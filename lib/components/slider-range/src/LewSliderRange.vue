@@ -432,12 +432,7 @@ const getStyle = computed(() => {
       height: var(--lew-slider-track-step-mark-size);
       transform: translate(
         calc(var(--lew-slider-track-step-mark-size) / 2 * -1),
-        calc(
-          (
-              var(--lew-slider-track-step-mark-size) -
-                var(--lew-slider-track-line-height)
-            ) / 2 * -1
-        )
+        calc((var(--lew-slider-track-step-mark-size) - var(--lew-slider-track-line-height)) / 2 * -1)
       );
       border-radius: 50%;
       background-color: var(--lew-bgcolor-9);
@@ -475,25 +470,24 @@ const getStyle = computed(() => {
     border-radius: 50%;
     border: var(--lew-color-blue) solid 2px;
     background: var(--lew-bgcolor-0);
-    transition: transform var(--lew-form-transition-ease),
+    transition:
+      transform var(--lew-form-transition-ease),
       border-width 0.1s ease;
     cursor: pointer;
     box-sizing: border-box;
     z-index: 3;
   }
   .lew-slider-track-dot:hover {
-    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%)
-      scale(1.1);
+    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%) scale(1.1);
   }
   .lew-slider-track-dot:active {
-    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%)
-      scale(1.05);
+    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%) scale(1.05);
     border-width: 4px;
   }
 }
 .lew-slider::before,
 .lew-slider::after {
-  content: "";
+  content: '';
   width: calc(var(--lew-slider-track-dot-size) / 2);
   height: var(--lew-slider-track-line-height);
   background-color: var(--lew-form-bgcolor);

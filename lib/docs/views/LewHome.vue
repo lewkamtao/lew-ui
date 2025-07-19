@@ -705,14 +705,12 @@ onUnmounted(() => {
   @keyframes demo {
     from {
       opacity: 0;
-      transform: scale(0.8) perspective(800px) rotateX(0deg) rotateY(0deg)
-        rotateZ(0deg) translate(0px, 0px);
+      transform: scale(0.8) perspective(800px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0px, 0px);
     }
 
     to {
       opacity: 1;
-      transform: scale(1.1) perspective(1000px) rotateX(12deg) rotateY(-24deg)
-        rotateZ(8deg) translate(-30px, 50px);
+      transform: scale(1.1) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg) translate(-30px, 50px);
     }
   }
 
@@ -758,8 +756,7 @@ onUnmounted(() => {
 
       to {
         opacity: 1;
-        transform: scale(0.5) translate(0px, 200px) rotateX(15deg)
-          rotateY(-15deg);
+        transform: scale(0.5) translate(0px, 200px) rotateX(15deg) rotateY(-15deg);
       }
     }
 

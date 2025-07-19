@@ -90,19 +90,11 @@ const nestedVisible = ref(false)
 }
 
 .main-content {
-  background: linear-gradient(
-    135deg,
-    var(--lew-bg-color-1) 0%,
-    var(--lew-bg-color-2) 100%
-  );
+  background: linear-gradient(135deg, var(--lew-bg-color-1) 0%, var(--lew-bg-color-2) 100%);
 }
 
 .nested-content {
-  background: linear-gradient(
-    135deg,
-    var(--lew-bg-color-2) 0%,
-    var(--lew-bg-color-3) 100%
-  );
+  background: linear-gradient(135deg, var(--lew-bg-color-2) 0%, var(--lew-bg-color-3) 100%);
 }
 
 .content-header {

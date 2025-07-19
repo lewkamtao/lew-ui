@@ -715,8 +715,7 @@ defineExpose({ show, hide })
 
   .lew-cascader-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
 
     .icon-select {
       transform: translateY(-50%) rotate(180deg);
@@ -765,8 +764,7 @@ defineExpose({ show, hide })
 
 .lew-cascader-item:hover {
   .lew-checkbox:deep(.lew-checkbox-icon-box) {
-    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
 
     background: var(--lew-form-bgcolor);
   }

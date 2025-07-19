@@ -678,7 +678,7 @@ onMounted(() => {
 
   .lew-form-wrapper-draggable-empty::after {
     position: absolute;
-    content: "请添加字段描述";
+    content: '请添加字段描述';
     top: 50%;
     left: 50%;
     opacity: 0.4;

@@ -287,8 +287,7 @@ async function copyAllDifferences() {
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 
   .lang-header {
     margin-bottom: 36px;
@@ -470,8 +469,7 @@ async function copyAllDifferences() {
       align-items: center;
       padding: 18px 20px;
       background-color: var(--lew-color-danger-light);
-      border-radius: var(--lew-border-radius-large)
-        var(--lew-border-radius-large) 0 0;
+      border-radius: var(--lew-border-radius-large) var(--lew-border-radius-large) 0 0;
       margin-bottom: 0;
       border-bottom: var(--lew-border-1);
 
@@ -539,15 +537,13 @@ async function copyAllDifferences() {
     }
 
     .diff-list {
-      border-radius: 0 0 var(--lew-border-radius-large)
-        var(--lew-border-radius-large);
+      border-radius: 0 0 var(--lew-border-radius-large) var(--lew-border-radius-large);
       overflow: hidden;
 
       .diff-item {
         padding: 16px 20px;
         border-bottom: var(--lew-border-1);
-        font-family: "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas,
-          monospace;
+        font-family: 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         font-size: 13px;
         line-height: 1.6;
         white-space: pre-wrap;

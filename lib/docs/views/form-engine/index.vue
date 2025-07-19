@@ -694,7 +694,7 @@ function addComponent(item: any) {
 
   .lew-form-wrapper-draggable-empty::after {
     position: absolute;
-    content: "从左侧拖动组件到当前区域";
+    content: '从左侧拖动组件到当前区域';
     top: 50%;
     left: 50%;
     opacity: 0.4;

@@ -3,15 +3,16 @@
 input,
 textarea,
 button {
-  font-family: inherit; 
-} 
+             font-family: inherit; 
+}  
 
 /* 隐藏滚动条 */ 
 .hidden-scrollbar {
-  overflow-x: hidden;
+    overflow-x: hidden;
   overflow-y: auto;
-  -ms-overflow-style: none; /* IE 10+ */
+   -ms-overflow-style: none; /* IE 10+ */
   scrollbar-width: none; /* Firefox */
+  
 
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari */

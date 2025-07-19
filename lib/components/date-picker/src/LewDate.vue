@@ -267,8 +267,7 @@ const headDate = computed(() => {
           color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
-          border: var(--lew-form-border-width) var(--lew-form-border-color)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         }
         .lew-date-value:active {
           transform: scale(0.9);
@@ -320,8 +319,7 @@ const headDate = computed(() => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -330,8 +328,7 @@ const headDate = computed(() => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -340,8 +337,7 @@ const headDate = computed(() => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }

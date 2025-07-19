@@ -536,7 +536,9 @@ defineExpose({
     box-shadow: var(--lew-form-box-shadow);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition: all var(--lew-form-transition-ease), width 0s ease;
+    transition:
+      all var(--lew-form-transition-ease),
+      width 0s ease;
 
     .lew-icon-select {
       position: absolute;
@@ -659,8 +661,7 @@ defineExpose({
   }
 
   .lew-select-focus {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
     background-color: var(--lew-form-bgcolor-focus);
     .lew-icon-select {
       color: var(--lew-text-color-1);

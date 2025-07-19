@@ -1602,7 +1602,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 }
 .lew-table-tr-dragging::after {
   position: absolute;
-  content: "";
+  content: '';
   left: 0;
   top: 0;
   width: 100%;
@@ -1674,7 +1674,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 .lew-table-checkbox-wrapper::after {
   position: absolute;
   z-index: 1;
-  content: "";
+  content: '';
   top: 0px;
   left: 0px;
   width: 100%;

@@ -131,7 +131,7 @@ watch(
 
 const getFormStyle = computed(() => {
   const gapMap = {
-    small: '24px',
+     small: '24px',
     medium: '26px',
     large: '28px',
   }
@@ -172,14 +172,15 @@ defineExpose({ getForm, setForm, resetError, validate })
         }
       "
     />
-  </div>
+   </div>
 </template>
-
+ 
 <style lang="scss" scoped>
 .lew-form {
-  width: 100%;
+   width: 100%; 
   display: grid;
   flex-shrink: 0;
+  padding-bottom: 30px;
 }
 
 .lew-form-columns-1 {
@@ -195,9 +196,6 @@ defineExpose({ getForm, setForm, resetError, validate })
 }
 
 .lew-form-columns-4 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(
-      0,
-      1fr
-    );
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 }
 </style>

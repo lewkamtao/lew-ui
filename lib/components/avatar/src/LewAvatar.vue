@@ -207,11 +207,7 @@ const getIconSize = computed(() => {
   .skeleton {
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg,
-      var(--lew-bgcolor-3) 25%,
-      var(--lew-bgcolor-2) 50%,
-      var(--lew-bgcolor-3) 75%
-    );
+    background: linear-gradient(90deg, var(--lew-bgcolor-3) 25%, var(--lew-bgcolor-2) 50%, var(--lew-bgcolor-3) 75%);
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s infinite;
   }

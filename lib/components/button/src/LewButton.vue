@@ -203,7 +203,7 @@ defineExpose({ focus })
   background-color: rgba($color: #000, $alpha: 0.2);
   transition: all var(--lew-form-transition-ease);
   opacity: 0;
-  content: "";
+  content: '';
 }
 
 .lew-button-color-black::after {
@@ -215,7 +215,7 @@ defineExpose({ focus })
   background-color: rgba($color: #fff, $alpha: 0.2);
   transition: 0.1s all;
   opacity: 0;
-  content: "";
+  content: '';
 }
 
 .lew-button-type-text.lew-button-color-black::after {
@@ -227,7 +227,7 @@ defineExpose({ focus })
   background-color: rgba($color: #000, $alpha: 0.2);
   transition: 0.1s all;
   opacity: 0;
-  content: "";
+  content: '';
 }
 
 .lew-button-type-ghost::after {

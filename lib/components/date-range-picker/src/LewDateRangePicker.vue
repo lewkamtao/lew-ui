@@ -247,8 +247,7 @@ defineExpose({ show, hide })
 
   .lew-date-range-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   }
   .lew-date-range-picker-focus:hover {
     background-color: var(--lew-form-bgcolor-focus);

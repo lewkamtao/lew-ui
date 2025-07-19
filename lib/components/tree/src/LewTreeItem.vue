@@ -342,8 +342,7 @@ const isNodePartiallySelected = computed(() => {
     background-color: var(--lew-pop-bgcolor-hover);
     user-select: none;
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
-      border: var(--lew-form-border-width)
-        var(--lew-checkbox-border-color-hover) solid;
+      border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
 
       background: var(--lew-form-bgcolor);
     }

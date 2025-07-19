@@ -384,8 +384,7 @@ defineExpose({ show, hide })
 
   .lew-select-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
 
     .lew-icon-select {
       transform: translateY(-50%) rotate(180deg);

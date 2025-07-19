@@ -158,8 +158,7 @@ const getRadioClassName = computed(() => {
 
 .lew-radio:hover {
   .lew-icon-radio-box {
-    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
     background: var(--lew-form-bgcolor);
   }
 }
@@ -201,8 +200,7 @@ const getRadioClassName = computed(() => {
 .lew-radio-block:hover {
   background: var(--lew-form-bgcolor-hover);
   .lew-icon-radio-box {
-    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
   }
 }
 

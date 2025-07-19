@@ -667,9 +667,7 @@ const getResultText = computed(() => {
         font-size: var(--lew-form-font-size-small);
         margin-left: 10px;
         padding-right: 26px;
-        line-height: calc(
-          var(--lew-form-item-height-small) - (var(--lew-form-border-width) * 2)
-        );
+        line-height: calc(var(--lew-form-item-height-small) - (var(--lew-form-border-width) * 2));
       }
     }
 
@@ -681,10 +679,7 @@ const getResultText = computed(() => {
         font-size: var(--lew-form-font-size-medium);
         margin-left: 12px;
         padding-right: 28px;
-        line-height: calc(
-          var(--lew-form-item-height-medium) -
-            (var(--lew-form-border-width) * 2)
-        );
+        line-height: calc(var(--lew-form-item-height-medium) - (var(--lew-form-border-width) * 2));
       }
     }
 
@@ -696,17 +691,14 @@ const getResultText = computed(() => {
         font-size: var(--lew-form-font-size-large);
         margin-left: 14px;
         padding-right: 30px;
-        line-height: calc(
-          var(--lew-form-item-height-large) - (var(--lew-form-border-width) * 2)
-        );
+        line-height: calc(var(--lew-form-item-height-large) - (var(--lew-form-border-width) * 2));
       }
     }
   }
 
   .lew-select-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
 
     :deep() {
       .lew-tag {
@@ -812,12 +804,10 @@ const getResultText = computed(() => {
       padding: 0px 7px;
       box-sizing: border-box;
       transition: all var(--lew-form-transition-bezier);
-      border-bottom: var(--lew-form-border-width) var(--lew-form-bgcolor-hover)
-        solid;
+      border-bottom: var(--lew-form-border-width) var(--lew-form-bgcolor-hover) solid;
       color: var(--lew-text-color-2);
       &:focus {
-        border-bottom: var(--lew-form-border-width)
-          var(--lew-form-border-color-focus) solid;
+        border-bottom: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
       }
     }
     input:placeholder {
@@ -886,8 +876,7 @@ const getResultText = computed(() => {
 
         .lew-checkbox {
           .lew-checkbox-icon-box {
-            border: var(--lew-form-border-width)
-              var(--lew-checkbox-border-color-hover) solid;
+            border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
             background: var(--lew-form-bgcolor);
           }
         }
@@ -909,8 +898,7 @@ const getResultText = computed(() => {
 
           .lew-checkbox {
             .lew-checkbox-icon-box {
-              border: var(--lew-form-border-width) var(--lew-checkbox-color)
-                solid;
+              border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
               background: var(--lew-checkbox-color);
 
               .icon-checkbox {

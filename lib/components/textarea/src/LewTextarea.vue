@@ -181,7 +181,10 @@ defineExpose({ toFocus })
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   background-color: var(--lew-form-bgcolor);
   box-shadow: var(--lew-form-box-shadow);
-  transition: all var(--lew-form-transition-ease), width 0s, height 0s;
+  transition:
+    all var(--lew-form-transition-ease),
+    width 0s,
+    height 0s;
 
   .lew-textarea {
     width: 100%;
@@ -274,7 +277,7 @@ defineExpose({ toFocus })
     width: 10px;
     height: 10px;
     border-radius: 4px;
-    content: "";
+    content: '';
     z-index: 9;
     opacity: 1;
     display: none;

@@ -80,31 +80,31 @@ setLocale('en');"
 
 <style lang="scss" scoped>
 .language-table {
-    width: 300px;
-    border-collapse: collapse;
-    margin: 16px 0;
-    border-radius: 8px;
-    overflow: hidden;
+  width: 300px;
+  border-collapse: collapse;
+  margin: 16px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--lew-bgcolor-2);
+
+  th,
+  td {
+    padding: 12px 16px;
     border: 1px solid var(--lew-bgcolor-2);
+    text-align: left;
+    border-bottom: 1px solid var(--lew-border-color);
+  }
 
-    th,
-    td {
-        padding: 12px 16px;
-        border: 1px solid var(--lew-bgcolor-2);
-        text-align: left;
-        border-bottom: 1px solid var(--lew-border-color);
-    }
+  th {
+    background-color: var(--lew-bgcolor-1);
+    font-weight: 600;
+    color: var(--lew-text-color);
+  }
 
-    th {
-        background-color: var(--lew-bgcolor-1);
-        font-weight: 600;
-        color: var(--lew-text-color);
-    }
-
-    td {
-        background-color: var(--lew-bgcolor-0);
-        color: var(--lew-text-color);
-        font-size: 14px;
-    }
+  td {
+    background-color: var(--lew-bgcolor-0);
+    color: var(--lew-text-color);
+    font-size: 14px;
+  }
 }
 </style>
