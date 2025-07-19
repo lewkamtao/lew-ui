@@ -1,15 +1,17 @@
 <script setup lang="ts">
 const data = ref({
-  name: "Steve Jobs",
-  title: "Co-founder of Apple Inc.",
-  quote: "Stay hungry, stay foolish.",
-});
+  name: 'Steve Jobs',
+  title: 'Co-founder of Apple Inc.',
+  quote: 'Stay hungry, stay foolish.',
+})
 </script>
 
 <template>
   <lew-popover trigger="click" placement="bottom-start">
     <template #trigger>
-      <lew-tag style="cursor: pointer">Steve Jobs</lew-tag>
+      <lew-tag style="cursor: pointer">
+        Steve Jobs
+      </lew-tag>
     </template>
     <template #popover-body>
       <div class="popover-body">
@@ -22,7 +24,9 @@ const data = ref({
         </lew-flex>
 
         <div class="info">
-          <h3 class="name">{{ data.name }}</h3>
+          <h3 class="name">
+            {{ data.name }}
+          </h3>
           <span class="title">{{ data.title }}</span>
         </div>
 

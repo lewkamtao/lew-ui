@@ -1,37 +1,36 @@
 <script lang="ts" setup>
-import { LewPopover, LewDateRange, LewTooltip } from 'lew-ui'
-import { dateRangePickerProps } from './props'
-import { object2class } from 'lew-ui/utils'
 import type { LewSize } from 'lew-ui'
+import { LewDateRange, LewPopover, LewTooltip, locale } from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
+import { dateRangePickerProps } from './props'
+
+const props = defineProps(dateRangePickerProps)
+const emit = defineEmits(['change', 'clear'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
-type DateRangePickerModel =
-  | {
-      [key in typeof startKey | typeof endKey]: string
-    }
+type DateRangePickerModel
+  = | {
+    [key in typeof startKey | typeof endKey]: string
+  }
   | undefined
 
 const modelValue = defineModel<DateRangePickerModel>()
-const props = defineProps(dateRangePickerProps)
-const emit = defineEmits(['change', 'clear'])
 const visible = ref(false)
 const lewPopoverRef = ref()
 const { startKey, endKey } = props
 
 const lewDateRangePanelRef = ref()
 
-const show = () => {
+function show() {
   lewPopoverRef.value.show()
 }
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value.hide()
 }
 
@@ -39,26 +38,26 @@ const getIconSize = computed(() => {
   const size: { [key in LewSize]: number } = {
     small: 13,
     medium: 14,
-    large: 15
+    large: 15,
   }
   const _propsSize: LewSize = props.size as LewSize
   return size[_propsSize]
 })
 
-const change = (e?: any) => {
+function change(e?: any) {
   emit('change', { e, show, hide })
   hide()
 }
 
-const showHandle = () => {
+function showHandle() {
   visible.value = true
   lewDateRangePanelRef.value && lewDateRangePanelRef.value.init()
 }
-const hideHandle = () => {
+function hideHandle() {
   visible.value = false
 }
 
-const clearHandle = () => {
+function clearHandle() {
   modelValue.value = undefined
   change(modelValue.value)
   emit('clear')
@@ -71,7 +70,7 @@ const lewDateRangeClassNames = computed(() => {
     focus,
     size,
     readonly,
-    disabled
+    disabled,
   })
 })
 
@@ -81,22 +80,23 @@ const getDateRangePickerInputStyle = computed(() => {
     height: `var(--lew-form-item-height-${size})`,
     lineHeight: `var(--lew-form-input-line-height-${size})`,
     padding: `var(--lew-form-input-padding-${size})`,
-    fontSize: `var(--lew-form-font-size-${size})`
+    fontSize: `var(--lew-form-font-size-${size})`,
   }
 })
 
 const checkClear = computed(() => {
   return (
-    ((modelValue.value && modelValue.value[startKey]) ||
-      (modelValue.value && modelValue.value[endKey])) &&
-    props.clearable
+    ((modelValue.value && modelValue.value[startKey])
+      || (modelValue.value && modelValue.value[endKey]))
+    && props.clearable
   )
 })
 
 defineExpose({ show, hide })
 </script>
+
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
     trigger="click"
     placement="bottom-start"
@@ -117,7 +117,7 @@ defineExpose({ show, hide })
             x="start"
             y="center"
             :style="{
-              opacity: visible ? 0.6 : 1
+              opacity: visible ? 0.6 : 1,
             }"
           >
             <div
@@ -159,7 +159,7 @@ defineExpose({ show, hide })
               class="lew-date-range-picker-icon-calendar"
               :size="getIconSize"
               :class="{
-                'lew-date-range-picker-icon-calendar-hide': checkClear
+                'lew-date-range-picker-icon-calendar-hide': checkClear,
               }"
               type="calendar"
             />
@@ -171,7 +171,7 @@ defineExpose({ show, hide })
               type="close"
               class="lew-form-icon-close lew-date-range-picker-form-icon-close"
               :class="{
-                'lew-form-icon-close-focus': visible
+                'lew-form-icon-close-focus': visible,
               }"
               @click.stop="clearHandle"
             />
@@ -180,14 +180,14 @@ defineExpose({ show, hide })
       </div>
     </template>
     <template #popover-body>
-      <lew-date-range
+      <LewDateRange
         ref="lewDateRangePanelRef"
         v-bind="props"
         v-model="modelValue"
         @change="change"
       />
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>

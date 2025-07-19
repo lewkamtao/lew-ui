@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Box } from 'lucide-vue-next'
+
 const options = ref([])
 const value = ref([])
 </script>
@@ -19,6 +20,7 @@ const value = ref([])
     </template>
   </lew-select-multiple>
 </template>
+
 <style lang="scss" scoped>
 .empty {
   display: flex;

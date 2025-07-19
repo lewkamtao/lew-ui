@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { cityTree } from '@/lib/data'
+
 const v = ref<string>('')
-const change = (e: any) => {
+function change(e: any) {
   console.log(e)
 }
 </script>
@@ -11,25 +12,25 @@ const change = (e: any) => {
     <lew-tree-select
       v-model="v"
       size="small"
-      keyField="value"
-      labelField="label"
+      key-field="value"
+      label-field="label"
       :data-source="cityTree"
       @change="change"
     />
     <lew-tree-select
       v-model="v"
-      keyField="value"
+      key-field="value"
       size="medium"
       searchable
-      labelField="label"
+      label-field="label"
       :data-source="cityTree"
       @change="change"
     />
     <lew-tree-select
       v-model="v"
       size="large"
-      keyField="value"
-      labelField="label"
+      key-field="value"
+      label-field="label"
       :data-source="cityTree"
       @change="change"
     />

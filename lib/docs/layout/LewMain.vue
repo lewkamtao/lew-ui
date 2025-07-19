@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import TheHeader from './TheHeader.vue'
+
 const route = useRoute()
 watch(route, () => {
   setBackgroundColor()
 })
 
-const setBackgroundColor = () => {
+function setBackgroundColor() {
   if (route.name === 'R-LewHome') {
     document.body.style.backgroundColor = 'var(--lew-bgcolor-0)'
-  } else {
+  }
+  else {
     document.body.style.backgroundColor = 'var(--lew-bgcolor-4)'
   }
 }
@@ -20,10 +22,10 @@ onMounted(() => {
 
 <template>
   <div class="wrapper">
-    <the-header
+    <TheHeader
       :style="{
         background:
-          route.name === 'R-LewHome' ? 'transparent' : 'var(--lew-bgcolor-0)'
+          route.name === 'R-LewHome' ? 'transparent' : 'var(--lew-bgcolor-0)',
       }"
     />
     <router-view />

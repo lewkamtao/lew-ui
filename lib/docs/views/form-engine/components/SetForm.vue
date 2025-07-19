@@ -4,21 +4,21 @@ import SetFormItem from './SetFormItem.vue'
 defineProps({
   options: {
     type: Array as PropType<any>,
-    default: () => []
+    default: () => [],
   },
   collapseHeight: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 })
 
 const form: any = defineModel({ default: {} })
 </script>
 
 <template>
-  <lew-expand :collapseHeight>
+  <lew-expand :collapse-height>
     <div class="set-form">
-      <set-form-item
+      <SetFormItem
         v-for="item in options"
         :key="item.field"
         v-model="form[item.field]"

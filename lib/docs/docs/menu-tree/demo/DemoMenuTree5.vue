@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
+import { LewFlex, LewTag } from 'lew-ui'
 import {
-  FileText,
-  Users,
-  MessageSquare,
-  Tag,
   BarChart2,
-  Settings
+  FileText,
+  MessageSquare,
+  Settings,
+  Tag,
+  Users,
 } from 'lucide-vue-next'
-import { LewTag, LewFlex } from 'lew-ui'
+
 const value = ref('')
 const expandKeys = ref([])
 
@@ -21,9 +22,14 @@ const options = [
         h('span', 'Article Mgmt'),
         h(
           LewTag,
-          { type: 'light', color: 'error', round: true, size: 'small' },
-          () => '10'
-        )
+          {
+            type: 'light',
+            color: 'error',
+            round: true,
+            size: 'small',
+          },
+          () => '10',
+        ),
       ]),
     children: [
       {
@@ -34,14 +40,14 @@ const options = [
             h(
               LewTag,
               { type: 'light', color: 'primary', size: 'small' },
-              () => 'New'
-            )
+              () => 'New',
+            ),
           ]),
         children: [
           { value: '1-1-1', label: 'Published' },
           { value: '1-1-2', label: 'Drafts' },
-          { value: '1-1-3', label: 'Recycle Bin' }
-        ]
+          { value: '1-1-3', label: 'Recycle Bin' },
+        ],
       },
       {
         value: '1-2',
@@ -49,10 +55,10 @@ const options = [
         children: [
           { value: '1-2-1', label: 'New Article' },
           { value: '1-2-2', label: 'Import Article' },
-          { value: '1-2-3', label: 'Batch Actions' }
-        ]
-      }
-    ]
+          { value: '1-2-3', label: 'Batch Actions' },
+        ],
+      },
+    ],
   },
   {
     value: '2',
@@ -62,9 +68,14 @@ const options = [
         h('span', 'User Mgmt'),
         h(
           LewTag,
-          { type: 'light', color: 'error', round: true, size: 'small' },
-          () => '5'
-        )
+          {
+            type: 'light',
+            color: 'error',
+            round: true,
+            size: 'small',
+          },
+          () => '5',
+        ),
       ]),
     children: [
       {
@@ -75,14 +86,14 @@ const options = [
             h(
               LewTag,
               { type: 'light', color: 'primary', size: 'small' },
-              () => 'New'
-            )
+              () => 'New',
+            ),
           ]),
         children: [
           { value: '2-1-1', label: 'Regular Users' },
           { value: '2-1-2', label: 'Admins' },
-          { value: '2-1-3', label: 'Blacklist' }
-        ]
+          { value: '2-1-3', label: 'Blacklist' },
+        ],
       },
       {
         value: '2-2',
@@ -90,10 +101,10 @@ const options = [
         children: [
           { value: '2-2-1', label: 'Role Mgmt' },
           { value: '2-2-2', label: 'Permission Assign' },
-          { value: '2-2-3', label: 'Access Control' }
-        ]
-      }
-    ]
+          { value: '2-2-3', label: 'Access Control' },
+        ],
+      },
+    ],
   },
   {
     value: '3',
@@ -106,8 +117,8 @@ const options = [
         children: [
           { value: '3-1-1', label: 'Pending Review' },
           { value: '3-1-2', label: 'Approved' },
-          { value: '3-1-3', label: 'Rejected' }
-        ]
+          { value: '3-1-3', label: 'Rejected' },
+        ],
       },
       {
         value: '3-2',
@@ -115,10 +126,10 @@ const options = [
         children: [
           { value: '3-2-1', label: 'Review Rules' },
           { value: '3-2-2', label: 'Sensitive Word Filter' },
-          { value: '3-2-3', label: 'Comment Switch' }
-        ]
-      }
-    ]
+          { value: '3-2-3', label: 'Comment Switch' },
+        ],
+      },
+    ],
   },
   {
     value: '4',
@@ -131,8 +142,8 @@ const options = [
         children: [
           { value: '4-1-1', label: 'Popular Tags' },
           { value: '4-1-2', label: 'Latest Tags' },
-          { value: '4-1-3', label: 'Tag Review' }
-        ]
+          { value: '4-1-3', label: 'Tag Review' },
+        ],
       },
       {
         value: '4-2',
@@ -140,10 +151,10 @@ const options = [
         children: [
           { value: '4-2-1', label: 'Category List' },
           { value: '4-2-2', label: 'Add Category' },
-          { value: '4-2-3', label: 'Category Sort' }
-        ]
-      }
-    ]
+          { value: '4-2-3', label: 'Category Sort' },
+        ],
+      },
+    ],
   },
   {
     value: '5',
@@ -156,8 +167,8 @@ const options = [
         children: [
           { value: '5-1-1', label: 'Visit Trends' },
           { value: '5-1-2', label: 'Source Analysis' },
-          { value: '5-1-3', label: 'Visit Details' }
-        ]
+          { value: '5-1-3', label: 'Visit Details' },
+        ],
       },
       {
         value: '5-2',
@@ -165,10 +176,10 @@ const options = [
         children: [
           { value: '5-2-1', label: 'Popular Articles' },
           { value: '5-2-2', label: 'Author Ranking' },
-          { value: '5-2-3', label: 'Engagement Data' }
-        ]
-      }
-    ]
+          { value: '5-2-3', label: 'Engagement Data' },
+        ],
+      },
+    ],
   },
   {
     value: '6',
@@ -181,8 +192,8 @@ const options = [
         children: [
           { value: '6-1-1', label: 'Site Info' },
           { value: '6-1-2', label: 'Theme Settings' },
-          { value: '6-1-3', label: 'Email Config' }
-        ]
+          { value: '6-1-3', label: 'Email Config' },
+        ],
       },
       {
         value: '6-2',
@@ -190,24 +201,24 @@ const options = [
         children: [
           { value: '6-2-1', label: 'Login Settings' },
           { value: '6-2-2', label: 'Backup & Restore' },
-          { value: '6-2-3', label: 'Action Logs' }
-        ]
-      }
-    ]
-  }
+          { value: '6-2-3', label: 'Action Logs' },
+        ],
+      },
+    ],
+  },
 ]
 
-const change = (item: MenuTreeItem) => {
+function change(item: MenuTreeItem) {
   console.log(item)
 }
 </script>
 
 <template>
   <lew-menu-tree
-    width="300"
     v-model="value"
-    :options="options"
     v-model:expand-keys="expandKeys"
+    width="300"
+    :options="options"
     @change="change"
   />
 </template>

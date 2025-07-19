@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { LewInput, LewSelect, LewFlex, LewButton } from 'lew-ui'
-import { paginationProps } from './props'
 import type { PaginationOptions } from './props'
+import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { paginationProps } from './props'
+
 const props = defineProps(paginationProps)
 const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize'])
 
@@ -15,12 +15,12 @@ const pageSize: Ref<number> = defineModel('pageSize', { default: 10 })
 const getPageSizeOptions = computed(() => {
   if (Array.isArray(props.pageSizeOptions)) {
     if (
-      typeof props.pageSizeOptions[0] === 'string' ||
-      typeof props.pageSizeOptions[0] === 'number'
+      typeof props.pageSizeOptions[0] === 'string'
+      || typeof props.pageSizeOptions[0] === 'number'
     ) {
-      return props.pageSizeOptions.map((item) => ({
+      return props.pageSizeOptions.map(item => ({
         label: locale.t('pagination.pageSize', { pageSize: item }),
-        value: item
+        value: item,
       }))
     }
     return props.pageSizeOptions
@@ -31,7 +31,7 @@ const getPageSizeOptions = computed(() => {
 const state = reactive({
   toPage: undefined,
   pageSize: pageSize.value,
-  visiblePagesCount: props.visiblePagesCount
+  visiblePagesCount: props.visiblePagesCount,
 })
 
 onMounted(() => {
@@ -69,7 +69,7 @@ const visiblePages = computed(() => {
   return visiblePages
 })
 
-const changePage = (page: number) => {
+function changePage(page: number) {
   page = Math.floor(page)
 
   if (page < 1 || page > totalPages.value) {
@@ -80,28 +80,29 @@ const changePage = (page: number) => {
   pageSize.value = state.pageSize
   emit('change', {
     currentPage: currentPage.value,
-    pageSize: state.pageSize
+    pageSize: state.pageSize,
   })
 }
 
 // 是否显示省略号
 const startEllipsis = computed(() => visiblePages.value[0] > 2 + 1)
 const endEllipsis = computed(
-  () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2
+  () =>
+    visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2,
 )
 
 // 是否显示最大和最小页码
 const showOne = computed(() => visiblePages.value[0] > 1)
 const showMax = computed(
-  () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value
+  () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value,
 )
 
-const checkPageSize = (value: any) => {
+function checkPageSize(value: any) {
   state.pageSize = value
   changePage(currentPage.value)
 }
 
-const checkPageNum = (value: any) => {
+function checkPageNum(value: any) {
   const page = Number(value)
   state.toPage = undefined
   if (page > totalPages.value || page < 1) {
@@ -114,7 +115,7 @@ const checkPageNum = (value: any) => {
 const getPaginationClassName = computed(() => {
   const { size } = props
   return object2class('lew-pagination', {
-    size
+    size,
   })
 })
 
@@ -135,17 +136,17 @@ const getIconSize = computed(() => {
 
 <template>
   <div class="lew-pagination" :class="getPaginationClassName">
-    <lew-flex class="lew-pagination-control" gap="10">
-      <slot name="left"></slot>
-      <lew-flex class="lew-pagination-page-box" gap="5">
-        <lew-button
-          @click="changePage(currentPage - 1)"
+    <LewFlex class="lew-pagination-control" gap="10">
+      <slot name="left" />
+      <LewFlex class="lew-pagination-page-box" gap="5">
+        <LewButton
           type="text"
-          singleIcon
+          single-icon
           :size="size"
+          @click="changePage(currentPage - 1)"
         >
           <Icon type="chevron-left" :size="getIconSize" />
-        </lew-button>
+        </LewButton>
         <div
           v-if="showOne"
           class="lew-pagination-page-btn"
@@ -162,8 +163,8 @@ const getIconSize = computed(() => {
         </div>
         <div
           v-else-if="
-            currentPage > visiblePages.length / 2 + 2 &&
-            visiblePagesCount < totalPages
+            currentPage > visiblePages.length / 2 + 2
+              && visiblePagesCount < totalPages
           "
           class="lew-pagination-page-btn"
           @click="changePage(2)"
@@ -175,7 +176,7 @@ const getIconSize = computed(() => {
           :key="index"
           class="lew-pagination-page-btn"
           :class="{
-            active: Number(page) === Number(currentPage)
+            active: Number(page) === Number(currentPage),
           }"
           @click="changePage(page)"
         >
@@ -190,8 +191,8 @@ const getIconSize = computed(() => {
         </div>
         <div
           v-else-if="
-            currentPage < totalPages - visiblePages.length / 2 - 1 &&
-            visiblePagesCount < totalPages
+            currentPage < totalPages - visiblePages.length / 2 - 1
+              && visiblePagesCount < totalPages
           "
           class="lew-pagination-page-btn"
           @click="changePage(2)"
@@ -205,34 +206,34 @@ const getIconSize = computed(() => {
         >
           {{ totalPages }}
         </div>
-        <lew-button
-          singleIcon
+        <LewButton
+          single-icon
           type="text"
           :size="size"
           @click="changePage(currentPage + 1)"
         >
           <Icon type="chevron-right" :size="getIconSize" />
-        </lew-button>
-      </lew-flex>
-      <lew-select
+        </LewButton>
+      </LewFlex>
+      <LewSelect
         v-model="state.pageSize"
         auto-width
         :popover-width="150"
         :size="size"
-        :showCheckIcon="false"
+        :show-check-icon="false"
         :options="getPageSizeOptions as PaginationOptions[]"
         @change="checkPageSize"
       />
-      <lew-input
+      <LewInput
         v-model="state.toPage"
         :size="size"
         align="center"
         :placeholder="locale.t('pagination.jumpTo')"
-        autoWidth
+        auto-width
         @change="checkPageNum"
       />
-      <slot name="right"></slot>
-    </lew-flex>
+      <slot name="right" />
+    </LewFlex>
   </div>
 </template>
 

@@ -1,14 +1,29 @@
-// 导入所需的依赖
-import tippy from 'tippy.js'
 import type { App, DirectiveBinding } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
+// 导入所需的依赖
+import tippy from 'tippy.js'
 import _LewContextMenu from '../../context-menu/src/LewContextMenu.vue'
+
+interface LewHoverMenuConfig {
+  menu: Record<string, any>
+  disabledIds: string[]
+  hoverMenu: ((e: MouseEvent) => void) | null
+  prevId: string
+  instance: any
+  menuInstance: Record<string, any>
+}
+
+declare global {
+  interface Window {
+    LewHoverMenu: LewHoverMenuConfig
+  }
+}
 
 /**
  * 初始化悬浮菜单
  * 创建全局悬浮菜单实例和相关配置
  */
-export const initLewHoverMenu = () => {
+export function initLewHoverMenu() {
   window.LewHoverMenu = {
     menu: {}, // 存储菜单配置
     disabledIds: [], // 禁用悬浮菜单的元素ID
@@ -25,15 +40,15 @@ export const initLewHoverMenu = () => {
       delay: [250, 0], // 显示和隐藏的延迟
       arrow: false, // 不显示箭头
       appendTo: () => document.body, // 添加到body
-      allowHTML: true // 允许HTML内容
+      allowHTML: true, // 允许HTML内容
     }),
-    menuInstance: {} // 存储子菜单实例
+    menuInstance: {}, // 存储子菜单实例
   }
 
   // 为菜单添加自定义属性
   window.LewHoverMenu.instance.popper.children[0].setAttribute(
     'data-lew',
-    'popover'
+    'popover',
   )
 }
 
@@ -42,12 +57,14 @@ export const initLewHoverMenu = () => {
  * @param el - 目标HTML元素
  * @returns 元素的悬浮菜单ID
  */
-const findHoverMenuId = (el: HTMLElement): string => {
+function findHoverMenuId(el: HTMLElement): string {
   try {
     const id = el.getAttribute('lew-hover-menu-id')
-    if (id) return id
+    if (id)
+      return id
     return el.parentNode ? findHoverMenuId(el.parentNode as HTMLElement) : ''
-  } catch {
+  }
+  catch {
     return ''
   }
 }
@@ -88,11 +105,14 @@ export const LewVHoverMenu = {
           window.LewHoverMenu.hoverMenu = (e: MouseEvent) => {
             const id = findHoverMenuId(e.target as HTMLElement)
             // 处理禁用和重复触发
-            if (window.LewHoverMenu.disabledIds.includes(id)) return
-            if (window.LewHoverMenu.prevId === id) return
+            if (window.LewHoverMenu.disabledIds.includes(id))
+              return
+            if (window.LewHoverMenu.prevId === id)
+              return
 
             window.LewHoverMenu.prevId = id
-            if (!id) return
+            if (!id)
+              return
 
             const options = window.LewHoverMenu.menu[id]
             const { instance } = window.LewHoverMenu
@@ -105,9 +125,9 @@ export const LewVHoverMenu = {
             createApp({
               render() {
                 return h(_LewContextMenu, {
-                  options
+                  options,
                 })
-              }
+              },
             }).mount(menuDom)
 
             // 显示菜单
@@ -122,8 +142,8 @@ export const LewVHoverMenu = {
                   top: rect.top,
                   bottom: rect.top,
                   left: rect.right,
-                  right: rect.right
-                })
+                  right: rect.right,
+                }),
               }
               instance.setProps(props)
               instance.show()
@@ -146,18 +166,20 @@ export const LewVHoverMenu = {
           // 更新禁用状态
           if (disabled) {
             window.LewHoverMenu.disabledIds.push(id)
-          } else {
-            window.LewHoverMenu.disabledIds =
-              window.LewHoverMenu.disabledIds.filter(
-                (item: string) => item !== id
+          }
+          else {
+            window.LewHoverMenu.disabledIds
+              = window.LewHoverMenu.disabledIds.filter(
+                (item: string) => item !== id,
               )
           }
-        } else {
+        }
+        else {
           console.error('发生未知错误！找不到 lew-hover-menu-id。')
         }
-      }
+      },
     })
-  }
+  },
 }
 
 /**
@@ -182,11 +204,11 @@ export const hoverMenuProps = {
   options: {
     type: Array as PropType<HoverMenus[]>,
     default: () => [],
-    description: '悬浮菜单配置'
+    description: '悬浮菜单配置',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用悬浮菜单'
-  }
+    description: '是否禁用悬浮菜单',
+  },
 }

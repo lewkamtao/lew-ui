@@ -3,7 +3,7 @@ import type {
   LewDirection,
   LewSize,
   LewStatusColor,
-  LewThemeColor
+  LewThemeColor,
 } from '../types'
 
 export const validColors: LewColor[] = [
@@ -27,7 +27,7 @@ export const validColors: LewColor[] = [
   'warning',
   'info',
   'normal',
-  'primary'
+  'primary',
 ]
 
 export const vailThemeColor: LewThemeColor[] = [
@@ -44,7 +44,7 @@ export const vailThemeColor: LewThemeColor[] = [
   'purple',
   'red',
   'teal',
-  'yellow'
+  'yellow',
 ]
 
 export const validStatusColors: LewStatusColor[] = [
@@ -53,7 +53,7 @@ export const validStatusColors: LewStatusColor[] = [
   'warning',
   'info',
   'normal',
-  'primary'
+  'primary',
 ]
 
 export const validSizes: LewSize[] = ['small', 'medium', 'large']

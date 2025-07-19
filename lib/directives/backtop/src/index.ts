@@ -1,7 +1,7 @@
-import { shallowRef } from 'vue'
 import type { App, DirectiveBinding } from 'vue'
+import { shallowRef } from 'vue'
 
-const createBackTopHandler = (target?: string) => {
+function createBackTopHandler(target?: string) {
   const dom = shallowRef<HTMLElement>(document.documentElement)
 
   if (target) {
@@ -36,7 +36,7 @@ export default {
           el.removeEventListener('click', el._backTopHandler)
           delete el._backTopHandler
         }
-      }
+      },
     })
-  }
+  },
 }

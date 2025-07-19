@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { orderBy } from 'lodash-es'
+
 const data: any = ref([
   {
     id: 1,
@@ -16,7 +17,7 @@ const data: any = ref([
     color: 'Space Black',
     storage: '512GB',
     camera: '108MP',
-    battery: '5000mAh'
+    battery: '5000mAh',
   },
   {
     id: 2,
@@ -33,7 +34,7 @@ const data: any = ref([
     color: 'Phantom Silver',
     storage: '256GB',
     camera: '64MP',
-    battery: '4800mAh'
+    battery: '4800mAh',
   },
   {
     id: 3,
@@ -50,7 +51,7 @@ const data: any = ref([
     color: 'Silver',
     storage: '1TB',
     processor: 'M1 Pro',
-    memory: '32GB'
+    memory: '32GB',
   },
   {
     id: 4,
@@ -67,7 +68,7 @@ const data: any = ref([
     color: 'Platinum',
     storage: '512GB',
     processor: 'Intel i7',
-    memory: '16GB'
+    memory: '16GB',
   },
   {
     id: 5,
@@ -84,8 +85,8 @@ const data: any = ref([
     color: 'Space Gray',
     storage: '256GB',
     processor: 'M1',
-    memory: '8GB'
-  }
+    memory: '8GB',
+  },
 ])
 
 const columns = [
@@ -93,7 +94,7 @@ const columns = [
     title: 'ID',
     field: 'id',
     width: 60,
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Product Info',
@@ -107,21 +108,21 @@ const columns = [
           {
             title: 'Name',
             width: 150,
-            field: 'name'
+            field: 'name',
           },
           {
             title: 'Brand',
             field: 'brand',
             width: 100,
-            x: 'center'
+            x: 'center',
           },
           {
             title: 'Category',
             field: 'category',
             width: 100,
-            x: 'center'
-          }
-        ]
+            x: 'center',
+          },
+        ],
       },
       {
         title: 'Release Year',
@@ -130,7 +131,7 @@ const columns = [
         x: 'center',
         customRender: ({ row }: any) => {
           return row.releaseYear
-        }
+        },
       },
       {
         title: 'Price',
@@ -139,10 +140,10 @@ const columns = [
         x: 'center',
         sortable: true,
         customRender: ({ row }: any) => {
-          return '$' + row.price
-        }
-      }
-    ]
+          return `$${row.price}`
+        },
+      },
+    ],
   },
   {
     title: 'Specifications',
@@ -151,47 +152,47 @@ const columns = [
       {
         title: 'Storage',
         field: 'storage',
-        width: 80,
-        x: 'center'
+        width: 120,
+        x: 'center',
       },
       {
         title: 'Color',
         field: 'color',
-        width: 80,
-        x: 'center'
+        width: 120,
+        x: 'center',
       },
       {
         title: 'Stock',
         field: 'stock',
 
-        width: 80,
-        x: 'center'
-      }
-    ]
+        width: 120,
+        x: 'center',
+      },
+    ],
   },
   {
     title: 'Rating',
-    width: 80,
+    width: 120,
     field: 'rating',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Description',
     width: 300,
     field: 'intro',
-    type: 'text-trim'
-  }
+    type: 'text-trim',
+  },
 ]
 
 const sortValue = ref<any>({
-  price: 'desc'
+  price: 'desc',
 })
 
-const sortChange = () => {
-  console.log(sortValue.value)
-  if (sortValue.value['price']) {
-    data.value = orderBy(data.value, 'price', sortValue.value['price'])
-  } else {
+function sortChange() {
+  if (sortValue.value.price) {
+    data.value = orderBy(data.value, 'price', sortValue.value.price)
+  }
+  else {
     data.value = orderBy(data.value, 'id', 'asc')
   }
 }
@@ -199,16 +200,20 @@ const sortChange = () => {
 
 <template>
   <lew-table
+    v-model:sort-value="sortValue"
     bordered
     :data-source="data"
     :columns="columns"
-    v-model:sortValue="sortValue"
     @sort-change="sortChange"
   >
     <template #info="{ row }">
       <lew-flex direction="y" x="start" gap="0px" class="info">
-        <div class="name">{{ row.name }}</div>
-        <div class="brand">{{ row.brand }}</div>
+        <div class="name">
+          {{ row.name }}
+        </div>
+        <div class="brand">
+          {{ row.brand }}
+        </div>
       </lew-flex>
     </template>
     <template #rating="{ row }">

@@ -4,12 +4,12 @@ const applianceFeatures = ref([
   { label: 'Washing Machine', value: 'washingMachine' },
   { label: 'Microwave', value: 'microwave' },
   { label: 'Air Conditioner', value: 'airConditioner' },
-  { label: 'Television', value: 'television' }
+  { label: 'Television', value: 'television' },
 ])
 
 const selectedFeatures = ref(['refrigerator', 'washingMachine'])
 
-const handleFeatureChange = (selectedValues: string[]) => {
+function handleFeatureChange(selectedValues: string[]) {
   console.log('Selected appliances:', selectedValues)
 }
 </script>

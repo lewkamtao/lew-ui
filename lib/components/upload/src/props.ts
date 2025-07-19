@@ -1,16 +1,17 @@
-import type { ExtractPropTypes } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 import { validSizes } from 'lew-ui/constants'
-export type UploadStatus =
-  | 'success'
-  | 'fail'
-  | 'uploading'
-  | 'complete'
-  | 'wrong_type'
-  | 'wrong_size'
-  | 'pending'
 
-export type UploadFileItem = {
+export type UploadStatus
+  = | 'success'
+    | 'fail'
+    | 'uploading'
+    | 'complete'
+    | 'wrong_type'
+    | 'wrong_size'
+    | 'pending'
+
+export interface UploadFileItem {
   key: string
   name?: string
   url?: string
@@ -27,27 +28,27 @@ export const uploadProps = {
   accept: {
     type: String,
     default: '',
-    description: '允许上传的文件类型'
+    description: '允许上传的文件类型',
   },
   immediate: {
     type: Boolean,
     default: true,
-    description: '是否在选择文件后立即上传，为false时仅保存文件信息不上传'
+    description: '是否在选择文件后立即上传，为false时仅保存文件信息不上传',
   },
   multiple: {
     type: Boolean,
     default: false,
-    description: '是否允许多文件上传'
+    description: '是否允许多文件上传',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用上传功能'
+    description: '是否禁用上传功能',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否为只读模式'
+    description: '是否为只读模式',
   },
   limit: {
     type: Number,
@@ -59,7 +60,7 @@ export const uploadProps = {
         return false
       }
       return true
-    }
+    },
   },
   maxFileSize: {
     type: Number,
@@ -71,7 +72,7 @@ export const uploadProps = {
         return false
       }
       return true
-    }
+    },
   },
   size: {
     type: String as PropType<LewSize>,
@@ -83,7 +84,7 @@ export const uploadProps = {
         return false
       }
       return true
-    }
+    },
   },
   tips: {
     type: String,
@@ -95,25 +96,25 @@ export const uploadProps = {
         return false
       }
       return true
-    }
+    },
   },
   uploadHelper: {
     type: Function,
     default: undefined,
     description: '自定义文件上传处理函数',
-    validator: (value: Function) => {
+    validator: (value: any) => {
       if (typeof value !== 'function') {
         console.warn('[LewUpload] uploadHelper 必须是一个函数')
         return false
       }
       return true
-    }
+    },
   },
   uploadHelperId: {
     type: String,
     default: '',
     hidden: true,
-    description: '上传函数的标识'
+    description: '上传函数的标识',
   },
   viewMode: {
     type: String,
@@ -125,8 +126,8 @@ export const uploadProps = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const uploadByListProps = {
@@ -140,8 +141,8 @@ export const uploadByListProps = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const uploadByCardProps = {
@@ -155,13 +156,13 @@ export const uploadByCardProps = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const statusConfig: Record<
   UploadStatus,
-  { text: string; color: string }
+  { text: string, color: string }
 > = {
   pending: { text: '待上传', color: 'gray' },
   success: { text: '上传成功', color: 'green' },
@@ -169,7 +170,7 @@ export const statusConfig: Record<
   uploading: { text: '上传中', color: 'blue' },
   complete: { text: '已上传', color: 'gray' },
   wrong_type: { text: '非法格式', color: 'red' },
-  wrong_size: { text: '文件大小超出限制', color: 'red' }
+  wrong_size: { text: '文件大小超出限制', color: 'red' },
 }
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>

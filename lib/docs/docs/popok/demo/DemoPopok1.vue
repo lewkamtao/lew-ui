@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Confirm
-const ok = () => {
+function ok() {
   return new Promise((resolve: any) => {
     setTimeout(() => {
       resolve(true)
@@ -9,7 +9,7 @@ const ok = () => {
   })
 }
 // Cancel
-const cancel = () => {
+function cancel() {
   return new Promise((resolve: any) => {
     setTimeout(() => {
       resolve(true)

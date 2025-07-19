@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const handleRequest = () => {
+function handleRequest() {
   return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve()

@@ -1,14 +1,14 @@
-import { describe, it, expect } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 import LewButton from '../src/LewButton.vue'
 
-describe('Button', () => {
+describe('button', () => {
   it('default', () => {
     const text = '添加'
     const buttonComponent = shallowMount(LewButton, {
       slots: {
-        default: text
-      }
+        default: text,
+      },
     })
     expect(buttonComponent.find('.lew-button').text()).toBe(text)
   })
@@ -17,11 +17,11 @@ describe('Button', () => {
     const buttonComponent = shallowMount(LewButton)
     // 默认type为primary
     expect(buttonComponent.find('.lew-button').classes()).toContain(
-      'lew-button-primary'
+      'lew-button-primary',
     )
     // 默认size为medium
     expect(buttonComponent.find('.lew-button').classes()).toContain(
-      'lew-button-medium'
+      'lew-button-medium',
     )
   })
 
@@ -29,14 +29,14 @@ describe('Button', () => {
     const buttonComponent = shallowMount(LewButton, {
       props: {
         type: 'fill',
-        size: 'small'
-      }
+        size: 'small',
+      },
     })
     expect(buttonComponent.find('.lew-button').classes()).toContain(
-      'lew-button-success'
+      'lew-button-success',
     )
     expect(buttonComponent.find('.lew-button').classes()).toContain(
-      'lew-button-small'
+      'lew-button-small',
     )
   })
 
@@ -49,8 +49,8 @@ describe('Button', () => {
   it('disabled-click', () => {
     const buttonComponent = shallowMount(LewButton, {
       props: {
-        disabled: true
-      }
+        disabled: true,
+      },
     })
     buttonComponent.trigger('click')
     // button 设置 disabled 属性后，点击事件不会触发

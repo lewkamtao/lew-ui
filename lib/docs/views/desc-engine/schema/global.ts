@@ -9,15 +9,15 @@ export const globalSchema = [
       options: [
         { label: '小', value: 'small' },
         { label: '中', value: 'medium' },
-        { label: '大', value: 'large' }
-      ]
-    }
+        { label: '大', value: 'large' },
+      ],
+    },
   },
   {
     label: '是否显示边框',
     as: 'switch',
     field: 'bordered',
-    componentWidth: 'auto'
+    componentWidth: 'auto',
   },
   {
     label: '方向',
@@ -28,9 +28,9 @@ export const globalSchema = [
       itemWidth: '50px',
       options: [
         { label: '水平', value: 'x' },
-        { label: '垂直', value: 'y' }
-      ]
-    }
+        { label: '垂直', value: 'y' },
+      ],
+    },
   },
   {
     label: '标签对齐方式',
@@ -41,9 +41,9 @@ export const globalSchema = [
       itemWidth: '50px',
       options: [
         { label: '左对齐', value: 'start' },
-        { label: '右对齐', value: 'end' }
-      ]
-    }
+        { label: '右对齐', value: 'end' },
+      ],
+    },
   },
   {
     label: '值对齐方式',
@@ -54,8 +54,8 @@ export const globalSchema = [
       itemWidth: '50px',
       options: [
         { label: '左对齐', value: 'start' },
-        { label: '右对齐', value: 'end' }
-      ]
-    }
-  }
+        { label: '右对齐', value: 'end' },
+      ],
+    },
+  },
 ]

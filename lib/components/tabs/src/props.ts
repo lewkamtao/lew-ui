@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
-export type TabsOptions = {
+export interface TabsOptions {
   label: string
   value: string | number
 }
@@ -20,8 +20,8 @@ export const tabsModel = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const tabsProps = {
@@ -36,18 +36,18 @@ export const tabsProps = {
       }
       if (
         value.some(
-          (item) =>
-            typeof item.label !== 'string' ||
-            (typeof item.value !== 'string' && typeof item.value !== 'number')
+          item =>
+            typeof item.label !== 'string'
+            || (typeof item.value !== 'string' && typeof item.value !== 'number'),
         )
       ) {
         console.warn(
-          '[LewTabs] options 数组中的每个项目必须包含 label（字符串）、value（字符串或数字）属性'
+          '[LewTabs] options 数组中的每个项目必须包含 label（字符串）、value（字符串或数字）属性',
         )
         return false
       }
       return true
-    }
+    },
   },
   type: {
     type: String as PropType<TabsType>,
@@ -60,7 +60,7 @@ export const tabsProps = {
         return false
       }
       return true
-    }
+    },
   },
   size: {
     type: String as PropType<TabsSize>,
@@ -73,7 +73,7 @@ export const tabsProps = {
         return false
       }
       return true
-    }
+    },
   },
   width: {
     type: [Number, String],
@@ -85,7 +85,7 @@ export const tabsProps = {
         return false
       }
       return true
-    }
+    },
   },
   itemWidth: {
     type: [Number, String],
@@ -98,23 +98,23 @@ export const tabsProps = {
         return false
       }
       return true
-    }
+    },
   },
   round: {
     type: Boolean,
     default: false,
-    description: '是否使用圆角样式'
+    description: '是否使用圆角样式',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用所有标签页'
+    description: '是否禁用所有标签页',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否将所有标签页设置为只读状态'
-  }
+    description: '是否将所有标签页设置为只读状态',
+  },
 }
 
 export type TabsProps = ExtractPropTypes<typeof tabsProps>

@@ -19,7 +19,7 @@ export const LewLoading = {
         const loader = createApp(Icon, {
           type: 'loader',
           loading: true,
-          size: iconSize || 24
+          size: iconSize || 24,
         })
         loader.mount(loadingBox)
         // // add loading text
@@ -40,10 +40,11 @@ export const LewLoading = {
         loadingBox && loadingBox.setAttribute('data-after', tip || '')
         if (visible) {
           el.classList.add('lew-loading-show')
-        } else {
+        }
+        else {
           el.classList.remove('lew-loading-show')
         }
-      }
+      },
     })
-  }
+  },
 }

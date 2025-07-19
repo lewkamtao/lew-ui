@@ -9,15 +9,15 @@ const options = ref<any[]>([
         value: 'chinese',
         checked: true,
         checkable: true,
-        onClick: (item: any) => setTheme(item, 'language')
+        onClick: (item: any) => setTheme(item, 'language'),
       },
       {
         label: 'English',
         value: 'english',
         checkable: true,
-        onClick: (item: any) => setTheme(item, 'language')
-      }
-    ]
+        onClick: (item: any) => setTheme(item, 'language'),
+      },
+    ],
   },
   {
     label: 'Theme',
@@ -29,42 +29,42 @@ const options = ref<any[]>([
         type: 'radio',
         checked: true,
         checkable: true,
-        onClick: (item: any) => setTheme(item, 'theme')
+        onClick: (item: any) => setTheme(item, 'theme'),
       },
       {
         label: 'Dark',
         type: 'radio',
         value: 'dark',
         checkable: true,
-        onClick: (item: any) => setTheme(item, 'theme')
-      }
-    ]
+        onClick: (item: any) => setTheme(item, 'theme'),
+      },
+    ],
   },
   {
     label: 'Font Style (Editor)',
-    value: 'font'
+    value: 'font',
   },
   {
     label: 'About',
-    value: 'about'
+    value: 'about',
   },
   {
-    isDividerLine: true
+    isDividerLine: true,
   },
   {
     label: 'Help',
-    value: 'help'
+    value: 'help',
   },
   {
     label: 'Check for Updates',
     checkable: true,
     checked: true,
     value: 'check-update',
-    onClick: (item: any) => setUpdate(item)
-  }
+    onClick: (item: any) => setUpdate(item),
+  },
 ])
 
-const setTheme = (item: any, type = 'theme') => {
+function setTheme(item: any, type = 'theme') {
   // Find the index of the Theme item
   const themeIndex = options.value.findIndex((item: any) => item.value === type)
   if (themeIndex !== -1 && options.value[themeIndex].children) {
@@ -74,19 +74,19 @@ const setTheme = (item: any, type = 'theme') => {
         if (child.checkable) {
           return {
             ...child,
-            checked: child.label === item.label
+            checked: child.label === item.label,
           }
         }
         return child
-      }
+      },
     )
 
     // Update the entire options array to trigger reactive update
-    let newOptions = options.value.map((item: any, index: number) => {
+    const newOptions = options.value.map((item: any, index: number) => {
       if (index === themeIndex) {
         return {
           ...item,
-          children: newChildren
+          children: newChildren,
         }
       }
       return item
@@ -95,15 +95,16 @@ const setTheme = (item: any, type = 'theme') => {
   }
 }
 
-const setUpdate = (item: any) => {
+function setUpdate(item: any) {
   item.checked = !item.checked
 }
 </script>
+
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options
+        options,
       }"
       class="box"
     >

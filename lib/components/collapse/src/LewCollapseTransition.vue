@@ -1,30 +1,11 @@
-<template>
-  <transition
-    :name="name"
-    @before-appear="beforeAppear"
-    @appear="appear"
-    @after-appear="afterAppear"
-    @appear-cancelled="appearCancelled"
-    @before-enter="beforeEnter"
-    @enter="enter"
-    @after-enter="afterEnter"
-    @enter-cancelled="enterCancelled"
-    @before-leave="beforeLeave"
-    @leave="leave"
-    @after-leave="afterLeave"
-    @leave-cancelled="leaveCancelled"
-  >
-    <slot></slot>
-  </transition>
-</template>
-
 <script>
 export default {
+
   props: {
     name: {
       type: String,
       required: false,
-      default: 'collapse'
+      default: 'collapse',
     },
     dimension: {
       type: String,
@@ -32,50 +13,64 @@ export default {
       default: 'height',
       validator: (value) => {
         return ['height', 'width'].includes(value)
-      }
+      },
     },
     duration: {
       type: Number,
       required: false,
-      default: 150
+      default: 150,
     },
     easing: {
       type: String,
       required: false,
-      default: 'ease-in-out'
-    }
+      default: 'ease-in-out',
+    },
   },
-
-  watch: {
-    dimension() {
-      this.clearCachedDimensions()
-    }
-  },
+  emits: [
+    'beforeAppear',
+    'appear',
+    'afterAppear',
+    'appearCancelled',
+    'beforeEnter',
+    'enter',
+    'afterEnter',
+    'enterCancelled',
+    'beforeLeave',
+    'leave',
+    'afterLeave',
+    'leaveCancelled',
+  ],
 
   data() {
     return {
-      cachedStyles: null
+      cachedStyles: null,
     }
   },
 
   computed: {
     transition() {
-      let transitions = []
+      const transitions = []
 
       Object.keys(this.cachedStyles).forEach((key) => {
         transitions.push(
-          `${this.convertToCssProperty(key)} ${this.duration}ms ${this.easing}`
+          `${this.convertToCssProperty(key)} ${this.duration}ms ${this.easing}`,
         )
       })
 
       return transitions.join(', ')
-    }
+    },
+  },
+
+  watch: {
+    dimension() {
+      this.clearCachedDimensions()
+    },
   },
 
   methods: {
     beforeAppear(el) {
       // Emit the event to the parent
-      this.$emit('before-appear', el)
+      this.$emit('beforeAppear', el)
     },
 
     appear(el) {
@@ -85,17 +80,17 @@ export default {
 
     afterAppear(el) {
       // Emit the event to the parent
-      this.$emit('after-appear', el)
+      this.$emit('afterAppear', el)
     },
 
     appearCancelled(el) {
       // Emit the event to the parent
-      this.$emit('appear-cancelled', el)
+      this.$emit('appearCancelled', el)
     },
 
     beforeEnter(el) {
       // Emit the event to the parent
-      this.$emit('before-enter', el)
+      this.$emit('beforeEnter', el)
     },
 
     enter(el, done) {
@@ -132,17 +127,17 @@ export default {
       this.clearCachedDimensions()
 
       // Emit the event to the parent
-      this.$emit('after-enter', el)
+      this.$emit('afterEnter', el)
     },
 
     enterCancelled(el) {
       // Emit the event to the parent
-      this.$emit('enter-cancelled', el)
+      this.$emit('enterCancelled', el)
     },
 
     beforeLeave(el) {
       // Emit the event to the parent
-      this.$emit('before-leave', el)
+      this.$emit('beforeLeave', el)
     },
 
     leave(el, done) {
@@ -180,19 +175,20 @@ export default {
       this.clearCachedDimensions()
 
       // Emit the event to the parent
-      this.$emit('after-leave', el)
+      this.$emit('afterLeave', el)
     },
 
     leaveCancelled(el) {
       // Emit the event to the parent
-      this.$emit('leave-cancelled', el)
+      this.$emit('leaveCancelled', el)
     },
 
     detectAndCacheDimensions(el) {
       // Cache actual dimensions
       // only once to void invalid values when
       // triggering during a transition
-      if (this.cachedStyles) return
+      if (this.cachedStyles)
+        return
 
       const visibility = el.style.visibility
       const display = el.style.display
@@ -217,23 +213,23 @@ export default {
       // These properties will be transitioned
       if (this.dimension === 'height') {
         return {
-          height: el.offsetHeight + 'px',
+          height: `${el.offsetHeight}px`,
           opacity: 1,
           paddingTop:
             el.style.paddingTop || this.getCssValue(el, 'padding-top'),
           paddingBottom:
-            el.style.paddingBottom || this.getCssValue(el, 'padding-bottom')
+            el.style.paddingBottom || this.getCssValue(el, 'padding-bottom'),
         }
       }
 
       if (this.dimension === 'width') {
         return {
-          width: el.offsetWidth + 'px',
+          width: `${el.offsetWidth}px`,
           opacity: 1,
           paddingLeft:
             el.style.paddingLeft || this.getCssValue(el, 'padding-left'),
           paddingRight:
-            el.style.paddingRight || this.getCssValue(el, 'padding-right')
+            el.style.paddingRight || this.getCssValue(el, 'padding-right'),
         }
       }
 
@@ -277,7 +273,7 @@ export default {
     forceRepaint(el) {
       // Force repaint to make sure the animation is triggered correctly.
       // Thanks: https://markus.oberlehner.net/blog/transition-to-height-auto-with-vue/
-      getComputedStyle(el)[this.dimension]
+      void getComputedStyle(el)[this.dimension]
     },
 
     getCssValue(el, style) {
@@ -296,7 +292,7 @@ export default {
       for (let i = 0, n = upperChars.length; i < n; i++) {
         style = style.replace(
           new RegExp(upperChars[i]),
-          '-' + upperChars[i].toLowerCase()
+          `-${upperChars[i].toLowerCase()}`,
         )
       }
 
@@ -305,7 +301,27 @@ export default {
       }
 
       return style
-    }
-  }
+    },
+  },
 }
 </script>
+
+<template>
+  <transition
+    :name="name"
+    @before-appear="beforeAppear"
+    @appear="appear"
+    @after-appear="afterAppear"
+    @appear-cancelled="appearCancelled"
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @after-enter="afterEnter"
+    @enter-cancelled="enterCancelled"
+    @before-leave="beforeLeave"
+    @leave="leave"
+    @after-leave="afterLeave"
+    @leave-cancelled="leaveCancelled"
+  >
+    <slot />
+  </transition>
+</template>

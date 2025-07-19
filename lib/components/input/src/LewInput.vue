@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { useMagicKeys } from '@vueuse/core'
-import { object2class, any2px } from 'lew-ui/utils'
-import { LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
-import { inputProps } from './props'
+import { LewDropdown, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { inputProps } from './props'
+
+const props = defineProps(inputProps)
+const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
 const { enter } = useMagicKeys()
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
-const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
-const props = defineProps(inputProps)
 const modelValue = defineModel({ required: true })
 const prefixValue = defineModel('prefixValue')
 const suffixValue: any = defineModel('suffixValue')
@@ -24,7 +24,7 @@ const _type = ref(props.type)
 const isFocus = ref(false)
 const state = reactive({
   prefixesDropdown: 'hide',
-  suffixDropdown: 'hide'
+  suffixDropdown: 'hide',
 })
 
 let timer: NodeJS.Timeout | null = null
@@ -35,10 +35,10 @@ watch(
     if (v === 'password') {
       _type.value = 'password'
     }
-  }
+  },
 )
 
-const clear = () => {
+function clear() {
   modelValue.value = undefined
   emit('clear')
 }
@@ -46,11 +46,11 @@ const clear = () => {
 const toFocus = () => lewInputRef.value?.focus()
 const toBlur = () => lewInputRef.value?.blur()
 
-const showPasswordFn = () => {
+function showPasswordFn() {
   _type.value = _type.value === 'text' ? 'password' : 'text'
 }
 
-const focus = (e: FocusEvent) => {
+function focus(e: FocusEvent) {
   if (props.selectByFocus) {
     ;(e.currentTarget as HTMLInputElement)?.select()
   }
@@ -58,8 +58,8 @@ const focus = (e: FocusEvent) => {
   isFocus.value = true
 }
 
-const blur = () => {
-  emit('blur', modelValue)
+function blur() {
+  emit('blur', modelValue.value)
   isFocus.value = false
 }
 
@@ -68,22 +68,20 @@ const getIconSize = computed(
     ({
       small: 13,
       medium: 14,
-      large: 16
-    })[props.size]
+      large: 16,
+    })[props.size],
 )
 
 const getInputStyle = computed(() => {
   const { clearable, showCount } = props
   const countWidth = lewInputCountRef.value?.offsetWidth || 0
   return {
-    width: `calc(100% - ${
-      clearable ? 20 + countWidth + (showCount ? 12 : 0) : 0
-    }px)`
+    width: `calc(100% - ${clearable ? 20 + countWidth + (showCount ? 12 : 0) : 0}px)`,
   }
 })
 
 const getType = computed(() =>
-  props.type === 'password' ? _type.value : props.type
+  props.type === 'password' ? _type.value : props.type,
 )
 
 const getInputClassNames = computed(() => {
@@ -93,32 +91,32 @@ const getInputClassNames = computed(() => {
     readonly,
     disabled,
     align,
-    autoWidth
+    autoWidth,
   })
 })
 
-const prefixesChange = (item: { value: string }) => {
+function prefixesChange(item: { value: string }) {
   prefixValue.value = item.value
 }
 
-const suffixChange = (item: { value: string }) => {
+function suffixChange(item: { value: string }) {
   suffixValue.value = item.value
 }
 
 const getPrefixesLabel = computed(() => {
   return (
-    props.prefixesOptions.find((e) => e.value === prefixValue.value)?.label ||
-    ''
+    props.prefixesOptions.find(e => e.value === prefixValue.value)?.label
+    || ''
   )
 })
 
 const getSuffixLabel = computed(() => {
   return (
-    props.suffixOptions.find((e) => e.value === suffixValue.value)?.label || ''
+    props.suffixOptions.find(e => e.value === suffixValue.value)?.label || ''
   )
 })
 
-const copy = () => {
+function copy() {
   const textarea = document.createElement('textarea')
   textarea.style.cssText = 'position:fixed;top:-200vh;'
   textarea.value = modelValue.value as string
@@ -132,7 +130,8 @@ const copy = () => {
     timer = setTimeout(() => {
       isCopy.value = false
     }, 2000)
-  } else {
+  }
+  else {
     LewMessage.error(locale.t('input.copyFailed'))
   }
 
@@ -155,7 +154,7 @@ const computedPrefixesOptions = computed(() => {
       ...e,
       onClick: () => {
         prefixValue.value = e.value
-      }
+      },
     }
   })
 })
@@ -166,13 +165,14 @@ const computedSuffixOptions = computed(() => {
       ...e,
       onClick: () => {
         suffixValue.value = e.value
-      }
+      },
     }
   })
 })
 
 onUnmounted(() => {
-  if (timer) clearTimeout(timer)
+  if (timer)
+    clearTimeout(timer)
 })
 
 defineExpose({ toFocus, toBlur })
@@ -188,7 +188,7 @@ defineExpose({ toFocus, toBlur })
       v-if="prefixes"
       v-tooltip="{
         content: prefixesTooltip,
-        trigger: 'mouseenter'
+        trigger: 'mouseenter',
       }"
       class="lew-input-prefixes"
     >
@@ -199,7 +199,7 @@ defineExpose({ toFocus, toBlur })
         <Icon :size="getIconSize" :type="prefixValue as string" />
       </div>
       <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
-        <lew-dropdown
+        <LewDropdown
           placement="bottom"
           trigger="click"
           :options="computedPrefixesOptions"
@@ -207,21 +207,21 @@ defineExpose({ toFocus, toBlur })
           @show="state.prefixesDropdown = 'show'"
           @hide="state.prefixesDropdown = 'hide'"
         >
-          <lew-flex
+          <LewFlex
             gap="5px"
             x="start"
             class="lew-input-prefixes-dropdown"
             :class="{
               'lew-input-prefixes-dropdown-open':
-                state.prefixesDropdown === 'show'
+                state.prefixesDropdown === 'show',
             }"
           >
             <div>
               {{ getPrefixesLabel }}
             </div>
             <Icon :size="getIconSize" type="chevron-down" class="icon-select" />
-          </lew-flex>
-        </lew-dropdown>
+          </LewFlex>
+        </LewDropdown>
       </div>
     </div>
     <div
@@ -238,7 +238,7 @@ defineExpose({ toFocus, toBlur })
     <div
       class="lew-input-box"
       :style="{
-        minWidth: any2px(minWidth)
+        minWidth: any2px(minWidth),
       }"
     >
       <input
@@ -256,26 +256,25 @@ defineExpose({ toFocus, toBlur })
         @change="emit('change', modelValue)"
         @blur="blur"
         @focus="focus"
-      />
+      >
       <label v-if="autoWidth" class="lew-input-auto-width">
         {{ modelValue }}
       </label>
-      <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear">
-      </label>
+      <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear" />
       <div
         v-if="showPassword || clearable || showCount"
         class="lew-input-controls"
       >
         <div
-          ref="lewInputCountRef"
           v-if="modelValue && showCount"
+          ref="lewInputCountRef"
           class="lew-input-count"
           :class="{
-            'lew-input-count-clearable': clearable && modelValue
+            'lew-input-count-clearable': clearable && modelValue,
           }"
         >
           {{ typeof modelValue === 'string' ? modelValue.length : 0
-          }}{{ maxLength ? ' / ' + maxLength : '' }}
+          }}{{ maxLength ? ` / ${maxLength}` : '' }}
         </div>
         <div
           v-if="showPassword && type === 'password'"
@@ -295,7 +294,7 @@ defineExpose({ toFocus, toBlur })
             v-if="clearable && modelValue && !readonly"
             class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-close-focus': isFocus
+              'lew-form-icon-close-focus': isFocus,
             }"
             :size="getIconSize"
             type="close"
@@ -309,16 +308,18 @@ defineExpose({ toFocus, toBlur })
       v-if="suffix"
       v-tooltip="{
         content: suffixTooltip,
-        trigger: suffixTooltip ? 'mouseenter' : ''
+        trigger: suffixTooltip ? 'mouseenter' : '',
       }"
       class="lew-input-suffix"
     >
-      <div v-if="suffix === 'text'">{{ suffixValue }}</div>
+      <div v-if="suffix === 'text'">
+        {{ suffixValue }}
+      </div>
       <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
         <Icon :size="getIconSize" :type="suffixValue" />
       </div>
       <div v-if="suffix === 'select'" class="lew-input-suffix-select">
-        <lew-dropdown
+        <LewDropdown
           placement="bottom"
           trigger="click"
           :options="computedSuffixOptions"
@@ -326,18 +327,18 @@ defineExpose({ toFocus, toBlur })
           @show="state.suffixDropdown = 'show'"
           @hide="state.suffixDropdown = 'hide'"
         >
-          <lew-flex
+          <LewFlex
             gap="5px"
             x="start"
             class="lew-input-suffix-dropdown"
             :class="{
-              'lew-input-suffix-dropdown-open': state.suffixDropdown === 'show'
+              'lew-input-suffix-dropdown-open': state.suffixDropdown === 'show',
             }"
           >
             <div>{{ getSuffixLabel }}</div>
             <Icon :size="getIconSize" type="chevron-down" class="icon-select" />
-          </lew-flex>
-        </lew-dropdown>
+          </LewFlex>
+        </LewDropdown>
       </div>
     </div>
   </div>

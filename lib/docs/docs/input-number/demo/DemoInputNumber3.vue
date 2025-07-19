@@ -4,6 +4,6 @@ const n = ref(0)
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-input-number v-model="n" max="1000" min="-1000"></lew-input-number>
+    <lew-input-number v-model="n" max="1000" min="-1000" />
   </lew-flex>
 </template>

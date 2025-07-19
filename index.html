@@ -1,31 +1,36 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lew Design - A Vue3 Component Library" />
+    <meta
+      name="keywords"
+      content="Lew Design, Vue 3, Component Library, UI Framework, Frontend Development, Responsive Design, User Interface, Open Source Project"
+    />
+    <meta name="author" content="Lew Design Team" />
+    <title>Lew Design</title>
+    <script src="/confetti.browser.min.js" async></script>
+  </head>
 
-<head>
-	<meta charset="UTF-8" />
-	<link rel="icon" href="/favicon.ico" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="description" content="Lew Design - A Vue3 Component Library" />
-	<meta name="keywords"
-		content="Lew Design, Vue 3, Component Library, UI Framework, Frontend Development, Responsive Design, User Interface, Open Source Project" />
-	<meta name="author" content="Lew Design Team" />
-	<title>Lew Design</title>
-	<script src="/confetti.browser.min.js" async></script>
-</head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/lib/docs/main.ts"></script>
 
-<body>
-	<div id="app"></div>
-	<script type="module" src="/lib/docs/main.ts"></script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XD8WT3Y51G"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
 
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XD8WT3Y51G"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-
-		gtag('config', 'G-XD8WT3Y51G');
-	</script>
-</body>
-
+      gtag('config', 'G-XD8WT3Y51G')
+    </script>
+  </body>
 </html>

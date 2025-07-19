@@ -3,7 +3,7 @@ const techOptions = ref([
   { label: 'Artificial Intelligence', value: 'ai' },
   { label: 'Blockchain', value: 'blockchain' },
   { label: 'Virtual Reality', value: 'vr' },
-  { label: 'Quantum Computing', value: 'quantum' }
+  { label: 'Quantum Computing', value: 'quantum' },
 ])
 
 const selectedTech = ref([])

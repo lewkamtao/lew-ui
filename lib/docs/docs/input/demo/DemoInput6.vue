@@ -6,7 +6,7 @@ const username = ref('')
   <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
     <lew-input
       v-model="username"
-      autoWidth
+      auto-width
       min-width="100"
       placeholder="请输入"
     />

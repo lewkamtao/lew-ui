@@ -5,7 +5,7 @@ const measureCache = new Map<string, number>()
 let sharedMeasureSpan: HTMLSpanElement | null = null
 
 // 测量文本宽度的工具函数
-const measureText = (text: string, style: CSSStyleDeclaration): number => {
+function measureText(text: string, style: CSSStyleDeclaration): number {
   // 使用缓存
   const cacheKey = `${text}-${style.fontSize || ''}-${style.fontFamily || ''}`
   if (measureCache.has(cacheKey)) {
@@ -45,19 +45,22 @@ const ELLIPSIS = '.....' // 省略号
 const MIN_VISIBLE_CHARS = 1 // 最小可见字符数
 const WIDTH_SAFETY_MARGIN = 12 // 宽度安全边距
 
-export const getDisplayText = ({
+export function getDisplayText({
   text,
   reserveEnd = 0,
-  target
+  target,
 }: {
   text: string
   reserveEnd: number
   target: HTMLElement
-}) => {
+}) {
   // 快速返回条件
-  if (!text || !target) return { text, isEllipsis: false }
-  if (reserveEnd >= text.length) return { text, isEllipsis: false }
-  if (reserveEnd < 0) reserveEnd = 0
+  if (!text || !target)
+    return { text, isEllipsis: false }
+  if (reserveEnd >= text.length)
+    return { text, isEllipsis: false }
+  if (reserveEnd < 0)
+    reserveEnd = 0
 
   // 获取目标元素的样式
   const style = window.getComputedStyle(target)
@@ -92,14 +95,15 @@ export const getDisplayText = ({
       if (tempWidth <= toleratedWidth + WIDTH_SAFETY_MARGIN) {
         finalEndText = tempEndText
         left = mid + 1
-      } else {
+      }
+      else {
         right = mid - 1
       }
     }
 
     return {
       text: finalEndText ? ELLIPSIS + finalEndText : ELLIPSIS,
-      isEllipsis: true
+      isEllipsis: true,
     }
   }
 
@@ -116,7 +120,8 @@ export const getDisplayText = ({
     if (tempWidth + WIDTH_SAFETY_MARGIN <= toleratedWidth) {
       startText = tempText
       left = mid + 1
-    } else {
+    }
+    else {
       right = mid - 1
     }
   }
@@ -128,12 +133,12 @@ export const getDisplayText = ({
 
   return {
     text: startText + ELLIPSIS + endText,
-    isEllipsis: true
+    isEllipsis: true,
   }
 }
 
 // 清理缓存的工具函数
-export const clearMeasureCache = () => {
+export function clearMeasureCache() {
   measureCache.clear()
   if (sharedMeasureSpan) {
     document.body.removeChild(sharedMeasureSpan)

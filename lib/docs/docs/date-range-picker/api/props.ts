@@ -5,5 +5,5 @@ export default {
   title: 'Props',
   columnsKey: 'props',
   orderNum: 2,
-  data: convertProps(dateRangePickerProps)
+  data: convertProps(dateRangePickerProps),
 }

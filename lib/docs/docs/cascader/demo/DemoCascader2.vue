@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { cityTree } from '@/lib/data'
-const change = (e: any) => {
-  console.log(e)
+
+function change(_e: any) {
+  // console.log(_e)
 }
 const v = ref()
 </script>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
-import { Sun, Moon, Github, Languages, Settings } from 'lucide-vue-next'
 import { setLocale } from 'lew-ui'
+import { Github, Languages, Moon, Settings, Sun } from 'lucide-vue-next'
+import { useRoute, useRouter } from 'vue-router'
 import docsLocale, { getInitialLocale } from '@/locals'
 import packageJson from '../../../package.json'
 
@@ -11,34 +11,36 @@ const version = ref(packageJson.version)
 const isDark = useDark({
   selector: 'html',
   valueDark: 'lew-dark',
-  valueLight: 'lew-light'
+  valueLight: 'lew-light',
 })
 
 const router = useRouter()
 const route = useRoute()
 
-const goHome = () => {
+function goHome() {
   if (route.name === 'R-LewHome') {
     LewMessage.warning('你已经在首页了！')
-  } else {
+  }
+  else {
     router.push('/')
   }
 }
 
-const goToPage = (path: string, isNewTab = false) => {
+function goToPage(path: string, isNewTab = false) {
   if (isNewTab) {
     const URL = router.resolve(path).href
     window.open(URL, '_blank')
-  } else {
+  }
+  else {
     router.push(path)
   }
 }
 
-const goToGithub = () => {
+function goToGithub() {
   window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
 }
 
-const getLocaleIcon = (locale: string) => {
+function getLocaleIcon(locale: string) {
   return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href
 }
 const localeOptions = ref([
@@ -51,12 +53,12 @@ const localeOptions = ref([
         src: getLocaleIcon('zh'),
         alt: '简体中文',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
+    },
   },
   {
     label: 'English',
@@ -67,12 +69,12 @@ const localeOptions = ref([
         src: getLocaleIcon('us'),
         alt: 'English',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
+    },
   },
 
   {
@@ -84,12 +86,12 @@ const localeOptions = ref([
         src: getLocaleIcon('ja'),
         alt: '日本語',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
+    },
   },
   {
     label: '한국어',
@@ -100,12 +102,12 @@ const localeOptions = ref([
         src: getLocaleIcon('ko'),
         alt: '한국어',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
+    },
   },
   {
     label: 'Español',
@@ -116,12 +118,12 @@ const localeOptions = ref([
         src: getLocaleIcon('es'),
         alt: 'Español',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
+    },
   },
   {
     label: 'Français',
@@ -132,12 +134,12 @@ const localeOptions = ref([
         src: getLocaleIcon('fr'),
         alt: 'Français',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
+    },
   },
   {
     label: 'Deutsch',
@@ -148,12 +150,12 @@ const localeOptions = ref([
         src: getLocaleIcon('de'),
         alt: 'Deutsch',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
+    },
   },
   {
     label: 'Português',
@@ -164,12 +166,12 @@ const localeOptions = ref([
         src: getLocaleIcon('br'),
         alt: 'Português',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
+    },
   },
   {
     label: 'Italiano',
@@ -180,33 +182,35 @@ const localeOptions = ref([
         src: getLocaleIcon('it'),
         alt: 'Italiano',
         width: 16,
-        height: 16
+        height: 16,
       })
     },
     onClick: (e: any) => {
       changeLanguage(e)
-    }
-  }
+    },
+  },
 ])
 
-const changeLanguage = (e: any) => {
+function changeLanguage(e: any) {
   const { value } = e
   setLocale(value)
   docsLocale.use(value)
-  localeOptions.value.map((item: any) => {
+  localeOptions.value.forEach((item: any) => {
     if (item.value === e.value) {
       item.checked = true
-    } else {
+    }
+    else {
       item.checked = false
     }
   })
 }
 
-const goToSettings = () => {
-  router.push('/check-lang')
+function goToSettings() {
+  const link = router.resolve('/check-lang').href
+  window.open(link, '_blank')
 }
 
-const isDev = window.location.hostname === 'localhost'
+const isDev = ['localhost', '127.0.0.1'].includes(window.location.hostname)
 
 // 初始化语言（异步）
 getInitialLocale().then((locale) => {
@@ -216,14 +220,14 @@ getInitialLocale().then((locale) => {
 
 <template>
   <lew-flex mode="between" class="Header">
-    <lew-flex class="logo" id="logo" x="start" @click="goHome">
+    <lew-flex id="logo" class="logo" x="start" @click="goHome">
       <img
         src="../assets/images/logo.png"
         alt="logo"
         srcset=""
         width="30"
         height="30"
-      />
+      >
       <span style="margin-left: 10px"> Lew UI</span>
       <lew-tag type="light" size="small" style="margin-left: 10px">
         Beta {{ version }}
@@ -245,7 +249,9 @@ getInitialLocale().then((locale) => {
         </lew-flex>
       </div>
       <div class="menu-item" @click="goToPage('/desc-engine', true)">
-        <lew-flex gap="5"> {{ docsLocale.t('home.descEngine') }} </lew-flex>
+        <lew-flex gap="5">
+          {{ docsLocale.t('home.descEngine') }}
+        </lew-flex>
       </div>
     </lew-flex>
     <lew-flex gap="15" x="end" class="menu">
@@ -363,6 +369,7 @@ getInitialLocale().then((locale) => {
   }
 }
 </style>
+
 <style lang="scss">
 .icon-mode-sunny {
   display: none !important;

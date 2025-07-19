@@ -1,5 +1,5 @@
-import type { PropType } from 'vue'
 import type { LewSize } from 'lew-ui/types'
+import type { PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export const switchModel = {
@@ -13,8 +13,8 @@ export const switchModel = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const switchProps = {
@@ -25,12 +25,12 @@ export const switchProps = {
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewSwitch] size 必须是 ${validSizes.join('、')} 中的一个`
+          `[LewSwitch] size 必须是 ${validSizes.join('、')} 中的一个`,
         )
         return false
       }
       return true
-    }
+    },
   },
   round: {
     type: [Boolean, Number],
@@ -42,26 +42,26 @@ export const switchProps = {
         return false
       }
       return true
-    }
+    },
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否为只读状态'
+    description: '是否为只读状态',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用开关'
+    description: '是否禁用开关',
   },
   request: {
     type: Function,
     default: null,
-    description: '切换状态时的异步请求函数'
+    description: '切换状态时的异步请求函数',
   },
   loading: {
     type: Boolean,
     default: false,
-    description: '是否显示加载状态'
-  }
+    description: '是否显示加载状态',
+  },
 }

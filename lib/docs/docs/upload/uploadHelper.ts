@@ -1,12 +1,12 @@
-import axios from '@/axios/http'
 import type { UploadFileItem } from 'lew-ui'
+import axios from '@/axios/http'
 
 export default ({
   fileItem,
-  setFileItem
+  setFileItem,
 }: {
   fileItem: UploadFileItem
-  setFileItem: Function
+  setFileItem: (item: UploadFileItem) => void
 }) => {
   const { key, file } = fileItem
   const formData = new FormData()
@@ -19,7 +19,7 @@ export default ({
       baseURL: '/api_sso',
       onUploadProgress: (e: any) => {
         setFileItem({ key, percent: e.progress * 100 })
-      }
+      },
     })
     .then((res: any) => {
       if (res.success) {
@@ -28,9 +28,10 @@ export default ({
           key,
           status: 'success',
           url: `https://app.tngeek.com/api_sso/open/file/${fileName}`,
-          percent: 100
+          percent: 100,
         })
-      } else {
+      }
+      else {
         setFileItem({ key, status: 'fail' })
       }
     })

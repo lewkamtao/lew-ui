@@ -10,14 +10,14 @@ const options = [
         children: [
           {
             value: 3,
-            label: 'Beijing'
+            label: 'Beijing',
           },
           {
             value: 4,
-            label: 'Shanghai'
+            label: 'Shanghai',
           },
-          { value: 5, label: 'Hangzhou' }
-        ]
+          { value: 5, label: 'Hangzhou' },
+        ],
       },
       {
         value: 6,
@@ -25,17 +25,17 @@ const options = [
         children: [
           {
             value: 7,
-            label: 'Tokyo'
+            label: 'Tokyo',
           },
           {
             value: 8,
-            label: 'Osaka'
+            label: 'Osaka',
           },
           {
             value: 9,
-            label: 'Kyoto'
-          }
-        ]
+            label: 'Kyoto',
+          },
+        ],
       },
       {
         value: 10,
@@ -44,12 +44,12 @@ const options = [
           { value: 11, label: 'Seoul' },
           {
             value: 12,
-            label: 'Busan'
+            label: 'Busan',
           },
-          { value: 13, label: 'Daegu' }
-        ]
-      }
-    ]
+          { value: 13, label: 'Daegu' },
+        ],
+      },
+    ],
   },
   {
     value: 14,
@@ -62,17 +62,17 @@ const options = [
         children: [
           {
             value: 16,
-            label: 'Paris'
+            label: 'Paris',
           },
           {
             value: 17,
-            label: 'Marseille'
+            label: 'Marseille',
           },
           {
             value: 18,
-            label: 'Lyon'
-          }
-        ]
+            label: 'Lyon',
+          },
+        ],
       },
       {
         value: 19,
@@ -81,15 +81,15 @@ const options = [
           { value: 20, label: 'London' },
           {
             value: 21,
-            label: 'Birmingham'
+            label: 'Birmingham',
           },
           {
             value: 22,
-            label: 'Manchester'
-          }
-        ]
-      }
-    ]
+            label: 'Manchester',
+          },
+        ],
+      },
+    ],
   },
   {
     value: 23,
@@ -101,17 +101,17 @@ const options = [
         children: [
           {
             value: 25,
-            label: 'New York'
+            label: 'New York',
           },
           {
             value: 26,
-            label: 'Los Angeles'
+            label: 'Los Angeles',
           },
           {
             value: 27,
-            label: 'Washington, D.C.'
-          }
-        ]
+            label: 'Washington, D.C.',
+          },
+        ],
       },
       {
         value: 28,
@@ -119,20 +119,20 @@ const options = [
         children: [
           {
             value: 29,
-            label: 'Toronto'
+            label: 'Toronto',
           },
           {
             value: 30,
-            label: 'Montreal'
+            label: 'Montreal',
           },
           {
             value: 31,
-            label: 'Ottawa'
-          }
-        ]
-      }
-    ]
-  }
+            label: 'Ottawa',
+          },
+        ],
+      },
+    ],
+  },
 ]
 const v = ref()
 </script>

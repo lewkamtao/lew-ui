@@ -12,7 +12,7 @@ const options: TabOption[] = [
   { label: 'Facebook', value: 'facebook' },
   { label: 'Tesla', value: 'tesla' },
   { label: 'Intel', value: 'intel' },
-  { label: 'Nvidia', value: 'nvidia' }
+  { label: 'Nvidia', value: 'nvidia' },
 ]
 
 const modelValue = ref('microsoft')

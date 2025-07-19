@@ -1,29 +1,36 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewTree, LewTooltip } from 'lew-ui'
-import { object2class } from 'lew-ui/utils'
-import { treeSelectProps } from './props'
-import { cloneDeep, isString } from 'lodash-es'
+import { LewPopover, LewTooltip, LewTree, locale } from 'lew-ui'
+import { any2px, findNodeByKey, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { findNodeByKey } from 'lew-ui/utils'
+import { cloneDeep, isFunction } from 'lodash-es'
+import { treeSelectProps } from './props'
+
+const props = defineProps(treeSelectProps)
+const emit = defineEmits(['change', 'blur', 'clear'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const props = defineProps(treeSelectProps)
-const emit = defineEmits(['change', 'blur', 'clear'])
 const treeSelectValue: Ref<any> = defineModel()
-
-// 校验 Model
-if (!isString(treeSelectValue.value)) {
-  throw new Error('tree-select modelValue must be a string')
-}
 
 const lewSelectRef = ref()
 const inputRef = ref()
 const lewPopoverRef = ref()
 const lewTreeRef = ref()
+
+const formMethods: any = inject('formMethods', {})
+
+const _initOptionsMethod = computed(() => {
+  if (isFunction(props.initOptionsMethod)) {
+    return props.initOptionsMethod
+  }
+  else if (props.initOptionsMethodId) {
+    return formMethods[props.initOptionsMethodId]
+  }
+  return false
+})
 
 const state = reactive({
   selectWidth: 0, // 选择框宽度
@@ -33,18 +40,18 @@ const state = reactive({
   valueIsChange: false, // 记录
   keyword: props.defaultValue || (treeSelectValue.value as any), // 搜索关键字
   keywordBackup: props.defaultValue as any, // 搜索关键字备份
-  resultText: ''
+  resultText: '',
 })
 
-const getSelectWidth = () => {
+function getSelectWidth() {
   state.selectWidth = lewSelectRef.value?.clientWidth - 12
 }
 
-const show = () => {
+function show() {
   lewPopoverRef.value.show()
 }
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value.hide()
 }
 
@@ -52,14 +59,14 @@ const searchDebounce = useDebounceFn(async (e: any) => {
   search(e)
 }, props.searchDelay)
 
-const search = async (e: any) => {
+async function search(e: any) {
   const keyword = e.target.value
   if (props.searchable) {
     await lewTreeRef.value.search(keyword)
   }
 }
 
-const change = (e: any) => {
+function change(e: any) {
   const { value } = e
   treeSelectValue.value = value
   state.valueIsChange = true
@@ -70,7 +77,7 @@ const change = (e: any) => {
   }, 100)
 }
 
-const clearHandle = () => {
+function clearHandle() {
   treeSelectValue.value = undefined
   state.keyword = ''
   state.keywordBackup = ''
@@ -94,7 +101,8 @@ const getSelectClassName = computed(() => {
     disabled,
     readonly,
     searchable,
-    focus
+    focus,
+    'init-loading': state.initLoading,
   })
 })
 
@@ -107,21 +115,22 @@ const getIconSize = computed(() => {
   const size: any = {
     small: 14,
     medium: 15,
-    large: 16
+    large: 16,
   }
   return size[props.size]
 })
 
 // 重新找回关键字
-const getKeywordLabel = (value: any) => {
+function getKeywordLabel(value: any) {
   if (lewTreeRef.value && value) {
-    let tree = lewTreeRef.value.getTree()
+    const tree = lewTreeRef.value.getTree()
     const treeItem: any = findNodeByKey(value, tree)
     if (treeItem !== undefined) {
       const { labelPaths, label } = treeItem
       if (props.showAllLevels && labelPaths && labelPaths.length > 0) {
         state.keyword = labelPaths.join(' / ')
-      } else {
+      }
+      else {
         state.keyword = label[0]
       }
     }
@@ -130,7 +139,7 @@ const getKeywordLabel = (value: any) => {
 
 getKeywordLabel(treeSelectValue.value)
 
-const showHandle = () => {
+function showHandle() {
   state.visible = true
   state.keywordBackup = cloneDeep(state.keyword)
   state.valueIsChange = false // 重置
@@ -143,7 +152,7 @@ const showHandle = () => {
   }
 }
 
-const hideHandle = () => {
+function hideHandle() {
   state.visible = false
   if (!state.valueIsChange && treeSelectValue.value) {
     state.keywordBackup
@@ -160,40 +169,47 @@ const hideHandle = () => {
 }
 
 const getPlaceholder = computed(() => {
-  return state.keywordBackup || props.placeholder
+  return (
+    state.keywordBackup
+    || props.placeholder
+    || locale.t('treeSelect.placeholder')
+  )
 })
 
 defineExpose({ show, hide })
 </script>
 
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
-    popoverBodyClassName="lew-select-popover-body"
+    popover-body-class-name="lew-select-popover-body"
     class="lew-select-view"
+    :style="{ width: any2px(width) }"
     :trigger="trigger"
-    :disabled="disabled || readonly"
+    :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
-    style="width: 100%"
     :loading="state.searchLoading"
     @show="showHandle"
     @hide="hideHandle"
   >
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
+        <div v-if="state.initLoading" class="lew-icon-loading-box">
+          <Icon
+            :size="getIconSize"
+            :loading="state.initLoading"
+            type="loading"
+          />
+        </div>
+
         <Icon
-          v-if="!readonly && !state.initLoading"
+          v-else
           :size="getIconSize"
           type="chevron-down"
-          class="icon-select"
-          :class="{ 'icon-select-hide': clearable && state.keyword }"
-        />
-        <Icon
-          v-else-if="state.initLoading"
-          loading
-          type="loader"
-          :size="getIconSize"
-          class="icon-loader"
+          class="lew-icon-select"
+          :class="{
+            'lew-icon-select-hide': clearable && state.keyword,
+          }"
         />
         <transition name="lew-form-icon-ani">
           <Icon
@@ -202,7 +218,7 @@ defineExpose({ show, hide })
             type="close"
             class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-close-focus': state.visible
+              'lew-form-icon-close-focus': state.visible,
             }"
             @click.stop="clearHandle"
           />
@@ -210,12 +226,12 @@ defineExpose({ show, hide })
         <input
           ref="inputRef"
           v-model="state.keyword"
-          class="value"
+          class="lew-value"
           :style="getValueStyle"
           :readonly="!searchable"
           :placeholder="getPlaceholder"
           @input="searchDebounce"
-        />
+        >
       </div>
     </template>
     <template #popover-body>
@@ -224,14 +240,14 @@ defineExpose({ show, hide })
         :class="getBodyClassName"
         :style="`width:${state.selectWidth}px`"
       >
-        <slot name="header"></slot>
+        <slot name="header" />
 
         <div class="lew-select-options-box">
           <div v-if="searchable && state.resultText" class="result-count">
             {{ state.resultText }}
           </div>
           <div class="tree-select-wrapper lew-scrollbar">
-            <lew-tree
+            <LewTree
               ref="lewTreeRef"
               v-model="treeSelectValue"
               v-bind="{
@@ -243,37 +259,35 @@ defineExpose({ show, hide })
                 searchable,
                 dataSource,
                 loadMethod,
-                initTree,
-                expandAll
+                initOptionsMethod: _initOptionsMethod,
+                expandAll,
               }"
               :is-select="true"
               @load-start="state.searchLoading = true"
               @load-end="
-                (state.searchLoading = false),
-                  (state.initLoading = false),
-                  (state.resultText = $event)
+                ((state.searchLoading = false),
+                 (state.initLoading = false),
+                 (state.resultText = $event))
               "
               @change="change"
             >
               <template v-if="$slots.empty" #empty>
-                <slot name="empty"></slot>
+                <slot name="empty" />
               </template>
-              <template v-if="$slots.item" #item="{ props }">
-                <slot name="item" :props="props"></slot>
+              <template v-if="$slots.item" #item="{ props: itemProps }">
+                <slot name="item" :props="itemProps" />
               </template>
-            </lew-tree>
+            </LewTree>
           </div>
         </div>
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>
 .lew-select-view {
-  width: 100%;
-
   > div {
     width: 100%;
   }
@@ -296,7 +310,18 @@ defineExpose({ show, hide })
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     box-shadow: var(--lew-form-box-shadow);
 
-    .icon-select {
+    .lew-icon-loading-box {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      right: 9px;
+      padding: 2px;
+      box-sizing: border-box;
+      transform: translateY(-50%);
+    }
+
+    .lew-icon-select {
       position: absolute;
       top: 50%;
       right: 9px;
@@ -305,31 +330,16 @@ defineExpose({ show, hide })
       padding: 2px;
     }
 
-    .icon-loader {
-      position: absolute;
-      top: 50%;
-      right: 9px;
-      animation: icon-spin 1s infinite linear;
-    }
-    @keyframes icon-spin {
-      0% {
-        transform: translateY(-50%) rotate(0deg);
-      }
-      100% {
-        transform: translateY(-50%) rotate(360deg);
-      }
-    }
-
-    .icon-select {
+    .lew-icon-select {
       opacity: var(--lew-form-icon-opacity);
     }
 
-    .icon-select-hide {
+    .lew-icon-select-hide {
       opacity: 0;
       transform: translate(100%, -50%);
     }
 
-    .value {
+    .lew-value {
       width: calc(100% - 24px);
       display: inline-flex;
       align-items: center;
@@ -344,7 +354,7 @@ defineExpose({ show, hide })
       color: var(--lew-text-color-1);
     }
 
-    .value::placeholder {
+    .lew-value::placeholder {
       color: rgb(165, 165, 165);
     }
   }
@@ -377,12 +387,12 @@ defineExpose({ show, hide })
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
       solid;
 
-    .icon-select {
+    .lew-icon-select {
       transform: translateY(-50%) rotate(180deg);
       color: var(--lew-text-color-1);
     }
 
-    .icon-select-hide {
+    .lew-icon-select-hide {
       opacity: 0;
       transform: translate(100%, -50%) rotate(180deg);
     }
@@ -406,7 +416,7 @@ defineExpose({ show, hide })
   }
   .lew-select-searchable {
     .lew-select {
-      .value {
+      .lew-value {
         cursor: text;
       }
     }
@@ -415,10 +425,18 @@ defineExpose({ show, hide })
     background-color: var(--lew-form-bgcolor);
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   }
+  .lew-select-init-loading {
+    pointer-events: none;
+    cursor: wait;
+
+    .lew-value {
+      cursor: wait;
+    }
+  }
   .lew-select-size-small {
     height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
-    .value {
+    .lew-value {
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
     }
@@ -427,7 +445,7 @@ defineExpose({ show, hide })
   .lew-select-size-medium {
     height: var(--lew-form-item-height-medium);
     line-height: var(--lew-form-input-line-height-medium);
-    .value {
+    .lew-value {
       padding: var(--lew-form-input-padding-medium);
 
       font-size: var(--lew-form-font-size-medium);
@@ -437,7 +455,7 @@ defineExpose({ show, hide })
   .lew-select-size-large {
     height: var(--lew-form-item-height-large);
     line-height: var(--lew-form-input-line-height-large);
-    .value {
+    .lew-value {
       padding: var(--lew-form-input-padding-large);
 
       font-size: var(--lew-form-font-size-large);
@@ -445,6 +463,7 @@ defineExpose({ show, hide })
   }
 }
 </style>
+
 <style lang="scss">
 .lew-select-popover-body {
   padding: 6px;

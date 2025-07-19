@@ -4,7 +4,7 @@ const iceCreamFlavors = ref([
   { label: 'Chocolate', value: 'chocolate' },
   { label: 'Strawberry', value: 'strawberry' },
   { label: 'Matcha', value: 'matcha' },
-  { label: 'Mango', value: 'mango' }
+  { label: 'Mango', value: 'mango' },
 ])
 
 const selectedFlavor = ref('')

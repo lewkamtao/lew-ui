@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-const openWithDelay = () => {
+function openWithDelay() {
   LewNotification.info({
     title: 'Notice',
     content: 'This notification will close in 5 seconds',
     duration: 5000,
-    showProgress: true
+    showProgress: true,
   })
 }
-const openWithoutDelay = () => {
+function openWithoutDelay() {
   LewNotification.warning({
     title: 'Notice',
     content: 'This notification will not close automatically',
-    duration: 0
+    duration: 0,
   })
 }
 </script>

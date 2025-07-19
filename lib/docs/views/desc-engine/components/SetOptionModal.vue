@@ -1,32 +1,32 @@
 <script setup lang="ts">
-const visible = ref(false);
+const visible = ref(false)
 
-const open = () => {
-  visible.value = true;
-};
+function open() {
+  visible.value = true
+}
 
-defineExpose({ open });
+defineExpose({ open })
 </script>
 
 <template>
   <div>
-    <lew-button type="light" color="gray" size="small" @click="open"
-      >设置</lew-button
-    >
+    <lew-button type="light" color="gray" size="small" @click="open">
+      设置
+    </lew-button>
     <lew-modal
       v-model:visible="visible"
-      closeOnClickOverlay
-      closeByEsc
+      close-on-click-overlay
+      close-by-esc
       width="550px"
       title="设置选项"
-      :closeButtonProps="{
+      :close-button-props="{
         request: () => {
-          visible = false;
+          visible = false
         },
       }"
-      :okButtonProps="{
+      :ok-button-props="{
         request: () => {
-          visible = false;
+          visible = false
         },
       }"
     >

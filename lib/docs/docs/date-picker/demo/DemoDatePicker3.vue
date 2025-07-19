@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const value = ref('')
 
-const change = (e: any) => {
+function change(e: any) {
   LewMessage.info(e.date)
 }
 </script>

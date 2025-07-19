@@ -1,7 +1,7 @@
+import type { ContextMenus, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { ContextMenus } from 'lew-ui'
-import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
+
 export type InputType = 'text' | 'password'
 export type InputAlign = 'left' | 'center' | 'right'
 export type InputPrefixesType = 'icon' | 'select' | 'text'
@@ -11,18 +11,18 @@ export const inputModel = {
   modelValue: {
     type: [String, Number],
     default: undefined,
-    description: '输入框的值，支持 v-model 双向绑定'
+    description: '输入框的值，支持 v-model 双向绑定',
   },
   prefixValue: {
     type: [String, Number],
     default: undefined,
-    description: '输入框前缀的值'
+    description: '输入框前缀的值',
   },
   suffixValue: {
     type: [String, Number],
     default: undefined,
-    description: '输入框后缀的值'
-  }
+    description: '输入框后缀的值',
+  },
 }
 
 export const inputProps = {
@@ -33,12 +33,12 @@ export const inputProps = {
     validator: (value: InputType) => {
       if (!['text', 'password'].includes(value)) {
         console.warn(
-          `[LewInput] type 属性 ${value} 无效，必须是 "text" 或 "password"`
+          `[LewInput] type 属性 ${value} 无效，必须是 "text" 或 "password"`,
         )
         return false
       }
       return true
-    }
+    },
   },
   size: {
     type: String as PropType<LewSize>,
@@ -50,37 +50,37 @@ export const inputProps = {
         return false
       }
       return true
-    }
+    },
   },
   width: {
     type: [String, Number],
     default: '300px',
-    description: '输入框宽度，支持数字（单位：像素）或带单位的字符串'
+    description: '输入框宽度，支持数字（单位：像素）或带单位的字符串',
   },
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '输入框占位文本'
+    description: '输入框占位文本',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用输入框'
+    description: '是否禁用输入框',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否将输入框设为只读'
+    description: '是否将输入框设为只读',
   },
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否显示清空按钮'
+    description: '是否显示清空按钮',
   },
   showPassword: {
     type: Boolean,
     default: false,
-    description: '是否显示切换密码可见性的按钮'
+    description: '是否显示切换密码可见性的按钮',
   },
   maxLength: {
     type: [Number, String],
@@ -88,17 +88,17 @@ export const inputProps = {
     description: '输入框最大字符数',
     validator: (value: number | string) => {
       const num = Number(value)
-      if (isNaN(num) || num <= 0) {
+      if (Number.isNaN(num) || num <= 0) {
         console.warn('[LewInput] maxLength 属性必须是大于 0 的数字')
         return false
       }
       return true
-    }
+    },
   },
   showCount: {
     type: Boolean,
     default: false,
-    description: '是否显示字符计数（仅在 type 为 text 时有效）'
+    description: '是否显示字符计数（仅在 type 为 text 时有效）',
   },
   align: {
     type: String,
@@ -110,7 +110,7 @@ export const inputProps = {
         return false
       }
       return true
-    }
+    },
   },
   minWidth: {
     type: [Number, String],
@@ -122,23 +122,23 @@ export const inputProps = {
         return false
       }
       return true
-    }
+    },
   },
   autoWidth: {
     type: Boolean,
     default: false,
-    description: '是否根据内容自动调整宽度'
+    description: '是否根据内容自动调整宽度',
   },
   selectByFocus: {
     type: Boolean,
     default: false,
-    description: '聚焦时是否自动选中输入框内容'
+    description: '聚焦时是否自动选中输入框内容',
   },
   copyable: {
     type: Boolean,
     default: false,
     description:
-      '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）'
+      '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）',
   },
   prefixes: {
     type: String,
@@ -147,22 +147,22 @@ export const inputProps = {
     validator: (value: InputPrefixesType) => {
       if (value && !['icon', 'select', 'text'].includes(value)) {
         console.warn(
-          '[LewInput] prefixes 属性必须是 "icon"、"select" 或 "text"'
+          '[LewInput] prefixes 属性必须是 "icon"、"select" 或 "text"',
         )
         return false
       }
       return true
-    }
+    },
   },
   prefixesOptions: {
     type: Array as PropType<ContextMenus[]>,
     default: () => [],
-    description: '输入框前缀选项列表，当 prefixes 为 select 时使用'
+    description: '输入框前缀选项列表，当 prefixes 为 select 时使用',
   },
   prefixesTooltip: {
     type: String,
     default: '',
-    description: '输入框前缀的 tooltip 提示文本'
+    description: '输入框前缀的 tooltip 提示文本',
   },
   suffix: {
     type: String,
@@ -174,23 +174,23 @@ export const inputProps = {
         return false
       }
       return true
-    }
+    },
   },
   suffixOptions: {
     type: Array as PropType<ContextMenus[]>,
     default: () => [],
-    description: '输入框后缀选项列表，当 suffix 为 select 时使用'
+    description: '输入框后缀选项列表，当 suffix 为 select 时使用',
   },
   suffixTooltip: {
     type: String,
     default: '',
-    description: '输入框后缀的 tooltip 提示文本'
+    description: '输入框后缀的 tooltip 提示文本',
   },
   okByEnter: {
     type: Boolean,
     default: false,
-    description: '是否允许通过回车键确认输入'
-  }
+    description: '是否允许通过回车键确认输入',
+  },
 }
 
 export type InputProps = ExtractPropTypes<typeof inputProps>

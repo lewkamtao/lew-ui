@@ -1,7 +1,7 @@
-import type { PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { PropType } from 'vue'
 
-export type CascaderOptions = {
+export interface CascaderOptions {
   label: string
   value: string
   labelPaths?: string[]
@@ -21,8 +21,8 @@ export const cascaderModel = {
   modelValue: {
     type: [String, Number],
     default: '',
-    description: '当前选中的值'
-  }
+    description: '当前选中的值',
+  },
 }
 
 export const cascaderProps = {
@@ -36,42 +36,42 @@ export const cascaderProps = {
         return false
       }
       return true
-    }
+    },
   },
   width: {
     type: String,
     default: '300px',
-    description: '宽度'
+    description: '宽度',
   },
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '输入框占位文本'
+    description: '输入框占位文本',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用'
+    description: '是否禁用',
   },
   clearable: {
     type: Boolean,
     default: true,
-    description: '是否可清空'
+    description: '是否可清空',
   },
   showAllLevels: {
     type: Boolean,
     default: true,
-    description: '是否显示完整的选中值路径'
+    description: '是否显示完整的选中值路径',
   },
   multiple: {
     type: Boolean,
     default: false,
-    description: '是否多选'
+    description: '是否多选',
   },
   free: {
     type: Boolean,
     default: false,
-    description: '是否启用自由选择模式'
+    description: '是否启用自由选择模式',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -79,7 +79,7 @@ export const cascaderProps = {
     description: '尺寸',
     validator: (value: string) => {
       return ['small', 'medium', 'large'].includes(value)
-    }
+    },
   },
   trigger: {
     type: String as PropType<CascaderTriggerType>,
@@ -87,21 +87,31 @@ export const cascaderProps = {
     description: '次级菜单的展开方式',
     validator: (value: string) => {
       return ['click', 'hover'].includes(value)
-    }
+    },
   },
   loadMethod: {
     type: Function,
-    description: '动态加载子节点数据的函数'
+    description: '动态加载子节点数据的函数',
   },
   loadMethodId: {
     type: String,
     default: '',
     hidden: true,
-    description: '动态加载子节点数据函数的标识'
+    description: '动态加载子节点数据函数的标识',
+  },
+  initOptionsMethod: {
+    type: Function,
+    description: '初始化选项数据的函数',
+  },
+  initOptionsMethodId: {
+    type: String,
+    default: '',
+    hidden: true,
+    description: '初始化选项数据函数的标识',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读'
-  }
+    description: '是否只读',
+  },
 }

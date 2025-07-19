@@ -1,4 +1,4 @@
-export type RetItemType = {
+export interface RetItemType {
   date: number
   year: number
   month: number
@@ -7,7 +7,7 @@ export type RetItemType = {
 
 export type RetType = Array<RetItemType>
 
-export const getMonthDate = (year?: number, month?: number): RetType => {
+export function getMonthDate(year?: number, month?: number): RetType {
   const ret: RetType = []
 
   if (!year || !month) {
@@ -18,7 +18,8 @@ export const getMonthDate = (year?: number, month?: number): RetType => {
 
   const firstDay: Date = new Date(year, month - 1, 1)
   let firstDayWeekDay: number = firstDay.getDay()
-  if (firstDayWeekDay === 0) firstDayWeekDay = 7
+  if (firstDayWeekDay === 0)
+    firstDayWeekDay = 7
   year = firstDay.getFullYear()
   month = firstDay.getMonth() + 1
   const lastDayofLastMonth: Date = new Date(year, month - 1, 0)
@@ -35,19 +36,22 @@ export const getMonthDate = (year?: number, month?: number): RetType => {
     if (date <= 0) {
       thisMonth = month - 1
       showDate = lastDateofLastMonth + date
-    } else if (date > lastData) {
+    }
+    else if (date > lastData) {
       thisMonth = month + 1
       showDate -= lastData
     }
 
-    if (thisMonth === 13) thisMonth = 1
-    if (thisMonth === 0) thisMonth = 12
+    if (thisMonth === 13)
+      thisMonth = 1
+    if (thisMonth === 0)
+      thisMonth = 12
 
     ret.push({
       date,
       year: year as number,
       month: thisMonth,
-      showDate
+      showDate,
     })
   }
 

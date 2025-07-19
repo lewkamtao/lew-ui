@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-const open = () => {
+function open() {
   LewNotification.info({
     title: 'New IKEA Collection Available',
     content:
       'Our new summer collection is now in stores. Visit us to discover the latest home inspiration.',
     duration: 3500,
     width: 400,
-    showProgress: true
+    showProgress: true,
   })
 }
 </script>

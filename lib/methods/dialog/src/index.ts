@@ -1,10 +1,11 @@
-import { useMouse } from '@vueuse/core'
-import _LewDialog from './LewDialog.vue'
 import type { LewColor } from 'lew-ui'
+import { useMouse } from '@vueuse/core'
 import { locale } from 'lew-ui'
+import _LewDialog from './LewDialog.vue'
+
 const { x, y } = useMouse()
 
-type Options = {
+interface Options {
   title: string
   content: string
   ok?: () => boolean | Promise<boolean>
@@ -18,18 +19,20 @@ type Options = {
 
 type DialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'
 
-const createDialog = (type: DialogType) => (options: Options) =>
-  dialog(type as LewColor, options)
+function createDialog(type: DialogType) {
+  return (options: Options) =>
+    dialog(type as LewColor, options)
+}
 
 const dialogTypes: Record<DialogType, (options: Options) => void> = {
   warning: createDialog('warning'),
   error: createDialog('error'),
   info: createDialog('info'),
   normal: createDialog('normal'),
-  success: createDialog('success')
+  success: createDialog('success'),
 }
 
-const dialog = (type: LewColor, options: Options) => {
+function dialog(type: LewColor, options: Options) {
   const {
     title,
     content,
@@ -39,7 +42,7 @@ const dialog = (type: LewColor, options: Options) => {
     cancelText,
     layout,
     closeOnClickOverlay,
-    closeByEsc
+    closeByEsc,
   } = options
 
   const div = document.createElement('div')
@@ -63,14 +66,14 @@ const dialog = (type: LewColor, options: Options) => {
             app.unmount()
             div.remove()
           },
-          cancel
+          cancel,
         },
         {
           title: () => title || locale.t('dialog.title'),
-          content: () => content
-        }
+          content: () => content,
+        },
       )
-    }
+    },
   })
 
   app.mount(div)
@@ -78,10 +81,10 @@ const dialog = (type: LewColor, options: Options) => {
 
 export const LewDialog = {
   name: 'LewDialog',
-  ...dialogTypes
+  ...dialogTypes,
 }
 
-export type LewDialog = {
+export type LewDialogType = {
   name: string
 } & Record<DialogType, (options: Options) => void>
 

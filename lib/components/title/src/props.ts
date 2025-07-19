@@ -1,32 +1,32 @@
 import type { ExtractPropTypes } from 'vue'
 
 type BoldType = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-type TitleColor =
-  | 'red'
-  | 'orange'
-  | 'yellow'
-  | 'green'
-  | 'mint'
-  | 'teal'
-  | 'cyan'
-  | 'blue'
-  | 'indigo'
-  | 'purple'
-  | 'pink'
-  | 'gray'
-  | 'brown'
-  | 'warning'
-  | 'error'
-  | 'success'
-  | 'normal'
-  | 'primary'
-  | 'info'
+type TitleColor
+  = | 'red'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'mint'
+    | 'teal'
+    | 'cyan'
+    | 'blue'
+    | 'indigo'
+    | 'purple'
+    | 'pink'
+    | 'gray'
+    | 'brown'
+    | 'warning'
+    | 'error'
+    | 'success'
+    | 'normal'
+    | 'primary'
+    | 'info'
 
 export const titleProps = {
   text: {
     type: String,
     default: '',
-    description: '标题文字'
+    description: '标题文字',
   },
   size: {
     type: [Number, String],
@@ -38,7 +38,7 @@ export const titleProps = {
         return false
       }
       return true
-    }
+    },
   },
   color: {
     type: String,
@@ -64,20 +64,20 @@ export const titleProps = {
         'success',
         'normal',
         'primary',
-        'info'
+        'info',
       ]
       if (
-        value &&
-        !validColors.includes(value as TitleColor) &&
-        !/^#([0-9A-Fa-f]{3}){1,2}$/.test(value)
+        value
+        && !validColors.includes(value as TitleColor)
+        && !/^#([0-9A-F]{3}){1,2}$/i.test(value)
       ) {
         console.warn(
-          `[LewTitle] color 必须是预定义的颜色名称之一或有效的十六进制颜色值`
+          `[LewTitle] color 必须是预定义的颜色名称之一或有效的十六进制颜色值`,
         )
         return false
       }
       return true
-    }
+    },
   },
   bold: {
     type: Number,
@@ -86,15 +86,15 @@ export const titleProps = {
     validator: (value: number) => {
       if (
         !([100, 200, 300, 400, 500, 600, 700, 800, 900] as BoldType[]).includes(
-          value as BoldType
+          value as BoldType,
         )
       ) {
         console.warn('[LewTitle] bold 必须是 100 到 900 之间的整百数')
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export type TitleProps = ExtractPropTypes<typeof titleProps>

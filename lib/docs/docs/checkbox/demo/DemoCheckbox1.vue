@@ -3,7 +3,7 @@ const socialMediaOptions = ref([
   { label: 'Google', value: 'google' },
   { label: 'Apple', value: 'apple' },
   { label: 'Microsoft', value: 'microsoft' },
-  { label: 'Amazon', value: 'amazon' }
+  { label: 'Amazon', value: 'amazon' },
 ])
 
 const selectedPlatforms = ref([])

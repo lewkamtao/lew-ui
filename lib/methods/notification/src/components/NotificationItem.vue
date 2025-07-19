@@ -1,31 +1,6 @@
-<template>
-  <div
-    :class="['lew-notification', `lew-notification-${type}`]"
-    :style="{ width: any2px(width) }"
-  >
-    <div class="lew-notification-box">
-      <div class="lew-notification-icon">
-        <Icon :type="type" :size="18" />
-      </div>
-      <div class="lew-notification-body">
-        <div v-if="title" class="lew-notification-title">{{ title }}</div>
-        <div v-if="content" class="lew-notification-content">{{ content }}</div>
-      </div>
-      <div class="lew-notification-close-icon" @click="onClose">
-        <Icon type="close" :size="16" />
-      </div>
-    </div>
-    <div
-      v-if="showProgress"
-      class="lew-notification-progress"
-      :style="{ animationDuration: `${duration}ms` }"
-    ></div>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import Icon from 'lew-ui/utils/Icon.vue'
 import { any2px } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 defineProps<{
   type: string
@@ -40,10 +15,39 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const onClose = () => {
+function onClose() {
   emit('close')
 }
 </script>
+
+<template>
+  <div
+    class="lew-notification" :class="[`lew-notification-${type}`]"
+    :style="{ width: any2px(width) }"
+  >
+    <div class="lew-notification-box">
+      <div class="lew-notification-icon">
+        <Icon :type="type" :size="18" />
+      </div>
+      <div class="lew-notification-body">
+        <div v-if="title" class="lew-notification-title">
+          {{ title }}
+        </div>
+        <div v-if="content" class="lew-notification-content">
+          {{ content }}
+        </div>
+      </div>
+      <div class="lew-notification-close-icon" @click="onClose">
+        <Icon type="close" :size="16" />
+      </div>
+    </div>
+    <div
+      v-if="showProgress"
+      class="lew-notification-progress"
+      :style="{ animationDuration: `${duration}ms` }"
+    />
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .lew-notification {

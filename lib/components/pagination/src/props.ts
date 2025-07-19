@@ -1,5 +1,4 @@
-import type { SelectOptions } from 'lew-ui'
-import type { LewSize } from 'lew-ui'
+import type { LewSize, SelectOptions } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
 
 export type PaginationOptions = SelectOptions
@@ -15,7 +14,7 @@ export const paginationModel = {
         return false
       }
       return true
-    }
+    },
   },
   currentPage: {
     type: Number,
@@ -27,7 +26,7 @@ export const paginationModel = {
         return false
       }
       return true
-    }
+    },
   },
   pageSize: {
     type: Number,
@@ -40,8 +39,8 @@ export const paginationModel = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const paginationProps = {
@@ -52,12 +51,12 @@ export const paginationProps = {
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewPagination] size 必须是 ${validSizes.join(', ')} 之一`
+          `[LewPagination] size 必须是 ${validSizes.join(', ')} 之一`,
         )
         return false
       }
       return true
-    }
+    },
   },
   pageSizeOptions: {
     type: Array as PropType<number[] | SelectOptions[]>,
@@ -69,7 +68,7 @@ export const paginationProps = {
         return false
       }
       return true
-    }
+    },
   },
   visiblePagesCount: {
     type: Number,
@@ -81,6 +80,6 @@ export const paginationProps = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }

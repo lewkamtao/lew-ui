@@ -1,32 +1,29 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "useDefineForClassFields": true,
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "moduleDetection": "force",
+    "baseUrl": "./",
     "module": "esnext",
     "moduleResolution": "node",
-    "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
-    "skipLibCheck": true,
-    "baseUrl": "./",
     "paths": {
       "lew-ui": ["./lib"],
       "lew-ui/*": ["./lib/*"],
+      "lew-ui/utils": ["./lib/utils"],
+      "lew-ui/utils/*": ["./lib/utils/*"],
       "@/*": ["./lib/docs/*"]
     },
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "lib/**/*.vue",
-    "lib/**/*.ts",
-    "lib/**/*.tsx",
-    "lib/**/*.d.ts",
-    "lib/docs/docs/inputTag/demo/DemoInputTag2vue",
-    "lib/docs/views/form-engine/schema/base.ts"
-  ],
-  "exclude": ["lib/components/_backup/**/*"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["lib", "public"]
 }

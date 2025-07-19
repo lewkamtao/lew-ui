@@ -1,13 +1,13 @@
-import type { ExtractPropTypes } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export const rateModel = {
   modelValue: {
     type: Number,
     default: undefined,
-    description: '绑定值'
-  }
+    description: '绑定值',
+  },
 }
 
 export const rateProps = {
@@ -18,33 +18,33 @@ export const rateProps = {
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn(
-          '[LewRadioGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"'
+          '[LewRadioGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
         )
         return false
       }
       return true
-    }
+    },
   },
   count: {
     type: Number,
     default: 5,
-    description: '评分的总数'
+    description: '评分的总数',
   },
   tips: {
     type: [Array, String] as PropType<string[] | string>,
     default: () => [],
-    description: '评分的提示文字,使用逗号分隔每个等级的提示文字,或者使用数组'
+    description: '评分的提示文字,使用逗号分隔每个等级的提示文字,或者使用数组',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读'
+    description: '是否只读',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用'
-  }
+    description: '是否禁用',
+  },
 }
 
 export type RateProps = ExtractPropTypes<typeof rateProps>

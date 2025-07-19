@@ -4,5 +4,5 @@ import { convertProps } from '@/lib/utils'
 export default {
   title: 'Model',
   columnsKey: 'model',
-  data: convertProps(treeSelectModel)
+  data: convertProps(treeSelectModel),
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Settings } from 'lucide-vue-next'
+
 const visible = ref(false)
 </script>
 
@@ -12,39 +13,45 @@ const visible = ref(false)
   </lew-flex>
   <lew-modal
     v-model:visible="visible"
-    closeOnClickOverlay
-    closeByEsc
+    close-on-click-overlay
+    close-by-esc
     width="420px"
     title="System Preferences"
-    :closeButtonProps="{
+    :close-button-props="{
       request: () => {
         visible = false
-      }
+      },
     }"
-    :okButtonProps="{
+    :ok-button-props="{
       request: () => {
         visible = false
-      }
+      },
     }"
   >
     <div class="modal-body">
       <div class="preferences-content">
         <div class="preference-item">
-          <div class="preference-icon">🔔</div>
+          <div class="preference-icon">
+            🔔
+          </div>
           <div class="preference-info">
             <h3>Notifications</h3>
             <p>Manage how you receive notifications and alerts</p>
           </div>
         </div>
         <div class="preference-item">
-          <div class="preference-icon">🔒</div>
+          <div class="preference-icon">
+            🔒
+          </div>
           <div class="preference-info">
             <h3>Security</h3>
             <p>Configure security settings and privacy options</p>
           </div>
         </div>
         <div class="preference-item">
-          <div class="preference-icon">🌙</div>
+          <div class="preference-icon">
+            🌙
+          </div>
           <div class="preference-info">
             <h3>Appearance</h3>
             <p>Customize the look and feel of your interface</p>

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { any2px } from 'lew-ui/utils'
 import { LewFlex } from 'lew-ui'
-import { expandProps } from './props'
+import { any2px } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { expandProps } from './props'
 
 const props = defineProps(expandProps)
 
 // 收起高度
 const expandRef = ref()
-let collapseHeight = ref(props.collapseHeight)
-let collapse = ref(false)
-let expandHeight = ref(0)
+const collapseHeight = ref(props.collapseHeight)
+const collapse = ref(false)
+const expandHeight = ref(0)
 
 onMounted(() => {
   if (expandRef.value) {
@@ -26,25 +26,27 @@ onMounted(() => {
     class="lew-expand-wrapper"
     :style="{
       height: collapse ? any2px(collapseHeight) : any2px(expandHeight),
-      paddingBottom: collapse ? '0px' : '40px'
+      paddingBottom: collapse ? '0px' : '40px',
     }"
   >
     <slot />
-    <lew-flex
-      @click="collapse = !collapse"
-      gap="5"
+    <LewFlex
       v-if="collapseHeight"
+      gap="5"
       x="center"
       class="lew-expand-btn"
+      @click="collapse = !collapse"
     >
       <Icon
-        :style="{ transform: collapse ? 'rotate(0deg)' : 'rotate(180deg)' }"
+        :style="{
+          transform: collapse ? 'rotate(0deg)' : 'rotate(180deg)',
+        }"
         class="lew-expand-icon"
         type="chevron-down"
         :size="14"
-      ></Icon>
+      />
       {{ collapse ? '展开更多' : '收起' }}
-    </lew-flex>
+    </LewFlex>
   </div>
 </template>
 

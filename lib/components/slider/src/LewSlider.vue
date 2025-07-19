@@ -1,180 +1,324 @@
 <script setup lang="ts">
-import { sliderProps } from './props'
 import { dragmove } from 'lew-ui/utils'
+import { throttle } from 'lodash-es'
+import { sliderProps } from './props'
 
 const props = defineProps(sliderProps)
-const emit = defineEmits(['change'])
+const emit = defineEmits<{
+  change: [value: number]
+}>()
 
-// @ts-ignore
-const modelValue: Ref<number> = defineModel('modelValue', {
-  get(val) {
-    if (val !== undefined) return val
-    return getMin.value // 初始值设置为最小值
+// 安全的数值转换函数
+function safeNumber(value: unknown, defaultValue: number = 0): number {
+  if (value === null || value === undefined || value === '') {
+    return defaultValue
   }
-})
-const dotRef = ref<HTMLElement | null>(null)
-const trackRef = ref<HTMLElement | null>(null)
-const dotX = ref(0)
+  const num = Number(value)
+  return Number.isNaN(num) ? defaultValue : num
+}
+
+// 安全的数组检查函数
+function safeArray<T>(value: unknown, defaultValue: T[] = []): T[] {
+  return Array.isArray(value) ? value : defaultValue
+}
+
+// 安全的函数检查
+function safeFunction(
+  value: unknown,
+  defaultValue: (val: number) => string,
+): (val: number) => string {
+  return typeof value === 'function'
+    ? (value as (val: number) => string)
+    : defaultValue
+}
 
 // 获取滑块轨道的最大值
 const getTrackMax = computed(() => {
-  const { options, max } = props
-  if (options && options.length > 0) {
-    return Math.max(...options.map((option) => Number(option.value)))
+  const options = safeArray(props.options)
+  if (options.length > 0) {
+    const values = options.map((option: any) => safeNumber(option.value))
+    return Math.max(...values)
   }
-  return Number(max)
+  return safeNumber(props.max, 100)
 })
 
 // 获取滑块轨道的最小值
 const getTrackMin = computed(() => {
-  const { options, min } = props
-  if (options && options.length > 0) {
-    return Math.min(...options.map((option) => Number(option.value)))
+  const options = safeArray(props.options)
+  if (options.length > 0) {
+    const values = options.map((option: any) => safeNumber(option.value))
+    return Math.min(...values)
   }
-  return Number(min)
+  return safeNumber(props.min, 0)
 })
 
 const getMax = computed(() => {
-  return Number(props.max) || getTrackMax.value
+  const max = safeNumber(props.max, getTrackMax.value)
+  return Math.max(max, getTrackMin.value + safeNumber(props.step, 1))
 })
 
 const getMin = computed(() => {
-  return Number(props.min) || getTrackMin.value
+  return safeNumber(props.min, getTrackMin.value)
 })
 
-// 获取 mark 位置
-const getMarkPosition = (value: number | string) => {
-  const range = getTrackMax.value - getTrackMin.value
-  const percentage = ((Number(value) - getTrackMin.value) / range) * 100
+const modelValue = defineModel<number>('modelValue', {
+  get(val) {
+    const defaultValue = getMin.value
+    const safeVal = safeNumber(val, defaultValue)
+    return Math.max(getMin.value, Math.min(getMax.value, safeVal))
+  },
+  set(val) {
+    const safeVal = safeNumber(val, getMin.value)
+    return Math.max(getMin.value, Math.min(getMax.value, safeVal))
+  },
+})
+
+const dotRef = ref<HTMLElement | null>(null)
+const trackRef = ref<HTMLElement | null>(null)
+const dotX = ref(0)
+
+// 创建节流函数，用于更新modelValue
+const throttledUpdateModelValue = throttle((newValue: number) => {
+  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
+  modelValue.value = clampedValue
+  emit('change', clampedValue)
+}, 16) // 约60fps的更新频率
+
+// 获取 mark 位置，确保在 0-100 范围内
+function getMarkPosition(value: number | string): number {
+  const trackMax = getTrackMax.value
+  const trackMin = getTrackMin.value
+  const range = trackMax - trackMin
+
+  if (range <= 0)
+    return 0
+
+  const safeValue = safeNumber(value, trackMin)
+  const percentage = ((safeValue - trackMin) / range) * 100
   return Math.max(0, Math.min(100, percentage))
 }
 
-const calculateValue = (position: number) => {
-  if (!trackRef.value) return 0
+function calculateValue(position: number): number {
+  if (!trackRef.value)
+    return getMin.value
+
   const trackWidth = trackRef.value.clientWidth
-  const percentage = position / trackWidth
+  if (trackWidth <= 0)
+    return getMin.value
+
+  const percentage = Math.max(0, Math.min(1, position / trackWidth))
   dotX.value = position
-  const value =
-    percentage * (Number(getTrackMax.value) - Number(getTrackMin.value)) +
-    Number(getTrackMin.value)
-  const step = Number(props.step)
+
+  const trackMax = getTrackMax.value
+  const trackMin = getTrackMin.value
+  const range = trackMax - trackMin
+
+  const value = percentage * range + trackMin
+  const step = safeNumber(props.step, 1)
+
+  if (step <= 0)
+    return value
+
   const decimalPlaces = (step.toString().split('.')[1] || '').length
-  return Number(value.toFixed(decimalPlaces)) || 0
+  return Number(value.toFixed(decimalPlaces))
 }
 
-const setDot = (e: MouseEvent) => {
-  if (props.readonly || props.disabled || !trackRef.value || !dotRef.value)
+function setDot(e: MouseEvent): void {
+  if (props.readonly || props.disabled || !trackRef.value || !dotRef.value) {
     return
-  const trackRect = trackRef.value.getBoundingClientRect()
-  const clickX = Math.max(
-    0,
-    Math.min(e.clientX - trackRect.left, trackRect.width)
-  )
+  }
 
-  // 计算刻度大小
-  const stepSize =
-    trackRect.width / (Number(getTrackMax.value) / Number(props.step))
+  try {
+    const trackRect = trackRef.value.getBoundingClientRect()
+    const clickX = Math.max(
+      0,
+      Math.min(e.clientX - trackRect.left, trackRect.width),
+    )
 
-  // 计算最近的刻度位置
-  const nearestStep = Math.round(clickX / stepSize) * stepSize
+    const step = safeNumber(props.step, 1)
+    if (step <= 0)
+      return
 
-  // 更新值
-  let _modelValue = calculateValue(nearestStep)
+    // 计算刻度大小
+    const trackMax = getTrackMax.value
+    const trackMin = getTrackMin.value
+    const range = trackMax - trackMin
 
-  if (_modelValue >= getMin.value && _modelValue <= getMax.value) {
-    // 设置点的位置
-    dotRef.value.style.left = `${nearestStep}px`
-    modelValue.value = _modelValue
-    emit('change', _modelValue)
+    if (range <= 0)
+      return
+
+    const stepSize = trackRect.width / (range / step)
+
+    // 计算最近的刻度位置
+    const nearestStep = Math.round(clickX / stepSize) * stepSize
+
+    // 更新值
+    const newValue = calculateValue(nearestStep)
+    const clampedValue = Math.max(
+      getMin.value,
+      Math.min(getMax.value, newValue),
+    )
+
+    if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
+      throttledUpdateModelValue(clampedValue)
+      setDotByValue(clampedValue)
+    }
+  }
+  catch (error) {
+    console.warn('[LewSlider] setDot error:', error)
   }
 }
 
 // 根据当前值计算最近的刻度位置的百分比
-const calculateNearestStep = (value: number) => {
-  const range = Number(getTrackMax.value) - Number(getTrackMin.value)
-  const steps = Math.round(
-    (value - Number(getTrackMin.value)) / Number(props.step)
+function calculateNearestStep(value: number): number {
+  const trackMax = getTrackMax.value
+  const trackMin = getTrackMin.value
+  const range = trackMax - trackMin
+  const step = safeNumber(props.step, 1)
+
+  if (range <= 0 || step <= 0)
+    return 0
+
+  const steps = Math.round((value - trackMin) / step)
+  return ((steps * step) / range) * 100
+}
+
+function setDotByClick(value: number): void {
+  if (props.readonly || props.disabled)
+    return
+
+  const safeValue = safeNumber(value, getMin.value)
+  const clampedValue = Math.max(
+    getMin.value,
+    Math.min(getMax.value, safeValue),
   )
-  return ((steps * Number(props.step)) / range) * 100
-}
 
-const setDotByClick = (value: number) => {
-  if (props.readonly || props.disabled) return
-  if (value >= getMin.value && value <= getMax.value) {
-    modelValue.value = value
-    setDotByValue(value)
-    emit('change', value)
+  if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
+    throttledUpdateModelValue(clampedValue)
+    setDotByValue(clampedValue)
   }
 }
 
-const setDotByValue = (value: number) => {
-  if (!dotRef.value) return
-  const nearestStep = calculateNearestStep(value)
-  dotRef.value.style.left = `${nearestStep}%`
-}
+function setDotByValue(value: number): void {
+  if (!dotRef.value)
+    return
 
-let _dragmove = () => {}
+  try {
+    const safeValue = safeNumber(value, getMin.value)
+    const clampedValue = Math.max(
+      getMin.value,
+      Math.min(getMax.value, safeValue),
+    )
+    const nearestStep = calculateNearestStep(clampedValue)
+    const clampedStep = Math.max(0, Math.min(100, nearestStep))
 
-const init = () => {
-  const el = dotRef.value
-  const parentEl = trackRef.value
-  const { step } = props
-  if (el && parentEl && !props.readonly && !props.disabled) {
-    _dragmove = dragmove({
-      el,
-      parentEl,
-      direction: 'horizontal',
-      step: () => Number(step),
-      max: () => getMax.value,
-      min: () => getMin.value,
-      trackMax: () => getTrackMax.value,
-      trackMin: () => getTrackMin.value,
-      callback: (e: any) => {
-        const newValue = calculateValue(e.x)
-        modelValue.value = newValue
-        emit('change', newValue)
-      }
-    })
+    dotRef.value.style.left = `${clampedStep}%`
   }
-  setDotByValue(modelValue.value)
+  catch (error) {
+    console.warn('[LewSlider] setDotByValue error:', error)
+  }
 }
 
-// 监听 max、min、step、readonly、disabled 的变化，重新初始化
+let _dragmove = (): void => {}
+
+function init(): void {
+  try {
+    const el = dotRef.value
+    const parentEl = trackRef.value
+    const step = safeNumber(props.step, 1)
+
+    if (el && parentEl && !props.readonly && !props.disabled) {
+      _dragmove = dragmove({
+        el,
+        parentEl,
+        direction: 'horizontal',
+        step: () => step,
+        max: () => getMax.value,
+        min: () => getMin.value,
+        trackMax: () => getTrackMax.value,
+        trackMin: () => getTrackMin.value,
+        callback: (e: any) => {
+          try {
+            const newValue = calculateValue(e.x)
+            const clampedValue = Math.max(
+              getMin.value,
+              Math.min(getMax.value, newValue),
+            )
+            throttledUpdateModelValue(clampedValue)
+            setDotByValue(clampedValue)
+          }
+          catch (error) {
+            console.warn('[LewSlider] drag callback error:', error)
+          }
+        },
+      })
+    }
+
+    const currentValue = modelValue.value || getMin.value
+    setDotByValue(currentValue)
+  }
+  catch (error) {
+    console.warn('[LewSlider] init error:', error)
+  }
+}
+
+// 监听 props 的变化，重新初始化
 watch(
   [
     () => props.max,
     () => props.min,
     () => props.step,
     () => props.readonly,
-    () => props.disabled
+    () => props.disabled,
+    () => props.options,
   ],
   () => {
-    init()
-  }
+    nextTick(() => {
+      init()
+    })
+  },
+  { deep: true },
 )
 
 onMounted(() => {
-  init()
+  nextTick(() => {
+    init()
+  })
 })
 
 onUnmounted(() => {
-  _dragmove()
+  try {
+    _dragmove()
+    throttledUpdateModelValue.cancel()
+  }
+  catch (error) {
+    console.warn('[LewSlider] cleanup error:', error)
+  }
 })
 
 // 监听 modelValue 的变化，实时更新 dot 的位置
-watch(modelValue, (newValue) => {
-  setDotByValue(newValue)
-})
+watch(
+  modelValue,
+  (newValue) => {
+    const safeValue = safeNumber(newValue, getMin.value)
+    setDotByValue(safeValue)
+  },
+  { immediate: true },
+)
+
 const getStyle = computed(() => {
   const { size } = props
-  let objStyle = {}
-  switch (size) {
+  const safeSize = size || 'medium'
+
+  let objStyle: Record<string, string> = {}
+
+  switch (safeSize) {
     case 'small':
       objStyle = {
         '--lew-slider-track-dot-size': '12px',
         '--lew-slider-track-line-height': '3px',
         '--lew-slider-track-step-mark-size': '6px',
-        '--lew-slider-track-step-label-size': '12px'
+        '--lew-slider-track-step-label-size': '12px',
       }
       break
     case 'medium':
@@ -182,7 +326,7 @@ const getStyle = computed(() => {
         '--lew-slider-track-dot-size': '16px',
         '--lew-slider-track-line-height': '4px',
         '--lew-slider-track-step-mark-size': '7px',
-        '--lew-slider-track-step-label-size': '14px'
+        '--lew-slider-track-step-label-size': '14px',
       }
       break
     case 'large':
@@ -190,21 +334,172 @@ const getStyle = computed(() => {
         '--lew-slider-track-dot-size': '20px',
         '--lew-slider-track-line-height': '5px',
         '--lew-slider-track-step-mark-size': '8px',
-        '--lew-slider-track-step-label-size': '16px'
+        '--lew-slider-track-step-label-size': '16px',
       }
       break
     default:
       objStyle = {
         '--lew-slider-track-dot-size': '16px',
         '--lew-slider-track-line-height': '4px',
-        '--lew-slider-track-step-mark-size': '10px'
+        '--lew-slider-track-step-mark-size': '10px',
+        '--lew-slider-track-step-label-size': '14px',
       }
       break
   }
+
   return {
     ...objStyle,
-    '--lew-slider-height': `var(--lew-form-item-height-${size})`
+    '--lew-slider-height': `var(--lew-form-item-height-${safeSize})`,
   }
+})
+
+// 安全的格式化工具提示函数
+function safeFormatTooltip(value: number): string {
+  try {
+    const formatFn = safeFunction(props.formatTooltip, (val: number) =>
+      val.toString())
+    return formatFn(value)
+  }
+  catch (error) {
+    console.warn('[LewSlider] formatTooltip error:', error)
+    return value.toString()
+  }
+}
+
+// 检查选项是否有效
+function isValidOption(option: any): boolean {
+  return (
+    option
+    && typeof option === 'object'
+    && 'label' in option
+    && 'value' in option
+    && typeof option.label === 'string'
+    && !Number.isNaN(safeNumber(option.value))
+  )
+}
+
+// 获取有效的选项
+const validOptions = computed(() => {
+  const options = safeArray(props.options)
+  return options.filter(isValidOption) as Array<{
+    label: string
+    value: string | number
+  }>
+})
+
+// 计算禁用区域的样式
+const disabledAreaStyles = computed(() => {
+  const leftWidth = getMarkPosition(getMin.value)
+  const rightWidth = 100 - getMarkPosition(getMax.value)
+
+  return {
+    left: {
+      width: `${leftWidth}%`,
+    },
+    right: {
+      width: `${rightWidth}%`,
+    },
+  }
+})
+
+// 计算轨道范围的样式
+const trackRangeStyles = computed(() => {
+  const trackMax = getTrackMax.value
+  const trackMin = getTrackMin.value
+  const range = trackMax - trackMin
+
+  if (range <= 0) {
+    return {
+      width: '0%',
+      left: '0%',
+    }
+  }
+
+  const width = Math.max(
+    0,
+    Math.min(100, ((getMax.value - getMin.value) / range) * 100),
+  )
+  const left = getMarkPosition(getMin.value)
+
+  return {
+    width: `${width}%`,
+    left: `${left}%`,
+  }
+})
+
+// 计算选中轨道的样式
+const selectedTrackStyles = computed(() => {
+  const currentValue = modelValue.value || getMin.value
+  const width = getMarkPosition(currentValue)
+
+  return {
+    width: `${width}%`,
+  }
+})
+
+// 计算滑块点的样式
+const dotStyles = computed(() => {
+  const currentValue = modelValue.value
+  const opacity
+    = currentValue !== undefined && currentValue !== null ? '1' : '0'
+
+  return {
+    opacity,
+  }
+})
+
+// 计算工具提示的配置
+const tooltipConfig = computed(() => {
+  const currentValue = safeNumber(modelValue.value)
+
+  return {
+    content: safeFormatTooltip(currentValue),
+    placement: 'top' as const,
+    trigger: 'mouseenter' as const,
+    delay: [0, 1000] as [number, number],
+    key: dotX.value,
+  }
+})
+
+// 计算选项标记的样式和类名
+const optionMarkStyles = computed(() => {
+  return validOptions.value.map((item) => {
+    const value = safeNumber(item.value)
+    const currentValue = safeNumber(modelValue.value)
+    const isSelected = value <= currentValue
+
+    return {
+      key: `mark-${item.value}`,
+      style: {
+        left: `${getMarkPosition(item.value)}%`,
+      },
+      class: {
+        'lew-slider-track-step-mark-selected': isSelected,
+      },
+    }
+  })
+})
+
+// 计算选项标签的样式和类名
+const optionLabelStyles = computed(() => {
+  return validOptions.value.map((item) => {
+    const value = safeNumber(item.value)
+    const isDisabled = value < getMin.value || value > getMax.value
+    const displayText = item.label || value.toString()
+
+    return {
+      key: `label-${item.value}`,
+      style: {
+        left: `${getMarkPosition(item.value)}%`,
+        top: `calc(var(--lew-slider-height) - 20px)`,
+      },
+      textClass: {
+        'lew-slider-track-step-label-text-disabled': isDisabled,
+      },
+      displayText,
+      value,
+    }
+  })
 })
 </script>
 
@@ -214,87 +509,57 @@ const getStyle = computed(() => {
     :style="getStyle"
     :class="{
       'lew-slider-disabled': disabled,
-      'lew-slider-readonly': readonly
+      'lew-slider-readonly': readonly,
     }"
   >
-    <div ref="trackRef" @click="setDot" class="lew-slider-track">
+    <div ref="trackRef" class="lew-slider-track" @click="setDot">
       <div
-        :style="{
-          width: `${getMarkPosition(getMin)}%`
-        }"
+        :style="disabledAreaStyles.left"
         class="lew-slider-track-disabled-area lew-slider-track-disabled-area-left"
         @click.stop
-      ></div>
+      />
       <div
-        :style="{
-          width: `${100 - getMarkPosition(getMax)}%`
-        }"
+        :style="disabledAreaStyles.right"
         class="lew-slider-track-disabled-area lew-slider-track-disabled-area-right"
         @click.stop
-      ></div>
+      />
 
       <div class="lew-slider-track-line">
-        <div
-          class="lew-slider-track-line-range"
-          :style="{
-            width: `${Math.max(0, Math.min(100, ((getMax - getMin) / (getTrackMax - getTrackMin)) * 100))}%`,
-            left: `${getMarkPosition(getMin)}%`
-          }"
-        ></div>
+        <div class="lew-slider-track-line-range" :style="trackRangeStyles" />
         <div
           class="lew-slider-track-line-selected"
-          :style="{ width: `${getMarkPosition(modelValue)}%` }"
-        ></div>
+          :style="selectedTrackStyles"
+        />
 
         <div
-          v-for="(item, index) in options"
-          :key="index"
+          v-for="markStyle in optionMarkStyles"
+          :key="markStyle.key"
           class="lew-slider-track-step-mark"
-          :class="{
-            'lew-slider-track-step-mark-selected':
-              Number(item.value) <= Number(modelValue)
-          }"
-          :style="{
-            left: `${getMarkPosition(item.value)}%`
-          }"
-        ></div>
+          :class="markStyle.class"
+          :style="markStyle.style"
+        />
         <div
-          v-for="(item, index) in options"
-          :key="index"
+          v-for="labelStyle in optionLabelStyles"
+          :key="labelStyle.key"
           class="lew-slider-track-step-label"
-          :style="{
-            left: `${getMarkPosition(item.value)}%`,
-            top: `calc(var(--lew-slider-height) - 20px)`
-          }"
+          :style="labelStyle.style"
         >
           <div
-            @click.stop="setDotByClick(Number(item.value))"
             class="lew-slider-track-step-label-text"
-            :class="{
-              'lew-slider-track-step-label-text-disabled':
-                Number(item.value) < Number(getMin) ||
-                Number(item.value) > Number(getMax)
-            }"
+            :class="labelStyle.textClass"
+            @click.stop="setDotByClick(labelStyle.value)"
           >
-            {{ item.label }}
+            {{ labelStyle.displayText }}
           </div>
         </div>
       </div>
       <div
-        @click.stop
         ref="dotRef"
-        v-tooltip="{
-          content: formatTooltip(modelValue),
-          placement: 'top',
-          trigger: 'mouseenter',
-          delay: [0, 1000],
-          key: dotX
-        }"
-        :style="{
-          opacity: modelValue || modelValue === 0 ? '1' : '0'
-        }"
+        v-tooltip="tooltipConfig"
+        :style="dotStyles"
         class="lew-slider-track-dot"
-      ></div>
+        @click.stop
+      />
     </div>
   </div>
 </template>
@@ -314,13 +579,12 @@ const getStyle = computed(() => {
     align-items: center;
     width: 100%;
     height: var(--lew-slider-height);
-    position: relative;
     cursor: pointer;
 
     .lew-slider-track-disabled-area {
       position: absolute;
       cursor: not-allowed;
-      top: 0px;
+      top: 0;
       height: 100%;
       z-index: 1;
     }
@@ -345,6 +609,7 @@ const getStyle = computed(() => {
       height: 100%;
       top: 0;
       background-color: var(--lew-form-bgcolor-hover);
+      border-radius: inherit;
     }
     .lew-slider-track-line-selected {
       position: absolute;
@@ -352,19 +617,19 @@ const getStyle = computed(() => {
       top: 0;
       left: 0;
       background-color: var(--lew-color-blue);
+      border-radius: inherit;
     }
     .lew-slider-track-step-mark {
       position: absolute;
       width: var(--lew-slider-track-step-mark-size);
       height: var(--lew-slider-track-step-mark-size);
       transform: translate(
-        calc(var(--lew-slider-track-step-mark-size) / 2 * -1),
+        calc(var(--lew-slider-track-step-mark-size) / -2),
         calc(
           (
-              var(--lew-slider-track-step-mark-size) - var(
-                  --lew-slider-track-line-height
-                )
-            ) / 2 * -1
+              var(--lew-slider-track-step-mark-size) -
+                var(--lew-slider-track-line-height)
+            ) / -2
         )
       );
       border-radius: 50%;
@@ -378,15 +643,22 @@ const getStyle = computed(() => {
     .lew-slider-track-step-label {
       position: absolute;
       text-align: center;
-      width: 0px;
+      width: 0;
       display: flex;
       justify-content: center;
       font-size: var(--lew-slider-track-step-label-size);
       user-select: none;
+
       .lew-slider-track-step-label-text {
         text-align: center;
         color: var(--lew-color-text-2);
         white-space: nowrap;
+        cursor: pointer;
+        transition: color var(--lew-form-transition-ease);
+
+        &:hover:not(.lew-slider-track-step-label-text-disabled) {
+          color: var(--lew-color-blue);
+        }
       }
       .lew-slider-track-step-label-text-disabled {
         cursor: not-allowed;
@@ -394,36 +666,39 @@ const getStyle = computed(() => {
       }
     }
   }
+
   .lew-slider-track-dot {
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%);
+    transform: translate(calc(var(--lew-slider-track-dot-size) / -2), -50%);
     width: var(--lew-slider-track-dot-size);
     height: var(--lew-slider-track-dot-size);
     border-radius: 50%;
-    border: var(--lew-color-blue) solid 2px;
+    border: 2px solid var(--lew-color-blue);
     background: var(--lew-bgcolor-0);
-    transition:
-      transform var(--lew-form-transition-ease),
+    transition: transform var(--lew-form-transition-ease),
       border-width 0.1s ease;
     cursor: pointer;
     box-sizing: border-box;
     z-index: 3;
-  }
-  .lew-slider-track-dot:hover {
-    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%)
-      scale(1.1);
-  }
-  .lew-slider-track-dot:active {
-    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%)
-      scale(1.05);
-    border-width: 4px;
+
+    &:hover {
+      transform: translate(calc(var(--lew-slider-track-dot-size) / -2), -50%)
+        scale(1.1);
+    }
+
+    &:active {
+      transform: translate(calc(var(--lew-slider-track-dot-size) / -2), -50%)
+        scale(1.05);
+      border-width: 4px;
+    }
   }
 }
+
 .lew-slider::before,
 .lew-slider::after {
-  content: '';
+  content: "";
   width: calc(var(--lew-slider-track-dot-size) / 2);
   height: var(--lew-slider-track-line-height);
   background-color: var(--lew-form-bgcolor);

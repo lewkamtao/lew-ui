@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { uploadByCardProps, statusConfig } from './props'
+import type { LewColor } from 'lew-ui'
 import type { UploadFileItem } from './props'
-import { LewFlex, LewImage, LewTooltip, LewColor } from 'lew-ui'
-import { any2px, getUniqueId, getFileIcon, checkUrlIsImage } from 'lew-ui/utils'
+import { LewFlex, LewImage, LewTooltip } from 'lew-ui'
+import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { statusConfig, uploadByCardProps } from './props'
 
+defineProps(uploadByCardProps)
+const emit = defineEmits(['reUpload', 'deleteFile'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -16,51 +19,48 @@ const previewGroupKey = getUniqueId()
 const fileIconSizeMap: Record<string, number> = {
   small: 30,
   medium: 36,
-  large: 44
+  large: 44,
 }
 
 const rightTopBtnSizeMap: Record<string, number> = {
   small: 16,
   medium: 18,
-  large: 20
+  large: 20,
 }
 
 const rightTopBtnIconSizeMap: Record<string, number> = {
   small: 10,
   medium: 12,
-  large: 14
+  large: 14,
 }
 
 const rightTopBorderRadiusMap: Record<string, number> = {
   small: 7,
   medium: 7.8,
-  large: 8.5
+  large: 8.5,
 }
 const getCardSize: Record<string, number> = {
   small: 72,
   medium: 80,
-  large: 88
+  large: 88,
 }
 
 const getStatus = computed(() => (item: UploadFileItem) => {
   return statusConfig[item.status || 'complete']
 })
 
-defineProps(uploadByCardProps)
-
-const emit = defineEmits(['reUpload', 'deleteFile'])
 const modelValue = defineModel<UploadFileItem[]>()
 </script>
 
 <template>
-  <lew-flex
+  <LewFlex
     v-show="(modelValue || []).length > 0"
     wrap
     class="lew-upload-file-card"
     gap="10"
   >
     <transition-group name="lew-upload-card">
-      <lew-flex
+      <LewFlex
         v-for="item in modelValue"
         :key="item.key || item.url"
         class="lew-upload-file-item"
@@ -68,41 +68,41 @@ const modelValue = defineModel<UploadFileItem[]>()
         gap="8"
         :style="{
           width: `${any2px(getCardSize[size])}`,
-          height: `${any2px(getCardSize[size])}`
+          height: `${any2px(getCardSize[size])}`,
         }"
       >
-        <lew-flex
+        <LewFlex
           v-if="item.status === 'fail'"
-          @click.stop="emit('reUpload', item.key)"
           x="center"
           y="center"
           :style="{
-            width: rightTopBtnSizeMap[size] + 'px',
-            height: rightTopBtnSizeMap[size] + 'px',
-            borderRadius: rightTopBorderRadiusMap[size] + 'px'
+            width: `${rightTopBtnSizeMap[size]}px`,
+            height: `${rightTopBtnSizeMap[size]}px`,
+            borderRadius: `${rightTopBorderRadiusMap[size]}px`,
           }"
           class="lew-upload-reupload-btn"
+          @click.stop="emit('reUpload', item.key)"
         >
           <Icon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
-        </lew-flex>
+        </LewFlex>
 
-        <lew-flex
+        <LewFlex
           v-else-if="
-            item.status &&
-            !['complete', 'success', 'none', 'uploading'].includes(
-              item.status as string
-            )
+            item.status
+              && !['complete', 'success', 'none', 'uploading'].includes(
+                item.status as string,
+              )
           "
           v-tooltip="{
             content: getStatus(item).text,
-            trigger: 'mouseenter'
+            trigger: 'mouseenter',
           }"
           x="center"
           y="center"
           :style="{
-            width: rightTopBtnSizeMap[size] + 'px',
-            height: rightTopBtnSizeMap[size] + 'px',
-            borderRadius: rightTopBorderRadiusMap[size] + 'px'
+            width: `${rightTopBtnSizeMap[size]}px`,
+            height: `${rightTopBtnSizeMap[size]}px`,
+            borderRadius: `${rightTopBorderRadiusMap[size]}px`,
           }"
           class="lew-upload-tips-tag"
         >
@@ -111,33 +111,33 @@ const modelValue = defineModel<UploadFileItem[]>()
             type="tips"
             :color="getStatus(item).color as LewColor"
           />
-        </lew-flex>
+        </LewFlex>
 
-        <lew-flex
-          @click.stop="emit('deleteFile', item.key)"
+        <LewFlex
           x="center"
           y="center"
           :style="{
-            width: rightTopBtnSizeMap[size] + 'px',
-            height: rightTopBtnSizeMap[size] + 'px',
-            borderRadius: rightTopBorderRadiusMap[size] + 'px'
+            width: `${rightTopBtnSizeMap[size]}px`,
+            height: `${rightTopBtnSizeMap[size]}px`,
+            borderRadius: `${rightTopBorderRadiusMap[size]}px`,
           }"
           class="lew-upload-delete-btn"
+          @click.stop="emit('deleteFile', item.key)"
         >
-          <Icon :size="rightTopBtnIconSizeMap[size]" type="close"></Icon>
-        </lew-flex>
-        <lew-flex class="lew-upload-icon-wrapper">
-          <lew-flex
+          <Icon :size="rightTopBtnIconSizeMap[size]" type="close" />
+        </LewFlex>
+        <LewFlex class="lew-upload-icon-wrapper">
+          <LewFlex
             class="lew-upload-icon-box"
             x="center"
             y="center"
             :style="{
-              transform: item.status === 'uploading' ? 'translateY(-7px)' : ''
+              transform: item.status === 'uploading' ? 'translateY(-7px)' : '',
             }"
           >
-            <lew-image
+            <LewImage
               v-if="checkUrlIsImage(item.url)"
-              :previewGroupKey="previewGroupKey"
+              :preview-group-key="previewGroupKey"
               object-fit="contain"
               width="100%"
               height="100%"
@@ -145,36 +145,35 @@ const modelValue = defineModel<UploadFileItem[]>()
               :src="item.url"
             />
             <img
+              v-else
               :style="{
                 width: `${fileIconSizeMap[size]}px`,
-                height: `${fileIconSizeMap[size]}px`
+                height: `${fileIconSizeMap[size]}px`,
               }"
-              v-else
               class="lew-upload-file-icon"
               :src="getFileIcon(item.name as string)"
-            />
-          </lew-flex>
-        </lew-flex>
+            >
+          </LewFlex>
+        </LewFlex>
         <transition name="fade">
-          <lew-flex
+          <LewFlex
             v-if="item.status === 'uploading'"
             class="lew-upload-progress"
             x="start"
           >
-            <lew-flex
+            <LewFlex
               class="lew-upload-progress-line"
               :style="{
                 width: `${(item.percent || 0) > 100 ? 100 : item.percent}%`,
-                background: 'var(--lew-color-blue)'
+                background: 'var(--lew-color-blue)',
               }"
-            >
-            </lew-flex>
-            <lew-flex class="lew-upload-progress-line-bg"> </lew-flex>
-          </lew-flex>
+            />
+            <LewFlex class="lew-upload-progress-line-bg" />
+          </LewFlex>
         </transition>
-      </lew-flex>
+      </LewFlex>
     </transition-group>
-  </lew-flex>
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

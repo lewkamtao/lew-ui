@@ -2,29 +2,29 @@
 const options = ref([
   {
     label: 'Home',
-    value: '/'
+    value: '/',
   },
   {
     label: 'Electronics',
-    value: '/electronics'
+    value: '/electronics',
   },
   {
     label: 'Phones',
-    value: '/electronics/phones'
+    value: '/electronics/phones',
   },
   {
     label: 'Smartphones',
-    value: '/electronics/phones/smartphones'
+    value: '/electronics/phones/smartphones',
   },
   {
     label: 'iPhone 13 Pro',
     value: '/electronics/phones/smartphones/iphone-13-pro',
-    active: true
-  }
+    active: true,
+  },
 ])
 // Simulate breadcrumb click event
-const handleBreadcrumbClick = (item: any) => {
-  LewMessage.success('Clicked breadcrumb item: ' + item.label)
+function handleBreadcrumbClick(item: any) {
+  LewMessage.success(`Clicked breadcrumb item: ${item.label}`)
 }
 </script>
 

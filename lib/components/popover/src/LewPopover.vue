@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import tippy from 'tippy.js'
 import { watchDebounced } from '@vueuse/core'
 import { LewLoading } from 'lew-ui'
+import tippy from 'tippy.js'
 import { popoverProps } from './props'
 
+const props = defineProps(popoverProps)
+const emit = defineEmits(['show', 'hide'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('loading')) {
   app.use(LewLoading)
 }
 
-const props = defineProps(popoverProps)
 const triggerRef = ref()
 const bodyRef = ref()
 let instance: any
@@ -21,10 +22,10 @@ watchDebounced(
   () => props.placement,
   (value: string) => {
     instance.setProps({
-      placement: value
+      placement: value,
     })
   },
-  watchOptions
+  watchOptions,
 )
 
 // 禁用
@@ -32,12 +33,13 @@ watchDebounced(
   () => props.disabled,
   (value: boolean) => {
     if (value) {
-      instance.disable()
-    } else {
-      instance.enable()
+      instance && instance.disable()
+    }
+    else {
+      instance && instance.enable()
     }
   },
-  watchOptions
+  watchOptions,
 )
 
 // trigger
@@ -46,11 +48,11 @@ watchDebounced(
   (value: string) => {
     if (instance) {
       instance.setProps({
-        trigger: value
+        trigger: value,
       })
     }
   },
-  watchOptions
+  watchOptions,
 )
 
 // trigger
@@ -59,11 +61,11 @@ watchDebounced(
   (value: Element | string) => {
     if (instance) {
       instance.setProps({
-        triggerTarget: value
+        triggerTarget: value,
       })
     }
   },
-  watchOptions
+  watchOptions,
 )
 // offset
 watchDebounced(
@@ -71,13 +73,13 @@ watchDebounced(
   (value: number[]) => {
     if (instance) {
       instance.setProps({
-        offset: value
+        offset: value,
       })
     }
   },
-  watchOptions
+  watchOptions,
 )
-const initTippy = () => {
+function initTippy() {
   if (instance) {
     return
   }
@@ -110,7 +112,7 @@ const initTippy = () => {
     },
     onHide() {
       emit('hide')
-    }
+    },
   })
   instance.popper.children[0].setAttribute('data-lew', 'popover')
 
@@ -134,23 +136,21 @@ onDeactivated(() => {
   instance = null
 })
 
-const emit = defineEmits(['show', 'hide'])
-
-const show = () => {
+function show() {
   instance.show()
 }
 
-const hide = () => {
+function hide() {
   instance.hide()
 }
 
-const refresh = () => {
+function refresh() {
   instance.setProps({})
 }
 
 onUnmounted(() => {
-  instance.hide()
-  instance.destroy()
+  instance && instance.hide()
+  instance && instance.destroy()
 })
 
 defineExpose({ show, hide, refresh })
@@ -159,22 +159,22 @@ defineExpose({ show, hide, refresh })
 <template>
   <div class="lew-popover">
     <div ref="triggerRef" class="lew-popover-trigger">
-      <slot name="trigger"></slot>
+      <slot name="trigger" />
     </div>
     <div
       ref="bodyRef"
-      class="lew-popover-body"
       v-loading="{
         visible: loading,
-        iconSize: 16
+        iconSize: 16,
       }"
+      class="lew-popover-body"
       :class="popoverBodyClassName"
       :style="{
         borderRadius: 'var(--lew-border-radius-small)',
-        overflow: loading ? 'hidden' : ''
+        overflow: loading ? 'hidden' : '',
       }"
     >
-      <slot name="popover-body" :show="show" :hide="hide"></slot>
+      <slot name="popover-body" :show="show" :hide="hide" />
     </div>
   </div>
 </template>

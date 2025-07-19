@@ -9,9 +9,9 @@ const fileList = ref<UploadFileItem[]>([])
   <lew-flex width="500px">
     <lew-upload
       v-model="fileList"
-      :uploadHelper="uploadHelper"
+      :upload-helper="uploadHelper"
       accept="image/*"
-      :maxFileSize="1024 * 500"
+      :max-file-size="1024 * 500"
       tips="证件照格式：只能上传jpg/png文件，且不超过500kb"
     />
   </lew-flex>

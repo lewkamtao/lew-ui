@@ -2,13 +2,13 @@
 const inputValues = reactive({
   email: '',
   website: '',
-  address: ''
+  address: '',
 })
 
 const selectValues = reactive({
   protocol: 'https://',
   domain: '.com',
-  city: 'New York'
+  city: 'New York',
 })
 
 const options = {
@@ -17,34 +17,34 @@ const options = {
     { label: 'London', value: 'London' },
     { label: 'Tokyo', value: 'Tokyo' },
     { label: 'Berlin', value: 'Berlin' },
-    { label: 'Canberra', value: 'Canberra' }
+    { label: 'Canberra', value: 'Canberra' },
   ],
   protocols: [
     { label: 'http://', value: 'http://' },
-    { label: 'https://', value: 'https://' }
+    { label: 'https://', value: 'https://' },
   ],
   domains: [
     { label: '.com', value: '.com' },
     { label: '.cn', value: '.cn' },
     { label: '.org', value: '.org' },
-    { label: '.net', value: '.net' }
-  ]
+    { label: '.net', value: '.net' },
+  ],
 }
 
-const getSuffixTooltip = () => {
+function getSuffixTooltip() {
   const domainDesc = {
     '.com': 'The common top-level domain for commercial websites',
     '.cn': 'The national top-level domain for China',
     '.org': 'Domain for non-profit organizations',
-    '.net': 'Domain for network service providers'
+    '.net': 'Domain for network service providers',
   }[selectValues.domain]
 
   return domainDesc
 }
 
-const getPrefixesTooltip = () => {
-  const protocolDesc =
-    selectValues.protocol === 'https://'
+function getPrefixesTooltip() {
+  const protocolDesc
+    = selectValues.protocol === 'https://'
       ? 'Secure encrypted hypertext transfer protocol'
       : 'Standard hypertext transfer protocol'
 
@@ -60,28 +60,28 @@ const getPrefixesTooltip = () => {
       min-width="180px"
       clearable
       suffix="text"
-      suffixValue="@gmail.com"
+      suffix-value="@gmail.com"
       placeholder="Please enter your email"
     />
     <lew-input
       v-model="inputValues.website"
-      v-model:prefixValue="selectValues.protocol"
-      v-model:suffixValue="selectValues.domain"
+      v-model:prefix-value="selectValues.protocol"
+      v-model:suffix-value="selectValues.domain"
       prefixes="select"
-      :prefixesOptions="options.protocols"
+      :prefixes-options="options.protocols"
       suffix="select"
       width="500px"
-      :suffixOptions="options.domains"
-      :suffixTooltip="getSuffixTooltip"
-      :prefixesTooltip="getPrefixesTooltip"
+      :suffix-options="options.domains"
+      :suffix-tooltip="getSuffixTooltip"
+      :prefixes-tooltip="getPrefixesTooltip"
       placeholder="Please enter the website name"
     />
     <lew-input
       v-model="inputValues.address"
-      v-model:prefixValue="selectValues.city"
+      v-model:prefix-value="selectValues.city"
       prefixes="select"
       width="500px"
-      :prefixesOptions="options.cities"
+      :prefixes-options="options.cities"
       placeholder="Please enter the detailed address"
     />
   </lew-flex>

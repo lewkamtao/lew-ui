@@ -7,7 +7,7 @@ const contextMenu = {
   isDividerLine: 'Linea divisoria',
   checkable: 'Casella di controllo',
   checked: 'Selezionato',
-  onClick: 'Evento click'
+  onClick: 'Evento click',
 }
 
 export default {
@@ -22,7 +22,7 @@ export default {
     install: 'Installazione',
     components: 'Componenti',
     formEngine: 'Form Engine',
-    descEngine: 'Description Engine'
+    descEngine: 'Description Engine',
   },
   base: {
     base: 'Base',
@@ -31,7 +31,7 @@ export default {
     data: 'Dati',
     feedback: 'Feedback',
     close: 'Chiudi',
-    showCode: 'Mostra codice'
+    showCode: 'Mostra codice',
   },
   components: {
     image: {
@@ -39,16 +39,16 @@ export default {
       description:
         'Visualizza le immagini in modo elegante, con supporto per lazy loading, stati di caricamento e gestione degli errori',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
         title: 'Stato di caricamento',
         tipsTitle: 'Suggerimento',
         tipsContent:
-          'È necessario impostare larghezza e altezza per visualizzare il placeholder durante il caricamento.'
+          'È necessario impostare larghezza e altezza per visualizzare il placeholder durante il caricamento.',
       },
       demo3: {
-        title: 'Errore di caricamento'
+        title: 'Errore di caricamento',
       },
       props: {
         src: 'URL immagine',
@@ -59,25 +59,26 @@ export default {
         objectPosition: 'Posizione immagine',
         lazy: 'Abilita lazy loading',
         loading: 'Mostra stato di caricamento',
-        title: 'Titolo immagine'
-      }
+        title: 'Titolo immagine',
+      },
     },
     avatar: {
       name: 'Avatar',
       description:
         'Un elegante componente avatar che supporta immagini, icone e testo',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Stato'
+        title: 'Stato',
       },
       demo3: {
-        title: 'Avatar predefinito'
+        title: 'Avatar predefinito',
       },
       demo4: {
         title: 'Forma',
-        description: "Controlla la forma dell'avatar tramite `shape`, i valori possibili sono `circle`, `square`, `sharp`."
+        description:
+          'Controlla la forma dell\'avatar tramite `shape`, i valori possibili sono `circle`, `square`, `sharp`.',
       },
       props: {
         size: 'Dimensione',
@@ -88,29 +89,29 @@ export default {
         status: 'Stato',
         objectFit: 'Modalità di riempimento',
         objectPosition: 'Posizione immagine',
-        statusPlacement: 'Posizione indicatore di stato'
-      }
+        statusPlacement: 'Posizione indicatore di stato',
+      },
     },
     button: {
       name: 'Pulsante',
-      description: "Cliccalo per un'interazione fluida e scorrevole",
+      description: 'Cliccalo per un\'interazione fluida e scorrevole',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Colori'
+        title: 'Colori',
       },
       demo3: {
-        title: 'Icone'
+        title: 'Icone',
       },
       demo4: {
-        title: 'Stato di caricamento'
+        title: 'Stato di caricamento',
       },
       demo5: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo6: {
-        title: 'Supporto Promise'
+        title: 'Supporto Promise',
       },
       props: {
         text: 'Testo pulsante',
@@ -122,33 +123,33 @@ export default {
         dashed: 'Bordo tratteggiato',
         loading: 'Stato di caricamento',
         disabled: 'Disabilitato',
-        request: 'Richiesta'
-      }
+        request: 'Richiesta',
+      },
     },
     tag: {
       name: 'Tag',
       description:
         'Un potente strumento di etichettatura per categorizzare i contenuti',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Tipi'
+        title: 'Tipi',
       },
       demo3: {
-        title: 'Dimensioni'
+        title: 'Dimensioni',
       },
       demo4: {
-        title: 'Colori'
+        title: 'Colori',
       },
       demo5: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo6: {
-        title: 'Chiudibile'
+        title: 'Chiudibile',
       },
       demo7: {
-        title: 'Slot'
+        title: 'Slot',
       },
       props: {
         text: 'Testo del tag (priorità maggiore dello slot, testo tagliato se eccede la larghezza)',
@@ -158,27 +159,27 @@ export default {
         closable: 'Chiudibile',
         disabled: 'Disabilitato',
         round: 'Bordi arrotondati',
-        oversize: 'Dimensione più ampia'
-      }
+        oversize: 'Dimensione più ampia',
+      },
     },
     badge: {
       name: 'Badge',
       description:
-        "Un punto rosso nell'angolo superiore destro per notifiche evidenti",
+        'Un punto rosso nell\'angolo superiore destro per notifiche evidenti',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Punto'
+        title: 'Punto',
       },
       demo3: {
-        title: 'Uso standalone'
+        title: 'Uso standalone',
       },
       demo4: {
-        title: 'Testo'
+        title: 'Testo',
       },
       demo5: {
-        title: 'In elaborazione'
+        title: 'In elaborazione',
       },
       props: {
         text: 'Testo badge',
@@ -187,43 +188,43 @@ export default {
         max: 'Valore massimo (mostra max+ se superato)',
         color: 'Colore badge',
         disabled: 'Disabilitato',
-        value: 'Valore badge (mostra punto se vuoto)'
-      }
+        value: 'Valore badge (mostra punto se vuoto)',
+      },
     },
     title: {
       name: 'Titolo',
-      description: "Non solo un titolo, ma l'essenza del contenuto",
+      description: 'Non solo un titolo, ma l\'essenza del contenuto',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Grassetto'
+        title: 'Grassetto',
       },
       demo3: {
-        title: 'Colori'
+        title: 'Colori',
       },
       props: {
         text: 'Contenuto testuale',
         size: 'Dimensione testo (numero in pixel o stringa es. "1.5em")',
         bold: 'Peso font (valori da 100 a 900)',
-        color: 'Colore testo (nome predefinito o valore personalizzato)'
-      }
+        color: 'Colore testo (nome predefinito o valore personalizzato)',
+      },
     },
     textTrim: {
       name: 'Testo troncato',
       description:
         'Gestisce elegantemente i testi lunghi preservando il layout',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Ellissi multilinea'
+        title: 'Ellissi multilinea',
       },
       demo3: {
-        title: 'Testo finale'
+        title: 'Testo finale',
       },
       demo4: {
-        title: 'Allineamento'
+        title: 'Allineamento',
       },
       props: {
         text: 'Contenuto testuale',
@@ -233,21 +234,21 @@ export default {
         offset: 'Offset tooltip [x, y] in pixel',
         textAlign: 'Allineamento orizzontale (quando larghezza < contenitore)',
         delay: 'Ritardo [mostra, nascondi] tooltip in ms',
-        reserveEnd: 'Caratteri da preservare alla fine (ellissi al centro)'
-      }
+        reserveEnd: 'Caratteri da preservare alla fine (ellissi al centro)',
+      },
     },
     flex: {
       name: 'Layout Flex',
       description:
         'Layout flessibile per un controllo preciso del posizionamento',
       demo1: {
-        title: 'Riga'
+        title: 'Riga',
       },
       demo2: {
-        title: 'Colonna'
+        title: 'Colonna',
       },
       demo3: {
-        title: 'Modalità'
+        title: 'Modalità',
       },
       props: {
         direction: 'Direzione elementi',
@@ -256,86 +257,86 @@ export default {
         mode: 'Modalità distribuzione (sovrascrive x/y in base a direction)',
         wrap: 'Permetti a capo automatico',
         gap: 'Spazio tra elementi (pixel)',
-        width: 'Larghezza contenitore (pixel o percentuale)'
-      }
+        width: 'Larghezza contenitore (pixel o percentuale)',
+      },
     },
     mark: {
       name: 'Evidenziatore',
       description: 'Evidenzia il testo importante per una migliore visibilità',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       props: {
         color: 'Tema colore',
         round: 'Bordi arrotondati',
         bold: 'Grassetto',
-        cursor: 'Stile cursore al passaggio'
-      }
+        cursor: 'Stile cursore al passaggio',
+      },
     },
     icon: {
       name: 'Icona',
       description:
-        "Una collezione di icone eleganti per arricchire l'interfaccia"
+        'Una collezione di icone eleganti per arricchire l\'interfaccia',
     },
     backTop: {
       name: 'Torna su',
-      description: "Torna all'inizio della pagina con un click",
+      description: 'Torna all\'inizio della pagina con un click',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Contenuto personalizzato'
+        title: 'Contenuto personalizzato',
       },
       demo3: {
-        title: 'Attivazione tramite direttiva'
+        title: 'Attivazione tramite direttiva',
       },
       props: {
         target: 'Selettore CSS elemento target (default: finestra)',
         right: 'Distanza dal bordo destro (pixel)',
         bottom: 'Distanza dal bordo inferiore (pixel)',
-        valveHeight: 'Altezza soglia per mostrare il pulsante (pixel)'
+        valveHeight: 'Altezza soglia per mostrare il pulsante (pixel)',
       },
       events: {
-        click: 'Callback click torna su'
-      }
+        click: 'Callback click torna su',
+      },
     },
     steps: {
       name: 'Passi',
       description:
-        "Mostra chiaramente il processo di operazione, permettendo all'utente di sapere dove si trova",
+        'Mostra chiaramente il processo di operazione, permettendo all\'utente di sapere dove si trova',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Stato'
+        title: 'Stato',
       },
       demo3: {
-        title: 'Caricamento'
+        title: 'Caricamento',
       },
       model: {
-        modelValue: 'Indice del passo attualmente attivo'
+        modelValue: 'Indice del passo attualmente attivo',
       },
       props: {
         options: 'Array di configurazione dei passi',
         status: 'Stato attuale dei passi',
-        minWidth: 'Larghezza minima del passo'
+        minWidth: 'Larghezza minima del passo',
       },
       options: {
         title: 'Titolo del passo',
-        description: 'Descrizione del passo'
-      }
+        description: 'Descrizione del passo',
+      },
     },
     menu: {
       name: 'Menu',
       description: 'Menu verticale elegante per una navigazione chiara',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       model: {
-        modelValue: 'Valore menu attivo'
+        modelValue: 'Valore menu attivo',
       },
       props: {
-        options: 'Array configurazione menu'
+        options: 'Array configurazione menu',
       },
       menuOptions: {
         label: 'Testo voce menu',
@@ -343,139 +344,139 @@ export default {
         children: 'Voci sottomenu',
         disabled: 'Voce disabilitata',
         icon: 'Icona voce menu',
-        tagText: 'Testo badge',
-        tagColor: 'Colore badge'
-      }
+        tagProps: 'Proprietà badge',
+      },
     },
     menuTree: {
       name: 'Menu ad albero',
       description: 'Menu gerarchico per visualizzare relazioni complesse',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Icone personalizzate'
+        title: 'Icone personalizzate',
       },
       demo3: {
         title: 'Espansione predefinita',
-        description: "Controlla l'espansione tramite v-model."
+        description: 'Controlla l\'espansione tramite v-model.',
       },
       demo4: {
-        title: 'Badge'
+        title: 'Badge',
       },
       demo5: {
-        title: 'Stile personalizzato'
+        title: 'Stile personalizzato',
       },
       model: {
         modelValue: 'Valore menu attivo',
         expandKeys: 'Array chiavi menu espansi',
-        collapsed: 'Menu compresso'
+        collapsed: 'Menu compresso',
       },
       props: {
         options: 'Dati menu gerarchico',
-        width: 'Larghezza menu (valore CSS)'
+        width: 'Larghezza menu (valore CSS)',
       },
       menuTreeItem: {
         label: 'Titolo voce (personalizzabile con slot "label")',
         value: 'Identificatore univoco voce',
         level: 'Livello gerarchico (da 1)',
         icon: 'Funzione rendering icona',
-        tagText: 'Testo badge',
-        tagType: 'Tipo badge',
-        tagColor: 'Colore badge',
+        tagProps: 'Proprietà badge',
         disabled: 'Voce disabilitata',
-        isLeaf: 'Nodo foglia'
-      }
+        isLeaf: 'Nodo foglia',
+      },
     },
     dropdown: {
-      name: 'Menu a discesa',
-      description: 'Menu contestuale a comparsa per azioni rapide',
-      demo1: {
-        title: 'Uso base'
+      'name': 'Menu a discesa',
+      'description': 'Menu contestuale a comparsa per azioni rapide',
+      'demo1': {
+        title: 'Uso base',
       },
-      demo2: {
-        title: 'Non solo pulsanti'
+      'demo2': {
+        title: 'Non solo pulsanti',
       },
-      demo3: {
-        title: 'Voci disabilitate'
+      'demo3': {
+        title: 'Voci disabilitate',
       },
 
-      props: {
+      'props': {
         options: 'Configurazione menu',
         trigger: 'Modalità attivazione',
         placement: 'Posizione menu',
-        checkable: 'Selezionabile'
+        checkable: 'Selezionabile',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
+      'events': {
         show: 'Callback apertura menu',
         hide: 'Callback chiusura menu',
-        change: 'Callback selezione voce'
-      }
+        change: 'Callback selezione voce',
+      },
     },
     breadcrumb: {
       name: 'Breadcrumb',
       description: 'Navigazione chiara del percorso corrente',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Selezione personalizzata'
+        title: 'Selezione personalizzata',
       },
       demo3: {
-        title: 'Tipo separatore'
+        title: 'Tipo separatore',
       },
       props: {
         options: 'Array configurazione breadcrumb',
-        separator: 'Tipo icona separatore'
+        separator: 'Tipo icona separatore',
       },
       breadcrumbOptions: {
         label: 'Testo voce',
         value: 'Valore voce',
-        active: 'Voce attiva'
+        active: 'Voce attiva',
       },
       events: {
-        change: 'Callback cambio voce'
-      }
+        change: 'Callback cambio voce',
+      },
     },
     contextMenu: {
-      name: 'Menu contestuale',
-      description: 'Menu tasto destro elegante per azioni contestuali',
-      demo1: {
-        title: 'Uso base'
+      'name': 'Menu contestuale',
+      'description': 'Menu tasto destro elegante per azioni contestuali',
+      'demo1': {
+        title: 'Uso base',
       },
-      demo2: {
-        title: 'Menu multilivello'
+      'demo2': {
+        title: 'Menu multilivello',
       },
-      demo3: {
-        title: 'Aggiornamento dinamico'
+      'demo3': {
+        title: 'Aggiornamento dinamico',
       },
-      demo4: {
-        title: 'Checkbox'
+      'demo4': {
+        title: 'Checkbox',
       },
-      props: {
+      'props': {
         options: 'Configurazione menu',
-        disabled: 'Menu disabilitato'
+        disabled: 'Menu disabilitato',
       },
-      'options(ContextMenus)': contextMenu
+      'options(ContextMenus)': contextMenu,
     },
     form: {
       name: 'Form',
       description: 'Potente gestione dei form per una raccolta dati efficace',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Direzione'
+        title: 'Direzione',
       },
       demo3: {
-        title: 'Validazione personalizzata'
+        title: 'Validazione personalizzata',
       },
       demo4: {
-        title: 'Layout a griglia'
+        title: 'Layout a griglia',
       },
       demo5: {
-        title: 'Configurazione Form Engine'
+        title: 'Configurazione Form Engine',
+      },
+      demo6: {
+        title: 'Validazione asincrona',
       },
       props: {
         options: 'Array configurazione struttura form',
@@ -486,7 +487,7 @@ export default {
         disabled: 'Form disabilitato',
         readonly: 'Form sola lettura',
         direction: 'Direzione campi (x=orizzontale, y=verticale)',
-        formMethods: 'Metodi operazioni form'
+        formMethods: 'Metodi operazioni form',
       },
       formItemProps: {
         label: 'Etichetta campo',
@@ -506,51 +507,51 @@ export default {
         between: 'Spazio tra campi orizzontali',
         gridArea: 'Posizione in griglia',
         outputFormat: 'Formattazione output',
-        inputFormat: 'Formattazione input'
+        inputFormat: 'Formattazione input',
       },
       events: {
-        mounted: 'Callback montaggio campo'
+        mounted: 'Callback montaggio campo',
       },
       methods: {
         getForm: 'Ottieni form',
-        setForm: 'Imposta form'
-      }
+        setForm: 'Imposta form',
+      },
     },
     input: {
       name: 'Input',
       description: 'Campo di input ricco di funzionalità per inserimento dati',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Prefisso/Suffisso'
+        title: 'Prefisso/Suffisso',
       },
       demo3: {
-        title: 'Limite caratteri'
+        title: 'Limite caratteri',
       },
       demo4: {
-        title: 'Allineamento'
+        title: 'Allineamento',
       },
       demo5: {
-        title: 'Password visibile'
+        title: 'Password visibile',
       },
       demo6: {
-        title: 'Larghezza automatica'
+        title: 'Larghezza automatica',
       },
       demo7: {
-        title: 'Selezione al focus'
+        title: 'Selezione al focus',
       },
       demo8: {
-        title: 'Cancellabile'
+        title: 'Cancellabile',
       },
       demo9: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo10: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo11: {
-        title: 'Evento invio'
+        title: 'Evento invio',
       },
       props: {
         type: 'Tipo input',
@@ -574,7 +575,7 @@ export default {
         suffix: 'Tipo suffisso',
         suffixOptions: 'Opzioni suffisso select',
         suffixTooltip: 'Tooltip suffisso',
-        okByEnter: 'Conferma con Invio'
+        okByEnter: 'Conferma con Invio',
       },
       events: {
         change: 'Callback cambio valore',
@@ -582,31 +583,31 @@ export default {
         blur: 'Callback blur',
         input: 'Callback input',
         clear: 'Callback cancellazione',
-        ok: 'Callback conferma'
+        ok: 'Callback conferma',
       },
       model: {
         modelValue: 'Valore legato',
         prefixValue: 'Valore prefisso',
-        suffixValue: 'Valore suffisso'
-      }
+        suffixValue: 'Valore suffisso',
+      },
     },
     inputNumber: {
       name: 'Input numerico',
       description: 'Campo specializzato per input numerici precisi',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Selezione al focus'
+        title: 'Selezione al focus',
       },
       demo3: {
-        title: 'Limiti'
+        title: 'Limiti',
       },
       demo4: {
-        title: 'Precisione'
+        title: 'Precisione',
       },
       demo5: {
-        title: 'Disabilitato/Sola lettura'
+        title: 'Disabilitato/Sola lettura',
       },
       props: {
         min: 'Valore minimo',
@@ -618,42 +619,42 @@ export default {
         readonly: 'Sola lettura',
         width: 'Larghezza (pixel o unità)',
         align: 'Allineamento',
-        selectByFocus: 'Seleziona al focus'
+        selectByFocus: 'Seleziona al focus',
       },
       model: {
-        modelValue: 'Valore legato'
-      }
+        modelValue: 'Valore legato',
+      },
     },
     textarea: {
       name: 'Area di testo',
       description:
         'Campo di testo multilinea per inserire testi lunghi in modo confortevole',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Limite caratteri'
+        title: 'Limite caratteri',
       },
       demo3: {
-        title: 'Seleziona tutto al focus'
+        title: 'Seleziona tutto al focus',
       },
       demo4: {
-        title: 'Cancellabile'
+        title: 'Cancellabile',
       },
       demo5: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo6: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo7: {
-        title: 'Evento su Invio'
+        title: 'Evento su Invio',
       },
       demo8: {
-        title: 'Ridimensionabile'
+        title: 'Ridimensionabile',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         placeholder: 'Testo segnaposto',
@@ -671,7 +672,7 @@ export default {
         maxWidth: 'Larghezza massima',
         maxHeight: 'Altezza massima',
         selectByFocus: 'Seleziona tutto al focus',
-        okByEnter: 'Conferma con Invio (Shift+Invio per nuova riga)'
+        okByEnter: 'Conferma con Invio (Shift+Invio per nuova riga)',
       },
       events: {
         change: 'Callback cambio valore',
@@ -679,39 +680,39 @@ export default {
         blur: 'Callback blur',
         input: 'Callback input',
         clear: 'Callback cancellazione',
-        ok: 'Callback conferma'
-      }
+        ok: 'Callback conferma',
+      },
     },
     inputTag: {
       name: 'Input Tag',
       description:
         'Gestisci facilmente tag multipli per organizzare meglio i dati',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Dimensioni'
+        title: 'Dimensioni',
       },
       demo3: {
-        title: 'Duplicati permessi'
+        title: 'Duplicati permessi',
       },
       demo4: {
-        title: 'Valore predefinito controllato'
+        title: 'Valore predefinito controllato',
       },
       demo5: {
-        title: 'Cancellabile'
+        title: 'Cancellabile',
       },
       demo6: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo7: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo8: {
-        title: 'Lunghezza massima'
+        title: 'Lunghezza massima',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         size: 'Dimensione',
@@ -721,45 +722,45 @@ export default {
         readonly: 'Sola lettura',
         allowDuplicates: 'Permetti duplicati',
         maxLength: 'Numero massimo di tag',
-        width: 'Larghezza'
+        width: 'Larghezza',
       },
       events: {
         change: 'Callback cambio valore',
         clear: 'Callback cancellazione',
         add: 'Callback aggiunta tag',
-        remove: 'Callback rimozione tag'
-      }
+        remove: 'Callback rimozione tag',
+      },
     },
     checkbox: {
-      name: 'Checkbox',
-      description:
+      'name': 'Checkbox',
+      'description':
         'Selettore per scelte multiple, rende le selezioni più intuitive',
-      demo1: {
-        title: 'Uso base'
+      'demo1': {
+        title: 'Uso base',
       },
-      demo2: {
-        title: 'Distribuzione verticale'
+      'demo2': {
+        title: 'Distribuzione verticale',
       },
-      demo3: {
-        title: 'A blocco'
+      'demo3': {
+        title: 'A blocco',
       },
-      demo4: {
-        title: 'Rotondo'
+      'demo4': {
+        title: 'Rotondo',
       },
-      demo5: {
-        title: 'Sola lettura'
+      'demo5': {
+        title: 'Sola lettura',
       },
-      demo6: {
-        title: 'Disabilitato'
+      'demo6': {
+        title: 'Disabilitato',
       },
-      demo7: {
-        title: 'Modalità singola'
+      'demo7': {
+        title: 'Modalità singola',
       },
       'model(CheckboxGroup)': {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       'model(Checkbox)': {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       'props(CheckboxGroup)': {
         options: 'Opzioni',
@@ -769,7 +770,7 @@ export default {
         direction: 'Direzione',
         block: 'Visualizzazione a blocco',
         round: 'Stile arrotondato',
-        iconable: 'Permetti icone'
+        iconable: 'Permetti icone',
       },
       'props(Checkbox)': {
         label: 'Etichetta',
@@ -781,44 +782,44 @@ export default {
         block: 'Visualizzazione a blocco',
         round: 'Stile arrotondato',
         iconable: 'Permetti icone',
-        certain: 'Stato certo'
+        certain: 'Stato certo',
       },
       'events(Checkbox)': {
-        change: 'Callback cambio valore'
+        change: 'Callback cambio valore',
       },
       'events(CheckboxGroup)': {
-        change: 'Callback cambio valore'
+        change: 'Callback cambio valore',
       },
-      options: {
+      'options': {
         label: 'Etichetta',
         value: 'Valore',
-        disabled: 'Disabilitato'
-      }
+        disabled: 'Disabilitato',
+      },
     },
     radio: {
-      name: 'Radio',
-      description:
+      'name': 'Radio',
+      'description':
         'Selettore per scelta singola, rende le selezioni più chiare',
-      demo1: {
-        title: 'Uso base'
+      'demo1': {
+        title: 'Uso base',
       },
-      demo2: {
-        title: 'Distribuzione verticale'
+      'demo2': {
+        title: 'Distribuzione verticale',
       },
-      demo3: {
-        title: 'A blocco'
+      'demo3': {
+        title: 'A blocco',
       },
-      demo4: {
-        title: 'Forma'
+      'demo4': {
+        title: 'Forma',
       },
-      demo5: {
-        title: 'Sola lettura'
+      'demo5': {
+        title: 'Sola lettura',
       },
-      demo6: {
-        title: 'Disabilitato'
+      'demo6': {
+        title: 'Disabilitato',
       },
-      model: {
-        modelValue: 'Valore legato'
+      'model': {
+        modelValue: 'Valore legato',
       },
       'props(RadioGroup)': {
         size: 'Dimensione',
@@ -828,38 +829,38 @@ export default {
         iconable: 'Permetti icone',
         options: 'Opzioni',
         readonly: 'Sola lettura',
-        round: 'Stile arrotondato'
+        round: 'Stile arrotondato',
       },
-      options: {
+      'options': {
         label: 'Etichetta',
         value: 'Valore',
-        disabled: 'Disabilitato'
+        disabled: 'Disabilitato',
       },
-      events: {
-        change: 'Callback cambio valore'
-      }
+      'events': {
+        change: 'Callback cambio valore',
+      },
     },
     tabs: {
       name: 'Schede',
       description:
         'Organizza i contenuti in categorie per una navigazione fluida',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Larghezza adattiva'
+        title: 'Larghezza adattiva',
       },
       demo3: {
-        title: 'Larghezza elemento personalizzata'
+        title: 'Larghezza elemento personalizzata',
       },
       demo4: {
-        title: 'Linea'
+        title: 'Linea',
       },
       demo5: {
-        title: 'Arrotondato'
+        title: 'Arrotondato',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         options: 'Opzioni',
@@ -869,42 +870,48 @@ export default {
         itemWidth: 'Larghezza elemento',
         round: 'Stile arrotondato',
         disabled: 'Disabilitato',
-        readonly: 'Sola lettura'
+        readonly: 'Sola lettura',
       },
       options: {
         label: 'Etichetta',
-        value: 'Valore'
-      }
+        value: 'Valore',
+      },
     },
     select: {
       name: 'Select',
       description: 'Menu a tendina per selezioni più comode',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Ricerca'
+        title: 'Ricerca',
       },
       demo3: {
-        title: 'Supporto slot'
+        title: 'Supporto slot',
       },
       demo4: {
-        title: 'Opzioni disabilitate'
+        title: 'Opzioni disabilitate',
       },
       demo5: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo6: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo7: {
-        title: 'Stato vuoto personalizzato'
+        title: 'Stato vuoto personalizzato',
       },
       demo8: {
-        title: 'Gruppi'
+        title: 'Gruppi',
+      },
+      demo9: {
+        title: 'Metodo inizializzazione opzioni',
+      },
+      demo10: {
+        title: 'Cache ricerca',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         defaultValue: 'Valore predefinito',
@@ -922,50 +929,57 @@ export default {
         clearable: 'Cancellabile',
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
-        showCheckIcon: 'Mostra icona spunta'
+        showCheckIcon: 'Mostra icona spunta',
+        initOptionsMethod: 'Metodo inizializzazione opzioni',
+        enableSearchCache: 'Abilita cache ricerca',
       },
       events: {
         change: 'Callback cambio valore',
         clear: 'Callback cancellazione',
         blur: 'Callback blur',
-        focus: 'Callback focus'
+        focus: 'Callback focus',
       },
       options: {
         label: 'Etichetta',
         value: 'Valore',
-        disabled: 'Disabilitato'
+        disabled: 'Disabilitato',
       },
       slots: {
         item: 'Contenuto opzione personalizzato',
-        empty: 'Contenuto stato vuoto personalizzato'
-      }
+        empty: 'Contenuto stato vuoto personalizzato',
+      },
     },
     selectMultiple: {
       name: 'Select Multiplo',
       description: 'Menu a tendina per selezioni multiple flessibili',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Metodo filtro personalizzato'
+        title: 'Metodo filtro personalizzato',
       },
       demo3: {
-        title: 'Supporto slot'
+        title: 'Supporto slot',
       },
       demo4: {
-        title: 'Opzioni disabilitate'
+        title: 'Opzioni disabilitate',
       },
       demo5: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo6: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo7: {
-        title: 'Slot stato vuoto'
+        title: 'Slot stato vuoto',
       },
       demo8: {
-        title: 'Gruppi'
+        title: 'Gruppi',
+      },
+      demo9: {
+        title: 'Metodo inizializzazione opzioni',
+        description:
+          'Utilizza ```initOptionsMethod``` per inizializzare i dati di selezione multipla e restituire un oggetto ```Promise```',
       },
       props: {
         options: 'Opzioni',
@@ -984,49 +998,51 @@ export default {
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
         showCheckIcon: 'Mostra icona spunta',
-        defaultValue: 'Valore predefinito'
+        defaultValue: 'Valore predefinito',
+        initOptionsMethod: 'Metodo inizializzazione opzioni',
+        enableSearchCache: 'Abilita cache ricerca',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       events: {
         change: 'Cambio valore',
         blur: 'Perdita focus',
-        focus: 'Acquisizione focus'
+        focus: 'Acquisizione focus',
       },
       options: {
         label: 'Etichetta',
         value: 'Valore',
-        disabled: 'Disabilitato'
+        disabled: 'Disabilitato',
       },
       slots: {
         item: 'Contenuto opzione personalizzato',
-        empty: 'Contenuto stato vuoto personalizzato'
-      }
+        empty: 'Contenuto stato vuoto personalizzato',
+      },
     },
     datePicker: {
       name: 'Selettore Data',
       description: 'Strumento intuitivo per selezione date precise',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Cancellabile'
+        title: 'Cancellabile',
       },
       demo3: {
-        title: 'Formato personalizzato'
+        title: 'Formato personalizzato',
       },
       demo4: {
-        title: 'Preimpostazioni'
+        title: 'Preimpostazioni',
       },
       demo5: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo6: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         valueFormat: 'Formato valore',
@@ -1036,30 +1052,30 @@ export default {
         clearable: 'Cancellabile',
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
-        presets: 'Valori preimpostati'
+        presets: 'Valori preimpostati',
       },
       events: {
         change: 'Cambio valore',
         focus: 'Acquisizione focus',
         blur: 'Perdita focus',
-        clear: 'Cancellazione'
-      }
+        clear: 'Cancellazione',
+      },
     },
     dateRangePicker: {
       name: 'Selettore Intervallo Date',
       description:
         'Strumento per selezionare intervalli di date in modo semplice e intuitivo',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Cancellabile'
+        title: 'Cancellabile',
       },
       demo3: {
-        title: 'Altro'
+        title: 'Altro',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         startKey: 'Chiave inizio',
@@ -1071,44 +1087,49 @@ export default {
         placeholderEnd: 'Testo segnaposto fine',
         clearable: 'Cancellabile',
         readonly: 'Sola lettura',
-        disabled: 'Disabilitato'
+        disabled: 'Disabilitato',
       },
       events: {
         change: 'Cambio valore',
         focus: 'Acquisizione focus',
         blur: 'Perdita focus',
-        clear: 'Cancellazione'
-      }
+        clear: 'Cancellazione',
+      },
     },
     cascader: {
       name: 'Selettore a Cascata',
       description: 'Selettore per dati gerarchici multilivello',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Modalità libera'
+        title: 'Modalità libera',
       },
       demo3: {
-        title: 'Mostra solo ultimo livello'
+        title: 'Mostra solo ultimo livello',
       },
       demo4: {
-        title: 'Caricamento asincrono'
+        title: 'Caricamento asincrono',
       },
       demo5: {
-        title: 'Cancellabile'
+        title: 'Cancellabile',
       },
       demo6: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo7: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo8: {
-        title: 'Opzioni disabilitate'
+        title: 'Opzioni disabilitate',
+      },
+      demo9: {
+        title: 'Metodo inizializzazione opzioni',
+        description:
+          'Utilizza ```initOptionsMethod``` per inizializzare i dati a cascata e restituire un oggetto ```Promise```',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         width: 'Larghezza',
@@ -1122,50 +1143,63 @@ export default {
         size: 'Dimensione',
         trigger: 'Modalità attivazione',
         loadMethod: 'Metodo caricamento',
-        readonly: 'Sola lettura'
+        readonly: 'Sola lettura',
+        initOptionsMethod: 'Metodo inizializzazione opzioni',
       },
       options: {
         label: 'Etichetta',
         value: 'Valore',
         isLeaf: 'È nodo foglia',
         children: 'Figli',
-        disabled: 'Disabilitato'
-      }
+        disabled: 'Disabilitato',
+      },
     },
     treeSelect: {
       name: 'Selettore ad Albero',
       description: 'Selettore con struttura gerarchica ad albero',
       demo1: {
-        title: 'Base'
+        title: 'Base',
       },
       demo2: {
-        title: 'Caricamento asincrono'
+        title: 'Caricamento asincrono',
       },
       demo3: {
-        title: 'Slot personalizzati'
+        title: 'Slot personalizzati',
       },
       demo4: {
-        title: 'Elementi disabilitati'
+        title: 'Elementi disabilitati',
       },
       demo5: {
-        title: 'Espandi tutto di default'
+        title: 'Espandi tutto di default',
       },
       demo6: {
-        title: 'Ricercabile'
+        title: 'Ricercabile',
       },
       demo7: {
-        title: 'Slot stato vuoto'
+        title: 'Slot stato vuoto',
       },
       demo8: {
-        title: 'Altro'
+        title: 'Altro',
+      },
+      demo9: {
+        title: 'Sola lettura',
+      },
+      demo10: {
+        title: 'Disabilitato',
+      },
+      demo11: {
+        title: 'Inizializza dati',
+        description:
+          'Utilizza ```initOptionsMethod``` per inizializzare i dati ad albero e restituire un oggetto ```Promise```',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         dataSource: 'Sorgente dati',
         defaultValue: 'Valore predefinito',
         placeholder: 'Testo segnaposto',
+        width: 'Larghezza',
         size: 'Dimensione componente',
         disabled: 'Disabilitato',
         clearable: 'Cancellabile',
@@ -1183,25 +1217,25 @@ export default {
         keyField: 'Campo chiave nodo',
         labelField: 'Campo etichetta nodo',
         disabledField: 'Campo disabilitazione nodo',
-        initTree: 'Metodo inizializzazione albero',
-        loadMethod: 'Metodo caricamento asincrono'
+        initOptionsMethod: 'Metodo inizializzazione albero',
+        loadMethod: 'Metodo caricamento asincrono',
       },
       slots: {
-        handle: 'Nome slot'
-      }
+        handle: 'Nome slot',
+      },
     },
     inputTable: {
       name: 'Tabella Input',
       description:
         'Input dati in formato tabellare per inserimenti multipli efficienti',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Valori predefiniti'
+        title: 'Valori predefiniti',
       },
       demo3: {
-        title: 'Avanzato'
+        title: 'Avanzato',
       },
       props: {
         columns: 'Configurazione colonne',
@@ -1218,29 +1252,29 @@ export default {
         sortable: 'Ordinabile',
         autoUniqueId: 'ID unico automatico',
         uniqueField: 'Campo univoco',
-        sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento'
-      }
+        sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento',
+      },
     },
     switch: {
       name: 'Interruttore',
       description: 'Selettore a interruttore per stati binari',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Quadrato'
+        title: 'Quadrato',
       },
       demo3: {
-        title: 'Simula richiesta'
+        title: 'Simula richiesta',
       },
       demo4: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo5: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       model: {
-        modelValue: 'Nome parametro'
+        modelValue: 'Nome parametro',
       },
       props: {
         size: 'Dimensione',
@@ -1248,35 +1282,35 @@ export default {
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
         request: 'Richiesta',
-        loading: 'Caricamento'
+        loading: 'Caricamento',
       },
       events: {
-        change: 'Nome evento'
-      }
+        change: 'Nome evento',
+      },
     },
     slider: {
       name: 'Cursore',
       description: 'Selezione valori tramite trascinamento',
       demo1: {
-        title: 'Dimensioni'
+        title: 'Dimensioni',
       },
       demo2: {
-        title: 'Passi diversi'
+        title: 'Passi diversi',
       },
       demo3: {
-        title: 'Intervallo limitato'
+        title: 'Intervallo limitato',
       },
       demo4: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo5: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo6: {
-        title: 'Configurazioni'
+        title: 'Configurazioni',
       },
       model: {
-        modelValue: 'Nome parametro'
+        modelValue: 'Nome parametro',
       },
       props: {
         size: 'Dimensione',
@@ -1286,32 +1320,32 @@ export default {
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
         options: 'Opzioni',
-        formatTooltip: 'Formatta tooltip'
-      }
+        formatTooltip: 'Formatta tooltip',
+      },
     },
     sliderRange: {
       name: 'Cursore Intervallo',
       description: 'Selezione intervalli di valori tramite cursore doppio',
       demo1: {
-        title: 'Dimensioni'
+        title: 'Dimensioni',
       },
       demo2: {
-        title: 'Passi diversi'
+        title: 'Passi diversi',
       },
       demo3: {
-        title: 'Intervallo limitato'
+        title: 'Intervallo limitato',
       },
       demo4: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo5: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo6: {
-        title: 'Configurazioni'
+        title: 'Configurazioni',
       },
       model: {
-        modelValue: 'Nome parametro'
+        modelValue: 'Nome parametro',
       },
       props: {
         size: 'Dimensione',
@@ -1321,90 +1355,90 @@ export default {
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
         options: 'Opzioni',
-        formatTooltip: 'Formatta tooltip'
-      }
+        formatTooltip: 'Formatta tooltip',
+      },
     },
     rate: {
       name: 'Valutazione',
       description: 'Componente valutazione a stelle',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       demo3: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo4: {
-        title: 'Suggerimenti'
+        title: 'Suggerimenti',
       },
       model: {
-        modelValue: 'Nome parametro'
+        modelValue: 'Nome parametro',
       },
       props: {
         size: 'Dimensione',
         count: 'Quantità',
         tips: 'Suggerimenti',
         readonly: 'Sola lettura',
-        disabled: 'Disabilitato'
-      }
+        disabled: 'Disabilitato',
+      },
     },
     colorPicker: {
       name: 'Selettore Colore',
       description: 'Strumento avanzato per selezione colori precisa',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Dimensioni diverse'
+        title: 'Dimensioni diverse',
       },
       demo3: {
-        title: 'Larghezza personalizzata'
+        title: 'Larghezza personalizzata',
       },
       demo4: {
-        title: 'Disabilitato'
+        title: 'Disabilitato',
       },
       demo5: {
-        title: 'Sola lettura'
+        title: 'Sola lettura',
       },
       model: {
-        modelValue: 'Nome parametro'
+        modelValue: 'Nome parametro',
       },
       props: {
         size: 'Dimensione',
         width: 'Larghezza',
         placeholder: 'Segnaposto',
         disabled: 'Disabilitato',
-        readonly: 'Sola lettura'
-      }
+        readonly: 'Sola lettura',
+      },
     },
     upload: {
       name: 'Caricamento',
       description: 'Componente per caricamento file semplificato',
       demo1: {
-        title: 'Base'
+        title: 'Base',
       },
       demo2: {
-        title: 'Limiti formato e dimensione'
+        title: 'Limiti formato e dimensione',
       },
       demo3: {
-        title: 'Carica immagine'
+        title: 'Carica immagine',
       },
       demo4: {
-        title: 'Suggerimenti personalizzati'
+        title: 'Suggerimenti personalizzati',
       },
       demo5: {
-        title: 'Galleria foto'
+        title: 'Galleria foto',
       },
       demo6: {
-        title: 'Senza caricamento'
+        title: 'Senza caricamento',
       },
       demo7: {
-        title: 'Anteprima'
+        title: 'Anteprima',
       },
       model: {
-        modelValue: 'Valore legato'
+        modelValue: 'Valore legato',
       },
       props: {
         accept: 'Tipi file accettati',
@@ -1417,8 +1451,8 @@ export default {
         size: 'Dimensione',
         tips: 'Suggerimenti',
         uploadHelper: 'Assistente caricamento',
-        viewMode: 'Modalità visualizzazione'
-      }
+        viewMode: 'Modalità visualizzazione',
+      },
     },
     table: {
       name: 'Tabella',
@@ -1426,43 +1460,46 @@ export default {
       model: {
         modelValue: 'Nome parametro',
         selectedKeys: 'Chiavi selezionate',
-        sortValue: 'Valore ordinamento'
+        sortValue: 'Valore ordinamento',
       },
       demo1: {
-        title: 'Base'
+        title: 'Base',
       },
       demo2: {
-        title: 'Righe/Colonne fisse'
+        title: 'Righe/Colonne fisse',
       },
       demo3: {
-        title: 'Azioni personalizzate'
+        title: 'Azioni personalizzate',
       },
       demo4: {
-        title: 'Slot'
+        title: 'Slot',
       },
       demo5: {
-        title: 'Stile personalizzato'
+        title: 'Stile personalizzato',
       },
       demo6: {
-        title: 'Selezione'
+        title: 'Selezione',
       },
       demo7: {
-        title: 'Ordinabile'
+        title: 'Ordinabile',
       },
       demo8: {
-        title: 'Rendering personalizzato'
+        title: 'Rendering personalizzato',
       },
       demo9: {
-        title: 'Funzionalità complete'
+        title: 'Funzionalità complete',
       },
       demo10: {
-        title: 'Nessun dato'
+        title: 'Nessun dato',
       },
       demo11: {
         title: 'Intestazioni raggruppate',
         tipsTitle: 'Avviso limitazione',
         tipsContent:
-          'Se desideri che le intestazioni raggruppate abbiano colonne fisse, devi impostare la larghezza per tutte le colonne fisse, inclusi tutti i nodi padre, altrimenti potrebbero verificarsi disallineamenti.'
+          'Se desideri che le intestazioni raggruppate abbiano colonne fisse, devi impostare la larghezza per tutte le colonne fisse, inclusi tutti i nodi padre, altrimenti potrebbero verificarsi disallineamenti.',
+      },
+      demo12: {
+        title: 'Ordinamento drag & drop',
       },
       props: {
         columns: 'Colonne',
@@ -1474,7 +1511,7 @@ export default {
         rowKey: 'Chiave riga',
         bordered: 'Bordi',
         sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento',
-        sortable: 'Ordinabile'
+        sortable: 'Ordinabile',
       },
       tableColumns: {
         field: 'Campo',
@@ -1483,69 +1520,69 @@ export default {
         type: 'Tipo',
         width: 'Larghezza',
         x: 'Asse X',
-        customRender: 'Rendering personalizzato'
-      }
+        customRender: 'Rendering personalizzato',
+      },
     },
     pagination: {
       name: 'Paginazione',
       description: 'Navigazione pagine chiara per sfogliare i dati',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Grande quantità'
+        title: 'Grande quantità',
       },
       demo3: {
-        title: 'Simula asincrono'
+        title: 'Simula asincrono',
       },
       model: {
         total: 'Nome parametro',
         currentPage: 'Pagina corrente',
-        pageSize: 'Dimensione pagina'
+        pageSize: 'Dimensione pagina',
       },
       props: {
         size: 'Dimensione',
         pageSizeOptions: 'Opzioni dimensione pagina',
-        visiblePagesCount: 'Pagine visibili'
+        visiblePagesCount: 'Pagine visibili',
       },
       events: {
-        change: 'Nome evento'
-      }
+        change: 'Nome evento',
+      },
     },
     magicNumber: {
       name: 'Numero Magico',
-      description: 'Componente per animazioni numeriche accattivanti'
+      description: 'Componente per animazioni numeriche accattivanti',
     },
     tree: {
       name: 'Albero',
       description: 'Visualizzazione dati gerarchici strutturata',
       demo1: {
-        title: 'Base'
+        title: 'Base',
       },
       demo2: {
-        title: 'Mostra checkbox'
+        title: 'Mostra checkbox',
       },
       demo3: {
-        title: 'Selezione multipla'
+        title: 'Selezione multipla',
       },
       demo4: {
-        title: 'Modalità relazione padre-figlio'
+        title: 'Modalità relazione padre-figlio',
       },
       demo5: {
-        title: 'Richiesta asincrona'
+        title: 'Richiesta asincrona',
       },
       demo6: {
-        title: 'Espandi tutto di default'
+        title: 'Espandi tutto di default',
       },
       demo7: {
-        title: 'Mostra linee guida'
+        title: 'Mostra linee guida',
       },
       demo8: {
-        title: 'Slot'
+        title: 'Slot',
       },
       model: {
         modelValue: 'Nome parametro',
-        expandedKeys: 'Chiavi nodi espansi'
+        expandedKeys: 'Chiavi nodi espansi',
       },
       props: {
         dataSource: 'Sorgente dati',
@@ -1561,64 +1598,64 @@ export default {
         keyField: 'Campo chiave nodo',
         labelField: 'Campo etichetta nodo',
         disabledField: 'Campo disabilitazione nodo',
-        initTree: 'Metodo inizializzazione albero',
+        initOptionsMethod: 'Metodo inizializzazione albero',
         loadMethod: 'Metodo caricamento asincrono nodi',
-        isSelect: 'È selezionato'
+        isSelect: 'È selezionato',
       },
       slots: {
-        handle: 'Nome slot'
+        handle: 'Nome slot',
       },
       treeDataSource: {
         label: 'Etichetta',
         key: 'Chiave',
         isLeaf: 'È nodo foglia',
         children: 'Figli',
-        disabled: 'Disabilitato'
-      }
+        disabled: 'Disabilitato',
+      },
     },
     collapse: {
-      name: 'Pannello pieghevole Collapse',
-      description:
+      'name': 'Pannello pieghevole Collapse',
+      'description':
         'Area di contenuto che può essere espansa e compressa, per una visualizzazione più ordinata delle informazioni',
-      demo1: {
-        title: 'Utilizzo base'
+      'demo1': {
+        title: 'Utilizzo base',
       },
-      demo2: {
-        title: 'Slot titolo'
+      'demo2': {
+        title: 'Slot titolo',
       },
-      demo3: {
-        title: 'Modalità fisarmonica'
+      'demo3': {
+        title: 'Modalità fisarmonica',
       },
-      model: {
-        modelValue: 'Nome parametro'
+      'model': {
+        modelValue: 'Nome parametro',
       },
       'model(CollapseItem)': {
-        modelValue: 'Nome parametro'
+        modelValue: 'Nome parametro',
       },
-      props: {
-        width: 'Larghezza'
+      'props': {
+        width: 'Larghezza',
       },
       'props(CollapseItem)': {
         collapseKey: 'Chiave di collasso',
         title: 'Titolo',
-        radius: 'Raggio'
-      }
+        radius: 'Raggio',
+      },
     },
     desc: {
       name: 'Lista descrittiva Desc',
       description:
         'Visualizza ordinatamente più campi per una presentazione più strutturata delle informazioni',
       demo1: {
-        title: 'Utilizzo base'
+        title: 'Utilizzo base',
       },
       demo2: {
-        title: 'Direzione'
+        title: 'Direzione',
       },
       demo3: {
-        title: 'Ricco'
+        title: 'Ricco',
       },
       demo4: {
-        title: 'Supporta configurazione online'
+        title: 'Supporta configurazione online',
       },
       props: {
         options: 'Opzioni',
@@ -1631,7 +1668,7 @@ export default {
         columns: 'Colonne',
         labelWidth: 'Larghezza etichetta',
         direction: 'Direzione',
-        bordered: 'Con bordo'
+        bordered: 'Con bordo',
       },
       descItemProps: {
         label: 'Etichetta',
@@ -1646,100 +1683,101 @@ export default {
         labelX: 'Etichetta X',
         valueX: 'Valore X',
         gridArea: 'Area griglia',
-        customRender: 'Rendering personalizzato'
-      }
+        customRender: 'Rendering personalizzato',
+      },
     },
     alert: {
       name: 'Avviso Alert',
       description:
         'Riquadro di avviso per informazioni importanti, per avvertimenti più delicati',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Supporto slot'
+        title: 'Supporto slot',
       },
       demo3: {
-        title: 'Altri scenari'
+        title: 'Altri scenari',
       },
       props: {
         type: 'Tipo',
         title: 'Titolo',
         content: 'Contenuto avviso',
         closeable: 'Chiudibile',
-        footer: 'Contenuto footer'
-      }
+        footer: 'Contenuto footer',
+      },
     },
     message: {
       name: 'Messaggio globale Message',
       description:
         'Feedback leggero di informazioni, per notifiche più concise',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Controllabile'
+        title: 'Controllabile',
       },
       demo3: {
-        title: 'Simulazione richiesta'
+        title: 'Simulazione richiesta',
       },
       events: {
-        close: 'Attivato alla chiusura'
+        close: 'Attivato alla chiusura',
       },
       props: {
         type: 'Tipo',
         content: 'Contenuto messaggio',
-        duration: 'Durata'
-      }
+        duration: 'Durata',
+      },
     },
     notification: {
       name: 'Notifica',
       description: 'Notifiche eleganti per un feedback più intuitivo.',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Durata'
+        title: 'Durata',
       },
       demo3: {
-        title: 'Larghezza personalizzata'
+        title: 'Larghezza personalizzata',
       },
       demo4: {
-        title: 'Mostra barra di avanzamento'
+        title: 'Mostra barra di avanzamento',
       },
       demo5: {
-        title: 'Chiusura manuale'
+        title: 'Chiusura manuale',
       },
       props: {
-        type: 'Tipo',
         title: 'Titolo',
         content: 'Contenuto notifica',
-        delay: 'Durata'
-      }
+        delay: 'Durata',
+        width: 'Larghezza',
+        showProgress: 'Mostra barra di avanzamento',
+      },
     },
     drawer: {
       name: 'Drawer',
       description: 'Pannello a scorrimento laterale per operazioni temporanee.',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Chiusura asincrona'
+        title: 'Chiusura asincrona',
       },
       demo3: {
-        title: 'Intestazione e piè di pagina personalizzati'
+        title: 'Intestazione e piè di pagina personalizzati',
       },
       demo4: {
-        title: 'Chiudi con ESC'
+        title: 'Chiudi con ESC',
       },
       demo5: {
-        title: 'Chiudi cliccando sul overlay'
+        title: 'Chiudi cliccando sul overlay',
       },
       demo6: {
-        title: 'Annidato'
+        title: 'Annidato',
       },
       model: {
-        visible: 'Visibile'
+        visible: 'Visibile',
       },
       props: {
         title: 'Titolo',
@@ -1751,23 +1789,24 @@ export default {
         hideFooter: 'Nascondi piè di pagina',
         okButtonProps: 'Proprietà pulsante OK',
         closeButtonProps: 'Proprietà pulsante Chiudi',
-        zIndex: 'z-index'
-      }
+        zIndex: 'z-index',
+      },
     },
     dialog: {
       name: 'Dialogo',
-      description: 'Finestra di dialogo modale per evidenziare interazioni importanti.',
+      description:
+        'Finestra di dialogo modale per evidenziare interazioni importanti.',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Chiusura asincrona'
+        title: 'Chiusura asincrona',
       },
       demo3: {
-        title: 'Chiudi cliccando sul overlay'
+        title: 'Chiudi cliccando sul overlay',
       },
       demo4: {
-        title: 'Chiudi con ESC'
+        title: 'Chiudi con ESC',
       },
       props: {
         type: 'Tipo',
@@ -1780,53 +1819,54 @@ export default {
         cancel: 'Callback annullamento',
         closeOnClickOverlay: 'Chiudi cliccando sul overlay',
         closeByEsc: 'Chiudi con tasto ESC',
-        transformOrigin: 'Origine trasformazione'
+        transformOrigin: 'Origine trasformazione',
       },
       events: {
         ok: 'Scatta al click su OK',
-        cancel: 'Scatta al click su Annulla'
-      }
+        cancel: 'Scatta al click su Annulla',
+      },
     },
     modal: {
       name: 'Modale',
       description:
         'Finestra modale flessibile, per interazioni popup più ricche',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Chiusura asincrona'
+        title: 'Chiusura asincrona',
       },
       demo3: {
-        title: 'Header e footer personalizzati'
+        title: 'Header e footer personalizzati',
       },
       demo4: {
-        title: 'Chiusura con ESC abilitata'
+        title: 'Chiusura con ESC abilitata',
       },
       model: {
-        visible: 'Visibilità'
+        visible: 'Visibilità',
       },
       props: {
         title: 'Titolo',
         width: 'Larghezza',
-        top: "Distanza dall'alto",
+        top: 'Distanza dall\'alto',
+        maxHeight: 'Altezza massima',
         hideFooter: 'Nascondi footer',
         closeByEsc: 'Chiudi con ESC',
         okButtonProps: 'Proprietà OK',
         closeOnClickOverlay: 'Chiudi al click overlay',
         zIndex: 'Z-index',
-        closeButtonProps: 'Proprietà pulsante Chiudi'
-      }
+        closeButtonProps: 'Proprietà pulsante Chiudi',
+      },
     },
     popok: {
       name: 'Conferma popup Popok',
       description:
         'Conferma leggera, per conferme di operazioni più convenienti',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Modalità trigger'
+        title: 'Modalità trigger',
       },
       props: {
         type: 'Tipo',
@@ -1838,26 +1878,27 @@ export default {
         okText: 'Testo OK',
         cancelText: 'Testo Annulla',
         ok: 'Callback OK',
-        cancel: 'Callback Annulla'
-      }
+        cancel: 'Callback Annulla',
+      },
     },
     popover: {
       name: 'Popover',
-      description: 'Una scheda a comparsa che fornisce informazioni o azioni aggiuntive.',
+      description:
+        'Una scheda a comparsa che fornisce informazioni o azioni aggiuntive.',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Trigger'
+        title: 'Trigger',
       },
       demo3: {
-        title: 'Trigger personalizzato'
+        title: 'Trigger personalizzato',
       },
       demo4: {
-        title: 'Chiudi cliccando all\'esterno'
+        title: 'Chiudi cliccando all\'esterno',
       },
       demo5: {
-        title: 'Stato di caricamento'
+        title: 'Stato di caricamento',
       },
       props: {
         trigger: 'Trigger',
@@ -1867,76 +1908,77 @@ export default {
         hideOnClick: 'Nascondi al click',
         offset: 'Offset',
         popoverBodyClassName: 'Classe corpo popover',
-        triggerTarget: 'Target trigger'
+        triggerTarget: 'Target trigger',
       },
       slots: {
-        trigger: 'Slot trigger',
-        'popover-body': 'Slot corpo popover'
-      }
+        'trigger': 'Slot trigger',
+        'popover-body': 'Slot corpo popover',
+      },
     },
     tooltip: {
       name: 'Tooltip',
       description: 'Semplice fumetto di testo per suggerimenti leggeri.',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Attivazione al click'
+        title: 'Attivazione al click',
       },
       demo3: {
-        title: 'Ritardo'
+        title: 'Ritardo',
       },
       demo4: {
-        title: 'Supporto HTML'
+        title: 'Supporto HTML',
       },
       props: {
         tips: 'Contenuto tooltip',
         placement: 'Posizione',
         trigger: 'Trigger',
         allowHTML: 'Consenti HTML',
-        delay: 'Ritardo'
-      }
+        delay: 'Ritardo',
+      },
     },
     loading: {
       name: 'Caricamento',
-      description: 'Un elegante effetto di caricamento per rendere l\'attesa più piacevole.',
+      description:
+        'Un elegante effetto di caricamento per rendere l\'attesa più piacevole.',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       demo2: {
-        title: 'Dimensione icona personalizzata'
+        title: 'Dimensione icona personalizzata',
       },
       demo3: {
-        title: 'Messaggio personalizzato'
+        title: 'Messaggio personalizzato',
       },
       props: {
         tip: 'Messaggio',
         iconSize: 'Dimensione icona',
-        visible: 'Visibile'
-      }
+        visible: 'Visibile',
+      },
     },
     result: {
       name: 'Risultato',
       description:
         'Per mostrare risultati di operazioni, per feedback più completi',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       props: {
         type: 'Tipo',
         title: 'Titolo',
-        content: 'Contenuto'
+        content: 'Contenuto',
       },
       slots: {
-        handle: 'Slot gestione'
-      }
+        handle: 'Slot gestione',
+      },
     },
     empty: {
       name: 'Stato vuoto Empty',
       description:
         'Visualizzazione stato dati vuoto, per pagine vuote più amichevoli',
       demo1: {
-        title: 'Uso base'
+        title: 'Uso base',
       },
       props: {
         type: 'Tipo',
@@ -1944,23 +1986,23 @@ export default {
         fontSize: 'Dimensione font',
         padding: 'Padding',
         width: 'Larghezza',
-        height: 'Altezza'
-      }
+        height: 'Altezza',
+      },
     },
     actionBox: {
       name: 'Box azioni',
       description: 'Pulsanti di azione flessibili per operazioni rapide',
       demo1: {
-        title: 'Utilizzo base'
+        title: 'Utilizzo base',
       },
       demo2: {
-        title: 'Menu a discesa'
+        title: 'Menu a discesa',
       },
       demo3: {
-        title: 'Icone personalizzate'
+        title: 'Icone personalizzate',
       },
       demo4: {
-        title: 'Stili personalizzati'
+        title: 'Stili personalizzati',
       },
       props: {
         options: 'Configurazione pulsanti azione',
@@ -1968,14 +2010,15 @@ export default {
         dropdownLabel: 'Testo menu a discesa',
         dropdownIcon: 'Icona menu a discesa',
         divider: 'Mostra divisore',
-        iconOnly: 'Mostra solo icona'
+        iconOnly: 'Mostra solo icona',
+        x: 'Posizione X',
       },
       options: {
         label: 'Testo pulsante azione',
         icon: 'Icona pulsante azione',
         onClick: 'Evento click pulsante azione',
-        customRender: 'Contenuto rendering personalizzato'
-      }
-    }
-  }
+        customRender: 'Contenuto rendering personalizzato',
+      },
+    },
+  },
 }

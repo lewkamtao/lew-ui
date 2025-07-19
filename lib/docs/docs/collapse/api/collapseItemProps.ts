@@ -5,5 +5,5 @@ export default {
   title: 'Props(CollapseItem)',
   columnsKey: 'props',
   orderNum: 4,
-  data: convertProps(collapseItemProps)
+  data: convertProps(collapseItemProps),
 }

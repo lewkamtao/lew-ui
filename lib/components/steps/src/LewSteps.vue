@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { stepsProps } from './props'
 import { LewTextTrim } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
 import { any2px } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { stepsProps } from './props'
+
 defineProps(stepsProps)
 const stepsValue: Ref<number | undefined> = defineModel()
 </script>
@@ -22,7 +23,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
         'lew-steps-item-warning':
           index === (stepsValue || 1) - 1 && status === 'warning',
         'lew-steps-item-done':
-          index === (stepsValue || 1) - 1 && status === 'done'
+          index === (stepsValue || 1) - 1 && status === 'done',
       }"
     >
       <div class="lew-steps-item-index">
@@ -47,11 +48,11 @@ const stepsValue: Ref<number | undefined> = defineModel()
         />
 
         <Icon
-          :style="{ color: 'var(--lew-color-primary)' }"
           v-else-if="
-            index < (stepsValue || 1) - 1 ||
-            (index === (stepsValue || 1) - 1 && status === 'done')
+            index < (stepsValue || 1) - 1
+              || (index === (stepsValue || 1) - 1 && status === 'done')
           "
+          :style="{ color: 'var(--lew-color-primary)' }"
           :size="16"
           :stroke-width="3"
           type="check"
@@ -63,15 +64,15 @@ const stepsValue: Ref<number | undefined> = defineModel()
           :style="{ maxWidth: any2px(minWidth) }"
           class="lew-steps-item-title"
         >
-          <lew-text-trim placement="bottom" :text="item.title" />
+          <LewTextTrim placement="bottom" :text="item.title" />
         </div>
         <div
           :style="{ maxWidth: any2px(minWidth) }"
           class="lew-steps-item-description"
         >
-          <lew-text-trim
-            allowHTML
-            :lineClamp="2"
+          <LewTextTrim
+            allow-h-t-m-l
+            :line-clamp="2"
             placement="bottom"
             :text="item.description"
           />

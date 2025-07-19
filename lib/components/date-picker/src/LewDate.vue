@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 import type { Ref } from 'vue'
-import { getMonthDate } from './date'
-import type { RetType, RetItemType } from './date'
-import { dateProps } from './props'
+import type { RetItemType, RetType } from './date'
 import dayjs from 'dayjs'
+import { LewButton, LewFlex, locale } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
-import { LewFlex, LewButton } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { getMonthDate } from './date'
+import { dateProps } from './props'
 
-const emit = defineEmits(['change'])
 const props = defineProps(dateProps)
+const emit = defineEmits(['change'])
 const modelValue: Ref<string | undefined> = defineModel()
 
 // 获取当前年份
@@ -22,14 +21,14 @@ const dateData: Ref<RetType> = ref(getMonthDate())
 
 const dateState = reactive({
   year: _year,
-  month: _month
+  month: _month,
 })
 
-const setMonthDate = () => {
+function setMonthDate() {
   dateData.value = getMonthDate(dateState.year, dateState.month)
 }
 
-const init = (date: string | undefined = '') => {
+function init(date: string | undefined = '') {
   dateState.year = dayjs(date || undefined).year()
   dateState.month = dayjs(date || undefined).month() + 1
   setMonthDate()
@@ -39,39 +38,41 @@ init(modelValue.value)
 
 defineExpose({ init })
 
-const prveMonth = () => {
+function prveMonth() {
   if (dateState.month > 1) {
     dateState.month -= 1
-  } else {
+  }
+  else {
     dateState.year -= 1
     dateState.month = 12
   }
   setMonthDate()
 }
 
-const nextMonth = () => {
+function nextMonth() {
   if (dateState.month < 12) {
     dateState.month += 1
-  } else {
+  }
+  else {
     dateState.year += 1
     dateState.month = 1
   }
   setMonthDate()
 }
 
-const prveYear = () => {
+function prveYear() {
   dateState.year -= 1
   setMonthDate()
 }
 
-const nextYear = () => {
+function nextYear() {
   dateState.year += 1
   setMonthDate()
 }
 
-const selectDateFn = (item: RetItemType) => {
+function selectDateFn(item: RetItemType) {
   const v = `${item.year}-${item.month}-${item.showDate}`
-  let _v = dayjs(v).format(props.valueFormat)
+  const _v = dayjs(v).format(props.valueFormat)
   modelValue.value = _v
   emit('change', _v)
 }
@@ -82,7 +83,7 @@ const checkToday = computed(() => (item: RetItemType) => {
 })
 
 const lewDateItemClassNames = computed(() => (item: RetItemType) => {
-  let e = item.date === item.showDate
+  const e = item.date === item.showDate
   let selected = false
   if (item.date > 0 && item.date <= item.showDate) {
     const v = `${dateState.year}-${dateState.month}-${item.showDate}`
@@ -99,16 +100,17 @@ const headDate = computed(() => {
     locale.t('datePicker.Thu'),
     locale.t('datePicker.Fri'),
     locale.t('datePicker.Sat'),
-    locale.t('datePicker.Sun')
+    locale.t('datePicker.Sun'),
   ]
 })
 </script>
+
 <template>
   <div class="lew-date">
-    <lew-flex x="start" mode="between" class="lew-date-control">
+    <LewFlex x="start" mode="between" class="lew-date-control">
       <div class="lew-date-control-left">
         <!-- 上一年 -->
-        <lew-button
+        <LewButton
           type="light"
           color="gray"
           size="small"
@@ -116,9 +118,9 @@ const headDate = computed(() => {
           @click="prveYear"
         >
           <Icon type="chevrons-left" />
-        </lew-button>
+        </LewButton>
         <!-- 上一月 -->
-        <lew-button
+        <LewButton
           type="light"
           color="gray"
           size="small"
@@ -126,7 +128,7 @@ const headDate = computed(() => {
           @click="prveMonth"
         >
           <Icon type="chevron-left" />
-        </lew-button>
+        </LewButton>
       </div>
       <!-- 日期 -->
       <div class="cur-date">
@@ -134,7 +136,7 @@ const headDate = computed(() => {
       </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
-        <lew-button
+        <LewButton
           type="light"
           color="gray"
           size="small"
@@ -142,9 +144,9 @@ const headDate = computed(() => {
           @click="nextMonth"
         >
           <Icon type="chevron-right" />
-        </lew-button>
+        </LewButton>
         <!-- 下一年 -->
-        <lew-button
+        <LewButton
           type="light"
           color="gray"
           size="small"
@@ -152,9 +154,9 @@ const headDate = computed(() => {
           @click="nextYear"
         >
           <Icon type="chevrons-right" />
-        </lew-button>
+        </LewButton>
       </div>
-    </lew-flex>
+    </LewFlex>
     <div class="lew-date-box">
       <!-- 表头 周 -->
       <div
@@ -162,7 +164,9 @@ const headDate = computed(() => {
         :key="`h${index}`"
         class="lew-date-item"
       >
-        <div class="lew-date-num">{{ item }}</div>
+        <div class="lew-date-num">
+          {{ item }}
+        </div>
       </div>
 
       <!-- 表格 -->
@@ -174,7 +178,7 @@ const headDate = computed(() => {
         @click="selectDateFn(item)"
       >
         <div class="lew-date-label">
-          <i v-if="checkToday(item)" class="lew-date-item-today"></i>
+          <i v-if="checkToday(item)" class="lew-date-item-today" />
           <div class="lew-date-value">
             {{ item.showDate }}
           </div>

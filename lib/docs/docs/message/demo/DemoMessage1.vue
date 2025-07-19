@@ -1,36 +1,39 @@
 <script lang="ts" setup>
-const showErrorMessage = () => {
+function showErrorMessage() {
   LewMessage.error({
     content: 'Payment failed. Please check your payment method and try again.',
-    duration: 3000
+    duration: 3000,
   })
 }
 
-const showSuccessMessage = () => {
+function showSuccessMessage() {
   LewMessage.success({
     content: 'Your order has been successfully placed. We will ship it soon.',
-    duration: 3000
+    duration: 3000,
   })
 }
 
-const showNormalMessage = () => {
+function showNormalMessage() {
   LewMessage.normal({
-    content: 'Your order is being processed. Estimated shipping time: 1-3 business days.',
-    duration: 3000
+    content:
+      'Your order is being processed. Estimated shipping time: 1-3 business days.',
+    duration: 3000,
   })
 }
 
-const showInfoMessage = () => {
+function showInfoMessage() {
   LewMessage.info({
-    content: 'New arrival alert: Limited edition items are now available for pre-order!',
-    duration: 3000
+    content:
+      'New arrival alert: Limited edition items are now available for pre-order!',
+    duration: 3000,
   })
 }
 
-const showWarningMessage = () => {
+function showWarningMessage() {
   LewMessage.warning({
-    content: 'Warning: Some items in your cart have low stock. Please check soon.',
-    duration: 3000
+    content:
+      'Warning: Some items in your cart have low stock. Please check soon.',
+    duration: 3000,
   })
 }
 </script>

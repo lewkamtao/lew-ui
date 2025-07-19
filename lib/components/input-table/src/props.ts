@@ -1,8 +1,8 @@
-import type { PropType, ExtractPropTypes } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
-export type InputTableColumn = {
+export interface InputTableColumn {
   title: string
   width?: number
   field: string
@@ -13,8 +13,8 @@ export const inputTableModel = {
   modelValue: {
     type: Array as PropType<any[]>,
     default: () => [],
-    description: '表格数据，支持双向绑定'
-  }
+    description: '表格数据，支持双向绑定',
+  },
 }
 
 export const inputTableProps = {
@@ -25,14 +25,14 @@ export const inputTableProps = {
         title: '标签',
         width: 100,
         field: 'label',
-        as: 'input'
+        as: 'input',
       },
       {
         title: '值',
         width: 100,
         field: 'value',
-        as: 'input'
-      }
+        as: 'input',
+      },
     ],
     description: '表格列配置',
     validator(value: InputTableColumn[]): boolean {
@@ -41,7 +41,7 @@ export const inputTableProps = {
         return false
       }
       return true
-    }
+    },
   },
   size: {
     type: String as PropType<LewSize>,
@@ -50,12 +50,12 @@ export const inputTableProps = {
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewInputTable] size 必须是 ${validSizes.join('、')} 之一`
+          `[LewInputTable] size 必须是 ${validSizes.join('、')} 之一`,
         )
         return false
       }
       return true
-    }
+    },
   },
   width: {
     type: [Number, String],
@@ -67,7 +67,7 @@ export const inputTableProps = {
         return false
       }
       return true
-    }
+    },
   },
   rowKey: {
     type: String,
@@ -79,20 +79,20 @@ export const inputTableProps = {
         return false
       }
       return true
-    }
+    },
   },
   // 添加新行
   addable: {
     type: Boolean,
     default: true,
-    description: '是否允许添加新行'
+    description: '是否允许添加新行',
   },
   defaultForm: { type: Object, default: {}, description: '默认表单值' },
   // 删除行
   deletable: {
     type: Boolean,
     default: true,
-    description: '是否允许删除行'
+    description: '是否允许删除行',
   },
   // 最大行数
   maxRows: {
@@ -105,7 +105,7 @@ export const inputTableProps = {
         return false
       }
       return true
-    }
+    },
   },
   // 最小行数
   minRows: {
@@ -118,34 +118,34 @@ export const inputTableProps = {
         return false
       }
       return true
-    }
+    },
   },
   clearable: {
     type: Boolean,
     default: true,
-    description: '是否显示清空按钮'
+    description: '是否显示清空按钮',
   },
   //  排序
   sortable: {
     type: Boolean,
     default: false,
-    description: '是否启用排序功能'
+    description: '是否启用排序功能',
   },
   sortTooltipCustomRender: {
     type: Function as PropType<(row: Record<string, any>) => string>,
     default: undefined,
-    description: '自定义行拖拽排序的提示'
+    description: '自定义行拖拽排序的提示',
   },
   autoUniqueId: {
     type: Boolean,
     default: true,
-    description: '是否自动生成行数据唯一标识'
+    description: '是否自动生成行数据唯一标识',
   },
   uniqueField: {
     type: String,
     default: '',
-    description: '指定一个不可重复的字段，用于添加数据时检查重复'
-  }
+    description: '指定一个不可重复的字段，用于添加数据时检查重复',
+  },
 }
 
 export type InputTableProps = ExtractPropTypes<typeof inputTableProps>

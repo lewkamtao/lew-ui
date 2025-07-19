@@ -1,52 +1,53 @@
 <script setup lang="ts">
-import { LewCollapseTransition } from "lew-ui";
-import { ChevronDown, ChevronUp } from "lucide-vue-next";
-import docsLocale from "@/locals";
-import { renderDescription } from "@/lib/utils";
+import { LewCollapseTransition } from 'lew-ui'
+import { ChevronDown, ChevronUp } from 'lucide-vue-next'
+import { renderDescription } from '@/lib/utils'
+import docsLocale from '@/locals'
+
 defineProps({
   title: {
     type: String,
-    default: "",
+    default: '',
   },
   tag: {
     type: String,
-    default: "",
+    default: '',
   },
   tipsContent: {
     type: String,
-    default: "",
+    default: '',
   },
   tipsType: {
     type: String,
-    default: "info",
+    default: 'info',
   },
   tipsTitle: {
     type: String,
-    default: "",
+    default: '',
   },
   description: {
     type: String,
-    default: "",
+    default: '',
   },
   code: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 
-const isShowCode = ref(false);
+const isShowCode = ref(false)
 const checkHasContent = computed(() => (text: string) => {
-  if (text && text.indexOf("components.") !== 0) {
-    return true;
+  if (text && text.indexOf('components.') !== 0) {
+    return true
   }
-  return false;
-});
+  return false
+})
 </script>
 
 <template>
   <div class="demo-box">
-    <lew-title :id="title" :size="18" class="demo-docs-title"
-      >{{ title }}
+    <lew-title :id="title" :size="18" class="demo-docs-title">
+      {{ title }}
       <lew-tag
         v-if="checkHasContent(tag)"
         type="light"
@@ -66,10 +67,10 @@ const checkHasContent = computed(() => (text: string) => {
       v-if="checkHasContent(description)"
       class="desc"
       v-html="renderDescription(description)"
-    ></div>
+    />
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
-        <slot></slot>
+        <slot />
       </div>
       <LewCollapseTransition>
         <div v-if="isShowCode && code" class="hl-pre lew-scrollbar">
@@ -85,8 +86,8 @@ const checkHasContent = computed(() => (text: string) => {
         </div>
         {{
           isShowCode
-            ? docsLocale.t("base.close")
-            : docsLocale.t("base.showCode")
+            ? docsLocale.t('base.close')
+            : docsLocale.t('base.showCode')
         }}
       </div>
     </div>

@@ -2,12 +2,13 @@
 const visible = ref(false)
 const nestedVisible = ref(false)
 </script>
+
 <template>
   <lew-flex gap="20" x="start">
     <lew-drawer
+      v-model:visible="visible"
       title="Nested Drawer Demo"
       close-by-esc
-      v-model:visible="visible"
       close-on-click-overlay
       position="right"
       width="400px"
@@ -16,18 +17,24 @@ const nestedVisible = ref(false)
         <div class="content main-content">
           <div class="content-header">
             <h3>Main Drawer Content</h3>
-            <div class="badge">Primary</div>
+            <div class="badge">
+              Primary
+            </div>
           </div>
           <p>
             This is the main drawer. You can open a nested drawer from here.
           </p>
           <div class="feature-list">
             <div class="feature-item">
-              <div class="feature-icon">📋</div>
+              <div class="feature-icon">
+                📋
+              </div>
               <span>Nested functionality</span>
             </div>
             <div class="feature-item">
-              <div class="feature-icon">⚡</div>
+              <div class="feature-icon">
+                ⚡
+              </div>
               <span>Fast interaction</span>
             </div>
           </div>
@@ -35,17 +42,17 @@ const nestedVisible = ref(false)
 
         <lew-button
           text="Open Nested Drawer"
-          @click="nestedVisible = true"
           color="blue"
           size="medium"
+          @click="nestedVisible = true"
         />
       </lew-flex>
     </lew-drawer>
 
     <lew-drawer
+      v-model:visible="nestedVisible"
       title="Nested Drawer"
       close-by-esc
-      v-model:visible="nestedVisible"
       close-on-click-overlay
       position="right"
       width="300px"
@@ -54,14 +61,16 @@ const nestedVisible = ref(false)
         <div class="content nested-content">
           <div class="content-header">
             <h4>Nested Content</h4>
-            <div class="badge secondary">Nested</div>
+            <div class="badge secondary">
+              Nested
+            </div>
           </div>
           <p>This is a nested drawer opened from within another drawer.</p>
         </div>
       </lew-flex>
     </lew-drawer>
 
-    <lew-button text="Open Main Drawer" @click="visible = true" size="medium" />
+    <lew-button text="Open Main Drawer" size="medium" @click="visible = true" />
   </lew-flex>
 </template>
 

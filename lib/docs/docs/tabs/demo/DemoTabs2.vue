@@ -42,7 +42,7 @@ const options: TabOption[] = [
   { label: 'Electronics', value: 'electronics' },
   { label: 'Garden Supplies', value: 'garden_supplies' },
   { label: 'Holiday Gifts', value: 'holiday_gifts' },
-  { label: 'Bags', value: 'bags' }
+  { label: 'Bags', value: 'bags' },
 ]
 
 const modelValue = ref('meat')

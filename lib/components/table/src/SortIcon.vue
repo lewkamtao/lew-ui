@@ -3,12 +3,12 @@ import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps({
   sortValue: {
-    type: String
+    type: String,
   },
   size: {
     type: String,
-    default: 'medium'
-  }
+    default: 'medium',
+  },
 })
 
 const getSize = computed(() => {
@@ -32,7 +32,7 @@ const getSize = computed(() => {
       :style="{
         opacity: sortValue === 'asc' ? 1 : 0.2,
         transform: 'rotate(180deg) translateY(-2px)',
-        color: sortValue === 'asc' ? 'var(--lew-color-primary-dark)' : ''
+        color: sortValue === 'asc' ? 'var(--lew-color-primary-dark)' : '',
       }"
       :size="getSize"
       :stroke-width="2.5"
@@ -43,7 +43,7 @@ const getSize = computed(() => {
       :style="{
         opacity: sortValue === 'desc' ? 1 : 0.2,
         transform: 'translateY(-2px)',
-        color: sortValue === 'desc' ? 'var(--lew-color-primary-dark)' : ''
+        color: sortValue === 'desc' ? 'var(--lew-color-primary-dark)' : '',
       }"
       :size="getSize"
       :stroke-width="2.5"

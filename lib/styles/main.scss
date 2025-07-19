@@ -1,26 +1,3 @@
-body,
-html {
-  color: var(--lew-text-color-1);
-  background: var(--lew-bgcolor-4);
-  overflow: hidden;
-  font-size: 14px;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif,
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol';
-}
-
-input,
-textarea,
-button {
-  font-family: inherit;
-}
-
 /* 隐藏滚动条 */
 .hidden-scrollbar {
   overflow-x: hidden;

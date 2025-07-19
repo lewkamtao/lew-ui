@@ -10,7 +10,7 @@ const dataSource: any = ref([
     features: ['Retina', 'Touch Bar', 'Thunderbolt', 'Face ID', 'Backlit'],
     releaseDate: '2023-11-07',
     batteryLife: '22 hours',
-    storage: '2TB SSD'
+    storage: '2TB SSD',
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const dataSource: any = ref([
     features: ['4K', 'Fingerprint', 'Military', 'Thunderbolt', 'Backlit'],
     releaseDate: '2023-09-15',
     batteryLife: '15 hours',
-    storage: '1TB SSD'
+    storage: '1TB SSD',
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const dataSource: any = ref([
     features: ['OLED', 'Thunderbolt', 'Backlit', 'Fingerprint', 'SD Card'],
     releaseDate: '2023-08-20',
     batteryLife: '12 hours',
-    storage: '1TB SSD'
+    storage: '1TB SSD',
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const dataSource: any = ref([
     features: ['PixelSense', 'Windows Hello', 'USB-C', 'Backlit', 'Alcantara'],
     releaseDate: '2023-10-05',
     batteryLife: '18 hours',
-    storage: '512GB SSD'
+    storage: '512GB SSD',
   },
   {
     id: 5,
@@ -58,7 +58,7 @@ const dataSource: any = ref([
     features: ['QHD', 'RGB', 'Wi-Fi 6E', 'USB-C', 'Gaming'],
     releaseDate: '2023-07-15',
     batteryLife: '10 hours',
-    storage: '1TB SSD'
+    storage: '1TB SSD',
   },
   {
     id: 6,
@@ -70,7 +70,7 @@ const dataSource: any = ref([
     features: ['4K OLED', 'RGB', 'Thunderbolt', 'Wi-Fi 6E', 'Gaming'],
     releaseDate: '2023-06-20',
     batteryLife: '8 hours',
-    storage: '2TB SSD'
+    storage: '2TB SSD',
   },
   {
     id: 7,
@@ -82,7 +82,7 @@ const dataSource: any = ref([
     features: ['4K Touch', '360°', 'Thunderbolt', 'Fingerprint', 'Backlit'],
     releaseDate: '2023-09-01',
     batteryLife: '14 hours',
-    storage: '1TB SSD'
+    storage: '1TB SSD',
   },
   {
     id: 8,
@@ -94,7 +94,7 @@ const dataSource: any = ref([
     features: ['4K', 'RGB', 'Thunderbolt', 'Wi-Fi 6E', 'Gaming'],
     releaseDate: '2023-05-15',
     batteryLife: '6 hours',
-    storage: '4TB SSD'
+    storage: '4TB SSD',
   },
   {
     id: 9,
@@ -106,7 +106,7 @@ const dataSource: any = ref([
     features: ['QHD', 'RGB', 'Thunderbolt', 'Wi-Fi 6E', 'Gaming'],
     releaseDate: '2023-04-10',
     batteryLife: '9 hours',
-    storage: '2TB SSD'
+    storage: '2TB SSD',
   },
   {
     id: 10,
@@ -118,8 +118,8 @@ const dataSource: any = ref([
     features: ['FHD', 'Backlit', 'USB-C', 'Fingerprint', 'Lightweight'],
     releaseDate: '2023-08-25',
     batteryLife: '16 hours',
-    storage: '512GB SSD'
-  }
+    storage: '512GB SSD',
+  },
 ])
 
 const columns = [
@@ -127,65 +127,65 @@ const columns = [
     title: 'ID',
     width: 80,
     field: 'id',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Brand',
     width: 120,
     field: 'brand',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Model',
     width: 180,
     field: 'name',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Processor',
     width: 140,
     field: 'processor',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Memory',
     width: 100,
     field: 'memory',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Features',
     width: 370,
     field: 'features',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Release Date',
     width: 140,
     field: 'releaseDate',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Battery Life',
     width: 120,
     field: 'batteryLife',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Storage',
     width: 120,
     field: 'storage',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Price',
     width: 120,
     field: 'price',
-    x: 'center'
-  }
+    x: 'center',
+  },
 ]
 
-const getSortTooltipComponent = (row: any) => {
+function getSortTooltipComponent(row: any) {
   return h('div', {}, `${row.brand} ${row.name} ${row.processor}`)
 }
 </script>
@@ -205,10 +205,13 @@ const getSortTooltipComponent = (row: any) => {
           size="small"
           type="light"
           color="blue"
-          >{{ item }}</lew-tag
         >
+          {{ item }}
+        </lew-tag>
       </lew-flex>
     </template>
-    <template #price="{ row }"> ${{ row.price }} </template>
+    <template #price="{ row }">
+      ${{ row.price }}
+    </template>
   </lew-table>
 </template>

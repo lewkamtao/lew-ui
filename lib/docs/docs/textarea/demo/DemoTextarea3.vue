@@ -3,5 +3,5 @@ const v = ref('Selecting text after gathering')
 </script>
 
 <template>
-  <lew-textarea width="300px" v-model="v" select-by-focus />
+  <lew-textarea v-model="v" width="300px" select-by-focus />
 </template>

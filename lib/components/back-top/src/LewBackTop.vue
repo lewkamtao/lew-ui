@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { throttle } from 'lodash-es'
-import { backTopProps } from './props'
-import { useEventListener } from '../../../hooks'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { throttle } from 'lodash-es'
+import { useEventListener } from '../../../hooks'
+import { backTopProps } from './props'
 
 const props = defineProps(backTopProps)
 
@@ -14,19 +14,21 @@ const showBackTop = ref(false)
 
 const backTopStyle = computed(() => ({
   right: `${props.right}px`,
-  bottom: `${props.bottom}px`
+  bottom: `${props.bottom}px`,
 }))
 
-const toBackUp = () => {
-  if (!dom.value) return
+function toBackUp() {
+  if (!dom.value)
+    return
   const scrollDom = dom.value as HTMLElement
   scrollDom.scrollTop = 0
 
   emit('click')
 }
 
-const handleScroll = () => {
-  if (dom.value) showBackTop.value = dom.value.scrollTop >= props.valveHeight
+function handleScroll() {
+  if (dom.value)
+    showBackTop.value = dom.value.scrollTop >= props.valveHeight
 }
 
 const throttledScrollHandler = throttle(handleScroll, 250)
@@ -36,8 +38,8 @@ useEventListener(window, 'scroll', throttledScrollHandler)
 onMounted(() => {
   dom.value = document.documentElement
   if (props.target) {
-    dom.value =
-      document.querySelector<HTMLElement>(`.${props.target}`) ?? undefined
+    dom.value
+      = document.querySelector<HTMLElement>(`.${props.target}`) ?? undefined
     if (!dom.value) {
       throw new Error(`target is not existed: ${props.target}`)
     }

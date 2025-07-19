@@ -1,20 +1,20 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { ContextMenus } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 
 export type DropdownTrigger = 'hover' | 'click'
-export type DropdownPlacement =
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end'
+export type DropdownPlacement
+  = | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
 
 export type DropdownOptions = ContextMenus
 
@@ -22,8 +22,8 @@ export const dropdownModel = {
   selectedKeys: {
     type: Array as PropType<string[]>,
     default: () => [],
-    description: '选中项的key值'
-  }
+    description: '选中项的key值',
+  },
 }
 
 export const dropdownProps = {
@@ -34,12 +34,12 @@ export const dropdownProps = {
     validator(value: DropdownTrigger): boolean {
       if (!['hover', 'click'].includes(value)) {
         console.warn(
-          `[LewDropdown] 无效的触发方式: ${value}。请使用 'hover' 或 'click'`
+          `[LewDropdown] 无效的触发方式: ${value}。请使用 'hover' 或 'click'`,
         )
         return false
       }
       return true
-    }
+    },
   },
   placement: {
     type: String as PropType<DropdownPlacement>,
@@ -58,16 +58,16 @@ export const dropdownProps = {
         'left-end',
         'right',
         'right-start',
-        'right-end'
+        'right-end',
       ]
       if (!validPlacements.includes(value)) {
         console.warn(
-          `[LewDropdown] 无效的弹出位置: ${value}。请使用有效的位置值`
+          `[LewDropdown] 无效的弹出位置: ${value}。请使用有效的位置值`,
         )
         return false
       }
       return true
-    }
+    },
   },
   options: {
     type: Array as PropType<DropdownOptions[]>,
@@ -80,13 +80,13 @@ export const dropdownProps = {
         return false
       }
       return true
-    }
+    },
   },
   checkable: {
     type: Boolean,
     default: false,
-    description: '是否开启checkbox模式'
-  }
+    description: '是否开启checkbox模式',
+  },
 }
 
 export type DropdownProps = ExtractPropTypes<typeof dropdownProps>

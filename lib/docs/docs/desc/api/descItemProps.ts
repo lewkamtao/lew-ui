@@ -5,5 +5,5 @@ export default {
   title: 'descItemProps',
   columnsKey: 'props',
   orderNum: 12,
-  data: convertProps(descItemProps)
+  data: convertProps(descItemProps),
 }

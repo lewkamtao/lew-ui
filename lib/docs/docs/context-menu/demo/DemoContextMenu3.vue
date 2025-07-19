@@ -5,26 +5,27 @@ import dayjs from 'dayjs'
 const options = ref<ContextMenus[]>([
   {
     label: 'New File',
-    value: 'new-file'
+    value: 'new-file',
   },
   {
     label: 'Save File',
-    value: 'save-file'
-  }
+    value: 'save-file',
+  },
 ])
 
 setInterval(() => {
   options.value[0] = {
     ...options.value[0],
-    label: dayjs().format('YYYY-MM-DD HH:mm:ss')
+    label: dayjs().format('YYYY-MM-DD HH:mm:ss'),
   }
 }, 1000)
 </script>
+
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options
+        options,
       }"
       class="box"
     >

@@ -1,3 +1,95 @@
+<script lang="ts" setup>
+import { getUniqueId } from 'lew-ui/utils'
+import { ref } from 'vue'
+import NotificationItem from './NotificationItem.vue'
+
+let timer: NodeJS.Timeout | null = null
+
+interface NotificationItemType {
+  id: string
+  type: string
+  title: string
+  content: string
+  duration: number
+  showProgress: boolean
+  width: number | string
+}
+
+const notifications = ref<NotificationItemType[]>([])
+const width = ref(0)
+
+function updateWidth() {
+  width.value = notifications.value.reduce(
+    (max, item: NotificationItemType) => {
+      return Math.max(max, Number(item.width))
+    },
+    0,
+  )
+}
+
+function add(
+  type: string,
+  title: string,
+  content: string,
+  duration: number,
+  showProgress: boolean,
+  width: number | string,
+) {
+  const id = getUniqueId()
+  document
+    .getElementById('lew-notification')
+    ?.classList
+    .remove('notification-hidden')
+  notifications.value.unshift({
+    id,
+    type,
+    title,
+    content,
+    duration,
+    showProgress,
+    width,
+  })
+
+  if (duration > 0) {
+    setTimeout(() => {
+      handleClose(id)
+    }, duration)
+  }
+  if (timer) {
+    clearTimeout(timer)
+  }
+  updateWidth()
+  return id
+}
+
+function handleClose(id: string) {
+  const index = notifications.value.findIndex(item => item.id === id)
+  if (index > -1) {
+    notifications.value.splice(index, 1)
+  }
+  if (timer) {
+    clearTimeout(timer)
+  }
+  if (notifications.value.length === 0) {
+    timer = setTimeout(() => {
+      updateWidth()
+      document
+        .getElementById('lew-notification')
+        ?.classList
+        .add('notification-hidden')
+    }, 350)
+  }
+  else {
+    updateWidth()
+  }
+}
+
+defineExpose({
+  add,
+  handleClose,
+})
+</script>
+
 <template>
   <div
     id="lew-notification"
@@ -24,92 +116,6 @@
     </TransitionGroup>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { ref } from 'vue'
-import NotificationItem from './NotificationItem.vue'
-import { getUniqueId } from 'lew-ui/utils'
-
-interface NotificationItem {
-  id: string
-  type: string
-  title: string
-  content: string
-  duration: number
-  showProgress: boolean
-  width: number | string
-}
-
-const notifications = ref<NotificationItem[]>([])
-const width = ref(0)
-
-const updateWidth = () => {
-  width.value = notifications.value.reduce((max, item: NotificationItem) => {
-    return Math.max(max, Number(item.width))
-  }, 0)
-}
-
-const add = (
-  type: string,
-  title: string,
-  content: string,
-  duration: number,
-  showProgress: boolean,
-  width: number | string
-) => {
-  const id = getUniqueId()
-  document
-    .getElementById('lew-notification')
-    ?.classList.remove('notification-hidden')
-  notifications.value.unshift({
-    id,
-    type,
-    title,
-    content,
-    duration,
-    showProgress,
-    width
-  })
-
-  if (duration > 0) {
-    setTimeout(() => {
-      handleClose(id)
-    }, duration)
-  }
-  if (timer) {
-    clearTimeout(timer)
-  }
-  updateWidth()
-  return id
-}
-
-let timer: NodeJS.Timeout | null = null
-
-const handleClose = (id: string) => {
-  const index = notifications.value.findIndex((item) => item.id === id)
-  if (index > -1) {
-    notifications.value.splice(index, 1)
-  }
-  if (timer) {
-    clearTimeout(timer)
-  }
-  if (notifications.value.length === 0) {
-    timer = setTimeout(() => {
-      updateWidth()
-      document
-        .getElementById('lew-notification')
-        ?.classList.add('notification-hidden')
-    }, 350)
-  } else {
-    updateWidth()
-  }
-}
-
-defineExpose({
-  add,
-  handleClose
-})
-</script>
 
 <style lang="scss">
 #lew-notification {

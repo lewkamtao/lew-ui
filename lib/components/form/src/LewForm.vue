@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import {
-  object2class,
   any2px,
   formatFormByMap,
-  retrieveNestedFieldValue
+  object2class,
+  retrieveNestedFieldValue,
 } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
+import * as Yup from 'yup'
+import LewFormItem from './LewFormItem.vue'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
 import { formProps } from './props'
-import { cloneDeep } from 'lodash-es'
-import LewFormItem from './LewFormItem.vue'
-import * as Yup from 'yup'
 
 const props = defineProps(formProps)
 const emit = defineEmits(['change', 'mounted'])
@@ -17,7 +17,8 @@ const formMap = ref<Record<string, any>>({})
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
 
-let componentOptions: any[] = cloneDeep(props.options) || []
+const componentOptions: any[] = cloneDeep(props.options) || []
+const formItemRefMap = ref<Record<string, any>>({})
 
 const getFormClassNames = computed(() => {
   const { columns } = cloneDeep(props)
@@ -25,23 +26,23 @@ const getFormClassNames = computed(() => {
 })
 
 // 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
-const getForm = () => {
+function getForm() {
   const formData: Record<string, any> = formatFormByMap(
-    cloneDeep(formMap.value)
+    cloneDeep(formMap.value),
   )
   // 应用 outputFormat
   componentOptions.forEach((item) => {
     if (item.outputFormat && item.field && formData[item.field]) {
       formData[item.field] = item.outputFormat({
         item,
-        value: formData[item.field]
+        value: formData[item.field],
       })
     }
   })
   return formData
 }
 
-const setForm = (value: any = {}) => {
+function setForm(value: any = {}) {
   // 把对象的值给 formMap
   componentOptions.forEach((item: any) => {
     let v = retrieveNestedFieldValue(value, item.field)
@@ -60,7 +61,7 @@ const setForm = (value: any = {}) => {
   })
 }
 
-const resetError = () => {
+function resetError() {
   componentOptions.forEach((item: any) => {
     // 重置error
     if (item.field) {
@@ -72,9 +73,7 @@ const resetError = () => {
   })
 }
 
-const formItemRefMap = ref<Record<string, any>>({})
-
-const validate = () => {
+function validate() {
   return new Promise<boolean>((resolve) => {
     // 定义校验规则
     const schemaMap: Record<string, any> = {}
@@ -127,19 +126,19 @@ watch(
     nextTick(() => {
       autoLabelWidth.value = formLabelRef.value?.getWidth()
     })
-  }
+  },
 )
 
 const getFormStyle = computed(() => {
   const gapMap = {
     small: '24px',
     medium: '26px',
-    large: '28px'
+    large: '28px',
   }
   return {
     width: any2px(props.width),
     minWidth: 320,
-    gap: gapMap[props.size]
+    gap: gapMap[props.size],
   }
 })
 
@@ -148,16 +147,16 @@ defineExpose({ getForm, setForm, resetError, validate })
 
 <template>
   <div class="lew-form" :style="getFormStyle" :class="getFormClassNames">
-    <lew-get-label-width
+    <LewGetLabelWidth
       ref="formLabelRef"
       :size="size"
       :options="componentOptions"
     />
-    <lew-form-item
-      :ref="(el) => (formItemRefMap[item.field] = el)"
+    <LewFormItem
       v-for="item in componentOptions"
-      v-model="formMap[item.field]"
+      :ref="(el) => (formItemRefMap[item.field] = el)"
       :key="item.field"
+      v-model="formMap[item.field]"
       v-bind="{
         direction,
         size,
@@ -165,7 +164,7 @@ defineExpose({ getForm, setForm, resetError, validate })
           labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
         disabled,
         readonly,
-        ...item
+        ...item,
       }"
       @change="
         () => {

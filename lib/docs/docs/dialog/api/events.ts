@@ -5,12 +5,12 @@ export default {
     {
       name: 'ok',
       description: '确认回调',
-      params: '() => {}'
+      params: '() => {}',
     },
     {
       name: 'cancel',
       description: '取消回调',
-      params: '() => {}'
-    }
-  ]
+      params: '() => {}',
+    },
+  ],
 }

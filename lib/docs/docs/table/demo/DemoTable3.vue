@@ -1,17 +1,18 @@
 <script lang="ts" setup>
+import { LewMessage } from 'lew-ui'
 import {
-  Edit,
-  Trash,
+  Archive,
   Copy,
   Download,
-  Share,
-  View,
-  Archive,
+  Edit,
+  MoreHorizontal,
   Settings,
-  MoreHorizontal
+  Share,
+  Trash,
+  View,
 } from 'lucide-vue-next'
 import { h } from 'vue'
-import { LewMessage } from 'lew-ui'
+
 const data: any = [
   {
     id: 1,
@@ -27,8 +28,8 @@ const data: any = [
       'PCIe 5.0',
       'DDR5',
       'Intel UHD Graphics 770',
-      'Turbo Boost Max 3.0'
-    ]
+      'Turbo Boost Max 3.0',
+    ],
   },
   {
     id: 2,
@@ -40,7 +41,7 @@ const data: any = [
     tdp: '105W',
     architecture: 'Zen 3',
     socket: 'AM4',
-    features: ['PCIe 4.0', 'DDR4', 'AMD StoreMI', 'Precision Boost 2']
+    features: ['PCIe 4.0', 'DDR4', 'AMD StoreMI', 'Precision Boost 2'],
   },
   {
     id: 3,
@@ -56,8 +57,8 @@ const data: any = [
       'Neural Engine',
       'Apple ProRes',
       'Unified Memory',
-      'Metal-optimized GPU'
-    ]
+      'Metal-optimized GPU',
+    ],
   },
   {
     id: 4,
@@ -69,7 +70,7 @@ const data: any = [
     tdp: '280W',
     architecture: 'Zen 3',
     socket: 'SP3',
-    features: ['PCIe 4.0', 'DDR4', 'AMD Infinity Guard', 'AMD Infinity Fabric']
+    features: ['PCIe 4.0', 'DDR4', 'AMD Infinity Guard', 'AMD Infinity Fabric'],
   },
   {
     id: 5,
@@ -85,9 +86,9 @@ const data: any = [
       'PCIe 4.0',
       'DDR4',
       'Intel SGX',
-      'Intel Optane Persistent Memory'
-    ]
-  }
+      'Intel Optane Persistent Memory',
+    ],
+  },
 ]
 
 const columns = [
@@ -96,129 +97,129 @@ const columns = [
     width: 50,
     field: 'id',
     x: 'center',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Processor Name',
     width: 180,
     field: 'name',
     x: 'start',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Cores',
     width: 130,
     field: 'cores',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Threads',
     width: 100,
     field: 'threads',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Base Frequency',
     width: 120,
     field: 'baseFrequency',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Boost Frequency',
     width: 120,
     field: 'boostFrequency',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'TDP',
     width: 100,
     field: 'tdp',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Architecture',
     width: 120,
     field: 'architecture',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Socket',
     width: 120,
     field: 'socket',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Features',
     width: 400,
-    field: 'features'
+    field: 'features',
   },
   {
     title: 'Actions',
     width: 110,
     field: 'action',
     fixed: 'right',
-    x: 'center'
-  }
+    x: 'center',
+  },
 ]
 
-const options = computed(() => (row: any, column: any) => {
+const options = computed(() => (row: any) => {
   return [
     {
       label: 'Edit',
       icon: h(Edit, { size: 14 }),
       onClick: () => {
         LewMessage.info(`Edit: ${row.name}`)
-      }
+      },
     },
     {
       label: 'Delete',
       icon: h(Trash, { size: 14 }),
       onClick: () => {
         LewMessage.info(`Delete: ${row.name}`)
-      }
+      },
     },
     {
       label: 'Copy',
       icon: h(Copy, { size: 14 }),
       onClick: () => {
         LewMessage.info(`Copy: ${row.name}`)
-      }
+      },
     },
     {
       label: 'Download',
       icon: h(Download, { size: 14 }),
       onClick: () => {
         LewMessage.info(`Download: ${row.name}`)
-      }
+      },
     },
     {
       label: 'Share',
       icon: h(Share, { size: 14 }),
       onClick: () => {
         LewMessage.info(`Share: ${row.name}`)
-      }
+      },
     },
     {
       label: 'View',
       icon: h(View, { size: 14 }),
       onClick: () => {
         LewMessage.info(`View: ${row.name}`)
-      }
+      },
     },
     {
       label: 'Archive',
       icon: h(Archive, { size: 14 }),
       onClick: () => {
         LewMessage.info(`Archive: ${row.name}`)
-      }
+      },
     },
     {
       label: 'Settings',
       icon: h(Settings, { size: 14 }),
       onClick: () => {
         LewMessage.info(`Settings: ${row.name}`)
-      }
-    }
+      },
+    },
   ]
 })
 
@@ -235,20 +236,20 @@ const dropdownIcon = h(MoreHorizontal, { size: 14 })
           type="light"
           color="blue"
           size="small"
-          >{{ item }}
+        >
+          {{ item }}
         </lew-tag>
       </lew-flex>
     </template>
-    <template #action="{ row, column }">
+    <template #action="{ row }">
       <lew-action-box
         :key="row.id"
-        :options="options(row, column)"
+        :options="options(row)"
         dropdown-threshold="2"
         dropdown-label=""
         :dropdown-icon="dropdownIcon"
         icon-only
-      >
-      </lew-action-box>
+      />
     </template>
   </lew-table>
 </template>

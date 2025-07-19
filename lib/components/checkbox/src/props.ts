@@ -1,10 +1,10 @@
+import type { LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { LewSize, LewDirection } from 'lew-ui'
-import { validSizes, validDirection } from 'lew-ui/constants'
+import { validDirection, validSizes } from 'lew-ui/constants'
 
 export type CheckboxGroupDirectionType = 'x' | 'y'
 export type CheckboxValue = string | number
-export type CheckboxOptions = {
+export interface CheckboxOptions {
   label: string
   value: CheckboxValue
   disabled?: boolean
@@ -14,8 +14,8 @@ export const checkboxModel = {
   modelValue: {
     type: Boolean,
     default: false,
-    description: '复选框的选中状态'
-  }
+    description: '复选框的选中状态',
+  },
 }
 
 export const checkboxGroupModel = {
@@ -23,30 +23,30 @@ export const checkboxGroupModel = {
     type: Array,
     default: () => [],
     required: true,
-    description: '复选框组的选中值数组'
-  }
+    description: '复选框组的选中值数组',
+  },
 }
 
 export const checkboxProps = {
   label: {
     type: String,
     default: '',
-    description: '复选框的标签文本'
+    description: '复选框的标签文本',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用复选框'
+    description: '是否禁用复选框',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否将复选框设置为只读'
+    description: '是否将复选框设置为只读',
   },
   checked: {
     type: Boolean,
     default: false,
-    description: '是否选中复选框'
+    description: '是否选中复选框',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -55,33 +55,33 @@ export const checkboxProps = {
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn(
-          '[LewCheckbox] 无效的 size 值，请使用 "small"、"medium" 或 "large"'
+          '[LewCheckbox] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
         )
         return false
       }
       return true
-    }
+    },
   },
   block: {
     type: Boolean,
     default: false,
-    description: '是否将复选框显示为块级元素'
+    description: '是否将复选框显示为块级元素',
   },
   round: {
     type: Boolean,
     default: false,
-    description: '是否将复选框显示为圆形'
+    description: '是否将复选框显示为圆形',
   },
   iconable: {
     type: Boolean,
     default: true,
-    description: '是否显示复选框的图标'
+    description: '是否显示复选框的图标',
   },
   certain: {
     type: Boolean,
     default: false,
-    description: '复选框是否处于确定状态'
-  }
+    description: '复选框是否处于确定状态',
+  },
 }
 
 export const checkboxGroupProps = {
@@ -92,24 +92,24 @@ export const checkboxGroupProps = {
     description: '复选框组的选项配置数组',
     validator: (value: CheckboxOptions[]) => {
       if (
-        !Array.isArray(value) ||
-        value.some((item) => typeof item !== 'object')
+        !Array.isArray(value)
+        || value.some(item => typeof item !== 'object')
       ) {
         console.warn('[LewCheckboxGroup] options 必须是一个对象数组')
         return false
       }
       return true
-    }
+    },
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用整个复选框组'
+    description: '是否禁用整个复选框组',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否将复选框组设置为只读'
+    description: '是否将复选框组设置为只读',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -118,12 +118,12 @@ export const checkboxGroupProps = {
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn(
-          '[LewCheckboxGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"'
+          '[LewCheckboxGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
         )
         return false
       }
       return true
-    }
+    },
   },
   direction: {
     type: String as PropType<LewDirection>,
@@ -132,28 +132,28 @@ export const checkboxGroupProps = {
     validator: (value: LewDirection) => {
       if (!validDirection.includes(value)) {
         console.warn(
-          '[LewCheckboxGroup] 无效的 direction 值，请使用 "x" 或 "y"'
+          '[LewCheckboxGroup] 无效的 direction 值，请使用 "x" 或 "y"',
         )
         return false
       }
       return true
-    }
+    },
   },
   block: {
     type: Boolean,
     default: false,
-    description: '是否将复选框组显示为块级元素'
+    description: '是否将复选框组显示为块级元素',
   },
   round: {
     type: Boolean,
     default: false,
-    description: '是否将复选框组中的复选框显示为圆形'
+    description: '是否将复选框组中的复选框显示为圆形',
   },
   iconable: {
     type: Boolean,
     default: true,
-    description: '是否显示复选框的图标（仅在块状模式下生效）'
-  }
+    description: '是否显示复选框的图标（仅在块状模式下生效）',
+  },
 }
 
 export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>

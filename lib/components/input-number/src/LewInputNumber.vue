@@ -1,169 +1,167 @@
 <script setup lang="ts">
-import { object2class, any2px } from "lew-ui/utils";
-import { LewTooltip, LewFlex } from "lew-ui";
-import { inputNumberProps } from "./props";
-import Icon from "lew-ui/utils/Icon.vue";
-import { locale } from "lew-ui";
+import { LewFlex, LewTooltip, locale } from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { inputNumberProps } from './props'
 
+const props = defineProps(inputNumberProps)
+const emit = defineEmits(['blur', 'focus', 'change', 'input'])
 // 获取app
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
-const emit = defineEmits(["blur", "focus", "change", "input"]);
+const modelValue: Ref<number | undefined> = defineModel({ required: true })
+const lewInputRef = ref()
+const isFocus = ref(false)
 
-const props = defineProps(inputNumberProps);
-const modelValue: Ref<number | undefined> = defineModel({ required: true });
-const lewInputRef = ref();
-const isFocus = ref(false);
+const validationMessage = ref('')
 
-const validationMessage = ref("");
+function toFocus() {
+  lewInputRef.value?.focus()
+}
 
-const toFocus = () => {
-  lewInputRef.value?.focus();
-};
-
-const focus = (e: any) => {
+function focus(e: any) {
   if (props.selectByFocus) {
-    e?.currentTarget?.select();
+    e?.currentTarget?.select()
   }
-  emit("focus");
-};
+  emit('focus')
+}
 
-const blur = () => {
-  emit("blur", modelValue);
-};
+function blur() {
+  emit('blur', modelValue.value)
+}
 
-const inputFn = (e: any) => {
-  validationMessage.value = lewInputRef.value.validationMessage;
-  emit("input", modelValue.value, e);
-};
+function inputFn(e: any) {
+  validationMessage.value = lewInputRef.value.validationMessage
+  emit('input', modelValue.value, e)
+}
 
 const getInputClassNames = computed(() => {
-  const { size, readonly, disabled, align } = props;
-  return object2class("lew-input-number-view", {
+  const { size, readonly, disabled, align } = props
+  return object2class('lew-input-number-view', {
     focus: isFocus.value,
     size,
     readonly,
     disabled,
     align,
-  });
-});
+  })
+})
 
-const changeFn = () => {
-  emit("change", modelValue.value);
-};
+function changeFn() {
+  emit('change', modelValue.value)
+}
 
 const getInputNumberStyle: any = computed(() => {
-  const { size, align } = props;
+  const { size, align } = props
   return {
     textAlign: align,
     padding: `var(--lew-form-input-padding-${size})`,
     fontSize: `var(--lew-form-font-size-${size})`,
-  };
-});
+  }
+})
 
 const getInputNumberViewStyle = computed(() => {
-  const { width, size } = props;
+  const { width, size } = props
   return {
     width: any2px(width),
     height: `var(--lew-form-item-height-${size})`,
     lineHeight: `var(--lew-form-input-line-height-${size})`,
-  };
-});
+  }
+})
 
 const getIconSize = computed(() => {
-  const { size } = props;
+  const { size } = props
   const sizeMap: Record<string, number> = {
     small: 12,
     medium: 14,
     large: 16,
-  };
-  return sizeMap[size];
-});
+  }
+  return sizeMap[size]
+})
 
 const getControlStyle = computed(() => {
-  const { size } = props;
+  const { size } = props
   return {
     height: `var(--lew-form-item-height-${size})`,
-  };
-});
+  }
+})
 
-let longClickTimer = ref();
+const longClickTimer = ref()
 
-const clearTimer = () => {
-  clearInterval(longClickTimer.value);
-};
+function clearTimer() {
+  clearInterval(longClickTimer.value)
+}
 
-const plus = () => {
-  lewInputRef.value.stepUp();
-  modelValue.value = lewInputRef.value.value;
+function plus() {
+  lewInputRef.value.stepUp()
+  modelValue.value = lewInputRef.value.value
   longClickTimer.value = setTimeout(() => {
     longClickTimer.value = setInterval(() => {
-      lewInputRef.value.stepUp();
-      modelValue.value = lewInputRef.value.value;
-      emit("change", modelValue.value);
+      lewInputRef.value.stepUp()
+      modelValue.value = lewInputRef.value.value
+      emit('change', modelValue.value)
       if (
-        props.max !== "" &&
-        lewInputRef.value.value >= Number(props.max || 0)
+        props.max !== ''
+        && lewInputRef.value.value >= Number(props.max || 0)
       ) {
-        clearTimer();
+        clearTimer()
       }
-    }, 80);
-  }, 250);
-};
-const minus = () => {
-  lewInputRef.value.stepDown();
-  modelValue.value = lewInputRef.value.value;
+    }, 80)
+  }, 250)
+}
+function minus() {
+  lewInputRef.value.stepDown()
+  modelValue.value = lewInputRef.value.value
   longClickTimer.value = setTimeout(() => {
     longClickTimer.value = setInterval(() => {
-      lewInputRef.value.stepDown();
-      modelValue.value = lewInputRef.value.value;
-      emit("change", modelValue.value);
+      lewInputRef.value.stepDown()
+      modelValue.value = lewInputRef.value.value
+      emit('change', modelValue.value)
       if (
-        props.min !== "" &&
-        lewInputRef.value.value <= Number(props.min || 0)
+        props.min !== ''
+        && lewInputRef.value.value <= Number(props.min || 0)
       ) {
-        clearTimer();
+        clearTimer()
       }
-    }, 80);
-  }, 250);
-};
+    }, 80)
+  }, 250)
+}
 
-const checkValidationMessage = () => {
-  validationMessage.value =
-    lewInputRef.value && lewInputRef.value.validationMessage;
-  return (validationMessage.value || "").length === 0;
-};
+function checkValidationMessage() {
+  validationMessage.value
+    = lewInputRef.value && lewInputRef.value.validationMessage
+  return (validationMessage.value || '').length === 0
+}
 
-const validCheck = () => {
+function validCheck() {
   return (
-    ((lewInputRef.value && lewInputRef.value.validationMessage) || "")
+    ((lewInputRef.value && lewInputRef.value.validationMessage) || '')
       .length === 0
-  );
-};
+  )
+}
 
-defineExpose({ toFocus, validCheck });
+defineExpose({ toFocus, validCheck })
 </script>
 
 <template>
   <div
-    @wheel="(e: any) => e.preventDefault()"
-    @mouseenter="checkValidationMessage"
-    @mouseleave="validationMessage = ''"
     class="lew-input-number-view"
     :class="getInputClassNames"
     :style="getInputNumberViewStyle"
+    @wheel="(e: any) => e.preventDefault()"
+    @mouseenter="checkValidationMessage"
+    @mouseleave="validationMessage = ''"
   >
     <input
+      ref="lewInputRef"
+      v-model="modelValue"
       v-tooltip="{
         content: validationMessage,
         triggerFrom: 'input-number',
       }"
       title=""
       type="number"
-      ref="lewInputRef"
-      v-model="modelValue"
       class="lew-input-number"
       :placeholder="
         placeholder ? placeholder : locale.t('inputNumber.placeholder')
@@ -176,33 +174,33 @@ defineExpose({ toFocus, validCheck });
       @change="changeFn"
       @blur="blur"
       @focus="focus"
-    />
-    <lew-flex
-      @mouseenter="isFocus = true"
-      @mouseleave="isFocus = false"
+    >
+    <LewFlex
       :style="getControlStyle"
       direction="y"
       x="end"
       gap="2px"
       class="lew-input-number-control"
+      @mouseenter="isFocus = true"
+      @mouseleave="isFocus = false"
     >
       <Icon
-        @mousedown="plus"
-        @mouseup="clearTimer"
-        @mouseleave="clearTimer"
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-up"
-      ></Icon>
-      <Icon
-        @mousedown="minus"
+        @mousedown="plus"
         @mouseup="clearTimer"
         @mouseleave="clearTimer"
+      />
+      <Icon
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-down"
-      ></Icon>
-    </lew-flex>
+        @mousedown="minus"
+        @mouseup="clearTimer"
+        @mouseleave="clearTimer"
+      />
+    </LewFlex>
   </div>
 </template>
 
@@ -232,13 +230,13 @@ defineExpose({ toFocus, validCheck });
     overflow: hidden;
   }
 
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  input[type="number"] {
+  input[type='number'] {
     -moz-appearance: textfield;
   }
 

@@ -1,13 +1,13 @@
 import DemoInputNumber1 from './DemoInputNumber1.vue'
-import DemoInputNumber2 from './DemoInputNumber2.vue'
-import DemoInputNumber3 from './DemoInputNumber3.vue'
-import DemoInputNumber4 from './DemoInputNumber4.vue'
-import DemoInputNumber5 from './DemoInputNumber5.vue'
-
 import DemoInputNumber1Code from './DemoInputNumber1.vue?raw'
+import DemoInputNumber2 from './DemoInputNumber2.vue'
 import DemoInputNumber2Code from './DemoInputNumber2.vue?raw'
+import DemoInputNumber3 from './DemoInputNumber3.vue'
+
 import DemoInputNumber3Code from './DemoInputNumber3.vue?raw'
+import DemoInputNumber4 from './DemoInputNumber4.vue'
 import DemoInputNumber4Code from './DemoInputNumber4.vue?raw'
+import DemoInputNumber5 from './DemoInputNumber5.vue'
 import DemoInputNumber5Code from './DemoInputNumber5.vue?raw'
 
 export const demoGroup = [
@@ -15,7 +15,7 @@ export const demoGroup = [
   DemoInputNumber2,
   DemoInputNumber3,
   DemoInputNumber4,
-  DemoInputNumber5
+  DemoInputNumber5,
 ]
 
 export const codeGroup = [
@@ -23,5 +23,5 @@ export const codeGroup = [
   DemoInputNumber2Code,
   DemoInputNumber3Code,
   DemoInputNumber4Code,
-  DemoInputNumber5Code
+  DemoInputNumber5Code,
 ]

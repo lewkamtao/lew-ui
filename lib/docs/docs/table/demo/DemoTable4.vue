@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { h } from 'vue'
-
 const data: any = [
   {
     id: 1,
@@ -11,7 +9,7 @@ const data: any = [
     peRatio: 28.5,
     dividend: '0.88%',
     sector: 'Technology',
-    industry: 'Consumer Electronics'
+    industry: 'Consumer Electronics',
   },
   {
     id: 2,
@@ -22,7 +20,7 @@ const data: any = [
     peRatio: 32.1,
     dividend: '0.75%',
     sector: 'Technology',
-    industry: 'Software'
+    industry: 'Software',
   },
   {
     id: 3,
@@ -33,7 +31,7 @@ const data: any = [
     peRatio: 58.7,
     dividend: 'N/A',
     sector: 'Consumer Cyclical',
-    industry: 'E-Commerce'
+    industry: 'E-Commerce',
   },
   {
     id: 4,
@@ -44,7 +42,7 @@ const data: any = [
     peRatio: 27.8,
     dividend: 'N/A',
     sector: 'Communication Services',
-    industry: 'Internet Content & Information'
+    industry: 'Internet Content & Information',
   },
   {
     id: 5,
@@ -55,8 +53,8 @@ const data: any = [
     peRatio: 370.2,
     dividend: 'N/A',
     sector: 'Consumer Cyclical',
-    industry: 'Auto Manufacturers'
-  }
+    industry: 'Auto Manufacturers',
+  },
 ]
 
 const columns = [
@@ -65,101 +63,107 @@ const columns = [
     width: 50,
     field: 'id',
     x: 'center',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Company Name',
     width: 100,
     field: 'name',
     x: 'center',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Ticker',
     width: 100,
     field: 'ticker',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Price',
     width: 100,
     field: 'price',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Market Cap',
     width: 100,
     field: 'marketCap',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'P/E Ratio',
     width: 100,
     field: 'peRatio',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Dividend',
     width: 100,
     field: 'dividend',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Industry',
     width: 420,
-    field: 'industry'
+    field: 'industry',
   },
   {
     title: 'Actions',
     width: 115,
     field: 'action',
     fixed: 'right',
-    x: 'center'
-  }
+    x: 'center',
+  },
 ]
 
-const formatPrice = (price: number) => {
+function formatPrice(price: number) {
   return `$${price.toFixed(2)}`
 }
-
-const options = (row: any, column: any) => {
+// 按照第一个“Edit”的英文提示格式，完善后面几个操作的提示，使其风格一致
+function options(row: any, column: any) {
   return [
     {
       label: 'Edit',
       onClick: () => {
-        LewMessage.success('Edit')
-      }
+        LewMessage.success(`Edit ${column.title} ${row.name}`)
+      },
     },
     {
       label: 'Delete',
       onClick: () => {
-        LewMessage.success('Delete')
-      }
+        LewMessage.success(`Delete ${column.title} ${row.name}`)
+      },
     },
     {
       label: 'View',
       onClick: () => {
-        LewMessage.success('View')
-      }
+        LewMessage.success(`View ${column.title} ${row.name}`)
+      },
     },
     {
       label: 'Detail',
       onClick: () => {
-        LewMessage.success('Detail')
-      }
-    }
+        LewMessage.success(`Detail ${column.title} ${row.name}`)
+      },
+    },
   ]
 }
 </script>
 
 <template>
   <lew-table :data-source="data" :columns="columns">
-    <template #price="{ row }"> {{ formatPrice(row.price) }} </template>
+    <template #price="{ row }">
+      {{ formatPrice(row.price) }}
+    </template>
     <template #industry="{ row }">
-      <lew-tag type="light" color="blue" size="small">{{ row.sector }}</lew-tag>
-      <lew-tag type="light" color="green" size="small">{{
-        row.industry
-      }}</lew-tag>
+      <lew-tag type="light" color="blue" size="small">
+        {{ row.sector }}
+      </lew-tag>
+      <lew-tag type="light" color="green" size="small">
+        {{
+          row.industry
+        }}
+      </lew-tag>
     </template>
     <template #action="{ row, column }">
       <lew-action-box
@@ -167,11 +171,11 @@ const options = (row: any, column: any) => {
         :options="options(row, column)"
         dropdown-threshold="1"
         dropdown-label="More"
-      >
-      </lew-action-box>
+      />
     </template>
   </lew-table>
 </template>
+
 <style lang="scss" scoped>
 .popover-body {
   padding: 15px;

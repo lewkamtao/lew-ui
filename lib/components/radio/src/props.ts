@@ -1,6 +1,6 @@
+import type { LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { LewSize, LewDirection } from 'lew-ui'
-import { validSizes, validDirection } from 'lew-ui/constants'
+import { validDirection, validSizes } from 'lew-ui/constants'
 
 export type RadioDirection = 'x' | 'y'
 
@@ -14,32 +14,32 @@ export const radioProps = {
   checked: {
     type: Boolean,
     default: false,
-    description: '是否选中'
+    description: '是否选中',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用'
+    description: '是否禁用',
   },
   iconable: {
     type: Boolean,
     default: true,
-    description: '是否显示图标'
+    description: '是否显示图标',
   },
   label: {
     type: String,
     default: '',
-    description: '单选框文本'
+    description: '单选框文本',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读'
+    description: '是否只读',
   },
   round: {
     type: Boolean,
     default: true,
-    description: '是否为圆角样式'
+    description: '是否为圆角样式',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -48,33 +48,33 @@ export const radioProps = {
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn(
-          '[LewRadio] 无效的 size 值，请使用 "small"、"medium" 或 "large"'
+          '[LewRadio] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
         )
         return false
       }
       return true
-    }
+    },
   },
   block: {
     type: Boolean,
     default: false,
-    description: '是否为块级元素'
-  }
+    description: '是否为块级元素',
+  },
 }
 
 export const radioGroupModel = {
   modelValue: {
     type: [String, Number],
     default: '',
-    description: '单选框组绑定值'
-  }
+    description: '单选框组绑定值',
+  },
 }
 
 export const radioGroupProps = {
   block: {
     type: Boolean,
     default: false,
-    description: '是否为块级元素'
+    description: '是否为块级元素',
   },
   direction: {
     type: String as PropType<LewDirection>,
@@ -86,32 +86,32 @@ export const radioGroupProps = {
         return false
       }
       return true
-    }
+    },
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用所有单选框'
+    description: '是否禁用所有单选框',
   },
   iconable: {
     type: Boolean,
     default: true,
-    description: '是否显示图标'
+    description: '是否显示图标',
   },
   options: {
     type: Array as PropType<RadioOptions[]>,
     default: () => [],
-    description: '单选框选项数组'
+    description: '单选框选项数组',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读'
+    description: '是否只读',
   },
   round: {
     type: Boolean,
     default: true,
-    description: '是否为圆角样式'
+    description: '是否为圆角样式',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -120,13 +120,13 @@ export const radioGroupProps = {
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn(
-          '[LewRadioGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"'
+          '[LewRadioGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
         )
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export type RadioProps = ExtractPropTypes<typeof radioProps>

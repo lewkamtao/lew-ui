@@ -3,9 +3,9 @@
 <template>
   <div class="bg-wrapper">
     <div class="g-bg">
-      <div class="g-polygon g-polygon-1"></div>
-      <div class="g-polygon g-polygon-2"></div>
-      <div class="g-polygon g-polygon-3"></div>
+      <div class="g-polygon g-polygon-1" />
+      <div class="g-polygon g-polygon-2" />
+      <div class="g-polygon g-polygon-3" />
     </div>
   </div>
 </template>

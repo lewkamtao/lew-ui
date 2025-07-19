@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const visible = ref(false)
-const ok = () => {
+function ok() {
   return new Promise<void>((resolve: any) => {
     setTimeout(() => {
       resolve(true)
@@ -9,36 +9,45 @@ const ok = () => {
   })
 }
 
-const close = () => {
+function close() {
   visible.value = false
 }
 </script>
 
 <template>
   <lew-flex x="start">
-    <lew-button type="ghost" color="danger" @click="visible = true">Delete Account</lew-button>
+    <lew-button type="ghost" color="danger" @click="visible = true">
+      Delete Account
+    </lew-button>
   </lew-flex>
   <lew-modal
     v-model:visible="visible"
-    closeOnClickOverlay
+    close-on-click-overlay
     width="420px"
     title="Delete Account"
-    :okButtonProps="{ 
+    :ok-button-props="{
       request: ok,
       color: 'danger',
-      text: 'Delete'
+      text: 'Delete',
     }"
-    :closeButtonProps="{ 
+    :close-button-props="{
       request: close,
-      text: 'Cancel'
+      text: 'Cancel',
     }"
   >
     <div class="modal-body">
-      <div class="warning-icon">⚠️</div>
+      <div class="warning-icon">
+        ⚠️
+      </div>
       <div class="warning-text">
         <h3>Are you sure you want to delete your account?</h3>
-        <p>This action cannot be undone. All your data will be permanently deleted.</p>
-        <p class="note">This dialog will close automatically in 3 seconds after confirmation.</p>
+        <p>
+          This action cannot be undone. All your data will be permanently
+          deleted.
+        </p>
+        <p class="note">
+          This dialog will close automatically in 3 seconds after confirmation.
+        </p>
       </div>
     </div>
   </lew-modal>

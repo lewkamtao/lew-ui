@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const v = ref(['China', 'USA', 'UK'])
 </script>
+
 <template>
-  <lew-input-tag style="width: 320px" readonly v-model="v" />
+  <lew-input-tag v-model="v" style="width: 320px" readonly />
 </template>

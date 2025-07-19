@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
+defineProps({
+  group: {
+    type: Array as PropType<Group[]>,
+    default() {
+      return []
+    },
+  },
+})
 const route = useRoute()
 const router = useRouter()
 
-type Item = {
+interface Item {
   name: string
   cname: string
   path: string
@@ -13,21 +21,12 @@ type Item = {
   type: string
 }
 
-type Group = {
+interface Group {
   title: string
   items: Item[]
 }
 
-defineProps({
-  group: {
-    type: Array as PropType<Group[]>,
-    default() {
-      return []
-    }
-  }
-})
-
-const toPath = (item: Item) => {
+function toPath(item: Item) {
   router.push(item.path)
 }
 </script>

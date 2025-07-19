@@ -13,17 +13,17 @@ const dataSource = ref({
   material: 'ABS+PC',
   weight: '1.8kg',
   price: '1999元',
-  description: '戴森吹风机，风速快，风量大，吹风温暖，适合各个季节使用。'
+  description: '戴森吹风机，风速快，风量大，吹风温暖，适合各个季节使用。',
 })
 // 定义选项
 const options = ref([
   {
     field: 'name',
-    label: '名称'
+    label: '名称',
   },
   {
     field: 'releaseDate',
-    label: '上市时间'
+    label: '上市时间',
   },
   { field: 'size', label: '尺寸' },
   { field: 'color', label: '颜色' },
@@ -33,7 +33,7 @@ const options = ref([
   { field: 'material', label: '材料' },
   { field: 'weight', label: '重量' },
   { field: 'price', label: '价格' },
-  { field: 'description', label: '描述' }
+  { field: 'description', label: '描述' },
 ])
 </script>
 
@@ -43,9 +43,9 @@ const options = ref([
       width="250"
       :columns="1"
       direction="x"
-      labelX="start"
-      valueX="end"
-      :dataSource="dataSource"
+      label-x="start"
+      value-x="end"
+      :data-source="dataSource"
       :options="options"
     />
   </lew-flex>

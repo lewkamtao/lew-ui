@@ -6,17 +6,17 @@ export default {
     {
       name: 'show',
       type: 'function',
-      default: '() => {}'
+      default: '() => {}',
     },
     {
       name: 'hide',
       type: 'function',
-      default: '() => {}'
+      default: '() => {}',
     },
     {
       name: 'change',
       type: 'function',
-      default: '() => {}'
-    }
-  ]
+      default: '() => {}',
+    },
+  ],
 }

@@ -3,22 +3,23 @@ const visible1 = ref(false)
 const visible2 = ref(false)
 const visible3 = ref(false)
 const visible4 = ref(false)
-const open1 = (): void => {
+function open1(): void {
   visible1.value = true
 }
-const open2 = (): void => {
+function open2(): void {
   visible2.value = true
 }
-const open3 = (): void => {
+function open3(): void {
   visible3.value = true
 }
-const open4 = (): void => {
+function open4(): void {
   visible4.value = true
 }
 </script>
+
 <template>
   <lew-flex gap="20" x="start">
-    <lew-drawer title="New Product" v-model:visible="visible1" position="right">
+    <lew-drawer v-model:visible="visible1" title="New Product" position="right">
       <lew-image
         preview-group-key="cover"
         object-position="top"
@@ -28,14 +29,23 @@ const open4 = (): void => {
       />
     </lew-drawer>
     <lew-button text="Right" @click="open1" />
-    <lew-drawer title="New Product" v-model:visible="visible2" position="bottom" />
+    <lew-drawer
+      v-model:visible="visible2"
+      title="New Product"
+      position="bottom"
+    />
     <lew-button text="Bottom" @click="open2" />
-    <lew-drawer title="New Product" v-model:visible="visible3" position="left" />
+    <lew-drawer
+      v-model:visible="visible3"
+      title="New Product"
+      position="left"
+    />
     <lew-button text="Left" @click="open3" />
-    <lew-drawer title="New Product" v-model:visible="visible4" position="top" />
+    <lew-drawer v-model:visible="visible4" title="New Product" position="top" />
     <lew-button text="Top" @click="open4" />
   </lew-flex>
 </template>
+
 <style lang="scss" scoped>
 .title {
   padding: 10px;

@@ -1,5 +1,5 @@
-import type { PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export interface TableColumn {
@@ -26,8 +26,8 @@ export const tableModel = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const tableProps = {
@@ -41,12 +41,12 @@ export const tableProps = {
         return false
       }
       return true
-    }
+    },
   },
   bordered: {
     type: Boolean,
     default: false,
-    description: '是否显示边框'
+    description: '是否显示边框',
   },
   dataSource: {
     type: Array as PropType<Record<string, any>[]>,
@@ -58,7 +58,7 @@ export const tableProps = {
         return false
       }
       return true
-    }
+    },
   },
   size: {
     type: String as PropType<LewSize>,
@@ -67,27 +67,27 @@ export const tableProps = {
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewTable] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`
+          `[LewTable] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`,
         )
         return false
       }
       return true
-    }
+    },
   },
   checkable: {
     type: Boolean,
     default: false,
-    description: '是否显示复选框列'
+    description: '是否显示复选框列',
   },
   sortable: {
     type: Boolean,
     default: false,
-    description: '是否启用行拖拽排序功能'
+    description: '是否启用行拖拽排序功能',
   },
   sortTooltipCustomRender: {
     type: Function as PropType<(row: Record<string, any>) => any>,
     default: undefined,
-    description: '自定义行拖拽排序的提示'
+    description: '自定义行拖拽排序的提示',
   },
   maxHeight: {
     type: [Number, String],
@@ -99,12 +99,12 @@ export const tableProps = {
         return false
       }
       return true
-    }
+    },
   },
   multiple: {
     type: Boolean,
     default: false,
-    description: '是否允许多选'
+    description: '是否允许多选',
   },
   rowKey: {
     type: String,
@@ -116,6 +116,6 @@ export const tableProps = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }

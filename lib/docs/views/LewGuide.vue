@@ -1,45 +1,46 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
-import TheSiderbar from "../layout/TheSiderbar.vue";
-import type { MenuOptions } from "lew-ui";
-import { Menu } from "lucide-vue-next";
+import type { MenuOptions } from 'lew-ui'
+import { Menu } from 'lucide-vue-next'
+import { useRoute } from 'vue-router'
+import TheSiderbar from '../layout/TheSiderbar.vue'
 
-const route = useRoute();
-const mainRef: any = ref(null);
-const isShowSider = ref(false);
+const route = useRoute()
+const mainRef: any = ref(null)
+const isShowSider = ref(false)
 
 watch(route, () => {
   setTimeout(() => {
-    if (mainRef.value) mainRef.value.scrollTop = 0;
-  }, 250);
-  isShowSider.value = false;
-});
+    if (mainRef.value)
+      mainRef.value.scrollTop = 0
+  }, 250)
+  isShowSider.value = false
+})
 
-const options = ref<MenuOptions[]>([]);
+const options = ref<MenuOptions[]>([])
 options.value = [
   {
-    label: "快速上手",
-    value: "快速上手",
+    label: '快速上手',
+    value: '快速上手',
     children: [
       {
-        label: "安装",
-        value: "/Install",
+        label: '安装',
+        value: '/Install',
       },
       {
-        label: "如何使用",
-        value: "/Start",
+        label: '如何使用',
+        value: '/Start',
       },
       {
-        label: "常见问题",
-        value: "/QA",
+        label: '常见问题',
+        value: '/QA',
       },
       {
-        label: "未来计划",
-        value: "/TodoList",
+        label: '未来计划',
+        value: '/TodoList',
       },
     ],
   },
-];
+]
 </script>
 
 <template>
@@ -52,7 +53,7 @@ options.value = [
       <Menu :size="24" />
     </div>
     <div class="sider" :class="{ 'sider-open': isShowSider }">
-      <the-siderbar :options="options" />
+      <TheSiderbar :options="options" />
     </div>
     <div ref="mainRef" class="app-main lew-scrollbar">
       <router-view v-slot="{ Component }">

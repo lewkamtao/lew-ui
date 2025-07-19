@@ -6,20 +6,20 @@ const columns = [
     field: 'id',
     width: 100,
     fixed: 'left',
-    x: 'center'
+    x: 'center',
   },
   {
     type: 'text',
     title: 'Title',
     field: 'title',
-    width: 180
+    width: 180,
   },
   {
     type: 'text',
     title: 'Release Date',
     field: 'release_date',
     width: 100,
-    x: 'center'
+    x: 'center',
   },
   {
     type: 'template',
@@ -27,33 +27,33 @@ const columns = [
     field: 'has_linewatch',
     width: 100,
 
-    x: 'center'
+    x: 'center',
   },
   {
     type: 'text',
     title: 'Director',
     field: 'directors',
-    width: 140
+    width: 140,
   },
   {
     type: 'text',
     title: 'Synopsis',
     field: 'info',
-    width: 120
+    width: 120,
   },
   {
     type: 'template',
     title: 'Genre',
     field: 'type',
     width: 100,
-    x: 'center'
+    x: 'center',
   },
   {
     type: 'template',
     title: 'Cast',
     align: 'start',
     field: 'actors',
-    width: 450
+    width: 450,
   },
 
   {
@@ -63,13 +63,13 @@ const columns = [
     width: 120,
     align: 'center',
     fixed: 'right',
-    x: 'center'
-  }
+    x: 'center',
+  },
 ]
 </script>
 
 <template>
-  <lew-table checkable :columns="columns" :max-height="400" rowKey="id" />
+  <lew-table checkable :columns="columns" :max-height="400" row-key="id" />
 </template>
 
 <style lang="scss" scoped>

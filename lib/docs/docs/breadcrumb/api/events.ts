@@ -5,7 +5,7 @@ export default {
   data: [
     {
       name: 'change',
-      type: '() => event'
-    }
-  ]
+      type: '() => event',
+    },
+  ],
 }

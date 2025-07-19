@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
-import { LewTooltip, LewTextTrim } from 'lew-ui'
 import type { TextTrimAlignment } from 'lew-ui'
-import { cloneDeep, isString } from 'lodash-es'
-import { descItemProps, lewDescSizePaddingMap } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { LewTextTrim, LewTooltip } from 'lew-ui'
 import { tipsIconSizeMap } from 'lew-ui/components/form/src/props'
+import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { isString } from 'lodash-es'
+import { descItemProps, lewDescSizePaddingMap } from './props'
 
+const props = defineProps(descItemProps)
 // 获取app实例并注册tooltip指令
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
-const props = defineProps(descItemProps)
 const descItemRef = ref()
 
 // 计算class名称
@@ -23,7 +23,7 @@ const getDescItemClassNames = computed(() => {
 })
 
 // 处理显示文本和空值
-const showTextAndEmpty = () => {
+function showTextAndEmpty() {
   const text = retrieveNestedFieldValue(props.dataSource, props.field)
   if (text === null || text === undefined || text === '') {
     return '-'
@@ -32,16 +32,20 @@ const showTextAndEmpty = () => {
 }
 
 // 渲染内容
-const renderItem = () => {
+function renderItem() {
   if (props.customRender) {
     const { field, label } = props
-    return props.customRender({ field, label, dataSource: props.dataSource })
+    return props.customRender({
+      field,
+      label,
+      dataSource: props.dataSource,
+    })
   }
   return props.type === 'text-trim'
     ? h(LewTextTrim, {
         x: props.valueX as TextTrimAlignment,
         style: 'width: 100%',
-        text: showTextAndEmpty()
+        text: showTextAndEmpty(),
       })
     : showTextAndEmpty()
 }
@@ -51,12 +55,12 @@ const getGap = computed(() => {
   const gapXMap = {
     small: 10,
     medium: 14,
-    large: 16
+    large: 16,
   }
   const gapYMap = {
     small: 8,
     medium: 10,
-    large: 12
+    large: 12,
   }
   return direction === 'x' ? gapXMap[size] : gapYMap[size]
 })
@@ -64,15 +68,17 @@ const getGap = computed(() => {
 const getPadding = computed(() => {
   const { bordered, size } = props
   return bordered
-    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(lewDescSizePaddingMap[size])}`
+    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(
+      lewDescSizePaddingMap[size],
+    )}`
     : 0
 })
 
 const getDescItemStyle = computed(() => {
   const { bordered, gridArea } = props
   return {
-    gap: bordered ? 0 : any2px(getGap.value),
-    'grid-area': gridArea || ''
+    'gap': bordered ? 0 : any2px(getGap.value),
+    'grid-area': gridArea || '',
   }
 })
 
@@ -80,19 +86,21 @@ const getLabelBoxStyle = computed(() => {
   const { labelX } = props
   return {
     'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`,
-    padding: getPadding.value
+    'padding': getPadding.value,
   }
 })
 
 const getDescItemMainStyle = computed(() => {
   const { direction, labelWidth, valueX } = props
   return {
-    width:
+    'width':
       direction === 'x'
-        ? `calc(${descItemRef.value?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
+        ? `calc(${descItemRef.value?.offsetWidth}px - ${any2px(
+          labelWidth,
+        )} - 10px)`
         : '100%',
     'justify-content': valueX === 'center' ? valueX : `flex-${valueX}`,
-    padding: getPadding.value
+    'padding': getPadding.value,
   }
 })
 
@@ -104,8 +112,8 @@ const getLabelBoxWidth = computed(() => {
 
 <template>
   <div
-    class="lew-desc-item"
     ref="descItemRef"
+    class="lew-desc-item"
     :class="getDescItemClassNames"
     :style="getDescItemStyle"
   >
@@ -113,14 +121,14 @@ const getLabelBoxWidth = computed(() => {
       <div class="lew-label-box" :style="getLabelBoxStyle">
         {{ label }}
         <Icon
-          class="lew-label-tips-icon"
           v-if="tips"
           v-tooltip="{
-            content: tips
+            content: tips,
           }"
+          class="lew-label-tips-icon"
           :size="tipsIconSizeMap[size]"
           type="normal"
-        ></Icon>
+        />
       </div>
     </div>
     <div class="lew-desc-item-main" :style="getDescItemMainStyle">

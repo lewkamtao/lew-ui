@@ -1,6 +1,6 @@
 <template>
   <lew-title>Todo List</lew-title>
-  <br />
+  <br>
   <div>
     <ul>
       <li>Card 卡片</li>
@@ -8,6 +8,7 @@
     </ul>
   </div>
 </template>
+
 <style lang="scss" scoped>
 ul {
   padding-left: 20px;

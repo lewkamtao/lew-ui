@@ -3,7 +3,7 @@ export default {
   columnsKey: 'events',
   data: [
     {
-      name: 'change'
-    }
-  ]
+      name: 'change',
+    },
+  ],
 }

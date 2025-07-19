@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { uploadByListProps, statusConfig } from './props'
-import type { UploadFileItem } from './props'
-import { LewFlex, LewTag, LewImage, LewTextTrim, LewTooltip } from 'lew-ui'
 import type { LewColor } from 'lew-ui'
+import type { UploadFileItem } from './props'
+import { LewFlex, LewImage, LewTag, LewTextTrim, LewTooltip } from 'lew-ui'
 import {
   any2px,
-  getUniqueId,
+  checkUrlIsImage,
   formatBytes,
   getFileIcon,
-  checkUrlIsImage
+  getUniqueId,
 } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { statusConfig, uploadByListProps } from './props'
 
+defineProps(uploadByListProps)
+const emit = defineEmits(['reUpload', 'deleteFile'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -23,47 +25,44 @@ const previewGroupKey = getUniqueId()
 const fileIconSizeMap: Record<string, number> = {
   small: 30,
   medium: 36,
-  large: 44
+  large: 44,
 }
 
 const uploadItemPaddingMap: Record<string, number> = {
   small: 8,
   medium: 10,
-  large: 12
+  large: 12,
 }
 
 const footerFontSizeMap: Record<string, number> = {
   small: 11,
   medium: 12,
-  large: 14
+  large: 14,
 }
 const fileNameFontSizeMap: Record<string, number> = {
   small: 13,
   medium: 14,
-  large: 16
+  large: 16,
 }
 
 const rightTopBtnSizeMap: Record<string, number> = {
   small: 16,
   medium: 18,
-  large: 20
+  large: 20,
 }
 
 const rightTopBtnIconSizeMap: Record<string, number> = {
   small: 10,
   medium: 12,
-  large: 14
+  large: 14,
 }
 
 const rightTopBorderRadiusMap: Record<string, number> = {
   small: 7,
   medium: 7.8,
-  large: 8.5
+  large: 8.5,
 }
 
-defineProps(uploadByListProps)
-
-const emit = defineEmits(['reUpload', 'deleteFile'])
 const modelValue = defineModel<UploadFileItem[]>()
 
 const getFileName = computed(() => (item: UploadFileItem) => {
@@ -71,7 +70,7 @@ const getFileName = computed(() => (item: UploadFileItem) => {
 })
 
 // 定义提取最后一个/后面的所有值方法
-const getLastValueAfterSlash = (url: string = '') => {
+function getLastValueAfterSlash(url: string = '') {
   const urlParts = url.split('/')
   return urlParts[urlParts.length - 1]
 }
@@ -82,35 +81,35 @@ const getStatus = computed(() => (item: UploadFileItem) => {
 </script>
 
 <template>
-  <lew-flex
+  <LewFlex
     v-show="(modelValue || []).length > 0"
     direction="y"
     class="lew-upload-file-list"
     gap="10"
   >
     <transition-group name="lew-upload-list">
-      <lew-flex
+      <LewFlex
         v-for="item in modelValue"
         :key="item.key || item.url"
         class="lew-upload-file-item"
         mode="between"
         gap="8"
         :style="{
-          padding: uploadItemPaddingMap[size] + 'px'
+          padding: `${uploadItemPaddingMap[size]}px`,
         }"
       >
-        <lew-flex
+        <LewFlex
           :style="{
             width: `${fileIconSizeMap[size]}px`,
-            height: `${fileIconSizeMap[size]}px`
+            height: `${fileIconSizeMap[size]}px`,
           }"
           class="lew-upload-icon-wrapper"
         >
-          <lew-image
+          <LewImage
             v-if="checkUrlIsImage(item.url)"
             width="100%"
             height="100%"
-            :previewGroupKey="previewGroupKey"
+            :preview-group-key="previewGroupKey"
             class="lew-upload-file-image"
             :src="item.url"
           />
@@ -118,89 +117,90 @@ const getStatus = computed(() => (item: UploadFileItem) => {
             v-else
             class="lew-upload-file-icon"
             :src="getFileIcon(item.name as string)"
-          />
-        </lew-flex>
-        <lew-flex
+          >
+        </LewFlex>
+        <LewFlex
           class="lew-upload-file-info"
-          :style="{ width: `calc(100% - ${fileIconSizeMap[size]}px - 8px)` }"
+          :style="{
+            width: `calc(100% - ${fileIconSizeMap[size]}px - 8px)`,
+          }"
           direction="y"
           gap="0"
         >
-          <lew-flex
+          <LewFlex
             v-if="item.status === 'fail'"
-            @click.stop="emit('reUpload', item.key)"
             x="center"
             y="center"
             :style="{
-              width: rightTopBtnSizeMap[size] + 'px',
-              height: rightTopBtnSizeMap[size] + 'px',
-              borderRadius: rightTopBorderRadiusMap[size] + 'px'
+              width: `${rightTopBtnSizeMap[size]}px`,
+              height: `${rightTopBtnSizeMap[size]}px`,
+              borderRadius: `${rightTopBorderRadiusMap[size]}px`,
             }"
             class="lew-upload-reupload-btn"
+            @click.stop="emit('reUpload', item.key)"
           >
             <Icon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
-          </lew-flex>
+          </LewFlex>
 
-          <lew-flex
-            @click.stop="emit('deleteFile', item.key)"
+          <LewFlex
             x="center"
             y="center"
             :style="{
-              width: rightTopBtnSizeMap[size] + 'px',
-              height: rightTopBtnSizeMap[size] + 'px',
-              borderRadius: rightTopBorderRadiusMap[size] + 'px'
+              width: `${rightTopBtnSizeMap[size]}px`,
+              height: `${rightTopBtnSizeMap[size]}px`,
+              borderRadius: `${rightTopBorderRadiusMap[size]}px`,
             }"
             class="lew-upload-delete-btn"
+            @click.stop="emit('deleteFile', item.key)"
           >
-            <Icon :size="rightTopBtnIconSizeMap[size]" type="close"></Icon>
-          </lew-flex>
-          <lew-flex mode="between" gap="5" y="center">
-            <lew-flex y="center" x="start" gap="5">
-              <lew-text-trim
+            <Icon :size="rightTopBtnIconSizeMap[size]" type="close" />
+          </LewFlex>
+          <LewFlex mode="between" gap="5" y="center">
+            <LewFlex y="center" x="start" gap="5">
+              <LewTextTrim
                 :text="getFileName(item)"
                 :style="{
                   width: `calc(100% - 30px)`,
-                  fontSize: `${any2px(fileNameFontSizeMap[size])}`
+                  fontSize: `${any2px(fileNameFontSizeMap[size])}`,
                 }"
                 class="lew-upload-file-name"
               />
-            </lew-flex>
-          </lew-flex>
-          <lew-flex
+            </LewFlex>
+          </LewFlex>
+          <LewFlex
             v-if="item.percent"
             class="lew-upload-progress"
             :class="[`lew-upload-progress-${item.status}`]"
           >
-            <lew-flex y="center" class="lew-upload-progress-box">
-              <span class="lew-upload-progress-bar"></span>
+            <LewFlex y="center" class="lew-upload-progress-box">
+              <span class="lew-upload-progress-bar" />
               <span
                 :style="{
-                  width: `${item.percent > 100 ? 100 : item.percent}%`
+                  width: `${item.percent > 100 ? 100 : item.percent}%`,
                 }"
                 class="lew-upload-progress-bar-upload"
-              >
-              </span>
-            </lew-flex>
-          </lew-flex>
-          <lew-flex mode="between" y="center" class="lew-upload-footer">
+              />
+            </LewFlex>
+          </LewFlex>
+          <LewFlex mode="between" y="center" class="lew-upload-footer">
             <span
               :style="{
-                fontSize: `${any2px(footerFontSizeMap[size])}`
+                fontSize: `${any2px(footerFontSizeMap[size])}`,
               }"
             >
               <template
                 v-if="item.status === 'uploading' && item.percent && item.size"
               >
-                {{ formatBytes((item.percent / 100) * item.size) + ' / ' }}
+                {{ `${formatBytes((item.percent / 100) * item.size)} / ` }}
               </template>
               <span v-if="item.size"> {{ formatBytes(item.size) }}</span>
             </span>
-            <lew-flex style="max-width: 200px" y="center" x="end">
-              <lew-tag
+            <LewFlex style="max-width: 200px" y="center" x="end">
+              <LewTag
                 v-if="item.status && item.status !== 'pending'"
+                :key="item.status"
                 type="light"
                 size="small"
-                :key="item.status"
                 :color="getStatus(item).color as LewColor"
               >
                 <template #left>
@@ -212,13 +212,13 @@ const getStatus = computed(() => (item: UploadFileItem) => {
                   />
                 </template>
                 {{ getStatus(item).text }}
-              </lew-tag>
-            </lew-flex>
-          </lew-flex>
-        </lew-flex>
-      </lew-flex>
+              </LewTag>
+            </LewFlex>
+          </LewFlex>
+        </LewFlex>
+      </LewFlex>
     </transition-group>
-  </lew-flex>
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

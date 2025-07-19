@@ -6,7 +6,7 @@ export type TextTrimAlignment = 'left' | 'center' | 'right'
 export const textTrimProps = {
   text: {
     type: [String, Number],
-    default: ''
+    default: '',
   },
   lineClamp: {
     type: Number,
@@ -17,11 +17,11 @@ export const textTrimProps = {
         return false
       }
       return true
-    }
+    },
   },
   allowHTML: {
     type: Boolean,
-    default: false
+    default: false,
   },
   placement: {
     type: String as PropType<TextTrimPlacement>,
@@ -32,31 +32,31 @@ export const textTrimProps = {
         'top',
         'bottom',
         'left',
-        'right'
+        'right',
       ]
       if (!validPlacements.includes(value)) {
         console.warn(
-          `[LewTextTrim] 无效的 placement 值: ${value}。请使用 ${validPlacements.join(', ')} 中的一个。`
+          `[LewTextTrim] 无效的 placement 值: ${value}。请使用 ${validPlacements.join(', ')} 中的一个。`,
         )
         return false
       }
       return true
-    }
+    },
   },
   offset: {
     type: Array as PropType<number[]>,
     default: [0, 15],
     validator(value: [number, number]): boolean {
       if (
-        !Array.isArray(value) ||
-        value.length !== 2 ||
-        !value.every((item) => typeof item === 'number')
+        !Array.isArray(value)
+        || value.length !== 2
+        || !value.every(item => typeof item === 'number')
       ) {
         console.warn('[LewTextTrim] offset 属性必须是包含两个数字的数组')
         return false
       }
       return true
-    }
+    },
   },
   textAlign: {
     type: String as PropType<TextTrimAlignment>,
@@ -66,27 +66,27 @@ export const textTrimProps = {
       const validAlignments: TextTrimAlignment[] = ['left', 'center', 'right']
       if (!validAlignments.includes(value)) {
         console.warn(
-          `[LewTextTrim] 无效的 x 值: ${value}。请使用 ${validAlignments.join(', ')} 中的一个。`
+          `[LewTextTrim] 无效的 x 值: ${value}。请使用 ${validAlignments.join(', ')} 中的一个。`,
         )
         return false
       }
       return true
-    }
+    },
   },
   delay: {
     type: Array as PropType<number[]>,
     default: [120, 120],
     validator(value: [number, number]): boolean {
       if (
-        !Array.isArray(value) ||
-        value.length !== 2 ||
-        !value.every((item) => typeof item === 'number' && item >= 0)
+        !Array.isArray(value)
+        || value.length !== 2
+        || !value.every(item => typeof item === 'number' && item >= 0)
       ) {
         console.warn('[LewTextTrim] delay 属性必须是包含两个非负数的数组')
         return false
       }
       return true
-    }
+    },
   },
   reserveEnd: {
     type: Number,
@@ -97,8 +97,8 @@ export const textTrimProps = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export type TextTrimProps = ExtractPropTypes<typeof textTrimProps>

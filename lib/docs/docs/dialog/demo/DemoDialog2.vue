@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const open = () => {
+function open() {
   LewDialog.info({
     okText: 'Submit',
     cancelText: 'Cancel',
@@ -12,17 +12,18 @@ const open = () => {
         setTimeout(() => {
           resolve(true)
           LewMessage.success({
-            content: 'Your app has been submitted for review'
+            content: 'Your app has been submitted for review',
           })
         }, 1000)
       })
     },
     cancel: () => {
       // Cancel submission
-    }
+    },
   })
 }
 </script>
+
 <template>
   <lew-button text="Submit for Review" round type="light" @click="open()" />
 </template>

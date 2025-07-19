@@ -1,14 +1,14 @@
 <template>
   <lew-flex wrap x="start" y="end" gap="20">
     <lew-image
-      previewGroupKey="cover"
+      preview-group-key="cover"
       object-position="top"
       :width="150"
       :height="150"
       src="https://app.tngeek.com/api_sso/open/file/b4c64ae_cat-8321993_1280.webp"
     />
     <lew-image
-      previewGroupKey="cover"
+      preview-group-key="cover"
       object-position="center"
       :width="150"
       :height="150"

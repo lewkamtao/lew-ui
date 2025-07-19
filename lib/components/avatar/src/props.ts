@@ -1,5 +1,6 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { ObjectFit } from 'lew-ui/components/image/src/props'
+import type { ExtractPropTypes, PropType } from 'vue'
+
 type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
 type AvatarShape = 'circle' | 'square' | 'sharp'
@@ -16,12 +17,12 @@ export const avatarProps = {
         return false
       }
       return true
-    }
+    },
   },
   loading: {
     type: Boolean,
     default: false,
-    description: '是否处于加载状态'
+    description: '是否处于加载状态',
   },
   shape: {
     type: String as PropType<AvatarShape>,
@@ -33,12 +34,12 @@ export const avatarProps = {
         return false
       }
       return true
-    }
+    },
   },
   src: {
     type: String,
     default: '',
-    description: '头像图片的 URL'
+    description: '头像图片的 URL',
   },
   alt: {
     type: String,
@@ -50,7 +51,7 @@ export const avatarProps = {
         return false
       }
       return true
-    }
+    },
   },
   status: {
     type: String as PropType<AvatarStatus | undefined>,
@@ -63,7 +64,7 @@ export const avatarProps = {
         return false
       }
       return true
-    }
+    },
   },
   objectFit: {
     type: String as PropType<ObjectFit>,
@@ -75,16 +76,16 @@ export const avatarProps = {
         'contain',
         'cover',
         'none',
-        'scale-down'
+        'scale-down',
       ]
       if (!validValues.includes(value)) {
         console.warn(
-          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`
+          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`,
         )
         return false
       }
       return true
-    }
+    },
   },
   objectPosition: {
     type: String,
@@ -100,17 +101,17 @@ export const avatarProps = {
         'top left',
         'top right',
         'bottom left',
-        'bottom right'
+        'bottom right',
       ]
       if (
-        !validPositions.includes(value) &&
-        !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
+        !validPositions.includes(value)
+        && !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
       ) {
         console.warn('[LewImage] objectPosition 格式不正确')
         return false
       }
       return true
-    }
+    },
   },
   statusPlacement: {
     type: String as PropType<AvatarPlacement>,
@@ -121,17 +122,17 @@ export const avatarProps = {
         'top-left',
         'top-right',
         'bottom-left',
-        'bottom-right'
+        'bottom-right',
       ]
       if (!validPlacements.includes(value)) {
         console.warn(
-          `[LewAvatar] statusPlacement 必须是 ${validPlacements.join(', ')} 之一`
+          `[LewAvatar] statusPlacement 必须是 ${validPlacements.join(', ')} 之一`,
         )
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export type AvatarProps = ExtractPropTypes<typeof avatarProps>

@@ -9,9 +9,9 @@ export const globalSchema = [
       options: [
         { label: '小', value: 'small' },
         { label: '中', value: 'medium' },
-        { label: '大', value: 'large' }
-      ]
-    }
+        { label: '大', value: 'large' },
+      ],
+    },
   },
   {
     label: '标签方向',
@@ -22,8 +22,8 @@ export const globalSchema = [
       itemWidth: '50px',
       options: [
         { label: '水平', value: 'x' },
-        { label: '垂直', value: 'y' }
-      ]
-    }
-  }
+        { label: '垂直', value: 'y' },
+      ],
+    },
+  },
 ]

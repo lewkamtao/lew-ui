@@ -2,7 +2,7 @@
 const visible1 = ref(false)
 const visible2 = ref(false)
 
-const ok1 = () => {
+function ok1() {
   return new Promise((resolve) => {
     setTimeout(() => {
       visible1.value = false
@@ -11,7 +11,7 @@ const ok1 = () => {
   })
 }
 
-const ok2 = () => {
+function ok2() {
   return new Promise((resolve) => {
     setTimeout(() => {
       visible2.value = false
@@ -19,7 +19,7 @@ const ok2 = () => {
     }, 1000)
   })
 }
-const close1 = () => {
+function close1() {
   return new Promise((resolve) => {
     setTimeout(() => {
       visible1.value = false
@@ -28,7 +28,7 @@ const close1 = () => {
   })
 }
 
-const close2 = () => {
+function close2() {
   return new Promise((resolve) => {
     setTimeout(() => {
       visible2.value = false
@@ -40,25 +40,27 @@ const close2 = () => {
 
 <template>
   <lew-flex x="start">
-    <lew-button @click="visible1 = true">Product Details</lew-button>
+    <lew-button @click="visible1 = true">
+      Product Details
+    </lew-button>
   </lew-flex>
   <lew-modal
     v-model:visible="visible1"
-    closeOnClickOverlay
-    closeByEsc
+    close-on-click-overlay
+    close-by-esc
     width="1000px"
     title="BILLY Bookcase"
-    :closeButtonProps="{
-      request: close1
+    :close-button-props="{
+      request: close1,
     }"
-    :okButtonProps="{
-      request: ok1
+    :ok-button-props="{
+      request: ok1,
     }"
   >
     <div class="modal-body">
       <div class="product-container">
         <lew-image
-          previewGroupKey="cover"
+          preview-group-key="cover"
           object-position="top"
           :width="500"
           :height="618.5"
@@ -66,7 +68,9 @@ const close2 = () => {
         />
         <div class="product-info">
           <h2>BILLY Bookcase</h2>
-          <p class="price">$69.99</p>
+          <p class="price">
+            $69.99
+          </p>
           <div class="description">
             <p>Height: 79 1/2"</p>
             <p>Width: 31 1/2"</p>
@@ -82,7 +86,9 @@ const close2 = () => {
             </ul>
           </div>
           <lew-flex x="start">
-            <lew-button @click="visible2 = true">Assembly Guide</lew-button>
+            <lew-button @click="visible2 = true">
+              Assembly Guide
+            </lew-button>
           </lew-flex>
         </div>
       </div>
@@ -91,21 +97,21 @@ const close2 = () => {
 
   <lew-modal
     v-model:visible="visible2"
-    closeOnClickOverlay
-    closeByEsc
+    close-on-click-overlay
+    close-by-esc
     width="400px"
     title="Assembly Guide"
-    :okButtonProps="{
-      request: ok2
+    :ok-button-props="{
+      request: ok2,
     }"
-    :closeButtonProps="{
-      request: close2
+    :close-button-props="{
+      request: close2,
     }"
   >
     <div class="modal-body">
       <div class="assembly-container">
         <lew-image
-          previewGroupKey="cover"
+          preview-group-key="cover"
           object-position="top"
           width="100%"
           :height="200"
@@ -124,6 +130,7 @@ const close2 = () => {
     </div>
   </lew-modal>
 </template>
+
 <style lang="scss" scoped>
 .modal-body {
   width: 100%;

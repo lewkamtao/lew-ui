@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const content = ref(
-  "People are busy every day, pursuing money and status, indulging in trivial matters and worldly affairs. These things fill up life. In the end, how many people with such a life without blank spaces have won others but lost themselves?"
-);
+  'People are busy every day, pursuing money and status, indulging in trivial matters and worldly affairs. These things fill up life. In the end, how many people with such a life without blank spaces have won others but lost themselves?',
+)
 </script>
 
 <template>

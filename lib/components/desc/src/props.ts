@@ -1,10 +1,10 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { LewSize, TextTrimAlignment } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export type DescDirection = 'x' | 'y'
 
-export type DescOptions = {
+export interface DescOptions {
   label: string
   field: string
   gridArea: string
@@ -24,12 +24,12 @@ export const descProps = {
         return false
       }
       return true
-    }
+    },
   },
   dataSource: {
     type: Object as PropType<Record<string, any>>,
     default: () => ({}),
-    description: '包含描述项值的对象'
+    description: '包含描述项值的对象',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -38,35 +38,35 @@ export const descProps = {
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewDesc] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`
+          `[LewDesc] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`,
         )
         return false
       }
       return true
-    }
+    },
   },
   labelX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: '描述项标签的对齐方式'
+    description: '描述项标签的对齐方式',
   },
   valueX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: '描述项值的对齐方式'
+    description: '描述项值的对齐方式',
   },
   gap: {
     type: [String, Number],
     default: 30,
     description: '描述项之间的间距，单位为像素',
     validator(value: string | number): boolean {
-      const numValue = typeof value === 'string' ? parseInt(value, 10) : value
-      if (isNaN(numValue) || numValue < 0) {
+      const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
+      if (Number.isNaN(numValue) || numValue < 0) {
         console.warn(`[LewFlex] gap 值必须是非负数或可转换为非负数的字符串。`)
         return false
       }
       return true
-    }
+    },
   },
   width: {
     type: [Number, String],
@@ -82,7 +82,7 @@ export const descProps = {
         return false
       }
       return true
-    }
+    },
   },
   columns: {
     type: [Number, String],
@@ -90,12 +90,12 @@ export const descProps = {
     description: '每行显示的描述项数量，范围为1到4',
     validator(value: number | string): boolean {
       const numValue = Number(value)
-      if (isNaN(numValue) || numValue < 1 || numValue > 4) {
+      if (Number.isNaN(numValue) || numValue < 1 || numValue > 4) {
         console.warn('[LewDesc] columns 必须是 1 到 4 之间的数字')
         return false
       }
       return true
-    }
+    },
   },
   labelWidth: {
     type: [Number, String],
@@ -107,15 +107,15 @@ export const descProps = {
         return false
       }
       if (
-        typeof value === 'string' &&
-        value !== 'auto' &&
-        !/^\d+px$/.test(value)
+        typeof value === 'string'
+        && value !== 'auto'
+        && !/^\d+px$/.test(value)
       ) {
         console.warn('[LewDesc] labelWidth 字符串必须是 "auto" 或有效的像素值')
         return false
       }
       return true
-    }
+    },
   },
   direction: {
     type: String as PropType<DescDirection>,
@@ -124,36 +124,36 @@ export const descProps = {
     validator(value: DescDirection): boolean {
       if (!['x', 'y'].includes(value)) {
         console.warn(
-          `[LewDesc] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`
+          `[LewDesc] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`,
         )
         return false
       }
       return true
-    }
+    },
   },
   id: {
     type: String,
     default: '',
     description: '描述组件的唯一标识符，用于区分不同的描述',
-    hidden: true
+    hidden: true,
   },
   bordered: {
     type: Boolean,
     default: false,
-    description: '是否显示边框和标签背景'
-  }
+    description: '是否显示边框和标签背景',
+  },
 }
 
 export const descItemProps = {
   label: {
     type: String,
     default: '',
-    description: '描述项的标签文本'
+    description: '描述项的标签文本',
   },
   field: {
     type: String,
     default: '',
-    description: '描述项对应的数据字段'
+    description: '描述项对应的数据字段',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -162,17 +162,17 @@ export const descItemProps = {
     validator(value: LewSize): boolean {
       if (!['small', 'medium', 'large'].includes(value)) {
         console.warn(
-          `[LewDescItem] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`
+          `[LewDescItem] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`,
         )
         return false
       }
       return true
-    }
+    },
   },
   bordered: {
     type: Boolean,
     default: false,
-    description: '是否显示边框和标签背景'
+    description: '是否显示边框和标签背景',
   },
   width: {
     type: [Number, String],
@@ -188,7 +188,7 @@ export const descItemProps = {
         return false
       }
       return true
-    }
+    },
   },
   labelWidth: {
     type: [Number, String],
@@ -200,17 +200,17 @@ export const descItemProps = {
         return false
       }
       if (
-        typeof value === 'string' &&
-        value !== 'auto' &&
-        !/^\d+px$/.test(value)
+        typeof value === 'string'
+        && value !== 'auto'
+        && !/^\d+px$/.test(value)
       ) {
         console.warn(
-          '[LewDescItem] labelWidth 字符串必须是 "auto" 或有效的像素值'
+          '[LewDescItem] labelWidth 字符串必须是 "auto" 或有效的像素值',
         )
         return false
       }
       return true
-    }
+    },
   },
   direction: {
     type: String as PropType<DescDirection>,
@@ -219,60 +219,60 @@ export const descItemProps = {
     validator(value: DescDirection): boolean {
       if (!['x', 'y'].includes(value)) {
         console.warn(
-          `[LewDescItem] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`
+          `[LewDescItem] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`,
         )
         return false
       }
       return true
-    }
+    },
   },
   tips: {
     type: String,
     default: '',
-    description: '描述项的提示信息，用于提供额外的说明'
+    description: '描述项的提示信息，用于提供额外的说明',
   },
   type: {
     type: String as PropType<'text-trim'>,
     default: '',
-    description: '描述项的类型，例如文本截断'
+    description: '描述项的类型，例如文本截断',
   },
   labelX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: '描述项标签的对齐方式'
+    description: '描述项标签的对齐方式',
   },
   valueX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: '描述项值的对齐方式'
+    description: '描述项值的对齐方式',
   },
   gridArea: {
     type: String,
     default: '',
-    description: '在网格布局中的位置'
+    description: '在网格布局中的位置',
   },
   customRender: {
     type: Function as PropType<(value: any) => any>,
     default: null,
-    description: '自定义渲染函数，用于自定义描述项的显示'
+    description: '自定义渲染函数，用于自定义描述项的显示',
   },
   id: {
     type: String,
     default: '',
     description: '单个描述项的唯一标识符，用于区分不同的描述项',
-    hidden: true
+    hidden: true,
   },
   dataSource: {
     type: Object,
     default: {},
-    hidden: true
-  }
+    hidden: true,
+  },
 }
 
 export const lewDescSizePaddingMap: Record<LewSize, number> = {
   small: 14,
   medium: 20,
-  large: 26
+  large: 26,
 }
 
 export type DescProps = ExtractPropTypes<typeof descProps>

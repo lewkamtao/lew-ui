@@ -3,7 +3,7 @@ export default [
     label: '选项配置',
     as: 'input-table',
     field: 'options',
-    direction: 'y'
+    direction: 'y',
   },
   {
     label: '排版方向',
@@ -14,30 +14,30 @@ export default [
       options: [
         {
           label: '水平',
-          value: 'x'
+          value: 'x',
         },
         {
           label: '垂直',
-          value: 'y'
-        }
-      ]
-    }
+          value: 'y',
+        },
+      ],
+    },
   },
 
   {
     label: '是否为块状',
     as: 'switch',
-    field: 'block'
+    field: 'block',
   },
   {
     label: '是否为圆形',
     as: 'switch',
-    field: 'round'
+    field: 'round',
   },
   {
     label: '图标开启',
     as: 'switch',
     tips: '图标开启，仅在块状时生效',
-    field: 'iconable'
-  }
+    field: 'iconable',
+  },
 ]

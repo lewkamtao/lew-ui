@@ -5,5 +5,5 @@ export default {
   title: 'Model(Checkbox)',
   columnsKey: 'model',
   orderNum: 2,
-  data: convertProps(checkboxModel)
+  data: convertProps(checkboxModel),
 }

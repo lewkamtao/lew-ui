@@ -2,7 +2,7 @@
 const visible = ref(false)
 const edit = ref(false)
 const notify = ref(false)
-const ok = () => {
+function ok() {
   return new Promise<void>(() => {
     setTimeout(() => {
       visible.value = false
@@ -10,25 +10,29 @@ const ok = () => {
   })
 }
 
-const close = () => {
+function close() {
   visible.value = false
 }
 </script>
 
 <template>
   <lew-flex x="start">
-    <lew-button type="ghost" @click="visible = true">Share Document</lew-button>
+    <lew-button type="ghost" @click="visible = true">
+      Share Document
+    </lew-button>
   </lew-flex>
   <lew-modal
     v-model:visible="visible"
-    closeOnClickOverlay
+    close-on-click-overlay
     width="550px"
-    :okButtonProps="{ request: ok }"
-    :closeButtonProps="{ request: close }"
+    :ok-button-props="{ request: ok }"
+    :close-button-props="{ request: close }"
   >
     <template #header>
       <lew-flex x="start" class="lew-modal-header">
-        <lew-tag color="blue">Share</lew-tag>
+        <lew-tag color="blue">
+          Share
+        </lew-tag>
         Share Document
       </lew-flex>
     </template>
@@ -40,11 +44,10 @@ const close = () => {
         </p>
         <div class="share-options">
           <div class="option">
-            <lew-checkbox label="Allow editing" v-model="edit"> </lew-checkbox>
+            <lew-checkbox v-model="edit" label="Allow editing" />
           </div>
           <div class="option">
-            <lew-checkbox label="Send email notification" v-model="notify">
-            </lew-checkbox>
+            <lew-checkbox v-model="notify" label="Send email notification" />
           </div>
         </div>
       </div>
@@ -55,10 +58,12 @@ const close = () => {
           Changes will be applied immediately
         </lew-flex>
         <lew-flex x="end" y="center" gap="8">
-          <lew-button type="text" color="gray" :request="close" size="small"
-            >Cancel</lew-button
-          >
-          <lew-button :request="ok" size="small">Share</lew-button>
+          <lew-button type="text" color="gray" :request="close" size="small">
+            Cancel
+          </lew-button>
+          <lew-button :request="ok" size="small">
+            Share
+          </lew-button>
         </lew-flex>
       </lew-flex>
     </template>

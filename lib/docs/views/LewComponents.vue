@@ -1,322 +1,322 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
-import TheSiderbar from "../layout/TheSiderbar.vue";
-import LewRightNav from "../layout/LewRightNav.vue";
-import type { MenuOptions } from "lew-ui";
-import { Menu } from "lucide-vue-next";
+import type { MenuOptions } from 'lew-ui'
+import { Menu } from 'lucide-vue-next'
+import { useRoute } from 'vue-router'
+import LewRightNav from '../layout/LewRightNav.vue'
+import TheSiderbar from '../layout/TheSiderbar.vue'
 
-const isShowSider = ref(false);
-const route = useRoute();
+const isShowSider = ref(false)
+const route = useRoute()
 
 onMounted(() => {
-  const isComplete: string[] = [];
+  const isComplete: string[] = []
 
   setTimeout(() => {
-    const menuItems = document.getElementsByClassName("lew-menu-item");
+    const menuItems = document.getElementsByClassName('lew-menu-item')
     for (let i = 0; i < menuItems.length; i++) {
       // 寻找lew-text-trim-wrapper
-      const dom = menuItems[i].querySelector(".lew-text-trim-wrapper");
+      const dom = menuItems[i].querySelector('.lew-text-trim-wrapper')
       if (dom) {
         if (isComplete.includes(dom.textContent as string)) {
-          (dom as HTMLElement).style.opacity = "0.2";
+          ;(dom as HTMLElement).style.opacity = '0.2'
         }
       }
     }
-  }, 500);
-});
+  }, 500)
+})
 
 watch(route, () => {
   nextTick(() => {
-    const componentMain = document.getElementById("component-main");
+    const componentMain = document.getElementById('component-main')
     if (componentMain) {
-      componentMain.scrollTop = 0;
+      componentMain.scrollTop = 0
     }
-  });
-  isShowSider.value = false;
-});
+  })
+  isShowSider.value = false
+})
 
 const options: MenuOptions[] = [
   {
-    label: "基础",
-    value: "基础",
+    label: '基础',
+    value: '基础',
     children: [
       {
-        label: "Image",
-        value: "/Image",
+        label: 'Image',
+        value: '/Image',
       },
       {
-        label: "Avatar",
-        value: "/Avatar",
+        label: 'Avatar',
+        value: '/Avatar',
       },
       {
-        label: "Button",
-        value: "/Button",
+        label: 'Button',
+        value: '/Button',
       },
 
       {
-        label: "Tag",
-        value: "/Tag",
+        label: 'Tag',
+        value: '/Tag',
       },
       {
-        label: "Badge",
-        value: "/Badge",
+        label: 'Badge',
+        value: '/Badge',
       },
       {
-        label: "Title",
-        value: "/Title",
+        label: 'Title',
+        value: '/Title',
       },
       {
-        label: "TextTrim",
-        value: "/TextTrim",
+        label: 'TextTrim',
+        value: '/TextTrim',
       },
       {
-        label: "Flex",
-        value: "/Flex",
+        label: 'Flex',
+        value: '/Flex',
       },
       {
-        label: "Mark",
-        value: "/Mark",
+        label: 'Mark',
+        value: '/Mark',
       },
     ],
   },
 
   {
-    label: "导航",
-    value: "导航",
+    label: '导航',
+    value: '导航',
     children: [
       {
-        label: "BackTop",
-        value: "/BackTop",
+        label: 'BackTop',
+        value: '/BackTop',
       },
       {
-        label: "Steps",
-        value: "/Steps",
+        label: 'Steps',
+        value: '/Steps',
       },
       {
-        label: "Menu",
-        value: "/Menu",
+        label: 'Menu',
+        value: '/Menu',
       },
       {
-        label: "MenuTree",
-        value: "/MenuTree",
+        label: 'MenuTree',
+        value: '/MenuTree',
       },
       {
-        label: "Dropdown",
-        value: "/Dropdown",
+        label: 'Dropdown',
+        value: '/Dropdown',
       },
       {
-        label: "Breadcrumb",
-        value: "/Breadcrumb",
+        label: 'Breadcrumb',
+        value: '/Breadcrumb',
       },
       {
-        label: "ContextMenu",
-        value: "/ContextMenu",
+        label: 'ContextMenu',
+        value: '/ContextMenu',
         tagProps: {
-          text: "Pro",
-          color: "red",
-          type: "ghost",
+          text: 'Pro',
+          color: 'red',
+          type: 'ghost',
           round: true,
         },
       },
       {
-        label: "ActionBox",
-        value: "/ActionBox",
+        label: 'ActionBox',
+        value: '/ActionBox',
         tagProps: {
-          text: "New",
-          color: "green",
-          type: "ghost",
+          text: 'New',
+          color: 'green',
+          type: 'ghost',
           round: true,
         },
       },
     ],
   },
   {
-    label: "表单",
-    value: "表单",
+    label: '表单',
+    value: '表单',
     children: [
       {
-        label: "Form",
-        value: "/Form",
+        label: 'Form',
+        value: '/Form',
       },
       {
-        label: "Input",
-        value: "/Input",
+        label: 'Input',
+        value: '/Input',
       },
       {
-        label: "InputNumber",
-        value: "/InputNumber",
+        label: 'InputNumber',
+        value: '/InputNumber',
       },
       {
-        label: "Textarea",
-        value: "/Textarea",
+        label: 'Textarea',
+        value: '/Textarea',
       },
       {
-        label: "InputTag",
-        value: "/InputTag",
+        label: 'InputTag',
+        value: '/InputTag',
       },
       {
-        label: "Checkbox",
-        value: "/Checkbox",
+        label: 'Checkbox',
+        value: '/Checkbox',
       },
       {
-        label: "Radio",
-        value: "/Radio",
+        label: 'Radio',
+        value: '/Radio',
       },
       {
-        label: "Tabs",
-        value: "/Tabs",
+        label: 'Tabs',
+        value: '/Tabs',
       },
       {
-        label: "Select",
-        value: "/Select",
+        label: 'Select',
+        value: '/Select',
       },
       {
-        label: "SelectMultiple",
-        value: "/SelectMultiple",
+        label: 'SelectMultiple',
+        value: '/SelectMultiple',
       },
       {
-        label: "DatePicker",
-        value: "/DatePicker",
+        label: 'DatePicker',
+        value: '/DatePicker',
       },
       {
-        label: "DateRangePicker",
-        value: "/DateRangePicker",
+        label: 'DateRangePicker',
+        value: '/DateRangePicker',
       },
       {
-        label: "Cascader",
-        value: "/Cascader",
+        label: 'Cascader',
+        value: '/Cascader',
       },
       {
-        label: "TreeSelect",
-        value: "/TreeSelect",
+        label: 'TreeSelect',
+        value: '/TreeSelect',
       },
       {
-        label: "InputTable",
-        value: "/InputTable",
+        label: 'InputTable',
+        value: '/InputTable',
         tagProps: {
-          text: "Dev",
-          type: "ghost",
+          text: 'Dev',
+          type: 'ghost',
           round: true,
-          color: "blue",    
+          color: 'blue',
         },
       },
       {
-        label: "Switch",
-        value: "/Switch",
+        label: 'Switch',
+        value: '/Switch',
       },
 
       {
-        label: "Slider",
-        value: "/Slider",
+        label: 'Slider',
+        value: '/Slider',
       },
       {
-        label: "SliderRange",
-        value: "/SliderRange",
+        label: 'SliderRange',
+        value: '/SliderRange',
       },
       {
-        label: "Rate",
-        value: "/Rate",
+        label: 'Rate',
+        value: '/Rate',
         tagProps: {
-          text: "New",
-          type: "ghost",
+          text: 'New',
+          type: 'ghost',
           round: true,
-          color: "green",
+          color: 'green',
         },
       },
       {
-        label: "ColorPicker",
-        value: "/ColorPicker",
+        label: 'ColorPicker',
+        value: '/ColorPicker',
       },
       {
-        label: "Upload",
-        value: "/Upload",
+        label: 'Upload',
+        value: '/Upload',
       },
     ],
   },
   {
-    label: "数据展示",
-    value: "数据展示",
+    label: '数据展示',
+    value: '数据展示',
     children: [
       {
-        label: "Table",
-        value: "/Table",
+        label: 'Table',
+        value: '/Table',
       },
       {
-        label: "Pagination",
-        value: "/Pagination",
+        label: 'Pagination',
+        value: '/Pagination',
       },
       {
-        label: "Tree",
-        value: "/Tree",
+        label: 'Tree',
+        value: '/Tree',
       },
 
       {
-        label: "Collapse",
-        value: "/Collapse",
+        label: 'Collapse',
+        value: '/Collapse',
       },
       {
-        label: "Desc",
-        value: "/Desc",
+        label: 'Desc',
+        value: '/Desc',
       },
     ],
   },
   {
-    label: "反馈",
-    value: "反馈",
+    label: '反馈',
+    value: '反馈',
     children: [
       {
-        label: "Alert",
-        value: "/Alert",
+        label: 'Alert',
+        value: '/Alert',
       },
       {
-        label: "Message",
-        value: "/Message",
+        label: 'Message',
+        value: '/Message',
       },
       {
-        label: "Notification",
-        value: "/Notification",
+        label: 'Notification',
+        value: '/Notification',
       },
       {
-        label: "Drawer",
-        value: "/Drawer",
+        label: 'Drawer',
+        value: '/Drawer',
       },
       {
-        label: "Dialog",
-        value: "/Dialog",
+        label: 'Dialog',
+        value: '/Dialog',
       },
       {
-        label: "Modal",
-        value: "/Modal",
+        label: 'Modal',
+        value: '/Modal',
       },
       {
-        label: "Popok",
-        value: "/Popok",
+        label: 'Popok',
+        value: '/Popok',
       },
       {
-        label: "Popover",
-        value: "/Popover",
+        label: 'Popover',
+        value: '/Popover',
       },
 
       {
-        label: "Tooltip",
-        value: "/Tooltip",
+        label: 'Tooltip',
+        value: '/Tooltip',
       },
       {
-        label: "Loading",
-        value: "/Loading",
+        label: 'Loading',
+        value: '/Loading',
       },
       {
-        label: "Empty",
-        value: "/Empty",
+        label: 'Empty',
+        value: '/Empty',
       },
     ],
   },
 ].map((item: any) => {
   return {
     ...item,
-    label: item.label + "（" + (item?.children || []).length + "）",
-  };
-});
+    label: `${item.label}（${(item?.children || []).length}）`,
+  }
+})
 </script>
 
 <template>
@@ -329,7 +329,7 @@ const options: MenuOptions[] = [
       <Menu :size="24" />
     </div>
     <div class="sider" :class="{ 'sider-open': isShowSider }">
-      <the-siderbar :options="options" />
+      <TheSiderbar :options="options" />
     </div>
     <div class="app-main lew-scrollbar">
       <div id="component-main" class="component-main lew-scrollbar">
@@ -339,7 +339,9 @@ const options: MenuOptions[] = [
           </keep-alive>
         </router-view>
       </div>
-      <div class="component-nav"><lew-right-nav /></div>
+      <div class="component-nav">
+        <LewRightNav />
+      </div>
     </div>
   </div>
 </template>

@@ -5,22 +5,22 @@ const value = ref('')
 <template>
   <lew-flex style="width: 300px" gap="20px" x="start" direction="y">
     <lew-textarea
+      v-model="value"
       resize="both"
-      v-model="value"
       placeholder="both"
-      minHeight="80px"
+      min-height="80px"
     />
     <lew-textarea
+      v-model="value"
       resize="vertical"
-      v-model="value"
       placeholder="vertical"
-      minHeight="100px"
+      min-height="100px"
     />
     <lew-textarea
-      resize="horizontal"
       v-model="value"
+      resize="horizontal"
       placeholder="horizontal"
-      minHeight="120px"
+      min-height="120px"
     />
   </lew-flex>
 </template>

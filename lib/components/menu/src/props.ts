@@ -1,7 +1,7 @@
-import type { ExtractPropTypes } from 'vue'
 import type { TagProps } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 
-export type MenuOptions = {
+export interface MenuOptions {
   label: string // 标题
   value?: string // 值
   children?: MenuOptions[] // 子菜单
@@ -21,8 +21,8 @@ export const menuModel = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const menuProps = {
@@ -37,8 +37,8 @@ export const menuProps = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export type MenuProps = ExtractPropTypes<typeof menuProps>

@@ -11,12 +11,12 @@ export const demoGroup = [
   DemoTextTrim1,
   DemoTextTrim2,
   DemoTextTrim3,
-  DemoTextTrim4
+  DemoTextTrim4,
 ]
 
 export const codeGroup = [
   DemoTextTrim1Code,
   DemoTextTrim2Code,
   DemoTextTrim3Code,
-  DemoTextTrim4Code
+  DemoTextTrim4Code,
 ]

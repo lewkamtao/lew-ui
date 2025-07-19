@@ -1,34 +1,33 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core'
+import { LewFlex, LewTooltip, locale } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
-import { LewFlex, LewTooltip } from 'lew-ui'
 import { imageProps } from './props'
-import { locale } from 'lew-ui'
+
+const props = defineProps(imageProps)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
-const props = defineProps(imageProps)
-
 const imageStyleObject = computed(() => {
   const { width, height } = props
   return {
     width: any2px(width),
-    height: any2px(height)
+    height: any2px(height),
   }
 })
 
-let _loading = ref()
-let _error = ref()
+const _loading = ref()
+const _error = ref()
 
-const init = () => {
+function init() {
   const { isLoading, error } = useImage({
-    src: props.src as string
+    src: props.src as string,
   })
-  _loading = isLoading
-  _error = error
+  _loading.value = isLoading
+  _error.value = error
 }
 
 init()
@@ -37,34 +36,35 @@ watch(
   () => props.src,
   () => {
     const { isLoading, error } = useImage({
-      src: props.src as string
+      src: props.src as string,
     })
-    _loading = isLoading
-    _error = error
-  }
+    _loading.value = isLoading
+    _error.value = error
+  },
 )
 </script>
+
 <template>
-  <lew-flex
+  <LewFlex
     gap="0"
     x="center"
     y="center"
     class="lew-image-wrapper"
     :style="imageStyleObject"
   >
-    <div class="skeletons" v-if="_loading || loading || !src"></div>
+    <div v-if="_loading || loading || !src" class="skeletons" />
     <template v-else-if="_error">
       <slot v-if="$slots.error" name="error" />
       <img
         v-else
         v-tooltip="{
           content: locale.t('image.fail'),
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         class="lew-image-fail-icon"
         src="./image_fail_icon.svg"
         :alt="locale.t('image.fail')"
-      />
+      >
     </template>
     <template v-else>
       <div class="lew-image-box">
@@ -74,13 +74,13 @@ watch(
           :lazy="lazy"
           :style="{
             'object-fit': objectFit,
-            'object-position': objectPosition
+            'object-position': objectPosition,
           }"
           :alt
-        />
+        >
       </div>
     </template>
-  </lew-flex>
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

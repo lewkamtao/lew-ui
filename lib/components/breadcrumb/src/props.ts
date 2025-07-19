@@ -28,12 +28,12 @@ export const breadcrumbProps = {
           return false
         }
         if (
-          item.value !== undefined &&
-          typeof item.value !== 'string' &&
-          typeof item.value !== 'number'
+          item.value !== undefined
+          && typeof item.value !== 'string'
+          && typeof item.value !== 'number'
         ) {
           console.warn(
-            '[LewBreadcrumb] options 中的 value 必须是字符串或数字类型'
+            '[LewBreadcrumb] options 中的 value 必须是字符串或数字类型',
           )
           return false
         }
@@ -43,7 +43,7 @@ export const breadcrumbProps = {
         }
         return true
       })
-    }
+    },
   },
   separator: {
     type: String,
@@ -54,13 +54,13 @@ export const breadcrumbProps = {
       const validTypes: BreadcrumbIconType[] = ['shoulder', 'sprit']
       if (!validTypes.includes(value as BreadcrumbIconType)) {
         console.warn(
-          `[LewBreadcrumb] separator 必须是 ${validTypes.join(' 或 ')}`
+          `[LewBreadcrumb] separator 必须是 ${validTypes.join(' 或 ')}`,
         )
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export type BreadcrumbProps = ExtractPropTypes<typeof breadcrumbProps>

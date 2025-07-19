@@ -5,12 +5,12 @@ export default {
     {
       name: 'item',
       description: '选项自定义内容',
-      params: 'Options'
+      params: 'Options',
     },
     {
       name: 'empty',
       description: '无选项时显示的内容',
-      params: 'Options'
-    }
-  ]
+      params: 'Options',
+    },
+  ],
 }

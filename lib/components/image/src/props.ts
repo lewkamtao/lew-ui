@@ -11,7 +11,7 @@ export const imageProps = {
         return false
       }
       return true
-    }
+    },
   },
   alt: {
     type: String,
@@ -21,7 +21,7 @@ export const imageProps = {
         return false
       }
       return true
-    }
+    },
   },
   width: {
     type: [Number, String],
@@ -32,7 +32,7 @@ export const imageProps = {
         return false
       }
       return true
-    }
+    },
   },
   height: {
     type: [Number, String],
@@ -43,7 +43,7 @@ export const imageProps = {
         return false
       }
       return true
-    }
+    },
   },
   objectFit: {
     type: String as PropType<ObjectFit>,
@@ -55,16 +55,16 @@ export const imageProps = {
         'contain',
         'cover',
         'none',
-        'scale-down'
+        'scale-down',
       ]
       if (!validValues.includes(value)) {
         console.warn(
-          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`
+          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`,
         )
         return false
       }
       return true
-    }
+    },
   },
   objectPosition: {
     type: String,
@@ -80,25 +80,25 @@ export const imageProps = {
         'top left',
         'top right',
         'bottom left',
-        'bottom right'
+        'bottom right',
       ]
       if (
-        !validPositions.includes(value) &&
-        !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
+        !validPositions.includes(value)
+        && !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
       ) {
         console.warn('[LewImage] objectPosition 格式不正确')
         return false
       }
       return true
-    }
+    },
   },
   lazy: {
     type: Boolean,
-    default: false
+    default: false,
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   title: {
     type: String,
@@ -109,8 +109,8 @@ export const imageProps = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export type ImageProps = ExtractPropTypes<typeof imageProps>

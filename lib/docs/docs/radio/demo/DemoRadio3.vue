@@ -4,7 +4,7 @@ const clothingBrandOptions = ref([
   { label: 'Adidas', value: 'adidas' },
   { label: 'Puma', value: 'puma' },
   { label: 'Under Armour', value: 'under_armour' },
-  { label: 'Reebok', value: 'reebok' }
+  { label: 'Reebok', value: 'reebok' },
 ])
 
 const selectedBrand = ref('')

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const visible = ref(false)
 </script>
+
 <template>
   <lew-flex gap="20" x="start">
     <lew-drawer
+      v-model:visible="visible"
       title="New Product"
       close-by-esc
-      v-model:visible="visible"
       position="right"
     >
       <lew-image

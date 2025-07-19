@@ -1,32 +1,34 @@
 <script setup lang="ts">
 import { LewBadge } from 'lew-ui'
 
+const status = ref('Success')
+
 const productOptions = ref([
   {
     label: 'Mac',
-    value: 'mac'
+    value: 'mac',
   },
   {
     label: 'iPad',
-    value: 'ipad'
+    value: 'ipad',
   },
   {
     label: 'iPhone',
-    value: 'iphone'
+    value: 'iphone',
   },
   {
     label: 'Watch',
     value: 'watch',
-    disabled: true
+    disabled: true,
   },
   {
     label: 'AirPods',
-    value: 'airpods'
+    value: 'airpods',
   },
   {
     label: 'TV & Home',
-    value: 'tv'
-  }
+    value: 'tv',
+  },
 ])
 
 const statusOptions = ref([
@@ -39,9 +41,9 @@ const statusOptions = ref([
     icon: h(LewBadge, {
       color: 'green',
       style: {
-        margin: '0 5px'
-      }
-    })
+        margin: '0 5px',
+      },
+    }),
   },
   {
     label: 'Failed',
@@ -52,9 +54,9 @@ const statusOptions = ref([
     icon: h(LewBadge, {
       color: 'red',
       style: {
-        margin: '0 5px'
-      }
-    })
+        margin: '0 5px',
+      },
+    }),
   },
   {
     label: 'Pending',
@@ -65,9 +67,9 @@ const statusOptions = ref([
     icon: h(LewBadge, {
       color: 'yellow',
       style: {
-        margin: '0 5px'
-      }
-    })
+        margin: '0 5px',
+      },
+    }),
   },
   {
     label: 'Processing',
@@ -79,24 +81,26 @@ const statusOptions = ref([
       color: 'blue',
       processing: true,
       style: {
-        margin: '0 5px'
-      }
-    })
-  }
+        margin: '0 5px',
+      },
+    }),
+  },
 ])
 
-const status = ref('Success')
 const colorMap: Record<string, string> = {
   Success: 'green',
   Failed: 'red',
   Pending: 'yellow',
-  Processing: 'blue'
+  Processing: 'blue',
 }
 </script>
+
 <template>
   <lew-flex gap="50" x="start">
-    <lew-dropdown :options="statusOptions" trigger="click">	
-      <lew-tag style="cursor: pointer" oversize :color="colorMap[status]">{{ status }}</lew-tag>
+    <lew-dropdown :options="statusOptions" trigger="click">
+      <lew-tag style="cursor: pointer" oversize :color="colorMap[status]">
+        {{ status }}
+      </lew-tag>
     </lew-dropdown>
 
     <lew-dropdown placement="bottom-start" :options="productOptions">

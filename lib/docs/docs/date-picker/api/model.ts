@@ -5,5 +5,5 @@ export default {
   title: 'Model',
   columnsKey: 'model',
   orderNum: 1,
-  data: convertProps(datePickerModel)
+  data: convertProps(datePickerModel),
 }

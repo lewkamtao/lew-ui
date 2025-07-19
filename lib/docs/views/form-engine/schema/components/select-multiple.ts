@@ -2,13 +2,13 @@ export default [
   {
     label: '占位提示',
     as: 'input',
-    field: 'placeholder'
+    field: 'placeholder',
   },
   {
     label: '选项配置',
     as: 'input-table',
     field: 'options',
-    direction: 'y'
+    direction: 'y',
   },
   {
     label: '触发方式',
@@ -19,14 +19,14 @@ export default [
       options: [
         {
           label: '点击',
-          value: 'click'
+          value: 'click',
         },
         {
           label: '悬浮',
-          value: 'hover'
-        }
-      ]
-    }
+          value: 'hover',
+        },
+      ],
+    },
   },
   {
     label: '回显方式',
@@ -37,44 +37,44 @@ export default [
       options: [
         {
           label: '文本',
-          value: 'text'
+          value: 'text',
         },
         {
           label: '标签',
-          value: 'tag'
-        }
-      ]
-    }
+          value: 'tag',
+        },
+      ],
+    },
   },
   {
     label: '值的分隔符',
     tips: '仅在 valueLayout 为 text 时有效',
     as: 'input',
-    field: 'valueTextSplit'
+    field: 'valueTextSplit',
   },
   {
     label: '是否可搜索',
     as: 'switch',
-    field: 'searchable'
+    field: 'searchable',
   },
   {
     label: '搜索提示',
     as: 'input',
-    field: 'searchPlaceholder'
+    field: 'searchPlaceholder',
   },
   {
     label: '搜索延时',
     as: 'input-number',
-    field: 'searchDelay'
+    field: 'searchDelay',
   },
   {
     label: '是否可清空',
     as: 'switch',
-    field: 'clearable'
+    field: 'clearable',
   },
   {
     label: '是否显示选中图标',
     as: 'switch',
-    field: 'showCheckIcon'
-  }
+    field: 'showCheckIcon',
+  },
 ]

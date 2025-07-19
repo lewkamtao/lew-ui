@@ -1,5 +1,5 @@
 <script setup lang="ts">
-let key = ref(0)
+const key = ref(0)
 </script>
 
 <template>

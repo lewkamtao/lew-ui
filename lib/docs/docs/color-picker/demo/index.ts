@@ -1,13 +1,13 @@
 import DemoColorPicker1 from './DemoColorPicker1.vue'
-import DemoColorPicker2 from './DemoColorPicker2.vue'
-import DemoColorPicker3 from './DemoColorPicker3.vue'
-import DemoColorPicker4 from './DemoColorPicker4.vue'
-import DemoColorPicker5 from './DemoColorPicker5.vue'
-
 import DemoColorPicker1Code from './DemoColorPicker1.vue?raw'
+import DemoColorPicker2 from './DemoColorPicker2.vue'
 import DemoColorPicker2Code from './DemoColorPicker2.vue?raw'
+import DemoColorPicker3 from './DemoColorPicker3.vue'
+
 import DemoColorPicker3Code from './DemoColorPicker3.vue?raw'
+import DemoColorPicker4 from './DemoColorPicker4.vue'
 import DemoColorPicker4Code from './DemoColorPicker4.vue?raw'
+import DemoColorPicker5 from './DemoColorPicker5.vue'
 import DemoColorPicker5Code from './DemoColorPicker5.vue?raw'
 
 export const demoGroup = [
@@ -15,7 +15,7 @@ export const demoGroup = [
   DemoColorPicker2,
   DemoColorPicker3,
   DemoColorPicker4,
-  DemoColorPicker5
+  DemoColorPicker5,
 ]
 
 export const codeGroup = [
@@ -23,5 +23,5 @@ export const codeGroup = [
   DemoColorPicker2Code,
   DemoColorPicker3Code,
   DemoColorPicker4Code,
-  DemoColorPicker5Code
+  DemoColorPicker5Code,
 ]

@@ -8,8 +8,8 @@ const v = ref('')
       v-model="v"
       type="password"
       placeholder="密码可见"
-      showPassword
-      :maxLength="30"
+      show-password
+      :max-length="30"
     />
   </lew-flex>
 </template>

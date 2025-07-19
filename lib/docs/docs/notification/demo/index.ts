@@ -14,7 +14,7 @@ export const demoGroup = [
   DemoNotification2,
   DemoNotification3,
   DemoNotification4,
-  DemoNotification5
+  DemoNotification5,
 ]
 
 export const codeGroup = [
@@ -22,5 +22,5 @@ export const codeGroup = [
   DemoNotification2Code,
   DemoNotification3Code,
   DemoNotification4Code,
-  DemoNotification5Code
+  DemoNotification5Code,
 ]

@@ -1,6 +1,6 @@
 import type { ExtractPropTypes } from 'vue'
 
-export type StepsOptions = {
+export interface StepsOptions {
   title: string
   description: string
 }
@@ -18,8 +18,8 @@ export const stepsModel = {
         return false
       }
       return true
-    }
-  }
+    },
+  },
 }
 
 export const stepsProps = {
@@ -34,18 +34,18 @@ export const stepsProps = {
       }
       if (
         value.some(
-          (item) =>
-            typeof item.title !== 'string' ||
-            typeof item.description !== 'string'
+          item =>
+            typeof item.title !== 'string'
+            || typeof item.description !== 'string',
         )
       ) {
         console.warn(
-          '[LewSteps] options 数组中的每个项目必须包含 title 和 description 字符串属性'
+          '[LewSteps] options 数组中的每个项目必须包含 title 和 description 字符串属性',
         )
         return false
       }
       return true
-    }
+    },
   },
   status: {
     type: String as PropType<StepsStatus>,
@@ -55,18 +55,18 @@ export const stepsProps = {
       const validStatus = ['pending', 'loading', 'done', 'error', 'warning']
       if (!validStatus.includes(value)) {
         console.warn(
-          `[LewSteps] status 必须是 ${validStatus.join(', ')} 中的一个`
+          `[LewSteps] status 必须是 ${validStatus.join(', ')} 中的一个`,
         )
         return false
       }
       return true
-    }
+    },
   },
   minWidth: {
     type: String as PropType<string>,
     default: '300px',
-    description: '步骤条的最小宽度'
-  }
+    description: '步骤条的最小宽度',
+  },
 }
 
 export type StepsProps = ExtractPropTypes<typeof stepsProps>

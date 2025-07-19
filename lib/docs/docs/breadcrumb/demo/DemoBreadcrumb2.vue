@@ -2,25 +2,25 @@
 const options = ref([
   {
     label: 'User Management',
-    value: '/users'
+    value: '/users',
   },
   {
     label: 'User List',
-    value: '/users/list'
+    value: '/users/list',
   },
   {
     label: 'User Details',
     value: '/users/details',
-    active: true
+    active: true,
   },
   {
     label: 'Edit User',
-    value: '/users/edit'
-  }
+    value: '/users/edit',
+  },
 ])
 // Simulate breadcrumb click event
-const handleBreadcrumbClick = (item: any) => {
-  LewMessage.success('Clicked breadcrumb item: ' + item.label)
+function handleBreadcrumbClick(item: any) {
+  LewMessage.success(`Clicked breadcrumb item: ${item.label}`)
 }
 </script>
 

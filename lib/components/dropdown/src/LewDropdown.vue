@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import { LewPopover, LewContextMenu } from 'lew-ui'
+import { LewContextMenu, LewPopover } from 'lew-ui'
 import { dropdownProps } from './props'
 
 defineProps(dropdownProps)
 
 const lewPopoverRef = ref()
 
-const show = () => {
+function show() {
   lewPopoverRef.value.show()
 }
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value.hide()
 }
 
 defineExpose({
   show,
-  hide
+  hide,
 })
 </script>
 
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
     popover-body-class-name="lew-dropdown-popover-body"
     :trigger="trigger"
@@ -31,11 +31,11 @@ defineExpose({
       <slot />
     </template>
     <template #popover-body>
-      <lew-context-menu
+      <LewContextMenu
         :checkable="checkable"
         :options="options"
         @select="hide"
       />
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>

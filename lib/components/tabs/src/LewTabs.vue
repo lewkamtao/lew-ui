@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { tabsProps } from './props'
 import type { TabsOptions } from './props'
-import { object2class, any2px } from 'lew-ui/utils'
+import { any2px, object2class } from 'lew-ui/utils'
+import { tabsProps } from './props'
 
-const emit = defineEmits(['change'])
 const props = defineProps(tabsProps)
+const emit = defineEmits(['change'])
 const tabsValue: Ref<string | number | undefined> = defineModel({
-  required: true
+  required: true,
 })
 
 const tabsRef = ref()
@@ -15,10 +15,10 @@ const itemRef = ref([] as any)
 const state = reactive({
   activeItemStyle: {} as any,
   curIndex: (props.options || []).findIndex(
-    (e: TabsOptions) => tabsValue.value === e.value
+    (e: TabsOptions) => tabsValue.value === e.value,
   ),
   hidLine: 'all',
-  isInit: false
+  isInit: false,
 })
 
 watch(
@@ -29,26 +29,31 @@ watch(
       init()
     })
   },
-  { deep: true }
+  { deep: true },
 )
 
-const initActiveItemStyle = (index: number) => {
+function initActiveItemStyle(index: number) {
   const activeRef = itemRef.value[index]
 
+  // 确保 tabsRef 存在，避免访问 null 的属性
+  if (!tabsRef.value || !activeRef) {
+    return
+  }
+
   if (
-    tabsRef.value.scrollWidth > tabsRef.value.clientWidth &&
-    activeRef?.offsetLeft >= 0
+    tabsRef.value.scrollWidth > tabsRef.value.clientWidth
+    && activeRef?.offsetLeft >= 0
   ) {
-    tabsRef.value.scrollLeft =
-      activeRef?.offsetLeft -
-      tabsRef.value.clientWidth / 2 +
-      activeRef?.offsetWidth / 2
+    tabsRef.value.scrollLeft
+      = activeRef?.offsetLeft
+        - tabsRef.value.clientWidth / 2
+        + activeRef?.offsetWidth / 2
   }
 
   state.activeItemStyle = {
     width: `${activeRef?.offsetWidth}px`,
     height: props.type === 'line' ? '' : `${activeRef?.offsetHeight}px`,
-    transform: `translate(${activeRef?.offsetLeft}px,-50%)`
+    transform: `translate(${activeRef?.offsetLeft}px,-50%)`,
   }
 }
 
@@ -58,16 +63,16 @@ watch(
     nextTick(() => {
       setTimeout(() => {
         const index = props.options.findIndex(
-          (e) => tabsValue.value === e.value
+          e => tabsValue.value === e.value,
         )
         initActiveItemStyle(index)
       }, 250)
     })
-  }
+  },
 )
 
-const init = () => {
-  let index = props.options.findIndex((e) => e.value === tabsValue.value)
+function init() {
+  const index = props.options.findIndex(e => e.value === tabsValue.value)
   if (index >= 0) {
     initActiveItemStyle(index)
   }
@@ -77,18 +82,18 @@ const init = () => {
   }, 100)
 }
 
-const selectItem = (value: string | number | undefined, type?: string) => {
-  let index = props.options.findIndex((e) => value === e.value)
+function selectItem(value: string | number | undefined, type?: string) {
+  const index = props.options.findIndex(e => value === e.value)
   if (index >= 0) {
     const _item = props.options[index]
-    if (tabsValue.value != _item.value) {
+    if (tabsValue.value !== _item.value) {
       tabsValue.value = _item.value
     }
     initActiveItemStyle(index)
     if (type !== 'watch' && value !== tabsValue.value) {
       emit('change', {
         label: _item.label,
-        value: _item.value
+        value: _item.value,
       })
     }
     state.curIndex = index
@@ -97,7 +102,7 @@ const selectItem = (value: string | number | undefined, type?: string) => {
 
 let timer: ReturnType<typeof setTimeout> | undefined
 
-const debounce = () => {
+function debounce() {
   clearTimeout(timer)
   timer = setTimeout(() => {
     init()
@@ -111,7 +116,7 @@ const getTabsWrapperClassName = computed(() => {
     round,
     hidLine: state.hidLine || !state.isInit,
     disabled,
-    readonly
+    readonly,
   })
 })
 
@@ -120,25 +125,33 @@ const getTabsClassName = computed(() => {
   return object2class('lew-tabs', {
     type,
     round,
-    size
+    size,
   })
 })
 
-const tabsScroll = () => {
+function tabsScroll() {
+  // 确保 tabsRef 存在，避免访问 null 的属性
+  if (!tabsRef.value) {
+    return
+  }
+
   if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
     if (tabsRef.value.scrollLeft > 5) {
       if (
-        tabsRef.value.scrollLeft >=
-        tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5
+        tabsRef.value.scrollLeft
+        >= tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5
       ) {
         state.hidLine = 'right'
-      } else {
+      }
+      else {
         state.hidLine = ''
       }
-    } else {
+    }
+    else {
       state.hidLine = 'left'
     }
-  } else {
+  }
+  else {
     state.hidLine = 'all'
   }
 }
@@ -151,7 +164,7 @@ onMounted(() => {
 })
 
 const getItemStyle = computed(() => {
-  let width = any2px(props.itemWidth)
+  const width = any2px(props.itemWidth)
   if (props.itemWidth === 'auto') {
     return 'flex:1'
   }
@@ -159,7 +172,7 @@ const getItemStyle = computed(() => {
 })
 
 const getTabsStyle = computed(() => {
-  let width = any2px(props.width)
+  const width = any2px(props.width)
   return `width:${width}`
 })
 
@@ -177,22 +190,24 @@ onUnmounted(() => {
     <div :style="getTabsStyle" class="lew-tabs" :class="getTabsClassName">
       <div
         ref="tabsRef"
-        @scroll="tabsScroll"
         class="lew-tabs-main hidden-scrollbar"
+        @scroll="tabsScroll"
       >
         <div
           v-if="tabsValue || tabsValue === 0"
           :style="state.activeItemStyle"
           class="lew-tabs-item-animation-active"
           :class="{ 'lew-tabs-item-isInit': state.isInit }"
-        ></div>
+        />
         <div
           v-for="item in props.options"
           :key="String(item.value)"
           :ref="(el) => itemRef.push(el)"
           class="lew-tabs-item"
           :style="getItemStyle"
-          :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
+          :class="{
+            'lew-tabs-item-active': tabsValue === item.value,
+          }"
           @click="selectItem(item.value)"
         >
           {{ item.label }}

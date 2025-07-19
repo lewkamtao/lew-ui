@@ -2,7 +2,7 @@ export default [
   {
     label: '占位提示',
     as: 'input',
-    field: 'placeholder'
+    field: 'placeholder',
   },
   {
     label: '输入框类型',
@@ -13,14 +13,14 @@ export default [
       options: [
         {
           label: '文本',
-          value: 'text'
+          value: 'text',
         },
         {
           label: '密码',
-          value: 'password'
-        }
-      ]
-    }
+          value: 'password',
+        },
+      ],
+    },
   },
   {
     label: '对齐方式',
@@ -32,50 +32,50 @@ export default [
       options: [
         {
           label: '居左',
-          value: 'left'
+          value: 'left',
         },
         {
           label: '居中',
-          value: 'center'
+          value: 'center',
         },
         {
           label: '居右',
-          value: 'right'
-        }
-      ]
-    }
+          value: 'right',
+        },
+      ],
+    },
   },
   {
     label: '是否聚焦时选中内容',
     as: 'switch',
-    field: 'selectByFocus'
+    field: 'selectByFocus',
   },
   {
     label: '是否可清空',
     as: 'switch',
-    field: 'clearable'
+    field: 'clearable',
   },
   {
     label: '显示密码切换按钮',
     as: 'switch',
-    field: 'showPassword'
+    field: 'showPassword',
   },
   {
     label: '自动宽度',
     as: 'switch',
-    field: 'autoWidth'
+    field: 'autoWidth',
   },
   {
     label: '限制最大长度',
     as: 'input-number',
     componentWidth: 110,
     props: { min: 0, align: 'center', placeholder: '最大长度' },
-    field: 'maxLength'
+    field: 'maxLength',
   },
   {
     label: '显示输入字数统计',
     as: 'switch',
     tips: '只在 type = text 时有效',
-    field: 'showCount'
-  }
+    field: 'showCount',
+  },
 ]

@@ -1,21 +1,22 @@
 <script lang="ts" setup>
-import { ref, watch, computed, nextTick, onMounted, onUnmounted } from 'vue'
-import { object2class, any2px, getUniqueId } from 'lew-ui/utils'
+import { onClickOutside, useMagicKeys } from '@vueuse/core'
+import { LewButton, LewFlex, locale } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
-import { LewButton, LewFlex } from 'lew-ui'
-import { drawerProps } from './props'
-import { useMagicKeys, onClickOutside } from '@vueuse/core'
+import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { drawerProps } from './props'
+
+const props = defineProps(drawerProps)
+
+const emit = defineEmits(['close'])
+
 const { Escape } = useMagicKeys()
 
 useDOMCreate('lew-drawer')
 
-const emit = defineEmits(['close'])
-
 const visible: Ref<boolean | undefined> = defineModel('visible')
 
-const props = defineProps(drawerProps)
 const drawerBodyRef = ref(null)
 const drawerId = `lew-drawer-${getUniqueId()}`
 
@@ -25,7 +26,7 @@ const recomputeTrigger = ref(0)
 // 计算当前 drawer 是否在顶层
 const isTopDrawer = computed(() => {
   // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
-  recomputeTrigger.value
+  void recomputeTrigger.value
 
   if (!visible.value) {
     return false
@@ -51,7 +52,7 @@ const isTopDrawer = computed(() => {
 
   const openDrawers = Array.from(drawerContainer.childNodes)
     .filter((e): e is Element => e instanceof Element)
-    .filter((e) => e.children.length > 0)
+    .filter(e => e.children.length > 0)
     .filter((e) => {
       // 只考虑可见的 drawer
       const drawerBody = e.querySelector('.lew-drawer-body')
@@ -60,13 +61,13 @@ const isTopDrawer = computed(() => {
 
   // 检查当前 drawer 是否是最后一个（顶层）
   return (
-    openDrawers.length > 0 &&
-    openDrawers[openDrawers.length - 1]?.id === drawerId
+    openDrawers.length > 0
+    && openDrawers[openDrawers.length - 1]?.id === drawerId
   )
 })
 
 // 强制重新计算顶层状态的函数
-const forceRecomputeTopDrawer = () => {
+function forceRecomputeTopDrawer() {
   recomputeTrigger.value++
 }
 
@@ -79,7 +80,7 @@ watch(
       forceRecomputeTopDrawer()
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 // 监听 visible 变化，确保状态正确更新
@@ -91,7 +92,8 @@ watch(visible, async (newVal) => {
   // 控制全局检查定时器
   if (newVal) {
     startGlobalCheck()
-  } else {
+  }
+  else {
     stopGlobalCheck()
   }
 })
@@ -99,7 +101,7 @@ watch(visible, async (newVal) => {
 // 监听全局 drawer 状态变化（通过定时器检查）
 let globalCheckTimer: ReturnType<typeof setInterval> | null = null
 
-const startGlobalCheck = () => {
+function startGlobalCheck() {
   if (globalCheckTimer) {
     clearInterval(globalCheckTimer)
   }
@@ -111,7 +113,7 @@ const startGlobalCheck = () => {
   }, 100) // 每100ms检查一次
 }
 
-const stopGlobalCheck = () => {
+function stopGlobalCheck() {
   if (globalCheckTimer) {
     clearInterval(globalCheckTimer)
     globalCheckTimer = null
@@ -147,11 +149,7 @@ if (props.closeByEsc) {
   })
 }
 
-const getStyle = (
-  position: string,
-  width: number | string,
-  height: number | string
-) => {
+function getStyle(position: string, width: number | string, height: number | string) {
   switch (true) {
     case !position:
       return 'width:30%;height:100%'
@@ -173,16 +171,17 @@ const getStyle = (
   }
 }
 
-const close = () => {
+function close() {
   visible.value = false
   emit('close')
 }
 </script>
+
 <template>
   <teleport to="#lew-drawer">
-    <div class="lew-drawer-container" :id="drawerId">
+    <div :id="drawerId" class="lew-drawer-container">
       <transition name="lew-drawer-mask">
-        <div :style="{ zIndex }" v-if="visible" class="lew-drawer-mask"></div>
+        <div v-if="visible" :style="{ zIndex }" class="lew-drawer-mask" />
       </transition>
       <div
         ref="drawerBodyRef"
@@ -193,16 +192,18 @@ const close = () => {
         }`"
       >
         <div v-if="$slots.header" class="lew-drawer-header-slot">
-          <slot name="header"></slot>
+          <slot name="header" />
         </div>
-        <lew-flex
+        <LewFlex
           v-else-if="title"
           mode="between"
           y="center"
           class="lew-drawer-header"
         >
-          <div class="lew-drawer-title">{{ title }}</div>
-          <lew-button
+          <div class="lew-drawer-title">
+            {{ title }}
+          </div>
+          <LewButton
             type="light"
             color="gray"
             round
@@ -212,43 +213,44 @@ const close = () => {
             @click="close"
           >
             <Icon :size="14" type="close" />
-          </lew-button>
-        </lew-flex>
+          </LewButton>
+        </LewFlex>
         <div class="lew-drawer-body-slot">
-          <slot></slot>
+          <slot />
         </div>
         <div v-if="$slots.footer" class="lew-drawer-footer-slot">
-          <slot name="footer"></slot>
+          <slot name="footer" />
         </div>
-        <lew-flex
+        <LewFlex
           v-else-if="!hideFooter"
           x="end"
           y="center"
           class="lew-drawer-footer"
         >
-          <lew-button
+          <LewButton
             v-bind="{
               size: 'small',
               text: locale.t('drawer.closeText'),
               type: 'light',
               color: 'normal',
               request: close,
-              ...(closeButtonProps as any)
+              ...(closeButtonProps as any),
             }"
           />
-          <lew-button
+          <LewButton
             v-bind="{
               size: 'small',
               text: locale.t('drawer.okText'),
               color: 'primary',
-              ...(okButtonProps as any)
+              ...(okButtonProps as any),
             }"
           />
-        </lew-flex>
+        </LewFlex>
       </div>
     </div>
   </teleport>
 </template>
+
 <style lang="scss">
 .lew-drawer-mask {
   position: fixed;

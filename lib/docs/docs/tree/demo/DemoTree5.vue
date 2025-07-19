@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import axios from '@/axios/http'
 
-const initTree = () => {
+function initOptionsMethod() {
   return new Promise<any[]>((resolve) => {
     // item 不存在的时候 是第一层加载
     axios
       .get({
-        url: '/common/region/province/0'
+        url: '/common/region/province/0',
       })
       .then((res: any) => {
         const { data, success } = res
@@ -15,7 +15,7 @@ const initTree = () => {
             return {
               label: e.name,
               value: e.code,
-              isLeaf: e.is_leaf
+              isLeaf: e.is_leaf,
             }
           })
           resolve(options)
@@ -24,12 +24,12 @@ const initTree = () => {
   })
 }
 
-const loadMethod = (item?: any) => {
+function loadMethod(item?: any) {
   const levelMap: any = {
     0: 'province',
     1: 'city',
     2: 'area',
-    3: 'street'
+    3: 'street',
   }
   // item 无值时，初始化第一层数据
   const _typeKey = item ? item.level + 1 : 0
@@ -38,7 +38,7 @@ const loadMethod = (item?: any) => {
     // item 不存在的时候 是第一层加载
     axios
       .get({
-        url: `/common/region/${levelMap[_typeKey] || 'province'}/${item ? item.key : 0}`
+        url: `/common/region/${levelMap[_typeKey] || 'province'}/${item ? item.key : 0}`,
       })
       .then((res: any) => {
         const { data, success } = res
@@ -47,7 +47,7 @@ const loadMethod = (item?: any) => {
             return {
               label: e.name,
               value: e.code,
-              isLeaf: e.is_leaf
+              isLeaf: e.is_leaf,
             }
           })
           resolve(options)
@@ -55,7 +55,7 @@ const loadMethod = (item?: any) => {
       })
   })
 }
-const change = (item: any) => {
+function change(item: any) {
   console.log(item)
 }
 const v = ref([])
@@ -68,13 +68,14 @@ const v = ref([])
       multiple
       checkable
       height="500px"
-      keyField="value"
-      :initTree="initTree"
-      :loadMethod="loadMethod"
+      key-field="value"
+      :init-options-method="initOptionsMethod"
+      :load-method="loadMethod"
       @change="change"
     />
   </div>
 </template>
+
 <style lang="scss" scoped>
 .tree {
   width: 300px;

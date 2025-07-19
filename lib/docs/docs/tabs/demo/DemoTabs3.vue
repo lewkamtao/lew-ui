@@ -15,7 +15,7 @@ const options: TabOption[] = [
   { label: 'Legal', value: 'legal' },
   { label: 'Procurement', value: 'procurement' },
   { label: 'Production', value: 'production' },
-  { label: 'Quality', value: 'quality_control' }
+  { label: 'Quality', value: 'quality_control' },
 ]
 const modelValue = ref('hr')
 </script>
@@ -25,6 +25,6 @@ const modelValue = ref('hr')
     v-model="modelValue"
     style="width: 100%"
     :options="options"
-    :itemWidth="120"
+    :item-width="120"
   />
 </template>

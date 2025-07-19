@@ -5,12 +5,13 @@ import v1_0_34 from './log/v1_0_34.vue'
 
 <template>
   <lew-title>更新日志</lew-title>
-  <br />
-  <br />
+  <br>
+  <br>
   <v1_0_34 />
-  <div class="line"></div>
+  <div class="line" />
   <v1_0_24 />
 </template>
+
 <style lang="scss" scoped>
 ul {
   padding-left: 20px;

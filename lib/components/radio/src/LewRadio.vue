@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils'
-import { radioProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { radioProps } from './props'
 
 const props = defineProps(radioProps)
 
 const emit = defineEmits(['change'])
 
-const setChecked = () => {
+function setChecked() {
   emit('change')
 }
 
@@ -35,7 +35,7 @@ const getRadioClassName = computed(() => {
     size,
     disabled,
     round,
-    readonly
+    readonly,
   })
 })
 </script>

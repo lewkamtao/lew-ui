@@ -12,30 +12,24 @@ const productData = ref({
   storage: '256GB',
   condition: 'New',
   warranty: '1 Year',
-  stock: 15
+  stock: 15,
 })
 
-const categories = [
-  { label: 'Electronics', value: 'electronics' },
-  { label: 'Clothing', value: 'clothing' },
-  { label: 'Home', value: 'home' },
-  { label: 'Sports', value: 'sports' }
-]
-
-const handleEdit = () => {
+function handleEdit() {
   console.log('Edit product data:', productData.value)
   visible.value = false
 }
 
-const handleCancel = () => {
+function handleCancel() {
   visible.value = false
 }
 </script>
+
 <template>
   <lew-flex gap="20" x="start">
     <lew-drawer
-      title="Product Details"
       v-model:visible="visible"
+      title="Product Details"
       close-on-click-overlay
       position="right"
       width="500px"
@@ -44,7 +38,9 @@ const handleCancel = () => {
         <lew-flex direction="column" gap="16">
           <div class="product-header">
             <h3>{{ productData.name }}</h3>
-            <div class="price">{{ productData.price }}</div>
+            <div class="price">
+              {{ productData.price }}
+            </div>
           </div>
 
           <div class="product-info">
@@ -92,9 +88,12 @@ const handleCancel = () => {
             color="gray"
             type="text"
             @click="handleCancel"
-            >Cancel</lew-button
           >
-          <lew-button size="small" @click="handleEdit">Edit Product</lew-button>
+            Cancel
+          </lew-button>
+          <lew-button size="small" @click="handleEdit">
+            Edit Product
+          </lew-button>
         </lew-flex>
       </template>
     </lew-drawer>

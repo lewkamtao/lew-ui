@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { object2class, getColorType, any2px } from 'lew-ui/utils'
-import { buttonProps } from './props'
+import { any2px, getColorType, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { buttonProps } from './props'
 
-const emit = defineEmits(['click'])
 const props = defineProps(buttonProps)
-
+const emit = defineEmits(['click'])
 const _loading = ref(false)
 
 const buttonRef = ref()
 
-const focus = () => {
+function focus() {
   buttonRef.value?.focus()
 }
 
-const handleClick = async (e: MouseEvent) => {
-  if (props.disabled || _loading.value || props.loading) return
+async function handleClick(e: MouseEvent) {
+  if (props.disabled || _loading.value || props.loading)
+    return
   emit('click', e)
   if (typeof props.request === 'function') {
     if (_loading.value) {
@@ -41,7 +41,7 @@ const getButtonClass = computed(() => {
     type,
     loading,
     singleIcon,
-    color
+    color,
   })
 })
 
@@ -70,31 +70,33 @@ const getStyle = computed(() => {
   const baseStyle = {
     fill: {
       backgroundColor: `var(--lew-color-${_color})`,
-      color: 'var(--lew-color-white)'
+      color: 'var(--lew-color-white)',
     },
     light: {
       backgroundColor: `var(--lew-color-${_color}-light)`,
-      color: `var(--lew-color-${_color}-dark)`
+      color: `var(--lew-color-${_color}-dark)`,
     },
     ghost: {
       backgroundColor: 'transparent',
-      border: `var(--lew-form-border-width) ${dashed ? 'dashed' : 'solid'} var(--lew-color-${_color}-dark)`,
+      border: `var(--lew-form-border-width) ${
+        dashed ? 'dashed' : 'solid'
+      } var(--lew-color-${_color}-dark)`,
       color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: 'none'
+      boxShadow: 'none',
     },
     text: {
       backgroundColor: 'transparent',
       color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: 'none'
-    }
+      boxShadow: 'none',
+    },
   }
 
   // 合并样式
   Object.assign(
     styleObj,
     baseStyle[type as keyof typeof baseStyle] || {
-      backgroundColor: `var(--lew-color-${_color})`
-    }
+      backgroundColor: `var(--lew-color-${_color})`,
+    },
   )
 
   // 圆角样式
@@ -122,7 +124,7 @@ defineExpose({ focus })
     <div
       class="lew-button-loading-icon"
       :class="{
-        'lew-button-loading-isShow': (_loading || loading) && !disabled
+        'lew-button-loading-isShow': (_loading || loading) && !disabled,
       }"
     >
       <Icon :size="getIconSize" loading type="loader" />
@@ -130,7 +132,7 @@ defineExpose({ focus })
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">
         <template v-if="$slots.default">
-          <slot></slot>
+          <slot />
         </template>
         <template v-else>
           {{ text }}
@@ -201,7 +203,7 @@ defineExpose({ focus })
   background-color: rgba($color: #000, $alpha: 0.2);
   transition: all var(--lew-form-transition-ease);
   opacity: 0;
-  content: '';
+  content: "";
 }
 
 .lew-button-color-black::after {
@@ -213,7 +215,7 @@ defineExpose({ focus })
   background-color: rgba($color: #fff, $alpha: 0.2);
   transition: 0.1s all;
   opacity: 0;
-  content: '';
+  content: "";
 }
 
 .lew-button-type-text.lew-button-color-black::after {
@@ -225,7 +227,7 @@ defineExpose({ focus })
   background-color: rgba($color: #000, $alpha: 0.2);
   transition: 0.1s all;
   opacity: 0;
-  content: '';
+  content: "";
 }
 
 .lew-button-type-ghost::after {
@@ -392,6 +394,7 @@ defineExpose({ focus })
   background-color: var(--lew-bgcolor-3) !important;
 }
 </style>
+
 <style lang="scss">
 .lew-dark .lew-button-color-black.lew-button-type-fill {
   color: #000 !important;

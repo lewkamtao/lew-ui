@@ -1,14 +1,19 @@
-import { defineConfig } from 'vite'
+import type { ConfigEnv, UserConfig } from 'vite'
+import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import AutoImport from 'unplugin-auto-import/vite'
-import dts from 'vite-plugin-dts'
-import checker from 'vite-plugin-checker'
-import zipPack from 'vite-plugin-zip-pack'
 import { visualizer } from 'rollup-plugin-visualizer'
-import { fileURLToPath, URL } from 'node:url'
+import AutoImport from 'unplugin-auto-import/vite'
+import { defineConfig } from 'vite'
+import checker from 'vite-plugin-checker'
+import dts from 'vite-plugin-dts'
+import zipPack from 'vite-plugin-zip-pack'
 
-export default defineConfig(({ mode }) => {
+// 路径工具函数
+const resolve = (path: string) => fileURLToPath(new URL(path, import.meta.url))
+
+export default defineConfig((configEnv: ConfigEnv): UserConfig => {
+  const { mode } = configEnv
   const isLibMode = mode === 'lib'
 
   // 插件配置
@@ -17,28 +22,30 @@ export default defineConfig(({ mode }) => {
     vue(),
     vueJsx(),
     AutoImport({ imports: ['vue', 'vue-router'] }),
-    checker({ typescript: true })
+    checker({ typescript: true }),
   ]
 
-  const libPlugins = isLibMode ? [
-    dts({
-      include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx'],
-      exclude: ['lib/docs/**/*']
-    })
-  ] : []
+  const libPlugins = isLibMode
+    ? [
+        dts({
+          include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx'],
+          exclude: ['lib/docs/**/*'],
+        }),
+      ]
+    : []
 
   // 构建配置
   const libBuildOptions = {
     lib: {
-      entry: fileURLToPath(new URL('./lib/index.ts', import.meta.url)),
+      entry: resolve('./lib/index.ts'),
       name: 'lew-ui',
-      fileName: 'index'
+      fileName: 'index',
     },
     rollupOptions: {
       external: ['vue'],
-      output: { globals: { vue: 'Vue' } }
+      output: { globals: { vue: 'Vue' } },
     },
-    copyPublicDir: false // lib模式下不复制public文件夹
+    copyPublicDir: false, // lib模式下不复制public文件夹
   }
 
   const docsBuildOptions = {
@@ -55,51 +62,53 @@ export default defineConfig(({ mode }) => {
               .split('/')[0]
               .toString()
           }
-        }
-      }
-    }
+        },
+      },
+    },
+  }
+
+  // 开发服务器配置
+  const serverConfig = {
+    open: true,
+    port: 3000,
+    hmr: true,
+    proxy: {
+      '/api_admin': {
+        target: 'https://app.tngeek.com/api_admin',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api_admin/, ''),
+      },
+      '/api_sso': {
+        target: 'https://app.tngeek.com/api_sso',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api_sso/, ''),
+      },
+    },
+  }
+
+  // 路径别名配置
+  const aliasConfig = {
+    'lew-ui': resolve('./lib'),
+    '@': resolve('./lib/docs'),
+  }
+
+  // 构建优化配置
+  const buildConfig = {
+    ...(isLibMode ? libBuildOptions : docsBuildOptions),
+    minify: 'terser' as const,
+    emptyOutDir: true,
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
   }
 
   return {
     base: '',
-
-    // 开发服务器配置
-    server: {
-      open: true,
-      port: 10034,
-      hmr: true,
-      proxy: {
-        '/api_admin': {
-          target: 'https://app.tngeek.com/api_admin',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api_admin/, '')
-        },
-        '/api_sso': {
-          target: 'https://app.tngeek.com/api_sso',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api_sso/, '')
-        }
-      }
-    },
-
-    // CSS 配置
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: 'modern-compiler'
-        }
-      }
-    },
-
-    // 路径解析配置
-    resolve: {
-      alias: {
-        'lew-ui': fileURLToPath(new URL('./lib', import.meta.url)),
-        '@': fileURLToPath(new URL('./lib/docs', import.meta.url))
-      }
-    },
-
-    // 插件配置
+    server: serverConfig,
+    resolve: { alias: aliasConfig },
     plugins: [
       ...commonPlugins,
       ...libPlugins,
@@ -107,21 +116,9 @@ export default defineConfig(({ mode }) => {
         open: false,
         filename: 'stats.html',
         gzipSize: true,
-        brotliSize: true
-      })
+        brotliSize: true,
+      }),
     ],
-
-    // 构建配置
-    build: {
-      ...(isLibMode ? libBuildOptions : docsBuildOptions),
-      minify: 'terser',
-      emptyOutDir: true,
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true
-        }
-      }
-    }
+    build: buildConfig,
   }
 })

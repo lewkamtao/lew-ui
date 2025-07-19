@@ -4,7 +4,7 @@ const beautyBrandOptions = ref([
   { label: 'Dior', value: 'dior' },
   { label: 'MAC', value: 'mac' },
   { label: 'Estée Lauder', value: 'estee_lauder' },
-  { label: 'Lancôme', value: 'lancome' }
+  { label: 'Lancôme', value: 'lancome' },
 ])
 
 const selectedBrand = ref('chanel')

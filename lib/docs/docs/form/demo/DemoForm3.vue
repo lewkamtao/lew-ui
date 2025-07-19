@@ -7,7 +7,7 @@ const options = ref([
     label: '用户名',
 
     as: 'input',
-    rule: Yup.string().required()
+    rule: Yup.string().required(),
   },
   {
     field: 'password',
@@ -16,15 +16,15 @@ const options = ref([
 
     rule: Yup.string().min(6).required(),
     props: {
-      type: 'password'
-    }
+      type: 'password',
+    },
   },
   {
     field: 'phone',
 
     label: '手机',
-    as: 'input'
-  }
+    as: 'input',
+  },
 ])
 
 const formRef = ref()
@@ -35,6 +35,7 @@ const formRef = ref()
     <lew-form ref="formRef" class="form-box" :options="options" />
   </lew-flex>
 </template>
+
 <style scoped lang="scss">
 .form-box {
   width: 380px;

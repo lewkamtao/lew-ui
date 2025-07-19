@@ -2,16 +2,16 @@
 const options = [
   {
     title: 'Fill in Basic Information',
-    description: 'Please enter your name and contact information'
+    description: 'Please enter your name and contact information',
   },
   {
     title: 'Select Service Type',
-    description: 'Please select the service type you need'
+    description: 'Please select the service type you need',
   },
   {
     title: 'Confirm Submission',
-    description: 'Please confirm and submit your information'
-  }
+    description: 'Please confirm and submit your information',
+  },
 ]
 
 const status = ref('error')
@@ -20,12 +20,12 @@ const currentStep = ref(2)
 
 <template>
   <lew-flex direction="y">
-    <lew-steps :options="options" v-model="currentStep" :status="status" />
+    <lew-steps v-model="currentStep" :options="options" :status="status" />
     <lew-flex x="center" y="center">
       <lew-button
         :disabled="currentStep === 1"
-        @click="currentStep -= 1"
         type="light"
+        @click="currentStep -= 1"
       >
         Previous
       </lew-button>

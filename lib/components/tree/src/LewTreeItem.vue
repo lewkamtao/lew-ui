@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import { treeItemProps } from "./props";
 import {
-  LewCollapseTransition,
-  LewTextTrim,
   LewCheckbox,
+  LewCollapseTransition,
   LewMessage,
-} from "lew-ui";
-import Icon from "lew-ui/utils/Icon.vue";
-import { cloneDeep } from "lodash-es";
-import transformTree, { formatTree } from "./transformTree";
+  LewTextTrim,
+} from 'lew-ui'
 import {
   findAllChildrenKeys,
   findNodeByKey,
+  formatComponent,
   insertChildByKey,
   isVueComponent,
-  formatComponent,
-} from "lew-ui/utils";
+} from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep } from 'lodash-es'
+import { treeItemProps } from './props'
+import transformTree, { formatTree } from './transformTree'
 
-const props = defineProps(treeItemProps);
+const props = defineProps(treeItemProps)
+
+const emit = defineEmits(['change', 'expand'])
 
 const {
   modelValue,
@@ -31,182 +33,191 @@ const {
   labelField,
   free,
   cacheDataSource,
-}: any = inject("lew-tree");
+}: any = inject('lew-tree')
 
-const emit = defineEmits(["change", "expand"]);
+const loading = ref(false)
+const loaded = ref(false)
 
-const loading = ref(false);
-const loaded = ref(false);
+function areSomeChildrenSelected(node: any): boolean {
+  if (!node.children || node.children.length === 0)
+    return false
 
-const areSomeChildrenSelected = (node: any): boolean => {
-  if (!node.children || node.children.length === 0) return false;
-
-  const childKeys = findAllChildrenKeys(node);
+  const childKeys = findAllChildrenKeys(node)
   return (
-    childKeys.some((key) => modelValue.value.includes(key)) &&
-    !childKeys.every((key) => modelValue.value.includes(key))
-  );
-};
+    childKeys.some(key => modelValue.value.includes(key))
+    && !childKeys.every(key => modelValue.value.includes(key))
+  )
+}
 
-const select = () => {
-  if (props.disabled) return;
+function select() {
+  if (props.disabled)
+    return
   // 创建一个变量来存储最终的绑定值
-  let newModelValue = cloneDeep(modelValue.value);
+  let newModelValue = cloneDeep(modelValue.value)
 
   if (multiple) {
-    const index = newModelValue.indexOf(props.__key);
+    const index = newModelValue.indexOf(props.__key)
     if (free) {
       if (index > -1) {
-        newModelValue.splice(index, 1);
-      } else {
-        newModelValue.push(props.__key);
+        newModelValue.splice(index, 1)
       }
-    } else {
+      else {
+        newModelValue.push(props.__key)
+      }
+    }
+    else {
       if (index > -1) {
-        newModelValue.splice(index, 1);
+        newModelValue.splice(index, 1)
         if (
-          props.extend &&
-          props.extend.children &&
-          props.extend.children.length > 0
+          props.extend
+          && props.extend.children
+          && props.extend.children.length > 0
         ) {
-          const childKeys = findAllChildrenKeys(props.extend);
+          const childKeys = findAllChildrenKeys(props.extend)
           newModelValue = newModelValue.filter(
-            (key: string | number) => !childKeys.includes(key)
-          );
+            (key: string | number) => !childKeys.includes(key),
+          )
         }
         if (
-          props.extend &&
-          props.extend.parentKeyPaths &&
-          props.extend.parentKeyPaths.length > 0
+          props.extend
+          && props.extend.parentKeyPaths
+          && props.extend.parentKeyPaths.length > 0
         ) {
           props.extend.parentKeyPaths.forEach((parentKey: string | number) => {
-            const parentIndex = newModelValue.indexOf(parentKey);
+            const parentIndex = newModelValue.indexOf(parentKey)
             if (parentIndex > -1) {
-              newModelValue.splice(parentIndex, 1);
+              newModelValue.splice(parentIndex, 1)
             }
-          });
+          })
         }
-      } else {
-        newModelValue.push(props.__key);
+      }
+      else {
+        newModelValue.push(props.__key)
         if (
-          props.extend &&
-          props.extend.children &&
-          props.extend.children.length > 0
+          props.extend
+          && props.extend.children
+          && props.extend.children.length > 0
         ) {
-          const childKeys = findAllChildrenKeys(props.extend);
+          const childKeys = findAllChildrenKeys(props.extend)
           childKeys.forEach((key: string | number) => {
             if (!newModelValue.includes(key)) {
-              newModelValue.push(key);
+              newModelValue.push(key)
             }
-          });
+          })
         }
       }
       if (
-        props.extend &&
-        props.extend.parentKey &&
-        props.extend.parentKeyPaths
+        props.extend
+        && props.extend.parentKey
+        && props.extend.parentKeyPaths
       ) {
-        const parentKey = props.extend.parentKey;
-        const parentNode = findNodeByKey(parentKey, _dataSource.value);
-        const siblingKeys = (parentNode?.children || []).map((e: any) => e.key);
+        const parentKey = props.extend.parentKey
+        const parentNode = findNodeByKey(parentKey, _dataSource.value)
+        const siblingKeys = (parentNode?.children || []).map((e: any) => e.key)
         if (
-          siblingKeys.length > 0 &&
-          siblingKeys.every((key: string | number) =>
-            newModelValue.includes(key)
+          siblingKeys.length > 0
+          && siblingKeys.every((key: string | number) =>
+            newModelValue.includes(key),
           )
         ) {
           if (!newModelValue.includes(parentKey)) {
-            newModelValue.push(parentKey);
+            newModelValue.push(parentKey)
           }
-        } else {
+        }
+        else {
           newModelValue = newModelValue.filter(
-            (key: string | number) => key !== parentKey
-          );
+            (key: string | number) => key !== parentKey,
+          )
         }
       }
     }
-  } else {
-    newModelValue = props.__key;
+  }
+  else {
+    newModelValue = props.__key
   }
 
   // 最终结果赋值给modelValue
-  modelValue.value = newModelValue;
-  emit("change");
-};
+  modelValue.value = newModelValue
+  emit('change')
+}
 
-const expand = async () => {
+async function expand() {
   if (!props.isLeaf) {
-    const index = expandKeys.value.indexOf(props.__key);
+    const index = expandKeys.value.indexOf(props.__key)
     if (index > -1) {
-      expandKeys.value.splice(index, 1);
-    } else if (loadMethod && !loading.value && !loaded.value) {
-      loading.value = true;
-      let _tree =
-        ((await loadMethod(
+      expandKeys.value.splice(index, 1)
+    }
+    else if (loadMethod && !loading.value && !loaded.value) {
+      loading.value = true
+      const _tree
+        = ((await loadMethod(
           cloneDeep({
             ...props,
             key: props.__key,
             value: props.__key,
             extend: props.extend,
-          }) as any
-        )) as any) || [];
+          }) as any,
+        )) as any) || []
 
       const { status, result, error } = (await transformTree({
         dataSource: _tree,
         keyField,
         labelField,
         free,
-      })) as any;
-      if (status === "success") {
-        loaded.value = true;
+      })) as any
+      if (status === 'success') {
+        loaded.value = true
         insertChildByKey(
           _dataSource.value,
           props.__key as string | number,
-          result
-        );
+          result,
+        )
 
         _dataSource.value = formatTree({
           dataSource: _dataSource.value,
           keyField,
           labelField,
           free,
-        });
+        })
 
-        cacheDataSource.value = cloneDeep(_dataSource.value);
+        cacheDataSource.value = cloneDeep(_dataSource.value)
 
-        console.log(_dataSource.value, "lew-tree-item");
         expandKeys.value = [
           ...(expandKeys.value as (string | number)[]),
           props.__key,
-        ];
-      } else {
-        loaded.value = false;
-        LewMessage.error(error.message);
+        ]
       }
-      loading.value = false;
-    } else {
-      expandKeys.value.push(props.__key);
+      else {
+        loaded.value = false
+        LewMessage.error(error.message)
+      }
+      loading.value = false
+    }
+    else {
+      expandKeys.value.push(props.__key)
     }
   }
-  expandKeys.value = cloneDeep(expandKeys.value);
-  emit("expand");
-};
+  expandKeys.value = cloneDeep(expandKeys.value)
+  emit('expand')
+}
 
 // 计算节点的选中状态
 const isNodeSelected = computed(() => {
   if (multiple) {
-    return modelValue.value.includes(props.__key);
-  } else {
-    return modelValue.value === props.__key;
+    return modelValue.value.includes(props.__key)
   }
-});
+  else {
+    return modelValue.value === props.__key
+  }
+})
 
 // 计算节点的部分选中状态
 const isNodePartiallySelected = computed(() => {
-  if (!multiple || free) return false;
+  if (!multiple || free)
+    return false
 
-  return props.extend && areSomeChildrenSelected(props.extend);
-});
+  return props.extend && areSomeChildrenSelected(props.extend)
+})
 </script>
 
 <template>
@@ -221,7 +232,7 @@ const isNodePartiallySelected = computed(() => {
       'lew-tree-item-disabled': disabled,
     }"
   >
-    <div @click.stop="expand" class="lew-tree-chevron-right">
+    <div class="lew-tree-chevron-right" @click.stop="expand">
       <Icon
         v-if="loading"
         :size="14"
@@ -237,7 +248,7 @@ const isNodePartiallySelected = computed(() => {
       />
     </div>
     <div class="lew-tree-item-label" @click="select">
-      <lew-checkbox
+      <LewCheckbox
         v-if="checkable"
         :certain="isNodePartiallySelected"
         :checked="isNodeSelected"
@@ -251,10 +262,10 @@ const isNodePartiallySelected = computed(() => {
           checked: isNodeSelected,
           certain: isNodePartiallySelected,
         }"
-      ></slot>
+      />
       <template v-else>
-        <component v-if="isVueComponent(icon)" :is="formatComponent(icon)" />
-        <lew-text-trim
+        <component :is="formatComponent(icon)" v-if="isVueComponent(icon)" />
+        <LewTextTrim
           v-else
           placement="right"
           :text="label"
@@ -263,18 +274,19 @@ const isNodePartiallySelected = computed(() => {
       </template>
     </div>
   </div>
-  <lew-collapse-transition v-if="!isLeaf">
+  <LewCollapseTransition v-if="!isLeaf">
     <div
       v-if="
-        ((expandKeys || []).length > 0 && expandKeys.includes(__key)) ||
-        expandAll
+        ((expandKeys || []).length > 0 && expandKeys.includes(__key))
+          || expandAll
       "
       class="lew-tree-item-main"
     >
       <slot />
     </div>
-  </lew-collapse-transition>
+  </LewCollapseTransition>
 </template>
+
 <style lang="scss" scoped>
 .lew-tree-item {
   display: inline-flex;
@@ -319,7 +331,7 @@ const isNodePartiallySelected = computed(() => {
     left: 0;
     top: 0;
     z-index: 9;
-    content: "";
+    content: '';
     width: 100%;
     height: 100%;
   }
@@ -401,5 +413,6 @@ const isNodePartiallySelected = computed(() => {
   flex-direction: column;
   margin-left: 15.5px;
   width: calc(100% - 15.5px);
+  box-sizing: border-box;
 }
 </style>

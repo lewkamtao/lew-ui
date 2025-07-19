@@ -1,37 +1,41 @@
 <script setup lang="ts">
 const visible = ref(false)
 
-const handleOk = () => {
+function handleOk() {
   visible.value = false
 }
 
-const handleClose = () => {
+function handleClose() {
   visible.value = false
 }
 </script>
 
 <template>
   <lew-flex x="start">
-    <lew-button type="light" @click="visible = true">View Profile</lew-button>
+    <lew-button type="light" @click="visible = true">
+      View Profile
+    </lew-button>
   </lew-flex>
   <lew-modal
     v-model:visible="visible"
-    closeOnClickOverlay
-    closeByEsc
+    close-on-click-overlay
+    close-by-esc
     width="500px"
     title="User Profile"
-    :closeButtonProps="{
-      request: handleClose
+    :close-button-props="{
+      request: handleClose,
     }"
-    :okButtonProps="{
-      request: handleOk
+    :ok-button-props="{
+      request: handleOk,
     }"
   >
     <div class="modal-body">
       <div class="profile-container">
         <div class="profile-info">
           <h2>John Doe</h2>
-          <p class="role">Senior Developer</p>
+          <p class="role">
+            Senior Developer
+          </p>
           <div class="details">
             <p>Email: john.doe@example.com</p>
             <p>Location: San Francisco, CA</p>

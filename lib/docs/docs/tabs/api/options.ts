@@ -6,13 +6,13 @@ export default {
       name: 'label',
       description: '文本内容',
       type: 'string',
-      default: '-'
+      default: '-',
     },
     {
       name: 'value',
       description: '值',
       type: 'string',
-      default: '-'
-    }
-  ]
+      default: '-',
+    },
+  ],
 }

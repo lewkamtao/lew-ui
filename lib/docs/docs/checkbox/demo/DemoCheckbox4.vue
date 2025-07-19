@@ -5,7 +5,7 @@ const productFeatures = ref([
   { label: 'Rabbit', value: 'rabbit' },
   { label: 'Bird', value: 'bird' },
   { label: 'Fish', value: 'fish' },
-  { label: 'Hamster', value: 'hamster' }
+  { label: 'Hamster', value: 'hamster' },
 ])
 
 const selectedFeatures = ref([])
@@ -13,7 +13,9 @@ const selectedFeatures = ref([])
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-title :size="14">Without Icon Selection</lew-title>
+    <lew-title :size="14">
+      Without Icon Selection
+    </lew-title>
     <lew-checkbox-group
       v-model="selectedFeatures"
       block
@@ -29,9 +31,11 @@ const selectedFeatures = ref([])
       direction="x"
       :options="productFeatures"
     />
-    <br />
-    <br />
-    <lew-title :size="14">With Icon Selection</lew-title>
+    <br>
+    <br>
+    <lew-title :size="14">
+      With Icon Selection
+    </lew-title>
     <lew-checkbox-group
       v-model="selectedFeatures"
       block

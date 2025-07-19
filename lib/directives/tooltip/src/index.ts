@@ -1,5 +1,5 @@
-import tippy, { roundArrow } from 'tippy.js'
 import type { App as Application, DirectiveBinding } from 'vue'
+import tippy, { roundArrow } from 'tippy.js'
 
 export const LewTooltip = {
   install(app: Application) {
@@ -18,17 +18,17 @@ export const LewTooltip = {
         el.instance = tippy(el, {
           theme: 'light',
           trigger: _trigger,
-          content: content,
+          content,
           animation: 'scale-subtle',
           interactive: true,
           appendTo: () => document.body,
           placement,
           allowHTML,
-          hideOnClick: _trigger === 'click' ? true : false,
+          hideOnClick: _trigger === 'click',
           arrow: roundArrow,
           maxWidth: 250,
           duration: [250, 250],
-          delay: _trigger === 'mouseenter' ? delay || [120, 120] : undefined
+          delay: _trigger === 'mouseenter' ? delay || [120, 120] : undefined,
         })
 
         el.instance?.popper.children[0].setAttribute('data-lew', 'tooltip')
@@ -41,14 +41,16 @@ export const LewTooltip = {
         const { triggerFrom, content } = binding.value
         if (!content && content !== 0) {
           el.instance?.disable()
-        } else {
+        }
+        else {
           el.instance?.enable()
           el.instance?.setContent(content)
         }
         if (triggerFrom === 'input-number') {
           if (content) {
             el.instance?.show()
-          } else {
+          }
+          else {
             el.instance?.disable()
           }
         }
@@ -56,7 +58,7 @@ export const LewTooltip = {
       unmounted(el: any) {
         el.instance?.hide()
         el.instance = null
-      }
+      },
     })
-  }
+  },
 }

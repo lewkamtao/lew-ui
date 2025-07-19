@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed, h, resolveDirective, withDirectives } from 'vue'
-import { any2px } from 'lew-ui/utils'
-import { menuTreeProps } from './props'
 import type { MenuTreeItem } from './props'
-import LewMenuTreeItem from './LewMenuTreeItem.vue'
+import { any2px } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { computed, h, resolveDirective, withDirectives } from 'vue'
+import LewMenuTreeItem from './LewMenuTreeItem.vue'
+import { menuTreeProps } from './props'
 
 // 定义组件 props
 const props = defineProps(menuTreeProps)
+// 定义事件
+const emit = defineEmits(['change'])
 // 定义双向绑定的值
 const modelValue = defineModel()
 const expandKeys = defineModel('expandKeys', { required: false, default: [] })
@@ -18,7 +20,7 @@ const getModelValueKeyPath = computed(() => {
   // 递归查找选中项的路径
   const findKeyPath = (
     items: MenuTreeItem[],
-    parentPath: (string | number)[] = []
+    parentPath: (string | number)[] = [],
   ): (string | number)[] | undefined => {
     for (const item of items) {
       const currentPath = [...parentPath, item.value]
@@ -29,7 +31,8 @@ const getModelValueKeyPath = computed(() => {
       // 递归查找子项
       if (item.children?.length) {
         const found = findKeyPath(item.children, currentPath)
-        if (found) return found
+        if (found)
+          return found
       }
     }
   }
@@ -42,30 +45,33 @@ provide('lew-menu-tree', {
   modelValue,
   expandKeys,
   collapsed,
-  modelValueKeyPath: getModelValueKeyPath
+  modelValueKeyPath: getModelValueKeyPath,
 })
 
 // 计算菜单树的样式
 const menuTreeStyle = computed(() => ({
-  width: collapsed.value ? any2px(44) : any2px(props.width)
+  width: collapsed.value ? any2px(44) : any2px(props.width),
 }))
 
 // 获取悬浮菜单指令
 const hoverMenu = resolveDirective('hover-menu')
 
 // 处理菜单项选择
-const handleMenuSelect = (item: MenuTreeItem) => {
-  if (item.disabled) return
+function handleMenuSelect(item: MenuTreeItem) {
+  if (item.disabled)
+    return
 
   if (item.children?.length) {
     // 处理展开/收起
     const index = expandKeys.value.indexOf(item.value as never)
     if (index > -1) {
       expandKeys.value.splice(index, 1)
-    } else {
+    }
+    else {
       expandKeys.value.push(item.value as never)
     }
-  } else {
+  }
+  else {
     // 处理选中/取消选中
     modelValue.value = modelValue.value !== item.value ? item.value : ''
   }
@@ -74,40 +80,39 @@ const handleMenuSelect = (item: MenuTreeItem) => {
   emit('change', item)
 }
 // 递归这棵树，给每个节点添加一个 active 字段，用于标识当前选中项
-const transformTree = (tree: MenuTreeItem[]): MenuTreeItem[] => {
-  return tree.map((item) => ({
+function transformTree(tree: MenuTreeItem[]): MenuTreeItem[] {
+  return tree.map(item => ({
     ...item,
     active:
-      item.value === modelValue.value ||
-      getModelValueKeyPath.value.includes(item.value as never),
+      item.value === modelValue.value
+      || getModelValueKeyPath.value.includes(item.value as never),
     onClick: handleMenuSelect,
-    children: item.children?.length ? transformTree(item.children) : undefined
+    children: item.children?.length ? transformTree(item.children) : undefined,
   }))
 }
 
-
 // 渲染菜单树项
-const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
+function renderMenuTreeItem(item: MenuTreeItem, level: number = 1): any {
   // 构建悬浮菜单选项
   const buildHoverMenuOptions = (item: MenuTreeItem) => {
     return [
       { label: item.label, disabled: true },
       { isDividerLine: true },
-      ...(transformTree(item.children as MenuTreeItem[]) || [])
+      ...(transformTree(item.children as MenuTreeItem[]) || []),
     ]
   }
 
   // 只有第一层级才添加悬浮菜单指令
-  const directives: any =
-    level === 1
+  const directives: any
+    = level === 1
       ? [
           [
             hoverMenu,
             {
               options: buildHoverMenuOptions(item),
-              disabled: !collapsed.value
-            }
-          ]
+              disabled: !collapsed.value,
+            },
+          ],
         ]
       : []
   const { disabled, icon, label, value, tagProps } = item
@@ -123,25 +128,21 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
         disabled,
         icon,
         tagProps,
-        onChange: () => emit('change', item)
+        onChange: () => emit('change', item),
       },
       () =>
         item.children?.length
-          ? item.children.map((child) => renderMenuTreeItem(child, level + 1))
-          : []
+          ? item.children.map(child => renderMenuTreeItem(child, level + 1))
+          : [],
     ),
-    directives
+    directives,
   )
 }
-
-// 定义事件
-const emit = defineEmits(['change'])
 
 onMounted(() => {
   expandKeys.value = cloneDeep(expandKeys.value)
   modelValue.value = cloneDeep(modelValue.value)
 })
-
 </script>
 
 <template>

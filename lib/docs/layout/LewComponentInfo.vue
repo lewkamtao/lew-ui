@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { renderDescription } from "@/lib/utils";
-const getComponentName = () => {
-  const { path } = useRoute();
+import { renderDescription } from '@/lib/utils'
+
+function getComponentName() {
+  const { path } = useRoute()
   return path
-    .replace("/", "")
+    .replace('/', '')
     .replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
-    .replace(/^[A-Z]/, (letter) => letter.toLowerCase());
-};
+    .replace(/^[A-Z]/, letter => letter.toLowerCase())
+}
 </script>
 
 <template>
@@ -17,7 +18,6 @@ const getComponentName = () => {
       v-html="
         renderDescription($t(`components.${getComponentName()}.description`))
       "
-    ></p>
+    />
   </div>
 </template>
-

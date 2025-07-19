@@ -4,7 +4,7 @@ import type { ContextMenus } from 'lew-ui/directives'
 const options: ContextMenus = [
   {
     label: 'New File',
-    value: 'new-file'
+    value: 'new-file',
   },
   {
     label: 'New Window',
@@ -12,20 +12,20 @@ const options: ContextMenus = [
     children: [
       {
         label: 'New Window',
-        value: 'new-window1'
+        value: 'new-window1',
       },
       {
         label: 'New Window with Config',
-        value: 'new-window2'
-      }
-    ]
+        value: 'new-window2',
+      },
+    ],
   },
   {
-    isDividerLine: true
+    isDividerLine: true,
   },
   {
     label: 'Save File',
-    value: 'save-file'
+    value: 'save-file',
   },
   {
     label: 'Save As',
@@ -33,24 +33,24 @@ const options: ContextMenus = [
     children: [
       {
         label: 'Save as Image',
-        value: 'image'
+        value: 'image',
       },
       {
         label: 'Save as Text',
-        value: 'text'
-      }
-    ]
+        value: 'text',
+      },
+    ],
   },
   {
     label: 'Save',
-    value: 'save'
+    value: 'save',
   },
   {
     label: 'Save All',
-    value: 'save-all'
+    value: 'save-all',
   },
   {
-    isDividerLine: true
+    isDividerLine: true,
   },
   {
     label: 'Preferences',
@@ -66,13 +66,13 @@ const options: ContextMenus = [
             children: [
               {
                 label: 'Chinese',
-                value: 'chinese'
+                value: 'chinese',
               },
               {
                 label: 'English',
-                value: 'english'
-              }
-            ]
+                value: 'english',
+              },
+            ],
           },
           {
             label: 'Theme',
@@ -80,56 +80,57 @@ const options: ContextMenus = [
             children: [
               {
                 label: 'Light',
-                value: 'light'
+                value: 'light',
               },
               {
                 label: 'Dark',
-                value: 'dark'
-              }
-            ]
+                value: 'dark',
+              },
+            ],
           },
           {
             label: 'Font Style (Editor)',
-            value: 'font'
-          }
-        ]
+            value: 'font',
+          },
+        ],
       },
       {
         label: 'About',
-        value: 'about'
+        value: 'about',
       },
       {
-        isDividerLine: true
+        isDividerLine: true,
       },
       {
         label: 'Help',
-        value: 'help'
+        value: 'help',
       },
       {
         label: 'Check for Updates',
-        value: 'check-update'
-      }
-    ]
+        value: 'check-update',
+      },
+    ],
   },
   {
     label: 'Find in Files',
-    value: 'find'
+    value: 'find',
   },
   {
     label: 'Close Window',
-    value: 'close-window'
+    value: 'close-window',
   },
   {
     label: 'Exit',
-    value: 'exit'
-  }
+    value: 'exit',
+  },
 ]
 </script>
+
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options
+        options,
       }"
       class="box"
     >

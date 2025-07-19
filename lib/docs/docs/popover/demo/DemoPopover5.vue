@@ -1,28 +1,28 @@
 <script setup lang="ts">
-const data = ref<any>({});
+const data = ref<any>({})
 
-const loading = ref(false);
+const loading = ref(false)
 
-const show = () => {
-  loading.value = true;
+function show() {
+  loading.value = true
   setTimeout(() => {
-    loading.value = false;
+    loading.value = false
     data.value = {
-      name: "Steve Jobs",
-      title: "Co-founder of Apple Inc.",
-      birth: "February 24, 1955",
-      death: "October 5, 2011",
+      name: 'Steve Jobs',
+      title: 'Co-founder of Apple Inc.',
+      birth: 'February 24, 1955',
+      death: 'October 5, 2011',
       achievements: [
-        "Founded Apple Inc.",
-        "Launched Macintosh computer",
-        "Founded NeXT",
-        "Acquired Pixar",
-        "Returned to Apple and launched iPod, iPhone, iPad",
+        'Founded Apple Inc.',
+        'Launched Macintosh computer',
+        'Founded NeXT',
+        'Acquired Pixar',
+        'Returned to Apple and launched iPod, iPhone, iPad',
       ],
-      quote: "Stay hungry, stay foolish.",
-    };
-  }, 1000);
-};
+      quote: 'Stay hungry, stay foolish.',
+    }
+  }, 1000)
+}
 </script>
 
 <template>
@@ -42,7 +42,9 @@ const show = () => {
     <template #popover-body>
       <div class="popover-body">
         <div class="header">
-          <h3 class="name">{{ data.name }}</h3>
+          <h3 class="name">
+            {{ data.name }}
+          </h3>
           <span class="title">{{ data.title }}</span>
         </div>
 

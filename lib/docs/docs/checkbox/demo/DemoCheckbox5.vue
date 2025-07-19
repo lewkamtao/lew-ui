@@ -4,12 +4,12 @@ const fruitOptions = ref([
   { label: 'Banana', value: 'banana' },
   { label: 'Cherry', value: 'cherry' },
   { label: 'Date', value: 'date' },
-  { label: 'Grape', value: 'grape' }
+  { label: 'Grape', value: 'grape' },
 ])
 
 const selectedFruits = ref(['apple', 'banana'])
 
-const handleFruitChange = (selectedValues: string[]) => {
+function handleFruitChange(selectedValues: string[]) {
   console.log('选中的水果:', selectedValues)
 }
 </script>

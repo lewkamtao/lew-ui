@@ -12,10 +12,13 @@ const value = ref('')
     placeholder="Please select department"
   >
     <template #empty>
-      <div class="empty">No matching departments</div>
+      <div class="empty">
+        No matching departments
+      </div>
     </template>
   </lew-select>
 </template>
+
 <style lang="scss" scoped>
 .empty {
   display: flex;

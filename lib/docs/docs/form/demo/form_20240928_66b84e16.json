@@ -76,8 +76,16 @@
       "label": "上传",
       "as": "upload",
       "schema": [
-        { "label": "接受上传的文件类型", "as": "input", "field": "accept" },
-        { "label": "是否允许多选文件", "as": "switch", "field": "multiple" },
+        {
+          "label": "接受上传的文件类型",
+          "as": "input",
+          "field": "accept"
+        },
+        {
+          "label": "是否允许多选文件",
+          "as": "switch",
+          "field": "multiple"
+        },
         {
           "label": "最大上传文件大小",
           "as": "input-number",
@@ -107,7 +115,11 @@
       "schema": [
         { "label": "占位提示", "as": "input", "field": "placeholder" },
         { "label": "是否可清空", "as": "switch", "field": "clearable" },
-        { "label": "允许重复值", "as": "switch", "field": "allowDuplicates" }
+        {
+          "label": "允许重复值",
+          "as": "switch",
+          "field": "allowDuplicates"
+        }
       ],
       "props": { "clearable": true },
       "id": "input-tag_20240928_a6a3db9",

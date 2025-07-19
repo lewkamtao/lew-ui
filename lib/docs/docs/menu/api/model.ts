@@ -1,9 +1,9 @@
-import { menuModel, menuProps } from 'lew-ui'
+import { menuModel } from 'lew-ui'
 import { convertProps } from '@/lib/utils'
 
 export default {
   title: 'Model',
   columnsKey: 'model',
   orderNum: 10,
-  data: convertProps(menuModel)
+  data: convertProps(menuModel),
 }

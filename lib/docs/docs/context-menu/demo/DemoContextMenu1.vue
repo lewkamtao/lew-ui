@@ -1,24 +1,25 @@
 <script lang="ts" setup>
-import { h } from 'vue'
-import type { ContextMenus } from 'lew-ui/directives'
+import type { ContextMenus } from 'lew-ui'
 import {
-  Home,
   CornerUpRight,
-  RotateCw,
   DownloadCloud,
+  Eye,
   File,
+  Home,
   Navigation,
+  RotateCw,
   Search,
-  Eye
 } from 'lucide-vue-next'
+import { h } from 'vue'
+
 const options1: ContextMenus = [
   {
     label: 'Back',
     value: 1,
     icon: h(Home, { size: 14 }),
     onClick: (e: ContextMenus) => {
-      LewMessage.info('Back')
-    }
+      LewMessage.info('Back', e)
+    },
   },
   {
     label: 'Forward',
@@ -26,7 +27,7 @@ const options1: ContextMenus = [
     icon: h(CornerUpRight, { size: 14 }),
     onClick: () => {
       LewMessage.info('Forward')
-    }
+    },
   },
   {
     label: 'Reload',
@@ -34,10 +35,10 @@ const options1: ContextMenus = [
     icon: h(RotateCw, { size: 14 }),
     onClick: () => {
       LewMessage.info('Reload')
-    }
+    },
   },
   {
-    isDividerLine: true
+    isDividerLine: true,
   },
   {
     label: 'Save As',
@@ -45,7 +46,7 @@ const options1: ContextMenus = [
     icon: h(DownloadCloud, { size: 14 }),
     onClick: () => {
       LewMessage.info('Save As')
-    }
+    },
   },
   {
     label: 'Print',
@@ -54,7 +55,7 @@ const options1: ContextMenus = [
     icon: h(File, { size: 14 }),
     onClick: () => {
       LewMessage.info('Print')
-    }
+    },
   },
   {
     label: 'Cast',
@@ -62,7 +63,7 @@ const options1: ContextMenus = [
     icon: h(Navigation, { size: 14 }),
     onClick: () => {
       LewMessage.info('Cast')
-    }
+    },
   },
   {
     label: 'Search image with Google',
@@ -70,7 +71,7 @@ const options1: ContextMenus = [
     icon: h(Search, { size: 14 }),
     onClick: () => {
       LewMessage.info('Search image with Google')
-    }
+    },
   },
   {
     label: 'Open in Reader Mode',
@@ -78,39 +79,42 @@ const options1: ContextMenus = [
     icon: h(Eye, { size: 14 }),
     onClick: () => {
       LewMessage.info('Open in Reader Mode')
-    }
-  }
+    },
+  },
 ]
 
 const options2 = [
   {
     label: 'Translate to English',
-    value: 1
+    value: 1,
   },
   {
-    isDividerLine: true
+    isDividerLine: true,
   },
   {
     label: 'View Source',
-    value: 2
+    value: 2,
   },
   {
     label: 'Inspect',
-    value: 3
-  }
+    value: 3,
+  },
 ]
 </script>
+
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options: options1
+        options: options1,
       }"
       class="box"
     >
       Right click here
     </div>
-    <div v-context-menu="{ options: options2 }" class="box">Right click here</div>
+    <div v-context-menu="{ options: options2 }" class="box">
+      Right click here
+    </div>
   </lew-flex>
 </template>
 

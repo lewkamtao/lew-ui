@@ -1,15 +1,15 @@
 import DemoButton1 from './DemoButton1.vue'
-import DemoButton2 from './DemoButton2.vue'
-import DemoButton3 from './DemoButton3.vue'
-import DemoButton4 from './DemoButton4.vue'
-import DemoButton5 from './DemoButton5.vue'
-import DemoButton6 from './DemoButton6.vue'
-
 import DemoButton1Code from './DemoButton1.vue?raw'
+import DemoButton2 from './DemoButton2.vue'
 import DemoButton2Code from './DemoButton2.vue?raw'
+import DemoButton3 from './DemoButton3.vue'
 import DemoButton3Code from './DemoButton3.vue?raw'
+
+import DemoButton4 from './DemoButton4.vue'
 import DemoButton4Code from './DemoButton4.vue?raw'
+import DemoButton5 from './DemoButton5.vue'
 import DemoButton5Code from './DemoButton5.vue?raw'
+import DemoButton6 from './DemoButton6.vue'
 import DemoButton6Code from './DemoButton6.vue?raw'
 
 export const demoGroup = [
@@ -18,7 +18,7 @@ export const demoGroup = [
   DemoButton3,
   DemoButton4,
   DemoButton5,
-  DemoButton6
+  DemoButton6,
 ]
 
 export const codeGroup = [
@@ -27,5 +27,5 @@ export const codeGroup = [
   DemoButton3Code,
   DemoButton4Code,
   DemoButton5Code,
-  DemoButton6Code
+  DemoButton6Code,
 ]

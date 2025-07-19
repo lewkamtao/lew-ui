@@ -1,31 +1,35 @@
 <script setup lang="ts">
+import type { CascaderOptions } from './props'
 import {
-  LewPopover,
-  LewFlex,
   LewButton,
-  LewTooltip,
-  LewTextTrim,
   LewCheckbox,
-} from "lew-ui";
-import { object2class } from "lew-ui/utils";
-import type { CascaderOptions } from "./props";
-import { cascaderProps } from "./props";
-import { VirtList } from "vue-virt-list";
-import { cloneDeep, isFunction } from "lodash-es";
-import Icon from "lew-ui/utils/Icon.vue";
-import { any2px } from "lew-ui/utils";
-import { locale } from "lew-ui";
+  LewFlex,
+  LewPopover,
+  LewTextTrim,
+  LewTooltip,
+  locale,
+} from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep, isFunction } from 'lodash-es'
+import { VirtList } from 'vue-virt-list'
+import { cascaderProps } from './props'
+
+const props = defineProps(cascaderProps)
+
+const emit = defineEmits(['change', 'blur', 'clear'])
+
 // 格式化 获取 path
-const formatTree = (
+function formatTree(
   tree: CascaderOptions[],
-  parentValuePaths: String[] = [],
-  parentLabelPaths: String[] = []
-): CascaderOptions[] => {
+  parentValuePaths: string[] = [],
+  parentLabelPaths: string[] = [],
+): CascaderOptions[] {
   return tree.map((node: CascaderOptions) => {
-    const { value, label, children = [] } = node;
-    const valuePaths: String[] = [...parentValuePaths, value];
-    const labelPaths: String[] = [...parentLabelPaths, label];
-    const level = valuePaths.length - 1;
+    const { value, label, children = [] } = node
+    const valuePaths: string[] = [...parentValuePaths, value]
+    const labelPaths: string[] = [...parentLabelPaths, label]
+    const level = valuePaths.length - 1
     const _node = {
       ...node,
       valuePaths,
@@ -33,272 +37,322 @@ const formatTree = (
       level,
       parentValuePaths,
       parentLabelPaths,
-    };
+    }
     if ((children || []).length > 0) {
       return {
         ..._node,
         children: formatTree(children, valuePaths, labelPaths),
-      };
+      }
     }
-    return _node;
-  }) as CascaderOptions[];
-};
-
-// 获取app
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+    return _node
+  }) as CascaderOptions[]
 }
 
-const props = defineProps(cascaderProps);
-const emit = defineEmits(["change", "blur", "clear"]);
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
+}
 
 const cascaderValue: Ref<string | number | undefined> = defineModel({
   default: undefined,
-});
+})
 
-const lewCascaderRef = ref();
-const lewPopoverRef = ref();
+const lewCascaderRef = ref()
+const lewPopoverRef = ref()
 
 const state = reactive({
   visible: false,
   loading: false,
+  initLoading: true,
   okLoading: false,
   optionsGroup: [] as CascaderOptions[][], // 分组
   optionsTree: [] as any, // 树
   activeLabels: [] as string[], // 激活
   tobeLabels: [] as string[], // 待确认
   tobeItem: {} as CascaderOptions,
-  keyword: "",
-});
+  keyword: '',
+})
 
-const formMethods: any = inject("formMethods", {});
+const formMethods: any = inject('formMethods', {})
 
-let _loadMethod = computed(() => {
+const _loadMethod = computed(() => {
   if (isFunction(props.loadMethod)) {
-    return props.loadMethod;
-  } else if (props.loadMethodId) {
-    return formMethods[props.loadMethodId];
+    return props.loadMethod
   }
-  return false;
-});
+  else if (props.loadMethodId) {
+    return formMethods[props.loadMethodId]
+  }
+  return false
+})
+
+const _initOptionsMethod = computed(() => {
+  if (isFunction(props.initOptionsMethod)) {
+    return props.initOptionsMethod
+  }
+  else if (props.initOptionsMethodId) {
+    return formMethods[props.initOptionsMethodId]
+  }
+  return false
+})
 
 // 创建一个对象来存储已加载的数据
-const loadedData = reactive<Record<string, CascaderOptions[]>>({});
+const loadedData = reactive<Record<string, CascaderOptions[]>>({})
 
 // 通过值获取对象
-const findObjectByValue = (treeList: CascaderOptions[], value: string) => {
+function findObjectByValue(treeList: CascaderOptions[], value: string) {
   for (let i = 0; i < treeList.length; i++) {
-    const tree = treeList[i];
+    const tree = treeList[i]
     if (tree.value === value) {
-      return tree;
+      return tree
     }
     if (tree.children) {
       const foundObject: CascaderOptions = findObjectByValue(
         tree.children,
-        value
-      ) as CascaderOptions;
+        value,
+      ) as CascaderOptions
       if (foundObject) {
-        return foundObject;
+        return foundObject
       }
     }
   }
-  return null;
-};
+  return null
+}
 // 通过值添加子集
 function findAndAddChildrenByValue(
   tree: CascaderOptions[],
   value: string,
-  children: CascaderOptions[]
+  children: CascaderOptions[],
 ): CascaderOptions[] {
   for (const node of tree) {
     if (node.value === value) {
       if (!node.children) {
-        node.children = [];
+        node.children = []
       }
-      node.children = children;
-      return tree;
+      node.children = children
+      return tree
     }
     if (node.children && node.children.length > 0) {
-      const result = findAndAddChildrenByValue(node.children, value, children);
+      const result = findAndAddChildrenByValue(node.children, value, children)
       if (result && result.length > 0) {
-        return tree;
+        return tree
       }
     }
   }
-  return [];
+  return []
 }
 // 通过值查找子集
 function findChildrenByValue(
   tree: CascaderOptions[],
-  value: string
+  value: string,
 ): CascaderOptions[] {
   for (const node of tree) {
     if (node.value === value) {
-      return node.children || [];
+      return node.children || []
     }
 
     if (node.children && node.children.length > 0) {
-      const result = findChildrenByValue(node.children, value);
+      const result = findChildrenByValue(node.children, value)
       if (result && result.length > 0) {
-        return result;
+        return result
       }
     }
   }
 
-  return [];
+  return []
 }
 
 // 初始化
-const init = async () => {
-  let _tree: CascaderOptions[] = [];
-  if (_loadMethod.value && !state.loading) {
-    state.loading = true;
-    _tree = (await _loadMethod.value()) || [];
-    state.loading = false;
-  } else if (props.options && props.options.length > 0) {
-    _tree =
-      ((props.options &&
-        props.options.map((e: CascaderOptions) => {
+async function init() {
+  let _tree: CascaderOptions[] = []
+
+  // 如果有初始化方法，优先使用
+  if (_initOptionsMethod.value) {
+    try {
+      const newOptions = await _initOptionsMethod.value()
+      _tree = newOptions || []
+    }
+    catch (error) {
+      console.error('[LewCascader] initOptionsMethod failed', error)
+      _tree = []
+    }
+  }
+  else if (_loadMethod.value && !state.loading) {
+    state.loading = true
+    _tree = (await _loadMethod.value()) || []
+    state.loading = false
+  }
+  else if (props.options && props.options.length > 0) {
+    _tree
+      = ((props.options
+        && props.options.map((e: CascaderOptions) => {
           return {
             ...e,
             isLeaf: !e.children || (e.children && e.children.length === 0), // 没有孩子
-          };
-        })) as CascaderOptions[]) || [];
+          }
+        })) as CascaderOptions[]) || []
   }
-  const __tree: CascaderOptions[] = formatTree(_tree);
-  state.optionsGroup = [__tree];
-  state.optionsTree = __tree;
-};
+  const __tree: CascaderOptions[] = formatTree(_tree)
+  state.optionsGroup = [__tree]
+  state.optionsTree = __tree
+  state.initLoading = false
+}
 
-init();
+init()
 
-const virtListRefs = ref<any[]>([]);
+// 监听 options 变化
+watch(
+  () => props.options,
+  (newOptions) => {
+    if (!_initOptionsMethod.value) {
+      // 只有在没有使用 initOptionsMethod 时才响应 options 的变化
+      const _tree
+        = ((newOptions
+          && newOptions.map((e: CascaderOptions) => {
+            return {
+              ...e,
+              isLeaf: !e.children || (e.children && e.children.length === 0),
+            }
+          })) as CascaderOptions[]) || []
+      const __tree: CascaderOptions[] = formatTree(_tree)
+      state.optionsGroup = [__tree]
+      state.optionsTree = __tree
+    }
+  },
+  {
+    deep: true,
+  },
+)
+
+const virtListRefs = ref<any[]>([])
 
 // 选择
-const selectItem = async (item: CascaderOptions, level: number) => {
+async function selectItem(item: CascaderOptions, level: number) {
   if (!item.isLeaf && item.labelPaths !== state.activeLabels) {
-    state.optionsGroup = state.optionsGroup.slice(0, level + 1);
+    state.optionsGroup = state.optionsGroup.slice(0, level + 1)
     if (_loadMethod.value && !item.isLeaf) {
       if (loadedData[item.value]) {
         // 如果数据已经加载过，直接使用缓存的数据
-        const _options = loadedData[item.value];
-        state.optionsGroup.push(_options);
-      } else {
-        item.loading = true;
-        state.okLoading = true;
-        const new_options =
-          (await _loadMethod.value(cloneDeep({ ...item, level }))) || [];
-        let _tree = findAndAddChildrenByValue(
+        const _options = loadedData[item.value]
+        state.optionsGroup.push(_options)
+      }
+      else {
+        item.loading = true
+        state.okLoading = true
+        const new_options
+          = (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
+        const _tree = findAndAddChildrenByValue(
           cloneDeep(state.optionsTree),
           cloneDeep(item.value),
-          new_options
-        );
-        state.optionsTree = formatTree(_tree);
-        const _options = findChildrenByValue(state.optionsTree, item.value);
-        state.optionsGroup.push(_options);
+          new_options,
+        )
+        state.optionsTree = formatTree(_tree)
+        const _options = findChildrenByValue(state.optionsTree, item.value)
+        state.optionsGroup.push(_options)
         // 将新加载的数据存储到对象中
-        loadedData[item.value] = _options;
-        item.loading = false;
-        state.okLoading = false;
+        loadedData[item.value] = _options
+        item.loading = false
+        state.okLoading = false
       }
-    } else if (!item.isLeaf) {
-      const _options =
-        (item.children &&
-          item.children.map((e) => {
+    }
+    else if (!item.isLeaf) {
+      const _options
+        = (item.children
+          && item.children.map((e) => {
             return {
               ...e,
               isLeaf: !e.children || (e.children && e.children.length === 0), // 没有孩子
-            };
-          })) ||
-        [];
-      state.optionsGroup.push(_options);
+            }
+          }))
+          || []
+      state.optionsGroup.push(_options)
     }
   }
   if (item.labelPaths === state.activeLabels) {
-    state.activeLabels = item.parentLabelPaths as string[];
+    state.activeLabels = item.parentLabelPaths as string[]
     if (level < state.optionsGroup.length - 1) {
-      state.optionsGroup.pop();
+      state.optionsGroup.pop()
     }
-  } else {
-    state.activeLabels = item.labelPaths as string[];
   }
-  state.tobeItem = { ...item, children: undefined };
+  else {
+    state.activeLabels = item.labelPaths as string[]
+  }
+  state.tobeItem = { ...item, children: undefined }
   if (props.free) {
-    checkItem(item);
-  } else if (item.isLeaf) {
-    checkItem(item);
-    ok();
+    checkItem(item)
   }
-};
+  else if (item.isLeaf) {
+    checkItem(item)
+    ok()
+  }
+}
 
 // 检查Item
-const checkItem = (item: CascaderOptions) => {
+function checkItem(item: CascaderOptions) {
   if (props.showAllLevels) {
     if (state.tobeLabels === item.labelPaths) {
-      state.tobeLabels = item.parentLabelPaths as string[];
-    } else {
-      state.tobeLabels = item.labelPaths as string[];
+      state.tobeLabels = item.parentLabelPaths as string[]
     }
-  } else if (state.tobeLabels[0] === (item.label as string)) {
-    state.tobeLabels = [] as string[];
-  } else {
-    state.tobeLabels = [item.label] as any;
+    else {
+      state.tobeLabels = item.labelPaths as string[]
+    }
   }
-};
+  else if (state.tobeLabels[0] === (item.label as string)) {
+    state.tobeLabels = [] as string[]
+  }
+  else {
+    state.tobeLabels = [item.label] as any
+  }
+}
 
-const show = async () => {
-  lewPopoverRef.value.show();
-};
+async function show() {
+  lewPopoverRef.value.show()
+}
 
-const hide = () => {
-  lewPopoverRef.value.hide();
-};
+function hide() {
+  lewPopoverRef.value.hide()
+}
 
-const clearHandle = () => {
-  cascaderValue.value = undefined as any;
-  state.tobeLabels = [];
-  state.activeLabels = [];
-  hide();
-  init();
-  emit("clear");
-  emit("change");
-};
+function clearHandle() {
+  cascaderValue.value = undefined as any
+  state.tobeLabels = []
+  state.activeLabels = []
+  hide()
+  init()
+  emit('clear')
+  emit('change')
+}
 
 const getValueStyle = computed(() => {
-  const { size } = props;
+  const { size } = props
 
   const widthMap = {
-    small: "calc(100% - 24px)",
-    medium: "calc(100% - 24px)",
-    large: "calc(100% - 24px)",
-  };
+    small: 'calc(100% - 24px)',
+    medium: 'calc(100% - 24px)',
+    large: 'calc(100% - 24px)',
+  }
   return {
     width: widthMap[size],
     padding: `var(--lew-form-input-padding-${size})`,
     fontSize: `var(--lew-form-font-size-${size})`,
     lineHeight: `calc(var(--lew-form-item-height-${size}) - (var(--lew-form-border-width) * 2))`,
     opacity: state.visible ? 0.4 : 1,
-  };
-});
+  }
+})
 
 const getCascaderClassName = computed(() => {
-  let { clearable, disabled, readonly } = props;
-  clearable = clearable ? !!cascaderValue.value : false;
-  const focus = state.visible;
+  let { clearable, disabled, readonly } = props
+  clearable = clearable ? !!cascaderValue.value : false
+  const focus = state.visible
 
-  return object2class("lew-cascader", {
+  return object2class('lew-cascader', {
     clearable,
     disabled,
     readonly,
     focus,
-  });
-});
-
-const getBodyClassName = computed(() => {
-  const { size, disabled } = props;
-  return object2class("lew-cascader-body", { size, disabled });
-});
+    'init-loading': state.initLoading,
+  })
+})
 
 // 获取图标大小
 const getIconSize = computed(() => {
@@ -306,68 +360,68 @@ const getIconSize = computed(() => {
     small: 14,
     medium: 15,
     large: 16,
-  };
-  return size[props.size];
-});
+  }
+  return size[props.size]
+})
 
 // 展示
-const showHandle = () => {
-  state.visible = true;
-};
+function showHandle() {
+  state.visible = true
+}
 
 // 隐藏
-const hideHandle = () => {
-  state.visible = false;
-  emit("blur");
-};
+function hideHandle() {
+  state.visible = false
+  emit('blur')
+}
 
 // 获取宽度
 const getCascaderWidth = computed(() => {
-  const _hasChildOptions = state.optionsGroup.filter((e) => e && e.length > 0)
-    .length;
+  const _hasChildOptions = state.optionsGroup.filter(e => e && e.length > 0)
+    .length
   if (_hasChildOptions > 1) {
-    return _hasChildOptions * 200;
+    return _hasChildOptions * 200
   }
-  return _hasChildOptions * 200;
-});
+  return _hasChildOptions * 200
+})
 
 const getCascaderStyle = computed(() => {
-  const { size } = props;
+  const { size } = props
 
   return {
     height: `var(--lew-form-item-height-${size})`,
-  };
-});
+  }
+})
 
 const getLabel = computed(() => {
   const item = findObjectByValue(
     state.optionsTree,
-    cascaderValue.value as string
-  );
-  return item?.labelPaths || [];
-});
+    cascaderValue.value as string,
+  )
+  return item?.labelPaths || []
+})
 
-const ok = () => {
-  const item = findObjectByValue(state.optionsTree, state.tobeItem.value);
-  cascaderValue.value = state.tobeItem.value;
-  emit("change", cloneDeep(item));
+function ok() {
+  const item = findObjectByValue(state.optionsTree, state.tobeItem.value)
+  cascaderValue.value = state.tobeItem.value
+  emit('change', cloneDeep(item))
 
-  hide();
-};
+  hide()
+}
 
-const close = () => {
-  hide();
-};
+function close() {
+  hide()
+}
 
-defineExpose({ show, hide });
+defineExpose({ show, hide })
 </script>
 
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
     class="lew-cascader-view"
     :trigger="trigger"
-    :disabled="disabled || readonly"
+    :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :loading="state.loading"
     :style="{ width: any2px(width) }"
@@ -381,7 +435,15 @@ defineExpose({ show, hide });
         :class="getCascaderClassName"
         :style="getCascaderStyle"
       >
-        <transition name="lew-form-icon-ani">
+        <div v-if="state.initLoading" class="lew-icon-loading-box">
+          <Icon
+            :size="getIconSize"
+            :loading="state.initLoading"
+            type="loading"
+          />
+        </div>
+
+        <transition v-else name="lew-form-icon-ani">
           <Icon
             v-if="!(clearable && getLabel && getLabel.length > 0)"
             :size="getIconSize"
@@ -404,12 +466,12 @@ defineExpose({ show, hide });
         </transition>
 
         <div
-          class="lew-cascader-value"
           v-show="getLabel && getLabel.length > 0"
+          class="lew-cascader-value"
           :style="getValueStyle"
         >
           <template v-if="showAllLevels">
-            <lew-text-trim :text="getLabel.join(' / ')" />
+            <LewTextTrim :text="getLabel.join(' / ')" />
           </template>
           <template v-else-if="getLabel">
             <span>{{ getLabel[getLabel.length - 1] }}</span>
@@ -430,11 +492,11 @@ defineExpose({ show, hide });
         :style="{
           width: `${getCascaderWidth}px`,
         }"
-        :class="getBodyClassName"
       >
-        <slot name="header"></slot>
+        <slot name="header" />
         <transition name="fade">
           <div
+            v-if="state.optionsGroup.length > 0"
             class="lew-cascader-options-box"
             :style="{ height: free ? 'calc(100% - 48px)' : '100%' }"
           >
@@ -442,117 +504,105 @@ defineExpose({ show, hide });
               v-for="(oItem, oIndex) in state.optionsGroup"
               :key="oIndex"
             >
-              <div
-                class="lew-cascader-item-wrapper"
+              <VirtList
+                :ref="(el: any) => (virtListRefs[oIndex] = el)"
+                class="lew-scrollbar-hover"
+                :list="oItem"
+                :min-size="38"
+                :buffer="5"
+                item-key="value"
                 :style="{
-                  zIndex: 20 - oIndex,
-                  borderRadius: `0 ${
-                    oIndex === state.optionsGroup.length - 1
-                      ? 'var(--lew-border-radius-small)'
-                      : '0'
-                  } 0 0`,
-                  transform:
-                    oItem.length > 0 ? `translateX(${200 * oIndex}px)` : '',
+                  padding: `6px 6px 2px 6px`,
+                  boxSizing: 'border-box',
                 }"
               >
-                <virt-list
-                  :key="oItem[0]?.parentValuePaths?.join('-') || 'root'"
-                  :ref="(el: any) => (virtListRefs[oIndex] = el)"
-                  class="lew-scrollbar-hover"
-                  :list="oItem"
-                  :minSize="38"
-                  :buffer="5"
-                  itemKey="value"
-                  :style="{
-                    padding: `6px 6px 2px 6px`,
-                    boxSizing: 'border-box',
-                  }"
-                >
-                  <template #default="{ itemData: templateProps }">
+                <template #default="{ itemData: templateProps }">
+                  <div
+                    class="lew-cascader-item-padding"
+                    :style="{ height: `${38}px` }"
+                  >
                     <div
-                      class="lew-cascader-item-padding"
-                      :style="{ height: 38 + 'px' }"
+                      class="lew-cascader-item"
+                      :class="{
+                        'lew-cascader-item-disabled': templateProps.disabled,
+                        'lew-cascader-item-hover': state.activeLabels.includes(
+                          templateProps.label,
+                        ),
+                        'lew-cascader-item-active': free
+                          ? state.activeLabels.includes(templateProps.label)
+                            && state.tobeLabels.includes(templateProps.label)
+                          : state.activeLabels.includes(templateProps.label),
+                        'lew-cascader-item-tobe': state.tobeLabels.includes(
+                          templateProps.label,
+                        ),
+                        'lew-cascader-item-selected':
+                          getLabel
+                          && getLabel.includes(templateProps.label)
+                          && state.tobeLabels.includes(templateProps.label),
+                      }"
+                      @click="selectItem(templateProps, oIndex)"
                     >
-                      <div
-                        class="lew-cascader-item"
+                      <LewCheckbox
+                        v-if="free"
+                        class="lew-cascader-checkbox"
+                        :checked="
+                          state.tobeLabels.includes(templateProps.label)
+                        "
+                      />
+                      <LewTextTrim
+                        class="lew-cascader-label"
                         :class="{
-                          'lew-cascader-item-disabled': templateProps.disabled,
-                          'lew-cascader-item-hover': state.activeLabels.includes(
-                            templateProps.label
-                          ),
-                          'lew-cascader-item-active': free
-                            ? state.activeLabels.includes(
-                                templateProps.label
-                              ) &&
-                              state.tobeLabels.includes(templateProps.label)
-                            : state.activeLabels.includes(templateProps.label),
-                          'lew-cascader-item-tobe': state.tobeLabels.includes(
-                            templateProps.label
-                          ),
-                          'lew-cascader-item-selected':
-                            getLabel &&
-                            getLabel.includes(templateProps.label) &&
-                            state.tobeLabels.includes(templateProps.label),
+                          'lew-cascader-label-free': free,
                         }"
-                        @click="selectItem(templateProps, oIndex)"
-                      >
-                        <lew-checkbox
-                          v-if="free"
-                          class="lew-cascader-checkbox"
-                          :checked="
-                            state.tobeLabels.includes(templateProps.label)
-                          "
-                        />
-                        <lew-text-trim
-                          class="lew-cascader-label"
-                          :class="{
-                            'lew-cascader-label-free': free,
-                          }"
-                          :text="templateProps.label"
-                          :delay="[500, 0]"
-                        />
-                        <Icon
-                          v-if="templateProps.loading"
-                          :size="14"
-                          loading
-                          class="lew-cascader-loading-icon"
-                          type="loader"
-                        />
-                        <Icon
-                          v-else-if="!templateProps.isLeaf"
-                          :size="16"
-                          class="lew-cascader-icon"
-                          type="chevron-right"
-                        />
-                      </div>
+                        :text="templateProps.label"
+                        :delay="[500, 0]"
+                      />
+                      <Icon
+                        v-if="templateProps.loading"
+                        :size="14"
+                        loading
+                        class="lew-cascader-loading-icon"
+                        type="loader"
+                      />
+                      <Icon
+                        v-else-if="!templateProps.isLeaf"
+                        :size="16"
+                        class="lew-cascader-icon"
+                        type="chevron-right"
+                      />
                     </div>
-                  </template>
-                </virt-list>
-              </div>
+                  </div>
+
+                  <LewFlex
+                    v-if="free"
+                    x="end"
+                    gap="5"
+                    class="lew-cascader-control"
+                  >
+                    <LewButton
+                      color="gray"
+                      type="text"
+                      size="small"
+                      @click="close"
+                    >
+                      {{ locale.t("cascader.closeText") }}
+                    </LewButton>
+                    <LewButton
+                      :disabled="state.okLoading"
+                      size="small"
+                      @click="ok()"
+                    >
+                      {{ locale.t("cascader.okText") }}
+                    </LewButton>
+                  </LewFlex>
+                </template>
+              </VirtList>
             </template>
           </div>
         </transition>
-
-        <lew-flex v-if="free" x="end" gap="5" class="lew-cascader-control">
-          <lew-button
-            color="gray"
-            type="text"
-            size="small"
-            @click="close"
-          >
-            {{ locale.t("cascader.closeText") }}
-          </lew-button>
-          <lew-button
-            :disabled="state.okLoading"
-            size="small"
-            @click="ok()"
-          >
-            {{ locale.t("cascader.okText") }}
-          </lew-button>
-        </lew-flex>
       </div>
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>
@@ -585,6 +635,17 @@ defineExpose({ show, hide });
       transform: translateY(-50%) rotate(0deg);
       transition: all var(--lew-form-transition-bezier);
       padding: 2px;
+    }
+
+    .lew-icon-loading-box {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      right: 9px;
+      padding: 2px;
+      box-sizing: border-box;
+      transform: translateY(-50%);
     }
 
     .icon-select {
@@ -667,11 +728,11 @@ defineExpose({ show, hide });
 
   .lew-cascader-disabled {
     opacity: var(--lew-disabled-opacity);
-    pointer-events: none; //鼠标点击不可修改
+    pointer-events: none;
   }
 
   .lew-cascader-readonly {
-    pointer-events: none; //鼠标点击不可修改
+    pointer-events: none;
 
     :deep(.lew-text-trim-wrapper) {
       user-select: text;
@@ -682,6 +743,16 @@ defineExpose({ show, hide });
   .lew-cascader-disabled:hover {
     background-color: var(--lew-form-bgcolor);
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  }
+
+  .lew-cascader-init-loading {
+    pointer-events: none;
+    cursor: wait;
+
+    .lew-cascader-placeholder,
+    .lew-cascader-value {
+      cursor: wait;
+    }
   }
 }
 
@@ -718,6 +789,7 @@ defineExpose({ show, hide });
   }
 }
 </style>
+
 <style lang="scss">
 .lew-cascader-body {
   width: 100%;

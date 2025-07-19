@@ -1,18 +1,18 @@
 <script setup lang="ts">
 const data = ref({
-  name: "Steve Jobs",
-  title: "Co-founder of Apple Inc.",
-  birth: "February 24, 1955",
-  death: "October 5, 2011",
+  name: 'Steve Jobs',
+  title: 'Co-founder of Apple Inc.',
+  birth: 'February 24, 1955',
+  death: 'October 5, 2011',
   achievements: [
-    "Founded Apple Inc.",
-    "Launched Macintosh computer",
-    "Founded NeXT",
-    "Acquired Pixar",
-    "Returned to Apple and launched iPod, iPhone, iPad",
+    'Founded Apple Inc.',
+    'Launched Macintosh computer',
+    'Founded NeXT',
+    'Acquired Pixar',
+    'Returned to Apple and launched iPod, iPhone, iPad',
   ],
-  quote: "Stay hungry, stay foolish.",
-});
+  quote: 'Stay hungry, stay foolish.',
+})
 </script>
 
 <template>
@@ -26,7 +26,9 @@ const data = ref({
     <template #popover-body>
       <div class="popover-body">
         <div class="header">
-          <h3 class="name">{{ data.name }}</h3>
+          <h3 class="name">
+            {{ data.name }}
+          </h3>
           <span class="title">{{ data.title }}</span>
         </div>
 

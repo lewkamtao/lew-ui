@@ -5,5 +5,5 @@ export default {
   title: 'FormItemProps',
   columnsKey: 'props',
   orderNum: 12,
-  data: convertProps(formItemProps)
+  data: convertProps(formItemProps),
 }

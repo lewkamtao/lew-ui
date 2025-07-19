@@ -5,5 +5,5 @@ export default {
   title: 'Model',
   columnsKey: 'model',
   orderNum: 10,
-  data: convertProps(tabsModel)
+  data: convertProps(tabsModel),
 }

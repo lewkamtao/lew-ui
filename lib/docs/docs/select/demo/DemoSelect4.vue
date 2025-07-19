@@ -2,64 +2,64 @@
 const options = ref([
   {
     label: 'Junior Software Engineer',
-    value: '1'
+    value: '1',
   },
   {
     label: 'Mid-level Software Engineer',
-    value: '2'
+    value: '2',
   },
   {
     label: 'Senior Software Engineer',
     value: '3',
-    disabled: true
+    disabled: true,
   },
   {
     label: 'Technical Lead',
     disabled: true,
-    value: '4'
+    value: '4',
   },
   {
     label: 'Product Manager',
-    value: '5'
+    value: '5',
   },
   {
     label: 'Project Manager',
-    value: '6'
+    value: '6',
   },
   {
     label: 'UI/UX Designer',
-    value: '7'
+    value: '7',
   },
   {
     label: 'Test Engineer',
-    value: '8'
+    value: '8',
   },
   {
     label: 'Operations Engineer',
-    value: '9'
+    value: '9',
   },
   {
     label: 'Data Analyst',
-    value: '10'
+    value: '10',
   },
   {
     label: 'Chief Technology Officer',
     value: '11',
-    disabled: true
-  }
+    disabled: true,
+  },
 ])
 
 const value = ref('')
 
-const handleChange = (val: string) => {
+function handleChange(val: string) {
   console.log('Selected position:', val)
 }
 </script>
 
 <template>
   <lew-select
-    style="width: 320px"
     v-model="value"
+    style="width: 320px"
     :options="options"
     placeholder="Select position"
     @change="handleChange"

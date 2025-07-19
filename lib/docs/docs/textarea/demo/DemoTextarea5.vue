@@ -3,5 +3,5 @@ const v = ref('This is a read-only state')
 </script>
 
 <template>
-  <lew-textarea width="300px" v-model="v" placeholder="Read-only" readonly />
+  <lew-textarea v-model="v" width="300px" placeholder="Read-only" readonly />
 </template>

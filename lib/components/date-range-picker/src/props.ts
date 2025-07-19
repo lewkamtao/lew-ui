@@ -1,12 +1,13 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
+
 export const dateRangePickerModel = {
   modelValue: {
     type: Object as () => Record<string, Date | undefined>,
     default: () => ({}),
-    description: '日期范围选择器的值'
-  }
+    description: '日期范围选择器的值',
+  },
 }
 
 export const dateRangePickerProps = {
@@ -20,7 +21,7 @@ export const dateRangePickerProps = {
         return false
       }
       return true
-    }
+    },
   },
   endKey: {
     type: String,
@@ -32,12 +33,12 @@ export const dateRangePickerProps = {
         return false
       }
       return true
-    }
+    },
   },
   valueFormat: {
     type: String,
     default: 'YYYY-MM-DD',
-    description: '日期输出格式'
+    description: '日期输出格式',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -46,43 +47,43 @@ export const dateRangePickerProps = {
     validator(value: LewSize) {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewDateRangePicker] size 必须是 'small'、'medium' 或 'large'`
+          `[LewDateRangePicker] size 必须是 'small'、'medium' 或 'large'`,
         )
         return false
       }
       return true
-    }
+    },
   },
   width: {
     type: [String, Number],
     default: '300px',
-    description: '选择器宽度，支持数字（单位：像素）或带单位的字符串'
+    description: '选择器宽度，支持数字（单位：像素）或带单位的字符串',
   },
   placeholderStart: {
     type: String,
     defaultLocale: true,
-    description: '开始日期占位文本'
+    description: '开始日期占位文本',
   },
   placeholderEnd: {
     type: String,
     defaultLocale: true,
-    description: '结束日期占位文本'
+    description: '结束日期占位文本',
   },
   clearable: {
     type: Boolean,
     default: true,
-    description: '是否可清除'
+    description: '是否可清除',
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读'
+    description: '是否只读',
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用'
-  }
+    description: '是否禁用',
+  },
 }
 
 export const dateRangeProps = {
@@ -96,7 +97,7 @@ export const dateRangeProps = {
         return false
       }
       return true
-    }
+    },
   },
   endKey: {
     type: String,
@@ -108,13 +109,13 @@ export const dateRangeProps = {
         return false
       }
       return true
-    }
+    },
   },
   valueFormat: {
     type: String,
     default: 'YYYY-MM-DD',
-    description: '日期格式化字符串'
-  }
+    description: '日期格式化字符串',
+  },
 }
 
 export type DateRangePickerProps = ExtractPropTypes<typeof dateRangePickerProps>

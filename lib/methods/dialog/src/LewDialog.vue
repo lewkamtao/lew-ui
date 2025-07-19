@@ -1,68 +1,68 @@
 <script lang="ts" setup name="dialog">
-import { ref, watch, onMounted, nextTick } from "vue";
-import { LewButton, LewFlex } from "lew-ui";
-import { useMagicKeys } from "@vueuse/core";
-import { dialogProps } from "./props";
-import Icon from "lew-ui/utils/Icon.vue";
-import { useDOMCreate } from "lew-ui/hooks";
-import type { LewColor } from "lew-ui";
-import { locale } from "lew-ui";
+import type { LewColor } from 'lew-ui'
+import { useMagicKeys } from '@vueuse/core'
+import { LewButton, LewFlex, locale } from 'lew-ui'
+import { useDOMCreate } from 'lew-ui/hooks'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
+import { dialogProps } from './props'
 
-const { Escape } = useMagicKeys();
-useDOMCreate("lew-dialog");
+const props = defineProps(dialogProps)
+const emit = defineEmits(['close'])
+const { Escape } = useMagicKeys()
+useDOMCreate('lew-dialog')
 
-const props = defineProps(dialogProps);
-const emit = defineEmits(["close"]);
+const visible = ref(false)
+const okLoading = ref(false)
+const cancelLoading = ref(false)
+const okRef1 = ref()
+const okRef2 = ref()
 
-const visible = ref(false);
-const okLoading = ref(false);
-const cancelLoading = ref(false);
-const okRef1 = ref();
-const okRef2 = ref();
-
-const maskClick = () => {
+function maskClick() {
   if (props.closeOnClickOverlay) {
-    visible.value = false;
+    visible.value = false
   }
-};
+}
 
 onMounted(() => {
-  visible.value = true;
+  visible.value = true
   nextTick(() => {
-    if (okRef1.value) okRef1.value.focus();
-    if (okRef2.value) okRef2.value.focus();
-  });
-});
+    if (okRef1.value)
+      okRef1.value.focus()
+    if (okRef2.value)
+      okRef2.value.focus()
+  })
+})
 
 watch(visible, (newVal) => {
   if (!newVal) {
-    setTimeout(() => emit("close"), 500);
+    setTimeout(() => emit('close'), 500)
   }
-});
+})
 
-const handleAction = async (action: "ok" | "cancel") => {
-  const actionFunction = props[action];
-  const loadingRef = action === "ok" ? okLoading : cancelLoading;
+async function handleAction(action: 'ok' | 'cancel') {
+  const actionFunction = props[action]
+  const loadingRef = action === 'ok' ? okLoading : cancelLoading
 
-  if (typeof actionFunction === "function") {
-    loadingRef.value = true;
-    const result = await actionFunction();
+  if (typeof actionFunction === 'function') {
+    loadingRef.value = true
+    const result = await actionFunction()
     if (result !== false) {
-      visible.value = false;
+      visible.value = false
     }
-    loadingRef.value = false;
+    loadingRef.value = false
   }
-};
+}
 
-const ok = () => handleAction("ok");
-const cancel = () => handleAction("cancel");
+const ok = () => handleAction('ok')
+const cancel = () => handleAction('cancel')
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (v && visible.value) {
-      visible.value = false;
+      visible.value = false
     }
-  });
+  })
 }
 </script>
 
@@ -79,13 +79,13 @@ if (props.closeByEsc) {
       </transition>
       <transition name="lew-dialog">
         <div v-if="visible" class="lew-dialog" @click="maskClick">
-          <lew-flex
+          <LewFlex
             direction="y"
             gap="20"
             class="lew-dialog-box lew-dialog-box-normal"
             @click.stop
           >
-            <lew-flex y="start">
+            <LewFlex y="start">
               <div class="left">
                 <Icon :type :size="24" />
               </div>
@@ -97,9 +97,9 @@ if (props.closeByEsc) {
                   <slot name="content" />
                 </main>
               </div>
-            </lew-flex>
+            </LewFlex>
             <footer>
-              <lew-button
+              <LewButton
                 :text="cancelText || locale.t('dialog.cancelText')"
                 color="gray"
                 type="light"
@@ -107,7 +107,7 @@ if (props.closeByEsc) {
                 :loading="cancelLoading"
                 @click.stop="cancel"
               />
-              <lew-button
+              <LewButton
                 ref="okRef1"
                 :text="okText || locale.t('dialog.okText')"
                 type="fill"
@@ -117,7 +117,7 @@ if (props.closeByEsc) {
                 @click.stop="ok"
               />
             </footer>
-          </lew-flex>
+          </LewFlex>
         </div>
       </transition>
     </div>
@@ -206,7 +206,8 @@ if (props.closeByEsc) {
 
 .lew-dialog-enter-active,
 .lew-dialog-leave-active {
-  transition: opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
+  transition:
+    opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
     transform 0.4s cubic-bezier(0.3, 1.3, 0.3, 1);
   transform-origin: var(--lew-dialog-transform-origin);
 }
