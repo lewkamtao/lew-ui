@@ -37,8 +37,7 @@
     "lint:fix": "eslint --fix",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "typecheck": "vue-tsc --noEmit",
-    "format": "prettier --cache --write ."
+    "typecheck": "vue-tsc --noEmit"
   },
   "peerDependencies": {
     "vue": "^3.5.3"
@@ -70,7 +69,6 @@
     "bumpp": "^10.2.0",
     "eslint": "^9.30.1",
     "happy-dom": "^18.0.1",
-    "prettier": "^3.6.2",
     "sass": "^1.89.2",
     "terser": "^5.31.6",
     "tsdown": "^0.12.9",
@@ -86,6 +84,5 @@
     "vitest": "^3.2.4",
     "vue": "^3.5.17",
     "vue-tsc": "^3.0.1"
-  },
-  "prettier": "@sxzz/prettier-config"
+  }
 }

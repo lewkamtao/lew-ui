@@ -112,7 +112,7 @@ export const formProps = {
     hidden: true,
   },
   formMethods: {
-    type: Object as PropType<Record<string, Function>>,
+    type: Object as PropType<Record<string, (...args: any[]) => any>>,
     default: () => ({}),
     description: '表单项的方法集合，包含用于操作表单的函数',
   },

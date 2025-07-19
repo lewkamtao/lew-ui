@@ -83,6 +83,9 @@ function compareObjects(base: any, target: any, path = ''): string[] {
   return differences
 }
 
+// 当前选择的语言，需要在使用之前声明
+const currentLang = ref<Language>('en')
+
 // 执行比较并生成结果
 function generateDiff() {
   diffResults.value = {}
@@ -108,9 +111,10 @@ function changeSource(source: ConfigSource) {
 
 // 初始化时生成差异
 generateDiff()
-
-// 当前选择的语言，初始化为第一个语言
-const currentLang = ref<Language>(languages.value[0] || 'en')
+// 初始化当前语言为第一个语言
+if (languages.value.length > 0) {
+  currentLang.value = languages.value[0]
+}
 
 // 切换语言
 function changeLang(lang: Language) {
@@ -190,7 +194,8 @@ async function copyAllDifferences() {
           <div
             v-for="source in ['docs', 'component']"
             :key="source"
-            class="source-tab" :class="[{ active: currentSource === source }]"
+            class="source-tab"
+            :class="[{ active: currentSource === source }]"
             tabindex="0"
             role="button"
             :aria-pressed="currentSource === source"
@@ -198,7 +203,7 @@ async function copyAllDifferences() {
             @keydown.enter="changeSource(source as ConfigSource)"
             @keydown.space.prevent="changeSource(source as ConfigSource)"
           >
-            {{ source === 'docs' ? '文档配置' : '组件配置' }}
+            {{ source === "docs" ? "文档配置" : "组件配置" }}
           </div>
         </div>
       </div>
@@ -208,7 +213,8 @@ async function copyAllDifferences() {
           <div
             v-for="lang in languages"
             :key="lang"
-            class="lang-tab" :class="[{ active: currentLang === lang }]"
+            class="lang-tab"
+            :class="[{ active: currentLang === lang }]"
             tabindex="0"
             role="button"
             :aria-pressed="currentLang === lang"
@@ -218,10 +224,9 @@ async function copyAllDifferences() {
           >
             {{ lang }}
             <span
-              v-if="diffResults[lang]?.length !== undefined" class="badge"
-              :class="[
-                { 'badge-success': !diffResults[lang]?.length },
-              ]"
+              v-if="diffResults[lang]?.length !== undefined"
+              class="badge"
+              :class="[{ 'badge-success': !diffResults[lang]?.length }]"
             >
               {{ diffResults[lang]?.length }}
             </span>
@@ -256,9 +261,7 @@ async function copyAllDifferences() {
             stroke-linejoin="round"
           >
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-            <path
-              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-            />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
           </svg>
           复制报告
         </button>
@@ -268,7 +271,8 @@ async function copyAllDifferences() {
         <div
           v-for="(diff, index) in diffResults[currentLang]"
           :key="index"
-          class="diff-item" :class="[getDiffItemClass(diff)]"
+          class="diff-item"
+          :class="[getDiffItemClass(diff)]"
         >
           {{ diff }}
         </div>
@@ -283,9 +287,8 @@ async function copyAllDifferences() {
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Helvetica Neue", Arial, sans-serif;
 
   .lang-header {
     margin-bottom: 36px;
@@ -543,8 +546,8 @@ async function copyAllDifferences() {
       .diff-item {
         padding: 16px 20px;
         border-bottom: var(--lew-border-1);
-        font-family:
-          'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-family: "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
         font-size: 13px;
         line-height: 1.6;
         white-space: pre-wrap;

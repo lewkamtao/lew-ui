@@ -9,6 +9,8 @@ const props = defineProps(textTrimProps)
 
 const lewTextTrimRef = ref()
 const lewTextTrimPopRef = ref()
+const displayText = ref('')
+const isEllipsisByTextTrim = ref(false)
 
 let instance: any
 
@@ -111,9 +113,6 @@ function destroyTippy() {
   instance && instance.destroy()
   instance = null
 }
-
-const displayText = ref('')
-const isEllipsisByTextTrim = ref(false)
 
 // 计算显示文本
 function calculateDisplayText() {

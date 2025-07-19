@@ -274,8 +274,8 @@ defineExpose({ show, hide })
               <template v-if="$slots.empty" #empty>
                 <slot name="empty" />
               </template>
-              <template v-if="$slots.item" #item="{ props }">
-                <slot name="item" :props="props" />
+              <template v-if="$slots.item" #item="{ props: itemProps }">
+                <slot name="item" :props="itemProps" />
               </template>
             </LewTree>
           </div>

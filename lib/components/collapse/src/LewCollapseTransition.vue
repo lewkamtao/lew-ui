@@ -1,5 +1,6 @@
 <script>
 export default {
+
   props: {
     name: {
       type: String,
@@ -25,6 +26,20 @@ export default {
       default: 'ease-in-out',
     },
   },
+  emits: [
+    'beforeAppear',
+    'appear',
+    'afterAppear',
+    'appearCancelled',
+    'beforeEnter',
+    'enter',
+    'afterEnter',
+    'enterCancelled',
+    'beforeLeave',
+    'leave',
+    'afterLeave',
+    'leaveCancelled',
+  ],
 
   data() {
     return {
@@ -55,7 +70,7 @@ export default {
   methods: {
     beforeAppear(el) {
       // Emit the event to the parent
-      this.$emit('before-appear', el)
+      this.$emit('beforeAppear', el)
     },
 
     appear(el) {
@@ -65,17 +80,17 @@ export default {
 
     afterAppear(el) {
       // Emit the event to the parent
-      this.$emit('after-appear', el)
+      this.$emit('afterAppear', el)
     },
 
     appearCancelled(el) {
       // Emit the event to the parent
-      this.$emit('appear-cancelled', el)
+      this.$emit('appearCancelled', el)
     },
 
     beforeEnter(el) {
       // Emit the event to the parent
-      this.$emit('before-enter', el)
+      this.$emit('beforeEnter', el)
     },
 
     enter(el, done) {
@@ -112,17 +127,17 @@ export default {
       this.clearCachedDimensions()
 
       // Emit the event to the parent
-      this.$emit('after-enter', el)
+      this.$emit('afterEnter', el)
     },
 
     enterCancelled(el) {
       // Emit the event to the parent
-      this.$emit('enter-cancelled', el)
+      this.$emit('enterCancelled', el)
     },
 
     beforeLeave(el) {
       // Emit the event to the parent
-      this.$emit('before-leave', el)
+      this.$emit('beforeLeave', el)
     },
 
     leave(el, done) {
@@ -160,12 +175,12 @@ export default {
       this.clearCachedDimensions()
 
       // Emit the event to the parent
-      this.$emit('after-leave', el)
+      this.$emit('afterLeave', el)
     },
 
     leaveCancelled(el) {
       // Emit the event to the parent
-      this.$emit('leave-cancelled', el)
+      this.$emit('leaveCancelled', el)
     },
 
     detectAndCacheDimensions(el) {

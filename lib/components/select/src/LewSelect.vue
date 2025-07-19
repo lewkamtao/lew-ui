@@ -17,6 +17,21 @@ const lewSelectRef = ref()
 const inputRef = ref()
 const lewPopoverRef = ref()
 const formMethods: any = inject('formMethods', {})
+const virtListRef = ref()
+
+// 需要提前定义 state，以便在其他函数和计算属性中使用
+const state = reactive({
+  visible: false,
+  loading: false,
+  initLoading: true,
+  sourceOptions: props.options,
+  options: flattenOptions(props.options),
+  hideBySelect: false, // 记录是否通过选择隐藏
+  keyword: props.defaultValue || (selectValue.value as any),
+  keywordBackup: props.defaultValue as any,
+  autoWidth: 0, // 新增自动宽度
+  searchCache: new Map<string, SelectOptions[]>(), // 新增搜索结果缓存
+})
 
 const _searchMethod = computed(() => {
   if (isFunction(props.searchMethod)) {
@@ -59,6 +74,13 @@ async function init() {
 }
 
 watch(
+  () => props.defaultValue,
+  () => {
+    state.keyword = props.defaultValue
+  },
+)
+
+watch(
   () => props.options,
   (newOptions) => {
     if (!_initOptionsMethod.value) {
@@ -75,28 +97,6 @@ watch(
   },
   {
     deep: true,
-  },
-)
-
-const virtListRef = ref()
-
-const state = reactive({
-  visible: false,
-  loading: false,
-  initLoading: true,
-  sourceOptions: props.options,
-  options: flattenOptions(props.options),
-  hideBySelect: false, // 记录是否通过选择隐藏
-  keyword: props.defaultValue || (selectValue.value as any),
-  keywordBackup: props.defaultValue as any,
-  autoWidth: 0, // 新增自动宽度
-  searchCache: new Map<string, SelectOptions[]>(), // 新增搜索结果缓存
-})
-
-watch(
-  () => props.defaultValue,
-  () => {
-    state.keyword = props.defaultValue
   },
 )
 
@@ -144,7 +144,7 @@ function calculateAutoWidth() {
   if (!textContent || textContent.trim() === '') {
     textContent = props.placeholder || locale.t('select.placeholder')
   }
-  tempDiv.innerText = textContent
+  tempDiv.textContent = textContent
   document.body.appendChild(tempDiv)
 
   // 文本宽度加上边距和图标空间

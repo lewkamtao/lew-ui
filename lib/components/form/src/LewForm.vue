@@ -18,6 +18,7 @@ const formLabelRef = ref()
 const autoLabelWidth = ref(0)
 
 const componentOptions: any[] = cloneDeep(props.options) || []
+const formItemRefMap = ref<Record<string, any>>({})
 
 const getFormClassNames = computed(() => {
   const { columns } = cloneDeep(props)
@@ -71,8 +72,6 @@ function resetError() {
     }
   })
 }
-
-const formItemRefMap = ref<Record<string, any>>({})
 
 function validate() {
   return new Promise<boolean>((resolve) => {

@@ -78,57 +78,11 @@ const modelValue: Ref<any> = defineModel({
   default: undefined,
 })
 
-watch(
-  () => modelValue.value,
-  () => {
-    if (!ignoreValidate.value) {
-      validateField()
-    }
-    else {
-      ignoreValidate.value = false
-    }
-  },
-  {
-    deep: true,
-  },
-)
-
 const ignoreValidate = ref(false)
+const errMsg = ref('')
 
 function setIgnoreValidate(value: boolean) {
   ignoreValidate.value = value
-}
-
-const validateField = debounce(() => {
-  validate()
-}, 120)
-
-const errMsg = ref('')
-
-function validate() {
-  if (!curRequired.value && !modelValue.value) {
-    errMsg.value = ''
-    return
-  }
-  if (curRule.value) {
-    curRule.value
-      .validate(modelValue.value)
-      .then(() => {
-        errMsg.value = ''
-      })
-      .catch((error: any) => {
-        errMsg.value = error.message
-      })
-  }
-}
-
-function setError(message: any) {
-  errMsg.value = message
-}
-
-function change() {
-  const { field, label } = props
-  emit('change', cloneDeep({ value: modelValue.value, field, label }))
 }
 
 function getRequiredRuleByMap(as: string) {
@@ -182,6 +136,51 @@ const curRequired = computed(() => {
     return _rule?.spec?.optional === false
   return required
 })
+
+function validate() {
+  if (!curRequired.value && !modelValue.value) {
+    errMsg.value = ''
+    return
+  }
+  if (curRule.value) {
+    curRule.value
+      .validate(modelValue.value)
+      .then(() => {
+        errMsg.value = ''
+      })
+      .catch((error: any) => {
+        errMsg.value = error.message
+      })
+  }
+}
+
+const validateField = debounce(() => {
+  validate()
+}, 120)
+
+function setError(message: any) {
+  errMsg.value = message
+}
+
+function change() {
+  const { field, label } = props
+  emit('change', cloneDeep({ value: modelValue.value, field, label }))
+}
+
+watch(
+  () => modelValue.value,
+  () => {
+    if (!ignoreValidate.value) {
+      validateField()
+    }
+    else {
+      ignoreValidate.value = false
+    }
+  },
+  {
+    deep: true,
+  },
+)
 
 const getFormItemMainStyle = computed(() => {
   if (!formItemRef.value)
