@@ -37,7 +37,7 @@ const displayValue = computed(() => {
   const { value, max } = props
   const numberValue = Number(value)
   const maxValue = Number(max)
-  if (!isNaN(numberValue) && !isNaN(maxValue) && numberValue > maxValue) {
+  if (!Number.isNaN(numberValue) && !Number.isNaN(maxValue) && numberValue > maxValue) {
     return `${maxValue}+`
   }
   return value

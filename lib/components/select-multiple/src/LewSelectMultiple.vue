@@ -132,7 +132,6 @@ function deleteTag({ value }: { value: any }) {
   if (valueIndex > -1) {
     const item = selectValue.value[valueIndex]
     selectValue.value.splice(valueIndex, 1)
-    console.log(selectValue.value)
     emit('delete', { item, value: selectValue.value })
 
     if (selectValue.value.length === 0) {
@@ -249,7 +248,6 @@ function showHandle() {
     .filter((index: number) => index > -1)
 
   const minIndex = Math.min(...indexes)
-  console.log(minIndex)
   poll({
     callback: () => {
       if (minIndex > 0 && minIndex !== Infinity) {

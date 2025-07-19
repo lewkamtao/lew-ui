@@ -20,7 +20,7 @@ const emit = defineEmits(['change'])
       >
         {{ item.label }}
       </span>
-      <div v-if="index != options.length - 1" class="lew-breadcrumb-parting">
+      <div v-if="index !== options.length - 1" class="lew-breadcrumb-parting">
         <svg
           v-if="separator === 'sprit'"
           viewBox="0 0 48 48"

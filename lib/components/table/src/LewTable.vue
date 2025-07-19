@@ -284,7 +284,9 @@ function getLeafColumns(columns: any[]) {
 
 const hasPartialSelection = computed(() => {
   const selectedRowsMap = state.selectedRowsMap
-  return state.dataSource.some((row: any) => selectedRowsMap[row[props.rowKey]])
+  return state.dataSource.some(
+    (row: any) => selectedRowsMap[row[props.rowKey]],
+  )
 })
 
 function updateAllCheckedState() {
@@ -688,7 +690,11 @@ function renderCustomCell({
   }
   catch (e) {
     console.error('Error in customRender:', e)
-    return h('span', {}, { default: () => showTextAndEmpty(row[column.field]) })
+    return h(
+      'span',
+      {},
+      { default: () => showTextAndEmpty(row[column.field]) },
+    )
   }
 }
 
@@ -702,6 +708,8 @@ function initDragState() {
   state.showTooltip = false
   state.isDragging = false
 }
+
+const throttledTooltipUpdate = throttle(updateTooltipPosition, 16)
 
 function dragStart(event: DragEvent, row: any, index: number) {
   if (!props.sortable)
@@ -746,8 +754,6 @@ function updateTooltipPosition(event: MouseEvent) {
   })
 }
 
-const throttledTooltipUpdate = throttle(updateTooltipPosition, 16)
-
 function dragEnd() {
   const dragDistance = Math.abs(state.initialDragY - state.lastMouseY)
   const minDragDistance = 10
@@ -765,7 +771,9 @@ function dragEnd() {
       row => row._lew_table_tr_id === state.targetRowId,
     )
     if (dragIndex !== -1 && targetIndex !== -1 && dragIndex !== targetIndex) {
-      const targetPosition = state.isAboveTarget ? targetIndex : targetIndex + 1
+      const targetPosition = state.isAboveTarget
+        ? targetIndex
+        : targetIndex + 1
 
       let actualTargetPosition = targetPosition
       if (dragIndex < targetPosition) {
@@ -1594,7 +1602,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 }
 .lew-table-tr-dragging::after {
   position: absolute;
-  content: '';
+  content: "";
   left: 0;
   top: 0;
   width: 100%;
@@ -1666,7 +1674,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 .lew-table-checkbox-wrapper::after {
   position: absolute;
   z-index: 1;
-  content: '';
+  content: "";
   top: 0px;
   left: 0px;
   width: 100%;

@@ -13,13 +13,12 @@ defineProps({
 })
 const route = useRoute()
 const router = useRouter()
+const active = ref(route.path)
 
 function toPath(item: MenuOptions) {
   router.push(item.value as string)
   active.value = item.value as string
 }
-
-let active = ref(route.path)
 </script>
 
 <template>

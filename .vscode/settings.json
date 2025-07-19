@@ -46,5 +46,6 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+  "nuxt.isNuxtApp": false
 }

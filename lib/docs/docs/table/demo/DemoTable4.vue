@@ -119,31 +119,31 @@ const columns = [
 function formatPrice(price: number) {
   return `$${price.toFixed(2)}`
 }
-
+// 按照第一个“Edit”的英文提示格式，完善后面几个操作的提示，使其风格一致
 function options(row: any, column: any) {
   return [
     {
       label: 'Edit',
       onClick: () => {
-        LewMessage.success('Edit')
+        LewMessage.success(`Edit ${column.title} ${row.name}`)
       },
     },
     {
       label: 'Delete',
       onClick: () => {
-        LewMessage.success('Delete')
+        LewMessage.success(`Delete ${column.title} ${row.name}`)
       },
     },
     {
       label: 'View',
       onClick: () => {
-        LewMessage.success('View')
+        LewMessage.success(`View ${column.title} ${row.name}`)
       },
     },
     {
       label: 'Detail',
       onClick: () => {
-        LewMessage.success('Detail')
+        LewMessage.success(`Detail ${column.title} ${row.name}`)
       },
     },
   ]

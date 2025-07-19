@@ -26,7 +26,7 @@ const recomputeTrigger = ref(0)
 // 计算当前 drawer 是否在顶层
 const isTopDrawer = computed(() => {
   // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
-  recomputeTrigger.value
+  void recomputeTrigger.value
 
   if (!visible.value) {
     return false

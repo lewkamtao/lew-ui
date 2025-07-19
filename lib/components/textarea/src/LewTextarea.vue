@@ -95,7 +95,7 @@ const getTextareaStyle: any = computed(() => {
   const obj = {
     resize: resize as string,
     minWidth: any2px(minWidth || width),
-    minHeight: any2px(minHeight || (height || heightMap[size])),
+    minHeight: any2px(minHeight || height || heightMap[size]),
     maxWidth: any2px(maxWidth),
     maxHeight: any2px(maxHeight),
     width: any2px(width),
@@ -108,10 +108,14 @@ const getTextareaStyle: any = computed(() => {
   return obj
 })
 
+const ok = useDebounceFn(() => {
+  emit('ok', modelValue.value)
+}, 250)
+
 if (props.okByEnter) {
   watchEffect(() => {
     if (shift.value && enter.value) {
-
+      // Do nothing when shift+enter is pressed
     }
     else if (enter.value && state.isFocus) {
       lewTextareaRef.value?.blur()
@@ -119,10 +123,6 @@ if (props.okByEnter) {
     }
   })
 }
-
-const ok = useDebounceFn(() => {
-  emit('ok', modelValue.value)
-}, 250)
 
 defineExpose({ toFocus })
 </script>
@@ -151,7 +151,7 @@ defineExpose({ toFocus })
     />
 
     <div v-if="modelValue && showCount" class="lew-textarea-count">
-      {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : '' }}
+      {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : "" }}
     </div>
     <transition name="lew-form-icon-ani">
       <Icon
@@ -181,10 +181,7 @@ defineExpose({ toFocus })
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   background-color: var(--lew-form-bgcolor);
   box-shadow: var(--lew-form-box-shadow);
-  transition:
-    all var(--lew-form-transition-ease),
-    width 0s,
-    height 0s;
+  transition: all var(--lew-form-transition-ease), width 0s, height 0s;
 
   .lew-textarea {
     width: 100%;
@@ -277,7 +274,7 @@ defineExpose({ toFocus })
     width: 10px;
     height: 10px;
     border-radius: 4px;
-    content: '';
+    content: "";
     z-index: 9;
     opacity: 1;
     display: none;

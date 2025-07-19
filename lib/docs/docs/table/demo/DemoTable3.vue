@@ -162,7 +162,7 @@ const columns = [
   },
 ]
 
-const options = computed(() => (row: any, column: any) => {
+const options = computed(() => (row: any) => {
   return [
     {
       label: 'Edit',
@@ -241,10 +241,10 @@ const dropdownIcon = h(MoreHorizontal, { size: 14 })
         </lew-tag>
       </lew-flex>
     </template>
-    <template #action="{ row, column }">
+    <template #action="{ row }">
       <lew-action-box
         :key="row.id"
-        :options="options(row, column)"
+        :options="options(row)"
         dropdown-threshold="2"
         dropdown-label=""
         :dropdown-icon="dropdownIcon"

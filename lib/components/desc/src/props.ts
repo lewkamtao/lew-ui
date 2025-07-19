@@ -61,7 +61,7 @@ export const descProps = {
     description: '描述项之间的间距，单位为像素',
     validator(value: string | number): boolean {
       const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
-      if (isNaN(numValue) || numValue < 0) {
+      if (Number.isNaN(numValue) || numValue < 0) {
         console.warn(`[LewFlex] gap 值必须是非负数或可转换为非负数的字符串。`)
         return false
       }
@@ -90,7 +90,7 @@ export const descProps = {
     description: '每行显示的描述项数量，范围为1到4',
     validator(value: number | string): boolean {
       const numValue = Number(value)
-      if (isNaN(numValue) || numValue < 1 || numValue > 4) {
+      if (Number.isNaN(numValue) || numValue < 1 || numValue > 4) {
         console.warn('[LewDesc] columns 必须是 1 到 4 之间的数字')
         return false
       }

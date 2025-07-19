@@ -3,7 +3,9 @@ import { getUniqueId } from 'lew-ui/utils'
 import { ref } from 'vue'
 import NotificationItem from './NotificationItem.vue'
 
-interface NotificationItem {
+let timer: NodeJS.Timeout | null = null
+
+interface NotificationItemType {
   id: string
   type: string
   title: string
@@ -13,16 +15,26 @@ interface NotificationItem {
   width: number | string
 }
 
-const notifications = ref<NotificationItem[]>([])
+const notifications = ref<NotificationItemType[]>([])
 const width = ref(0)
 
 function updateWidth() {
-  width.value = notifications.value.reduce((max, item: NotificationItem) => {
-    return Math.max(max, Number(item.width))
-  }, 0)
+  width.value = notifications.value.reduce(
+    (max, item: NotificationItemType) => {
+      return Math.max(max, Number(item.width))
+    },
+    0,
+  )
 }
 
-function add(type: string, title: string, content: string, duration: number, showProgress: boolean, width: number | string) {
+function add(
+  type: string,
+  title: string,
+  content: string,
+  duration: number,
+  showProgress: boolean,
+  width: number | string,
+) {
   const id = getUniqueId()
   document
     .getElementById('lew-notification')
@@ -49,8 +61,6 @@ function add(type: string, title: string, content: string, duration: number, sho
   updateWidth()
   return id
 }
-
-let timer: NodeJS.Timeout | null = null
 
 function handleClose(id: string) {
   const index = notifications.value.findIndex(item => item.id === id)

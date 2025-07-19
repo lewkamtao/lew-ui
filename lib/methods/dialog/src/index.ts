@@ -84,7 +84,7 @@ export const LewDialog = {
   ...dialogTypes,
 }
 
-export type LewDialog = {
+export type LewDialogType = {
   name: string
 } & Record<DialogType, (options: Options) => void>
 

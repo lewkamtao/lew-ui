@@ -14,7 +14,7 @@ const componentName: string = (route.name as string)
 
 const options = ref(
   Object.keys(API).map((key: any) => {
-    // @ts-ignore
+    // @ts-expect-error API key access
     return API[key]
   }),
 )

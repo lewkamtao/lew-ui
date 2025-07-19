@@ -66,13 +66,13 @@ const companies1 = [
       <template v-if="item.name === 'Apple'">
         <lew-collapse v-model="value" width="100%" style="padding-left: 20px">
           <lew-collapse-item
-            v-for="item in companies1"
-            :key="item.id"
-            :title="item.name"
-            :collapse-key="item.id"
+            v-for="subItem in companies1"
+            :key="subItem.id"
+            :title="subItem.name"
+            :collapse-key="subItem.id"
           >
             <div>
-              {{ item.description }}
+              {{ subItem.description }}
             </div>
           </lew-collapse-item>
         </lew-collapse>

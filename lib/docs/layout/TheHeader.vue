@@ -195,7 +195,7 @@ function changeLanguage(e: any) {
   const { value } = e
   setLocale(value)
   docsLocale.use(value)
-  localeOptions.value.map((item: any) => {
+  localeOptions.value.forEach((item: any) => {
     if (item.value === e.value) {
       item.checked = true
     }

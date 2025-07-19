@@ -1,10 +1,5 @@
 import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from './Icon.vue'
-/**
- * 获取颜色类型。
- * @param {string | undefined} type - 消息类型。
- * @returns {string} 对应的颜色类型。
- */
 
 export const iconColorType: Record<string, string> = {
   normal: 'gray',
@@ -22,12 +17,6 @@ export function getColorType(type: string): string {
   return typeMap[type as string] || type
 }
 
-/**
- * 将对象转换为类名字符串。
- * @param {string} prefix - 类名前缀。
- * @param {object} props - 要转换的属性对象。
- * @returns {string} 生成的类名字符串。
- */
 export function object2class(prefix: string, props: object) {
   let className = ''
   for (const [key, value] of Object.entries(props)) {
@@ -41,11 +30,6 @@ export function object2class(prefix: string, props: object) {
   return className
 }
 
-/**
- * 格式化数字，添加千位分隔符。
- * @param {number} num - 要格式化的数字。
- * @returns {string} 格式化后的字符串。
- */
 export function numFormat(num: number) {
   const str = num.toString().split('.')
   let integerPart = str[0]
@@ -57,11 +41,6 @@ export function numFormat(num: number) {
   return integerPart + decimalPart
 }
 
-/**
- * 将任意值转换为像素值。
- * @param {number | string | undefined} value - 要转换的值。
- * @returns {string} 转换后的像素值字符串。
- */
 export function any2px(value: number | string | undefined): string {
   if (!value) {
     return ''
@@ -95,18 +74,13 @@ export function any2px(value: number | string | undefined): string {
     return `${_value}`
   }
   const numValue = Number.parseFloat(_value)
-  if (!isNaN(numValue)) {
+  if (!Number.isNaN(numValue)) {
     return `${numValue}px`
   }
 
   return ''
 }
 
-/**
- * 针对上面的 any2px 写一个类型校验方法，确保输入的值是有效的 CSS 值，可以是百分比或者 calc 计算。
- * @param {number | string | undefined} value - 要校验的值。
- * @returns {boolean} 如果输入的值是有效的 CSS 值，则返回 true，否则返回 false。
- */
 export function isValidCssValue({
   name,
   field,
@@ -139,11 +113,6 @@ export function isValidCssValue({
   return false
 }
 
-/**
- * 生成6位不重复的唯一ID。
- * 使用 UUID v4 的前6位，确保唯一性。
- * @returns {string} 生成的6位唯一ID。
- */
 export function getUniqueId() {
   // 生成 UUID v4
   const uuid = crypto.randomUUID()
@@ -151,11 +120,6 @@ export function getUniqueId() {
   return uuid.substring(0, 8)
 }
 
-/**
- * 根据映射格式化表单数据。
- * @param {any} formMap - 表单映射。
- * @returns {object} 格式化后的表单数据。
- */
 export function formatFormByMap(formMap: any) {
   const form = {}
   Object.keys(formMap).forEach((key) => {
@@ -173,11 +137,7 @@ export function formatFormByMap(formMap: any) {
   })
   return form
 }
-/**
- * 将嵌套对象转换为以 a.b.c.d 形式表示的扁平对象。
- * @param {object} form - 嵌套的表单数据。
- * @returns {any} 转换后的扁平对象映射。
- */
+
 export function flattenNestedObject(form: any) {
   const formMap: Record<string, any> = {}
 
@@ -197,12 +157,7 @@ export function flattenNestedObject(form: any) {
   buildMap(form)
   return formMap
 }
-/**
- * 获取嵌套对象中指定字段的值。
- * @param {object} obj - 要查询的对象。
- * @param {string} field - 嵌套字段的字符串表示，使用 '.' 分隔。
- * @returns {any} 返回目标字段的值，如果字段不存在则返回 undefined。
- */
+
 export function retrieveNestedFieldValue(obj: any, field: string) {
   if (!field) {
     return undefined
@@ -220,12 +175,6 @@ export function retrieveNestedFieldValue(obj: any, field: string) {
   return value // 返回目标字段的值
 }
 
-/**
- * 格式化字节数。
- * @param {number} bytes - 字节数。
- * @param {number} [decimals] - 小数位数。
- * @returns {string} 格式化后的字符串。
- */
 export function formatBytes(bytes: number, decimals: number = 2) {
   if (bytes === 0)
     return '0 Bytes'
@@ -236,13 +185,6 @@ export function formatBytes(bytes: number, decimals: number = 2) {
   return `${Number.parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`
 }
 
-/**
- * 获取静态资源文件。
- * @param {object} options - 配置选项。
- * @param {string} options.name - 文件名。
- * @param {string} options.type - 资源类型。
- * @returns {string} 静态资源文件的URL。
- */
 export function getAssetsFile({
   name,
   type,
@@ -253,11 +195,6 @@ export function getAssetsFile({
   return new URL(`../assets/${type}/${name}`, import.meta.url).href
 }
 
-/**
- * 根据文件名获取对应的文件图标。
- * @param {string} [fileName] - 文件名。
- * @returns {string} 文件图标的URL。
- */
 export function getFileIcon(fileName: string = '') {
   // 根据文件名获取后缀名
   const suffix = fileName.split('.').pop()
@@ -339,8 +276,8 @@ export function getIconInnerHTML(e: any = {}) {
 }
 
 export function checkUrlIsImage(url: string = ''): boolean {
-  const imageRegex
-    = /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
+  // 移除正则中的捕获分组，避免未使用的分组警告
+  const imageRegex = /\.(?:jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
   return imageRegex.test(url)
 }
 
@@ -382,17 +319,6 @@ export function dragmove({
 
   const snapToGrid = (value: number, gridSize: number) => {
     return Math.round(value / gridSize) * gridSize
-  }
-
-  const onMouseDown = (e: MouseEvent) => {
-    isDragging = true
-    startX = e.clientX - el.offsetLeft
-    startY = e.clientY - el.offsetTop
-
-    parentRect = parentEl.getBoundingClientRect()
-    document.body.style.userSelect = 'none'
-    document.addEventListener('mousemove', onMouseMove)
-    document.addEventListener('mouseup', onMouseUp)
   }
 
   const onMouseMove = (e: MouseEvent) => {
@@ -447,19 +373,23 @@ export function dragmove({
     document.removeEventListener('mousemove', onMouseMove)
     document.removeEventListener('mouseup', onMouseUp)
   }
+  const onMouseDown = (e: MouseEvent) => {
+    isDragging = true
+    startX = e.clientX - el.offsetLeft
+    startY = e.clientY - el.offsetTop
 
+    parentRect = parentEl.getBoundingClientRect()
+    document.body.style.userSelect = 'none'
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+  }
   el.addEventListener('mousedown', onMouseDown)
 
   return () => {
     el.removeEventListener('mousedown', onMouseDown)
   }
 }
-/**
- * 将字符串转换为标准的 JSON 格式。
- * 兼容单引号、双引号以及无引号的字段名。
- * @param {string} str - 要转换的字符串。
- * @returns {any} 解析后的 JSON 对象。
- */
+
 export function parseToStandardJSON(str: string) {
   const modifiedStr = str
     .replace(/'/g, '"') // 替换单引号为双引号
@@ -467,13 +397,6 @@ export function parseToStandardJSON(str: string) {
   return JSON.parse(modifiedStr)
 }
 
-/**
- * 轮询方法
- * @param {number} interval - 轮询间隔时间(ms)
- * @param {number} timeout - 轮询总时长(ms)
- * @param {Function} callback - 轮询回调函数
- * @param {Function} vail - 判断依据 如果 true 停止轮询
- */
 export function poll({
   interval = 10,
   timeout = 1000 * 3,
@@ -552,11 +475,6 @@ export function findNodeByKey(key: string | number, tree: any) {
   return null
 }
 
-/**
- * 判断是否为 Vue 组件
- * @param {any} value - 要判断的值
- * @returns {boolean} 如果值是 Vue 组件则返回 true，否则返回 false
- */
 export function isVueComponent(value: any): boolean {
   try {
     // 检查是否为函数类型
@@ -598,11 +516,6 @@ export function isVueComponent(value: any): boolean {
   }
 }
 
-/**
- * 格式化组件
- * @param {any} value - 要格式化的值
- * @returns {any} 格式化后的值
- */
 export function formatComponent(value: any) {
   if (isFunction(value)) {
     return value()

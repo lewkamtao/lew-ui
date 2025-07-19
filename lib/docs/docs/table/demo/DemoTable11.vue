@@ -189,7 +189,6 @@ const sortValue = ref<any>({
 })
 
 function sortChange() {
-  console.log(sortValue.value)
   if (sortValue.value.price) {
     data.value = orderBy(data.value, 'price', sortValue.value.price)
   }

@@ -88,7 +88,7 @@ export const inputProps = {
     description: '输入框最大字符数',
     validator: (value: number | string) => {
       const num = Number(value)
-      if (isNaN(num) || num <= 0) {
+      if (Number.isNaN(num) || num <= 0) {
         console.warn('[LewInput] maxLength 属性必须是大于 0 的数字')
         return false
       }

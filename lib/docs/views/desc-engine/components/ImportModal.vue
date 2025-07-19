@@ -54,7 +54,7 @@ function ok() {
       )
     }
   }
-  catch (error) {
+  catch {
     LewMessage.warning(
       '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！',
     )
@@ -69,7 +69,7 @@ defineExpose({ open })
     width="500"
     :close-button-props="{
       request: () => {
-        visible = false
+        visible = false;
       },
     }"
     :ok-button-props="{

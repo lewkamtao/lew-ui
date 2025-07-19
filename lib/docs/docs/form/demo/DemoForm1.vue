@@ -7,6 +7,7 @@ const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: i + 1 }
 })
 
+const form = ref({} as any)
 const formRef = ref()
 
 function submit() {
@@ -363,8 +364,6 @@ const options = ref([
     },
   },
 ])
-
-const form = ref({} as any)
 
 function setForm() {
   // 设置表单

@@ -69,7 +69,7 @@ export const flexProps = {
     default: 10,
     validator(value: string | number): boolean {
       const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
-      if (isNaN(numValue) || numValue < 0) {
+      if (Number.isNaN(numValue) || numValue < 0) {
         console.warn(`[LewFlex] gap 值必须是非负数或可转换为非负数的字符串。`)
         return false
       }

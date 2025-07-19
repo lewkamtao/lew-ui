@@ -69,7 +69,7 @@ export const LewNotification = {
   error: createNotification('error'),
 }
 
-export interface LewNotification {
+export interface LewNotificationInterface {
   name: string
   warning: NotificationFn
   info: NotificationFn

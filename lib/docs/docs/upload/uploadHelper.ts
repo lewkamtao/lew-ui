@@ -6,7 +6,7 @@ export default ({
   setFileItem,
 }: {
   fileItem: UploadFileItem
-  setFileItem: Function
+  setFileItem: (item: UploadFileItem) => void
 }) => {
   const { key, file } = fileItem
   const formData = new FormData()

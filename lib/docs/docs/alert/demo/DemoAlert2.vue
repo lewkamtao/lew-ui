@@ -5,8 +5,7 @@
         Sign In Failed
       </template>
       <template #content>
-        Your sign-in attempt failed. Please check your username and
-        password.
+        Your sign-in attempt failed. Please check your username and password.
       </template>
     </lew-alert>
 
@@ -34,8 +33,7 @@
         New Feature Available
       </template>
       <template #content>
-        Google Photos is now available with enhanced photo management
-        features.
+        Google Photos is now available with enhanced photo management features.
       </template>
     </lew-alert>
 

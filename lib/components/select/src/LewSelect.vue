@@ -242,6 +242,7 @@ function findKeyword() {
       if (e) {
         return e.value === selectValue.value
       }
+      return false
     })
 
     if (option && JSON.stringify(option) !== '{}') {
@@ -535,9 +536,7 @@ defineExpose({
     box-shadow: var(--lew-form-box-shadow);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition:
-      all var(--lew-form-transition-ease),
-      width 0s ease;
+    transition: all var(--lew-form-transition-ease), width 0s ease;
 
     .lew-icon-select {
       position: absolute;

@@ -14,7 +14,7 @@ function safeNumber(value: unknown, defaultValue: number = 0): number {
     return defaultValue
   }
   const num = Number(value)
-  return isNaN(num) ? defaultValue : num
+  return Number.isNaN(num) ? defaultValue : num
 }
 
 // 安全的数组检查函数
@@ -23,34 +23,14 @@ function safeArray<T>(value: unknown, defaultValue: T[] = []): T[] {
 }
 
 // 安全的函数检查
-function safeFunction(value: unknown, defaultValue: (val: number) => string): ((val: number) => string) {
+function safeFunction(
+  value: unknown,
+  defaultValue: (val: number) => string,
+): (val: number) => string {
   return typeof value === 'function'
     ? (value as (val: number) => string)
     : defaultValue
 }
-
-const modelValue = defineModel<number>('modelValue', {
-  get(val) {
-    const defaultValue = getMin.value
-    const safeVal = safeNumber(val, defaultValue)
-    return Math.max(getMin.value, Math.min(getMax.value, safeVal))
-  },
-  set(val) {
-    const safeVal = safeNumber(val, getMin.value)
-    return Math.max(getMin.value, Math.min(getMax.value, safeVal))
-  },
-})
-
-const dotRef = ref<HTMLElement | null>(null)
-const trackRef = ref<HTMLElement | null>(null)
-const dotX = ref(0)
-
-// 创建节流函数，用于更新modelValue
-const throttledUpdateModelValue = throttle((newValue: number) => {
-  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
-  modelValue.value = clampedValue
-  emit('change', clampedValue)
-}, 16) // 约60fps的更新频率
 
 // 获取滑块轨道的最大值
 const getTrackMax = computed(() => {
@@ -80,6 +60,29 @@ const getMax = computed(() => {
 const getMin = computed(() => {
   return safeNumber(props.min, getTrackMin.value)
 })
+
+const modelValue = defineModel<number>('modelValue', {
+  get(val) {
+    const defaultValue = getMin.value
+    const safeVal = safeNumber(val, defaultValue)
+    return Math.max(getMin.value, Math.min(getMax.value, safeVal))
+  },
+  set(val) {
+    const safeVal = safeNumber(val, getMin.value)
+    return Math.max(getMin.value, Math.min(getMax.value, safeVal))
+  },
+})
+
+const dotRef = ref<HTMLElement | null>(null)
+const trackRef = ref<HTMLElement | null>(null)
+const dotX = ref(0)
+
+// 创建节流函数，用于更新modelValue
+const throttledUpdateModelValue = throttle((newValue: number) => {
+  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
+  modelValue.value = clampedValue
+  emit('change', clampedValue)
+}, 16) // 约60fps的更新频率
 
 // 获取 mark 位置，确保在 0-100 范围内
 function getMarkPosition(value: number | string): number {
@@ -185,7 +188,10 @@ function setDotByClick(value: number): void {
     return
 
   const safeValue = safeNumber(value, getMin.value)
-  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, safeValue))
+  const clampedValue = Math.max(
+    getMin.value,
+    Math.min(getMax.value, safeValue),
+  )
 
   if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
     throttledUpdateModelValue(clampedValue)
@@ -368,7 +374,7 @@ function isValidOption(option: any): boolean {
     && 'label' in option
     && 'value' in option
     && typeof option.label === 'string'
-    && !isNaN(safeNumber(option.value))
+    && !Number.isNaN(safeNumber(option.value))
   )
 }
 
@@ -519,10 +525,7 @@ const optionLabelStyles = computed(() => {
       />
 
       <div class="lew-slider-track-line">
-        <div
-          class="lew-slider-track-line-range"
-          :style="trackRangeStyles"
-        />
+        <div class="lew-slider-track-line-range" :style="trackRangeStyles" />
         <div
           class="lew-slider-track-line-selected"
           :style="selectedTrackStyles"
@@ -576,13 +579,12 @@ const optionLabelStyles = computed(() => {
     align-items: center;
     width: 100%;
     height: var(--lew-slider-height);
-    position: relative;
     cursor: pointer;
 
     .lew-slider-track-disabled-area {
       position: absolute;
       cursor: not-allowed;
-      top: 0px;
+      top: 0;
       height: 100%;
       z-index: 1;
     }
@@ -607,6 +609,7 @@ const optionLabelStyles = computed(() => {
       height: 100%;
       top: 0;
       background-color: var(--lew-form-bgcolor-hover);
+      border-radius: inherit;
     }
     .lew-slider-track-line-selected {
       position: absolute;
@@ -614,20 +617,19 @@ const optionLabelStyles = computed(() => {
       top: 0;
       left: 0;
       background-color: var(--lew-color-blue);
+      border-radius: inherit;
     }
     .lew-slider-track-step-mark {
       position: absolute;
       width: var(--lew-slider-track-step-mark-size);
       height: var(--lew-slider-track-step-mark-size);
       transform: translate(
-        calc(var(--lew-slider-track-step-mark-size) / 2 * -1),
+        calc(var(--lew-slider-track-step-mark-size) / -2),
         calc(
           (
-              var(--lew-slider-track-step-mark-size) - var(
-                  --lew-slider-track-line-height
-                )
-            ) /
-            2 * -1
+              var(--lew-slider-track-step-mark-size) -
+                var(--lew-slider-track-line-height)
+            ) / -2
         )
       );
       border-radius: 50%;
@@ -641,15 +643,22 @@ const optionLabelStyles = computed(() => {
     .lew-slider-track-step-label {
       position: absolute;
       text-align: center;
-      width: 0px;
+      width: 0;
       display: flex;
       justify-content: center;
       font-size: var(--lew-slider-track-step-label-size);
       user-select: none;
+
       .lew-slider-track-step-label-text {
         text-align: center;
         color: var(--lew-color-text-2);
         white-space: nowrap;
+        cursor: pointer;
+        transition: color var(--lew-form-transition-ease);
+
+        &:hover:not(.lew-slider-track-step-label-text-disabled) {
+          color: var(--lew-color-blue);
+        }
       }
       .lew-slider-track-step-label-text-disabled {
         cursor: not-allowed;
@@ -657,36 +666,39 @@ const optionLabelStyles = computed(() => {
       }
     }
   }
+
   .lew-slider-track-dot {
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%);
+    transform: translate(calc(var(--lew-slider-track-dot-size) / -2), -50%);
     width: var(--lew-slider-track-dot-size);
     height: var(--lew-slider-track-dot-size);
     border-radius: 50%;
-    border: var(--lew-color-blue) solid 2px;
+    border: 2px solid var(--lew-color-blue);
     background: var(--lew-bgcolor-0);
-    transition:
-      transform var(--lew-form-transition-ease),
+    transition: transform var(--lew-form-transition-ease),
       border-width 0.1s ease;
     cursor: pointer;
     box-sizing: border-box;
     z-index: 3;
-  }
-  .lew-slider-track-dot:hover {
-    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%)
-      scale(1.1);
-  }
-  .lew-slider-track-dot:active {
-    transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%)
-      scale(1.05);
-    border-width: 4px;
+
+    &:hover {
+      transform: translate(calc(var(--lew-slider-track-dot-size) / -2), -50%)
+        scale(1.1);
+    }
+
+    &:active {
+      transform: translate(calc(var(--lew-slider-track-dot-size) / -2), -50%)
+        scale(1.05);
+      border-width: 4px;
+    }
   }
 }
+
 .lew-slider::before,
 .lew-slider::after {
-  content: '';
+  content: "";
   width: calc(var(--lew-slider-track-dot-size) / 2);
   height: var(--lew-slider-track-line-height);
   background-color: var(--lew-form-bgcolor);

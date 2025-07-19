@@ -238,7 +238,7 @@ function sprs() {
 
     const particleCount = 50 * (timeLeft / duration)
 
-    // @ts-ignore
+    // @ts-expect-error confetti
     confetti({
       ...defaults,
       particleCount,
@@ -248,7 +248,7 @@ function sprs() {
       },
     })
 
-    // @ts-ignore
+    // @ts-expect-error confetti
     confetti({
       ...defaults,
       particleCount,
@@ -373,7 +373,6 @@ function notification(type: string) {
     },
   }
 
-  // @ts-ignore
   LewNotification[type](
     notifications[type as keyof typeof notifications] || {
       title: 'Apple Notification',
@@ -406,16 +405,16 @@ onUnmounted(() => {
     <LewBg />
     <div :style="{ left: logoLeft }" class="startbox">
       <div class="slogan">
-        {{ $t('home.sloganTitle') }}
+        {{ $t("home.sloganTitle") }}
       </div>
-      <p>{{ $t('home.slogan') }}</p>
+      <p>{{ $t("home.slogan") }}</p>
       <lew-flex x="start">
         <lew-button
           round
           style="margin-top: 20px"
           @click="router.push('/Image')"
         >
-          {{ $t('home.getStarted') }}
+          {{ $t("home.getStarted") }}
           <Icon type="chevron-right" />
         </lew-button>
       </lew-flex>
@@ -519,8 +518,7 @@ onUnmounted(() => {
               New Feature
             </template>
             <template #content>
-              Google Photos now offers enhanced photo management
-              features.
+              Google Photos now offers enhanced photo management features.
             </template>
           </lew-alert>
 

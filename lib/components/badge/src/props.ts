@@ -46,7 +46,7 @@ export const badgeProps = {
     description: '超过多少转化成加号',
     validator: (value: string | number) => {
       const numberValue = Number(value)
-      if (isNaN(numberValue)) {
+      if (Number.isNaN(numberValue)) {
         console.warn(
           '[LewBadge] max 属性必须是有效的数字或可转换为数字的字符串。',
         )

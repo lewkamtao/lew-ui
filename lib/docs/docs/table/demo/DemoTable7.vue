@@ -108,7 +108,6 @@ function sortChange() {
 <template>
   <lew-flex style="width: 100%" direction="y" x="start">
     <lew-table
-      ref="tableRef"
       v-model:sort-value="sortValue"
       :data-source="data"
       :columns="columns"

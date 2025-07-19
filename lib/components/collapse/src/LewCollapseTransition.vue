@@ -258,7 +258,7 @@ export default {
     forceRepaint(el) {
       // Force repaint to make sure the animation is triggered correctly.
       // Thanks: https://markus.oberlehner.net/blog/transition-to-height-auto-with-vue/
-      getComputedStyle(el)[this.dimension]
+      void getComputedStyle(el)[this.dimension]
     },
 
     getCssValue(el, style) {

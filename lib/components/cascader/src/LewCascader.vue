@@ -20,7 +20,11 @@ const props = defineProps(cascaderProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
 
 // 格式化 获取 path
-function formatTree(tree: CascaderOptions[], parentValuePaths: string[] = [], parentLabelPaths: string[] = []): CascaderOptions[] {
+function formatTree(
+  tree: CascaderOptions[],
+  parentValuePaths: string[] = [],
+  parentLabelPaths: string[] = [],
+): CascaderOptions[] {
   return tree.map((node: CascaderOptions) => {
     const { value, label, children = [] } = node
     const valuePaths: string[] = [...parentValuePaths, value]
@@ -350,11 +354,6 @@ const getCascaderClassName = computed(() => {
   })
 })
 
-const getBodyClassName = computed(() => {
-  const { size, disabled } = props
-  return object2class('lew-cascader-body', { size, disabled })
-})
-
 // 获取图标大小
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
@@ -378,9 +377,8 @@ function hideHandle() {
 
 // 获取宽度
 const getCascaderWidth = computed(() => {
-  const _hasChildOptions = state.optionsGroup.filter(
-    e => e && e.length > 0,
-  ).length
+  const _hasChildOptions = state.optionsGroup.filter(e => e && e.length > 0)
+    .length
   if (_hasChildOptions > 1) {
     return _hasChildOptions * 200
   }
@@ -484,7 +482,7 @@ defineExpose({ show, hide })
           class="lew-cascader-placeholder"
           :style="getValueStyle"
         >
-          {{ placeholder ? placeholder : locale.t('cascader.placeholder') }}
+          {{ placeholder ? placeholder : locale.t("cascader.placeholder") }}
         </div>
       </div>
     </template>
@@ -494,11 +492,11 @@ defineExpose({ show, hide })
         :style="{
           width: `${getCascaderWidth}px`,
         }"
-        :class="getBodyClassName"
       >
         <slot name="header" />
         <transition name="fade">
           <div
+            v-if="state.optionsGroup.length > 0"
             class="lew-cascader-options-box"
             :style="{ height: free ? 'calc(100% - 48px)' : '100%' }"
           >
@@ -506,158 +504,102 @@ defineExpose({ show, hide })
               v-for="(oItem, oIndex) in state.optionsGroup"
               :key="oIndex"
             >
-              <div v-if="state.initLoading" class="lew-icon-loading-box">
-                <Icon
-                  :size="getIconSize"
-                  :loading="state.initLoading"
-                  type="loading"
-                />
-              </div>
-
-              <transition v-else name="lew-form-icon-ani">
-                <Icon
-                  v-if="!(clearable && getLabel && getLabel.length > 0)"
-                  :size="getIconSize"
-                  type="chevron-down"
-                  class="icon-select"
-                />
-              </transition>
-
-              <transition name="lew-form-icon-ani">
-                <Icon
-                  v-if="
-                    clearable
-                      && getLabel
-                      && getLabel.length > 0
-                      && !readonly
-                  "
-                  :size="getIconSize"
-                  type="close"
-                  class="lew-form-icon-close"
-                  :class="{
-                    'lew-form-icon-close-focus': state.visible,
-                  }"
-                  @click.stop="clearHandle"
-                />
-              </transition>
-
-              <div
-                v-show="getLabel && getLabel.length > 0"
-                class="lew-cascader-value"
-                :style="getValueStyle"
+              <VirtList
+                :ref="(el: any) => (virtListRefs[oIndex] = el)"
+                class="lew-scrollbar-hover"
+                :list="oItem"
+                :min-size="38"
+                :buffer="5"
+                item-key="value"
+                :style="{
+                  padding: `6px 6px 2px 6px`,
+                  boxSizing: 'border-box',
+                }"
               >
-                <template v-if="showAllLevels">
-                  <LewTextTrim :text="getLabel.join(' / ')" />
+                <template #default="{ itemData: templateProps }">
+                  <div
+                    class="lew-cascader-item-padding"
+                    :style="{ height: `${38}px` }"
+                  >
+                    <div
+                      class="lew-cascader-item"
+                      :class="{
+                        'lew-cascader-item-disabled': templateProps.disabled,
+                        'lew-cascader-item-hover': state.activeLabels.includes(
+                          templateProps.label,
+                        ),
+                        'lew-cascader-item-active': free
+                          ? state.activeLabels.includes(templateProps.label)
+                            && state.tobeLabels.includes(templateProps.label)
+                          : state.activeLabels.includes(templateProps.label),
+                        'lew-cascader-item-tobe': state.tobeLabels.includes(
+                          templateProps.label,
+                        ),
+                        'lew-cascader-item-selected':
+                          getLabel
+                          && getLabel.includes(templateProps.label)
+                          && state.tobeLabels.includes(templateProps.label),
+                      }"
+                      @click="selectItem(templateProps, oIndex)"
+                    >
+                      <LewCheckbox
+                        v-if="free"
+                        class="lew-cascader-checkbox"
+                        :checked="
+                          state.tobeLabels.includes(templateProps.label)
+                        "
+                      />
+                      <LewTextTrim
+                        class="lew-cascader-label"
+                        :class="{
+                          'lew-cascader-label-free': free,
+                        }"
+                        :text="templateProps.label"
+                        :delay="[500, 0]"
+                      />
+                      <Icon
+                        v-if="templateProps.loading"
+                        :size="14"
+                        loading
+                        class="lew-cascader-loading-icon"
+                        type="loader"
+                      />
+                      <Icon
+                        v-else-if="!templateProps.isLeaf"
+                        :size="16"
+                        class="lew-cascader-icon"
+                        type="chevron-right"
+                      />
+                    </div>
+                  </div>
+
+                  <LewFlex
+                    v-if="free"
+                    x="end"
+                    gap="5"
+                    class="lew-cascader-control"
+                  >
+                    <LewButton
+                      color="gray"
+                      type="text"
+                      size="small"
+                      @click="close"
+                    >
+                      {{ locale.t("cascader.closeText") }}
+                    </LewButton>
+                    <LewButton
+                      :disabled="state.okLoading"
+                      size="small"
+                      @click="ok()"
+                    >
+                      {{ locale.t("cascader.okText") }}
+                    </LewButton>
+                  </LewFlex>
                 </template>
-                <template v-else-if="getLabel">
-                  <span>{{ getLabel[getLabel.length - 1] }}</span>
-                </template>
-              </div>
-              <div
-                v-show="!getLabel || (getLabel && getLabel.length === 0)"
-                class="lew-cascader-placeholder"
-                :style="getValueStyle"
-              >
-                {{
-                  placeholder
-                    ? placeholder
-                    : locale.t('cascader.placeholder')
-                }}
-              </div>
+              </VirtList>
             </template>
           </div>
         </transition>
-      </div>
-    </template>
-    <template #popover-body>
-      <div
-        class="lew-cascader-body"
-        :style="{
-          width: `${getCascaderWidth}px`,
-        }"
-      >
-        <VirtList
-          :key="oItem[0]?.parentValuePaths?.join('-') || 'root'"
-          :ref="(el: any) => (virtListRefs[oIndex] = el)"
-          class="lew-scrollbar-hover"
-          :list="oItem"
-          :min-size="38"
-          :buffer="5"
-          item-key="value"
-          :style="{
-            padding: `6px 6px 2px 6px`,
-            boxSizing: 'border-box',
-          }"
-        >
-          <template #default="{ itemData: templateProps }">
-            <div
-              class="lew-cascader-item-padding"
-              :style="{ height: `${38}px` }"
-            >
-              <div
-                class="lew-cascader-item"
-                :class="{
-                  'lew-cascader-item-disabled': templateProps.disabled,
-                  'lew-cascader-item-hover':
-                    state.activeLabels.includes(templateProps.label),
-                  'lew-cascader-item-active': free
-                    ? state.activeLabels.includes(
-                      templateProps.label,
-                    )
-                      && state.tobeLabels.includes(templateProps.label)
-                    : state.activeLabels.includes(templateProps.label),
-                  'lew-cascader-item-tobe': state.tobeLabels.includes(
-                    templateProps.label,
-                  ),
-                  'lew-cascader-item-selected':
-                    getLabel
-                    && getLabel.includes(templateProps.label)
-                    && state.tobeLabels.includes(templateProps.label),
-                }"
-                @click="selectItem(templateProps, oIndex)"
-              >
-                <LewCheckbox
-                  v-if="free"
-                  class="lew-cascader-checkbox"
-                  :checked="
-                    state.tobeLabels.includes(templateProps.label)
-                  "
-                />
-                <LewTextTrim
-                  class="lew-cascader-label"
-                  :class="{
-                    'lew-cascader-label-free': free,
-                  }"
-                  :text="templateProps.label"
-                  :delay="[500, 0]"
-                />
-                <Icon
-                  v-if="templateProps.loading"
-                  :size="14"
-                  loading
-                  class="lew-cascader-loading-icon"
-                  type="loader"
-                />
-                <Icon
-                  v-else-if="!templateProps.isLeaf"
-                  :size="16"
-                  class="lew-cascader-icon"
-                  type="chevron-right"
-                />
-              </div>
-            </div>
-            </transition>
-
-            <LewFlex v-if="free" x="end" gap="5" class="lew-cascader-control">
-              <LewButton color="gray" type="text" size="small" @click="close">
-                {{ locale.t('cascader.closeText') }}
-              </LewButton>
-              <LewButton :disabled="state.okLoading" size="small" @click="ok()">
-                {{ locale.t('cascader.okText') }}
-              </LewButton>
-            </LewFlex>
-          </template>
-        </VirtList>
       </div>
     </template>
   </LewPopover>
@@ -665,345 +607,345 @@ defineExpose({ show, hide })
 
 <style lang="scss" scoped>
 .lew-cascader-view {
+  width: 100%;
+
+  > div {
     width: 100%;
+  }
 
-    > div {
-        width: 100%;
+  .lew-cascader {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: var(--lew-border-radius-small);
+    background-color: var(--lew-form-bgcolor);
+    transition: all var(--lew-form-transition-ease);
+    box-sizing: border-box;
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    box-shadow: var(--lew-form-box-shadow);
+
+    .icon-select {
+      position: absolute;
+      top: 50%;
+      right: 9px;
+      transform: translateY(-50%) rotate(0deg);
+      transition: all var(--lew-form-transition-bezier);
+      padding: 2px;
     }
 
-    .lew-cascader {
-        position: relative;
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        cursor: pointer;
-        box-sizing: border-box;
-        border-radius: var(--lew-border-radius-small);
-        background-color: var(--lew-form-bgcolor);
-        transition: all var(--lew-form-transition-ease);
-        box-sizing: border-box;
-        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-        box-shadow: var(--lew-form-box-shadow);
-
-        .icon-select {
-            position: absolute;
-            top: 50%;
-            right: 9px;
-            transform: translateY(-50%) rotate(0deg);
-            transition: all var(--lew-form-transition-bezier);
-            padding: 2px;
-        }
-
-        .lew-icon-loading-box {
-            display: flex;
-            align-items: center;
-            position: absolute;
-            top: 50%;
-            right: 9px;
-            padding: 2px;
-            box-sizing: border-box;
-            transform: translateY(-50%);
-        }
-
-        .icon-select {
-            opacity: var(--lew-form-icon-opacity);
-        }
-
-        .icon-select-hide {
-            opacity: 0;
-            transform: translate(100%, -50%);
-        }
-
-        .lew-cascader-placeholder {
-            color: rgb(165, 165, 165);
-        }
-
-        .lew-cascader-placeholder,
-        .lew-cascader-value {
-            display: inline-flex;
-            align-items: center;
-            box-sizing: border-box;
-            transition: all var(--lew-form-transition-bezier);
-            gap: 2px;
-            overflow: hidden;
-            height: 100%;
-
-            span {
-                display: inline-flex;
-                gap: 2px;
-                align-items: center;
-                svg {
-                    opacity: 0.4;
-                }
-            }
-        }
+    .lew-icon-loading-box {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      right: 9px;
+      padding: 2px;
+      box-sizing: border-box;
+      transform: translateY(-50%);
     }
 
-    .lew-cascader-align-left {
-        text-align: left;
+    .icon-select {
+      opacity: var(--lew-form-icon-opacity);
     }
 
-    .lew-cascader-align-center {
-        text-align: center;
-    }
-
-    .lew-cascader-align-right {
-        text-align: right;
+    .icon-select-hide {
+      opacity: 0;
+      transform: translate(100%, -50%);
     }
 
     .lew-cascader-placeholder {
-        color: rgb(165, 165, 165);
+      color: rgb(165, 165, 165);
     }
 
-    .lew-cascader:hover {
-        background-color: var(--lew-form-bgcolor-hover);
-    }
+    .lew-cascader-placeholder,
+    .lew-cascader-value {
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      transition: all var(--lew-form-transition-bezier);
+      gap: 2px;
+      overflow: hidden;
+      height: 100%;
 
-    .lew-cascader:active {
-        background-color: var(--lew-form-bgcolor-active);
-    }
-
-    .lew-cascader-focus {
-        background-color: var(--lew-form-bgcolor-focus);
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-            solid;
-
-        .icon-select {
-            transform: translateY(-50%) rotate(180deg);
-            color: var(--lew-text-color-1);
+      span {
+        display: inline-flex;
+        gap: 2px;
+        align-items: center;
+        svg {
+          opacity: 0.4;
         }
+      }
+    }
+  }
 
-        .icon-select-hide {
-            opacity: 0;
-            transform: translate(100%, -50%) rotate(180deg);
-        }
+  .lew-cascader-align-left {
+    text-align: left;
+  }
+
+  .lew-cascader-align-center {
+    text-align: center;
+  }
+
+  .lew-cascader-align-right {
+    text-align: right;
+  }
+
+  .lew-cascader-placeholder {
+    color: rgb(165, 165, 165);
+  }
+
+  .lew-cascader:hover {
+    background-color: var(--lew-form-bgcolor-hover);
+  }
+
+  .lew-cascader:active {
+    background-color: var(--lew-form-bgcolor-active);
+  }
+
+  .lew-cascader-focus {
+    background-color: var(--lew-form-bgcolor-focus);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
+
+    .icon-select {
+      transform: translateY(-50%) rotate(180deg);
+      color: var(--lew-text-color-1);
     }
 
-    .lew-cascader-focus:hover {
-        background-color: var(--lew-form-bgcolor-focus);
+    .icon-select-hide {
+      opacity: 0;
+      transform: translate(100%, -50%) rotate(180deg);
     }
+  }
 
-    .lew-cascader-disabled {
-        opacity: var(--lew-disabled-opacity);
-        pointer-events: none;
+  .lew-cascader-focus:hover {
+    background-color: var(--lew-form-bgcolor-focus);
+  }
+
+  .lew-cascader-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none;
+  }
+
+  .lew-cascader-readonly {
+    pointer-events: none;
+
+    :deep(.lew-text-trim-wrapper) {
+      user-select: text;
+      cursor: text;
     }
+  }
 
-    .lew-cascader-readonly {
-        pointer-events: none;
+  .lew-cascader-disabled:hover {
+    background-color: var(--lew-form-bgcolor);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  }
 
-        :deep(.lew-text-trim-wrapper) {
-            user-select: text;
-            cursor: text;
-        }
+  .lew-cascader-init-loading {
+    pointer-events: none;
+    cursor: wait;
+
+    .lew-cascader-placeholder,
+    .lew-cascader-value {
+      cursor: wait;
     }
-
-    .lew-cascader-disabled:hover {
-        background-color: var(--lew-form-bgcolor);
-        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-    }
-
-    .lew-cascader-init-loading {
-        pointer-events: none;
-        cursor: wait;
-
-        .lew-cascader-placeholder,
-        .lew-cascader-value {
-            cursor: wait;
-        }
-    }
+  }
 }
 
 .lew-cascader-item:hover {
-    .lew-checkbox:deep(.lew-checkbox-icon-box) {
-        border: var(--lew-form-border-width)
-            var(--lew-checkbox-border-color-hover) solid;
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
+    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
+      solid;
 
-        background: var(--lew-form-bgcolor);
-    }
+    background: var(--lew-form-bgcolor);
+  }
 }
 
 .lew-cascader-item-tobe:hover {
-    .lew-checkbox:deep(.lew-checkbox-icon-box) {
-        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-        background: var(--lew-checkbox-color);
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
+    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+    background: var(--lew-checkbox-color);
 
-        .icon-checkbox {
-            transform: translate(-50%, -50%) scale(0.7);
-            opacity: 1;
-        }
+    .icon-checkbox {
+      transform: translate(-50%, -50%) scale(0.7);
+      opacity: 1;
     }
+  }
 }
 
 .lew-cascader-item-selected:hover {
-    .lew-checkbox:deep(.lew-checkbox-icon-box) {
-        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-        background: var(--lew-checkbox-color);
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
+    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+    background: var(--lew-checkbox-color);
 
-        .icon-checkbox {
-            transform: translate(-50%, -50%) scale(0.7);
-            opacity: 1;
-        }
+    .icon-checkbox {
+      transform: translate(-50%, -50%) scale(0.7);
+      opacity: 1;
     }
+  }
 }
 </style>
 
 <style lang="scss">
 .lew-cascader-body {
-    width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 200px;
+  height: 320px;
+  overflow: hidden;
+  transition: all var(--lew-form-transition-bezier);
+  user-select: none;
+
+  .not-found {
+    opacity: 0.4;
+  }
+
+  .result-count {
+    padding-left: 8px;
+    margin: 5px 0px;
+    opacity: 0.4;
+    font-size: 13px;
+  }
+
+  .lew-cascader-options-box {
+    position: relative;
+    display: flex;
     box-sizing: border-box;
-    min-width: 200px;
-    height: 320px;
-    overflow: hidden;
-    transition: all var(--lew-form-transition-bezier);
-    user-select: none;
 
-    .not-found {
-        opacity: 0.4;
+    .lew-cascader-item-wrapper {
+      position: absolute;
+      overflow: hidden;
+      height: 100%;
+      width: 200px;
+      border-right: var(--lew-pop-border);
+      box-sizing: border-box;
+      gap: 4px;
     }
 
-    .result-count {
-        padding-left: 8px;
-        margin: 5px 0px;
-        opacity: 0.4;
-        font-size: 13px;
+    .lew-cascader-item-wrapper:last-child {
+      border-right: 0px var(--lew-form-border-color) solid;
     }
 
-    .lew-cascader-options-box {
+    .lew-cascader-item {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      color: var(--lew-text-color-1);
+      box-sizing: border-box;
+      border-radius: var(--lew-border-radius-small);
+      height: 34px;
+      flex-shrink: 0;
+      .lew-cascader-icon {
+        position: absolute;
+        right: 2px;
+        top: 10px;
+        opacity: 0.4;
+      }
+      .lew-cascader-loading-icon {
+        position: absolute;
+        right: 5px;
+        top: 8.5px;
+      }
+      .lew-cascader-checkbox {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .lew-cascader-label {
         position: relative;
-        display: flex;
+        z-index: 5;
+        width: 100%;
+        user-select: none;
+        font-size: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         box-sizing: border-box;
+        padding: 0px 12px;
+      }
 
-        .lew-cascader-item-wrapper {
-            position: absolute;
-            overflow: hidden;
-            height: 100%;
-            width: 200px;
-            border-right: var(--lew-pop-border);
-            box-sizing: border-box;
-            gap: 4px;
-        }
-
-        .lew-cascader-item-wrapper:last-child {
-            border-right: 0px var(--lew-form-border-color) solid;
-        }
-
-        .lew-cascader-item {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            font-size: 14px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            cursor: pointer;
-            color: var(--lew-text-color-1);
-            box-sizing: border-box;
-            border-radius: var(--lew-border-radius-small);
-            height: 34px;
-            flex-shrink: 0;
-            .lew-cascader-icon {
-                position: absolute;
-                right: 2px;
-                top: 10px;
-                opacity: 0.4;
-            }
-            .lew-cascader-loading-icon {
-                position: absolute;
-                right: 5px;
-                top: 8.5px;
-            }
-            .lew-cascader-checkbox {
-                position: absolute;
-                left: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-
-            .lew-cascader-label {
-                position: relative;
-                z-index: 5;
-                width: 100%;
-                user-select: none;
-                font-size: 14px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                box-sizing: border-box;
-                padding: 0px 12px;
-            }
-
-            .lew-cascader-label-free {
-                padding: 0px 14px 0px 38px;
-            }
-        }
-
-        .lew-cascader-item:hover {
-            .icon {
-                opacity: 1;
-            }
-        }
-
-        .lew-cascader-item-disabled {
-            opacity: var(--lew-disabled-opacity);
-            pointer-events: none;
-        }
-
-        .lew-cascader-item-align-left {
-            text-align: left;
-        }
-
-        .lew-cascader-item-align-center {
-            text-align: center;
-        }
-
-        .lew-cascader-item-align-right {
-            text-align: right;
-        }
-
-        .lew-cascader-item:hover {
-            color: var(--lew-text-color-0);
-            background-color: var(--lew-pop-bgcolor-hover);
-        }
-
-        .lew-cascader-slot-item {
-            border-radius: 6px;
-        }
-
-        .lew-cascader-slot-item:hover {
-            color: var(--lew-text-color-0);
-            background-color: var(--lew-pop-bgcolor-hover);
-        }
-
-        .lew-cascader-item-hover {
-            background-color: var(--lew-pop-bgcolor-hover);
-            .icon-check {
-                margin-right: 10px;
-            }
-        }
-        .lew-cascader-item-active {
-            color: var(--lew-checkbox-color);
-            font-weight: bold;
-            .lew-cascader-icon {
-                opacity: 1;
-            }
-            .icon-check {
-                margin-right: 10px;
-            }
-        }
-
-        .lew-cascader-item-active:hover {
-            color: var(--lew-checkbox-color);
-            font-weight: bold;
-        }
+      .lew-cascader-label-free {
+        padding: 0px 14px 0px 38px;
+      }
     }
 
-    .lew-cascader-control {
-        border-top: var(--lew-pop-border);
-        height: 48px;
-        padding-right: 10px;
+    .lew-cascader-item:hover {
+      .icon {
+        opacity: 1;
+      }
     }
+
+    .lew-cascader-item-disabled {
+      opacity: var(--lew-disabled-opacity);
+      pointer-events: none;
+    }
+
+    .lew-cascader-item-align-left {
+      text-align: left;
+    }
+
+    .lew-cascader-item-align-center {
+      text-align: center;
+    }
+
+    .lew-cascader-item-align-right {
+      text-align: right;
+    }
+
+    .lew-cascader-item:hover {
+      color: var(--lew-text-color-0);
+      background-color: var(--lew-pop-bgcolor-hover);
+    }
+
+    .lew-cascader-slot-item {
+      border-radius: 6px;
+    }
+
+    .lew-cascader-slot-item:hover {
+      color: var(--lew-text-color-0);
+      background-color: var(--lew-pop-bgcolor-hover);
+    }
+
+    .lew-cascader-item-hover {
+      background-color: var(--lew-pop-bgcolor-hover);
+      .icon-check {
+        margin-right: 10px;
+      }
+    }
+    .lew-cascader-item-active {
+      color: var(--lew-checkbox-color);
+      font-weight: bold;
+      .lew-cascader-icon {
+        opacity: 1;
+      }
+      .icon-check {
+        margin-right: 10px;
+      }
+    }
+
+    .lew-cascader-item-active:hover {
+      color: var(--lew-checkbox-color);
+      font-weight: bold;
+    }
+  }
+
+  .lew-cascader-control {
+    border-top: var(--lew-pop-border);
+    height: 48px;
+    padding-right: 10px;
+  }
 }
 </style>

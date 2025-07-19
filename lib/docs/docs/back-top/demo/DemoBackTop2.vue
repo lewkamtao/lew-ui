@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 function getEvent() {
-  console.log('回到顶部')
+  // console.log('回到顶部')
 }
 </script>
 

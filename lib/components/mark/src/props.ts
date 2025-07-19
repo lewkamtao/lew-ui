@@ -54,7 +54,7 @@ export const markProps = {
     validator: (value: BoldValue | string): boolean => {
       const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
       if (
-        isNaN(numValue)
+        Number.isNaN(numValue)
         || numValue < 100
         || numValue > 900
         || numValue % 100 !== 0

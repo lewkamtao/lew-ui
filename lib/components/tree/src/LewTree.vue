@@ -35,6 +35,14 @@ provide('lew-tree', {
   _dataSource,
 })
 
+const getResultText = computed(() => {
+  return _dataSource.value.length > 0
+    ? locale.t('tree.resultCount', {
+        num: numFormat(_dataSource.value.length),
+      })
+    : ''
+})
+
 function renderMenuTreeItem(item: TreeDataSource, level: number = 0): any {
   const { disabled, label, key, isLeaf, children } = item
   return h(
@@ -122,14 +130,6 @@ function search(keyword: string) {
     searchTimer.value = null
   }, DEBOUNCE_TIME)
 }
-
-const getResultText = computed(() => {
-  return _dataSource.value.length > 0
-    ? locale.t('tree.resultCount', {
-        num: numFormat(_dataSource.value.length),
-      })
-    : ''
-})
 
 defineExpose({
   search,

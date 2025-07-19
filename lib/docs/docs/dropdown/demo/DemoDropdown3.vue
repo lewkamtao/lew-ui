@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { LewBadge } from 'lew-ui'
 
+const status = ref('Success')
+
 const productOptions = ref([
   {
     label: 'Mac',
@@ -85,7 +87,6 @@ const statusOptions = ref([
   },
 ])
 
-const status = ref('Success')
 const colorMap: Record<string, string> = {
   Success: 'green',
   Failed: 'red',
@@ -98,9 +99,7 @@ const colorMap: Record<string, string> = {
   <lew-flex gap="50" x="start">
     <lew-dropdown :options="statusOptions" trigger="click">
       <lew-tag style="cursor: pointer" oversize :color="colorMap[status]">
-        {{
-          status
-        }}
+        {{ status }}
       </lew-tag>
     </lew-dropdown>
 

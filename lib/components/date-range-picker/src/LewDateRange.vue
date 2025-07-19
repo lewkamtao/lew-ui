@@ -259,7 +259,7 @@ let i = 0
 let startBackup = ''
 
 function hoverValueFn(item: RetItemType) {
-  if (item.date != item.showDate || i % 2 === 0) {
+  if (item.date !== item.showDate || i % 2 === 0) {
     return
   }
   const end = `${item.year}-${item.month}-${item.showDate}`
@@ -272,7 +272,7 @@ function hoverValueFn(item: RetItemType) {
 function setValue(item: RetItemType) {
   i += 1
 
-  if (item.date != item.showDate) {
+  if (item.date !== item.showDate) {
     return
   }
   const __dateStr = `${item.year}-${item.month}-${item.showDate}`

@@ -6,6 +6,32 @@ import { sliderRangeProps } from './props'
 const props = defineProps(sliderRangeProps)
 const emit = defineEmits(['change'])
 
+// 获取滑块轨道的最大值
+const getTrackMax = computed(() => {
+  const { options, max } = props
+  if (options && options.length > 0) {
+    return Math.max(...options.map(option => Number(option.value)))
+  }
+  return Number(max)
+})
+
+// 获取滑块轨道的最小值
+const getTrackMin = computed(() => {
+  const { options, min } = props
+  if (options && options.length > 0) {
+    return Math.min(...options.map(option => Number(option.value)))
+  }
+  return Number(min)
+})
+
+const getMax = computed(() => {
+  return Number(props.max) || getTrackMax.value
+})
+
+const getMin = computed(() => {
+  return Number(props.min) || getTrackMin.value
+})
+
 const modelValue = defineModel<number[]>('modelValue', {
   get(val) {
     // 确保返回有效的数组，避免 null、undefined 或空数组
@@ -27,7 +53,11 @@ const _modelValue = ref<number[]>([0, 0])
 const isDragging = ref(false)
 
 // 安全的数组访问函数
-function safeGetArrayValue(arr: number[] | null | undefined, index: number, defaultValue: number): number {
+function safeGetArrayValue(
+  arr: number[] | null | undefined,
+  index: number,
+  defaultValue: number,
+): number {
   if (
     !Array.isArray(arr)
     || arr.length <= index
@@ -63,32 +93,6 @@ const throttledUpdateModelValue = throttle(
   },
   16,
 ) // 约60fps的更新频率
-
-// 获取滑块轨道的最大值
-const getTrackMax = computed(() => {
-  const { options, max } = props
-  if (options && options.length > 0) {
-    return Math.max(...options.map(option => Number(option.value)))
-  }
-  return Number(max)
-})
-
-// 获取滑块轨道的最小值
-const getTrackMin = computed(() => {
-  const { options, min } = props
-  if (options && options.length > 0) {
-    return Math.min(...options.map(option => Number(option.value)))
-  }
-  return Number(min)
-})
-
-const getMax = computed(() => {
-  return Number(props.max) || getTrackMax.value
-})
-
-const getMin = computed(() => {
-  return Number(props.min) || getTrackMin.value
-})
 
 // 获取 mark 位置
 function getMarkPosition(value: number | string) {
@@ -374,27 +378,6 @@ function isStepLabelDisabled(value: number | string) {
   )
 }
 
-// 创建 tooltip 配置
-function createTooltipConfig(value: number) {
-  return {
-    content: props.formatTooltip(value),
-    placement: 'top' as const,
-    trigger: 'mouseenter' as const,
-    delay: [0, 1000] as [number, number],
-    key: dotX.value,
-  }
-}
-
-// 左侧滑块的 tooltip 配置
-const leftDotTooltip = computed(() =>
-  createTooltipConfig(getInternalValueAt(0, getMin.value)),
-)
-
-// 右侧滑块的 tooltip 配置
-const rightDotTooltip = computed(() =>
-  createTooltipConfig(getInternalValueAt(1, getMax.value)),
-)
-
 // 左侧禁用区域样式
 const leftDisabledAreaStyle = computed(() => ({
   width: `${getMarkPosition(getMin.value)}%`,
@@ -419,16 +402,6 @@ function createStepMarkStyle(value: number | string) {
     left: `${getMarkPosition(value)}%`,
   }
 }
-
-// 左侧滑块的样式
-const leftDotStyle = computed(() => ({
-  opacity: getInternalValueAt(0, getMin.value) !== undefined ? '1' : '0',
-}))
-
-// 右侧滑块的样式
-const rightDotStyle = computed(() => ({
-  opacity: getInternalValueAt(1, getMax.value) !== undefined ? '1' : '0',
-}))
 </script>
 
 <template>
@@ -453,10 +426,7 @@ const rightDotStyle = computed(() => ({
       />
 
       <div class="lew-slider-track-line">
-        <div
-          class="lew-slider-track-line-range"
-          :style="rangeAreaStyle"
-        />
+        <div class="lew-slider-track-line-range" :style="rangeAreaStyle" />
         <div
           class="lew-slider-track-line-selected"
           :style="selectedAreaStyle"
@@ -695,6 +665,6 @@ const rightDotStyle = computed(() => ({
 }
 
 .lew-slider-readonly {
-    pointer-events: none;
+      pointer-events: none;
 }
 </style>

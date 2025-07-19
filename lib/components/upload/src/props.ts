@@ -102,7 +102,7 @@ export const uploadProps = {
     type: Function,
     default: undefined,
     description: '自定义文件上传处理函数',
-    validator: (value: Function) => {
+    validator: (value: any) => {
       if (typeof value !== 'function') {
         console.warn('[LewUpload] uploadHelper 必须是一个函数')
         return false

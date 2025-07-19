@@ -151,6 +151,7 @@ const curRule = computed(() => {
   const { rule, required, as } = props
   let _rule
   try {
+    // eslint-disable-next-line no-eval
     _rule = isString(rule) ? eval(rule) : rule
   }
   catch {
@@ -171,6 +172,7 @@ const curRequired = computed(() => {
   const { rule, required } = props
   let _rule
   try {
+    // eslint-disable-next-line no-eval
     _rule = isString(rule) ? eval(rule) : rule
   }
   catch {

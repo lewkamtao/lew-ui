@@ -86,7 +86,7 @@ function selectItem(value: string | number | undefined, type?: string) {
   const index = props.options.findIndex(e => value === e.value)
   if (index >= 0) {
     const _item = props.options[index]
-    if (tabsValue.value != _item.value) {
+    if (tabsValue.value !== _item.value) {
       tabsValue.value = _item.value
     }
     initActiveItemStyle(index)

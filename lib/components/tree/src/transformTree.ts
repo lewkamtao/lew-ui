@@ -48,11 +48,6 @@ function findLeafNodes(tree: TreeDataSource[] = [], keyField = 'key') {
   return Array.from(leafNodes)
 }
 
-/**
- * 格式化树结构，添加路径信息
- * @param options 格式化选项
- * @returns 格式化后的树结构
- */
 export function formatTree({
   dataSource,
   parent = null,
@@ -127,11 +122,6 @@ export function formatTree({
   })
 }
 
-/**
- * 转换树结构，支持初始化、过滤等功能
- * @param options 转换选项
- * @returns 处理结果，包含状态和数据
- */
 async function transformTree({
   initOptionsMethod = null,
   dataSource = [],

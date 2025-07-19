@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ContextMenus } from 'lew-ui/directives'
+import type { ContextMenus } from 'lew-ui'
 import {
   CornerUpRight,
   DownloadCloud,
@@ -18,7 +18,7 @@ const options1: ContextMenus = [
     value: 1,
     icon: h(Home, { size: 14 }),
     onClick: (e: ContextMenus) => {
-      LewMessage.info('Back')
+      LewMessage.info('Back', e)
     },
   },
   {

@@ -18,7 +18,7 @@ export const inputNumberProps = {
     default: '',
     description: '最小值',
     validator(value: number | string) {
-      if (value && typeof value === 'string' && isNaN(Number(value))) {
+      if (value && typeof value === 'string' && Number.isNaN(Number(value))) {
         console.warn('[LewInputNumber] min 必须是有效的数字')
         return false
       }
@@ -30,7 +30,7 @@ export const inputNumberProps = {
     default: '',
     description: '最大值',
     validator(value: number | string) {
-      if (value && typeof value === 'string' && isNaN(Number(value))) {
+      if (value && typeof value === 'string' && Number.isNaN(Number(value))) {
         console.warn('[LewInputNumber] max 必须是有效的数字')
         return false
       }
@@ -43,7 +43,7 @@ export const inputNumberProps = {
     description: '步长',
     validator(value: number | string) {
       const numValue = Number(value)
-      if (isNaN(numValue) || numValue <= 0) {
+      if (Number.isNaN(numValue) || numValue <= 0) {
         console.warn('[LewInputNumber] step 必须是大于 0 的数字')
         return false
       }

@@ -6,7 +6,7 @@ declare const LewCollapseTransition: DefineComponent<
     dimension?: 'height' | 'width'
     duration?: number
   },
-  {},
+  Record<string, never>,
   any
 >
 

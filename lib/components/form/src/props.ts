@@ -54,7 +54,7 @@ export const formProps = {
     description: '每行显示的表单项数量，最大值为4',
     validator(value: number | string): boolean {
       const numValue = Number(value)
-      if (isNaN(numValue) || numValue < 1 || numValue > 4) {
+      if (Number.isNaN(numValue) || numValue < 1 || numValue > 4) {
         console.warn('[LewForm] columns 必须是 1 到 4 之间的数字')
         return false
       }

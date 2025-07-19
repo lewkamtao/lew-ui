@@ -5,12 +5,18 @@ interface MessageFnOptions {
   id: string
   content: string
   duration: number
-  onClose: Function
+  onClose: () => void
 }
 
 interface MessageOptions {
   type: string
   e: MessageFnOptions
+}
+
+// 添加 LewMessage 的类型定义
+const LewMessage: any = {
+  name: 'LewMessage',
+  timer: {} as any,
 }
 
 function createMessageList() {
@@ -77,107 +83,107 @@ function addClass(element: any, className: any) {
   element.classList.add(className)
 }
 
-const LewMessage: any = {
-  name: 'LewMessage',
+// 添加方法到 LewMessage 对象
+LewMessage.message = ({ type, e }: MessageOptions) => {
+  if (!document.getElementById('lew-message')) {
+    createMessageList()
+    LewMessage.message({ type, e })
+  }
+  else {
+    showMessage({ type, e })
+  }
+}
 
-  message: ({ type, e }: MessageOptions) => {
-    if (!document.getElementById('lew-message')) {
-      createMessageList()
-      LewMessage.message({ type, e })
-    }
-    else {
-      showMessage({ type, e })
-    }
-  },
+LewMessage.close = ({ id }: { id: string }) => {
+  const messageElement = document.getElementById(`lew-message-id-${id}`)
 
-  close: ({ id }: { id: string }) => {
-    const messageElement = document.getElementById(`lew-message-id-${id}`)
+  if (messageElement) {
+    removeClass(messageElement, 'lew-message-show')
+    addClass(messageElement, 'lew-message-hidden')
+    setTimeout(() => {
+      clearTimeout(LewMessage.timer[id])
+      messageElement.remove()
+    }, 350)
+  }
+}
 
-    if (messageElement) {
-      removeClass(messageElement, 'lew-message-show')
-      addClass(messageElement, 'lew-message-hidden')
-      setTimeout(() => {
-        clearTimeout(LewMessage.timer[id])
-        messageElement.remove()
-      }, 350)
-    }
-  },
+LewMessage.request = async (
+  { loadingMessage }: { loadingMessage: string },
+  asyncFn: () => Promise<{
+    content?: string
+    duration?: number
+    type?: string
+  }>,
+) => {
+  try {
+    // 显示loading消息
+    LewMessage.loading({
+      id: 'lew-request-loading',
+      content: loadingMessage,
+      duration: 0,
+    })
 
-  request: async (
-    { loadingMessage }: { loadingMessage: string },
-    asyncFn: Function,
-  ) => {
-    try {
-      // 显示loading消息
-      LewMessage.loading({
-        id: 'lew-request-loading',
-        content: loadingMessage,
-        duration: 0,
-      })
+    const startTime = new Date().getTime()
 
-      const startTime = new Date().getTime()
-
-      // 执行异步方法
-      asyncFn()
-        .then(
-          async ({
-            content = '请求成功！',
-            duration = 3000,
-            type = 'success',
-          }: {
-            content: string
-            duration: number
-            type?: string
-          }) => {
-            // 最小延迟 250ms 保持动画流畅
-            const endTime = new Date().getTime()
-            const delay = 250
-            if (endTime - startTime < delay) {
-              await new Promise(resolve =>
-                setTimeout(resolve, delay - (endTime - startTime)),
-              )
-            }
-            LewMessage.close({ id: 'lew-request-loading' })
-            // 显示success消息
-            LewMessage[type]({
-              content,
-              duration,
-            })
-          },
-        )
-        .catch(
-          ({
-            content = '加载失败！',
-            duration = 3000,
-          }: {
-            content: string
-            duration: number
-          }) => {
-            // 隐藏loading消息
-            LewMessage.close({ id: 'lew-request-loading' })
-            // 显示success消息
-            LewMessage.error({
-              id: 'lew-request-fail',
-              content,
-              duration,
-            })
-          },
-        )
-    }
-    catch (error) {
-      // 处理异步方法执行出错的情况
-      LewMessage.error({
-        id: 'lew-request-loading',
-        content: 'An error occurred',
-        duration: 3000,
-        onClose: () => {
-          // 可以选择性地处理错误消息关闭时的逻辑
+    // 执行异步方法
+    asyncFn()
+      .then(
+        async ({
+          content = '请求成功！',
+          duration = 3000,
+          type = 'success',
+        }: {
+          content?: string
+          duration?: number
+          type?: string
+        }) => {
+          // 最小延迟 250ms 保持动画流畅
+          const endTime = new Date().getTime()
+          const delay = 250
+          if (endTime - startTime < delay) {
+            await new Promise(resolve =>
+              setTimeout(resolve, delay - (endTime - startTime)),
+            )
+          }
+          LewMessage.close({ id: 'lew-request-loading' })
+          // 显示success消息
+          LewMessage[type]({
+            content,
+            duration,
+          })
         },
-      })
-    }
-  },
-
-  timer: {} as any,
+      )
+      .catch(
+        ({
+          content = '加载失败！',
+          duration = 3000,
+        }: {
+          content?: string
+          duration?: number
+        }) => {
+          // 隐藏loading消息
+          LewMessage.close({ id: 'lew-request-loading' })
+          // 显示success消息
+          LewMessage.error({
+            id: 'lew-request-fail',
+            content,
+            duration,
+          })
+        },
+      )
+  }
+  catch (err) {
+    // 处理异步方法执行出错的情况
+    console.error('Request error:', err)
+    LewMessage.error({
+      id: 'lew-request-loading',
+      content: 'An error occurred',
+      duration: 3000,
+      onClose: () => {
+        // 可以选择性地处理错误消息关闭时的逻辑
+      },
+    })
+  }
 }
 
 LewMessage.warning = (e: MessageFnOptions) =>

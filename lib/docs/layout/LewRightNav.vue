@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { throttle } from 'lodash-es'
 
+const navMenus = ref([] as any)
+const activeItem = ref('')
+
 function initNav(titleDoms: any = []) {
   navMenus.value = Array.from(titleDoms).map((e: any) => {
     return {
@@ -8,7 +11,6 @@ function initNav(titleDoms: any = []) {
       top: e.offsetTop,
     }
   })
-  // @ts-ignore
   setTimeout(() => {
     init()
   }, 250)
@@ -33,9 +35,6 @@ const checkActive = throttle(() => {
   activeItem.value = closestItem ? closestItem.label : ''
 }, 250)
 
-const navMenus = ref([] as any)
-const activeItem = ref('')
-
 function init() {
   // 选取需要监听的DOM元素
   const titleDoms = document.getElementsByClassName('demo-docs-title')
@@ -52,7 +51,6 @@ function toScroll(item: any) {
   activeItem.value = item.label
 }
 
-// @ts-ignore
 onMounted(() => {
   const mainDom: any = document.getElementById('component-main')
   nextTick(() => {

@@ -13,7 +13,7 @@ const componentName: string = (route.name as string)
   .replace(/^[A-Z]/, match => match.toLowerCase())
 const options = ref(
   Object.keys(API).map((key: any) => {
-    // @ts-ignore
+    // @ts-expect-error API key access
     return API[key]
   }),
 )

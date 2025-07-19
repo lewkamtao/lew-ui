@@ -182,7 +182,6 @@ async function expand() {
 
         cacheDataSource.value = cloneDeep(_dataSource.value)
 
-        console.log(_dataSource.value, 'lew-tree-item')
         expandKeys.value = [
           ...(expandKeys.value as (string | number)[]),
           props.__key,

@@ -7,6 +7,7 @@ const schoolsOptions = schools.map((e, i) => {
 })
 
 const form = ref({} as any)
+const formRef = ref()
 
 onMounted(() => {
   // 设置表单
@@ -277,8 +278,6 @@ const options = ref([
     },
   },
 ])
-
-const formRef = ref()
 
 async function submit() {
   const vail = await formRef.value.validate()
