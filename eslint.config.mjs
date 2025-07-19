@@ -8,6 +8,5 @@ export default antfu({
     // 正则表达式相关 - 开发中常见且合理
     'regexp/no-unused-capturing-group': 'off',
     'regexp/no-dupe-disjunctions': 'off',
-
   },
 })

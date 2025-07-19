@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="LewContextMenu">
 import type { ContextMenus } from './index'
 import { LewEmpty, LewFlex } from 'lew-ui'
 import { formatComponent, getUniqueId, isVueComponent } from 'lew-ui/utils'
@@ -6,7 +6,6 @@ import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
 import { contextMenuProps, initLewContextMenu } from './index'
-import LewContextMenu from './LewContextMenu.vue'
 
 const props = defineProps(contextMenuProps)
 
@@ -20,7 +19,7 @@ function clickItem(item: ContextMenus) {
         return Reflect.get(target, prop, receiver)
       },
     })
-    item.onClick(proxy)
+    item.onClick?.(proxy)
   }
   if (window.LewContextMenu) {
     const { instance } = window.LewContextMenu
@@ -52,9 +51,10 @@ function initTippy() {
       return
     }
     const menuDom = document.createElement('div')
+    const LewContextMenuComponent = defineAsyncComponent(() => import('./LewContextMenu.vue'))
     createApp({
       render() {
-        return h(LewContextMenu, {
+        return h(LewContextMenuComponent, {
           options: props.options[index].children,
           onSelect: (item: any) => {
             emit('select', item)

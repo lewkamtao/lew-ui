@@ -129,7 +129,7 @@ onUnmounted(() => {
   stopGlobalCheck()
 })
 
-onClickOutside(modalBodyRef, (e) => {
+onClickOutside(modalBodyRef, (e: any) => {
   if (visible.value && props.closeOnClickOverlay) {
     const { parentElement } = e?.target as Element
     if (parentElement?.id === modalId) {

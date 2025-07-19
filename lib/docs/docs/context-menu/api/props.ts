@@ -1,4 +1,4 @@
-import { contextMenuProps } from 'lew-ui'
+import { contextMenuProps } from 'lew-ui/directives/context-menu'
 import { convertProps } from '@/lib/utils'
 
 export default {

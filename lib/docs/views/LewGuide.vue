@@ -30,6 +30,7 @@ options.value = [
         label: '如何使用',
         value: '/Start',
       },
+      { label: '国际化', value: '/Locale' },
       {
         label: '常见问题',
         value: '/QA',

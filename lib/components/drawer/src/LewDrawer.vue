@@ -130,7 +130,7 @@ onUnmounted(() => {
   stopGlobalCheck()
 })
 
-onClickOutside(drawerBodyRef, (e) => {
+onClickOutside(drawerBodyRef, (e: any) => {
   if (visible.value && props.closeOnClickOverlay) {
     const { parentElement } = e?.target as Element
     if (parentElement?.id === drawerId) {

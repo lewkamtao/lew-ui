@@ -2,7 +2,6 @@ import type { ConfigEnv, UserConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
@@ -18,12 +17,16 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
 
   // 插件配置
   const commonPlugins = [
-    zipPack({ outFileName: `lew-ui_${mode}.zip` }),
     vue(),
     vueJsx(),
     AutoImport({ imports: ['vue', 'vue-router'] }),
     checker({ typescript: true }),
   ]
+
+  // 只在lib和docs模式下打包zip
+  const zipPlugins = (mode === 'lib' || mode === 'docs')
+    ? [zipPack({ outFileName: `lew-ui_${mode}.zip` })]
+    : []
 
   const libPlugins = isLibMode
     ? [
@@ -110,14 +113,9 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
     server: serverConfig,
     resolve: { alias: aliasConfig },
     plugins: [
+      ...zipPlugins,
       ...commonPlugins,
       ...libPlugins,
-      visualizer({
-        open: false,
-        filename: 'stats.html',
-        gzipSize: true,
-        brotliSize: true,
-      }),
     ],
     build: buildConfig,
   }

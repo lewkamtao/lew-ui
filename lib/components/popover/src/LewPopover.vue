@@ -21,7 +21,7 @@ const watchOptions = { debounce: 250, maxWait: 1000 }
 watchDebounced(
   () => props.placement,
   (value: string) => {
-    instance.setProps({
+    instance?.setProps({
       placement: value,
     })
   },
@@ -33,10 +33,10 @@ watchDebounced(
   () => props.disabled,
   (value: boolean) => {
     if (value) {
-      instance && instance.disable()
+      instance?.disable()
     }
     else {
-      instance && instance.enable()
+      instance?.enable()
     }
   },
   watchOptions,
@@ -46,11 +46,9 @@ watchDebounced(
 watchDebounced(
   () => props.trigger,
   (value: string) => {
-    if (instance) {
-      instance.setProps({
-        trigger: value,
-      })
-    }
+    instance?.setProps({
+      trigger: value,
+    })
   },
   watchOptions,
 )
@@ -59,11 +57,9 @@ watchDebounced(
 watchDebounced(
   () => props.triggerTarget,
   (value: Element | string) => {
-    if (instance) {
-      instance.setProps({
-        triggerTarget: value,
-      })
-    }
+    instance?.setProps({
+      triggerTarget: value,
+    })
   },
   watchOptions,
 )
@@ -71,11 +67,9 @@ watchDebounced(
 watchDebounced(
   () => props.offset,
   (value: number[]) => {
-    if (instance) {
-      instance.setProps({
-        offset: value,
-      })
-    }
+    instance?.setProps({
+      offset: value,
+    })
   },
   watchOptions,
 )
@@ -114,7 +108,7 @@ function initTippy() {
       emit('hide')
     },
   })
-  instance.popper.children[0].setAttribute('data-lew', 'popover')
+  instance?.popper.children[0].setAttribute('data-lew', 'popover')
 
   // 判断入参
   if (disabled && instance) {
@@ -131,26 +125,26 @@ onMounted(() => {
 })
 
 onDeactivated(() => {
-  instance.hide()
-  instance.destroy()
+  instance?.hide()
+  instance?.destroy()
   instance = null
 })
 
 function show() {
-  instance.show()
+  instance?.show()
 }
 
 function hide() {
-  instance.hide()
+  instance?.hide()
 }
 
 function refresh() {
-  instance.setProps({})
+  instance?.setProps({})
 }
 
 onUnmounted(() => {
-  instance && instance.hide()
-  instance && instance.destroy()
+  instance?.hide()
+  instance?.destroy()
 })
 
 defineExpose({ show, hide, refresh })
