@@ -1,8 +1,7 @@
 body,
 html {
-  color: var(--lew-text-color-1);
-  background: var(--lew-bgcolor-4);
   overflow: hidden;
+  color: var(--lew-text-color-1);
   font-size: 14px;
   font-family:
     system-ui,
@@ -13,6 +12,7 @@ html {
     'Apple Color Emoji',
     'Segoe UI Emoji',
     'Segoe UI Symbol';
+  background: var(--lew-bgcolor-4);
 }
 
 :root {
@@ -25,31 +25,31 @@ a {
 }
 
 .sub-title {
-  font-size: 14px;
   color: var(--lew-text-color-6);
   font-weight: 400;
+  font-size: 14px;
   line-height: 30px;
 }
 
 .demo-tips {
-  font-size: 14px;
+  margin: 20px 0;
   color: var(--lew-text-color-6);
   font-weight: 400;
-  margin: 20px 0px;
+  font-size: 14px;
 }
 
 .guide-wrapper {
   p {
-    line-height: 30px;
-    font-size: 14px;
-    margin: 10px 0px 20px 0px;
+    margin: 10px 0 20px;
     color: var(--lew-text-color-5);
+    font-size: 14px;
+    line-height: 30px;
   }
 
   .pre-box {
     code {
-      border-radius: var(--lew-border-radius-small);
       overflow: hidden;
+      border-radius: var(--lew-border-radius-small);
     }
   }
 }
@@ -57,15 +57,15 @@ a {
 .demo-item {
   pre {
     font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
-    white-space: pre-wrap;
     letter-spacing: 0.05em;
+    white-space: pre-wrap;
   }
 }
 
 .lew-docs-tag {
-  background-color: var(--lew-color-primary-light);
-  padding: 3px 6px;
-  border-radius: 4px;
   box-sizing: border-box;
+  padding: 3px 6px;
   color: var(--lew-text-color-1);
+  background-color: var(--lew-color-primary-light);
+  border-radius: 4px;
 }

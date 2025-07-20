@@ -14,8 +14,8 @@
 .tippy-box[data-lew~='popover'] {
   color: var(--lew-color-text-0) !important;
   background-color: var(--lew-pop-bgcolor) !important;
-  box-shadow: var(--lew-pop-shadow) !important;
   border: var(--lew-pop-border) !important;
+  box-shadow: var(--lew-pop-shadow) !important;
 }
 
 .tippy-box[data-lew~='tooltip'] {
@@ -105,8 +105,8 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  fill: #333;
   text-align: initial;
+  fill: #333;
 
   & > svg {
     position: absolute;

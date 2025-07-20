@@ -1,39 +1,44 @@
 .lew-loading {
   position: relative;
+
   .lew-loading-wrapper {
     position: absolute;
-    left: 0;
     top: 0;
+    left: 0;
+    z-index: -9;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    opacity: 0;
-    background-color: var(--lew-loading-bgcolor);
-    z-index: -9;
-    transition: all 0.25s;
     overflow: hidden;
+    background-color: var(--lew-loading-bgcolor);
+    opacity: 0;
+    transition: all 0.25s;
   }
+
   .lew-loading-box {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 5px;
+    font-size: 14px;
     text-align: center;
     content: attr(data-after);
-    font-size: 14px;
-    margin-top: 5px;
   }
+
   .lew-loading-box::after {
-    content: attr(data-after);
-    font-size: 14px;
     margin-top: 5px;
+    font-size: 14px;
+    content: attr(data-after);
   }
+
   @keyframes lew-loading-spinner-spin {
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(360deg);
     }
@@ -41,6 +46,6 @@
 }
 
 .lew-loading-show > .lew-loading-wrapper {
-  opacity: 1;
   z-index: 99;
+  opacity: 1;
 }

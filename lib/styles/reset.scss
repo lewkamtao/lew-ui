@@ -65,15 +65,15 @@ legend {
 /* 列表样式 */
 ol,
 ul {
-  list-style-image: none;
   list-style-position: outside;
+  list-style-image: none;
 }
 
 /* 引用样式 */
-q:before,
-q:after,
-blockquote:before,
-blockquote:after {
+q::before,
+q::after,
+blockquote::before,
+blockquote::after {
   content: '';
 }
 
@@ -87,7 +87,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-transition:
+  transition:
     color 9999999s ease-out,
     background-color 9999999s ease-out;
   transition-delay: 9999999s;

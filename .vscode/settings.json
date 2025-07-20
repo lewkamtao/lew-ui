@@ -3,10 +3,18 @@
   "prettier.enable": false,
   "editor.formatOnSave": false,
 
+  // stylelint
+  // ========================stylelint==============================
+  // 使用 stylelint 自身的校验即可, 关闭vscode验证
+
+  "stylelint.validate": ["css", "scss"],
+  // 在editor.codeActionsOnSave中增加styleLint修复
+
   // Auto fix
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never"
+    "source.organizeImports": "never",
+    "source.fixAll.stylelint": "explicit"
   },
 
   // Silent the stylistic rules in you IDE, but still auto fix them
