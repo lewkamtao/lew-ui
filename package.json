@@ -33,6 +33,7 @@
     "build:tsdown": "tsdown",
     "build:docs": "vue-tsc --noEmit && vite build --mode docs",
     "build:lib": "vue-tsc --noEmit && vite build --mode lib",
+    "format": "pnpm lint:fix && pnpm lint:css:fix",
     "lint:css": "stylelint \"lib/**/*.{css,scss}\"",
     "lint:css:fix": "stylelint \"lib/**/*.{css,scss}\" --fix",
     "lint": "eslint",
@@ -68,12 +69,9 @@
     "@vitejs/plugin-vue": "^6.0.0",
     "eslint": "^9.31.0",
     "eslint-plugin-format": "^1.0.1",
-    "postcss-html": "^1.8.0",
     "sass": "^1.89.2",
     "stylelint": "16.2.1",
     "stylelint-config-rational-order": "0.1.2",
-    "stylelint-config-standard": "^38.0.0",
-    "stylelint-config-standard-vue": "^1.0.0",
     "stylelint-order": "^7.0.0",
     "tsdown": "^0.12.9",
     "tsx": "^4.20.3",
@@ -85,7 +83,6 @@
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-zip-pack": "^1.2.3",
-    "vitest": "^3.2.4",
     "vue": "^3.5.17",
     "vue-tsc": "^3.0.1"
   }

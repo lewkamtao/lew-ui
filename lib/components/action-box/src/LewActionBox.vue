@@ -75,37 +75,5 @@ const dropdownOptions: any = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.lew-action-box {
-  position: relative;
-  .lew-action-box-item {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3px 4px;
-    cursor: pointer;
-    border-radius: 5px;
-    color: var(--lew-color-primary-dark);
-    user-select: none;
-    transition: all 0.2s ease;
-    gap: 4px;
-    white-space: nowrap;
-    &:hover {
-      background-color: var(--lew-form-bgcolor-hover);
-    }
-    &:active {
-      background-color: var(--lew-form-bgcolor-active);
-    }
-    :deep(.lew-action-box-icon) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
-  }
-  .lew-action-box-divider {
-    width: 1px;
-    height: 14px;
-    background-color: var(--lew-form-bgcolor-hover);
-  }
-}
+@use './index.scss';
 </style>

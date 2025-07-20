@@ -157,8 +157,8 @@ const getIconSize = computed(() => {
         <div v-if="isLoading || loading" class="skeleton" />
         <img
           v-else-if="!error"
-          :src="src"
           :alt="alt"
+          :src="src"
           lazy
           :style="imageStyleObject"
         >
