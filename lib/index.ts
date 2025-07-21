@@ -5,11 +5,8 @@ import * as directives from './directives'
 import * as methods from './methods'
 // tippy 样式
 import 'tippy.js/dist/tippy.css' // optional for styling
-
 import 'tippy.js/animations/shift-away-subtle.css'
-
 import 'tippy.js/animations/scale-subtle.css'
-import 'tippy.js/themes/light.css'
 // 引入样式
 import './styles/index.scss'
 

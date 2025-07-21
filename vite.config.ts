@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
 import dts from 'vite-plugin-dts'
 import zipPack from 'vite-plugin-zip-pack'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 // 路径工具函数
 const resolve = (path: string) => fileURLToPath(new URL(path, import.meta.url))
@@ -24,6 +25,18 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
   // 只在lib和docs模式下打包zip
   const zipPlugins = (mode === 'lib' || mode === 'docs')
     ? [zipPack({ outFileName: `lew-ui_${mode}.zip` })]
+    : []
+
+  // 分析插件配置
+  const analyzePlugins = mode === 'analyze'
+    ? [
+        visualizer({
+          filename: 'dist/stats.html',
+          open: true,
+          gzipSize: true,
+          brotliSize: true,
+        }),
+      ]
     : []
 
   const libPlugins = isLibMode
@@ -114,6 +127,7 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
       ...zipPlugins,
       ...commonPlugins,
       ...libPlugins,
+      ...analyzePlugins,
     ],
     build: buildConfig,
   }
