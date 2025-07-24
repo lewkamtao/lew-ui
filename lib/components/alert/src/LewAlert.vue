@@ -114,5 +114,4 @@ const alertClassName = computed(() => {
   color: var(--lew-color-info-dark);
   background-color: var(--lew-color-info-light);
 }
-
 </style>

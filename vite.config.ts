@@ -1,12 +1,12 @@
 import type { ConfigEnv, UserConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
+import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
 import dts from 'vite-plugin-dts'
 import zipPack from 'vite-plugin-zip-pack'
-import { visualizer } from 'rollup-plugin-visualizer'
 
 // 路径工具函数
 const resolve = (path: string) => fileURLToPath(new URL(path, import.meta.url))

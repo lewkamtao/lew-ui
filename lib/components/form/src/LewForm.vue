@@ -20,9 +20,17 @@ const autoLabelWidth = ref(0)
 const componentOptions: any[] = cloneDeep(props.options) || []
 const formItemRefMap = ref<Record<string, any>>({})
 
+// 移除固定的columns class，改为动态样式
 const getFormClassNames = computed(() => {
-  const { columns } = cloneDeep(props)
-  return object2class('lew-form', { columns })
+  return object2class('lew-form', {})
+})
+
+// 动态生成网格样式
+const getDynamicGridStyle = computed(() => {
+  const columns = Number(props.columns)
+  return {
+    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+  }
 })
 
 // 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
@@ -139,6 +147,7 @@ const getFormStyle = computed(() => {
     width: any2px(props.width),
     minWidth: 320,
     gap: gapMap[props.size],
+    ...getDynamicGridStyle.value,
   }
 })
 
@@ -181,21 +190,6 @@ defineExpose({ getForm, setForm, resetError, validate })
   display: grid;
   flex-shrink: 0;
   padding-bottom: 30px;
-}
-
-.lew-form-columns-1 {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.lew-form-columns-2 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-}
-
-.lew-form-columns-3 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-}
-
-.lew-form-columns-4 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  // 移除固定的grid-template-columns样式类，改为动态样式
 }
 </style>

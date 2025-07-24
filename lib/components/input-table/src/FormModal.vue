@@ -16,37 +16,41 @@ const props = defineProps({
     default: () => true,
   },
 })
+
 const emit = defineEmits(['addSuccess', 'editSuccess'])
 const visible = ref(false)
 const formRef = ref()
 const form = ref({})
-const editIndex = ref(-1)
-const id = ref('')
+const isEditing = ref(false)
+const originalRowId = ref('')
 
-function open({ row = {}, index = -1 }: { row: any, index: number }) {
+function open({ row = {} }: { row: any }) {
   visible.value = true
-  editIndex.value = index
-  id.value = row.id
+  // 通过是否有id来判断是编辑还是新增
+  isEditing.value = !!row.id
+  originalRowId.value = row.id || ''
   form.value = cloneDeep(row)
 }
 
 function ok() {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
-      if (editIndex.value >= 0) {
+      const formData = formRef.value.getForm()
+
+      if (isEditing.value) {
+        // 编辑模式：保持原有的id
         emit('editSuccess', {
-          row: { ...formRef.value.getForm(), id: id.value },
-          index: editIndex.value,
+          row: { ...formData, id: originalRowId.value },
         })
       }
       else {
-        const _form = formRef.value.getForm()
-
-        if (!props.checkUniqueFieldFn(_form)) {
+        // 新增模式：检查唯一性
+        if (!props.checkUniqueFieldFn(formData)) {
           return
         }
-
-        emit('addSuccess', { row: { ..._form, id: id.value } })
+        emit('addSuccess', {
+          row: { ...formData, id: originalRowId.value },
+        })
       }
       visible.value = false
     }
@@ -78,7 +82,7 @@ defineExpose({ open })
         request: ok,
       } as any
     "
-    :title="`${editIndex >= 0 ? locale.t('inputTable.editTitle') : locale.t('inputTable.modelTitle')}`"
+    :title="`${isEditing ? locale.t('inputTable.editTitle') : locale.t('inputTable.modelTitle')}`"
   >
     <div class="lew-form-modal lew-scrollbar">
       <LewForm

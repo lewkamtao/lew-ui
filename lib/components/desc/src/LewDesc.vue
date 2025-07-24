@@ -13,8 +13,8 @@ const autoLabelWidth = ref(0)
 const componentOptions: any[] = cloneDeep(props.options) || []
 
 const getDescClassNames = computed(() => {
-  const { columns, bordered } = props
-  return object2class('lew-desc', { columns, bordered })
+  const { bordered } = props
+  return object2class('lew-desc', { bordered })
 })
 
 onMounted(() => {
@@ -37,11 +37,14 @@ watch(
 )
 
 const getDescStyle = computed(() => {
-  const { width, gap, bordered } = props
+  const { width, gap, bordered, columns } = props
+  const columnsCount = Number(columns)
+
   return {
     width: any2px(width),
     minWidth: 320,
     gap: bordered ? 0 : any2px(gap),
+    gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
   }
 })
 
@@ -82,22 +85,6 @@ const getBind = computed(() => (item: any) => {
   width: 100%;
   display: grid;
   flex-shrink: 0;
-}
-
-.lew-desc-columns-1 {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.lew-desc-columns-2 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-}
-
-.lew-desc-columns-3 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-}
-
-.lew-desc-columns-4 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .lew-desc-bordered {

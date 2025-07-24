@@ -87,11 +87,11 @@ export const descProps = {
   columns: {
     type: [Number, String],
     default: 1,
-    description: '每行显示的描述项数量，范围为1到4',
+    description: '每行显示的描述项数量，必须是正整数',
     validator(value: number | string): boolean {
       const numValue = Number(value)
-      if (Number.isNaN(numValue) || numValue < 1 || numValue > 4) {
-        console.warn('[LewDesc] columns 必须是 1 到 4 之间的数字')
+      if (Number.isNaN(numValue) || numValue < 1 || !Number.isInteger(numValue)) {
+        console.warn('[LewDesc] columns 必须是大于等于1的整数')
         return false
       }
       return true

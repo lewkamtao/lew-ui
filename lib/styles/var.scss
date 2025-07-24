@@ -209,7 +209,8 @@
   --lew-pop-bgcolor: #fff;
   --lew-pop-bgcolor-hover: rgb(0 0 0 / 5%);
   --lew-pop-bgcolor-active: rgb(0 0 0 / 8%);
-  --lew-pop-border: 1px rgb(142 147 154 / 30%) solid;
+  --lew-pop-border-color: var(--lew-form-bgcolor-hover);
+  --lew-pop-border: 1px var(--lew-pop-border-color) solid;
   --lew-pop-shadow: rgb(0 0 0 / 4%) 0px 2px 8px;
 
   /* 提示框 */
@@ -412,7 +413,8 @@
   /* 弹出框 */
   --lew-pop-bgcolor: rgb(36 36 38);
   --lew-pop-bgcolor-hover: rgb(255 255 255 / 5%);
-  --lew-pop-border: 1px rgb(255 255 255 / 15%) solid;
+  --lew-pop-border-color: var(--lew-form-bgcolor-hover);
+  --lew-pop-border: 1px var(--lew-pop-border-color) solid;
   --lew-pop-shadow: rgb(0 0 0 / 4%) 0px 2px 8px;
 
   /* 提示框 */
@@ -429,7 +431,7 @@
   --lew-table-header-bgcolor-hover: rgb(36 36 38);
   --lew-table-header-bgcolor-active: rgb(44 44 46);
   --lew-table-tr-hover-bgcolor: rgb(40 41 44);
-  --lew-table-border: 1px rgb(255 255 255 / 7.6%) solid;
+  --lew-table-border: var(--lew-pop-border);
   --lew-table-tr-selected: rgb(29 35 42);
   --lew-table-scroll-line-color-start: rgb(0 0 0 / 0%);
   --lew-table-scroll-line-color-end: rgb(0 0 0 / 20%);

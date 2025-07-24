@@ -19,7 +19,7 @@ import { tableProps } from './props'
 import SortIcon from './SortIcon.vue'
 
 const props = defineProps(tableProps)
-const emit = defineEmits(['sortChange', 'selectChange', 'sortOrderChange'])
+const emit = defineEmits(['sortChange', 'selectChange', 'dragSort'])
 const selectedKeys = defineModel('selectedKeys')
 const sortValue: any = defineModel('sortValue', { default: {} })
 const tableRef = ref()
@@ -785,7 +785,7 @@ function dragEnd() {
         const [movedItem] = newDataSource.splice(dragIndex, 1)
         newDataSource.splice(actualTargetPosition, 0, movedItem)
         state.dataSource = newDataSource
-        emit('sortOrderChange', newDataSource)
+        emit('dragSort', newDataSource)
       }
     }
   }

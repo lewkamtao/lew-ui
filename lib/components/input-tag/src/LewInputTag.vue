@@ -421,16 +421,13 @@ function onBlur() {
 .tag-list-move,
 .tag-list-enter-active,
 .tag-list-leave-active {
-  transition: all var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-ease);
 }
 
-.tag-list-enter-from {
-  opacity: 0;
-  transform: translateX(-12px);
-}
+.tag-list-enter-from,
 .tag-list-leave-to {
   opacity: 0;
-  transform: scaleX(0);
+  transform: scale(0);
 }
 
 .tag-list-leave-active {

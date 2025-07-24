@@ -99,12 +99,58 @@ const formModel = computed(() => {
   return formatFormByMap(cloneDeep(formMap.value))
 })
 
-const colOptions = ref([
-  { label: '单栏', value: 1 },
-  { label: '两栏', value: 2 },
-  { label: '三栏', value: 3 },
-  { label: '四栏', value: 4 },
-])
+// 动态生成columns选项，支持1-12栏
+const colOptions = computed(() => {
+  const options = []
+  const columnLabels = ['单栏', '两栏', '三栏', '四栏', '五栏', '六栏', '七栏', '八栏', '九栏', '十栏', '十一栏', '十二栏']
+
+  for (let i = 1; i <= 12; i++) {
+    options.push({
+      label: columnLabels[i - 1] || `${i}栏`,
+      value: i,
+    })
+  }
+
+  return options
+})
+
+// 动态生成网格样式
+const getDynamicGridStyle = computed(() => {
+  const columns = formGlobal.value.columns
+  return {
+    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+  }
+})
+
+// 确保spanMap包含当前columns的键
+function ensureSpanMap(item: any) {
+  const currentColumns = formGlobal.value.columns
+  if (!item.spanMap) {
+    item.spanMap = {}
+  }
+
+  // 确保spanMap有当前columns数的键
+  for (let i = 1; i <= Math.max(currentColumns, 12); i++) {
+    if (!item.spanMap[i]) {
+      item.spanMap[i] = 1
+    }
+  }
+}
+
+// 当columns改变时，确保所有item的spanMap都有对应的键
+function updateSpanMapsForColumns() {
+  options.value.forEach((item: any) => {
+    ensureSpanMap(item)
+  })
+}
+
+// 监听columns变化，更新spanMap
+watch(
+  () => formGlobal.value.columns,
+  () => {
+    updateSpanMapsForColumns()
+  },
+)
 
 function formatFormMap() {
   const _formMap: Record<string, any> = {}
@@ -117,11 +163,17 @@ function formatFormMap() {
 }
 
 function minimize(item: any) {
-  item.spanMap[formGlobal.value.columns] -= 1
+  ensureSpanMap(item)
+  if (item.spanMap[formGlobal.value.columns] > 1) {
+    item.spanMap[formGlobal.value.columns] -= 1
+  }
 }
 
 function maximize(item: any) {
-  item.spanMap[formGlobal.value.columns] += 1
+  ensureSpanMap(item)
+  if (item.spanMap[formGlobal.value.columns] < formGlobal.value.columns) {
+    item.spanMap[formGlobal.value.columns] += 1
+  }
 }
 
 function getModel() {
@@ -133,6 +185,7 @@ function getModel() {
 
   const _options = cloneDeep(options.value)
   _options.forEach((item: any) => {
+    ensureSpanMap(item)
     const rowStart
       = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
     const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
@@ -196,21 +249,25 @@ function preview() {
   }
 }
 
+// 创建新字段的spanMap，支持更多columns
+function createInitialSpanMap() {
+  const spanMap: Record<number, number> = {}
+  // 为1-12栏创建初始spanMap
+  for (let i = 1; i <= 12; i++) {
+    spanMap[i] = 1
+  }
+  return spanMap
+}
+
 function addField() {
   const field = `${getUniqueId()}`
-  options.value.push(
-    cloneDeep({
-      id: `desc_${dayjs().format('YYYYMMDD')}_${field}`,
-      label: `字段 ${field}`,
-      spanMap: {
-        1: 1,
-        2: 1,
-        3: 1,
-        4: 1,
-      },
-      field,
-    }),
-  )
+  const newItem = {
+    id: `desc_${dayjs().format('YYYYMMDD')}_${field}`,
+    label: `字段 ${field}`,
+    spanMap: createInitialSpanMap(),
+    field,
+  }
+  options.value.push(cloneDeep(newItem))
 }
 
 function importField() {
@@ -223,12 +280,7 @@ function importFieldOptions(_options: any) {
       return {
         id: `desc_${dayjs().format('YYYYMMDD')}_${key}`,
         label: _options[key],
-        spanMap: {
-          1: 1,
-          2: 1,
-          3: 1,
-          4: 1,
-        },
+        spanMap: createInitialSpanMap(),
         field: key,
       }
     },
@@ -236,6 +288,8 @@ function importFieldOptions(_options: any) {
 }
 
 onMounted(() => {
+  // 初始化时确保所有item都有完整的spanMap
+  updateSpanMapsForColumns()
   refreshForm()
 })
 </script>
@@ -260,7 +314,7 @@ onMounted(() => {
         </lew-button>
         <lew-tabs
           v-model="formGlobal.columns"
-          width="320px"
+          width="620px"
           item-width="auto"
           :options="colOptions"
         />
@@ -287,14 +341,11 @@ onMounted(() => {
         <draggable
           v-model="options"
           group="form"
+          class="lew-form-wrapper-draggable lew-scrollbar"
           :class="{
             'lew-form-wrapper-draggable-empty': options.length === 0,
-            'lew-form-wrapper-draggable-1': formGlobal.columns === 1,
-            'lew-form-wrapper-draggable-2': formGlobal.columns === 2,
-            'lew-form-wrapper-draggable-3': formGlobal.columns === 3,
-            'lew-form-wrapper-draggable-4': formGlobal.columns === 4,
           }"
-          class="lew-form-wrapper-draggable lew-scrollbar"
+          :style="getDynamicGridStyle"
           item-key="id"
           v-bind="{
             animation: 200,
@@ -311,7 +362,7 @@ onMounted(() => {
               }"
               :style="{
                 'grid-column-end': `span ${
-                  element.spanMap[formGlobal.columns]
+                  element.spanMap?.[formGlobal.columns] || 1
                 }`,
                 'padding': formGlobal.bordered ? 0 : `15px 13px 15px 13px`,
               }"
@@ -325,7 +376,7 @@ onMounted(() => {
               <lew-flex x="end" y="center" class="handle-box">
                 <lew-flex x="end" gap="5" y="center">
                   <Icon
-                    v-if="element.spanMap[formGlobal.columns] > 1"
+                    v-if="(element.spanMap?.[formGlobal.columns] || 1) > 1"
                     class="handle-icon handle-resize"
                     :size="14"
                     type="minimize-2"
@@ -333,7 +384,7 @@ onMounted(() => {
                   />
                   <Icon
                     v-if="
-                      element.spanMap[formGlobal.columns] < formGlobal.columns
+                      (element.spanMap?.[formGlobal.columns] || 1) < formGlobal.columns
                     "
                     class="handle-icon handle-resize"
                     :size="14"
@@ -543,6 +594,8 @@ onMounted(() => {
       overflow-y: auto;
       box-sizing: border-box;
       padding: 5px;
+      // 移除固定的grid-template-columns类，改为动态样式
+      align-content: start;
     }
 
     .lew-form-component-box {
@@ -673,7 +726,6 @@ onMounted(() => {
 
   .lew-form-wrapper-draggable {
     position: relative;
-    align-content: start;
   }
 
   .lew-form-wrapper-draggable-empty::after {
@@ -688,23 +740,7 @@ onMounted(() => {
     transform: translate(-50%, -50%);
   }
 
-  .lew-form-wrapper-draggable-1 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .lew-form-wrapper-draggable-2 {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .lew-form-wrapper-draggable-3 {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .lew-form-wrapper-draggable-4 {
-    grid-template-columns:
-      minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)
-      minmax(0, 1fr);
-  }
+  // 移除固定的grid-template-columns样式类，改为动态样式
 }
 
 .lew-form-options-main {
