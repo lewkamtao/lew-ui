@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { LewDropdown, LewFlex } from "lew-ui";
-import { formatComponent, isVueComponent } from "lew-ui/utils";
-import { computed } from "vue";
-import { actionBoxProps } from "./props";
+import { LewDropdown, LewFlex } from 'lew-ui'
+import { formatComponent, isVueComponent } from 'lew-ui/utils'
+import { computed } from 'vue'
+import { actionBoxProps } from './props'
 
-const props = defineProps(actionBoxProps);
+const props = defineProps(actionBoxProps)
 
-const threshold = computed(() => Number(props.dropdownThreshold));
+const threshold = computed(() => Number(props.dropdownThreshold))
 
 const visibleOptions = computed(() => {
   if (threshold.value <= 0) {
-    return props.options;
+    return props.options
   }
-  return props.options.slice(0, threshold.value);
-});
+  return props.options.slice(0, threshold.value)
+})
 
 const dropdownOptions: any = computed(() => {
   if (threshold.value <= 0) {
-    return [];
+    return []
   }
-  return props.options.slice(threshold.value);
-});
+  return props.options.slice(threshold.value)
+})
 </script>
 
 <template>
@@ -47,9 +47,9 @@ const dropdownOptions: any = computed(() => {
       </div>
       <i
         v-if="
-          divider &&
-          (dropdownOptions.length > 0 ||
-            (visibleOptions.length === options.length && index !== options.length - 1))
+          divider
+            && (dropdownOptions.length > 0
+              || (visibleOptions.length === options.length && index !== options.length - 1))
         "
         class="lew-action-box-divider"
       />

@@ -82,7 +82,9 @@ defineExpose({ open })
         request: ok,
       } as any
     "
-    :title="`${isEditing ? locale.t('inputTable.editTitle') : locale.t('inputTable.modelTitle')}`"
+    :title="`${
+      isEditing ? locale.t('inputTable.editTitle') : locale.t('inputTable.modelTitle')
+    }`"
   >
     <div class="lew-form-modal lew-scrollbar">
       <LewForm

@@ -1,94 +1,94 @@
 <script setup lang="ts">
-import type { InputTableColumn } from "./props";
-import { LewButton, LewDialog, LewFlex, LewMessage, LewTable, locale } from "lew-ui";
+import type { InputTableColumn } from './props'
+import { LewButton, LewDialog, LewFlex, LewMessage, LewTable, locale } from 'lew-ui'
 
-import { any2px, getUniqueId } from "lew-ui/utils";
-import Icon from "lew-ui/utils/Icon.vue";
-import { cloneDeep } from "lodash-es";
-import FormModal from "./FormModal.vue";
-import { inputTableProps } from "./props";
+import { any2px, getUniqueId } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep } from 'lodash-es'
+import FormModal from './FormModal.vue'
+import { inputTableProps } from './props'
 
 // 扩展LewTable类型以支持drag-sort事件
-declare module "vue" {
+declare module 'vue' {
   interface ComponentCustomEvents {
-    "drag-sort": [data: any[]];
+    'drag-sort': [data: any[]]
   }
 }
 
-const props = defineProps(inputTableProps);
+const props = defineProps(inputTableProps)
 // 获取app
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewMessage);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewMessage)
 }
-const modelValue: Ref<Array<any>> = defineModel({ required: true });
+const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
 function setUseId() {
   (modelValue.value || []).forEach((e: any) => {
     if (!e.id) {
-      e.id = getUniqueId();
+      e.id = getUniqueId()
     }
-  });
+  })
 }
 
-setUseId();
+setUseId()
 watch(modelValue.value, () => {
-  setUseId();
-});
+  setUseId()
+})
 
 // 缓存列配置，避免重复计算
 const inputTableColumns = computed(() => {
-  const actionColumn =
-    props.deletable || props.addable
+  const actionColumn
+    = props.deletable || props.addable
       ? [
           {
-            title: "操作",
+            title: '操作',
             width: 90,
-            field: "action",
-            x: "center",
-            fixed: "right",
+            field: 'action',
+            x: 'center',
+            fixed: 'right',
           },
         ]
-      : [];
+      : []
 
-  return [...props.columns, ...actionColumn];
-});
+  return [...props.columns, ...actionColumn]
+})
 
 // 缓存表单选项配置
 const formOptions = computed(() => {
   return props.columns.map((column: any) => {
-    const { as, title, field, props: columnProps, required } = column;
+    const { as, title, field, props: columnProps, required } = column
     return {
       label: title,
       field,
-      as: as || "input",
+      as: as || 'input',
       required,
       props: columnProps,
-    };
-  });
-});
+    }
+  })
+})
 
 // 缓存样式计算
 const styleConfig = computed(() => {
-  const { size } = props;
+  const { size } = props
 
   const paddingMap = {
-    small: "8px",
-    medium: "10px",
-    large: "12px",
-  };
+    small: '8px',
+    medium: '10px',
+    large: '12px',
+  }
 
   const fontSizeMap = {
     small: 13,
     medium: 14,
     large: 16,
-  };
+  }
 
   const iconSizeMap = {
-    small: "24px",
-    medium: "26px",
-    large: "28px",
-  };
+    small: '24px',
+    medium: '26px',
+    large: '28px',
+  }
 
   return {
     addButtonStyle: {
@@ -100,113 +100,114 @@ const styleConfig = computed(() => {
       height: iconSizeMap[size],
     },
     iconSize: fontSizeMap[size],
-  };
-});
+  }
+})
 
-const formModalRef = ref();
+const formModalRef = ref()
 
 // 修复排序后编辑问题：使用rowKey而不是index来标识行
-function edit({ row }: { row: any; index: number }) {
-  formModalRef.value.open({ row });
+function edit({ row }: { row: any, index: number }) {
+  formModalRef.value.open({ row })
 }
 
-function del({ row }: { row: any; index: number }) {
+function del({ row }: { row: any, index: number }) {
   if ((modelValue.value || []).length <= props.minRows) {
-    LewMessage.warning(locale.t("inputTable.minRows"));
-    return;
+    LewMessage.warning(locale.t('inputTable.minRows'))
+    return
   }
 
   LewDialog.error({
-    title: locale.t("inputTable.deleteConfirm"),
-    okText: locale.t("inputTable.delete"),
-    cancelText: locale.t("inputTable.cancel"),
-    content: locale.t("inputTable.deleteConfirmContent"),
+    title: locale.t('inputTable.deleteConfirm'),
+    okText: locale.t('inputTable.delete'),
+    cancelText: locale.t('inputTable.cancel'),
+    content: locale.t('inputTable.deleteConfirmContent'),
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {
       // 通过rowKey找到正确的行进行删除
-      const rowId = row[props.rowKey];
+      const rowId = row[props.rowKey]
       const actualIndex = modelValue.value.findIndex(
-        (item) => item[props.rowKey] === rowId
-      );
+        item => item[props.rowKey] === rowId,
+      )
       if (actualIndex !== -1) {
-        modelValue.value.splice(actualIndex, 1);
+        modelValue.value.splice(actualIndex, 1)
       }
-      return true;
+      return true
     },
-  });
+  })
 }
 
 function add() {
   if ((modelValue.value || []).length >= props.maxRows) {
-    LewMessage.warning(locale.t("inputTable.maxRows"));
-    return;
+    LewMessage.warning(locale.t('inputTable.maxRows'))
+    return
   }
 
-  const row: any = cloneDeep(props.defaultForm);
+  const row: any = cloneDeep(props.defaultForm)
   if (props.autoUniqueId) {
-    row.id = getUniqueId();
+    row.id = getUniqueId()
   }
-  formModalRef.value.open({ row });
+  formModalRef.value.open({ row })
 }
 
 function addSuccess({ row }: { row: any }) {
   if (!Array.isArray(modelValue.value)) {
-    modelValue.value = [row];
-  } else {
-    modelValue.value.push(row);
+    modelValue.value = [row]
+  }
+  else {
+    modelValue.value.push(row)
   }
 }
 
 // 修复编辑成功逻辑：通过rowKey找到正确的行进行更新
 function editSuccess({ row }: { row: any }) {
-  const rowId = row[props.rowKey];
-  const actualIndex = modelValue.value.findIndex((item) => item[props.rowKey] === rowId);
+  const rowId = row[props.rowKey]
+  const actualIndex = modelValue.value.findIndex(item => item[props.rowKey] === rowId)
   if (actualIndex !== -1) {
-    modelValue.value.splice(actualIndex, 1, row);
+    modelValue.value.splice(actualIndex, 1, row)
   }
 }
 
-const selectedKeys = ref<string[]>([]);
+const selectedKeys = ref<string[]>([])
 
 // 处理拖拽排序事件，同步更新modelValue的顺序
 function dragSort(sortedDataSource: any[]) {
   // 移除内部的_lew_table_tr_id字段，保持数据纯净
   const cleanedData = sortedDataSource.map((item) => {
-    const { _lew_table_tr_id, ...cleanItem } = item;
-    return cleanItem;
-  });
+    const { _lew_table_tr_id, ...cleanItem } = item
+    return cleanItem
+  })
 
   // 更新modelValue为排序后的数据
-  modelValue.value = cleanedData;
+  modelValue.value = cleanedData
 }
 
 function checkUniqueFieldFn(form: any) {
   if (!props.uniqueField) {
-    return true;
+    return true
   }
 
-  const fieldValue = form[props.uniqueField];
-  const currentRowId = form[props.rowKey];
+  const fieldValue = form[props.uniqueField]
+  const currentRowId = form[props.rowKey]
 
   // 编辑时需要排除当前行
   const isDuplicate = modelValue.value.some(
-    (item) =>
-      item[props.uniqueField] === fieldValue && item[props.rowKey] !== currentRowId
-  );
+    item =>
+      item[props.uniqueField] === fieldValue && item[props.rowKey] !== currentRowId,
+  )
 
   if (isDuplicate) {
     const label = formOptions.value.find(
-      (option: any) => option.field === props.uniqueField
-    )?.label;
-    LewMessage.warning(locale.t("inputTable.uniqueFieldExist", { label }));
-    return false;
+      (option: any) => option.field === props.uniqueField,
+    )?.label
+    LewMessage.warning(locale.t('inputTable.uniqueFieldExist', { label }))
+    return false
   }
 
-  return true;
+  return true
 }
 
-const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props.maxRows);
+const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props.maxRows)
 </script>
 
 <template>
