@@ -29,25 +29,7 @@ class xwlRequest {
       (response: AxiosResponse) => {
         // 响应成功的拦截
         const res: any = response.data
-        if (res.code && res.code !== 200) {
-          if (res.code === 401) {
-            const redirectUrl = window.location.href
-            window.location.replace(
-              `http://app.tngeek.com/sso?redirectUrl=${redirectUrl}`,
-            )
-          }
-          else if (res.code === 403) {
-            LewNotification.warning({
-              title: '通知',
-              content: '无权限，请联系管理员，微信：15818934279',
-              delay: 0,
-            })
-          }
-          else {
-            LewMessage.error(res.message || '网络繁忙，请稍后重试！')
-          }
-        }
-        return response.data
+        return res
       },
       (error) => {
         // 响应失败的拦截

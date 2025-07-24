@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
 import type { UploadFileItem } from './props'
-import { LewFlex, LewImage, LewTag, LewTextTrim, LewTooltip } from 'lew-ui'
+import { LewFlex, LewImage, LewTag, LewTextTrim, LewTooltip, locale } from 'lew-ui'
 import {
   any2px,
   checkUrlIsImage,
@@ -10,10 +10,22 @@ import {
   getUniqueId,
 } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { statusConfig, uploadByListProps } from './props'
+import { uploadByListProps } from './props'
 
 defineProps(uploadByListProps)
+
 const emit = defineEmits(['reUpload', 'deleteFile'])
+
+const statusColorMap = {
+  success: 'green',
+  fail: 'red',
+  uploading: 'blue',
+  complete: 'gray',
+  wrong_type: 'red',
+  wrong_size: 'red',
+  pending: 'gray',
+}
+
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -75,8 +87,8 @@ function getLastValueAfterSlash(url: string = '') {
   return urlParts[urlParts.length - 1]
 }
 
-const getStatus = computed(() => (item: UploadFileItem) => {
-  return statusConfig[item.status || 'complete']
+const getStatusText = computed(() => (item: UploadFileItem) => {
+  return locale.t(`upload.${item.status || 'complete'}`)
 })
 </script>
 
@@ -188,9 +200,7 @@ const getStatus = computed(() => (item: UploadFileItem) => {
                 fontSize: `${any2px(footerFontSizeMap[size])}`,
               }"
             >
-              <template
-                v-if="item.status === 'uploading' && item.percent && item.size"
-              >
+              <template v-if="item.status === 'uploading' && item.percent && item.size">
                 {{ `${formatBytes((item.percent / 100) * item.size)} / ` }}
               </template>
               <span v-if="item.size"> {{ formatBytes(item.size) }}</span>
@@ -201,7 +211,7 @@ const getStatus = computed(() => (item: UploadFileItem) => {
                 :key="item.status"
                 type="light"
                 size="small"
-                :color="getStatus(item).color as LewColor"
+                :color="statusColorMap[item.status || 'complete'] as LewColor"
               >
                 <template #left>
                   <Icon
@@ -211,7 +221,7 @@ const getStatus = computed(() => (item: UploadFileItem) => {
                     :loading="item.status === 'uploading'"
                   />
                 </template>
-                {{ getStatus(item).text }}
+                {{ getStatusText(item) }}
               </LewTag>
             </LewFlex>
           </LewFlex>
@@ -288,21 +298,6 @@ const getStatus = computed(() => (item: UploadFileItem) => {
       display: flex;
       align-items: center;
       overflow: hidden;
-      animation: progressCompleted 0.25s;
-      animation-fill-mode: forwards;
-      animation-play-state: paused;
-      animation-delay: 500ms;
-
-      @keyframes progressCompleted {
-        0% {
-          opacity: 1;
-          height: 14px;
-        }
-        100% {
-          opacity: 0;
-          height: 0px;
-        }
-      }
 
       .lew-upload-progress-box {
         height: 14px;
@@ -331,8 +326,27 @@ const getStatus = computed(() => (item: UploadFileItem) => {
       }
     }
 
-    .lew-upload-progress-success {
+    .lew-upload-progress-success,
+    .lew-upload-progress-fail {
+      animation: progressCompleted 0.25s;
+      animation-fill-mode: forwards;
+      animation-play-state: paused;
+      animation-delay: 500ms;
       animation-play-state: running;
+
+      @keyframes progressCompleted {
+        0% {
+          opacity: 1;
+          height: 14px;
+        }
+        100% {
+          opacity: 0;
+          height: 0px;
+        }
+      }
+    }
+    .lew-upload-progress-uploading {
+      animation: none;
     }
     .lew-upload-progress-fail {
       .lew-upload-progress-bar-upload {

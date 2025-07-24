@@ -56,8 +56,7 @@ const getBind = computed(() => (item: any) => {
     labelX,
     valueX,
     bordered,
-    labelWidth:
-      labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth,
+    labelWidth: labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth,
     ...item,
   }
 })
@@ -65,11 +64,7 @@ const getBind = computed(() => (item: any) => {
 
 <template>
   <div class="lew-desc" :style="getDescStyle" :class="getDescClassNames">
-    <LewGetLabelWidth
-      ref="descLabelRef"
-      :size="size"
-      :options="componentOptions"
-    />
+    <LewGetLabelWidth ref="descLabelRef" :size="size" :options="componentOptions" />
     <LewDescItem
       v-for="item in componentOptions"
       :key="item.field"

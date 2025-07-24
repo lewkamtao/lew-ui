@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { UploadFileItem, UploadStatus } from './props'
 import { useClipboardItems } from '@vueuse/core'
-import { LewDialog, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
+import { LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
 import { any2px, formatBytes, getUniqueId, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { cloneDeep, isFunction } from 'lodash-es'
@@ -30,15 +30,13 @@ const maxSizeFontSizeMap: Record<string, number> = {
   medium: 12,
   large: 14,
 }
-const uploadIconFontSizeMap: ComputedRef<Record<string, number>> = computed(
-  () => {
-    return {
-      small: props.viewMode === 'list' ? 28 : 22,
-      medium: props.viewMode === 'list' ? 30 : 24,
-      large: props.viewMode === 'list' ? 32 : 26,
-    }
-  },
-)
+const uploadIconFontSizeMap: ComputedRef<Record<string, number>> = computed(() => {
+  return {
+    small: props.viewMode === 'list' ? 28 : 22,
+    medium: props.viewMode === 'list' ? 30 : 24,
+    large: props.viewMode === 'list' ? 32 : 26,
+  }
+})
 const uploadPaddingMap: ComputedRef<Record<string, string>> = computed(() => {
   return {
     small: props.viewMode === 'list' ? '10px 8px' : '14px',
@@ -119,30 +117,39 @@ function addImageToList(files: any) {
   }
 }
 
-function deleteFile(key: string) {
+async function deleteFile(key: string) {
   const fileList = cloneDeep(modelValue.value) || []
   const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
   if (index >= 0) {
     const { status } = fileList[index]
+    const fileItem = fileList[index]
+
+    // 对于错误状态的文件，直接删除
     if (['wrong_type', 'wrong_size', 'pending'].includes(status || '')) {
       fileList.splice(index, 1)
       modelValue.value = fileList
+      emit('delete', key)
+      return
     }
-    else {
-      LewDialog.error({
-        title: '移除文件',
-        okText: '移除',
-        content: '你是否要移除该文件，此操作会立即生效，请谨慎操作！',
-        closeOnClickOverlay: true,
-        closeByEsc: true,
-        ok: () => {
-          fileList.splice(index, 1)
-          modelValue.value = fileList
-          emit('delete', key)
-          return true
-        },
-      })
+
+    // 调用删除前的回调函数
+    if (props.beforeDelete && isFunction(props.beforeDelete)) {
+      try {
+        const shouldDelete = await props.beforeDelete(fileItem)
+        if (!shouldDelete) {
+          return // 用户取消删除
+        }
+      }
+      catch (error) {
+        console.error('[LewUpload] beforeDelete callback error:', error)
+        return // 出错时不删除
+      }
     }
+
+    // 执行删除
+    fileList.splice(index, 1)
+    modelValue.value = fileList
+    emit('delete', key)
   }
 }
 
@@ -350,10 +357,10 @@ const getTips = computed(() => {
         >
           {{
             dropActive
-              ? locale.t('upload.dropActive')
-              : `${locale.t('upload.click')}${isSupported && isFocus ? locale.t('upload.paste') : ''}${locale.t(
-                'upload.drag',
-              )}`
+              ? locale.t("upload.dropActive")
+              : `${locale.t("upload.click")}${
+                isSupported && isFocus ? locale.t("upload.paste") : ""
+              }${locale.t("upload.drag")}`
           }}
         </div>
         <div

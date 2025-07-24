@@ -35,8 +35,7 @@ const imageStyleObject = computed(() => {
 })
 
 const textStyleObject = computed(() => {
-  const size
-    = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
+  const size = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
   return {
     fontSize: `${size * 0.45}px`,
     lineHeight: `${size}px`,
@@ -141,7 +140,6 @@ const dotStyleObject: any = computed(() => {
   }
 })
 
-// 修复响应性问题：直接使用 useImage 返回的响应式引用
 const { isLoading, error } = useImage({ src: props.src })
 
 const getIconSize = computed(() => {
@@ -155,13 +153,7 @@ const getIconSize = computed(() => {
     <div class="lew-avatar-box" :style="avatarBoxStyleObject">
       <template v-if="src">
         <div v-if="isLoading || loading" class="skeleton" />
-        <img
-          v-else-if="!error"
-          :alt="alt"
-          :src="src"
-          lazy
-          :style="imageStyleObject"
-        >
+        <img v-else-if="!error" :alt="alt" :src="src" lazy :style="imageStyleObject">
         <div v-else-if="alt" class="lew-avatar-text" :style="textStyleObject">
           {{ altText }}
         </div>
@@ -195,6 +187,7 @@ const getIconSize = computed(() => {
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
     background-color: var(--lew-bgcolor-2);
+    border: var(--lew-pop-border);
   }
 
   .lew-avatar-text {

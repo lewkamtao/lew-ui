@@ -18,7 +18,7 @@ onMounted(() => {
       const dom = menuItems[i].querySelector('.lew-text-trim-wrapper')
       if (dom) {
         if (isComplete.includes(dom.textContent as string)) {
-          ;(dom as HTMLElement).style.opacity = '0.2'
+          (dom as HTMLElement).style.opacity = '0.2'
         }
       }
     }
@@ -112,10 +112,10 @@ const options: MenuOptions[] = [
         label: 'ContextMenu',
         value: '/ContextMenu',
         tagProps: {
-          text: 'Pro',
-          color: 'red',
+          text: 'New',
           type: 'ghost',
           round: true,
+          color: 'green',
         },
       },
       {
@@ -194,10 +194,10 @@ const options: MenuOptions[] = [
         label: 'InputTable',
         value: '/InputTable',
         tagProps: {
-          text: 'Dev',
+          text: 'New',
           type: 'ghost',
           round: true,
-          color: 'blue',
+          color: 'green',
         },
       },
       {

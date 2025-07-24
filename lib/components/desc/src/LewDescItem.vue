@@ -68,9 +68,7 @@ const getGap = computed(() => {
 const getPadding = computed(() => {
   const { bordered, size } = props
   return bordered
-    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(
-      lewDescSizePaddingMap[size],
-    )}`
+    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(lewDescSizePaddingMap[size])}`
     : 0
 })
 
@@ -95,9 +93,7 @@ const getDescItemMainStyle = computed(() => {
   return {
     'width':
       direction === 'x'
-        ? `calc(${descItemRef.value?.offsetWidth}px - ${any2px(
-          labelWidth,
-        )} - 10px)`
+        ? `calc(${descItemRef.value?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
         : '100%',
     'justify-content': valueX === 'center' ? valueX : `flex-${valueX}`,
     'padding': getPadding.value,
@@ -276,8 +272,6 @@ const getLabelBoxWidth = computed(() => {
 }
 
 .lew-desc-item-bordered {
-  border-bottom: var(--lew-desc-border);
-
   .lew-label-box-wrapper,
   .lew-desc-item-main {
     box-sizing: border-box;

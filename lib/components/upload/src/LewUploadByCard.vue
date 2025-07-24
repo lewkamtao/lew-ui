@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
 import type { UploadFileItem } from './props'
-import { LewFlex, LewImage, LewTooltip } from 'lew-ui'
+import { LewFlex, LewImage, LewTooltip, locale } from 'lew-ui'
 import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { statusConfig, uploadByCardProps } from './props'
+import { uploadByCardProps } from './props'
 
 defineProps(uploadByCardProps)
 const emit = defineEmits(['reUpload', 'deleteFile'])
@@ -45,10 +45,19 @@ const getCardSize: Record<string, number> = {
   large: 88,
 }
 
-const getStatus = computed(() => (item: UploadFileItem) => {
-  return statusConfig[item.status || 'complete']
+const getStatusText = computed(() => (item: UploadFileItem) => {
+  return locale.t(`upload.${item.status || 'complete'}`)
 })
 
+const statusColorMap = {
+  success: 'green',
+  fail: 'red',
+  uploading: 'blue',
+  complete: 'gray',
+  wrong_type: 'red',
+  wrong_size: 'red',
+  pending: 'gray',
+}
 const modelValue = defineModel<UploadFileItem[]>()
 </script>
 
@@ -94,7 +103,7 @@ const modelValue = defineModel<UploadFileItem[]>()
               )
           "
           v-tooltip="{
-            content: getStatus(item).text,
+            content: getStatusText(item),
             trigger: 'mouseenter',
           }"
           x="center"
@@ -109,7 +118,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           <Icon
             :size="rightTopBtnIconSizeMap[size]"
             type="tips"
-            :color="getStatus(item).color as LewColor"
+            :color="statusColorMap[item.status || 'complete'] as LewColor"
           />
         </LewFlex>
 

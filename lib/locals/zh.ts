@@ -97,6 +97,13 @@ export default {
     accept: '支持上传 {accept}',
     limit: '最多可上传 {limit} 个文件',
     maxFileSize: '单个文件不超过 {maxFileSize}',
+    pending: '待上传',
+    success: '上传成功',
+    fail: '上传失败',
+    uploading: '上传中',
+    complete: '已上传',
+    wrong_type: '非法格式',
+    wrong_size: '文件大小超出限制',
   },
   pagination: {
     pageSize: '{pageSize} 条/页',

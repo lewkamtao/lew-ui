@@ -22,12 +22,12 @@ function openLoading() {
 .demo-card {
   width: 100%;
   height: 500px;
-  border: 2px solid var(--lew-bgcolor-5);
+  border: 1px solid var(--lew-pop-border-color);
   background-color: var(--lew-bgcolor-0);
   overflow: hidden;
   background-image:
-    linear-gradient(var(--lew-bgcolor-5) 1px, transparent 1px),
-    linear-gradient(90deg, var(--lew-bgcolor-5) 1px, transparent 1px);
+    linear-gradient(var(--lew-pop-border-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--lew-pop-border-color) 1px, transparent 1px);
   background-size: 20px 20px;
   background-position: center center;
   padding: 20px;

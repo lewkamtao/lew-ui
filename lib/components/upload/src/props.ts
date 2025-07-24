@@ -128,6 +128,18 @@ export const uploadProps = {
       return true
     },
   },
+  beforeDelete: {
+    type: Function,
+    default: undefined,
+    description: '删除文件前的回调函数，返回 Promise<boolean> 或 boolean，true 表示继续删除',
+    validator: (value: any) => {
+      if (value !== undefined && typeof value !== 'function') {
+        console.warn('[LewUpload] beforeDelete 必须是一个函数')
+        return false
+      }
+      return true
+    },
+  },
 }
 
 export const uploadByListProps = {
@@ -158,19 +170,6 @@ export const uploadByCardProps = {
       return true
     },
   },
-}
-
-export const statusConfig: Record<
-  UploadStatus,
-  { text: string, color: string }
-> = {
-  pending: { text: '待上传', color: 'gray' },
-  success: { text: '上传成功', color: 'green' },
-  fail: { text: '上传失败', color: 'red' },
-  uploading: { text: '上传中', color: 'blue' },
-  complete: { text: '已上传', color: 'gray' },
-  wrong_type: { text: '非法格式', color: 'red' },
-  wrong_size: { text: '文件大小超出限制', color: 'red' },
 }
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>

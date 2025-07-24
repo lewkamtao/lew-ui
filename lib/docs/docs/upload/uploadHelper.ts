@@ -32,6 +32,7 @@ export default ({
         })
       }
       else {
+        LewMessage.error(res.message)
         setFileItem({ key, status: 'fail' })
       }
     })

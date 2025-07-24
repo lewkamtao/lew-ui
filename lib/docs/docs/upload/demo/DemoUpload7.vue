@@ -16,13 +16,6 @@ const fileList = ref<UploadFileItem[]>([
     lastModifiedDate: '2024-09-05T12:48:35.593Z',
     lastModified: 1725540515593,
   },
-  {
-    key: '6924f722',
-    size: 646077,
-    name: 'lew-ui_docs.zip',
-    lastModifiedDate: '2025-01-06T07:15:21.373Z',
-    lastModified: 1736147721373,
-  },
 ])
 </script>
 

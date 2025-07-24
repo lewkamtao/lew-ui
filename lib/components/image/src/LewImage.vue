@@ -19,29 +19,9 @@ const imageStyleObject = computed(() => {
   }
 })
 
-const _loading = ref()
-const _error = ref()
-
-function init() {
-  const { isLoading, error } = useImage({
-    src: props.src as string,
-  })
-  _loading.value = isLoading
-  _error.value = error
-}
-
-init()
-
-watch(
-  () => props.src,
-  () => {
-    const { isLoading, error } = useImage({
-      src: props.src as string,
-    })
-    _loading.value = isLoading
-    _error.value = error
-  },
-)
+const { isLoading, error } = useImage({
+  src: props.src as string,
+})
 </script>
 
 <template>
@@ -52,8 +32,8 @@ watch(
     class="lew-image-wrapper"
     :style="imageStyleObject"
   >
-    <div v-if="_loading || loading || !src" class="skeletons" />
-    <template v-else-if="_error">
+    <div v-if="isLoading || loading || !src" class="skeletons" />
+    <template v-else-if="error">
       <slot v-if="$slots.error" name="error" />
       <img
         v-else
