@@ -3,7 +3,7 @@ import type { TextTrimAlignment } from 'lew-ui'
 import { LewTextTrim, LewTooltip } from 'lew-ui'
 import { tipsIconSizeMap } from 'lew-ui/components/form/form/src/props'
 import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { isString } from 'lodash-es'
 import { descItemProps, lewDescSizePaddingMap } from './props'
 
@@ -116,7 +116,7 @@ const getLabelBoxWidth = computed(() => {
     <div :style="`width:${getLabelBoxWidth}`" class="lew-label-box-wrapper">
       <div class="lew-label-box" :style="getLabelBoxStyle">
         {{ label }}
-        <Icon
+        <LewCommonIcon
           v-if="tips"
           v-tooltip="{
             content: tips,

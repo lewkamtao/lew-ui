@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getColorType } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { tagProps } from './props'
 
 // Props & Emits
@@ -107,7 +107,7 @@ const tagStyle: any = computed(() => {
     </div>
 
     <div v-if="closable" class="lew-tag-close" @click.stop="close">
-      <Icon :size="tagStyle.closeIconSize" type="close" />
+      <LewCommonIcon :size="tagStyle.closeIconSize" type="close" />
     </div>
   </div>
 </template>

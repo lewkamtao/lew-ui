@@ -6,7 +6,7 @@ import { lewDescSizePaddingMap } from 'lew-ui'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
 import { downloadObjectAsFile } from 'lew-ui/docs/lib/utils'
 import { flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
@@ -378,14 +378,14 @@ onMounted(() => {
             >
               <lew-flex x="end" y="center" class="handle-box">
                 <lew-flex x="end" gap="5" y="center">
-                  <Icon
+                  <LewCommonIcon
                     v-if="(element.spanMap?.[formGlobal.columns] || 1) > 1"
                     class="handle-icon handle-resize"
                     :size="14"
                     type="minimize-2"
                     @click="minimize(element)"
                   />
-                  <Icon
+                  <LewCommonIcon
                     v-if="
                       (element.spanMap?.[formGlobal.columns] || 1) < formGlobal.columns
                     "
@@ -394,7 +394,7 @@ onMounted(() => {
                     type="maximize-2"
                     @click="maximize(element)"
                   />
-                  <Icon
+                  <LewCommonIcon
                     class="handle-icon"
                     :size="14"
                     type="trash"
@@ -402,7 +402,7 @@ onMounted(() => {
                   />
                 </lew-flex>
               </lew-flex>
-              <Icon
+              <LewCommonIcon
                 v-if="!element.field"
                 v-tooltip="{
                   content: '未绑定字段',

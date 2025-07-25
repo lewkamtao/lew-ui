@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { LewTooltip } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { rateProps } from './props'
 
 const props = defineProps(rateProps)
@@ -117,7 +117,7 @@ const getTips = computed(() => (index: number) => {
       @mouseleave="handleMouseLeave"
       @click="handleClick(i)"
     >
-      <Icon
+      <LewCommonIcon
         v-tooltip="{
           content: getTips(i),
           trigger: 'hover',

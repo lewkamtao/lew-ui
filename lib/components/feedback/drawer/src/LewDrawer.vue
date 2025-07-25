@@ -3,7 +3,7 @@ import { onClickOutside, useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { drawerProps } from './props'
 
@@ -212,7 +212,7 @@ function close() {
             class="lew-drawer-icon-close"
             @click="close"
           >
-            <Icon :size="14" type="close" />
+            <LewCommonIcon :size="14" type="close" />
           </LewButton>
         </LewFlex>
         <div class="lew-drawer-body-slot">

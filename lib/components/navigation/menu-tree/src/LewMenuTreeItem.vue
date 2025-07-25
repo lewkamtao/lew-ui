@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { LewCollapseTransition, LewFlex } from 'lew-ui'
-import { formatComponent, isVueRender } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { isValidComponent } from 'lew-ui/utils'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
 import { cloneDeep } from 'lodash-es'
 import { menuTreeItemProps } from './props'
 
@@ -10,6 +11,7 @@ const props = defineProps(menuTreeItemProps)
 const emit = defineEmits(['change'])
 const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any
   = inject('lew-menu-tree')
+
 function change() {
   if (props.disabled)
     return
@@ -51,7 +53,7 @@ function change() {
       :style="{
         paddingLeft: collapsed
           ? '0px'
-          : isVueRender(icon)
+          : isValidComponent(icon)
             ? '36px'
             : '11.5px',
       }"
@@ -59,31 +61,27 @@ function change() {
     >
       <slot v-if="$slots.label" name="label" :props="props" />
       <template v-else>
-        <component
-          :is="formatComponent(icon)"
-          v-if="isVueRender(icon)"
+        <RenderComponent
+          :render-fn="icon"
           class="lew-menu-tree-item-icon"
         />
-        <component
-          :is="formatComponent(label)"
-          v-if="isVueRender(label)"
-          class="lew-menu-tree-item-text"
-        />
-        <lew-text-trim
-          v-else
-          class="lew-menu-tree-item-text"
-          placement="right"
-          :style="{
-            maxWidth: `calc(100% - ${isVueRender(icon) ? 30 : 0}px)`,
+        <RenderComponent
+          :render-fn="label"
+          type="text-trim"
+          :component-props="{
+            placement: 'right',
+            delay: [250, 250],
           }"
-          :text="label"
-          :delay="[250, 250]"
+          :style="{
+            maxWidth: `calc(100% - ${isValidComponent(icon) ? 30 : 0}px)`,
+          }"
+          class="lew-menu-tree-item-text"
         />
         <lew-tag
           v-if="tagProps?.text"
           v-bind="{ ...tagProps, size: tagProps.size || 'small' }"
         />
-        <Icon
+        <LewCommonIcon
           v-if="!isLeaf && !collapsed"
           class="lew-menu-tree-item-chevron-right"
           :size="14"

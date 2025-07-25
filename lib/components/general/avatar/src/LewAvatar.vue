@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { avatarProps } from './props'
 
 const props = defineProps(avatarProps)
@@ -157,7 +157,7 @@ const getIconSize = computed(() => {
         <div v-else-if="alt" class="lew-avatar-text" :style="textStyleObject">
           {{ altText }}
         </div>
-        <Icon v-else :size="getIconSize" type="user" />
+        <LewCommonIcon v-else :size="getIconSize" type="user" />
       </template>
       <template v-else-if="alt">
         <div class="lew-avatar-text" :style="textStyleObject">
@@ -165,7 +165,7 @@ const getIconSize = computed(() => {
         </div>
       </template>
       <template v-else>
-        <Icon :size="getIconSize" type="user" />
+        <LewCommonIcon :size="getIconSize" type="user" />
       </template>
     </div>
     <i v-if="status" :style="dotStyleObject" />

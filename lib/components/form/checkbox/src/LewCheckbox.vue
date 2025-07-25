@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { cloneDeep } from 'lodash-es'
 import { checkboxProps } from './props'
 
@@ -60,7 +60,7 @@ const getCheckboxClassName = computed(() => {
   >
     <div v-if="iconable || (!iconable && !block)" class="lew-checkbox-icon-box">
       <i v-show="certain" class="lew-checkbox-icon-certain" />
-      <Icon
+      <LewCommonIcon
         :stroke-width="4"
         class="lew-checkbox-icon"
         type="check"

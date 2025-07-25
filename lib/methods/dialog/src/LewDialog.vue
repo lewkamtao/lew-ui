@@ -3,7 +3,7 @@ import type { LewColor } from 'lew-ui'
 import { useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { nextTick, onMounted, ref, watch } from 'vue'
 import { dialogProps } from './props'
 
@@ -87,7 +87,7 @@ if (props.closeByEsc) {
           >
             <LewFlex y="start">
               <div class="left">
-                <Icon :type :size="24" />
+                <LewCommonIcon :type :size="24" />
               </div>
               <div class="right">
                 <header>

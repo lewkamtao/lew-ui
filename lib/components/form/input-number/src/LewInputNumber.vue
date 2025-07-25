@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewFlex, LewTooltip, locale } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { inputNumberProps } from './props'
 
 const props = defineProps(inputNumberProps)
@@ -184,7 +184,7 @@ defineExpose({ toFocus, validCheck })
       @mouseenter="isFocus = true"
       @mouseleave="isFocus = false"
     >
-      <Icon
+      <LewCommonIcon
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-up"
@@ -192,7 +192,7 @@ defineExpose({ toFocus, validCheck })
         @mouseup="clearTimer"
         @mouseleave="clearTimer"
       />
-      <Icon
+      <LewCommonIcon
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-down"

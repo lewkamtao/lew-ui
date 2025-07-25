@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewFlex } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { collapseItemProps } from './props'
 
@@ -46,7 +46,7 @@ function change() {
     >
       <slot v-if="$slots.title" name="title" :props="props" />
       <template v-else>
-        <Icon
+        <LewCommonIcon
           :size="16"
           :style="{
             transform: `rotate(${modelValue ? 90 : 0}deg)`,

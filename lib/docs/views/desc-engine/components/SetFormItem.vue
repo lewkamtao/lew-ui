@@ -10,7 +10,7 @@ import {
   LewTextarea,
 } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import SetOptionModal from './SetOptionModal.vue'
 
 const props = defineProps({
@@ -60,7 +60,7 @@ const asMap: Record<string, any> = {
   <div x="start" class="set-form-item" :class="[`set-form-item-${direction}`]">
     <lew-flex v-if="as" x="start" gap="5" class="set-form-item-label">
       {{ label || '标签' }}
-      <Icon
+      <LewCommonIcon
         v-if="props?.tips"
         v-tooltip="{ content: props?.tips }"
         class="set-form-item-tips"

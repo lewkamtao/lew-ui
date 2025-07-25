@@ -9,7 +9,7 @@ import {
   getFileIcon,
   getUniqueId,
 } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { uploadByListProps } from './props'
 
 defineProps(uploadByListProps)
@@ -151,7 +151,7 @@ const getStatusText = computed(() => (item: UploadFileItem) => {
             class="lew-upload-reupload-btn"
             @click.stop="emit('reUpload', item.key)"
           >
-            <Icon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
+            <LewCommonIcon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
           </LewFlex>
 
           <LewFlex
@@ -165,7 +165,7 @@ const getStatusText = computed(() => (item: UploadFileItem) => {
             class="lew-upload-delete-btn"
             @click.stop="emit('deleteFile', item.key)"
           >
-            <Icon :size="rightTopBtnIconSizeMap[size]" type="close" />
+            <LewCommonIcon :size="rightTopBtnIconSizeMap[size]" type="close" />
           </LewFlex>
           <LewFlex mode="between" gap="5" y="center">
             <LewFlex y="center" x="start" gap="5">
@@ -214,7 +214,7 @@ const getStatusText = computed(() => (item: UploadFileItem) => {
                 :color="statusColorMap[item.status || 'complete'] as LewColor"
               >
                 <template #left>
-                  <Icon
+                  <LewCommonIcon
                     :size="12"
                     :type="item.status"
                     dark

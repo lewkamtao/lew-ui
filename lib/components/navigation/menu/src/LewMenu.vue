@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { MenuOptions } from './props'
 import { LewTag, LewTextTrim } from 'lew-ui'
-import { formatComponent, isVueRender } from 'lew-ui/utils'
+import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
 import { menuProps } from './props'
 
 defineProps(menuProps)
@@ -39,12 +39,18 @@ function select(item: MenuOptions) {
           }"
           @click="select(cItem)"
         >
-          <component
-            :is="formatComponent(cItem.icon)"
-            v-if="isVueRender(cItem.icon)"
+          <RenderComponent
+            :render-fn="cItem.icon"
             class="lew-menu-icon"
           />
-          <LewTextTrim :text="cItem.label" />
+          <RenderComponent
+            :render-fn="cItem.label"
+            type="text-trim"
+            :component-props="{
+              placement: 'right',
+              delay: [250, 250],
+            }"
+          />
           <LewTag
             v-if="cItem.tagProps?.text"
             v-bind="{

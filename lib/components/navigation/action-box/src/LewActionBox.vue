@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewDropdown, LewFlex } from 'lew-ui'
-import { formatComponent, isVueRender } from 'lew-ui/utils'
-import { computed } from 'vue'
+import { isValidComponent } from 'lew-ui/utils'
+import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
 import { actionBoxProps } from './props'
 
 const props = defineProps(actionBoxProps)
@@ -26,24 +26,19 @@ const dropdownOptions: any = computed(() => {
 <template>
   <LewFlex class="lew-action-box" :gap="5" :x="x">
     <template v-for="(option, index) in visibleOptions" :key="index">
-      <component
-        :is="formatComponent(option.customRender)"
-        v-if="isVueRender(option.customRender)"
+      <RenderComponent
+        v-if="isValidComponent(option.customRender)"
+        :render-fn="option.customRender"
         @click="option.onClick?.()"
       />
       <div v-else class="lew-action-box-item" @click="option.onClick?.()">
-        <component
-          :is="formatComponent(option.icon)"
-          v-if="isVueRender(option.icon)"
+        <RenderComponent
+          :render-fn="option.icon"
           class="lew-action-box-icon"
         />
-        <component
-          :is="formatComponent(option.label)"
-          v-if="isVueRender(option.label) && !iconOnly"
+        <RenderComponent
+          :render-fn="option.label"
         />
-        <template v-else-if="!iconOnly">
-          {{ option.label }}
-        </template>
       </div>
       <i
         v-if="
@@ -56,18 +51,13 @@ const dropdownOptions: any = computed(() => {
     </template>
     <LewDropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
       <div class="lew-action-box-item">
-        <component
-          :is="formatComponent(dropdownIcon)"
-          v-if="isVueRender(dropdownIcon)"
+        <RenderComponent
+          :render-fn="dropdownIcon"
           class="lew-action-box-icon"
         />
-        <component
-          :is="formatComponent(dropdownLabel)"
-          v-if="isVueRender(dropdownLabel)"
+        <RenderComponent
+          :render-fn="dropdownLabel"
         />
-        <template v-else>
-          {{ dropdownLabel }}
-        </template>
       </div>
     </LewDropdown>
   </LewFlex>

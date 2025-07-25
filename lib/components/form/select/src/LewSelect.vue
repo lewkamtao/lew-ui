@@ -3,7 +3,7 @@ import type { SelectOptions } from './props'
 import { useDebounceFn } from '@vueuse/core'
 import { LewEmpty, LewFlex, LewPopover, LewTextTrim, locale } from 'lew-ui'
 import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { cloneDeep, isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
 import { selectProps } from './props'
@@ -396,14 +396,14 @@ defineExpose({
         :class="getSelectClassName"
       >
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <Icon
+          <LewCommonIcon
             :size="getIconSize"
             :loading="state.initLoading"
             type="loading"
           />
         </div>
 
-        <Icon
+        <LewCommonIcon
           v-else
           :size="getIconSize"
           type="chevron-down"
@@ -413,7 +413,7 @@ defineExpose({
           }"
         />
         <transition name="lew-form-icon-ani">
-          <Icon
+          <LewCommonIcon
             v-if="clearable && state.keyword && !readonly"
             :size="getIconSize"
             type="close"
@@ -497,7 +497,7 @@ defineExpose({
                       :delay="[500, 0]"
                       class="lew-select-label"
                     />
-                    <Icon
+                    <LewCommonIcon
                       v-if="getChecked(templateProps.value) && showCheckIcon"
                       class="lew-icon-check"
                       :size="16"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewInput, LewMessage, LewTag, locale } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { cloneDeep } from 'lodash-es'
 import { inputTagProps } from './props'
 
@@ -326,7 +326,7 @@ function onBlur() {
       </transition-group>
 
       <transition name="lew-form-icon-ani">
-        <Icon
+        <LewCommonIcon
           v-if="
             clearable && (modelValue || []).length > 0 && !readonly && !disabled
           "

@@ -25,7 +25,7 @@ import {
   LewUpload,
 } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { cloneDeep, debounce, isString, merge } from 'lodash-es'
 import * as Yup from 'yup'
 import {
@@ -218,7 +218,7 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
           :size="requiredIconSizeMap[size]"
         />
         {{ label }}
-        <Icon
+        <LewCommonIcon
           v-if="tips"
           v-tooltip="{
             content: tips,

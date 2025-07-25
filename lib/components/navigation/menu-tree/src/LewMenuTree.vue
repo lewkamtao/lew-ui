@@ -80,7 +80,7 @@ function handleMenuSelect(item: MenuTreeItem) {
   emit('change', item)
 }
 // 递归这棵树，给每个节点添加一个 active 字段，用于标识当前选中项
-function transformTree(tree: MenuTreeItem[]): MenuTreeItem[] {
+function transformTree(tree: MenuTreeItem[] = []): MenuTreeItem[] {
   return tree.map(item => ({
     ...item,
     active:

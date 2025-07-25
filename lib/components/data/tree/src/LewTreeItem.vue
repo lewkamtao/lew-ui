@@ -3,16 +3,14 @@ import {
   LewCheckbox,
   LewCollapseTransition,
   LewMessage,
-  LewTextTrim,
 } from 'lew-ui'
 import {
   findAllChildrenKeys,
   findNodeByKey,
-  formatComponent,
   insertChildByKey,
-  isVueRender,
 } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
 import { cloneDeep } from 'lodash-es'
 import { treeItemProps } from './props'
 import transformTree, { formatTree } from './transformTree'
@@ -233,14 +231,14 @@ const isNodePartiallySelected = computed(() => {
     }"
   >
     <div class="lew-tree-chevron-right" @click.stop="expand">
-      <Icon
+      <LewCommonIcon
         v-if="loading"
         :size="14"
         loading
         class="lew-cascader-loading-icon"
         type="loader"
       />
-      <Icon
+      <LewCommonIcon
         v-else
         class="lew-tree-chevron-right-icon"
         :size="14"
@@ -264,12 +262,16 @@ const isNodePartiallySelected = computed(() => {
         }"
       />
       <template v-else>
-        <component :is="formatComponent(icon)" v-if="isVueRender(icon)" />
-        <LewTextTrim
-          v-else
-          placement="right"
-          :text="label"
-          :delay="[250, 250]"
+        <RenderComponent
+          :render-fn="icon"
+        />
+        <RenderComponent
+          :render-fn="label"
+          type="text-trim"
+          :component-props="{
+            placement: 'right',
+            delay: [250, 250],
+          }"
         />
       </template>
     </div>

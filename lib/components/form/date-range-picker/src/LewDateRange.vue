@@ -2,7 +2,7 @@
 import type { RetItemType } from '../../date-picker/src/date'
 import dayjs from 'dayjs'
 import { LewButton, LewFlex, locale } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { cloneDeep } from 'lodash-es'
 import { getMonthDate } from '../../date-picker/src/date'
 import { dateRangeProps } from './props'
@@ -365,7 +365,7 @@ const headDate = computed(() => {
             single-icon
             @click="prveYear1"
           >
-            <Icon type="chevrons-left" />
+            <LewCommonIcon type="chevrons-left" />
           </LewButton>
           <LewButton
             type="light"
@@ -374,7 +374,7 @@ const headDate = computed(() => {
             single-icon
             @click="prveMonth1"
           >
-            <Icon type="chevron-left" />
+            <LewCommonIcon type="chevron-left" />
           </LewButton>
         </div>
         <!-- 日期 -->
@@ -392,7 +392,7 @@ const headDate = computed(() => {
             single-icon
             @click="nextMonth1"
           >
-            <Icon type="chevron-right" />
+            <LewCommonIcon type="chevron-right" />
           </LewButton>
           <LewButton
             type="light"
@@ -401,7 +401,7 @@ const headDate = computed(() => {
             single-icon
             @click="nextYear1"
           >
-            <Icon type="chevrons-right" />
+            <LewCommonIcon type="chevrons-right" />
           </LewButton>
         </div>
       </LewFlex>
@@ -451,7 +451,7 @@ const headDate = computed(() => {
             single-icon
             @click="prveYear2"
           >
-            <Icon type="chevrons-left" />
+            <LewCommonIcon type="chevrons-left" />
           </LewButton>
           <LewButton
             type="light"
@@ -460,7 +460,7 @@ const headDate = computed(() => {
             single-icon
             @click="prveMonth2"
           >
-            <Icon type="chevron-left" />
+            <LewCommonIcon type="chevron-left" />
           </LewButton>
         </div>
         <div class="cur-date">
@@ -476,7 +476,7 @@ const headDate = computed(() => {
             single-icon
             @click="nextMonth2"
           >
-            <Icon type="chevron-right" />
+            <LewCommonIcon type="chevron-right" />
           </LewButton>
           <!-- 下一年 -->
           <LewButton
@@ -486,7 +486,7 @@ const headDate = computed(() => {
             single-icon
             @click="nextYear2"
           >
-            <Icon type="chevrons-right" />
+            <LewCommonIcon type="chevrons-right" />
           </LewButton>
         </div>
       </LewFlex>

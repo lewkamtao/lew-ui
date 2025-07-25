@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { random } from 'lodash-es'
 import { useRouter } from 'vue-router'
 import * as Yup from 'yup'
@@ -415,7 +415,7 @@ onUnmounted(() => {
           @click="router.push('/Image')"
         >
           {{ $t("home.getStarted") }}
-          <Icon type="chevron-right" />
+          <LewCommonIcon type="chevron-right" />
         </lew-button>
       </lew-flex>
     </div>

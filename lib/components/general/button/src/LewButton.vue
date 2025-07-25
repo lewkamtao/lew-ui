@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { any2px, getColorType, object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { buttonProps } from './props'
 
 const props = defineProps(buttonProps)
@@ -127,7 +127,7 @@ defineExpose({ focus })
         'lew-button-loading-isShow': (_loading || loading) && !disabled,
       }"
     >
-      <Icon :size="getIconSize" loading type="loader" />
+      <LewCommonIcon :size="getIconSize" loading type="loader" />
     </div>
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">
