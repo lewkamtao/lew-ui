@@ -972,7 +972,7 @@ export default {
         readonly: '읽기 전용 상태',
         disabled: '비활성화 상태',
         showCheckIcon: '체크 아이콘 표시 여부',
-        initOptionsMethod: '옵션 초기화 방법',
+        initMethod: '옵션 초기화 방법',
         enableSearchCache: '검색 캐시 활성화 여부',
       },
       events: {
@@ -1018,7 +1018,7 @@ export default {
       demo9: {
         title: '옵션 초기화 방법',
         description:
-          '```initOptionsMethod``` 방법을 사용하여 다중 선택 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
+          '```initMethod``` 방법을 사용하여 다중 선택 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
       },
       props: {
         options: '옵션',
@@ -1038,7 +1038,7 @@ export default {
         disabled: '비활성화',
         showCheckIcon: '체크 아이콘 표시 여부',
         defaultValue: '기본값',
-        initOptionsMethod: '옵션 초기화 방법',
+        initMethod: '옵션 초기화 방법',
         enableSearchCache: '검색 캐시 활성화 여부',
       },
       model: {
@@ -1162,7 +1162,7 @@ export default {
       demo9: {
         title: '옵션 초기화 방법',
         description:
-          '```initOptionsMethod``` 방법을 사용하여 계층형 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
+          '```initMethod``` 방법을 사용하여 계층형 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
       },
       model: {
         modelValue: '바인딩 값',
@@ -1180,7 +1180,7 @@ export default {
         trigger: '트리거 방식',
         loadMethod: '로딩 방법',
         readonly: '읽기 전용',
-        initOptionsMethod: '옵션 초기화 방법',
+        initMethod: '옵션 초기화 방법',
       },
       options: {
         label: '라벨',
@@ -1227,7 +1227,7 @@ export default {
       demo11: {
         title: '데이터 초기화',
         description:
-          '```initOptionsMethod``` 방법을 사용하여 트리 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
+          '```initMethod``` 방법을 사용하여 트리 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
       },
       model: {
         modelValue: '바인딩 값',
@@ -1253,7 +1253,7 @@ export default {
         keyField: '노드 식별 필드',
         labelField: '노드 라벨 필드',
         disabledField: '노드 비활성화 필드',
-        initOptionsMethod: '트리 노드 초기화 메서드',
+        initMethod: '트리 노드 초기화 메서드',
         loadMethod: '자식 노드 데이터 비동기 로드 메서드',
         width: '너비',
       },
@@ -1641,7 +1641,7 @@ export default {
         keyField: '노드 식별 필드',
         labelField: '노드 레이블 필드',
         disabledField: '비활성화 노드 필드',
-        initOptionsMethod: '트리 노드 초기화 메서드',
+        initMethod: '트리 노드 초기화 메서드',
         loadMethod: '자식 노드 데이터 비동기 로드 메서드',
         isSelect: '선택 여부',
       },

@@ -26,7 +26,7 @@ provide('formMethods', formMethods)
   <div class="demo-select">
     <LewSelect
       v-model="selectValue"
-      init-options-method-id="loadUserOptions"
+      init-method-id="loadUserOptions"
       placeholder="请选择用户"
       width="300px"
       searchable

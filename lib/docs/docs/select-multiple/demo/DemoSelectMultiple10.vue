@@ -28,7 +28,7 @@ provide('formMethods', formMethods)
   <div class="demo-select-multiple">
     <LewSelectMultiple
       v-model="selectValue"
-      init-options-method-id="loadProductOptions"
+      init-method-id="loadProductOptions"
       placeholder="请选择产品"
       width="300px"
       searchable

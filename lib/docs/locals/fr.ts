@@ -978,7 +978,7 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
         showCheckIcon: 'Afficher l\'icône de vérification',
-        initOptionsMethod: 'Méthode d\'initialisation des options',
+        initMethod: 'Méthode d\'initialisation des options',
         enableSearchCache: 'Activer le cache de recherche',
       },
       events: {
@@ -1024,7 +1024,7 @@ export default {
       demo9: {
         title: 'Méthode d\'initialisation des options',
         description:
-          'Utilisez ```initOptionsMethod``` pour initialiser les données de sélection multiple et retourner un objet ```Promise```',
+          'Utilisez ```initMethod``` pour initialiser les données de sélection multiple et retourner un objet ```Promise```',
       },
       props: {
         options: 'Options',
@@ -1044,7 +1044,7 @@ export default {
         disabled: 'Désactivé',
         showCheckIcon: 'Afficher l\'icône de vérification',
         defaultValue: 'Valeur par défaut',
-        initOptionsMethod: 'Méthode d\'initialisation des options',
+        initMethod: 'Méthode d\'initialisation des options',
         enableSearchCache: 'Activer le cache de recherche',
       },
       model: {
@@ -1173,7 +1173,7 @@ export default {
       demo9: {
         title: 'Méthode d\'initialisation des options',
         description:
-          'Utilisez ```initOptionsMethod``` pour initialiser les données en cascade et retourner un objet ```Promise```',
+          'Utilisez ```initMethod``` pour initialiser les données en cascade et retourner un objet ```Promise```',
       },
       model: {
         modelValue: 'Valeur liée',
@@ -1191,7 +1191,7 @@ export default {
         trigger: 'Mode de déclenchement',
         loadMethod: 'Méthode de chargement',
         readonly: 'Lecture seule',
-        initOptionsMethod: 'Méthode d\'initialisation des options',
+        initMethod: 'Méthode d\'initialisation des options',
       },
       options: {
         label: 'Étiquette',
@@ -1238,7 +1238,7 @@ export default {
       demo11: {
         title: 'Initialiser les données',
         description:
-          'Utilisez ```initOptionsMethod``` pour initialiser les données d\'arbre et retourner un objet ```Promise```',
+          'Utilisez ```initMethod``` pour initialiser les données d\'arbre et retourner un objet ```Promise```',
       },
       model: {
         modelValue: 'Valeur liée',
@@ -1265,7 +1265,7 @@ export default {
         keyField: 'Champ d\'identification du nœud',
         labelField: 'Champ d\'étiquette du nœud',
         disabledField: 'Champ de désactivation du nœud',
-        initOptionsMethod: 'Méthode d\'initialisation des nœuds',
+        initMethod: 'Méthode d\'initialisation des nœuds',
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
       },
       slots: {
@@ -1656,7 +1656,7 @@ export default {
         keyField: 'Champ d\'identification du nœud',
         labelField: 'Champ d\'étiquette du nœud',
         disabledField: 'Champ de désactivation du nœud',
-        initOptionsMethod: 'Méthode d\'initialisation des nœuds',
+        initMethod: 'Méthode d\'initialisation des nœuds',
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
         isSelect: 'Est sélectionné',
       },

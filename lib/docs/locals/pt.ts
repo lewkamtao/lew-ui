@@ -964,7 +964,7 @@ export default {
         readonly: 'Somente leitura',
         disabled: 'Desabilitado',
         showCheckIcon: 'Exibir ícone de seleção',
-        initOptionsMethod: 'Método de inicialização de opções',
+        initMethod: 'Método de inicialização de opções',
         enableSearchCache: 'Habilitar cache de pesquisa',
       },
       events: {
@@ -1013,7 +1013,7 @@ export default {
       demo9: {
         title: 'Método de inicialização de opções',
         description:
-          'Use o método ```initOptionsMethod``` para inicializar dados de seleção múltipla e retornar um objeto ```Promise```',
+          'Use o método ```initMethod``` para inicializar dados de seleção múltipla e retornar um objeto ```Promise```',
       },
       props: {
         options: 'Opções',
@@ -1033,7 +1033,7 @@ export default {
         disabled: 'Desabilitado',
         showCheckIcon: 'Exibir ícone de seleção',
         defaultValue: 'Valor padrão',
-        initOptionsMethod: 'Método de inicialização de opções',
+        initMethod: 'Método de inicialização de opções',
         enableSearchCache: 'Habilitar cache de pesquisa',
       },
       model: {
@@ -1160,7 +1160,7 @@ export default {
       demo9: {
         title: 'Método de inicialização de opções',
         description:
-          'Use o método ```initOptionsMethod``` para inicializar dados em cascata e retornar um objeto ```Promise```',
+          'Use o método ```initMethod``` para inicializar dados em cascata e retornar um objeto ```Promise```',
       },
       model: {
         modelValue: 'Valor vinculado',
@@ -1178,7 +1178,7 @@ export default {
         trigger: 'Modo de acionamento',
         loadMethod: 'Método de carregamento',
         readonly: 'Somente leitura',
-        initOptionsMethod: 'Método de inicialização de opções',
+        initMethod: 'Método de inicialização de opções',
       },
       options: {
         label: 'Rótulo',
@@ -1225,7 +1225,7 @@ export default {
       demo11: {
         title: 'Inicializar dados',
         description:
-          'Use o método ```initOptionsMethod``` para inicializar dados em árvore e retornar um objeto ```Promise```',
+          'Use o método ```initMethod``` para inicializar dados em árvore e retornar um objeto ```Promise```',
       },
       model: {
         modelValue: 'Valor vinculado',
@@ -1252,7 +1252,7 @@ export default {
         keyField: 'Campo identificador do nó',
         labelField: 'Campo rótulo do nó',
         disabledField: 'Campo de desabilitação do nó',
-        initOptionsMethod: 'Método de inicialização dos nós',
+        initMethod: 'Método de inicialização dos nós',
         loadMethod: 'Método de carregamento assíncrono dos filhos',
       },
       slots: {
@@ -1644,7 +1644,7 @@ export default {
         keyField: 'Campo identificador do nó',
         labelField: 'Campo rótulo do nó',
         disabledField: 'Campo de desabilitação do nó',
-        initOptionsMethod: 'Método de inicialização da árvore',
+        initMethod: 'Método de inicialização da árvore',
         loadMethod: 'Método de carregamento assíncrono',
         isSelect: 'Está selecionado',
       },

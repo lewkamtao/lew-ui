@@ -930,7 +930,7 @@ export default {
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
         showCheckIcon: 'Mostra icona spunta',
-        initOptionsMethod: 'Metodo inizializzazione opzioni',
+        initMethod: 'Metodo inizializzazione opzioni',
         enableSearchCache: 'Abilita cache ricerca',
       },
       events: {
@@ -979,7 +979,7 @@ export default {
       demo9: {
         title: 'Metodo inizializzazione opzioni',
         description:
-          'Utilizza ```initOptionsMethod``` per inizializzare i dati di selezione multipla e restituire un oggetto ```Promise```',
+          'Utilizza ```initMethod``` per inizializzare i dati di selezione multipla e restituire un oggetto ```Promise```',
       },
       props: {
         options: 'Opzioni',
@@ -999,7 +999,7 @@ export default {
         disabled: 'Disabilitato',
         showCheckIcon: 'Mostra icona spunta',
         defaultValue: 'Valore predefinito',
-        initOptionsMethod: 'Metodo inizializzazione opzioni',
+        initMethod: 'Metodo inizializzazione opzioni',
         enableSearchCache: 'Abilita cache ricerca',
       },
       model: {
@@ -1126,7 +1126,7 @@ export default {
       demo9: {
         title: 'Metodo inizializzazione opzioni',
         description:
-          'Utilizza ```initOptionsMethod``` per inizializzare i dati a cascata e restituire un oggetto ```Promise```',
+          'Utilizza ```initMethod``` per inizializzare i dati a cascata e restituire un oggetto ```Promise```',
       },
       model: {
         modelValue: 'Valore legato',
@@ -1144,7 +1144,7 @@ export default {
         trigger: 'Modalità attivazione',
         loadMethod: 'Metodo caricamento',
         readonly: 'Sola lettura',
-        initOptionsMethod: 'Metodo inizializzazione opzioni',
+        initMethod: 'Metodo inizializzazione opzioni',
       },
       options: {
         label: 'Etichetta',
@@ -1190,7 +1190,7 @@ export default {
       demo11: {
         title: 'Inizializza dati',
         description:
-          'Utilizza ```initOptionsMethod``` per inizializzare i dati ad albero e restituire un oggetto ```Promise```',
+          'Utilizza ```initMethod``` per inizializzare i dati ad albero e restituire un oggetto ```Promise```',
       },
       model: {
         modelValue: 'Valore legato',
@@ -1217,7 +1217,7 @@ export default {
         keyField: 'Campo chiave nodo',
         labelField: 'Campo etichetta nodo',
         disabledField: 'Campo disabilitazione nodo',
-        initOptionsMethod: 'Metodo inizializzazione albero',
+        initMethod: 'Metodo inizializzazione albero',
         loadMethod: 'Metodo caricamento asincrono',
       },
       slots: {
@@ -1598,7 +1598,7 @@ export default {
         keyField: 'Campo chiave nodo',
         labelField: 'Campo etichetta nodo',
         disabledField: 'Campo disabilitazione nodo',
-        initOptionsMethod: 'Metodo inizializzazione albero',
+        initMethod: 'Metodo inizializzazione albero',
         loadMethod: 'Metodo caricamento asincrono nodi',
         isSelect: 'È selezionato',
       },

@@ -933,7 +933,7 @@ export default {
         readonly: '読み取り専用状態',
         disabled: '無効状態',
         showCheckIcon: 'チェックアイコンを表示',
-        initOptionsMethod: 'オプション初期化メソッド',
+        initMethod: 'オプション初期化メソッド',
         enableSearchCache: '検索キャッシュを有効化するかどうか',
       },
       events: {
@@ -979,7 +979,7 @@ export default {
       demo9: {
         title: '初期化オプション方法',
         description:
-          '```initOptionsMethod``` メソッドを使用して、複数選択データを初期化し、```Promise``` オブジェクトを返す',
+          '```initMethod``` メソッドを使用して、複数選択データを初期化し、```Promise``` オブジェクトを返す',
       },
       props: {
         options: 'オプション',
@@ -999,7 +999,7 @@ export default {
         disabled: '無効化',
         showCheckIcon: 'チェックアイコンを表示',
         defaultValue: 'デフォルト値',
-        initOptionsMethod: 'オプション初期化メソッド',
+        initMethod: 'オプション初期化メソッド',
         enableSearchCache: '検索キャッシュを有効化するかどうか',
       },
       model: {
@@ -1121,7 +1121,7 @@ export default {
       demo9: {
         title: '初期化オプション方法',
         description:
-          '```initOptionsMethod``` メソッドを使用して、カスケードデータを初期化し、```Promise``` オブジェクトを返す',
+          '```initMethod``` メソッドを使用して、カスケードデータを初期化し、```Promise``` オブジェクトを返す',
       },
       model: {
         modelValue: 'バインド値',
@@ -1139,7 +1139,7 @@ export default {
         trigger: 'トリガー方式',
         loadMethod: '読み込みメソッド',
         readonly: '読み取り専用',
-        initOptionsMethod: 'オプション初期化メソッド',
+        initMethod: 'オプション初期化メソッド',
       },
       options: {
         label: 'ラベル',
@@ -1185,7 +1185,7 @@ export default {
       demo11: {
         title: '高度な設定',
         description:
-          '```initOptionsMethod``` メソッドを使用して、ツリーデータを初期化し、```Promise``` オブジェクトを返す',
+          '```initMethod``` メソッドを使用して、ツリーデータを初期化し、```Promise``` オブジェクトを返す',
       },
       model: {
         modelValue: 'バインド値',
@@ -1212,7 +1212,7 @@ export default {
         keyField: 'ノード識別フィールド',
         labelField: 'ノードラベルフィールド',
         disabledField: 'ノード無効化フィールド',
-        initOptionsMethod: 'ツリーノード初期化メソッド',
+        initMethod: 'ツリーノード初期化メソッド',
         loadMethod: '子ノードデータの非同期読み込みメソッド',
       },
       slots: {
@@ -1595,7 +1595,7 @@ export default {
         keyField: 'ノード識別フィールド',
         labelField: 'ノードラベルフィールド',
         disabledField: '無効ノードフィールド',
-        initOptionsMethod: 'ツリーノード初期化メソッド',
+        initMethod: 'ツリーノード初期化メソッド',
         loadMethod: '子ノードデータ非同期読み込みメソッド',
         isSelect: '選択状態',
       },

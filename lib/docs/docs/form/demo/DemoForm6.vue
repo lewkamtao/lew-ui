@@ -9,7 +9,7 @@ const options = ref([
     rule: Yup.string().required('Please select a category'),
     props: {
       clearable: true,
-      initOptionsMethodId: 'categoryMethod',
+      initMethodId: 'categoryMethod',
     },
   },
   {
@@ -21,7 +21,7 @@ const options = ref([
       .required('Please select tags'),
     props: {
       clearable: true,
-      initOptionsMethodId: 'tagsMethod',
+      initMethodId: 'tagsMethod',
     },
   },
   {
@@ -31,7 +31,7 @@ const options = ref([
     rule: Yup.string().required('Please select a department'),
     props: {
       clearable: true,
-      initOptionsMethodId: 'departmentMethod',
+      initMethodId: 'departmentMethod',
     },
   },
   {
@@ -41,7 +41,7 @@ const options = ref([
     rule: Yup.string().required('Please select warehouse location'),
     props: {
       clearable: true,
-      initOptionsMethodId: 'locationMethod',
+      initMethodId: 'locationMethod',
       free: true,
     },
   },

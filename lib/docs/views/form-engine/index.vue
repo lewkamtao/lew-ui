@@ -2,7 +2,7 @@
 import type { LewSize } from 'lew-ui/types'
 import { useDark } from '@vueuse/core'
 import dayjs from 'dayjs'
-import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
+import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
 import { downloadObjectAsFile, getComponentIcon } from 'lew-ui/docs/lib/utils'
 import { formatFormByMap, getUniqueId } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'

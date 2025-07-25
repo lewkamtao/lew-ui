@@ -960,7 +960,7 @@ export default {
         readonly: 'Read-only',
         disabled: 'Disabled',
         showCheckIcon: 'Show Check Icon',
-        initOptionsMethod: 'Initialize Options Method',
+        initMethod: 'Initialize Options Method',
         enableSearchCache: 'Enable Search Cache',
       },
       events: {
@@ -1006,7 +1006,7 @@ export default {
       demo9: {
         title: 'Initialize Options Method',
         description:
-          'Use the ```initOptionsMethod``` to initialize multiple selection data and return a ```Promise``` object',
+          'Use the ```initMethod``` to initialize multiple selection data and return a ```Promise``` object',
       },
       props: {
         options: 'Options',
@@ -1026,7 +1026,7 @@ export default {
         disabled: 'Disabled',
         showCheckIcon: 'Show Check Icon',
         defaultValue: 'Default Value',
-        initOptionsMethod: 'Initialize Options Method',
+        initMethod: 'Initialize Options Method',
         enableSearchCache: 'Enable Search Cache',
       },
       model: {
@@ -1147,7 +1147,7 @@ export default {
       demo9: {
         title: 'Initialize Options Method',
         description:
-          'Use the ```initOptionsMethod``` to initialize cascader data and return a ```Promise``` object',
+          'Use the ```initMethod``` to initialize cascader data and return a ```Promise``` object',
       },
       model: {
         modelValue: 'Bound Value',
@@ -1165,7 +1165,7 @@ export default {
         trigger: 'Trigger Method',
         loadMethod: 'Load Method',
         readonly: 'Read-only',
-        initOptionsMethod: 'Initialize Options Method',
+        initMethod: 'Initialize Options Method',
       },
       options: {
         label: 'Label',
@@ -1212,7 +1212,7 @@ export default {
       demo11: {
         title: 'Initialize Data',
         description:
-          'Use the ```initOptionsMethod``` to initialize tree data and return a ```Promise``` object',
+          'Use the ```initMethod``` to initialize tree data and return a ```Promise``` object',
       },
       model: {
         modelValue: 'Bound Value',
@@ -1239,7 +1239,7 @@ export default {
         keyField: 'Node Key Field',
         labelField: 'Node Label Field',
         disabledField: 'Disabled Node Field',
-        initOptionsMethod: 'Initialize Tree Nodes Method',
+        initMethod: 'Initialize Tree Nodes Method',
         loadMethod: 'Asynchronous Load Child Nodes Method',
       },
       slots: {
@@ -1629,7 +1629,7 @@ export default {
         keyField: 'Node Key Field',
         labelField: 'Node Label Field',
         disabledField: 'Disabled Node Field',
-        initOptionsMethod: 'Initialize Tree Nodes Method',
+        initMethod: 'Initialize Tree Nodes Method',
         loadMethod: 'Asynchronous Load Child Nodes Method',
         isSelect: 'Is Selected',
       },

@@ -3,7 +3,7 @@ import { schools } from '@/lib/data'
 
 const value = ref([])
 
-function initOptionsMethod() {
+function initMethod() {
   return new Promise((resolve) => {
     setTimeout(() => {
       const res = schools.map((e) => {
@@ -26,7 +26,7 @@ function load() {
     :key="updateKey"
     v-model="value"
     searchable
-    :init-options-method="initOptionsMethod"
+    :init-method="initMethod"
     placeholder="load options"
   />
   <lew-button type="ghost" style="margin-top: 20px" @click="load">

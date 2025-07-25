@@ -4,7 +4,7 @@ import { LewCascader } from 'lew-ui'
 const cascaderValue = ref()
 
 // Simulate async initialization data
-async function initOptionsMethod() {
+async function initMethod() {
   // Simulate network request delay, increase delay time to better demonstrate initLoading effect
   await new Promise(resolve => setTimeout(resolve, 2000))
 
@@ -67,7 +67,7 @@ function load() {
   <LewCascader
     :key="updateKey"
     v-model="cascaderValue"
-    :init-options-method="initOptionsMethod"
+    :init-method="initMethod"
     placeholder="Please select region"
     width="300px"
   />

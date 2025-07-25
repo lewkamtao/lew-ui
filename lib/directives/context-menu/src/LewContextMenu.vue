@@ -1,7 +1,7 @@
 <script setup lang="ts" name="LewContextMenu">
 import type { ContextMenus } from './index'
 import { LewEmpty, LewFlex } from 'lew-ui'
-import { formatComponent, getUniqueId, isVueComponent } from 'lew-ui/utils'
+import { formatComponent, getUniqueId, isVueRender } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
@@ -135,7 +135,7 @@ onUnmounted(() => {
           <div class="lew-context-menu-label">
             <component
               :is="formatComponent(item.icon)"
-              v-if="isVueComponent(item.icon)"
+              v-if="isVueRender(item.icon)"
             />
             <div class="lew-context-menu-label-text">
               {{ item.label }}

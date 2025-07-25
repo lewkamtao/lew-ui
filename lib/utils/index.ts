@@ -1,4 +1,6 @@
-import { cloneDeep, isFunction } from 'lodash-es'
+import type { Component, VNode } from 'vue'
+import { cloneDeep } from 'lodash-es'
+import { defineComponent, h, isVNode } from 'vue'
 import Icon from './Icon.vue'
 
 export const iconColorType: Record<string, string> = {
@@ -475,50 +477,109 @@ export function findNodeByKey(key: string | number, tree: any) {
   return null
 }
 
-export function isVueComponent(value: any): boolean {
-  try {
-    // 检查是否为函数类型
-    if (typeof value !== 'function' && typeof value !== 'object') {
-      return false
-    }
-
-    // 检查函数式组件 (返回 VNode 的函数)
-    if (typeof value === 'function') {
-      return true
-    }
-
-    // 检查对象类型组件
-    if (value && typeof value === 'object') {
-      // 检查是否有组件特有属性
-      if (
-        value.__file
-        || value.__name
-        || value.setup
-        || value.render
-        || value.template
-      ) {
-        return true
-      }
-
-      // 检查是否为 Vue 定义的组件对象
-      if (value.component || value.__v_isVNode || value.__v_isComponent)
-        return true
-    }
-
-    // 检查是否为 defineComponent 创建的组件
-    if (value && value.__esModule && value.default) {
-      return isVueComponent(value.default)
-    }
-    return false
+/**
+ * 格式化输入为有效的 Vue 组件
+ * @param input 可能是组件、组件名称、配置对象等
+ * @returns 有效的 Vue 组件
+ */
+export function formatComponent(input: any): Component {
+  // 处理空值情况
+  if (input === null || input === undefined || input === '') {
+    return createEmptyComponent()
   }
-  catch {
-    return false
+
+  // 首先检查是否是Vue渲染内容（VNode或渲染函数），如果是则优先处理
+  // 如果是 VNode，创建 VNode 组件
+  if (isVNode(input)) {
+    return createVNodeComponent(input)
   }
+  // 如果是函数，创建函数组件
+  if (typeof input === 'function') {
+    return createFunctionalComponent(input)
+  }
+
+  // 处理字符串（组件名称或 HTML 标签）
+  if (typeof input === 'string') {
+    return createTextComponent(input)
+  }
+
+  // 处理数字
+  if (typeof input === 'number') {
+    return createTextComponent(String(input))
+  }
+
+  // 处理布尔值
+  if (typeof input === 'boolean') {
+    return createTextComponent(String(input))
+  }
+
+  // 处理其他函数（非Vue渲染函数）
+  if (typeof input === 'function') {
+    return createFunctionalComponent(input)
+  }
+
+  // 处理对象（可能是组件选项）
+  if (typeof input === 'object') {
+    // 处理组件选项对象
+    if (isComponentOptions(input)) {
+      return defineComponent(input)
+    }
+
+    // 处理包含 component 属性的对象
+    if (input.component) {
+      return formatComponent(input.component)
+    }
+  }
+
+  // 默认情况：返回空组件
+  return createEmptyComponent()
 }
 
-export function formatComponent(value: any) {
-  if (isFunction(value)) {
-    return value()
-  }
-  return value
+// 辅助函数：创建空组件
+function createEmptyComponent(): Component {
+  return defineComponent({
+    render() {
+      return h('div', { class: 'empty-component' }, '')
+    },
+  })
+}
+
+// 辅助函数：创建文本显示组件
+function createTextComponent(text: string | number): Component {
+  return defineComponent({
+    render() {
+      return h('div', { class: 'text-component' }, String(text))
+    },
+  })
+}
+
+// 辅助函数：创建函数式组件
+function createFunctionalComponent(renderFn: (...args: any[]) => any): Component {
+  return defineComponent({
+    render() {
+      try {
+        return renderFn.call(this)
+      }
+      catch (error) {
+        console.error('渲染函数执行失败:', error)
+        return h('div', { class: 'error-component' }, '渲染错误')
+      }
+    },
+  })
+}
+
+// 辅助函数：创建 VNode 组件
+function createVNodeComponent(vnode: VNode): Component {
+  return defineComponent({
+    render() {
+      return vnode
+    },
+  })
+}
+
+// 辅助函数：判断是否为组件选项对象
+function isComponentOptions(obj: any): boolean {
+  return obj && typeof obj === 'object' && (
+    obj.setup || obj.render || obj.template || obj.components
+  )
 }

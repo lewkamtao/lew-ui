@@ -957,7 +957,7 @@ export default {
         readonly: 'Schreibgeschützt',
         disabled: 'Deaktiviert',
         showCheckIcon: 'Häkchen-Icon anzeigen',
-        initOptionsMethod: 'Optionsinitialisierungsmethode',
+        initMethod: 'Optionsinitialisierungsmethode',
         enableSearchCache: 'Suchcache aktivieren',
       },
       events: {
@@ -1007,7 +1007,7 @@ export default {
       demo9: {
         title: 'Optionsinitialisierungsmethode',
         description:
-          'Verwenden Sie die ```initOptionsMethod```, um Mehrfachauswahldaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
+          'Verwenden Sie die ```initMethod```, um Mehrfachauswahldaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
       },
       props: {
         options: 'Optionen',
@@ -1027,7 +1027,7 @@ export default {
         disabled: 'Deaktiviert',
         showCheckIcon: 'Häkchen-Icon anzeigen',
         defaultValue: 'Standardwert',
-        initOptionsMethod: 'Optionsinitialisierungsmethode',
+        initMethod: 'Optionsinitialisierungsmethode',
         enableSearchCache: 'Suchcache aktivieren',
       },
       model: {
@@ -1155,7 +1155,7 @@ export default {
       demo9: {
         title: 'Optionsinitialisierungsmethode',
         description:
-          'Verwenden Sie die ```initOptionsMethod```, um Kaskadendaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
+          'Verwenden Sie die ```initMethod```, um Kaskadendaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
       },
       model: {
         modelValue: 'Gebundener Wert',
@@ -1173,7 +1173,7 @@ export default {
         trigger: 'Auslösemethode',
         loadMethod: 'Lademethode',
         readonly: 'Schreibgeschützt',
-        initOptionsMethod: 'Optionsinitialisierungsmethode',
+        initMethod: 'Optionsinitialisierungsmethode',
       },
       options: {
         label: 'Beschriftung',
@@ -1220,7 +1220,7 @@ export default {
       demo11: {
         title: 'Daten initialisieren',
         description:
-          'Verwenden Sie die ```initOptionsMethod```, um Baumdaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
+          'Verwenden Sie die ```initMethod```, um Baumdaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
       },
       model: {
         modelValue: 'Gebundener Wert',
@@ -1247,7 +1247,7 @@ export default {
         keyField: 'Knotenschlüsselfeld',
         labelField: 'Knotenbeschriftungsfeld',
         disabledField: 'Deaktiviertes Knotenfeld',
-        initOptionsMethod: 'Methode zur Initialisierung von Baumknoten',
+        initMethod: 'Methode zur Initialisierung von Baumknoten',
         loadMethod: 'Methode zum asynchronen Laden von Unterknoten',
       },
       slots: {
@@ -1633,7 +1633,7 @@ export default {
         keyField: 'Knotenschlüsselfeld',
         labelField: 'Knotenbeschriftungsfeld',
         disabledField: 'Deaktiviertes Knotenfeld',
-        initOptionsMethod: 'Methode zur Initialisierung von Baumknoten',
+        initMethod: 'Methode zur Initialisierung von Baumknoten',
         loadMethod: 'Methode zum asynchronen Laden von Unterknoten',
         isSelect: 'Ist ausgewählt',
       },

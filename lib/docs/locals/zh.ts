@@ -954,7 +954,7 @@ export default {
         readonly: '只读状态',
         disabled: '禁用状态',
         showCheckIcon: '显示勾选图标',
-        initOptionsMethod: '初始化选项方法',
+        initMethod: '初始化选项方法',
         enableSearchCache: '是否启用搜索缓存',
       },
       events: {
@@ -996,7 +996,7 @@ export default {
       demo9: {
         title: '初始化选项方法',
         description:
-          '使用 ```initOptionsMethod``` 方法，初始化多选数据，并返回一个 ```Promise``` 对象',
+          '使用 ```initMethod``` 方法，初始化多选数据，并返回一个 ```Promise``` 对象',
       },
       props: {
         options: '选项',
@@ -1016,7 +1016,7 @@ export default {
         disabled: '禁用',
         showCheckIcon: '显示勾选图标',
         defaultValue: '默认值',
-        initOptionsMethod: '初始化选项方法',
+        initMethod: '初始化选项方法',
         enableSearchCache: '是否启用搜索缓存',
       },
       model: {
@@ -1131,7 +1131,7 @@ export default {
       demo9: {
         title: '初始化选项方法',
         description:
-          '使用 ```initOptionsMethod``` 方法，初始化级联数据，并返回一个 ```Promise``` 对象',
+          '使用 ```initMethod``` 方法，初始化级联数据，并返回一个 ```Promise``` 对象',
       },
       model: {
         modelValue: '绑定值',
@@ -1149,7 +1149,7 @@ export default {
         trigger: '触发方式',
         loadMethod: '加载方法',
         readonly: '只读',
-        initOptionsMethod: '初始化选项方法',
+        initMethod: '初始化选项方法',
       },
       options: {
         label: '标签',
@@ -1195,7 +1195,7 @@ export default {
       demo11: {
         title: '初始化数据',
         description:
-          '使用 ```initOptionsMethod``` 方法，初始化树形数据，并返回一个 ```Promise``` 对象',
+          '使用 ```initMethod``` 方法，初始化树形数据，并返回一个 ```Promise``` 对象',
       },
       model: {
         modelValue: '绑定值',
@@ -1221,7 +1221,7 @@ export default {
         keyField: '节点标识字段',
         labelField: '节点标签字段',
         disabledField: '禁用节点字段',
-        initOptionsMethod: '初始化树节点的方法',
+        initMethod: '初始化树节点的方法',
         loadMethod: '异步加载子节点数据的方法',
         width: '宽度',
       },
@@ -1603,7 +1603,7 @@ export default {
         keyField: '节点标识字段',
         labelField: '节点标签字段',
         disabledField: '禁用节点字段',
-        initOptionsMethod: '初始化树节点的方法',
+        initMethod: '初始化树节点的方法',
         loadMethod: '异步加载子节点数据的方法',
         isSelect: '是否选中',
       },

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import axios from '@/axios/http'
 
-function initOptionsMethod() {
+function initMethod() {
   return new Promise<any[]>((resolve) => {
     // item 不存在的时候 是第一层加载
     axios
@@ -69,7 +69,7 @@ const v = ref([])
       checkable
       height="500px"
       key-field="value"
-      :init-options-method="initOptionsMethod"
+      :init-method="initMethod"
       :load-method="loadMethod"
       @change="change"
     />
