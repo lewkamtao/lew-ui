@@ -2,7 +2,6 @@
 import { LewFlex } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { isArray } from 'lodash-es'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { collapseItemProps } from './props'
 
@@ -12,7 +11,7 @@ const modelValue = defineModel()
 const expandKeys: any = inject('expandKeys')
 
 function setModelValue() {
-  modelValue.value = isArray(expandKeys.value)
+  modelValue.value = Array.isArray(expandKeys.value)
     ? expandKeys.value.includes(props.collapseKey)
     : props.collapseKey === expandKeys.value
 }
@@ -24,7 +23,7 @@ setModelValue()
 function change() {
   modelValue.value = !modelValue.value
 
-  if (isArray(expandKeys.value)) {
+  if (Array.isArray(expandKeys.value)) {
     expandKeys.value = modelValue.value
       ? [...expandKeys.value, props.collapseKey]
       : expandKeys.value.filter((item: string) => item !== props.collapseKey)

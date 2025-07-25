@@ -32,9 +32,13 @@ function setUseId() {
 }
 
 setUseId()
-watch(modelValue.value, () => {
-  setUseId()
-})
+watch(
+  modelValue.value,
+  () => {
+    setUseId()
+  },
+  { deep: true },
+)
 
 // 缓存列配置，避免重复计算
 const inputTableColumns = computed(() => {
@@ -143,11 +147,7 @@ function add() {
     return
   }
 
-  const row: any = cloneDeep(props.defaultForm)
-  if (props.autoUniqueId) {
-    row.id = getUniqueId()
-  }
-  formModalRef.value.open({ row })
+  formModalRef.value.open({})
 }
 
 function addSuccess({ row }: { row: any }) {
@@ -156,6 +156,7 @@ function addSuccess({ row }: { row: any }) {
   }
   else {
     modelValue.value.push(row)
+    modelValue.value = cloneDeep(modelValue.value)
   }
 }
 
@@ -211,6 +212,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
 </script>
 
 <template>
+  <pre>{{ modelValue }}</pre>
   <LewFlex
     x="start"
     y="start"

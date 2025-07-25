@@ -59,7 +59,20 @@ const formModel = computed(() => {
 // 动态生成columns选项，支持1-12栏
 const colOptions = computed(() => {
   const options = []
-  const columnLabels = ['单栏', '两栏', '三栏', '四栏', '五栏', '六栏', '七栏', '八栏', '九栏', '十栏', '十一栏', '十二栏']
+  const columnLabels = [
+    '单栏',
+    '两栏',
+    '三栏',
+    '四栏',
+    '五栏',
+    '六栏',
+    '七栏',
+    '八栏',
+    '九栏',
+    '十栏',
+    '十一栏',
+    '十二栏',
+  ]
 
   for (let i = 1; i <= 12; i++) {
     options.push({
@@ -162,8 +175,7 @@ function getModel() {
   const _options = cloneDeep(options.value)
   _options.forEach((item: any) => {
     ensureSpanMap(item)
-    const rowStart
-      = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
+    const rowStart = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
     const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
     delete item.spanMap
@@ -284,25 +296,18 @@ onMounted(() => {
             class="lew-form-component-box"
             @click="addComponent(element)"
           >
-            <img
-              :src="getComponentIcon(element.as || 'blank')"
-              alt=""
-              srcset=""
-            >
+            <img :src="getComponentIcon(element.as || 'blank')" alt="" srcset="">
             {{ element.label }}
           </lew-flex>
         </template>
       </draggable>
     </div>
-    <div
-      class="lew-form-wrapper"
-      @click="(settingTab = 'options'), (activeId = '')"
-    >
+    <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activeId = '')">
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
           v-model="formGlobal.columns"
-          width="320px"
-          item-width="auto"
+          width="420px"
+          item-width="80px"
           :options="colOptions"
         />
         <lew-button
@@ -344,13 +349,10 @@ onMounted(() => {
               :ref="(el) => (itemRefMap[element.id] = el)"
               class="lew-form-wrapper-draggable-item"
               :class="{
-                'lew-form-wrapper-draggable-item-active':
-                  activeId === element.id,
+                'lew-form-wrapper-draggable-item-active': activeId === element.id,
               }"
               :style="{
-                'grid-column-end': `span ${
-                  element.spanMap?.[formGlobal.columns] || 1
-                }`,
+                'grid-column-end': `span ${element.spanMap?.[formGlobal.columns] || 1}`,
               }"
               @click.stop="
                 activeId === element.id || element.as === ''
@@ -395,12 +397,7 @@ onMounted(() => {
                 :size="14"
                 type="error"
               />
-              <lew-flex
-                v-if="element.as === ''"
-                x="center"
-                y="center"
-                class="blank-box"
-              >
+              <lew-flex v-if="element.as === ''" x="center" y="center" class="blank-box">
                 占位盒子
               </lew-flex>
               <lew-form-item

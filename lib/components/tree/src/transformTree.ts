@@ -1,5 +1,5 @@
 import type { TreeDataSource } from './props'
-import { has, isArray } from 'lodash-es'
+import { has } from 'lodash-es'
 
 /**
  * 查找树中所有节点的值
@@ -145,7 +145,7 @@ async function transformTree({
     if (initOptionsMethod) {
       try {
         const _tree: TreeDataSource[] = await initOptionsMethod()
-        if (isArray(_tree)) {
+        if (Array.isArray(_tree)) {
           tree = formatTree({
             dataSource: _tree,
             parentKeyPaths: [],
