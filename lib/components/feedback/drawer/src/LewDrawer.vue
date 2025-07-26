@@ -184,32 +184,19 @@ function close() {
         <div v-if="visible" :style="{ zIndex }" class="lew-drawer-mask" />
       </transition>
       <div
-        ref="drawerBodyRef"
-        :style="`${getStyle(position, width, height)}; z-index:${zIndex}`"
-        class="lew-drawer-body"
-        :class="`${object2class('lew-drawer-body', { position })} ${
-          visible ? 'lew-drawer-body-show' : ''
+        ref="drawerBodyRef" :style="`${getStyle(position, width, height)}; z-index:${zIndex}`"
+        class="lew-drawer-body" :class="`${object2class('lew-drawer-body', { position })} ${visible ? 'lew-drawer-body-show' : ''
         }`"
       >
         <div v-if="$slots.header" class="lew-drawer-header-slot">
           <slot name="header" />
         </div>
-        <LewFlex
-          v-else-if="title"
-          mode="between"
-          y="center"
-          class="lew-drawer-header"
-        >
+        <LewFlex v-else-if="title" mode="between" y="center" class="lew-drawer-header">
           <div class="lew-drawer-title">
             {{ title }}
           </div>
           <LewButton
-            type="light"
-            color="gray"
-            round
-            single-icon
-            size="small"
-            class="lew-drawer-icon-close"
+            type="light" color="gray" round single-icon size="small" class="lew-drawer-icon-close"
             @click="close"
           >
             <LewCommonIcon :size="14" type="close" />
@@ -221,12 +208,7 @@ function close() {
         <div v-if="$slots.footer" class="lew-drawer-footer-slot">
           <slot name="footer" />
         </div>
-        <LewFlex
-          v-else-if="!hideFooter"
-          x="end"
-          y="center"
-          class="lew-drawer-footer"
-        >
+        <LewFlex v-else-if="!hideFooter" x="end" y="center" class="lew-drawer-footer">
           <LewButton
             v-bind="{
               size: 'small',
@@ -267,6 +249,7 @@ function close() {
   background: var(--lew-drawer-body-bgcolor);
   display: flex;
   flex-direction: column;
+
   .lew-drawer-header {
     position: relative;
     padding: 15px 20px;

@@ -28,6 +28,9 @@
     "dist",
     "package.json"
   ],
+  "engines": {
+    "node": "^22.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build:tsdown": "tsdown",
@@ -65,7 +68,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.17.0",
+    "@antfu/eslint-config": "^5.0.0",
     "@types/node": "^22.16.0",
     "@vitejs/plugin-vue": "^6.0.0",
     "eslint": "^9.31.0",

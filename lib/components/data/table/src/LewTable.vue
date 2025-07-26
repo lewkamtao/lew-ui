@@ -233,12 +233,8 @@ const getColumnStyle = computed(() => {
 
     const tdWidth
       = (width
-        / (totalColumnWidth.value
-          - fixedWidths.value.left
-          - fixedWidths.value.right))
-        * (state.scrollClientWidth
-          - fixedWidths.value.left
-          - fixedWidths.value.right)
+        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
+      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
     return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
   }
 })
@@ -257,12 +253,8 @@ const getHeaderColumnStyle = computed(() => {
 
     const tdWidth
       = (width
-        / (totalColumnWidth.value
-          - fixedWidths.value.left
-          - fixedWidths.value.right))
-        * (state.scrollClientWidth
-          - fixedWidths.value.left
-          - fixedWidths.value.right)
+        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
+      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
     return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
   }
 })
@@ -285,29 +277,19 @@ function getLeafColumns(columns: any[]) {
 
 const hasPartialSelection = computed(() => {
   const selectedRowsMap = state.selectedRowsMap
-  return state.dataSource.some(
-    (row: any) => selectedRowsMap[row[props.rowKey]],
-  )
+  return state.dataSource.some((row: any) => selectedRowsMap[row[props.rowKey]])
 })
 
 function updateAllCheckedState() {
   const checkedKeys = keys(pickBy(state.selectedRowsMap, Boolean))
-  const allDataKeys = state.dataSource.map((row: any) =>
-    String(row[props.rowKey]),
-  )
+  const allDataKeys = state.dataSource.map((row: any) => String(row[props.rowKey]))
   const uncheckedKeys = difference(allDataKeys, checkedKeys)
   state.isAllChecked
-    = isEmpty(uncheckedKeys)
-      && props.multiple
-      && props.checkable
-      && checkedKeys.length > 0
+    = isEmpty(uncheckedKeys) && props.multiple && props.checkable && checkedKeys.length > 0
 }
 
 function setAllRowsChecked(checked: boolean) {
-  state.selectedRowsMap = mapValues(
-    keyBy(state.dataSource, props.rowKey),
-    () => checked,
-  )
+  state.selectedRowsMap = mapValues(keyBy(state.dataSource, props.rowKey), () => checked)
   if (props.multiple) {
     selectedKeys.value = checked ? keys(state.selectedRowsMap) : []
   }
@@ -333,10 +315,7 @@ function toggleRowSelection(row: any) {
 
 function updateSelectedKeys(keys: any) {
   if (props.multiple) {
-    state.selectedRowsMap = mapValues(
-      keyBy(state.dataSource, props.rowKey),
-      () => false,
-    )
+    state.selectedRowsMap = mapValues(keyBy(state.dataSource, props.rowKey), () => false)
     keys.forEach((key: string) => {
       state.selectedRowsMap[key] = true
     })
@@ -439,9 +418,7 @@ function readerHeaderTd({ column }: any) {
               },
               {
                 default: () =>
-                  column.children.map((child: any) =>
-                    readerHeaderTd({ column: child }),
-                  ),
+                  column.children.map((child: any) => readerHeaderTd({ column: child })),
               },
             )
           : null,
@@ -589,9 +566,7 @@ function init() {
 onMounted(() => {
   init()
   if (props.checkable && !props.rowKey) {
-    throw new Error(
-      'LewTable error: rowKey is required when checkable is enabled!',
-    )
+    throw new Error('LewTable error: rowKey is required when checkable is enabled!')
   }
   if (
     props.columns.some(
@@ -625,10 +600,7 @@ watch(
       initTableObserver()
       updateScrollState()
       handleTableResize()
-      state.selectedRowsMap = mapValues(
-        keyBy(newVal, props.rowKey),
-        () => false,
-      )
+      state.selectedRowsMap = mapValues(keyBy(newVal, props.rowKey), () => false)
       updateAllCheckedState()
       initDragState()
       computeTableRowHeight()
@@ -667,36 +639,6 @@ watch(
     })
   },
 )
-
-function renderCustomCell({
-  row,
-  column,
-  index,
-}: {
-  row: any
-  column: any
-  index: number
-}) {
-  try {
-    const customContent = column.customRender({
-      row,
-      column,
-      index,
-      text: row[column.field],
-    })
-    return h(RenderComponent, {
-      renderFn: customContent,
-    })
-  }
-  catch (e) {
-    console.error('Error in customRender:', e)
-    return h(
-      'span',
-      {},
-      { default: () => showTextAndEmpty(row[column.field]) },
-    )
-  }
-}
 
 function initDragState() {
   state.dragIndex = -1
@@ -771,9 +713,7 @@ function dragEnd() {
       row => row._lew_table_tr_id === state.targetRowId,
     )
     if (dragIndex !== -1 && targetIndex !== -1 && dragIndex !== targetIndex) {
-      const targetPosition = state.isAboveTarget
-        ? targetIndex
-        : targetIndex + 1
+      const targetPosition = state.isAboveTarget ? targetIndex : targetIndex + 1
 
       let actualTargetPosition = targetPosition
       if (dragIndex < targetPosition) {
@@ -832,12 +772,10 @@ function updateDragTarget(mouseY: number) {
 
   let targetRowId = ''
   let isAbove = false
-  const positionEntries = Object.entries(state.trPositionsMap).map(
-    ([id, pos]) => ({
-      id,
-      ...pos,
-    }),
-  )
+  const positionEntries = Object.entries(state.trPositionsMap).map(([id, pos]) => ({
+    id,
+    ...pos,
+  }))
 
   positionEntries.sort((a, b) => a.top - b.top)
 
@@ -862,14 +800,8 @@ function updateDragTarget(mouseY: number) {
       if (positionEntries[i + 1].id === state.dragRowId)
         continue
 
-      if (
-        mouseY > positionEntries[i].bottom
-        && mouseY < positionEntries[i + 1].top
-      ) {
-        if (
-          mouseY - positionEntries[i].bottom
-          < positionEntries[i + 1].top - mouseY
-        ) {
+      if (mouseY > positionEntries[i].bottom && mouseY < positionEntries[i + 1].top) {
+        if (mouseY - positionEntries[i].bottom < positionEntries[i + 1].top - mouseY) {
           targetRowId = positionEntries[i].id
           isAbove = false
         }
@@ -903,11 +835,7 @@ function updateDragTarget(mouseY: number) {
 }
 
 function getIndicatorStyle() {
-  if (
-    !state.isDragging
-    || !state.targetRowId
-    || state.dragRowId === state.targetRowId
-  ) {
+  if (!state.isDragging || !state.targetRowId || state.dragRowId === state.targetRowId) {
     return `
       display: none;
       transform: translateY(0);
@@ -964,9 +892,7 @@ const columnLevel = computed(() => {
 
 // 获取固定表头列
 const getFixedHeaderColumns = computed(() => (direction: string) => {
-  return (
-    headerColumns.value[direction as keyof typeof headerColumns.value] || []
-  )
+  return headerColumns.value[direction as keyof typeof headerColumns.value] || []
 })
 
 // 获取固定列
@@ -1029,9 +955,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
         @mouseenter="state.hoverRowIndex = -1"
       >
         <div
-          v-if="
-            getFixedHeaderColumns('left').length > 0 || checkable || sortable
-          "
+          v-if="getFixedHeaderColumns('left').length > 0 || checkable || sortable"
           ref="fixedLeftRef"
           class="lew-table-fixed-left"
         >
@@ -1137,8 +1061,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
             :key="row._lew_table_tr_id"
             class="lew-table-tr"
             :class="{
-              'lew-table-tr-hover':
-                state.hoverRowIndex === i && !state.isDragging,
+              'lew-table-tr-hover': state.hoverRowIndex === i && !state.isDragging,
               'lew-table-tr-dragging': state.dragIndex === i,
               'lew-table-tr-selected': state.selectedRowsMap[row[rowKey]],
             }"
@@ -1183,12 +1106,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot
-                  :name="column.field"
-                  :row="row"
-                  :column="column"
-                  :index="i"
-                />
+                <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
                 <LewFlex
@@ -1199,12 +1117,13 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <component
-                    :is="
-                      renderCustomCell({
+                  <RenderComponent
+                    :render-fn="
+                      column.customRender({
                         row,
                         column,
                         index: i,
+                        text: row[column.field],
                       })
                     "
                   />
@@ -1223,8 +1142,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
             :ref="(e: any) => setTrRef(e, row)"
             class="lew-table-tr"
             :class="{
-              'lew-table-tr-hover':
-                state.hoverRowIndex === i && !state.isDragging,
+              'lew-table-tr-hover': state.hoverRowIndex === i && !state.isDragging,
               'lew-table-tr-dragging': state.dragIndex === i,
               'lew-table-tr-selected': state.selectedRowsMap[row[rowKey]],
             }"
@@ -1240,12 +1158,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot
-                  :name="column.field"
-                  :row="row"
-                  :column="column"
-                  :index="i"
-                />
+                <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
                 <LewFlex
@@ -1256,12 +1169,13 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <component
-                    :is="
-                      renderCustomCell({
+                  <RenderComponent
+                    :render-fn="
+                      column.customRender({
                         row,
                         column,
                         index: i,
+                        text: row[column.field],
                       })
                     "
                   />
@@ -1273,10 +1187,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
             </LewFlex>
           </div>
         </div>
-        <div
-          v-if="getFixedColumns('right').length > 0"
-          class="lew-table-fixed-right"
-        >
+        <div v-if="getFixedColumns('right').length > 0" class="lew-table-fixed-right">
           <div
             v-for="(row, i) in state.dataSource"
             :key="row._lew_table_tr_id"
@@ -1285,8 +1196,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               height: getRowHeight(row),
             }"
             :class="{
-              'lew-table-tr-hover':
-                state.hoverRowIndex === i && !state.isDragging,
+              'lew-table-tr-hover': state.hoverRowIndex === i && !state.isDragging,
               'lew-table-tr-dragging': state.dragIndex === i,
               'lew-table-tr-selected': state.selectedRowsMap[row[rowKey]],
             }"
@@ -1301,12 +1211,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot
-                  :name="column.field"
-                  :row="row"
-                  :column="column"
-                  :index="i"
-                />
+                <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
                 <LewFlex
@@ -1317,12 +1222,13 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <component
-                    :is="
-                      renderCustomCell({
+                  <RenderComponent
+                    :render-fn="
+                      column.customRender({
                         row,
                         column,
                         index: i,
+                        text: row[column.field],
                       })
                     "
                   />
@@ -1357,11 +1263,13 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
   border-bottom: 0px solid transparent;
   box-sizing: border-box;
   background-color: var(--lew-table-bgcolor);
+
   .lew-table-header,
   .lew-table-footer {
     position: relative;
     z-index: 9;
   }
+
   .lew-table-scroll-line {
     position: absolute;
     top: 0px;
@@ -1396,6 +1304,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
       rgba(0, 0, 0, 0)
     );
   }
+
   .lew-hide-line-left,
   .lew-hide-line-right {
     opacity: 0;
@@ -1501,17 +1410,21 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
       flex-shrink: 0;
       border-bottom: var(--lew-table-border);
       height: 100%;
+
       .lew-table-td {
         color: var(--lew-text-color-1);
         white-space: nowrap;
         transition: background 0.08s;
       }
+
       .lew-table-td-sortable {
         cursor: pointer;
         user-select: none;
       }
+
       .lew-table-title-span {
         position: relative;
+
         .lew-table-sorter {
           position: absolute;
           top: 50%;
@@ -1520,9 +1433,11 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
           transition: all 0.2s;
         }
       }
+
       .lew-table-td-sortable:hover {
         background: var(--lew-table-bgcolor-hover);
       }
+
       .lew-table-td-sortable:active {
         background: var(--lew-table-bgcolor-active);
       }
@@ -1560,12 +1475,14 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 
   .lew-table-tr-hover {
     background-color: var(--lew-table-tr-hover-bgcolor);
+
     .lew-table-checkbox {
       .lew-checkbox-icon-box {
         border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       }
     }
   }
+
   .lew-table-tr-selected {
     background-color: var(--lew-table-tr-selected);
   }
@@ -1597,6 +1514,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 .lew-table-tr-dragging {
   position: relative;
 }
+
 .lew-table-tr-dragging::after {
   position: absolute;
   content: '';
@@ -1610,34 +1528,41 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 .lew-table-scroll {
   overflow-x: auto;
 }
+
 .lew-table-td-group {
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;
   margin-left: 1px;
 }
+
 .lew-table-bordered {
   border: var(--lew-table-border);
 
   .lew-table-td {
     border-right: var(--lew-table-border);
   }
+
   .lew-table-td-group {
     border-top: var(--lew-table-border);
+
     .lew-table-td:last-child {
       border-right: none;
     }
   }
+
   .lew-table-fixed-left,
   .lew-table-fixed-right {
     .lew-table-td:last-child {
       border-right: none;
       border-left: none;
     }
+
     .lew-table-td:first-child {
       border-left: none;
     }
   }
+
   .lew-table-main {
     border-left: var(--lew-table-border);
   }
@@ -1647,22 +1572,27 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
   .lew-table-td {
     border-right: var(--lew-table-border);
   }
+
   .lew-table-td-group {
     border-top: var(--lew-table-border);
+
     .lew-table-td:last-child {
       border-right: none;
     }
   }
+
   .lew-table-fixed-left,
   .lew-table-fixed-right {
     .lew-table-td:last-child {
       border-right: none;
       border-left: none;
     }
+
     .lew-table-td:first-child {
       border-left: none;
     }
   }
+
   .lew-table-main {
     border-left: var(--lew-table-border);
   }
@@ -1681,6 +1611,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 // 修改边框控制规则
 .lew-table {
   box-sizing: border-box;
+
   &.lew-table-bordered {
     .lew-table-main {
       border-left: var(--lew-table-border);

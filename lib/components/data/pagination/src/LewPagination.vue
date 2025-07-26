@@ -87,8 +87,7 @@ function changePage(page: number) {
 // 是否显示省略号
 const startEllipsis = computed(() => visiblePages.value[0] > 2 + 1)
 const endEllipsis = computed(
-  () =>
-    visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2,
+  () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2,
 )
 
 // 是否显示最大和最小页码
@@ -147,11 +146,7 @@ const getIconSize = computed(() => {
         >
           <LewCommonIcon type="chevron-left" :size="getIconSize" />
         </LewButton>
-        <div
-          v-if="showOne"
-          class="lew-pagination-page-btn"
-          @click="changePage(1)"
-        >
+        <div v-if="showOne" class="lew-pagination-page-btn" @click="changePage(1)">
           1
         </div>
         <div
@@ -163,8 +158,7 @@ const getIconSize = computed(() => {
         </div>
         <div
           v-else-if="
-            currentPage > visiblePages.length / 2 + 2
-              && visiblePagesCount < totalPages
+            currentPage > visiblePages.length / 2 + 2 && visiblePagesCount < totalPages
           "
           class="lew-pagination-page-btn"
           @click="changePage(2)"

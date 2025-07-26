@@ -55,10 +55,8 @@ function renderMenuTreeItem(item: TreeDataSource, level: number = 0): any {
       isLeaf: isLeaf !== undefined ? isLeaf : (children || []).length === 0,
       disabled,
       extend: item,
-      onChange: () =>
-        emit('change', cloneDeep({ extend: item, key, value: key })),
-      onExpand: () =>
-        emit('expand', cloneDeep({ extend: item, key, value: key })),
+      onChange: () => emit('change', cloneDeep({ extend: item, key, value: key })),
+      onExpand: () => emit('expand', cloneDeep({ extend: item, key, value: key })),
     },
     () =>
       (item.children || []).map((child: TreeDataSource) =>
@@ -147,22 +145,11 @@ onMounted(() => {
     v-loading="{
       visible: loading,
       text: '加载中...',
-    }"
-    direction="y"
-    gap="0"
-    class="lew-tree-wrapper"
+    }" direction="y" gap="0" class="lew-tree-wrapper"
   >
-    <LewFlex
-      v-if="searchable && !isSelect"
-      direction="y"
-      gap="0"
-      class="lew-tree-header"
-    >
+    <LewFlex v-if="searchable && !isSelect" direction="y" gap="0" class="lew-tree-header">
       <lew-input
-        v-model="keyword"
-        width="100%"
-        size="small"
-        :placeholder="locale.t('tree.searchPlaceholder')"
+        v-model="keyword" width="100%" size="small" :placeholder="locale.t('tree.searchPlaceholder')"
         @input="search(keyword)"
       />
 
@@ -177,13 +164,8 @@ onMounted(() => {
       </LewFlex>
     </template>
     <LewFlex
-      v-else
-      direction="y"
-      y="start"
-      gap="0"
-      class="lew-tree lew-scrollbar"
-      :class="{ 'lew-tree-line': showLine }"
-      :style="{ height: any2px(height) }"
+      v-else direction="y" y="start" gap="0" class="lew-tree lew-scrollbar"
+      :class="{ 'lew-tree-line': showLine }" :style="{ height: any2px(height) }"
     >
       <template v-for="item in _dataSource" :key="item.key">
         <component :is="renderMenuTreeItem(item)" />
@@ -201,11 +183,13 @@ onMounted(() => {
   overflow-y: auto;
   padding-right: 5px;
 }
+
 .lew-result-count {
   padding: 5px 12px;
   font-size: 13px;
   opacity: 0.7;
 }
+
 .lew-tree-line {
   :deep(.lew-tree-item-main) {
     border-left: 1px solid var(--lew-bgcolor-5);
