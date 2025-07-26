@@ -4,7 +4,6 @@ import { LewButton, LewFlex, LewTextTrim, locale } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId } from 'lew-ui/utils'
 import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { modalProps } from './props'
 
 const props = defineProps(modalProps)

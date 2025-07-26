@@ -3,7 +3,6 @@
   "editor.fontFamily": "Input Mono, monospace",
   "editor.guides.bracketPairs": "active",
   "editor.lineNumbers": "interval",
-  "editor.renderWhitespace": "boundary",
   "window.autoDetectColorScheme": true,
   "workbench.fontAliasing": "antialiased",
   "workbench.list.smoothScrolling": true,

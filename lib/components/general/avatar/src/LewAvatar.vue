@@ -9,7 +9,7 @@ const props = defineProps(avatarProps)
 const avatarBoxStyleObject = computed(() => {
   const { shape } = props
 
-  const borderRadiusMap = {
+  const borderRadiusMap: Record<string, string> = {
     circle: '50%',
     sharp: '0',
     square: 'var(--lew-border-radius-small)',
@@ -57,7 +57,7 @@ const altText = computed(() => {
 })
 
 // 状态点位置配置
-const STATUS_PLACEMENT_CONFIG_CIRCLE = {
+const STATUS_PLACEMENT_CONFIG_CIRCLE: Record<string, Record<string, string>> = {
   'top-left': {
     top: '-0.05rem',
     left: '-0.05rem',

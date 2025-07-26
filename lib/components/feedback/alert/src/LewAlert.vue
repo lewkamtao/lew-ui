@@ -36,9 +36,7 @@ const alertClassName = computed(() => {
       </div>
     </div>
     <LewCommonIcon
-      v-if="closeable"
-      class="lew-form-icon-close lew-alert-close-icon"
-      type="close"
+      v-if="closeable" class="lew-form-icon-close lew-alert-close-icon" type="close"
       @click="emit('close')"
     />
   </div>

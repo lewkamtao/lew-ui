@@ -4,7 +4,6 @@ import { useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
 import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import { nextTick, onMounted, ref, watch } from 'vue'
 import { dialogProps } from './props'
 
 const props = defineProps(dialogProps)

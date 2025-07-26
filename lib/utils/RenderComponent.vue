@@ -4,7 +4,8 @@ import { formatComponent } from 'lew-ui/utils'
 
 defineProps({
   renderFn: {
-    type: [String, Number, Boolean, Object, Array, Function, Symbol, undefined] as PropType<any>,
+    type: Object,
+    required: true,
   },
   type: {
     type: String as PropType<'text-trim'>,
@@ -18,13 +19,6 @@ defineProps({
 </script>
 
 <template>
-  <LewTextTrim
-    v-if="type === 'text-trim' && typeof renderFn === 'string'"
-    v-bind="componentProps"
-    :text="renderFn"
-  />
-  <component
-    :is="formatComponent(renderFn)"
-    v-else
-  />
+  <LewTextTrim v-if="type === 'text-trim' && typeof renderFn === 'string'" v-bind="componentProps" :text="renderFn" />
+  <component :is="formatComponent(renderFn)" v-else />
 </template>

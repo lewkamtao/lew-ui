@@ -11,7 +11,6 @@ import {
   Trash,
   View,
 } from 'lucide-vue-next'
-import { h } from 'vue'
 
 const data: any = [
   {

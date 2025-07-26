@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 defineProps({

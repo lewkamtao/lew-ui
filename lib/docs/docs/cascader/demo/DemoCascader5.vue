@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 const selectedProduct = ref()
-
 const productCategories = [
   {
     value: 'skincare',

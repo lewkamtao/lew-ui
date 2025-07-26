@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { MenuOptions } from 'lew-ui'
-import type { PropType } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 defineProps({

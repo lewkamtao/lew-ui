@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash-es'
-import { h } from 'vue'
+
 import Icon from './LewCommonIcon.vue'
 
 export * from './render'

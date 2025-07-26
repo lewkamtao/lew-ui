@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Language } from '../../locals/index'
 import { useDark } from '@vueuse/core'
-import { computed, ref } from 'vue'
 import { de, en, es, fr, it, ja, ko, pt, zh } from '../../../locals/index'
 import { messages } from '../../locals/index'
 

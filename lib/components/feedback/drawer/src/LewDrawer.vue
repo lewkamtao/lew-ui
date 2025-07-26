@@ -4,7 +4,6 @@ import { LewButton, LewFlex, locale } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
 import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { drawerProps } from './props'
 
 const props = defineProps(drawerProps)
@@ -17,11 +16,11 @@ useDOMCreate('lew-drawer')
 
 const visible: Ref<boolean | undefined> = defineModel('visible')
 
-const drawerBodyRef = ref(null)
+const drawerBodyRef = ref<HTMLElement | null>(null)
 const drawerId = `lew-drawer-${getUniqueId()}`
 
 // 用于强制重新计算顶层状态的响应式变量
-const recomputeTrigger = ref(0)
+const recomputeTrigger = ref<number>(0)
 
 // 计算当前 drawer 是否在顶层
 const isTopDrawer = computed(() => {
@@ -74,7 +73,7 @@ function forceRecomputeTopDrawer() {
 // 监听 drawerBodyRef 变化，确保在 DOM 更新后重新计算顶层状态
 watch(
   drawerBodyRef,
-  async (newVal) => {
+  async (newVal: HTMLElement | null) => {
     if (newVal && visible.value) {
       await nextTick()
       forceRecomputeTopDrawer()
@@ -84,7 +83,7 @@ watch(
 )
 
 // 监听 visible 变化，确保状态正确更新
-watch(visible, async (newVal) => {
+watch(visible, async (newVal: boolean | undefined) => {
   await nextTick()
   // drawer 状态变化时，强制重新计算
   forceRecomputeTopDrawer()
@@ -140,7 +139,7 @@ onClickOutside(drawerBodyRef, (e: any) => {
 })
 
 if (props.closeByEsc) {
-  watch(Escape, (v) => {
+  watch(Escape, (v: boolean) => {
     if (!visible.value || !v || !isTopDrawer.value) {
       return
     }
