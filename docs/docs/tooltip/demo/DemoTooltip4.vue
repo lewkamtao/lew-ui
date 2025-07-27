@@ -119,7 +119,7 @@ function content() {
       oversize
       color="red"
       round
-      text="Allow HTML"
+      text="Support VNode"
     />
   </lew-flex>
 </template>
