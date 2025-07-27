@@ -1,11 +1,29 @@
 import type { App as Application, DirectiveBinding } from 'vue'
+import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
 import tippy, { roundArrow } from 'tippy.js'
+import { createApp, defineComponent, h } from 'vue'
+
+// 提取创建tooltip内容的函数
+function createTooltipContent(renderFn: any) {
+  const tooltipContainer = document.createElement('div')
+  const contentRef = defineComponent({
+    render() {
+      return h(RenderComponent, {
+        renderFn,
+      })
+    },
+  })
+  const vueApp = createApp(contentRef)
+  vueApp.mount(tooltipContainer)
+
+  return { tooltipContainer, vueApp }
+}
 
 export const LewTooltip = {
   install(app: Application) {
     app.directive('tooltip', {
       mounted(el: any, binding: DirectiveBinding) {
-        const { trigger, content, placement, allowHTML, delay } = binding.value
+        const { trigger, content, placement, delay } = binding.value
         let _trigger = trigger
         if (trigger === 'hover') {
           _trigger = 'mouseenter'
@@ -15,15 +33,20 @@ export const LewTooltip = {
           _trigger = 'mouseenter'
         }
 
+        // 使用提取的函数创建tooltip内容
+        const { tooltipContainer, vueApp } = createTooltipContent(content)
+
+        // 将 Vue 应用实例保存到元素上，用于后续清理
+        el.vueApp = vueApp
+
         el.instance = tippy(el, {
           theme: 'light',
           trigger: _trigger,
-          content,
+          content: tooltipContainer,
           animation: 'scale-subtle',
           interactive: true,
           appendTo: () => document.body,
           placement,
-          allowHTML,
           hideOnClick: _trigger === 'click',
           arrow: roundArrow,
           maxWidth: 250,
@@ -44,7 +67,16 @@ export const LewTooltip = {
         }
         else {
           el.instance?.enable()
-          el.instance?.setContent(content)
+
+          // 清理旧的 Vue 应用实例
+          if (el.vueApp) {
+            el.vueApp.unmount()
+          }
+
+          // 使用提取的函数创建新的tooltip内容
+          const { tooltipContainer, vueApp } = createTooltipContent(content)
+          el.vueApp = vueApp
+          el.instance?.setContent(tooltipContainer)
         }
         if (triggerFrom === 'input-number') {
           if (content) {
@@ -56,6 +88,12 @@ export const LewTooltip = {
         }
       },
       unmounted(el: any) {
+        // 清理 Vue 应用实例
+        if (el.vueApp) {
+          el.vueApp.unmount()
+          el.vueApp = null
+        }
+
         el.instance?.hide()
         el.instance = null
       },

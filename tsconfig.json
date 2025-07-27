@@ -11,7 +11,7 @@
       "lew-ui/*": ["./lib/*"],
       "lew-ui/utils": ["./lib/utils"],
       "lew-ui/utils/*": ["./lib/utils/*"],
-      "@/*": ["./lib/docs/*"]
+      "docs/*": ["./docs/*"]
     },
     "resolveJsonModule": true,
     "types": ["node"],
@@ -25,5 +25,5 @@
     "verbatimModuleSyntax": true,
     "skipLibCheck": true
   },
-  "include": ["lib", "public"]
+  "include": ["lib", "docs", "public"]
 }

@@ -116,7 +116,7 @@ export const treeProps = {
 
 export const treeItemProps = {
   label: {
-    type: Function as PropType<() => any>,
+    type: null,
     default: undefined,
     description:
       '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。',

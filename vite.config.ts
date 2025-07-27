@@ -43,7 +43,6 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
     ? [
         dts({
           include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx'],
-          exclude: ['lib/docs/**/*'],
         }),
       ]
     : []
@@ -103,7 +102,7 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
   // 路径别名配置
   const aliasConfig = {
     'lew-ui': resolve('./lib'),
-    '@': resolve('./lib/docs'),
+    'docs': resolve('./docs'),
   }
 
   // 构建优化配置

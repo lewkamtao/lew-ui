@@ -4,7 +4,7 @@ import { formatComponent } from 'lew-ui/utils'
 
 defineProps({
   renderFn: {
-    type: Object,
+    type: null,
     required: true,
   },
   type: {

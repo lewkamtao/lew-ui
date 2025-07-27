@@ -2,6 +2,7 @@
 import type { MenuTreeItem } from './props'
 import { any2px } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { resolveDirective, withDirectives } from 'vue'
 import LewMenuTreeItem from './LewMenuTreeItem.vue'
 import { menuTreeProps } from './props'
 
