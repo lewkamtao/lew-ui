@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { FlexXAlignment, FlexYAlignment } from 'lew-ui'
+import { useResizeObserver } from '@vueuse/core'
 import { LewCheckbox, LewEmpty, LewFlex, LewTextTrim } from 'lew-ui'
 import { any2px, getUniqueId } from 'lew-ui/utils'
 import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
@@ -29,7 +30,6 @@ const fixedRightRef = ref()
 const trRefMap = ref<Record<string, HTMLElement | null>>({})
 const tableWrapperRef = ref()
 
-let resizeObserver: any
 let tooltipAnimationFrame: number | null = null
 
 const state = reactive({
@@ -541,17 +541,8 @@ const handleTableResize = throttle(() => {
   updateScrollState()
 }, 120)
 
-function initTableObserver() {
-  resizeObserver = new ResizeObserver(() => {
-    state.isInitialized = false
-    handleTableResize()
-  })
-  resizeObserver.observe(tableRef.value)
-}
-
 function init() {
   nextTick(() => {
-    initTableObserver()
     updateScrollState()
     handleTableResize()
     if (props.checkable) {
@@ -565,6 +556,13 @@ function init() {
 
 onMounted(() => {
   init()
+
+  // 只在客户端环境下使用 ResizeObserver
+  useResizeObserver(tableRef, () => {
+    state.isInitialized = false
+    handleTableResize()
+  })
+
   if (props.checkable && !props.rowKey) {
     throw new Error('LewTable error: rowKey is required when checkable is enabled!')
   }
@@ -578,11 +576,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (resizeObserver) {
-    resizeObserver.disconnect()
-    resizeObserver = null
-  }
-
   if (tooltipAnimationFrame) {
     cancelAnimationFrame(tooltipAnimationFrame)
     tooltipAnimationFrame = null
@@ -597,7 +590,6 @@ watch(
     nextTick(() => {
       state.dataSource = newDataSource
       // 延迟执行其他操作，让过渡动画更平滑
-      initTableObserver()
       updateScrollState()
       handleTableResize()
       state.selectedRowsMap = mapValues(keyBy(newVal, props.rowKey), () => false)
@@ -629,7 +621,6 @@ watch(
   () => props.size,
   () => {
     nextTick(() => {
-      initTableObserver()
       updateScrollState()
       handleTableResize()
       computeTableRowHeight()

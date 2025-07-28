@@ -21,9 +21,11 @@ const resizeObj = ref({
   width: 0,
 })
 
-useResizeObserver(lewTextareaViewRef, () => {
+// 只在客户端环境下使用 ResizeObserver
+useResizeObserver(lewTextareaViewRef, (entries: any) => {
   if (props.resize !== 'none') {
-    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
+    const entry = entries[0]
+    const { width, height } = entry.contentRect
     resizeObj.value = {
       width,
       height,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDebounceFn, useMouse } from '@vueuse/core'
+import { useDebounceFn, useMouse, useResizeObserver } from '@vueuse/core'
 import { escape } from 'lodash-es'
 import tippy, { roundArrow } from 'tippy.js'
 import { textTrimProps } from './props'
@@ -138,26 +138,13 @@ function initCalculateDisplayText() {
 // 使用 VueUse 的防抖函数处理后续更新
 const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
 
-// 监听窗口大小变化
-function setupResizeObserver() {
-  if (!lewTextTrimRef.value)
-    return
-
-  const resizeObserver = new ResizeObserver(() => {
-    debouncedCalculate()
-  })
-
-  resizeObserver.observe(lewTextTrimRef.value)
-
-  // 在组件卸载时清理
-  onBeforeUnmount(() => {
-    resizeObserver.disconnect()
-  })
-}
-
 onMounted(() => {
   initCalculateDisplayText()
-  setupResizeObserver()
+
+  // 只在客户端环境下使用 ResizeObserver
+  useResizeObserver(lewTextTrimRef, () => {
+    debouncedCalculate()
+  })
 })
 
 onUnmounted(() => {
