@@ -346,7 +346,7 @@ onMounted(() => {
         >
           <template #item="{ element }">
             <div
-              :ref="(el) => (itemRefMap[element.id] = el)"
+              :ref="(el:any) => (itemRefMap[element.id] = el)"
               class="lew-form-wrapper-draggable-item"
               :class="{
                 'lew-form-wrapper-draggable-item-active': activeId === element.id,

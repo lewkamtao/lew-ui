@@ -163,7 +163,7 @@ defineExpose({ getForm, setForm, resetError, validate })
     />
     <LewFormItem
       v-for="item in componentOptions"
-      :ref="(el) => (formItemRefMap[item.field] = el)"
+      :ref="(el:any) => (formItemRefMap[item.field] = el)"
       :key="item.field"
       v-model="formMap[item.field]"
       v-bind="{

@@ -202,7 +202,7 @@ onUnmounted(() => {
         <div
           v-for="item in props.options"
           :key="String(item.value)"
-          :ref="(el) => itemRef.push(el)"
+          :ref="(el:any) => itemRef.push(el)"
           class="lew-tabs-item"
           :style="getItemStyle"
           :class="{
@@ -414,7 +414,7 @@ onUnmounted(() => {
   bottom: 0px;
   left: 3px;
   height: 2px;
-  background-color: var(--lew-form-bgcolor);
+  background-color: var(--lew-form-bgcolor-hover);
   width: calc(100% - 6px);
 }
 .lew-tabs-round {

@@ -110,7 +110,7 @@ const getTips = computed(() => (index: number) => {
     <div
       v-for="i in getCount"
       :key="i"
-      :ref="(el) => (iconRef[i - 1] = el)"
+      :ref="(el: any) => (iconRef[i - 1] = el)"
       :style="getRateIconStyle"
       class="lew-rate-icon"
       @mousemove="handleMouseMove($event, i)"
