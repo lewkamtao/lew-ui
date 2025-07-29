@@ -1,12 +1,23 @@
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
 /* 隐藏滚动条 */
 .hidden-scrollbar {
-  overflow-x: hidden;
-  overflow-y: auto;
-  -ms-overflow-style: none; /* IE 10+ */
-  scrollbar-width: none; /* Firefox */
+  overflow: hidden auto;
+  -ms-overflow-style: none;
+
+  /* IE 10+ */
+  scrollbar-width: none;
+
+  /* Firefox */
 
   &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
+
+    /* Chrome, Safari */
   }
 }
 
@@ -14,24 +25,14 @@
 .skeletons {
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    hsl(210, 15%, 88%),
-    hsl(210, 15%, 95%),
-    hsl(210, 15%, 88%)
-  );
+  background: linear-gradient(120deg, hsl(210deg 15% 88%), hsl(210deg 15% 95%), hsl(210deg 15% 88%));
   background-size: 200%;
-  animation: loader 1s infinite reverse;
   opacity: 0.6;
+  animation: loader 1s infinite reverse;
 }
 
 .lew-dark .skeletons {
-  background: linear-gradient(
-    90deg,
-    hsl(240, 14%, 15%),
-    hsl(240, 16%, 20%),
-    hsl(240, 15%, 15%)
-  );
+  background: linear-gradient(90deg, hsl(240deg 14% 15%), hsl(240deg 16% 20%), hsl(240deg 15% 15%));
   background-size: 200%;
 }
 
@@ -39,6 +40,7 @@
   from {
     background-position: -100% 0;
   }
+
   to {
     background-position: 100% 0;
   }
@@ -106,8 +108,8 @@
 /* 表单图标动画 */
 .lew-form-icon-ani-enter-from,
 .lew-form-icon-ani-leave-to {
-  opacity: 0 !important;
   margin-right: -10px;
+  opacity: 0 !important;
 }
 
 .lew-form-icon-ani-enter-active,
@@ -122,15 +124,15 @@
   right: 10px;
   z-index: 9;
   padding: 2px;
-  opacity: var(--lew-form-icon-opacity);
-  cursor: pointer;
   border-radius: 50%;
   transform: translate(0, -50%);
+  cursor: pointer;
+  opacity: var(--lew-form-icon-opacity);
   transition: all 0.2s;
 
   &:hover {
-    opacity: var(--lew-form-icon-opacity-hover);
     background-color: var(--lew-bgcolor-0);
+    opacity: var(--lew-form-icon-opacity-hover);
   }
 
   &:active {
@@ -140,8 +142,8 @@
 
 .lew-form-icon-close-focus {
   &:hover {
-    opacity: var(--lew-form-icon-opacity-hover);
     background-color: var(--lew-bgcolor-4);
+    opacity: var(--lew-form-icon-opacity-hover);
   }
 
   &:active {

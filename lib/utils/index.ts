@@ -1,5 +1,8 @@
-import { cloneDeep, isFunction } from 'lodash-es'
-import Icon from './Icon.vue'
+import { cloneDeep } from 'lodash-es'
+
+import Icon from './LewCommonIcon.vue'
+
+export * from './render'
 
 export const iconColorType: Record<string, string> = {
   normal: 'gray',
@@ -473,52 +476,4 @@ export function findNodeByKey(key: string | number, tree: any) {
   }
 
   return null
-}
-
-export function isVueComponent(value: any): boolean {
-  try {
-    // 检查是否为函数类型
-    if (typeof value !== 'function' && typeof value !== 'object') {
-      return false
-    }
-
-    // 检查函数式组件 (返回 VNode 的函数)
-    if (typeof value === 'function') {
-      return true
-    }
-
-    // 检查对象类型组件
-    if (value && typeof value === 'object') {
-      // 检查是否有组件特有属性
-      if (
-        value.__file
-        || value.__name
-        || value.setup
-        || value.render
-        || value.template
-      ) {
-        return true
-      }
-
-      // 检查是否为 Vue 定义的组件对象
-      if (value.component || value.__v_isVNode || value.__v_isComponent)
-        return true
-    }
-
-    // 检查是否为 defineComponent 创建的组件
-    if (value && value.__esModule && value.default) {
-      return isVueComponent(value.default)
-    }
-    return false
-  }
-  catch {
-    return false
-  }
-}
-
-export function formatComponent(value: any) {
-  if (isFunction(value)) {
-    return value()
-  }
-  return value
 }

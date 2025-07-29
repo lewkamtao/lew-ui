@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getUniqueId } from 'lew-ui/utils'
-import { ref } from 'vue'
+
 import NotificationItem from './NotificationItem.vue'
 
 let timer: NodeJS.Timeout | null = null

@@ -1,8 +1,9 @@
 <script setup lang="ts" name="LewContextMenu">
 import type { ContextMenus } from './index'
 import { LewEmpty, LewFlex } from 'lew-ui'
-import { formatComponent, getUniqueId, isVueComponent } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { getUniqueId } from 'lew-ui/utils'
+import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
 import { contextMenuProps, initLewContextMenu } from './index'
@@ -125,7 +126,7 @@ onUnmounted(() => {
             v-if="options.filter((e: any) => e.checkable).length > 0"
             class="lew-context-menu-checkable"
           >
-            <Icon
+            <LewCommonIcon
               v-if="item.checked"
               :size="12"
               :stroke-width="2.5"
@@ -133,15 +134,15 @@ onUnmounted(() => {
             />
           </div>
           <div class="lew-context-menu-label">
-            <component
-              :is="formatComponent(item.icon)"
-              v-if="isVueComponent(item.icon)"
+            <RenderComponent
+              :render-fn="item.icon"
             />
-            <div class="lew-context-menu-label-text">
-              {{ item.label }}
-            </div>
+            <RenderComponent
+              class="lew-context-menu-label-text"
+              :render-fn="item.label"
+            />
           </div>
-          <Icon
+          <LewCommonIcon
             v-if="options.filter((e: any) => e.children).length > 0"
             class="lew-context-menu-item-chevron"
             :style="{

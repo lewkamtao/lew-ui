@@ -62,6 +62,10 @@ declare global {
   const watchEffect: (typeof import('vue'))['watchEffect'];
   const watchPostEffect: (typeof import('vue'))['watchPostEffect'];
   const watchSyncEffect: (typeof import('vue'))['watchSyncEffect'];
+  const resolveDirective: (typeof import('vue'))['resolveDirective'];
+  const withDirectives: (typeof import('vue'))['withDirectives'];
+  const computed: (typeof import('vue'))['computed'];
+  const CSSProperties: (typeof import('vue'))['CSSProperties'];
 }
 // for type re-export
 declare global {

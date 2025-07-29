@@ -1,7 +1,7 @@
 import type { ConfigEnv, UserConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
+import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
@@ -18,7 +18,6 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
   // 插件配置
   const commonPlugins = [
     vue(),
-    vueJsx(),
     AutoImport({ imports: ['vue', 'vue-router'] }),
     checker({ typescript: true }),
   ]
@@ -28,11 +27,22 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
     ? [zipPack({ outFileName: `lew-ui_${mode}.zip` })]
     : []
 
+  // 分析插件配置
+  const analyzePlugins = mode === 'analyze'
+    ? [
+        visualizer({
+          filename: 'dist/stats.html',
+          open: true,
+          gzipSize: true,
+          brotliSize: true,
+        }),
+      ]
+    : []
+
   const libPlugins = isLibMode
     ? [
         dts({
           include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx'],
-          exclude: ['lib/docs/**/*'],
         }),
       ]
     : []
@@ -92,7 +102,7 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
   // 路径别名配置
   const aliasConfig = {
     'lew-ui': resolve('./lib'),
-    '@': resolve('./lib/docs'),
+    'docs': resolve('./docs'),
   }
 
   // 构建优化配置
@@ -116,6 +126,7 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
       ...zipPlugins,
       ...commonPlugins,
       ...libPlugins,
+      ...analyzePlugins,
     ],
     build: buildConfig,
   }

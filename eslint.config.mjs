@@ -9,4 +9,9 @@ export default antfu({
     'regexp/no-unused-capturing-group': 'off',
     'regexp/no-dupe-disjunctions': 'off',
   },
+  formatters: {
+    css: true,
+    html: true,
+    markdown: 'prettier',
+  },
 })

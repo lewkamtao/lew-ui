@@ -1,7 +1,7 @@
 {
   "name": "lew-ui",
   "type": "module",
-  "version": "2.7.3",
+  "version": "2.7.13",
   "description": "A Component Library for Vue3.js.",
   "author": "lewkamtao",
   "license": "MIT",
@@ -14,13 +14,13 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.umd.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
     },
-    "./style": "./dist/style.css"
+    "./style": "./dist/index.css"
   },
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "LICENSE",
@@ -28,11 +28,18 @@
     "dist",
     "package.json"
   ],
+  "engines": {
+    "node": "^22.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build:tsdown": "tsdown",
     "build:docs": "vue-tsc --noEmit && vite build --mode docs",
     "build:lib": "vue-tsc --noEmit && vite build --mode lib",
+    "analyze": "vite build --mode analyze",
+    "format": "pnpm lint:fix && pnpm lint:css:fix",
+    "lint:css": "stylelint \"lib/**/*.{css,scss}\" \"docs/**/*.{css,scss}\"",
+    "lint:css:fix": "stylelint \"lib/**/*.{css,scss}\" \"docs/**/*.{css,scss}\" --fix",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest",
@@ -45,13 +52,15 @@
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
     "@types/lodash-es": "^4.17.12",
-    "@vueuse/core": "^10.11.0",
+    "@vueuse/core": "^13.5.0",
     "axios": "^1.6.7",
+    "csstype": "^3.1.3",
     "dayjs": "^1.11.7",
     "highlight.js": "^11.9.0",
     "lodash-es": "^4.17.21",
     "lucide-vue-next": "^0.471.0",
     "rollup-plugin-scss": "^4.0.1",
+    "stylelint-config-recommended": "^16.0.0",
     "tippy.js": "^6.3.7",
     "vue-i18n": "^11.1.0",
     "vue-router": "^4.0.13",
@@ -60,16 +69,16 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.17.0",
+    "@antfu/eslint-config": "^5.0.0",
     "@types/node": "^22.16.0",
     "@vitejs/plugin-vue": "^6.0.0",
-    "@vitejs/plugin-vue-jsx": "^1.3.10",
-    "@vue/test-utils": "^2.4.6",
-    "bumpp": "^10.2.0",
-    "eslint": "^9.30.1",
-    "happy-dom": "^18.0.1",
+    "eslint": "^9.31.0",
+    "eslint-plugin-format": "^1.0.1",
+    "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.89.2",
-    "terser": "^5.31.6",
+    "stylelint": "16.2.1",
+    "stylelint-config-rational-order": "0.1.2",
+    "stylelint-order": "^7.0.0",
     "tsdown": "^0.12.9",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
@@ -80,7 +89,6 @@
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-zip-pack": "^1.2.3",
-    "vitest": "^3.2.4",
     "vue": "^3.5.17",
     "vue-tsc": "^3.0.1"
   }
