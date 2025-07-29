@@ -85,11 +85,13 @@ button {
   &:hover {
     &::-webkit-scrollbar {
       background-color: var(--lew-bgcolor-2);
+      border-radius: 4px;
     }
 
     &::-webkit-scrollbar-thumb {
       background-color: var(--lew-bgcolor-4);
-
+      border-radius: 4px;
+      
       &:hover {
         background-color: var(--lew-bgcolor-6);
       }
