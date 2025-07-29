@@ -48,26 +48,15 @@ const checkHasContent = computed(() => (text: string) => {
   <div class="demo-box">
     <lew-title :id="title" :size="18" class="demo-docs-title">
       {{ title }}
-      <lew-tag
-        v-if="checkHasContent(tag)"
-        type="light"
-        color="blue"
-        style="margin: 2px 0px 0px 5px"
-      >
+      <lew-tag v-if="checkHasContent(tag)" type="light" color="blue" style="margin: 2px 0px 0px 5px">
         {{ tag }}
       </lew-tag>
     </lew-title>
     <lew-alert
-      v-if="checkHasContent(tipsContent)"
-      :type="checkHasContent(tipsType) ? tipsType : 'info'"
-      :title="tipsTitle"
-      :content="tipsContent"
+      v-if="checkHasContent(tipsContent)" :type="checkHasContent(tipsType) ? tipsType : 'info'"
+      :title="tipsTitle" :content="tipsContent"
     />
-    <div
-      v-if="checkHasContent(description)"
-      class="desc"
-      v-html="renderDescription(description)"
-    />
+    <div v-if="checkHasContent(description)" class="desc" v-html="renderDescription(description)" />
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
         <slot />
@@ -97,10 +86,12 @@ const checkHasContent = computed(() => (text: string) => {
 <style lang="scss" scoped>
 .demo-box {
   margin: 50px 0px 50px 0px;
+
   .desc {
     margin: 20px 0px;
     color: var(--lew-text-color-5);
   }
+
   .demo-item {
     margin: 10px 0px;
     background-color: var(--lew-bgcolor-0);
@@ -108,6 +99,7 @@ const checkHasContent = computed(() => (text: string) => {
     box-shadow: var(--lew-box-shadow);
     overflow: hidden;
   }
+
   .demo-docs-title {
     text-transform: capitalize;
   }

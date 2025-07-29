@@ -56,7 +56,7 @@ const companies1 = [
 </script>
 
 <template>
-  <lew-collapse v-model="value" :width="300">
+  <lew-collapse v-model="value" :width="400">
     <lew-collapse-item
       v-for="item in companies"
       :key="item.id"

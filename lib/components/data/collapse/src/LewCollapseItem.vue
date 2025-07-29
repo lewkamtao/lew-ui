@@ -1,35 +1,52 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
+import type { CollapseModelValue } from './props'
 import { LewFlex } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
 import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { inject, ref, watch } from 'vue'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { collapseItemProps } from './props'
 
 const props = defineProps(collapseItemProps)
 const modelValue = defineModel()
 
-const expandKeys: any = inject('expandKeys')
+const expandKeys = inject<Ref<CollapseModelValue>>('expandKeys', ref(null))
 
 function setModelValue() {
-  modelValue.value = Array.isArray(expandKeys.value)
-    ? expandKeys.value.includes(props.collapseKey)
-    : props.collapseKey === expandKeys.value
+  if (!expandKeys)
+    return
+
+  const currentValue = expandKeys.value
+  if (currentValue === null || currentValue === undefined) {
+    modelValue.value = false
+    return
+  }
+
+  modelValue.value = Array.isArray(currentValue)
+    ? currentValue.includes(props.collapseKey as string | number)
+    : props.collapseKey === currentValue
 }
 
-watch(() => expandKeys.value, setModelValue, { deep: true })
+watch(() => expandKeys?.value, setModelValue, { deep: true })
 
 setModelValue()
 
 function change() {
+  if (!expandKeys)
+    return
+
   modelValue.value = !modelValue.value
 
-  if (Array.isArray(expandKeys.value)) {
-    expandKeys.value = modelValue.value
-      ? [...expandKeys.value, props.collapseKey]
-      : expandKeys.value.filter((item: string) => item !== props.collapseKey)
+  const currentValue = expandKeys.value
+  if (Array.isArray(currentValue)) {
+    const newArray = modelValue.value
+      ? [...currentValue, props.collapseKey]
+      : currentValue.filter((item: string | number) => item !== props.collapseKey)
+    expandKeys.value = newArray as CollapseModelValue
   }
   else {
-    expandKeys.value = modelValue.value ? props.collapseKey : null
+    expandKeys.value = (modelValue.value ? props.collapseKey : null) as CollapseModelValue
   }
 }
 </script>
@@ -41,7 +58,7 @@ function change() {
       y="center"
       class="lew-collapse-item-title"
       :class="{ 'lew-collapse-item-title-active': modelValue }"
-      :style="{ borderRadius: any2px(radius) }"
+      :style="{ borderRadius: any2px(props.radius) }"
       @click="change"
     >
       <slot v-if="$slots.title" name="title" :props="props" />
@@ -54,7 +71,7 @@ function change() {
           }"
           type="chevron-right"
         />
-        <lew-text-trim :style="{ width: 'calc(100% - 50px)' }" :text="title" />
+        <lew-text-trim :style="{ width: 'calc(100% - 50px)' }" :text="props.title" />
       </template>
     </LewFlex>
     <LewCollapseTransition>

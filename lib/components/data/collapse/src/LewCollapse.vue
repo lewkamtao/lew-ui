@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { any2px } from 'lew-ui/utils'
-import { computed } from 'vue'
+import { computed, provide } from 'vue'
 import { collapseProps } from './props'
 
 const props = defineProps(collapseProps)

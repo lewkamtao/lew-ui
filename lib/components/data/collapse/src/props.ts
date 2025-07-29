@@ -2,10 +2,10 @@ import type { Property } from 'csstype'
 import type { ExtractPropTypes, PropType } from 'vue'
 import { isValidCssValue } from 'lew-ui/utils'
 
+// Model definitions (使用 type 定义联合类型场景)
 export const collapseModel = {
   modelValue: {
-    type: [Array, String, Number],
-    default: '',
+    type: [Array, String, Number] as PropType<string[] | string | number | null>,
   },
 }
 
@@ -16,6 +16,7 @@ export const collapseItemModel = {
   },
 }
 
+// Props definitions
 export const collapseProps = {
   width: {
     type: String as PropType<Property.Width>,
@@ -25,12 +26,11 @@ export const collapseProps = {
 
 export const collapseItemProps = {
   collapseKey: {
-    type: [String, Number],
-    default: '',
-    description: '折叠项的唯一标识符。在使用 Collapse 组件时必须提供。',
+    type: [String, Number] as PropType<string | number>,
+    required: true,
     validator(value: string | number): boolean {
-      if (value === '') {
-        console.warn('[LewCollapseItem] collapseKey 不能为空。')
+      if (value === '' || value === null || value === undefined) {
+        console.warn('[LewCollapseItem] collapseKey is required and cannot be empty.')
         return false
       }
       return true
@@ -38,14 +38,10 @@ export const collapseItemProps = {
   },
   title: {
     type: String,
-    default: '',
-    description:
-      '折叠项的标题文本。也可以使用具名插槽 "title" 自定义标题内容。',
   },
   radius: {
     type: [String, Number] as PropType<Property.BorderRadius>,
     default: '0px' as Property.BorderRadius,
-    description: '折叠项的圆角大小，支持所有 CSS border-radius 属性值。',
     validator(value: Property.BorderRadius): boolean {
       return isValidCssValue({
         name: 'LewCollapseItem',
@@ -56,16 +52,21 @@ export const collapseItemProps = {
   },
 }
 
-// 导出增强的类型定义
-export interface CollapsePropsEnhanced {
+// Type definitions (使用 type 定义基础类型别名)
+export type CollapseModelValue = (string | number)[] | string | number | null
+export type CollapseItemModelValue = boolean
+
+// Interface definitions (使用 interface 定义对象形状，便于扩展)
+export interface CollapseProps {
   width?: Property.Width
 }
 
-export interface CollapseItemPropsEnhanced {
+export interface CollapseItemProps {
   collapseKey: string | number
   title?: string
   radius?: Property.BorderRadius
 }
 
-export type CollapseProps = ExtractPropTypes<typeof collapseProps>
-export type CollapseItemProps = ExtractPropTypes<typeof collapseItemProps>
+// Extract prop types (使用 type 定义提取的类型)
+export type CollapsePropsType = ExtractPropTypes<typeof collapseProps>
+export type CollapseItemPropsType = ExtractPropTypes<typeof collapseItemProps>

@@ -8,11 +8,11 @@ defineProps({
     required: true,
   },
   type: {
-    type: String as PropType<'text-trim'>,
+    type: String,
     default: '',
   },
   componentProps: {
-    type: Object as PropType<any>,
+    type: Object,
     default: () => ({}),
   },
 })

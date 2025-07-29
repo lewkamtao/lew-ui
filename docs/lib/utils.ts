@@ -74,5 +74,5 @@ export function getComponentIcon(name: string) {
 }
 
 export function renderDescription(text: string) {
-  return text.replace(/```(\w+)```/g, '<span class="lew-docs-tag">$1</span>')
+  return text.replace(/`(\w+)`/g, '<span class="lew-docs-tag">$1</span>')
 }

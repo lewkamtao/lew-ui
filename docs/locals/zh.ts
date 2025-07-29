@@ -75,7 +75,7 @@ export default {
       demo4: {
         title: '形状',
         description:
-          '通过 shape 控制头像的形状, 可选值为 ```circle``` ```square``` ```sharp```。',
+          '通过 shape 控制头像的形状, 可选值为 `circle` `square` `sharp`。',
       },
       props: {
         size: '尺寸',
