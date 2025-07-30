@@ -2,7 +2,7 @@
 import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewTooltip, LewTree, locale } from 'lew-ui'
 import { any2px, findNodeByKey, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { cloneDeep, isFunction } from 'lodash-es'
 import { treeSelectProps } from './props'
 
@@ -194,10 +194,10 @@ defineExpose({ show, hide })
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <LewCommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
-        <LewCommonIcon
+        <CommonIcon
           v-else
           :size="getIconSize"
           type="chevron-down"
@@ -207,7 +207,7 @@ defineExpose({ show, hide })
           }"
         />
         <transition name="lew-form-icon-ani">
-          <LewCommonIcon
+          <CommonIcon
             v-if="clearable && state.keyword && !readonly"
             :size="getIconSize"
             type="close"

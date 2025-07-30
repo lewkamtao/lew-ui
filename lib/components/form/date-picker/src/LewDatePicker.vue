@@ -2,7 +2,7 @@
 import dayjs from 'dayjs'
 import { LewDate, LewPopover, LewTooltip, locale } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { cloneDeep } from 'lodash-es'
 import { datePickerProps } from './props'
 
@@ -124,7 +124,7 @@ defineExpose({ show, hide })
               {{ modelValue }}
             </div>
           </lew-flex>
-          <LewCommonIcon
+          <CommonIcon
             class="lew-date-picker-icon-calendar"
             :size="getIconSize"
             :class="{
@@ -133,7 +133,7 @@ defineExpose({ show, hide })
             type="calendar"
           />
           <transition name="lew-form-icon-ani">
-            <LewCommonIcon
+            <CommonIcon
               v-if="modelValue && clearable && !readonly"
               :size="getIconSize"
               type="close"

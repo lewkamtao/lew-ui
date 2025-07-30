@@ -1,18 +1,24 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 import type { CollapseModelValue } from './props'
-import { LewFlex } from 'lew-ui'
+import { LewFlex, LewTextTrim } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { inject, ref, watch } from 'vue'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { collapseItemProps } from './props'
 
 const props = defineProps(collapseItemProps)
-const modelValue = defineModel()
+const emit = defineEmits<{
+  change: [expanded: boolean, key: string | number]
+}>()
 
+const modelValue = defineModel<boolean>({ default: false })
+
+// Inject
 const expandKeys = inject<Ref<CollapseModelValue>>('expandKeys', ref(null))
 
+// Methods
 function setModelValue() {
   if (!expandKeys)
     return
@@ -24,13 +30,9 @@ function setModelValue() {
   }
 
   modelValue.value = Array.isArray(currentValue)
-    ? currentValue.includes(props.collapseKey as string | number)
+    ? currentValue.includes(props.collapseKey!)
     : props.collapseKey === currentValue
 }
-
-watch(() => expandKeys?.value, setModelValue, { deep: true })
-
-setModelValue()
 
 function change() {
   if (!expandKeys)
@@ -48,7 +50,15 @@ function change() {
   else {
     expandKeys.value = (modelValue.value ? props.collapseKey : null) as CollapseModelValue
   }
+
+  emit('change', modelValue.value, props.collapseKey!)
 }
+
+// Watchers
+watch(() => expandKeys?.value, setModelValue, { deep: true })
+
+// Initialize
+setModelValue()
 </script>
 
 <template>
@@ -63,7 +73,7 @@ function change() {
     >
       <slot v-if="$slots.title" name="title" :props="props" />
       <template v-else>
-        <LewCommonIcon
+        <CommonIcon
           :size="16"
           :style="{
             transform: `rotate(${modelValue ? 90 : 0}deg)`,
@@ -71,7 +81,7 @@ function change() {
           }"
           type="chevron-right"
         />
-        <lew-text-trim :style="{ width: 'calc(100% - 50px)' }" :text="props.title" />
+        <LewTextTrim :style="{ width: 'calc(100% - 50px)' }" :text="props.title" />
       </template>
     </LewFlex>
     <LewCollapseTransition>

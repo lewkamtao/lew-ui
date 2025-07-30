@@ -1,39 +1,47 @@
+import type { Property } from 'csstype'
 import type { LewColor, LewSize } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validColors, validSizes } from 'lew-ui/constants'
 
 export type ButtonSize = 'mini' | LewSize
 export type ButtonType = 'fill' | 'light' | 'ghost' | 'text'
 export type IconPosition = 'left' | 'right'
+export type ButtonWidth = Property.Width | number
 
 export const buttonProps = {
   text: {
     type: String,
-    default: '',
-    description: '按钮文本内容',
     validator(value: string): boolean {
-      if (value.length > 20) {
-        console.warn('[LewButton] 按钮文本长度不应超过20个字符')
+      if (value && value.length > 50) {
+        console.warn('[LewButton] text should not exceed 50 characters')
         return false
       }
       return true
     },
   },
   width: {
-    type: [String, Number],
-    default: undefined,
-    description: '按钮宽度，支持数字（单位：像素）或带单位的字符串',
+    type: [String, Number] as PropType<ButtonWidth>,
+    validator(value: ButtonWidth): boolean {
+      if (value !== undefined) {
+        if (typeof value === 'number' && value <= 0) {
+          console.warn('[LewButton] width must be greater than 0')
+          return false
+        }
+        if (typeof value === 'string' && !value.match(/^(auto|max-content|min-content|\d+(%|px|em|rem|vw|vh))$/)) {
+          console.warn('[LewButton] width must be a valid CSS width value')
+          return false
+        }
+      }
+      return true
+    },
   },
   type: {
     type: String as PropType<ButtonType>,
     default: 'fill',
-    description: '按钮类型',
     validator(value: ButtonType): boolean {
       const validTypes: ButtonType[] = ['fill', 'light', 'ghost', 'text']
       if (!validTypes.includes(value)) {
-        console.warn(
-          `[LewButton] 无效的按钮类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个`,
-        )
+        console.warn(`[LewButton] type must be one of: ${validTypes.join(', ')}`)
         return false
       }
       return true
@@ -42,13 +50,10 @@ export const buttonProps = {
   size: {
     type: String as PropType<ButtonSize>,
     default: 'medium',
-    description: '按钮尺寸',
     validator(value: ButtonSize): boolean {
       const buttonSizes: ButtonSize[] = ['mini', ...validSizes]
       if (!buttonSizes.includes(value)) {
-        console.warn(
-          `[LewButton] 无效的按钮尺寸: ${value}。请使用 ${buttonSizes.join(', ')} 中的一个`,
-        )
+        console.warn(`[LewButton] size must be one of: ${buttonSizes.join(', ')}`)
         return false
       }
       return true
@@ -56,18 +61,13 @@ export const buttonProps = {
   },
   singleIcon: {
     type: Boolean,
-    default: false,
-    description: '是否为单图标模式',
   },
   color: {
     type: String as PropType<LewColor>,
-    default: 'blue',
-    description: '按钮颜色',
+    default: 'primary',
     validator(value: LewColor): boolean {
       if (!validColors.includes(value)) {
-        console.warn(
-          `[LewButton] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个`,
-        )
+        console.warn(`[LewButton] color must be one of: ${validColors.join(', ')}`)
         return false
       }
       return true
@@ -75,28 +75,18 @@ export const buttonProps = {
   },
   round: {
     type: Boolean,
-    default: false,
-    description: '是否为圆角按钮',
   },
   dashed: {
     type: Boolean,
-    default: false,
-    description: '是否为虚线按钮',
   },
   loading: {
     type: Boolean,
-    default: false,
-    description: '是否显示加载状态',
   },
   disabled: {
     type: Boolean,
-    default: false,
-    description: '是否禁用按钮',
   },
   request: {
-    type: Function,
-    default: null,
-    description: '点击按钮时触发的异步请求函数',
+    type: Function as PropType<() => Promise<void>>,
   },
 }
 

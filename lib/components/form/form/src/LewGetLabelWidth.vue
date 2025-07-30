@@ -2,7 +2,7 @@
 import type { LewSize } from 'lew-ui'
 import { LewFlex } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { requiredIconSizeMap, tipsIconSizeMap } from './props'
 import RequiredIcon from './RequiredIcon.vue'
 
@@ -50,7 +50,7 @@ defineExpose({
         :size="requiredIconSizeMap[size]"
       />
       {{ item.label }}
-      <LewCommonIcon v-if="item.tips" :size="tipsIconSizeMap[size]" type="normal" color="black" />
+      <CommonIcon v-if="item.tips" :size="tipsIconSizeMap[size]" type="normal" color="black" />
     </LewFlex>
   </div>
 </template>

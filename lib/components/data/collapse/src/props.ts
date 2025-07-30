@@ -16,11 +16,22 @@ export const collapseItemModel = {
   },
 }
 
+// Type definitions
+export type CollapseModelValue = (string | number)[] | string | number | null
+export type CollapseItemModelValue = boolean
+
 // Props definitions
 export const collapseProps = {
   width: {
     type: String as PropType<Property.Width>,
     default: '100%',
+    validator(value: Property.Width): boolean {
+      return isValidCssValue({
+        name: 'LewCollapse',
+        field: 'width',
+        value,
+      })
+    },
   },
 }
 
@@ -30,7 +41,7 @@ export const collapseItemProps = {
     required: true,
     validator(value: string | number): boolean {
       if (value === '' || value === null || value === undefined) {
-        console.warn('[LewCollapseItem] collapseKey is required and cannot be empty.')
+        console.warn('[LewCollapseItem] collapseKey is required and cannot be empty')
         return false
       }
       return true
@@ -41,7 +52,7 @@ export const collapseItemProps = {
   },
   radius: {
     type: [String, Number] as PropType<Property.BorderRadius>,
-    default: '0px' as Property.BorderRadius,
+    default: '0px',
     validator(value: Property.BorderRadius): boolean {
       return isValidCssValue({
         name: 'LewCollapseItem',
@@ -52,21 +63,6 @@ export const collapseItemProps = {
   },
 }
 
-// Type definitions (使用 type 定义基础类型别名)
-export type CollapseModelValue = (string | number)[] | string | number | null
-export type CollapseItemModelValue = boolean
-
-// Interface definitions (使用 interface 定义对象形状，便于扩展)
-export interface CollapseProps {
-  width?: Property.Width
-}
-
-export interface CollapseItemProps {
-  collapseKey: string | number
-  title?: string
-  radius?: Property.BorderRadius
-}
-
-// Extract prop types (使用 type 定义提取的类型)
-export type CollapsePropsType = ExtractPropTypes<typeof collapseProps>
-export type CollapseItemPropsType = ExtractPropTypes<typeof collapseItemProps>
+// Extract prop types
+export type CollapseProps = ExtractPropTypes<typeof collapseProps>
+export type CollapseItemProps = ExtractPropTypes<typeof collapseItemProps>

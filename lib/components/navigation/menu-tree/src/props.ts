@@ -59,10 +59,7 @@ export const menuTreeProps = {
 
 export const menuTreeItemProps = {
   label: {
-    type: [String, Function],
-    default: '',
-    description:
-      '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。',
+    type: null,
   },
   value: {
     type: [String, Number],
@@ -77,9 +74,7 @@ export const menuTreeItemProps = {
     },
   },
   icon: {
-    type: [String, Function],
-    default: undefined,
-    description: '菜单树项的图标。',
+    type: null,
   },
   disabled: {
     type: Boolean,

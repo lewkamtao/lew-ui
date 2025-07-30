@@ -3,8 +3,8 @@ import type { FlexXAlignment, FlexYAlignment } from 'lew-ui'
 import { useResizeObserver } from '@vueuse/core'
 import { LewCheckbox, LewEmpty, LewFlex, LewTextTrim } from 'lew-ui'
 import { any2px, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import {
   cloneDeep,
   difference,
@@ -960,7 +960,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               }"
               x="center"
             >
-              <LewCommonIcon :size="getIconSize" type="grip-vertical" />
+              <CommonIcon :size="getIconSize" type="grip-vertical" />
             </LewFlex>
             <LewFlex
               v-if="checkable"
@@ -979,7 +979,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
                 :certain="hasPartialSelection && !state.isAllChecked"
                 @change="setAllRowsChecked($event)"
               />
-              <LewCommonIcon v-else :size="getIconSize" type="square-mouse-pointer" />
+              <CommonIcon v-else :size="getIconSize" type="square-mouse-pointer" />
             </LewFlex>
             <readerHeaderTd
               v-for="(column, index) in getFixedHeaderColumns('left')"
@@ -1070,7 +1070,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               class="lew-table-drag-handle"
               @mousedown="dragStart($event, row, i)"
             >
-              <LewCommonIcon
+              <CommonIcon
                 :size="getIconSize"
                 type="grip-vertical"
                 class="lew-table-drag-icon"

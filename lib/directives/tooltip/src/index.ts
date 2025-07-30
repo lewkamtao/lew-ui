@@ -1,5 +1,5 @@
 import type { App as Application, DirectiveBinding } from 'vue'
-import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import tippy, { roundArrow } from 'tippy.js'
 import { createApp, defineComponent, h } from 'vue'
 

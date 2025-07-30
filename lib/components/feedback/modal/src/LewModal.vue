@@ -3,7 +3,7 @@ import { onClickOutside, useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, LewTextTrim, locale } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { modalProps } from './props'
 
 const props = defineProps(modalProps)
@@ -189,7 +189,7 @@ if (props.closeByEsc) {
                 class="lew-modal-icon-close"
                 @click="close"
               >
-                <LewCommonIcon :size="14" type="close" />
+                <CommonIcon :size="14" type="close" />
               </LewButton>
             </LewFlex>
             <div

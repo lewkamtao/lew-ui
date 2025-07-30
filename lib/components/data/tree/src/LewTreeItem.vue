@@ -9,8 +9,8 @@ import {
   findNodeByKey,
   insertChildByKey,
 } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { cloneDeep } from 'lodash-es'
 import { treeItemProps } from './props'
 import transformTree, { formatTree } from './transformTree'
@@ -231,14 +231,14 @@ const isNodePartiallySelected = computed(() => {
     }"
   >
     <div class="lew-tree-chevron-right" @click.stop="expand">
-      <LewCommonIcon
+      <CommonIcon
         v-if="loading"
         :size="14"
         loading
         class="lew-cascader-loading-icon"
         type="loader"
       />
-      <LewCommonIcon
+      <CommonIcon
         v-else
         class="lew-tree-chevron-right-icon"
         :size="14"

@@ -13,10 +13,8 @@ import './styles/index.scss'
 export * from './components'
 export * from './directives'
 export * from './locals'
-
 export * from './methods'
 export * from './types'
-export * from './utils'
 
 function install(Vue: App): void {
   Object.keys(components).forEach((key) => {

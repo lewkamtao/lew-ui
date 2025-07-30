@@ -3,7 +3,7 @@ import type { RetItemType, RetType } from './date'
 import dayjs from 'dayjs'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { getMonthDate } from './date'
 import { dateProps } from './props'
 
@@ -110,11 +110,11 @@ const headDate = computed(() => {
       <div class="lew-date-control-left">
         <!-- 上一年 -->
         <LewButton type="light" color="gray" size="small" single-icon @click="prveYear">
-          <LewCommonIcon type="chevrons-left" />
+          <CommonIcon type="chevrons-left" />
         </LewButton>
         <!-- 上一月 -->
         <LewButton type="light" color="gray" size="small" single-icon @click="prveMonth">
-          <LewCommonIcon type="chevron-left" />
+          <CommonIcon type="chevron-left" />
         </LewButton>
       </div>
       <!-- 日期 -->
@@ -124,11 +124,11 @@ const headDate = computed(() => {
       <div class="lew-date-control-right">
         <!-- 下一月 -->
         <LewButton type="light" color="gray" size="small" single-icon @click="nextMonth">
-          <LewCommonIcon type="chevron-right" />
+          <CommonIcon type="chevron-right" />
         </LewButton>
         <!-- 下一年 -->
         <LewButton type="light" color="gray" size="small" single-icon @click="nextYear">
-          <LewCommonIcon type="chevrons-right" />
+          <CommonIcon type="chevrons-right" />
         </LewButton>
       </div>
     </LewFlex>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewDropdown, LewFlex } from 'lew-ui'
 import { isValidComponent } from 'lew-ui/utils'
-import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { actionBoxProps } from './props'
 
 const props = defineProps(actionBoxProps)

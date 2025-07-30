@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useEventListener } from 'lew-ui/hooks'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { throttle } from 'lodash-es'
 import { backTopProps } from './props'
 
@@ -50,7 +50,7 @@ onMounted(() => {
   <transition name="fade">
     <div v-if="showBackTop" class="lew-back-top" :style="backTopStyle" @click="toBackUp">
       <slot>
-        <LewCommonIcon :size="20" type="chevron-up" />
+        <CommonIcon :size="20" type="chevron-up" />
       </slot>
     </div>
   </transition>

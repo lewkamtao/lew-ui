@@ -28,6 +28,7 @@ export const validColors: LewColor[] = [
   'info',
   'normal',
   'primary',
+  'danger',
 ]
 
 export const vailThemeColor: LewThemeColor[] = [
@@ -54,6 +55,7 @@ export const validStatusColors: LewStatusColor[] = [
   'info',
   'normal',
   'primary',
+  'danger',
 ]
 
 export const validSizes: LewSize[] = ['small', 'medium', 'large']

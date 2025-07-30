@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewFlex } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { expandProps } from './props'
 
 const props = defineProps(expandProps)
@@ -37,7 +37,7 @@ onMounted(() => {
       class="lew-expand-btn"
       @click="collapse = !collapse"
     >
-      <LewCommonIcon
+      <CommonIcon
         :style="{
           transform: collapse ? 'rotate(0deg)' : 'rotate(180deg)',
         }"

@@ -1,4 +1,5 @@
 import type { Component, VNode } from 'vue'
+import type { ComponentSource } from '../types'
 import { defineAsyncComponent, defineComponent, isVNode } from 'vue'
 
 /**
@@ -16,33 +17,33 @@ enum ComponentType {
 
 /**
  * 检测组件类型
- * @param input 输入值
+ * @param componentSource 组件源输入
  * @returns 组件类型
  */
-function detectComponentType(input: any): ComponentType {
-  if (input === null || input === undefined || input === '') {
+function detectComponentType(componentSource: ComponentSource): ComponentType {
+  if (componentSource === null || componentSource === undefined || componentSource === '') {
     return ComponentType.Unknown
   }
 
   // VNode 检查 - 最优先，因为isVNode是Vue内置的高效检查
-  if (isVNode(input)) {
+  if (isVNode(componentSource)) {
     return ComponentType.VNode
   }
 
   // 基础类型检查 - 快速路径
-  const inputType = typeof input
+  const inputType = typeof componentSource
   if (inputType === 'string' || inputType === 'number' || inputType === 'boolean') {
     return ComponentType.Text
   }
 
   // 函数类型检查
   if (inputType === 'function') {
-    return detectFunctionComponentType(input)
+    return detectFunctionComponentType(componentSource)
   }
 
   // 对象类型检查
   if (inputType === 'object') {
-    return detectObjectComponentType(input)
+    return detectObjectComponentType(componentSource)
   }
 
   return ComponentType.Unknown
@@ -230,39 +231,39 @@ function createVNodeComponent(vnode: VNode): Component {
 
 /**
  * 检查组件是否有效（可以被渲染）
- * @param component 组件
+ * @param componentSource 组件源
  * @returns 是否有效
  */
-export function isValidComponent(component: any): boolean {
-  const componentType = detectComponentType(component)
+export function isValidComponent(componentSource: ComponentSource): boolean {
+  const componentType = detectComponentType(componentSource)
   return componentType !== ComponentType.Unknown
 }
 
 /**
  * 格式化输入为有效的 Vue 组件
- * @param input 可能是组件、组件名称、配置对象等
+ * @param componentSource 可能是组件、组件名称、配置对象等
  * @returns 有效的 Vue 组件
  */
-export function formatComponent(input: any): Component | undefined {
-  const componentType = detectComponentType(input)
+export function formatComponent(componentSource: ComponentSource): Component | undefined {
+  const componentType = detectComponentType(componentSource)
 
   try {
     switch (componentType) {
       case ComponentType.VNode:
-        return createVNodeComponent(input)
+        return createVNodeComponent(componentSource as VNode)
 
       case ComponentType.Text:
-        return createTextComponent(String(input))
+        return createTextComponent(String(componentSource))
 
       case ComponentType.FunctionalComponent:
-        return createFunctionalComponent(input)
+        return createFunctionalComponent(componentSource as (...args: any[]) => any)
 
       case ComponentType.AsyncComponent:
-        return createAsyncComponent(input)
+        return createAsyncComponent(componentSource)
 
       case ComponentType.ComponentOptions:
       case ComponentType.ComponentInstance:
-        return createOptionsComponent(input)
+        return createOptionsComponent(componentSource as Record<string, any>)
 
       case ComponentType.Unknown:
       default:
@@ -270,7 +271,7 @@ export function formatComponent(input: any): Component | undefined {
     }
   }
   catch (error) {
-    console.error('[formatComponent] 组件格式化失败:', error, input)
+    console.error('[formatComponent] 组件格式化失败:', error, componentSource)
     return undefined
   }
 }

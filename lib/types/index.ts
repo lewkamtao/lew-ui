@@ -1,3 +1,5 @@
+import type { Component, VNode } from 'vue'
+
 /**
  * 主题色类型
  */
@@ -27,6 +29,7 @@ export type LewStatusColor
     | 'info'
     | 'normal'
     | 'primary'
+    | 'danger'
 
 /**
  * 颜色类型 = 主题色 + 状态色
@@ -42,3 +45,18 @@ export type LewSize = 'small' | 'medium' | 'large'
  * 方向类型
  */
 export type LewDirection = 'x' | 'y'
+
+/**
+ * 可能的组件源类型定义
+ */
+export type ComponentSource
+  = | string
+    | number
+    | boolean
+    | VNode
+    | Component
+    | ((...args: any[]) => any) // 函数式组件或异步组件工厂
+    | Promise<Component>
+    | Record<string, any>
+    | null
+    | undefined

@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { downloadObjectAsFile, getComponentIcon } from 'docs/lib/utils'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
 import { formatFormByMap, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
@@ -363,14 +363,14 @@ onMounted(() => {
             >
               <lew-flex x="end" y="center" class="handle-box">
                 <lew-flex x="end" gap="5" y="center">
-                  <LewCommonIcon
+                  <CommonIcon
                     v-if="(element.spanMap?.[formGlobal.columns] || 1) > 1"
                     class="handle-icon handle-resize"
                     :size="14"
                     type="minimize-2"
                     @click="minimize(element)"
                   />
-                  <LewCommonIcon
+                  <CommonIcon
                     v-if="
                       (element.spanMap?.[formGlobal.columns] || 1) < formGlobal.columns
                     "
@@ -379,7 +379,7 @@ onMounted(() => {
                     type="maximize-2"
                     @click="maximize(element)"
                   />
-                  <LewCommonIcon
+                  <CommonIcon
                     class="handle-icon"
                     :size="14"
                     type="trash"
@@ -387,7 +387,7 @@ onMounted(() => {
                   />
                 </lew-flex>
               </lew-flex>
-              <LewCommonIcon
+              <CommonIcon
                 v-if="!element.field"
                 v-tooltip="{
                   content: '未绑定字段',

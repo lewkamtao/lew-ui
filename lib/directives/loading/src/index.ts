@@ -1,5 +1,5 @@
 import type { App as Application, DirectiveBinding } from 'vue'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 
 import { createApp } from 'vue'
 import '../styles/index.scss'
@@ -16,7 +16,7 @@ export const LewLoading = {
 
         el.classList.add('lew-loading')
         //  add loading icon
-        const loader = createApp(LewCommonIcon, {
+        const loader = createApp(CommonIcon, {
           type: 'loader',
           loading: true,
           size: iconSize || 24,

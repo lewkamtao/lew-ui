@@ -1,38 +1,70 @@
 <script setup lang="ts">
+import type { AvatarPlacement, AvatarShape, AvatarStatus } from './props'
 import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { computed } from 'vue'
 import { avatarProps } from './props'
 
 const props = defineProps(avatarProps)
 
-const avatarBoxStyleObject = computed(() => {
-  const { shape } = props
+const emit = defineEmits<{
+  load: []
+  error: []
+}>()
 
-  const borderRadiusMap: Record<string, string> = {
-    circle: '50%',
-    sharp: '0',
-    square: 'var(--lew-border-radius-small)',
-  }
+// Constants
+const BORDER_RADIUS_MAP: Record<AvatarShape, string> = {
+  circle: '50%',
+  sharp: '0',
+  square: 'var(--lew-border-radius-small)',
+}
 
-  return {
-    borderRadius: borderRadiusMap[shape],
-  }
+const STATUS_PLACEMENT_CONFIG_CIRCLE: Record<AvatarPlacement, Record<string, string>> = {
+  'top-left': { top: '-0.05rem', left: '-0.05rem', bottom: 'auto', right: 'auto' },
+  'top-right': { top: '-0.05rem', left: 'auto', bottom: 'auto', right: '-0.05rem' },
+  'bottom-left': { top: 'auto', left: '-0.05rem', bottom: '-0.05rem', right: 'auto' },
+  'bottom-right': { top: 'auto', left: 'auto', bottom: '-0.05rem', right: '-0.05rem' },
+}
+
+const STATUS_PLACEMENT_CONFIG_SQUARE: Record<AvatarPlacement, Record<string, string>> = {
+  'top-left': { top: '-0.25rem', left: '-0.25rem', bottom: 'auto', right: 'auto' },
+  'top-right': { top: '-0.25rem', left: 'auto', bottom: 'auto', right: '-0.25rem' },
+  'bottom-left': { top: 'auto', left: '-0.25rem', bottom: '-0.25rem', right: 'auto' },
+  'bottom-right': { top: 'auto', left: 'auto', bottom: '-0.25rem', right: '-0.25rem' },
+}
+
+const STATUS_COLOR_CONFIG: Record<AvatarStatus, string> = {
+  online: 'var(--lew-color-success)',
+  busy: 'var(--lew-color-error)',
+  offline: 'var(--lew-color-normal-dark)',
+  processing: 'var(--lew-color-info)',
+  away: 'var(--lew-color-warning)',
+}
+
+// Image handling
+const { isLoading, error } = useImage({
+  src: props.src,
+  onLoaded: () => emit('load'),
+  onError: () => emit('error'),
 })
 
-const avatarStyleObject = computed(() => {
-  return {
-    width: any2px(props.size),
-    height: any2px(props.size),
-  }
-})
+// Image loading watch is handled by useImage hook
 
-const imageStyleObject = computed(() => {
-  return {
-    objectFit: props.objectFit,
-    objectPosition: props.objectPosition,
-  }
-})
+// Computed
+const avatarStyleObject = computed(() => ({
+  width: any2px(props.size),
+  height: any2px(props.size),
+}))
+
+const avatarBoxStyleObject = computed(() => ({
+  borderRadius: BORDER_RADIUS_MAP[props.shape],
+}))
+
+const imageStyleObject = computed(() => ({
+  objectFit: props.objectFit,
+  objectPosition: props.objectPosition,
+}))
 
 const textStyleObject = computed(() => {
   const size = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
@@ -56,80 +88,18 @@ const altText = computed(() => {
   return result.length > 2 ? result.charAt(0) : result
 })
 
-// 状态点位置配置
-const STATUS_PLACEMENT_CONFIG_CIRCLE: Record<string, Record<string, string>> = {
-  'top-left': {
-    top: '-0.05rem',
-    left: '-0.05rem',
-    bottom: 'auto',
-    right: 'auto',
-  },
-  'top-right': {
-    top: '-0.05rem',
-    left: 'auto',
-    bottom: 'auto',
-    right: '-0.05rem',
-  },
-  'bottom-left': {
-    top: 'auto',
-    left: '-0.05rem',
-    bottom: '-0.05rem',
-    right: 'auto',
-  },
-  'bottom-right': {
-    top: 'auto',
-    left: 'auto',
-    bottom: '-0.05rem',
-    right: '-0.05rem',
-  },
-}
+const dotStyleObject = computed(() => {
+  const { status, statusPlacement, shape, size } = props
+  if (!status)
+    return {}
 
-const STATUS_PLACEMENT_CONFIG_SQUARE = {
-  'top-left': {
-    top: '-0.25rem',
-    left: '-0.25rem',
-    bottom: 'auto',
-    right: 'auto',
-  },
-  'top-right': {
-    top: '-0.25rem',
-    left: 'auto',
-    bottom: 'auto',
-    right: '-0.25rem',
-  },
-  'bottom-left': {
-    top: 'auto',
-    left: '-0.25rem',
-    bottom: '-0.25rem',
-    right: 'auto',
-  },
-  'bottom-right': {
-    top: 'auto',
-    left: 'auto',
-    bottom: '-0.25rem',
-    right: '-0.25rem',
-  },
-}
-
-// 状态点颜色配置
-const STATUS_COLOR_CONFIG = {
-  online: 'var(--lew-color-success)',
-  busy: 'var(--lew-color-error)',
-  offline: 'var(--lew-color-normal-dark)',
-  processing: 'var(--lew-color-info)',
-  away: 'var(--lew-color-warning)',
-}
-
-const dotStyleObject: any = computed(() => {
-  const { status, statusPlacement, size } = props
-  const STATUS_PLACEMENT_CONFIG
-    = props.shape === 'circle'
-      ? STATUS_PLACEMENT_CONFIG_CIRCLE
-      : STATUS_PLACEMENT_CONFIG_SQUARE
+  const statusPlacementConfig = shape === 'circle'
+    ? STATUS_PLACEMENT_CONFIG_CIRCLE
+    : STATUS_PLACEMENT_CONFIG_SQUARE
 
   return {
-    ...STATUS_PLACEMENT_CONFIG[statusPlacement],
-    backgroundColor: status ? STATUS_COLOR_CONFIG[status] : '',
+    ...statusPlacementConfig[statusPlacement],
+    backgroundColor: STATUS_COLOR_CONFIG[status],
     position: 'absolute',
     content: '',
     width: any2px(Number(size) * 0.2),
@@ -139,8 +109,6 @@ const dotStyleObject: any = computed(() => {
     border: 'var(--lew-form-border-width) var(--lew-color-white) solid',
   }
 })
-
-const { isLoading, error } = useImage({ src: props.src })
 
 const getIconSize = computed(() => {
   const { size } = props
@@ -157,7 +125,7 @@ const getIconSize = computed(() => {
         <div v-else-if="alt" class="lew-avatar-text" :style="textStyleObject">
           {{ altText }}
         </div>
-        <LewCommonIcon v-else :size="getIconSize" type="user" />
+        <CommonIcon v-else :size="getIconSize" type="user" />
       </template>
       <template v-else-if="alt">
         <div class="lew-avatar-text" :style="textStyleObject">
@@ -165,7 +133,7 @@ const getIconSize = computed(() => {
         </div>
       </template>
       <template v-else>
-        <LewCommonIcon :size="getIconSize" type="user" />
+        <CommonIcon :size="getIconSize" type="user" />
       </template>
     </div>
     <i v-if="status" :style="dotStyleObject" />

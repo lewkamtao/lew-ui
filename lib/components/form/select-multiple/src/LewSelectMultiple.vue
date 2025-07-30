@@ -11,7 +11,7 @@ import {
   locale,
 } from 'lew-ui'
 import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
 import { defaultSearchMethod, flattenOptions } from '../../select/src/util'
@@ -351,13 +351,13 @@ const getResultText = computed(() => {
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <LewCommonIcon
+          <CommonIcon
             :size="getIconSize"
             :loading="state.initLoading"
             type="loading"
           />
         </div>
-        <LewCommonIcon
+        <CommonIcon
           v-else
           :size="getIconSize"
           type="chevron-down"
@@ -368,7 +368,7 @@ const getResultText = computed(() => {
           }"
         />
         <transition name="lew-form-icon-ani">
-          <LewCommonIcon
+          <CommonIcon
             v-if="
               clearable
                 && getSelectedRows

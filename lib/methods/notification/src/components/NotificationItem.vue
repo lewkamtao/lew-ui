@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { any2px } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 
 defineProps<{
   type: string
@@ -27,7 +27,7 @@ function onClose() {
   >
     <div class="lew-notification-box">
       <div class="lew-notification-icon">
-        <LewCommonIcon :type="type" :size="18" />
+        <CommonIcon :type="type" :size="18" />
       </div>
       <div class="lew-notification-body">
         <div v-if="title" class="lew-notification-title">
@@ -38,7 +38,7 @@ function onClose() {
         </div>
       </div>
       <div class="lew-notification-close-icon" @click="onClose">
-        <LewCommonIcon type="close" :size="16" />
+        <CommonIcon type="close" :size="16" />
       </div>
     </div>
     <div

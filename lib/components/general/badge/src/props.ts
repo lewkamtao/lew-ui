@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validColors } from 'lew-ui/constants'
 
 export type BadgeColor
@@ -23,59 +23,64 @@ export type BadgeColor
     | 'info'
     | 'primary'
 
+export type BadgeValue = string | number
+export type BadgeOffset = [number, number]
+
 export const badgeProps = {
   text: {
     type: String,
     default: '',
-    description: '自定义提示内容',
   },
   offset: {
-    type: Array,
-    default: () => [0, 0],
-    description: '徽章偏移量，格式为 [x, y]',
+    type: Array as unknown as PropType<BadgeOffset>,
+    default: (): BadgeOffset => [0, 0],
+    validator(value: BadgeOffset): boolean {
+      if (!Array.isArray(value) || value.length !== 2) {
+        console.warn('[LewBadge] offset must be an array with exactly 2 numbers')
+        return false
+      }
+      if (!value.every(v => typeof v === 'number')) {
+        console.warn('[LewBadge] offset values must be numbers')
+        return false
+      }
+      return true
+    },
   },
   processing: {
     type: Boolean,
-    default: false,
-    description: '徽章是否为处理中状态',
   },
-  // 超过多少转化成加号
   max: {
-    type: [Number, String],
+    type: [Number, String] as PropType<number | string>,
     default: 99,
-    description: '超过多少转化成加号',
-    validator: (value: string | number) => {
+    validator(value: string | number): boolean {
       const numberValue = Number(value)
       if (Number.isNaN(numberValue)) {
-        console.warn(
-          '[LewBadge] max 属性必须是有效的数字或可转换为数字的字符串。',
-        )
+        console.warn('[LewBadge] max must be a valid number or a string convertible to number')
+        return false
+      }
+      if (numberValue < 0) {
+        console.warn('[LewBadge] max must be greater than or equal to 0')
         return false
       }
       return true
     },
   },
   color: {
-    type: String,
+    type: String as PropType<BadgeColor>,
     default: 'red',
-    description: '徽章颜色，可选值包括多种预定义颜色',
-    validator: (value: string) => {
-      if (!validColors.includes(value as BadgeColor)) {
-        console.warn(
-          `[LewBadge] 无效的颜色值: ${value}。请使用预定义的颜色之一。`,
-        )
+    validator(value: BadgeColor): boolean {
+      if (!validColors.includes(value)) {
+        console.warn(`[LewBadge] color must be one of: ${validColors.join(', ')}`)
         return false
       }
       return true
     },
   },
   value: {
-    type: [String, Number],
-    default: '',
-    description: '徽章显示的内容，为空时显示为小圆点',
-    validator: (value: string | number) => {
-      if (typeof value !== 'string' && typeof value !== 'number') {
-        console.warn('[LewBadge] value 属性必须是字符串或数字类型。')
+    type: [String, Number] as PropType<BadgeValue>,
+    validator(value: BadgeValue): boolean {
+      if (value !== undefined && typeof value !== 'string' && typeof value !== 'number') {
+        console.warn('[LewBadge] value must be a string or number')
         return false
       }
       return true

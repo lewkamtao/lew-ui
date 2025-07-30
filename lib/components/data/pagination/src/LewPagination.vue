@@ -2,7 +2,7 @@
 import type { PaginationOptions } from './props'
 import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { paginationProps } from './props'
 
 const props = defineProps(paginationProps)
@@ -144,7 +144,7 @@ const getIconSize = computed(() => {
           :size="size"
           @click="changePage(currentPage - 1)"
         >
-          <LewCommonIcon type="chevron-left" :size="getIconSize" />
+          <CommonIcon type="chevron-left" :size="getIconSize" />
         </LewButton>
         <div v-if="showOne" class="lew-pagination-page-btn" @click="changePage(1)">
           1
@@ -154,7 +154,7 @@ const getIconSize = computed(() => {
           class="lew-pagination-page-btn"
           @click="changePage(visiblePages[0] - 1)"
         >
-          <LewCommonIcon :size="getIconSize" type="more-horizontal" />
+          <CommonIcon :size="getIconSize" type="more-horizontal" />
         </div>
         <div
           v-else-if="
@@ -181,7 +181,7 @@ const getIconSize = computed(() => {
           class="lew-pagination-page-btn"
           @click="changePage(visiblePages[visiblePages.length - 1] + 1)"
         >
-          <LewCommonIcon :size="getIconSize" type="more-horizontal" />
+          <CommonIcon :size="getIconSize" type="more-horizontal" />
         </div>
         <div
           v-else-if="
@@ -206,7 +206,7 @@ const getIconSize = computed(() => {
           :size="size"
           @click="changePage(currentPage + 1)"
         >
-          <LewCommonIcon type="chevron-right" :size="getIconSize" />
+          <CommonIcon type="chevron-right" :size="getIconSize" />
         </LewButton>
       </LewFlex>
       <LewSelect

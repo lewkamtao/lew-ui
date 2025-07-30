@@ -1,31 +1,82 @@
 <script setup lang="ts">
 import { any2px, getColorType, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { computed, getCurrentInstance, ref } from 'vue'
 import { buttonProps } from './props'
 
+// Props & Emit
 const props = defineProps(buttonProps)
-const emit = defineEmits(['click'])
+
+const emit = defineEmits<{
+  click: [event: MouseEvent]
+  focus: [event: FocusEvent]
+  blur: [event: FocusEvent]
+  mouseenter: [event: MouseEvent]
+  mouseleave: [event: MouseEvent]
+}>()
+
+// Refs
+const buttonRef = ref<HTMLButtonElement>()
 const _loading = ref(false)
 
-const buttonRef = ref()
-
+// Methods
 function focus() {
   buttonRef.value?.focus()
 }
 
-async function handleClick(e: MouseEvent) {
-  if (props.disabled || _loading.value || props.loading)
+function blur() {
+  buttonRef.value?.blur()
+}
+
+async function handleClick(event: MouseEvent) {
+  if (props.disabled || _loading.value || props.loading) {
     return
-  emit('click', e)
+  }
+
+  emit('click', event)
+
   if (typeof props.request === 'function') {
     if (_loading.value) {
       return
     }
     _loading.value = true
-    await props.request()
-    _loading.value = false
+    try {
+      await props.request()
+    }
+    catch (error) {
+      console.error('[LewButton] Request failed:', error)
+    }
+    finally {
+      _loading.value = false
+    }
   }
 }
+
+function handleFocus(event: FocusEvent) {
+  if (!props.disabled) {
+    emit('focus', event)
+  }
+}
+
+function handleBlur(event: FocusEvent) {
+  if (!props.disabled) {
+    emit('blur', event)
+  }
+}
+
+function handleMouseenter(event: MouseEvent) {
+  if (!props.disabled) {
+    emit('mouseenter', event)
+  }
+}
+
+function handleMouseleave(event: MouseEvent) {
+  if (!props.disabled) {
+    emit('mouseleave', event)
+  }
+}
+
+// Slot detection
 const instance = getCurrentInstance()
 const hasDefaultSlot = ref(false)
 
@@ -33,6 +84,7 @@ if (instance?.slots.default) {
   hasDefaultSlot.value = true
 }
 
+// Computed
 const getButtonClass = computed(() => {
   const { size, type, color, singleIcon } = props
   const loading = _loading.value || props.loading
@@ -109,7 +161,11 @@ const getStyle = computed(() => {
   return styleObj
 })
 
-defineExpose({ focus })
+// Expose methods
+defineExpose({
+  focus,
+  blur,
+})
 </script>
 
 <template>
@@ -120,6 +176,10 @@ defineExpose({ focus })
     :disabled="disabled"
     :style="getStyle"
     @click="handleClick"
+    @focus="handleFocus"
+    @blur="handleBlur"
+    @mouseenter="handleMouseenter"
+    @mouseleave="handleMouseleave"
   >
     <div
       class="lew-button-loading-icon"
@@ -127,7 +187,7 @@ defineExpose({ focus })
         'lew-button-loading-isShow': (_loading || loading) && !disabled,
       }"
     >
-      <LewCommonIcon :size="getIconSize" loading type="loader" />
+      <CommonIcon :size="getIconSize" loading type="loader" />
     </div>
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { LewCollapseTransition, LewFlex } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { isValidComponent } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
 import { cloneDeep } from 'lodash-es'
 import { menuTreeItemProps } from './props'
 
@@ -81,7 +81,7 @@ function change() {
           v-if="tagProps?.text"
           v-bind="{ ...tagProps, size: tagProps.size || 'small' }"
         />
-        <LewCommonIcon
+        <CommonIcon
           v-if="!isLeaf && !collapsed"
           class="lew-menu-tree-item-chevron-right"
           :size="14"

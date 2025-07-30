@@ -2,7 +2,7 @@
 import { useMagicKeys } from '@vueuse/core'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { inputProps } from './props'
 
 const props = defineProps(inputProps)
@@ -189,7 +189,7 @@ defineExpose({ toFocus, toBlur })
         {{ prefixValue }}
       </div>
       <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-        <LewCommonIcon :size="getIconSize" :type="prefixValue as string" />
+        <CommonIcon :size="getIconSize" :type="prefixValue as string" />
       </div>
       <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
         <LewDropdown
@@ -211,7 +211,7 @@ defineExpose({ toFocus, toBlur })
             <div>
               {{ getPrefixesLabel }}
             </div>
-            <LewCommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <CommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
           </LewFlex>
         </LewDropdown>
       </div>
@@ -221,7 +221,7 @@ defineExpose({ toFocus, toBlur })
       class="lew-input-copy-btn"
       @click="copy"
     >
-      <LewCommonIcon
+      <CommonIcon
         :size="getIconSize"
         :type="isCopy ? 'check' : 'copy'"
         :class="{ 'lew-input-copy-btn-check': isCopy }"
@@ -271,11 +271,11 @@ defineExpose({ toFocus, toBlur })
           @mousedown.prevent=""
           @click="showPasswordFn"
         >
-          <LewCommonIcon v-show="_type === 'text'" :size="getIconSize" type="eye" />
-          <LewCommonIcon v-show="_type === 'password'" :size="getIconSize" type="eye_off" />
+          <CommonIcon v-show="_type === 'text'" :size="getIconSize" type="eye" />
+          <CommonIcon v-show="_type === 'password'" :size="getIconSize" type="eye_off" />
         </div>
         <transition name="lew-form-icon-ani">
-          <LewCommonIcon
+          <CommonIcon
             v-if="clearable && modelValue && !readonly"
             class="lew-form-icon-close"
             :class="{
@@ -301,7 +301,7 @@ defineExpose({ toFocus, toBlur })
         {{ suffixValue }}
       </div>
       <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-        <LewCommonIcon :size="getIconSize" :type="suffixValue" />
+        <CommonIcon :size="getIconSize" :type="suffixValue" />
       </div>
       <div v-if="suffix === 'select'" class="lew-input-suffix-select">
         <LewDropdown
@@ -321,7 +321,7 @@ defineExpose({ toFocus, toBlur })
             }"
           >
             <div>{{ getSuffixLabel }}</div>
-            <LewCommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <CommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
           </LewFlex>
         </LewDropdown>
       </div>

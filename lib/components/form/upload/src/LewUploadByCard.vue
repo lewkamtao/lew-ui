@@ -3,7 +3,7 @@ import type { LewColor } from 'lew-ui'
 import type { UploadFileItem } from './props'
 import { LewFlex, LewImage, LewTooltip, locale } from 'lew-ui'
 import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { uploadByCardProps } from './props'
 
 defineProps(uploadByCardProps)
@@ -92,7 +92,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           class="lew-upload-reupload-btn"
           @click.stop="emit('reUpload', item.key)"
         >
-          <LewCommonIcon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
+          <CommonIcon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
         </LewFlex>
 
         <LewFlex
@@ -115,7 +115,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           }"
           class="lew-upload-tips-tag"
         >
-          <LewCommonIcon
+          <CommonIcon
             :size="rightTopBtnIconSizeMap[size]"
             type="tips"
             :color="statusColorMap[item.status || 'complete'] as LewColor"
@@ -133,7 +133,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           class="lew-upload-delete-btn"
           @click.stop="emit('deleteFile', item.key)"
         >
-          <LewCommonIcon :size="rightTopBtnIconSizeMap[size]" type="close" />
+          <CommonIcon :size="rightTopBtnIconSizeMap[size]" type="close" />
         </LewFlex>
         <LewFlex class="lew-upload-icon-wrapper">
           <LewFlex

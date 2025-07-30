@@ -2,7 +2,7 @@
 import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
 import { LewTooltip, locale } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { textareaProps } from './props'
 
 const props = defineProps(textareaProps)
@@ -156,7 +156,7 @@ defineExpose({ toFocus })
       {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : "" }}
     </div>
     <transition name="lew-form-icon-ani">
-      <LewCommonIcon
+      <CommonIcon
         v-if="clearable && modelValue && !readonly"
         :size="getIconSize"
         type="close"

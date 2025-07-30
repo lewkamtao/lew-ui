@@ -2,7 +2,7 @@
 import type { LewSize } from 'lew-ui'
 import { LewDateRange, LewPopover, LewTooltip, locale } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { dateRangePickerProps } from './props'
 
 const props = defineProps(dateRangePickerProps)
@@ -137,7 +137,7 @@ defineExpose({ show, hide })
               {{ modelValue[startKey] }}
             </div>
             <div class="lew-date-range-picker-mid">
-              <LewCommonIcon :size="14" type="minus" />
+              <CommonIcon :size="14" type="minus" />
             </div>
             <div
               v-if="!modelValue || !modelValue[endKey]"
@@ -155,7 +155,7 @@ defineExpose({ show, hide })
             >
               {{ modelValue[endKey] }}
             </div>
-            <LewCommonIcon
+            <CommonIcon
               class="lew-date-range-picker-icon-calendar"
               :size="getIconSize"
               :class="{
@@ -165,7 +165,7 @@ defineExpose({ show, hide })
             />
           </lew-flex>
           <transition name="lew-form-icon-ani">
-            <LewCommonIcon
+            <CommonIcon
               v-if="clearable && checkClear && !readonly"
               :size="getIconSize"
               type="close"

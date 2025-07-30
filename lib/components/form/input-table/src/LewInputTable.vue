@@ -3,7 +3,7 @@ import type { InputTableColumn } from './props'
 import { LewButton, LewDialog, LewFlex, LewMessage, LewTable, locale } from 'lew-ui'
 
 import { any2px, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { cloneDeep } from 'lodash-es'
 import FormModal from './FormModal.vue'
 import { inputTableProps } from './props'
@@ -245,7 +245,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
             :style="styleConfig.addButtonStyle"
             @click="add"
           >
-            <LewCommonIcon :size="styleConfig.iconSize" type="plus" />
+            <CommonIcon :size="styleConfig.iconSize" type="plus" />
             {{ locale.t("inputTable.addText") }}
           </LewFlex>
         </LewFlex>
@@ -262,7 +262,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
             round
             @click="edit({ row, index })"
           >
-            <LewCommonIcon :size="styleConfig.iconSize" type="edit-2" />
+            <CommonIcon :size="styleConfig.iconSize" type="edit-2" />
           </LewButton>
           <LewButton
             v-if="deletable"
@@ -274,7 +274,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
             single-icon
             @click="del({ row, index })"
           >
-            <LewCommonIcon :size="styleConfig.iconSize" type="trash" />
+            <CommonIcon :size="styleConfig.iconSize" type="trash" />
           </LewButton>
         </LewFlex>
       </template>

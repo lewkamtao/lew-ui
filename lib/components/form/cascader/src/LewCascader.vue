@@ -10,7 +10,7 @@ import {
   locale,
 } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { cloneDeep, isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
 import { cascaderProps } from './props'
@@ -437,7 +437,7 @@ defineExpose({ show, hide })
         :style="getCascaderStyle"
       >
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <LewCommonIcon
+          <CommonIcon
             :size="getIconSize"
             :loading="state.initLoading"
             type="loading"
@@ -445,7 +445,7 @@ defineExpose({ show, hide })
         </div>
 
         <transition v-else name="lew-form-icon-ani">
-          <LewCommonIcon
+          <CommonIcon
             v-if="!(clearable && getLabel && getLabel.length > 0)"
             :size="getIconSize"
             type="chevron-down"
@@ -454,7 +454,7 @@ defineExpose({ show, hide })
         </transition>
 
         <transition name="lew-form-icon-ani">
-          <LewCommonIcon
+          <CommonIcon
             v-if="clearable && getLabel && getLabel.length > 0 && !readonly"
             :size="getIconSize"
             type="close"
@@ -577,14 +577,14 @@ defineExpose({ show, hide })
                           :text="templateProps.label"
                           :delay="[500, 0]"
                         />
-                        <LewCommonIcon
+                        <CommonIcon
                           v-if="templateProps.loading"
                           :size="14"
                           loading
                           class="lew-cascader-loading-icon"
                           type="loader"
                         />
-                        <LewCommonIcon
+                        <CommonIcon
                           v-else-if="!templateProps.isLeaf"
                           :size="16"
                           class="lew-cascader-icon"

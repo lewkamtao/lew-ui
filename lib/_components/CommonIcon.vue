@@ -37,7 +37,7 @@ import {
   UserRound,
   X,
 } from 'lucide-vue-next'
-import { getColorType, iconColorType } from './index'
+import { getColorType, iconColorType } from '../utils'
 
 const props = defineProps({
   type: {

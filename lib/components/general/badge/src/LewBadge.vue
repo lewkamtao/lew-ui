@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
 import { getColorType } from 'lew-ui/utils'
+import { computed } from 'vue'
 import { badgeProps } from './props'
 
 const props = defineProps(badgeProps)
+
+const emit = defineEmits<{
+  click: [event: MouseEvent]
+}>()
+
+// Computed properties
 const getStyle = computed<CSSProperties>(() => {
   const { color, offset, text } = props
   const _color = getColorType(color)
@@ -42,10 +49,15 @@ const displayValue = computed(() => {
   }
   return value
 })
+
+// Methods
+function handleClick(event: MouseEvent) {
+  emit('click', event)
+}
 </script>
 
 <template>
-  <div class="lew-badge" :style="getBadgeStyle">
+  <div class="lew-badge" :style="getBadgeStyle" @click="handleClick">
     <span v-if="value" class="lew-badge-value" :style="getStyle">
       {{ displayValue }}
     </span>

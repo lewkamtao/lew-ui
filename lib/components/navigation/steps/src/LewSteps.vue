@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { LewTextTrim } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { stepsProps } from './props'
 
 defineProps(stepsProps)
@@ -27,27 +27,27 @@ const stepsValue: Ref<number | undefined> = defineModel()
       }"
     >
       <div class="lew-steps-item-index">
-        <LewCommonIcon
+        <CommonIcon
           v-if="index === (stepsValue || 1) - 1 && status === 'loading'"
           :size="16"
           :stroke-width="3"
           loading
           type="loader"
         />
-        <LewCommonIcon
+        <CommonIcon
           v-else-if="index === (stepsValue || 1) - 1 && status === 'warning'"
           :size="16"
           :stroke-width="3"
           type="alert-circle"
         />
-        <LewCommonIcon
+        <CommonIcon
           v-else-if="index === (stepsValue || 1) - 1 && status === 'error'"
           :size="16"
           :stroke-width="3"
           type="close"
         />
 
-        <LewCommonIcon
+        <CommonIcon
           v-else-if="
             index < (stepsValue || 1) - 1
               || (index === (stepsValue || 1) - 1 && status === 'done')

@@ -3,7 +3,7 @@ import type { UploadFileItem, UploadStatus } from './props'
 import { useClipboardItems } from '@vueuse/core'
 import { LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
 import { any2px, formatBytes, getUniqueId, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { cloneDeep, isFunction } from 'lodash-es'
 import LewUploadByCard from './LewUploadByCard.vue'
 import LewUploadByList from './LewUploadByList.vue'
@@ -341,7 +341,7 @@ const getTips = computed(() => {
         }"
         gap="5"
       >
-        <LewCommonIcon
+        <CommonIcon
           :stroke-width="1.5"
           class="lew-upload-icon"
           :size="uploadIconFontSizeMap[size]"

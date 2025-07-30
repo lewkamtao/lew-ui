@@ -2,7 +2,7 @@
 import type { LewColor } from 'lew-ui'
 import { LewButton, LewPopover, locale } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { popokButtonProps } from './props'
 
 const props = defineProps(popokButtonProps)
@@ -59,7 +59,7 @@ onMounted(() => {
         }"
       >
         <div class="lew-popok-left">
-          <LewCommonIcon :size="24" :type />
+          <CommonIcon :size="24" :type />
         </div>
         <div class="lew-popok-right">
           <div v-if="title" class="lew-popok-title">
