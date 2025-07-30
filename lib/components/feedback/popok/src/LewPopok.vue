@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
 import { LewButton, LewPopover, locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px } from 'lew-ui/utils'
 import { popokButtonProps } from './props'
 
 const props = defineProps(popokButtonProps)

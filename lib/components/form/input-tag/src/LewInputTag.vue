@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewInput, LewMessage, LewTag, locale } from 'lew-ui'
-import { any2px, object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { inputTagProps } from './props'
 
@@ -298,7 +298,7 @@ function onBlur() {
             color:
               isTagMarkedForDeletion && index === (modelValue || []).length - 1
                 ? 'var(--lew-color-red-dark)'
-                : 'var(--lew-color-blue-dark)',
+                : 'var(--lew-color-primary-dark)',
           }"
           :size="size"
           :closable="!readonly && !disabled"

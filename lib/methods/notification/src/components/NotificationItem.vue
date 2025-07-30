@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { any2px } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px } from 'lew-ui/utils'
 
 defineProps<{
   type: string

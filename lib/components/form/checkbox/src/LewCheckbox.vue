@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { checkboxProps } from './props'
 

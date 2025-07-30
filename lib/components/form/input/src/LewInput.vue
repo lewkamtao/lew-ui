@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useMagicKeys } from '@vueuse/core'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
-import { any2px, object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
 import { inputProps } from './props'
 
 const props = defineProps(inputProps)

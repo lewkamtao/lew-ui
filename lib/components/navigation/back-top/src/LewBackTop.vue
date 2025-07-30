@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useEventListener } from 'lew-ui/hooks'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { useEventListener } from 'lew-ui/hooks'
 import { throttle } from 'lodash-es'
 import { backTopProps } from './props'
 

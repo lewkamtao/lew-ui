@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { getColorType } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { getColorType } from 'lew-ui/utils'
 import { tagProps } from './props'
 
 // Props & Emits

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { PaginationOptions } from './props'
 import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
-import { object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { object2class } from 'lew-ui/utils'
 import { paginationProps } from './props'
 
 const props = defineProps(paginationProps)

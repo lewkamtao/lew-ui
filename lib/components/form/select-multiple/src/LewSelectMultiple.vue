@@ -10,8 +10,8 @@ import {
   LewTextTrim,
   locale,
 } from 'lew-ui'
-import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
 import { defaultSearchMethod, flattenOptions } from '../../select/src/util'

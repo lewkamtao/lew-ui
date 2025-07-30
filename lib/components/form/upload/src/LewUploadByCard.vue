@@ -2,8 +2,8 @@
 import type { LewColor } from 'lew-ui'
 import type { UploadFileItem } from './props'
 import { LewFlex, LewImage, LewTooltip, locale } from 'lew-ui'
-import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
 import { uploadByCardProps } from './props'
 
 defineProps(uploadByCardProps)
@@ -174,7 +174,7 @@ const modelValue = defineModel<UploadFileItem[]>()
               class="lew-upload-progress-line"
               :style="{
                 width: `${(item.percent || 0) > 100 ? 100 : item.percent}%`,
-                background: 'var(--lew-color-blue)',
+                background: 'var(--lew-color-primary)',
               }"
             />
             <LewFlex class="lew-upload-progress-line-bg" />
@@ -249,7 +249,7 @@ const modelValue = defineModel<UploadFileItem[]>()
     }
     .lew-upload-reupload-btn {
       right: 18px;
-      background-color: var(--lew-color-blue);
+      background-color: var(--lew-color-primary);
       color: var(--lew-color-white);
     }
     .lew-upload-delete-btn {

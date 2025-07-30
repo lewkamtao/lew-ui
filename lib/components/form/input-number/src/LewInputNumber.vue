@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewFlex, LewTooltip, locale } from 'lew-ui'
-import { any2px, object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
 import { inputNumberProps } from './props'
 
 const props = defineProps(inputNumberProps)

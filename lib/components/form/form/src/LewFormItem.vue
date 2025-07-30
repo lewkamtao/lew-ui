@@ -24,8 +24,8 @@ import {
   LewTreeSelect,
   LewUpload,
 } from 'lew-ui'
-import { any2px, object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep, debounce, isString, merge } from 'lodash-es'
 import * as Yup from 'yup'
 import {
@@ -310,7 +310,7 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
 }
 .lew-label-tips {
   cursor: pointer;
-  border-bottom: 2px dashed var(--lew-color-blue);
+  border-bottom: 2px dashed var(--lew-color-primary);
 }
 .lew-form-item-direction-x {
   display: flex;

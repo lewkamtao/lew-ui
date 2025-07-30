@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
 import { LewTooltip, locale } from 'lew-ui'
-import { any2px, object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
 import { textareaProps } from './props'
 
 const props = defineProps(textareaProps)

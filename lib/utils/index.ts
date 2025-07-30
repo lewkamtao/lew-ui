@@ -12,7 +12,7 @@ export const iconColorType: Record<string, string> = {
   error: 'red',
   danger: 'red',
   info: 'blue',
-  primary: 'blue',
+  primary: 'primary',
   tips: 'blue',
 }
 

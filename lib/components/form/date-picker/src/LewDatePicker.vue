@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
 import { LewDate, LewPopover, LewTooltip, locale } from 'lew-ui'
-import { any2px, object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { datePickerProps } from './props'
 
@@ -276,7 +276,7 @@ defineExpose({ show, hide })
       background-color: var(--lew-form-bgcolor-hover);
     }
     .lew-date-picker-presets-item-active {
-      background-color: var(--lew-color-blue) !important;
+      background-color: var(--lew-color-primary) !important;
       color: var(--lew-color-white);
     }
   }

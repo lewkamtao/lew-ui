@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { object2class } from 'lew-ui/utils'
 import { alertProps } from './props'
 
 const props = defineProps(alertProps)

@@ -2,6 +2,7 @@
 import type { LewColor } from 'lew-ui'
 import type { UploadFileItem } from './props'
 import { LewFlex, LewImage, LewTag, LewTextTrim, LewTooltip, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import {
   any2px,
   checkUrlIsImage,
@@ -9,7 +10,6 @@ import {
   getFileIcon,
   getUniqueId,
 } from 'lew-ui/utils'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { uploadByListProps } from './props'
 
 defineProps(uploadByListProps)

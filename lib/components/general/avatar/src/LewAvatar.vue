@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { AvatarPlacement, AvatarShape, AvatarStatus } from './props'
 import { useImage } from '@vueuse/core'
-import { any2px } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px } from 'lew-ui/utils'
 import { computed } from 'vue'
 import { avatarProps } from './props'
 

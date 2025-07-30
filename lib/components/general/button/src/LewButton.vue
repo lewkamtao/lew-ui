@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { any2px, getColorType, object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, getColorType, object2class } from 'lew-ui/utils'
 import { computed, getCurrentInstance, ref } from 'vue'
 import { buttonProps } from './props'
 

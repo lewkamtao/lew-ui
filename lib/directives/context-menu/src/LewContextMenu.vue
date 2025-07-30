@@ -1,9 +1,9 @@
 <script setup lang="ts" name="LewContextMenu">
 import type { ContextMenus } from './index'
 import { LewEmpty, LewFlex } from 'lew-ui'
-import { getUniqueId } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
 import { contextMenuProps, initLewContextMenu } from './index'

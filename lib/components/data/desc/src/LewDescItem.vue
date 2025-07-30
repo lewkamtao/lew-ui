@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { LewSize } from 'lew-ui'
 import { LewTextTrim, LewTooltip } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { tipsIconSizeMap } from 'lew-ui/components/form/form/src/props'
 import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { isString } from 'lodash-es'
 import { computed, getCurrentInstance, ref } from 'vue'
 import { descItemProps, lewDescSizePaddingMap } from './props'

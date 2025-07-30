@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { onClickOutside, useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { drawerProps } from './props'
 
 const props = defineProps(drawerProps)

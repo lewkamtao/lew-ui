@@ -4,13 +4,13 @@ import {
   LewCollapseTransition,
   LewMessage,
 } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import {
   findAllChildrenKeys,
   findNodeByKey,
   insertChildByKey,
 } from 'lew-ui/utils'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { cloneDeep } from 'lodash-es'
 import { treeItemProps } from './props'
 import transformTree, { formatTree } from './transformTree'

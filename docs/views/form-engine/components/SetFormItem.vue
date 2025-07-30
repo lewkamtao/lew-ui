@@ -10,8 +10,8 @@ import {
   LewTabs,
   LewTextarea,
 } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px } from 'lew-ui/utils'
 import SetOptionModal from './SetOptionModal.vue'
 
 const props = defineProps({

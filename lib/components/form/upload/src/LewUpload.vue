@@ -2,8 +2,8 @@
 import type { UploadFileItem, UploadStatus } from './props'
 import { useClipboardItems } from '@vueuse/core'
 import { LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
-import { any2px, formatBytes, getUniqueId, object2class } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, formatBytes, getUniqueId, object2class } from 'lew-ui/utils'
 import { cloneDeep, isFunction } from 'lodash-es'
 import LewUploadByCard from './LewUploadByCard.vue'
 import LewUploadByList from './LewUploadByList.vue'
@@ -470,11 +470,11 @@ const getTips = computed(() => {
   }
   .lew-upload:hover {
     border-color: var(--lew-form-border-color-focus);
-    background-color: var(--lew-color-blue-light);
+    background-color: var(--lew-color-primary-light);
   }
   .lew-upload-drop-active {
     border-color: var(--lew-form-border-color-focus);
-    background-color: var(--lew-color-blue-light);
+    background-color: var(--lew-color-primary-light);
   }
   .lew-upload:active {
     border-color: var(--lew-form-border-color-focus);
@@ -510,7 +510,7 @@ const getTips = computed(() => {
 
       .lew-upload-reupload-btn {
         right: 24px;
-        background-color: var(--lew-color-blue);
+        background-color: var(--lew-color-primary);
         color: var(--lew-color-white);
       }
       .lew-upload-delete-btn {

@@ -2,8 +2,8 @@
 import type { InputTableColumn } from './props'
 import { LewButton, LewDialog, LewFlex, LewMessage, LewTable, locale } from 'lew-ui'
 
-import { any2px, getUniqueId } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, getUniqueId } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import FormModal from './FormModal.vue'
 import { inputTableProps } from './props'

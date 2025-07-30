@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { LewSize } from 'lew-ui'
 import { LewFlex } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px } from 'lew-ui/utils'
 import { requiredIconSizeMap, tipsIconSizeMap } from './props'
 import RequiredIcon from './RequiredIcon.vue'
 

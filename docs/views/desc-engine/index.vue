@@ -4,9 +4,9 @@ import { useDark } from '@vueuse/core'
 import dayjs from 'dayjs'
 import { downloadObjectAsFile } from 'docs/lib/utils'
 import { lewDescSizePaddingMap } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
 import { flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
@@ -640,7 +640,7 @@ onMounted(() => {
   }
 
   .lew-form-wrapper-draggable-item-active {
-    border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
+    border: var(--lew-form-border-width) dashed var(--lew-color-primary-dark) !important;
   }
 
   .blank-box {
@@ -701,7 +701,7 @@ onMounted(() => {
 }
 
 .chosen {
-  border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
+  border: var(--lew-form-border-width) dashed var(--lew-color-primary-dark) !important;
 }
 
 .lew-form-setting-tabs {

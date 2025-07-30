@@ -424,7 +424,7 @@ const getStyle = computed(() => {
       height: 100%;
       top: 0;
       left: 0;
-      background-color: var(--lew-color-blue);
+      background-color: var(--lew-color-primary);
     }
     .lew-slider-track-step-mark {
       position: absolute;
@@ -439,7 +439,7 @@ const getStyle = computed(() => {
       box-sizing: border-box;
     }
     .lew-slider-track-step-mark-selected {
-      background-color: var(--lew-color-blue);
+      background-color: var(--lew-color-primary);
     }
 
     .lew-slider-track-step-label {
@@ -468,7 +468,7 @@ const getStyle = computed(() => {
     width: var(--lew-slider-track-dot-size);
     height: var(--lew-slider-track-dot-size);
     border-radius: 50%;
-    border: var(--lew-color-blue) solid 2px;
+    border: var(--lew-color-primary) solid 2px;
     background: var(--lew-bgcolor-0);
     transition:
       transform var(--lew-form-transition-ease),
