@@ -36,11 +36,11 @@ export const badgeProps = {
     default: (): BadgeOffset => [0, 0],
     validator(value: BadgeOffset): boolean {
       if (!Array.isArray(value) || value.length !== 2) {
-        console.warn('[LewBadge] offset must be an array with exactly 2 numbers')
+        console.warn(`[LewBadge] Invalid offset: "${value}". Expected: array with exactly 2 numbers.`)
         return false
       }
       if (!value.every(v => typeof v === 'number')) {
-        console.warn('[LewBadge] offset values must be numbers')
+        console.warn(`[LewBadge] Invalid offset: "${value}". Expected: all values must be numbers.`)
         return false
       }
       return true
@@ -55,11 +55,11 @@ export const badgeProps = {
     validator(value: string | number): boolean {
       const numberValue = Number(value)
       if (Number.isNaN(numberValue)) {
-        console.warn('[LewBadge] max must be a valid number or a string convertible to number')
+        console.warn(`[LewBadge] Invalid max: "${value}". Expected: valid number or string convertible to number.`)
         return false
       }
       if (numberValue < 0) {
-        console.warn('[LewBadge] max must be greater than or equal to 0')
+        console.warn(`[LewBadge] Invalid max: "${value}". Expected: number ≥ 0.`)
         return false
       }
       return true
@@ -70,7 +70,7 @@ export const badgeProps = {
     default: 'red',
     validator(value: BadgeColor): boolean {
       if (!validColors.includes(value)) {
-        console.warn(`[LewBadge] color must be one of: ${validColors.join(', ')}`)
+        console.warn(`[LewBadge] Invalid color: "${value}". Expected one of: ${validColors.join(', ')}.`)
         return false
       }
       return true
@@ -80,7 +80,7 @@ export const badgeProps = {
     type: [String, Number] as PropType<BadgeValue>,
     validator(value: BadgeValue): boolean {
       if (value !== undefined && typeof value !== 'string' && typeof value !== 'number') {
-        console.warn('[LewBadge] value must be a string or number')
+        console.warn(`[LewBadge] Invalid value: "${value}". Expected: string or number.`)
         return false
       }
       return true

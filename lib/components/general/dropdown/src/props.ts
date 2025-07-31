@@ -1,82 +1,44 @@
 import type { ContextMenus } from 'lew-ui'
+import type { LewPopoverPlacement, LewPopoverTrigger } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-
-export type DropdownTrigger = 'hover' | 'click'
-export type DropdownPlacement
-  = | 'top'
-    | 'top-start'
-    | 'top-end'
-    | 'bottom'
-    | 'bottom-start'
-    | 'bottom-end'
-    | 'left'
-    | 'left-start'
-    | 'left-end'
-    | 'right'
-    | 'right-start'
-    | 'right-end'
-
-export type DropdownOptions = ContextMenus
+import { validPopoverPlacement, validPopoverTrigger } from 'lew-ui/constants'
 
 export const dropdownModel = {
   selectedKeys: {
     type: Array as PropType<string[]>,
     default: () => [],
-    description: '选中项的key值',
   },
 }
 
 export const dropdownProps = {
   trigger: {
-    type: String as PropType<DropdownTrigger>,
+    type: String as PropType<LewPopoverTrigger>,
     default: 'hover',
-    description: '触发方式',
-    validator(value: DropdownTrigger): boolean {
-      if (!['hover', 'click'].includes(value)) {
-        console.warn(
-          `[LewDropdown] 无效的触发方式: ${value}。请使用 'hover' 或 'click'`,
-        )
+    validator(value: LewPopoverTrigger): boolean {
+      if (!validPopoverTrigger.includes(value)) {
+        console.warn(`[LewDropdown] Invalid trigger: "${value}". Expected: "hover" or "click".`)
         return false
       }
       return true
     },
   },
   placement: {
-    type: String as PropType<DropdownPlacement>,
+    type: String as PropType<LewPopoverPlacement>,
     default: 'bottom',
-    description: '弹出位置',
-    validator(value: DropdownPlacement): boolean {
-      const validPlacements = [
-        'top',
-        'top-start',
-        'top-end',
-        'bottom',
-        'bottom-start',
-        'bottom-end',
-        'left',
-        'left-start',
-        'left-end',
-        'right',
-        'right-start',
-        'right-end',
-      ]
-      if (!validPlacements.includes(value)) {
-        console.warn(
-          `[LewDropdown] 无效的弹出位置: ${value}。请使用有效的位置值`,
-        )
+    validator(value: LewPopoverPlacement): boolean {
+      if (!validPopoverPlacement.includes(value)) {
+        console.warn(`[LewDropdown] Invalid placement: "${value}". Expected one of: ${validPopoverPlacement.join(', ')}.`)
         return false
       }
       return true
     },
   },
   options: {
-    type: Array as PropType<DropdownOptions[]>,
+    type: Array as PropType<ContextMenus[]>,
     default: () => [],
-    description: '选项列表',
-    typeDesc: 'ContextMenus[]',
-    validator(value: DropdownOptions[]): boolean {
+    validator(value: ContextMenus[]): boolean {
       if (!Array.isArray(value)) {
-        console.warn('[LewDropdown] 选项列表必须是一个数组')
+        console.warn(`[LewDropdown] Invalid options: "${value}". Expected: array.`)
         return false
       }
       return true
@@ -84,8 +46,6 @@ export const dropdownProps = {
   },
   checkable: {
     type: Boolean,
-    default: false,
-    description: '是否开启checkbox模式',
   },
 }
 

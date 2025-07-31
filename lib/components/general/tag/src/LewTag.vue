@@ -1,14 +1,43 @@
 <script lang="ts" setup>
+import type { LewSize } from 'lew-ui'
+import type { CSSProperties } from 'vue'
+import type { TagType } from './props'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { getColorType } from 'lew-ui/utils'
+import { computed } from 'vue'
 import { tagProps } from './props'
+
+// Types
+interface SizeConfig {
+  minHeight: string
+  minWidth: string
+  lineHeight: string
+  fontSize: string
+  borderRadius: string
+  padding: string
+  oversizePadding: string
+  gap: string
+  closeIconSize: number
+}
+
+interface TagStyle extends CSSProperties {
+  closeIconSize?: number
+}
+
+interface TagStyleFunction {
+  (color: string): CSSProperties
+}
+
+interface TagEmits {
+  close: []
+}
 
 // Props & Emits
 const props = defineProps(tagProps)
-const emit = defineEmits(['close'])
+const emit = defineEmits<TagEmits>()
 
 // Constants
-const SIZE_CONFIG = {
+const SIZE_CONFIG: Record<LewSize, SizeConfig> = {
   small: {
     minHeight: '20px',
     minWidth: '20px',
@@ -42,51 +71,48 @@ const SIZE_CONFIG = {
     closeIconSize: 16,
     gap: '4px',
   },
-}
+} as const
 
-const TYPE_STYLES = {
-  fill: (color: string) => ({
+const TYPE_STYLES: Record<TagType, TagStyleFunction> = {
+  fill: (color: string): CSSProperties => ({
     backgroundColor: `var(--lew-color-${color})`,
     color: 'var(--lew-color-white)',
   }),
-  light: (color: string) => ({
+  light: (color: string): CSSProperties => ({
     backgroundColor: `var(--lew-color-${color}-light)`,
     color: `var(--lew-color-${color}-dark)`,
   }),
-  ghost: (color: string) => ({
+  ghost: (color: string): CSSProperties => ({
     backgroundColor: 'transparent',
     border: `var(--lew-form-border-width) solid var(--lew-color-${color}-dark)`,
     color: `var(--lew-color-${color}-dark)`,
     boxShadow: 'none',
   }),
-  default: (color: string) => ({
-    backgroundColor: `var(--lew-color-${color})`,
-    color: 'var(--lew-color-white)',
-  }),
-}
-
-// Methods
-function close() {
-  if (props.disabled)
-    return
-  emit('close')
-}
+} as const
 
 // Computed
-const tagStyle: any = computed(() => {
-  const { round, type, color, size, disabled } = props
-  const _color = getColorType(color) || 'primary'
+const tagStyle = computed((): TagStyle => {
+  const { round, type, color, size, disabled, oversize } = props
+  const resolvedColor = getColorType(color) || 'primary'
   const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium
+  const styleFunction = TYPE_STYLES[type] || TYPE_STYLES.fill
 
   return {
-    ...(TYPE_STYLES[type] || TYPE_STYLES.default)(_color),
+    ...styleFunction(resolvedColor),
     ...sizeConfig,
-    padding: props.oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
+    padding: oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
     borderRadius: round ? '20px' : sizeConfig.borderRadius,
     opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
     pointerEvents: disabled ? 'none' : undefined,
   }
 })
+
+// Methods
+function handleClose(): void {
+  if (props.disabled)
+    return
+  emit('close')
+}
 </script>
 
 <template>
@@ -106,7 +132,7 @@ const tagStyle: any = computed(() => {
       <slot name="right" />
     </div>
 
-    <div v-if="closable" class="lew-tag-close" @click.stop="close">
+    <div v-if="closable" class="lew-tag-close" @click.stop="handleClose">
       <CommonIcon :size="tagStyle.closeIconSize" type="close" />
     </div>
   </div>

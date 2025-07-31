@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewSize, TextTrimAlignment } from 'lew-ui'
+import type { LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
@@ -16,8 +16,8 @@ export interface DescOptions {
   labelWidth?: number | string
   tips?: string
   type?: 'text-trim'
-  labelX?: TextTrimAlignment
-  valueX?: TextTrimAlignment
+  labelX?: Property.TextAlign
+  valueX?: Property.TextAlign
 }
 
 export const descProps = {
@@ -48,11 +48,11 @@ export const descProps = {
     },
   },
   labelX: {
-    type: String as PropType<TextTrimAlignment>,
+    type: String as PropType<Property.TextAlign>,
     default: 'start',
   },
   valueX: {
-    type: String as PropType<TextTrimAlignment>,
+    type: String as PropType<Property.TextAlign>,
     default: 'start',
   },
   gap: {
@@ -208,11 +208,11 @@ export const descItemProps = {
     type: String as PropType<'text-trim'>,
   },
   labelX: {
-    type: String as PropType<TextTrimAlignment>,
+    type: String as PropType<Property.TextAlign>,
     default: 'start',
   },
   valueX: {
-    type: String as PropType<TextTrimAlignment>,
+    type: String as PropType<Property.TextAlign>,
     default: 'start',
   },
   gridArea: {

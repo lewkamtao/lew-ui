@@ -1,63 +1,102 @@
 <script setup lang="ts">
+import type { ContextMenus } from 'lew-ui'
+import type { ActionBoxOption } from './props'
 import { LewDropdown, LewFlex } from 'lew-ui'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { isValidComponent } from 'lew-ui/utils'
+import { computed } from 'vue'
 import { actionBoxProps } from './props'
 
+// Types
+interface ActionBoxEmits {
+  click: [option: ActionBoxOption, index: number, event: MouseEvent]
+  dropdownClick: [option: ActionBoxOption, index: number, event: MouseEvent]
+}
+
+// Props & Emits
 const props = defineProps(actionBoxProps)
+const emit = defineEmits<ActionBoxEmits>()
 
-const threshold = computed(() => Number(props.dropdownThreshold))
+// Computed
+const threshold = computed((): number => Number(props.dropdownThreshold || 0))
 
-const visibleOptions = computed(() => {
+const visibleOptions = computed((): ActionBoxOption[] => {
   if (threshold.value <= 0) {
     return props.options
   }
   return props.options.slice(0, threshold.value)
 })
 
-const dropdownOptions: any = computed(() => {
+// Methods
+function convertToContextMenus(options: ActionBoxOption[]): ContextMenus[] {
+  return options.map(option => ({
+    label: option.label,
+    icon: option.icon,
+    onClick: (item: ContextMenus) => {
+      // Find original option for proper callback
+      const originalOption = options.find(opt =>
+        (typeof opt.label === 'string' ? opt.label : '') === item.label,
+      )
+      if (originalOption?.onClick) {
+        originalOption.onClick()
+      }
+    },
+  }))
+}
+
+const dropdownOptions = computed((): ContextMenus[] => {
   if (threshold.value <= 0) {
     return []
   }
-  return props.options.slice(threshold.value)
+  return convertToContextMenus(props.options.slice(threshold.value))
 })
+
+function handleOptionClick(option: ActionBoxOption, index: number, event: MouseEvent): void {
+  option.onClick?.(event)
+  emit('click', option, index, event)
+}
+
+function handleDropdownClick(item: ContextMenus): void {
+  // Find the original ActionBoxOption
+  const originalOptions = props.options.slice(threshold.value)
+  const originalIndex = originalOptions.findIndex(option =>
+    (typeof option.label === 'string' ? option.label : '') === item.label,
+  )
+
+  if (originalIndex !== -1) {
+    const originalOption = originalOptions[originalIndex]
+    emit('dropdownClick', originalOption, originalIndex + threshold.value, new MouseEvent('click'))
+  }
+}
 </script>
 
 <template>
   <LewFlex class="lew-action-box" :gap="5" :x="x">
     <template v-for="(option, index) in visibleOptions" :key="index">
       <RenderComponent
-        v-if="isValidComponent(option.customRender)"
-        :render-fn="option.customRender"
-        @click="option.onClick?.()"
+        v-if="isValidComponent(option.customRender)" :render-fn="option.customRender"
+        @click="(event: MouseEvent) => handleOptionClick(option, index, event)"
       />
-      <div v-else class="lew-action-box-item" @click="option.onClick?.()">
-        <RenderComponent
-          :render-fn="option.icon"
-          class="lew-action-box-icon"
-        />
-        <RenderComponent
-          :render-fn="option.label"
-        />
+      <div v-else class="lew-action-box-item" @click="(event: MouseEvent) => handleOptionClick(option, index, event)">
+        <RenderComponent v-if="option.icon && !iconOnly" :render-fn="option.icon" class="lew-action-box-icon" />
+        <RenderComponent v-if="!iconOnly" :render-fn="option.label" />
+        <RenderComponent v-else :render-fn="option.icon || option.label" class="lew-action-box-icon" />
       </div>
       <i
         v-if="
           divider
             && (dropdownOptions.length > 0
               || (visibleOptions.length === options.length && index !== options.length - 1))
-        "
-        class="lew-action-box-divider"
+        " class="lew-action-box-divider"
       />
     </template>
-    <LewDropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
+    <LewDropdown
+      v-if="dropdownOptions.length > 0" :options="dropdownOptions"
+      @select="handleDropdownClick"
+    >
       <div class="lew-action-box-item">
-        <RenderComponent
-          :render-fn="dropdownIcon"
-          class="lew-action-box-icon"
-        />
-        <RenderComponent
-          :render-fn="dropdownLabel"
-        />
+        <RenderComponent v-if="dropdownIcon" :render-fn="dropdownIcon" class="lew-action-box-icon" />
+        <RenderComponent v-if="!iconOnly" :render-fn="dropdownLabel" />
       </div>
     </LewDropdown>
   </LewFlex>
@@ -66,6 +105,7 @@ const dropdownOptions: any = computed(() => {
 <style lang="scss" scoped>
 .lew-action-box {
   position: relative;
+
   .lew-action-box-item {
     display: inline-flex;
     gap: 4px;
@@ -78,12 +118,15 @@ const dropdownOptions: any = computed(() => {
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
+
     &:hover {
       background-color: var(--lew-form-bgcolor-hover);
     }
+
     &:active {
       background-color: var(--lew-form-bgcolor-active);
     }
+
     :deep(.lew-action-box-icon) {
       display: flex;
       align-items: center;
@@ -91,6 +134,7 @@ const dropdownOptions: any = computed(() => {
       font-size: 14px;
     }
   }
+
   .lew-action-box-divider {
     width: 1px;
     height: 14px;

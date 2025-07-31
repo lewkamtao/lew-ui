@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { LewTextTrim } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { any2px } from 'lew-ui/utils'
 import { stepsProps } from './props'
 
@@ -64,17 +65,26 @@ const stepsValue: Ref<number | undefined> = defineModel()
           :style="{ maxWidth: any2px(minWidth) }"
           class="lew-steps-item-title"
         >
-          <LewTextTrim placement="bottom" :text="item.title" />
+          <RenderComponent
+            :render-fn="item.title"
+            type="text-trim"
+            :component-props="{
+              placement: 'bottom',
+            }"
+          />
         </div>
         <div
           :style="{ maxWidth: any2px(minWidth) }"
           class="lew-steps-item-description"
         >
-          <LewTextTrim
-            allow-h-t-m-l
-            :line-clamp="2"
-            placement="bottom"
-            :text="item.description"
+          <RenderComponent
+            :render-fn="item.description"
+            type="text-trim"
+            :component-props="{
+              allowHtml: true,
+              lineClamp: 2,
+              placement: 'bottom',
+            }"
           />
         </div>
       </div>

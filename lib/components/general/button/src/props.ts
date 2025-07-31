@@ -13,7 +13,7 @@ export const buttonProps = {
     type: String,
     validator(value: string): boolean {
       if (value && value.length > 50) {
-        console.warn('[LewButton] text should not exceed 50 characters')
+        console.warn(`[LewButton] Invalid text: "${value}". Expected: text length ≤ 50 characters.`)
         return false
       }
       return true
@@ -24,11 +24,11 @@ export const buttonProps = {
     validator(value: ButtonWidth): boolean {
       if (value !== undefined) {
         if (typeof value === 'number' && value <= 0) {
-          console.warn('[LewButton] width must be greater than 0')
+          console.warn(`[LewButton] Invalid width: "${value}". Expected: positive number.`)
           return false
         }
         if (typeof value === 'string' && !value.match(/^(auto|max-content|min-content|\d+(%|px|em|rem|vw|vh))$/)) {
-          console.warn('[LewButton] width must be a valid CSS width value')
+          console.warn(`[LewButton] Invalid width: "${value}". Expected: valid CSS width value.`)
           return false
         }
       }
@@ -41,7 +41,7 @@ export const buttonProps = {
     validator(value: ButtonType): boolean {
       const validTypes: ButtonType[] = ['fill', 'light', 'ghost', 'text']
       if (!validTypes.includes(value)) {
-        console.warn(`[LewButton] type must be one of: ${validTypes.join(', ')}`)
+        console.warn(`[LewButton] Invalid type: "${value}". Expected one of: ${validTypes.join(', ')}.`)
         return false
       }
       return true
@@ -53,7 +53,7 @@ export const buttonProps = {
     validator(value: ButtonSize): boolean {
       const buttonSizes: ButtonSize[] = ['mini', ...validSizes]
       if (!buttonSizes.includes(value)) {
-        console.warn(`[LewButton] size must be one of: ${buttonSizes.join(', ')}`)
+        console.warn(`[LewButton] Invalid size: "${value}". Expected one of: ${buttonSizes.join(', ')}.`)
         return false
       }
       return true
@@ -67,7 +67,7 @@ export const buttonProps = {
     default: 'primary',
     validator(value: LewColor): boolean {
       if (!validColors.includes(value)) {
-        console.warn(`[LewButton] color must be one of: ${validColors.join(', ')}`)
+        console.warn(`[LewButton] Invalid color: "${value}". Expected one of: ${validColors.join(', ')}.`)
         return false
       }
       return true

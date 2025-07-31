@@ -1,95 +1,58 @@
-import type { ExtractPropTypes } from 'vue'
+import type { Property } from 'csstype'
+import type { LewColor } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
+import { validColors } from 'lew-ui/constants'
 
-type BoldType = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-type TitleColor
-  = | 'red'
-    | 'orange'
-    | 'yellow'
-    | 'green'
-    | 'mint'
-    | 'teal'
-    | 'cyan'
-    | 'blue'
-    | 'indigo'
-    | 'purple'
-    | 'pink'
-    | 'gray'
-    | 'brown'
-    | 'warning'
-    | 'error'
-    | 'success'
-    | 'normal'
-    | 'primary'
-    | 'info'
+// Constants
+const FONT_WEIGHTS: Property.FontWeight[] = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
 export const titleProps = {
+  // Content props
   text: {
     type: String,
-    default: '',
-    description: '标题文字',
   },
+
+  // Style props
   size: {
-    type: [Number, String],
+    type: [Number, String] as PropType<number | string>,
     default: 24,
-    description: '标题文字大小，可以是数字（单位：像素）或字符串（如 "1.5em"）',
-    validator: (value: number | string) => {
+    validator(value: number | string): boolean {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewTitle] size 必须大于 0')
+        console.warn(`[LewTitle] Invalid size: "${value}". Expected: positive number or valid CSS size string.`)
         return false
       }
       return true
     },
   },
   color: {
-    type: String,
-    default: '',
-    description: '标题文字颜色，可选值包括预定义的颜色名称或自定义的颜色值',
-    validator: (value: string) => {
-      const validColors: TitleColor[] = [
-        'red',
-        'orange',
-        'yellow',
-        'green',
-        'mint',
-        'teal',
-        'cyan',
-        'blue',
-        'indigo',
-        'purple',
-        'pink',
-        'gray',
-        'brown',
-        'warning',
-        'error',
-        'success',
-        'normal',
-        'primary',
-        'info',
-      ]
-      if (
-        value
-        && !validColors.includes(value as TitleColor)
-        && !/^#([0-9A-F]{3}){1,2}$/i.test(value)
-      ) {
-        console.warn(
-          `[LewTitle] color 必须是预定义的颜色名称之一或有效的十六进制颜色值`,
-        )
-        return false
-      }
-      return true
+    type: String as PropType<LewColor>,
+    validator(value: LewColor): boolean {
+      // Allow empty/undefined values
+      if (!value)
+        return true
+
+      // Check if it's a valid predefined color
+      if (validColors.includes(value))
+        return true
+
+      // Check if it's a valid hex color
+      if (/^#([0-9A-F]{3}){1,2}$/i.test(value))
+        return true
+
+      console.warn(
+        `[LewTitle] Invalid color: "${value}". Expected: predefined color name from [${validColors.join(', ')}] or valid hex color.`,
+      )
+      return false
     },
   },
   bold: {
-    type: Number,
+    type: Number as PropType<Property.FontWeight>,
     default: 500,
-    description: '标题文字粗细程度，可选值为 100 到 900 之间的整百数',
-    validator: (value: number) => {
-      if (
-        !([100, 200, 300, 400, 500, 600, 700, 800, 900] as BoldType[]).includes(
-          value as BoldType,
+    validator(value: Property.FontWeight): boolean {
+      if (typeof value === 'number' && !FONT_WEIGHTS.includes(value)) {
+        console.warn(
+          `[LewTitle] Invalid bold: "${value}". Expected one of: ${FONT_WEIGHTS.join(', ')}.`,
         )
-      ) {
-        console.warn('[LewTitle] bold 必须是 100 到 900 之间的整百数')
         return false
       }
       return true

@@ -1,18 +1,20 @@
+import type { Property } from 'csstype'
 import type { ExtractPropTypes, PropType } from 'vue'
 
 export type FlexDirection = 'x' | 'y'
 export type FlexXAlignment = 'start' | 'center' | 'end' | 'left' | 'right'
 export type FlexYAlignment = 'start' | 'center' | 'end' | 'top' | 'bottom'
 export type FlexMode = 'around' | 'between'
+export type FlexGap = Property.Gap | number
+export type FlexWidth = Property.Width | number
 
 export const flexProps = {
   direction: {
     type: String as PropType<FlexDirection>,
     default: 'x',
-    typeDesc: 'x | y',
     validator(value: FlexDirection): boolean {
       if (!['x', 'y'].includes(value)) {
-        console.warn(`[LewFlex] 无效的方向值: ${value}。请使用 'x' 或 'y'。`)
+        console.warn('[LewFlex] direction must be either "x" or "y"')
         return false
       }
       return true
@@ -21,12 +23,10 @@ export const flexProps = {
   x: {
     type: String as PropType<FlexXAlignment>,
     default: 'start',
-    typeDesc: 'start | center | end',
     validator(value: FlexXAlignment): boolean {
-      if (!['start', 'center', 'end', 'left', 'right'].includes(value)) {
-        console.warn(
-          `[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center'、'end'、'left' 或 'right'。`,
-        )
+      const validValues: FlexXAlignment[] = ['start', 'center', 'end', 'left', 'right']
+      if (!validValues.includes(value)) {
+        console.warn(`[LewFlex] x must be one of: ${validValues.join(', ')}`)
         return false
       }
       return true
@@ -35,12 +35,10 @@ export const flexProps = {
   y: {
     type: String as PropType<FlexYAlignment>,
     default: 'center',
-    typeDesc: 'start | center | end',
     validator(value: FlexYAlignment): boolean {
-      if (!['start', 'center', 'end', 'top', 'bottom'].includes(value)) {
-        console.warn(
-          `[LewFlex] 无效的垂直对齐值: ${value}。请使用 'start'、'center'、'end'、'top' 或 'bottom'。`,
-        )
+      const validValues: FlexYAlignment[] = ['start', 'center', 'end', 'top', 'bottom']
+      if (!validValues.includes(value)) {
+        console.warn(`[LewFlex] y must be one of: ${validValues.join(', ')}`)
         return false
       }
       return true
@@ -48,13 +46,9 @@ export const flexProps = {
   },
   mode: {
     type: String as PropType<FlexMode>,
-    default: '',
-    typeDesc: 'around | between',
     validator(value: FlexMode): boolean {
       if (value && !['around', 'between'].includes(value)) {
-        console.warn(
-          `[LewFlex] 无效的分布模式: ${value}。请使用 'around' 或 'between'。`,
-        )
+        console.warn('[LewFlex] mode must be either "around" or "between"')
         return false
       }
       return true
@@ -62,37 +56,50 @@ export const flexProps = {
   },
   wrap: {
     type: Boolean,
-    default: false,
   },
   gap: {
-    type: [String, Number],
+    type: [String, Number] as PropType<FlexGap>,
     default: 10,
-    validator(value: string | number): boolean {
-      const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
-      if (Number.isNaN(numValue) || numValue < 0) {
-        console.warn(`[LewFlex] gap 值必须是非负数或可转换为非负数的字符串。`)
-        return false
+    validator(value: FlexGap): boolean {
+      if (typeof value === 'number') {
+        if (value < 0) {
+          console.warn(`[LewFlex] Invalid gap: "${value}". Expected: non-negative number.`)
+          return false
+        }
+        return true
+      }
+      if (typeof value === 'string') {
+        // Check if it's a valid CSS gap value
+        if (!value.match(/^(normal|0|(\d+(\.\d+)?(px|em|rem|%|ch|ex|vh|vw|vmin|vmax)))$/)) {
+          console.warn(`[LewFlex] Invalid gap: "${value}". Expected: valid CSS gap value.`)
+          return false
+        }
+        return true
       }
       return true
     },
   },
   width: {
-    type: [String, Number],
-    default: '',
-    validator(value: string | number): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn(`[LewFlex] width 值必须是非负数。`)
-        return false
+    type: [String, Number] as PropType<FlexWidth>,
+    default: '100%',
+    validator(value: FlexWidth): boolean {
+      if (value === undefined || value === '') {
+        return true
       }
-      if (
-        value
-        && typeof value === 'string'
-        && !/^(\d+(\.\d+)?(px|%)?|\d+)$/.test(value)
-      ) {
-        console.warn(
-          `[LewFlex] width 字符串值必须是有效的 CSS 宽度值（如 '100px' 或 '50%'）。`,
-        )
-        return false
+      if (typeof value === 'number') {
+        if (value < 0) {
+          console.warn('[LewFlex] width must be a non-negative number')
+          return false
+        }
+        return true
+      }
+      if (typeof value === 'string') {
+        // Check if it's a valid CSS width value
+        if (!value.match(/^(auto|max-content|min-content|fit-content|\d+(\.\d+)?(px|em|rem|%|ch|ex|vh|vw|vmin|vmax))$/)) {
+          console.warn('[LewFlex] width must be a valid CSS width value')
+          return false
+        }
+        return true
       }
       return true
     },

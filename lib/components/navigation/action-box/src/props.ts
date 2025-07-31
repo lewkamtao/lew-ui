@@ -1,51 +1,67 @@
 import type { FlexXAlignment } from 'lew-ui'
+import type { ComponentSource } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-
+// Types
 export interface ActionBoxOption {
-  label: string | (() => any)
-  icon?: string | (() => any)
-  customRender?: () => any
-  onClick?: () => void
+  label: ComponentSource
+  icon?: ComponentSource
+  customRender?: ComponentSource
+  onClick?: (event?: MouseEvent) => void
 }
 
+// Constants
+const ALIGNMENT_OPTIONS: FlexXAlignment[] = ['start', 'center', 'end', 'left', 'right']
+
 export const actionBoxProps = {
+  // Content props
   options: {
-    type: Array as PropType<ActionBoxOption[]>,
+    type: Array as unknown as PropType<ActionBoxOption[]>,
     default: () => [],
   },
+
+  // Layout props
   x: {
     type: String as PropType<FlexXAlignment>,
     default: 'start',
-    typeDesc: 'start | center | end',
     validator(value: FlexXAlignment): boolean {
-      if (!['start', 'center', 'end', 'left', 'right'].includes(value)) {
+      if (!ALIGNMENT_OPTIONS.includes(value)) {
         console.warn(
-          `[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center'、'end'、'left' 或 'right'。`,
+          `[LewActionBox] Invalid x: "${value}". Expected one of: ${ALIGNMENT_OPTIONS.join(', ')}.`,
         )
         return false
       }
       return true
     },
   },
+  divider: {
+    type: Boolean,
+  },
+
+  // Dropdown props
   dropdownThreshold: {
-    type: [Number, String],
-    default: 0,
+    type: [Number, String] as PropType<number | string>,
+    validator(value: number | string): boolean {
+      const numValue = Number(value)
+      if (Number.isNaN(numValue) || numValue < 0) {
+        console.warn(
+          `[LewActionBox] Invalid dropdownThreshold: "${value}". Expected: non-negative number.`,
+        )
+        return false
+      }
+      return true
+    },
   },
   dropdownLabel: {
-    type: [String, Function, Object] as PropType<string | (() => any) | any>,
+    type: null,
     default: 'More',
   },
   dropdownIcon: {
-    type: [Function, Object] as PropType<(() => any) | any>,
-    default: undefined,
+    type: null,
   },
-  divider: {
-    type: Boolean,
-    default: true,
-  },
+
+  // Style props
   iconOnly: {
     type: Boolean,
-    default: false,
   },
 }
 

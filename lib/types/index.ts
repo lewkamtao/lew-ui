@@ -60,3 +60,19 @@ export type ComponentSource
     | Record<string, any>
     | null
     | undefined
+
+export type LewPopoverTrigger = 'hover' | 'click'
+
+export type LewPopoverPlacement
+  = | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'

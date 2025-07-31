@@ -20,7 +20,14 @@ function select(item: MenuOptions) {
   <div class="lew-menu">
     <template v-for="item in options" :key="item.label">
       <div class="lew-menu-item">
-        <LewTextTrim :text="item.label" />
+        <RenderComponent
+          :render-fn="item.label"
+          type="text-trim"
+          :component-props="{
+            placement: 'right',
+            delay: [250, 250],
+          }"
+        />
         <LewTag
           v-if="item.tagProps?.text"
           v-bind="{

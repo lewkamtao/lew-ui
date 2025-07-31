@@ -1,54 +1,123 @@
 <script lang="ts" setup>
+import type { CSSProperties } from 'vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useEventListener } from 'lew-ui/hooks'
 import { throttle } from 'lodash-es'
+import { computed, onMounted, ref, shallowRef } from 'vue'
 import { backTopProps } from './props'
 
+// Types
+interface BackTopEmits {
+  click: [event?: MouseEvent]
+  show: []
+  hide: []
+}
+
+// Props & Emits
 const props = defineProps(backTopProps)
+const emit = defineEmits<BackTopEmits>()
 
-const emit = defineEmits(['click'])
-
+// Refs
 const dom = shallowRef<HTMLElement>()
-
 const showBackTop = ref(false)
 
-const backTopStyle = computed(() => ({
+// Computed
+const backTopStyle = computed((): CSSProperties => ({
   right: `${props.right}px`,
   bottom: `${props.bottom}px`,
 }))
 
-function toBackUp() {
+// Methods
+function handleScroll(): void {
   if (!dom.value)
     return
-  const scrollDom = dom.value as HTMLElement
-  scrollDom.scrollTop = 0
 
-  emit('click')
-}
+  const shouldShow = dom.value.scrollTop >= props.valveHeight
 
-function handleScroll() {
-  if (dom.value)
-    showBackTop.value = dom.value.scrollTop >= props.valveHeight
-}
-
-const throttledScrollHandler = throttle(handleScroll, 250)
-
-useEventListener(window, 'scroll', throttledScrollHandler)
-
-onMounted(() => {
-  dom.value = document.documentElement
-  if (props.target) {
-    dom.value = document.querySelector<HTMLElement>(`.${props.target}`) ?? undefined
-    if (!dom.value) {
-      throw new Error(`target is not existed: ${props.target}`)
+  if (shouldShow !== showBackTop.value) {
+    showBackTop.value = shouldShow
+    if (shouldShow) {
+      emit('show')
+    }
+    else {
+      emit('hide')
     }
   }
+}
+
+function scrollToTop(): void {
+  if (!dom.value)
+    return
+
+  const scrollElement = dom.value
+  const startPosition = scrollElement.scrollTop
+  const duration = 300
+  const startTime = performance.now()
+
+  function animate(currentTime: number): void {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+
+    // Easing function for smooth animation
+    const easeInOutCubic = progress < 0.5
+      ? 4 * progress * progress * progress
+      : 1 - (-2 * progress + 2) ** 3 / 2
+
+    scrollElement.scrollTop = startPosition * (1 - easeInOutCubic)
+
+    if (progress < 1) {
+      requestAnimationFrame(animate)
+    }
+  }
+
+  requestAnimationFrame(animate)
+}
+
+function handleClick(event: MouseEvent): void {
+  scrollToTop()
+  emit('click', event)
+}
+
+// Throttled scroll handler
+const throttledScrollHandler = throttle(handleScroll, 100)
+
+// Lifecycle hooks
+onMounted(() => {
+  // Set default scroll target
+  dom.value = document.documentElement
+
+  // Override with custom target if provided
+  if (props.target) {
+    const targetElement = document.querySelector<HTMLElement>(props.target)
+    if (targetElement) {
+      dom.value = targetElement
+    }
+    else {
+      console.warn(`[LewBackTop] Target element not found: "${props.target}". Using document.documentElement as fallback.`)
+    }
+  }
+
+  // Add scroll listener to the appropriate element
+  if (dom.value === document.documentElement) {
+    useEventListener(window, 'scroll', throttledScrollHandler)
+  }
+  else {
+    useEventListener(dom.value, 'scroll', throttledScrollHandler)
+  }
+
+  // Initial check
+  handleScroll()
 })
 </script>
 
 <template>
   <transition name="fade">
-    <div v-if="showBackTop" class="lew-back-top" :style="backTopStyle" @click="toBackUp">
+    <div
+      v-if="showBackTop"
+      class="lew-back-top"
+      :style="backTopStyle"
+      @click="handleClick"
+    >
       <slot>
         <CommonIcon :size="20" type="chevron-up" />
       </slot>
@@ -71,5 +140,29 @@ onMounted(() => {
   user-select: none;
   cursor: pointer;
   color: var(--lew-color-primary);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--lew-form-bgcolor-hover);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Fade transition
+.fade-enter-active,
+.fade-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>

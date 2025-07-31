@@ -2,26 +2,26 @@ import type { LewColor, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import { validColors, validSizes } from 'lew-ui/constants'
 
+// Types
 export type TagType = 'fill' | 'light' | 'ghost'
 
+// Constants
+const TAG_TYPES: TagType[] = ['fill', 'light', 'ghost']
+
 export const tagProps = {
+  // Content props
   text: {
     type: String,
-    default: '',
   },
-  oversize: {
-    type: Boolean,
-    default: false,
-  },
+
+  // Style props
   type: {
     type: String as PropType<TagType>,
     default: 'light',
-    typeDesc: `fill | light | ghost`,
     validator(value: TagType): boolean {
-      const validTypes: TagType[] = ['fill', 'light', 'ghost']
-      if (!validTypes.includes(value)) {
+      if (!TAG_TYPES.includes(value)) {
         console.warn(
-          `[LewTag] 无效的标签类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个。`,
+          `[LewTag] Invalid tag type: "${value}". Expected one of: ${TAG_TYPES.join(', ')}.`,
         )
         return false
       }
@@ -34,7 +34,7 @@ export const tagProps = {
     validator(value: LewColor): boolean {
       if (!validColors.includes(value)) {
         console.warn(
-          `[LewTag] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个。`,
+          `[LewTag] Invalid color: "${value}". Expected one of: ${validColors.join(', ')}.`,
         )
         return false
       }
@@ -47,25 +47,36 @@ export const tagProps = {
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewTag] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`,
+          `[LewTag] Invalid size: "${value}". Expected one of: ${validSizes.join(', ')}.`,
         )
         return false
       }
       return true
     },
   },
-
   round: {
     type: Boolean,
-    default: false,
   },
-  closable: {
+  oversize: {
     type: Boolean,
-    default: false,
   },
+
+  // State props
   disabled: {
     type: Boolean,
-    default: false,
+  },
+
+  // Feature props
+  closable: {
+    type: Boolean,
+  },
+}
+
+// Export model for documentation
+export const model = {
+  tag: {
+    type: 'String | Object',
+    description: 'Tag model value',
   },
 }
 

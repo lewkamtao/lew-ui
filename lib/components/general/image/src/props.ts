@@ -7,7 +7,7 @@ export const imageProps = {
     type: String,
     validator: (value: string) => {
       if (!value) {
-        console.warn('[LewImage] src 不能为空')
+        console.warn(`[LewImage] Invalid src: "${value}". Expected: non-empty string.`)
         return false
       }
       return true
@@ -16,8 +16,8 @@ export const imageProps = {
   alt: {
     type: String,
     validator: (value: string) => {
-      if (value.length > 100) {
-        console.warn('[LewImage] alt 文本不应超过100个字符')
+      if (value && value.length > 100) {
+        console.warn(`[LewImage] Invalid alt: "${value}". Expected: text length ≤ 100 characters.`)
         return false
       }
       return true
@@ -28,7 +28,7 @@ export const imageProps = {
     default: 200,
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewImage] width 必须大于0')
+        console.warn(`[LewImage] Invalid width: "${value}". Expected: positive number.`)
         return false
       }
       return true
@@ -39,7 +39,7 @@ export const imageProps = {
     default: 200,
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewImage] height 必须大于0')
+        console.warn(`[LewImage] Invalid height: "${value}". Expected: positive number.`)
         return false
       }
       return true
@@ -59,7 +59,7 @@ export const imageProps = {
       ]
       if (!validValues.includes(value)) {
         console.warn(
-          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`,
+          `[LewImage] Invalid objectFit: "${value}". Expected one of: ${validValues.join(', ')}.`,
         )
         return false
       }

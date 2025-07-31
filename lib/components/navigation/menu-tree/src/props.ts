@@ -1,7 +1,9 @@
+import type { Property } from 'csstype'
 import type { TagProps } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { isValidCssValue } from 'lew-ui/utils'
 
+// Types
 export interface MenuTreeItem {
   label: string | (() => any)
   value: string | number
@@ -12,89 +14,138 @@ export interface MenuTreeItem {
   tagProps?: TagProps
 }
 
+// Constants
+const DEFAULT_WIDTH = '240px'
+
 export const menuTreeModel = {
+  // Content props
   modelValue: {
     type: String,
     default: '',
-    description: '双向绑定值',
     validator(value: string): boolean {
       if (typeof value !== 'string') {
-        console.warn('[LewMenuTree] modelValue 必须是字符串类型。')
+        console.warn(`[LewMenuTree] Invalid modelValue: "${value}". Expected: string.`)
         return false
       }
       return true
     },
   },
+
+  // State props
   expandKeys: {
     type: Array as PropType<(string | number)[]>,
     default: () => [],
-    description: '菜单树的当前展开项，用于双向绑定。',
   },
+
   collapsed: {
     type: Boolean,
     default: false,
-    description: '菜单树是否折叠。',
   },
 }
 
 export const menuTreeProps = {
+  // Content props
   options: {
     type: Array as PropType<MenuTreeItem[]>,
-    default: [],
-    description: '菜单树的数据源，支持嵌套结构。',
+    default: () => [],
+    validator(value: MenuTreeItem[]): boolean {
+      if (!Array.isArray(value)) {
+        console.warn(`[LewMenuTree] Invalid options: "${value}". Expected: array.`)
+        return false
+      }
+
+      for (let i = 0; i < value.length; i++) {
+        const item = value[i]
+        if (!item || typeof item !== 'object') {
+          console.warn(`[LewMenuTree] Invalid options[${i}]: "${item}". Expected: object.`)
+          return false
+        }
+
+        if (typeof item.label !== 'string' && typeof item.label !== 'function') {
+          console.warn(`[LewMenuTree] Invalid options[${i}].label: "${item.label}". Expected: string or function.`)
+          return false
+        }
+
+        if (typeof item.value !== 'string' && typeof item.value !== 'number') {
+          console.warn(`[LewMenuTree] Invalid options[${i}].value: "${item.value}". Expected: string or number.`)
+          return false
+        }
+      }
+
+      return true
+    },
   },
+
+  // Style props
   width: {
-    type: [String, Number],
-    default: '240px',
-    description: '菜单树的宽度，支持 CSS 宽度值。',
-    validator(value: string | number): boolean {
-      return isValidCssValue({
+    type: [String, Number] as PropType<Property.Width | number>,
+    default: DEFAULT_WIDTH,
+    validator(value: Property.Width | number): boolean {
+      const isValid = isValidCssValue({
         name: 'LewMenuTree',
         field: 'width',
         value,
       })
+
+      if (!isValid) {
+        console.warn(`[LewMenuTree] Invalid width: "${value}". Expected: valid CSS width value.`)
+        return false
+      }
+
+      return true
     },
   },
 }
 
 export const menuTreeItemProps = {
+  // Content props
   label: {
     type: null,
   },
+
   value: {
-    type: [String, Number],
+    type: [String, Number] as PropType<string | number>,
     required: true,
-    description: '菜单树项的唯一标识符。',
     validator(value: string | number): boolean {
-      if (value === '') {
-        console.warn('[LewMenuTreeItem] value 不能为空。')
+      if (value === '' || value === null || value === undefined) {
+        console.warn(`[LewMenuTreeItem] Invalid value: "${value}". Expected: non-empty string or number.`)
         return false
       }
       return true
     },
   },
+
   icon: {
     type: null,
   },
-  disabled: {
-    type: Boolean,
-    default: false,
-    description: '菜单树项是否禁用。',
-  },
-  level: {
-    type: Number,
-    default: 1,
-    description: '菜单树项的层级，从 1 开始。',
-  },
-  isLeaf: {
-    type: Boolean,
-    default: false,
-    description: '是否为叶子节点。',
-  },
+
   tagProps: {
     type: Object as PropType<TagProps>,
     default: () => ({}),
-    description: '菜单树项的标签属性。',
+  },
+
+  // State props
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+
+  // Structure props
+  level: {
+    type: Number,
+    default: 1,
+    validator(value: number): boolean {
+      if (!Number.isInteger(value) || value < 1) {
+        console.warn(`[LewMenuTreeItem] Invalid level: "${value}". Expected: positive integer starting from 1.`)
+        return false
+      }
+      return true
+    },
+  },
+
+  isLeaf: {
+    type: Boolean,
+    default: false,
   },
 }
 
