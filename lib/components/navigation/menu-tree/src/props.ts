@@ -1,9 +1,8 @@
 import type { Property } from 'csstype'
 import type { TagProps } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { isValidCssValue } from 'lew-ui/utils'
 
-// Types
+// Type definitions
 export interface MenuTreeItem {
   label: string | (() => any)
   value: string | number
@@ -14,50 +13,37 @@ export interface MenuTreeItem {
   tagProps?: TagProps
 }
 
-// Constants
-const DEFAULT_WIDTH = '240px'
-
+// Model definitions
 export const menuTreeModel = {
-  // Content props
   modelValue: {
-    type: String,
+    type: [String, Number] as PropType<string | number>,
     default: '',
-    validator(value: string): boolean {
-      if (typeof value !== 'string') {
-        console.warn(`[LewMenuTree] Invalid modelValue: "${value}". Expected: string.`)
-        return false
-      }
-      return true
-    },
   },
-
-  // State props
   expandKeys: {
     type: Array as PropType<(string | number)[]>,
     default: () => [],
   },
-
   collapsed: {
     type: Boolean,
     default: false,
   },
 }
 
+// Props definitions
 export const menuTreeProps = {
-  // Content props
   options: {
     type: Array as PropType<MenuTreeItem[]>,
     default: () => [],
     validator(value: MenuTreeItem[]): boolean {
       if (!Array.isArray(value)) {
-        console.warn(`[LewMenuTree] Invalid options: "${value}". Expected: array.`)
+        console.warn(`[LewMenuTree] Invalid options: "${typeof value}". Expected: array.`)
         return false
       }
 
       for (let i = 0; i < value.length; i++) {
         const item = value[i]
         if (!item || typeof item !== 'object') {
-          console.warn(`[LewMenuTree] Invalid options[${i}]: "${item}". Expected: object.`)
+          console.warn(`[LewMenuTree] Invalid options[${i}]: "${item}". Expected: object with label and value properties.`)
           return false
         }
 
@@ -75,20 +61,38 @@ export const menuTreeProps = {
       return true
     },
   },
-
-  // Style props
   width: {
     type: [String, Number] as PropType<Property.Width | number>,
-    default: DEFAULT_WIDTH,
+    default: '240px',
     validator(value: Property.Width | number): boolean {
-      const isValid = isValidCssValue({
-        name: 'LewMenuTree',
-        field: 'width',
-        value,
-      })
-
-      if (!isValid) {
+      if (!value) {
         console.warn(`[LewMenuTree] Invalid width: "${value}". Expected: valid CSS width value.`)
+        return false
+      }
+
+      if (typeof value === 'number' && value < 0) {
+        console.warn(`[LewMenuTree] Invalid width: "${value}". Expected: non-negative number.`)
+        return false
+      }
+
+      if (typeof value === 'string') {
+        const autoRegex = /^auto$/i
+        const calcRegex = /^calc\((.+)\)$/
+        const percentRegex = /^-?\d+(\.\d+)?%$/
+        const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
+        const numericRegex = /^-?\d+(\.\d+)?$/
+
+        if (
+          autoRegex.test(value)
+          || calcRegex.test(value)
+          || percentRegex.test(value)
+          || pixelRegex.test(value)
+          || numericRegex.test(value)
+        ) {
+          return true
+        }
+
+        console.warn(`[LewMenuTree] Invalid width: "${value}". Expected: valid CSS width value (e.g., "240px", "50%", "auto", "calc(100% - 20px)").`)
         return false
       }
 
@@ -98,11 +102,6 @@ export const menuTreeProps = {
 }
 
 export const menuTreeItemProps = {
-  // Content props
-  label: {
-    type: null,
-  },
-
   value: {
     type: [String, Number] as PropType<string | number>,
     required: true,
@@ -114,23 +113,19 @@ export const menuTreeItemProps = {
       return true
     },
   },
-
-  icon: {
-    type: null,
+  label: {
+    type: [String, Function] as PropType<string | (() => any)>,
   },
-
+  icon: {
+    type: Function as PropType<() => any>,
+  },
   tagProps: {
     type: Object as PropType<TagProps>,
-    default: () => ({}),
   },
-
-  // State props
   disabled: {
     type: Boolean,
     default: false,
   },
-
-  // Structure props
   level: {
     type: Number,
     default: 1,
@@ -142,12 +137,12 @@ export const menuTreeItemProps = {
       return true
     },
   },
-
   isLeaf: {
     type: Boolean,
     default: false,
   },
 }
 
+// Extract prop types
 export type MenuTreeProps = ExtractPropTypes<typeof menuTreeProps>
 export type MenuTreeItemProps = ExtractPropTypes<typeof menuTreeItemProps>

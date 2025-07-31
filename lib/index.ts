@@ -3,6 +3,7 @@ import type { App } from 'vue'
 import * as components from './components'
 import * as directives from './directives'
 import * as methods from './methods'
+import 'resize-observer-polyfill/dist/ResizeObserver.global'
 // tippy 样式
 import 'tippy.js/dist/tippy.css' // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css'

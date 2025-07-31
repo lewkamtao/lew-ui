@@ -26,7 +26,7 @@ export const descProps = {
     required: true,
     validator(value: DescOptions[]): boolean {
       if (!Array.isArray(value)) {
-        console.warn('[LewDesc] options must be an array')
+        console.warn(`[LewDesc] Invalid options: "${typeof value}". Expected: array.`)
         return false
       }
       return true
@@ -41,7 +41,7 @@ export const descProps = {
     default: 'medium',
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewDesc] Invalid size value: ${value}. Please use 'small', 'medium' or 'large'`)
+        console.warn(`[LewDesc] Invalid size: "${value}". Expected: ${validSizes.join(', ')}.`)
         return false
       }
       return true
@@ -61,7 +61,7 @@ export const descProps = {
     validator(value: string | number): boolean {
       const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
       if (Number.isNaN(numValue) || numValue < 0) {
-        console.warn('[LewDesc] gap must be a non-negative number or convertible string')
+        console.warn(`[LewDesc] Invalid gap: "${value}". Expected: non-negative number or convertible string.`)
         return false
       }
       return true
@@ -71,11 +71,11 @@ export const descProps = {
     type: [Number, String] as PropType<Property.Width | number>,
     validator(value: Property.Width | number): boolean {
       if (typeof value === 'number' && value < 0) {
-        console.warn('[LewDesc] width cannot be negative')
+        console.warn(`[LewDesc] Invalid width: "${value}". Expected: non-negative number.`)
         return false
       }
       if (value && typeof value === 'string' && !/^\d+(%|px|rem|em|vw|vh)?$/.test(value)) {
-        console.warn('[LewDesc] width string must be a valid CSS width value')
+        console.warn(`[LewDesc] Invalid width: "${value}". Expected: valid CSS width value (e.g., "100px", "50%", "2rem").`)
         return false
       }
       return true
@@ -87,7 +87,7 @@ export const descProps = {
     validator(value: number | string): boolean {
       const numValue = Number(value)
       if (Number.isNaN(numValue) || numValue < 1 || !Number.isInteger(numValue)) {
-        console.warn('[LewDesc] columns must be an integer greater than or equal to 1')
+        console.warn(`[LewDesc] Invalid columns: "${value}". Expected: integer greater than or equal to 1.`)
         return false
       }
       return true
@@ -98,7 +98,7 @@ export const descProps = {
     default: 'auto',
     validator(value: Property.Width | number): boolean {
       if (typeof value === 'number' && value < 0) {
-        console.warn('[LewDesc] labelWidth cannot be negative')
+        console.warn(`[LewDesc] Invalid labelWidth: "${value}". Expected: non-negative number.`)
         return false
       }
       if (
@@ -106,7 +106,7 @@ export const descProps = {
         && value !== 'auto'
         && !/^\d+(px|rem|em|%)?$/.test(value)
       ) {
-        console.warn('[LewDesc] labelWidth string must be "auto" or a valid CSS width value')
+        console.warn(`[LewDesc] Invalid labelWidth: "${value}". Expected: "auto" or valid CSS width value (e.g., "100px", "50%", "2rem").`)
         return false
       }
       return true
@@ -117,7 +117,7 @@ export const descProps = {
     default: 'x',
     validator(value: DescDirection): boolean {
       if (!['x', 'y'].includes(value)) {
-        console.warn(`[LewDesc] Invalid direction value: ${value}. Please use 'x' or 'y'`)
+        console.warn(`[LewDesc] Invalid direction: "${value}". Expected: "x" or "y".`)
         return false
       }
       return true
@@ -147,7 +147,7 @@ export const descItemProps = {
     default: 'medium',
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewDescItem] Invalid size value: ${value}. Please use 'small', 'medium' or 'large'`)
+        console.warn(`[LewDescItem] Invalid size: "${value}". Expected: ${validSizes.join(', ')}.`)
         return false
       }
       return true
@@ -161,11 +161,11 @@ export const descItemProps = {
     type: [Number, String] as PropType<Property.Width | number>,
     validator(value: Property.Width | number): boolean {
       if (typeof value === 'number' && value < 0) {
-        console.warn('[LewDescItem] width cannot be negative')
+        console.warn(`[LewDescItem] Invalid width: "${value}". Expected: non-negative number.`)
         return false
       }
       if (value && typeof value === 'string' && !/^\d+(%|px|rem|em|vw|vh)?$/.test(value)) {
-        console.warn('[LewDescItem] width string must be a valid CSS width value')
+        console.warn(`[LewDescItem] Invalid width: "${value}". Expected: valid CSS width value (e.g., "100px", "50%", "2rem").`)
         return false
       }
       return true
@@ -176,7 +176,7 @@ export const descItemProps = {
     default: 'auto',
     validator(value: Property.Width | number): boolean {
       if (typeof value === 'number' && value < 0) {
-        console.warn('[LewDescItem] labelWidth cannot be negative')
+        console.warn(`[LewDescItem] Invalid labelWidth: "${value}". Expected: non-negative number.`)
         return false
       }
       if (
@@ -184,7 +184,7 @@ export const descItemProps = {
         && value !== 'auto'
         && !/^\d+(px|rem|em|%)?$/.test(value)
       ) {
-        console.warn('[LewDescItem] labelWidth string must be "auto" or a valid CSS width value')
+        console.warn(`[LewDescItem] Invalid labelWidth: "${value}". Expected: "auto" or valid CSS width value (e.g., "100px", "50%", "2rem").`)
         return false
       }
       return true
@@ -195,7 +195,7 @@ export const descItemProps = {
     default: 'x',
     validator(value: DescDirection): boolean {
       if (!['x', 'y'].includes(value)) {
-        console.warn(`[LewDescItem] Invalid direction value: ${value}. Please use 'x' or 'y'`)
+        console.warn(`[LewDescItem] Invalid direction: "${value}". Expected: "x" or "y".`)
         return false
       }
       return true

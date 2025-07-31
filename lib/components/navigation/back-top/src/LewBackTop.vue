@@ -3,7 +3,6 @@ import type { CSSProperties } from 'vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useEventListener } from 'lew-ui/hooks'
 import { throttle } from 'lodash-es'
-import { computed, onMounted, ref, shallowRef } from 'vue'
 import { backTopProps } from './props'
 
 // Types
@@ -81,6 +80,8 @@ function handleClick(event: MouseEvent): void {
 // Throttled scroll handler
 const throttledScrollHandler = throttle(handleScroll, 100)
 
+useEventListener(window, 'scroll', throttledScrollHandler)
+
 // Lifecycle hooks
 onMounted(() => {
   // Set default scroll target
@@ -88,21 +89,13 @@ onMounted(() => {
 
   // Override with custom target if provided
   if (props.target) {
-    const targetElement = document.querySelector<HTMLElement>(props.target)
+    const targetElement = document.querySelector<HTMLElement>(`.${props.target}`)
     if (targetElement) {
       dom.value = targetElement
     }
     else {
       console.warn(`[LewBackTop] Target element not found: "${props.target}". Using document.documentElement as fallback.`)
     }
-  }
-
-  // Add scroll listener to the appropriate element
-  if (dom.value === document.documentElement) {
-    useEventListener(window, 'scroll', throttledScrollHandler)
-  }
-  else {
-    useEventListener(dom.value, 'scroll', throttledScrollHandler)
   }
 
   // Initial check
@@ -112,12 +105,7 @@ onMounted(() => {
 
 <template>
   <transition name="fade">
-    <div
-      v-if="showBackTop"
-      class="lew-back-top"
-      :style="backTopStyle"
-      @click="handleClick"
-    >
+    <div v-if="showBackTop" class="lew-back-top" :style="backTopStyle" @click="handleClick">
       <slot>
         <CommonIcon :size="20" type="chevron-up" />
       </slot>
@@ -140,10 +128,9 @@ onMounted(() => {
   user-select: none;
   cursor: pointer;
   color: var(--lew-color-primary);
-  transition: all 0.3s ease;
+  transition: var(--lew-form-transition-bezier);
 
   &:hover {
-    background-color: var(--lew-form-bgcolor-hover);
     transform: translateY(-2px);
   }
 
@@ -155,9 +142,7 @@ onMounted(() => {
 // Fade transition
 .fade-enter-active,
 .fade-leave-active {
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+  transition: var(--lew-form-transition-bezier);
 }
 
 .fade-enter-from,

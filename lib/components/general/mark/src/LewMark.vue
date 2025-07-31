@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import type { CSSProperties } from 'vue'
 import { getColorType } from 'lew-ui/utils'
-import { markProps, type MarkProps } from './props'
+import { computed } from 'vue'
+import { markProps } from './props'
 
 // Types
 interface MarkEmits {
@@ -17,7 +17,7 @@ const emit = defineEmits<MarkEmits>()
 const markStyle = computed((): CSSProperties => {
   const { color, round, bold, cursor } = props
   const resolvedColor = getColorType(color) || 'blue'
-  
+
   return {
     borderRadius: round ? '20px' : 'var(--lew-border-radius-mini)',
     fontWeight: bold || 400,
@@ -28,7 +28,7 @@ const markStyle = computed((): CSSProperties => {
 })
 
 // Methods
-const handleClick = (event: MouseEvent): void => {
+function handleClick(event: MouseEvent): void {
   emit('click', event)
 }
 </script>

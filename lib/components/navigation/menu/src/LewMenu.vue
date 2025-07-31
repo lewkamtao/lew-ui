@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { MenuOptions } from './props'
-import { LewTag, LewTextTrim } from 'lew-ui'
+import { LewTag } from 'lew-ui'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { menuProps } from './props'
 

@@ -9,7 +9,7 @@ import { menuTreeProps } from './props'
 // Types
 interface MenuTreeEmits {
   change: [item: MenuTreeItem]
-  itemClick: [item: MenuTreeItem]
+  select: [value: string | number, item: MenuTreeItem]
   expand: [expandKeys: (string | number)[]]
   collapse: [expandKeys: (string | number)[]]
 }
@@ -20,14 +20,8 @@ const emit = defineEmits<MenuTreeEmits>()
 
 // Models
 const modelValue = defineModel<string | number>({ default: '' })
-const expandKeys = defineModel<(string | number)[]>('expandKeys', {
-  required: false,
-  default: () => [],
-})
-const collapsed = defineModel<boolean>('collapsed', {
-  required: false,
-  default: false,
-})
+const expandKeys = defineModel<(string | number)[]>('expandKeys', { default: () => [] })
+const collapsed = defineModel<boolean>('collapsed', { default: false })
 
 // Computed
 const getModelValueKeyPath = computed(() => {
@@ -93,7 +87,7 @@ function handleMenuSelect(item: MenuTreeItem): void {
     // Handle selection
     const newValue = modelValue.value !== item.value ? item.value : ''
     modelValue.value = newValue
-    emit('itemClick', item)
+    emit('select', newValue, item)
   }
 
   // Clone to trigger reactivity

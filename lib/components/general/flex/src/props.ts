@@ -81,7 +81,6 @@ export const flexProps = {
   },
   width: {
     type: [String, Number] as PropType<FlexWidth>,
-    default: '100%',
     validator(value: FlexWidth): boolean {
       if (value === undefined || value === '') {
         return true

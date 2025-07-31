@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { CSSProperties } from 'vue'
 import { any2px } from 'lew-ui/utils'
-import { titleProps, type TitleProps } from './props'
+import { computed } from 'vue'
+import { titleProps } from './props'
 
 // Types
 interface TitleEmits {
@@ -17,12 +17,12 @@ const emit = defineEmits<TitleEmits>()
 const titleStyle = computed((): CSSProperties | string => {
   const { bold, color, size } = props
   const fontSize = any2px(size)
-  
+
   if (color) {
     // Use string style for gradient background
     return `font-weight: ${bold}; font-size: ${fontSize}; -webkit-background-clip: text; -moz-background-clip: text; background-clip: text; color: transparent; background-image: linear-gradient(-252deg, var(--lew-color-${color}-dark), var(--lew-color-${color}));`
   }
-  
+
   return {
     fontWeight: bold,
     fontSize,

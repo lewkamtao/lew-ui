@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { LewTextTrim } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { any2px } from 'lew-ui/utils'

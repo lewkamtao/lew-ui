@@ -24,12 +24,13 @@ const props = defineProps(menuTreeItemProps)
 const emit = defineEmits<MenuTreeItemEmits>()
 
 // Inject
-const menuTreeContext = inject<MenuTreeContext>('lew-menu-tree')!
+const menuTreeContext = inject<MenuTreeContext>('lew-menu-tree')
 if (!menuTreeContext) {
   throw new Error('LewMenuTreeItem must be used within LewMenuTree')
 }
 
-// 保持响应式，直接使用 menuTreeContext，不解构
+// Type assertion after null check
+const context = menuTreeContext as Required<MenuTreeContext>
 
 // Methods
 function handleChange(): void {
@@ -39,26 +40,26 @@ function handleChange(): void {
 
   if (!props.isLeaf) {
     // Handle expand/collapse for parent nodes
-    if (!menuTreeContext.expandKeys.value) {
-      menuTreeContext.expandKeys.value = []
+    if (!context.expandKeys.value) {
+      context.expandKeys.value = []
     }
 
-    const index = menuTreeContext.expandKeys.value.indexOf(props.value as never)
+    const index = context.expandKeys.value.indexOf(props.value as never)
     if (index > -1) {
-      menuTreeContext.expandKeys.value.splice(index, 1)
+      context.expandKeys.value.splice(index, 1)
     }
     else {
-      menuTreeContext.expandKeys.value.push(props.value as never)
+      context.expandKeys.value.push(props.value as never)
     }
   }
   else {
     // Handle selection for leaf nodes
-    if (menuTreeContext.modelValue.value !== props.value) {
-      menuTreeContext.modelValue.value = props.value as never
+    if (context.modelValue.value !== props.value) {
+      context.modelValue.value = props.value as never
     }
   }
 
-  menuTreeContext.expandKeys.value = cloneDeep(menuTreeContext.expandKeys.value || [])
+  context.expandKeys.value = cloneDeep(context.expandKeys.value || [])
   emit('change')
 }
 </script>
@@ -67,15 +68,15 @@ function handleChange(): void {
   <div class="lew-menu-tree-item">
     <LewFlex
       x="start" y="center" class="lew-menu-tree-item-label" :class="{
-        'lew-menu-tree-item-label-active': menuTreeContext.modelValue.value === props.value,
-        'lew-menu-tree-item-label-selected': menuTreeContext.modelValueKeyPath.value?.includes(
+        'lew-menu-tree-item-label-active': context.modelValue.value === props.value,
+        'lew-menu-tree-item-label-selected': context.modelValueKeyPath.value?.includes(
           props.value as never,
         ),
         'lew-menu-tree-item-label-leaf': props.isLeaf,
         'lew-menu-tree-item-label-disabled': props.disabled,
-        'lew-menu-tree-item-label-collapsed': menuTreeContext.collapsed.value,
+        'lew-menu-tree-item-label-collapsed': context.collapsed.value,
       }" :style="{
-        paddingLeft: menuTreeContext.collapsed.value
+        paddingLeft: context.collapsed.value
           ? '0px'
           : isValidComponent(props.icon)
             ? '36px'
@@ -95,9 +96,9 @@ function handleChange(): void {
         />
         <lew-tag v-if="props.tagProps?.text" v-bind="{ ...props.tagProps, size: props.tagProps.size || 'small' }" />
         <CommonIcon
-          v-if="!props.isLeaf && !menuTreeContext.collapsed.value" class="lew-menu-tree-item-chevron-right"
+          v-if="!props.isLeaf && !context.collapsed.value" class="lew-menu-tree-item-chevron-right"
           :size="14" :style="{
-            transform: `rotate(${menuTreeContext.expandKeys.value?.includes(props.value as never) ? 270 : 90}deg)`,
+            transform: `rotate(${context.expandKeys.value?.includes(props.value as never) ? 270 : 90}deg)`,
             transition: 'all 0.2s',
           }" type="chevron-right"
         />
@@ -105,7 +106,7 @@ function handleChange(): void {
     </LewFlex>
     <LewCollapseTransition v-if="!props.isLeaf">
       <div
-        v-if="menuTreeContext.expandKeys.value?.includes(props.value as never) && !menuTreeContext.collapsed.value"
+        v-if="context.expandKeys.value?.includes(props.value as never) && !context.collapsed.value"
         :style="{
           marginTop: props.level === 1 ? '5px' : 0,
         }" class="lew-menu-tree-item-main"

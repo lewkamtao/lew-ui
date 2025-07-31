@@ -55,7 +55,7 @@ const styleObject = computed((): CSSProperties => {
     justifyContent: getJustifyContent(),
     alignItems: getAlignItems(),
     gap: `${gap}`,
-    ...(width && { width }),
+    width,
     boxSizing: 'border-box',
   }
 })
@@ -69,6 +69,7 @@ const styleObject = computed((): CSSProperties => {
 
 <style lang="scss" scoped>
 .lew-flex {
+  width: 100%;
   box-sizing: border-box;
 }
 </style>
