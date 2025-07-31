@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Check, Copy } from 'lucide-vue-next'
 
-const props = defineProps({
+defineProps({
   code: {
     type: String,
     default: '',
@@ -26,7 +26,8 @@ async function copyCode(code: string) {
     setTimeout(() => {
       isCopied.value = false
     }, 2000)
-  } catch (err) {
+  }
+  catch (err) {
     console.error('复制失败:', err)
     // 降级方案：使用传统的复制方法
     const textArea = document.createElement('textarea')

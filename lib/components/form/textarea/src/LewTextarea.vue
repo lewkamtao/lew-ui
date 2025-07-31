@@ -3,6 +3,7 @@ import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
 import { LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
+import { throttle } from 'lodash-es'
 import { textareaProps } from './props'
 
 const props = defineProps(textareaProps)
@@ -21,18 +22,20 @@ const resizeObj = ref({
   width: 0,
 })
 
+const handleResize = throttle(() => {
+  if (props.resize !== 'none') {
+    const { width, height }
+          = lewTextareaViewRef.value.getBoundingClientRect()
+    resizeObj.value = {
+      width,
+      height,
+    }
+  }
+}, 250)
+
 onMounted(() => {
   // 只在客户端环境下使用 ResizeObserver
-  useResizeObserver(lewTextareaViewRef, () => {
-    if (props.resize !== 'none') {
-      const { width, height }
-            = lewTextareaViewRef.value.getBoundingClientRect()
-      resizeObj.value = {
-        width,
-        height,
-      }
-    }
-  })
+  useResizeObserver(lewTextareaViewRef, handleResize)
 })
 
 const modelValue: Ref<string | undefined> = defineModel()
