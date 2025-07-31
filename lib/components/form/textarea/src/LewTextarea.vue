@@ -23,10 +23,10 @@ const resizeObj = ref({
 
 onMounted(() => {
   // 只在客户端环境下使用 ResizeObserver
-  useResizeObserver(lewTextareaViewRef, (entries: any) => {
+  useResizeObserver(lewTextareaViewRef, () => {
     if (props.resize !== 'none') {
-      const entry = entries[0]
-      const { width, height } = entry.contentRect
+      const { width, height }
+            = lewTextareaViewRef.value.getBoundingClientRect()
       resizeObj.value = {
         width,
         height,
