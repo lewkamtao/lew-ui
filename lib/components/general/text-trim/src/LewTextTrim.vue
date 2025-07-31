@@ -153,7 +153,7 @@ function initCalculateDisplayText(): void {
   requestAnimationFrame(calculateDisplayText)
 }
 
-const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
+const debouncedCalculate = useDebounceFn(calculateDisplayText, 250)
 
 // Event handlers
 function handleClick(event: MouseEvent): void {

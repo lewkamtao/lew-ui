@@ -32,6 +32,7 @@ export default {
     feedback: '反馈',
     close: '关闭',
     showCode: '显示源码',
+    copySuccess: '复制成功！',
   },
   components: {
     image: {

@@ -21,16 +21,18 @@ const resizeObj = ref({
   width: 0,
 })
 
-// 只在客户端环境下使用 ResizeObserver
-useResizeObserver(lewTextareaViewRef, (entries: any) => {
-  if (props.resize !== 'none') {
-    const entry = entries[0]
-    const { width, height } = entry.contentRect
-    resizeObj.value = {
-      width,
-      height,
+onMounted(() => {
+  // 只在客户端环境下使用 ResizeObserver
+  useResizeObserver(lewTextareaViewRef, (entries: any) => {
+    if (props.resize !== 'none') {
+      const entry = entries[0]
+      const { width, height } = entry.contentRect
+      resizeObj.value = {
+        width,
+        height,
+      }
     }
-  }
+  })
 })
 
 const modelValue: Ref<string | undefined> = defineModel()
