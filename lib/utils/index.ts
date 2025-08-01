@@ -3,7 +3,6 @@ import { cloneDeep } from 'lodash-es'
 import CommonIcon from '../_components/CommonIcon.vue'
 
 export * from './dragmove'
-export * from './render'
 
 export const iconColorType: Record<string, string> = {
   normal: 'gray',
@@ -83,38 +82,6 @@ export function any2px(value: number | string | undefined): string {
   }
 
   return ''
-}
-
-export function isValidCssValue({
-  name,
-  field,
-  value,
-}: {
-  name: string
-  field: string
-  value: number | string | undefined
-}): boolean {
-  if (!value) {
-    return false
-  }
-  const autoRegex = /^auto$/i
-  const calcRegex = /^calc\((.+)\)$/
-  const percentRegex = /^-?\d+(\.\d+)?%$/
-  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
-  const numericRegex = /^-?\d+(\.\d+)?$/
-
-  const _value = String(value)
-  if (
-    autoRegex.test(_value)
-    || calcRegex.test(_value)
-    || percentRegex.test(_value)
-    || pixelRegex.test(_value)
-    || numericRegex.test(_value)
-  ) {
-    return true
-  }
-  console.warn(`[${name}] ${field} 属性的值 ${_value} 不是有效的 CSS 值。`)
-  return false
 }
 
 export function getUniqueId() {

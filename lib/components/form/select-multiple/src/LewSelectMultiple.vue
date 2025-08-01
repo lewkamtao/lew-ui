@@ -433,7 +433,7 @@ const getResultText = computed(() => {
                 <LewFlex
                   x="start"
                   y="center"
-                  :gap="5"
+                  gap="5px"
                   wrap
                   :style="{
                     maxWidth: `${state.selectWidth + 12}px`,

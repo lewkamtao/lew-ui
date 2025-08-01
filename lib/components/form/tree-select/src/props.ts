@@ -1,7 +1,7 @@
 import type { LewSize } from 'lew-ui'
 import type { PropType } from 'vue'
 import type { TreeDataSource } from '../../../data/tree'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export interface TreeSelectOptions {
   label: string
@@ -66,13 +66,10 @@ export const treeSelectProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '组件尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewTreeSelect] size 必须是 small、medium 或 large')
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewTreeSelect',
+      propName: 'size',
+    }),
   },
   disabled: {
     type: Boolean,

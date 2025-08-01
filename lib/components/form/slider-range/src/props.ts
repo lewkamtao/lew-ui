@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui/types'
 import type { ExtractPropTypes } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export interface SliderRangeOptions {
   label: string
@@ -20,15 +20,10 @@ export const sliderRangeProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '尺寸',
-    validator(value: LewSize) {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewInputNumber] size 必须是 ${validSizes.join('、')} 之一`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewSliderRange',
+      propName: 'size',
+    }),
   },
   min: {
     type: [Number, String],

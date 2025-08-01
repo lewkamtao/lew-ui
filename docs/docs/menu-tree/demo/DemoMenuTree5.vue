@@ -18,7 +18,7 @@ const options = [
     value: '1',
     icon: () => h(FileText, { size: 14 }),
     label: () =>
-      h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+      h(LewFlex, { x: 'start', style: 'width: 100%' }, () => [
         h('span', 'Article Mgmt'),
         h(
           LewTag,
@@ -35,7 +35,7 @@ const options = [
       {
         value: '1-1',
         label: () =>
-          h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+          h(LewFlex, { x: 'start', style: 'width: 100%' }, () => [
             h('span', 'Article List'),
             h(
               LewTag,
@@ -64,7 +64,7 @@ const options = [
     value: '2',
     icon: () => h(Users, { size: 14 }),
     label: () =>
-      h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+      h(LewFlex, { x: 'start', style: 'width: 100%' }, () => [
         h('span', 'User Mgmt'),
         h(
           LewTag,
@@ -81,7 +81,7 @@ const options = [
       {
         value: '2-1',
         label: () =>
-          h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+          h(LewFlex, { x: 'start', style: 'width: 100%' }, () => [
             h('span', 'User List'),
             h(
               LewTag,
@@ -214,13 +214,7 @@ function change(item: MenuTreeItem) {
 </script>
 
 <template>
-  <lew-menu-tree
-    v-model="value"
-    v-model:expand-keys="expandKeys"
-    width="300"
-    :options="options"
-    @change="change"
-  />
+  <lew-menu-tree v-model="value" v-model:expand-keys="expandKeys" width="300" :options="options" @change="change" />
 </template>
 
 <style scoped>

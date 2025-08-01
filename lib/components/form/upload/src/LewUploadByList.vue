@@ -167,8 +167,8 @@ const getStatusText = computed(() => (item: UploadFileItem) => {
           >
             <CommonIcon :size="rightTopBtnIconSizeMap[size]" type="close" />
           </LewFlex>
-          <LewFlex mode="between" gap="5" y="center">
-            <LewFlex y="center" x="start" gap="5">
+          <LewFlex mode="between" gap="5px" y="center">
+            <LewFlex y="center" x="start" gap="5px">
               <LewTextTrim
                 :text="getFileName(item)"
                 :style="{

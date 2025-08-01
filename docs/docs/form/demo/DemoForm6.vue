@@ -291,7 +291,7 @@ function loadAgain() {
     :form-methods="formMethods"
     direction="y"
     :options="options"
-    :width="320"
+    width="320px"
   />
   <lew-button style="margin-top: 20px" @click="loadAgain">
     Load again

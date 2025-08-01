@@ -4,7 +4,7 @@ const maxLength = ref(50)
 </script>
 
 <template>
-  <lew-flex :gap="20" x="start" direction="y">
+  <lew-flex gap="20px" x="start" direction="y">
     <lew-input
       v-model="inputValue"
       placeholder="Please enter content"

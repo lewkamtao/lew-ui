@@ -1,4 +1,4 @@
-import type { ComponentSource } from 'lew-ui/types'
+import type { LewComponentSource } from 'lew-ui/types'
 import type { App, DirectiveBinding, PropType } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
 // 导入所需的依赖
@@ -9,9 +9,9 @@ import { createApp, defineAsyncComponent, h } from 'vue'
  * 右键菜单项目接口定义
  */
 export interface ContextMenus {
-  label?: ComponentSource
+  label?: LewComponentSource
   value?: string
-  icon?: ComponentSource
+  icon?: LewComponentSource
   children?: ContextMenus[]
   disabled?: boolean
   level?: number

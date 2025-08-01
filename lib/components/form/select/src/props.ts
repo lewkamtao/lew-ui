@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui'
 import type { PropType } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export interface SelectOptions {
   label: string
@@ -71,15 +71,10 @@ export const selectProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '尺寸',
-    validator(value: LewSize): boolean {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewSelect] 尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewSelect',
+      propName: 'size',
+    }),
   },
   itemHeight: {
     type: Number,

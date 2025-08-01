@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui/types'
 import type { PropType } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export const switchModel = {
   modelValue: {
@@ -22,15 +22,10 @@ export const switchProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '开关的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewSwitch] size 必须是 ${validSizes.join('、')} 中的一个`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewSwitch',
+      propName: 'size',
+    }),
   },
   round: {
     type: [Boolean, Number],

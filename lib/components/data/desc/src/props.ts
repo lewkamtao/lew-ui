@@ -1,19 +1,17 @@
 import type { Property } from 'csstype'
-import type { LewSize } from 'lew-ui'
+import type { LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validSizes } from 'lew-ui/constants'
-
-export type DescDirection = 'x' | 'y'
+import validators from 'lew-ui/validators'
 
 export interface DescOptions {
   label: string
   field: string
   gridArea?: string
-  direction?: DescDirection
+  direction?: LewDirection
   customRender?: (params: { field: string, label: string, dataSource: Record<string, any> }) => any
   size?: LewSize
-  width?: number | string
-  labelWidth?: number | string
+  width?: string
+  labelWidth?: string
   tips?: string
   type?: 'text-trim'
   labelX?: Property.TextAlign
@@ -24,112 +22,98 @@ export const descProps = {
   options: {
     type: Array as PropType<DescOptions[]>,
     required: true,
-    validator(value: DescOptions[]): boolean {
-      if (!Array.isArray(value)) {
-        console.warn(`[LewDesc] Invalid options: "${typeof value}". Expected: array.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewDesc',
+      propName: 'options',
+    }),
   },
   dataSource: {
     type: Object as PropType<Record<string, any>>,
+    required: true,
     default: () => ({}),
+    validator: validators.object({
+      componentName: 'LewDesc',
+      propName: 'dataSource',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator(value: LewSize): boolean {
-      if (!validSizes.includes(value)) {
-        console.warn(`[LewDesc] Invalid size: "${value}". Expected: ${validSizes.join(', ')}.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewDesc',
+      propName: 'size',
+    }),
   },
   labelX: {
     type: String as PropType<Property.TextAlign>,
     default: 'start',
+    validator: validators.xAlignment({
+      componentName: 'LewDesc',
+      propName: 'labelX',
+    }),
   },
   valueX: {
     type: String as PropType<Property.TextAlign>,
     default: 'start',
+    validator: validators.xAlignment({
+      componentName: 'LewDesc',
+      propName: 'valueX',
+    }),
   },
   gap: {
-    type: [String, Number] as PropType<string | number>,
-    default: 30,
-    validator(value: string | number): boolean {
-      const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
-      if (Number.isNaN(numValue) || numValue < 0) {
-        console.warn(`[LewDesc] Invalid gap: "${value}". Expected: non-negative number or convertible string.`)
-        return false
-      }
-      return true
-    },
+    type: String as PropType<string>,
+    default: '30px',
+    validator: validators.gap({
+      componentName: 'LewDesc',
+      propName: 'gap',
+    }),
   },
   width: {
-    type: [Number, String] as PropType<Property.Width | number>,
-    validator(value: Property.Width | number): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn(`[LewDesc] Invalid width: "${value}". Expected: non-negative number.`)
-        return false
-      }
-      if (value && typeof value === 'string' && !/^\d+(%|px|rem|em|vw|vh)?$/.test(value)) {
-        console.warn(`[LewDesc] Invalid width: "${value}". Expected: valid CSS width value (e.g., "100px", "50%", "2rem").`)
-        return false
-      }
-      return true
-    },
+    type: String as PropType<Property.Width>,
+    validator: validators.widthHeight({
+      componentName: 'LewDesc',
+      propName: 'width',
+    }),
   },
   columns: {
-    type: [Number, String] as PropType<number | string>,
+    type: Number as PropType<number>,
     default: 1,
-    validator(value: number | string): boolean {
-      const numValue = Number(value)
-      if (Number.isNaN(numValue) || numValue < 1 || !Number.isInteger(numValue)) {
-        console.warn(`[LewDesc] Invalid columns: "${value}". Expected: integer greater than or equal to 1.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.positiveInteger({
+      componentName: 'LewDesc',
+      propName: 'columns',
+    }),
   },
   labelWidth: {
-    type: [Number, String] as PropType<Property.Width | number>,
+    type: String as PropType<Property.Width>,
     default: 'auto',
-    validator(value: Property.Width | number): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn(`[LewDesc] Invalid labelWidth: "${value}". Expected: non-negative number.`)
-        return false
-      }
-      if (
-        typeof value === 'string'
-        && value !== 'auto'
-        && !/^\d+(px|rem|em|%)?$/.test(value)
-      ) {
-        console.warn(`[LewDesc] Invalid labelWidth: "${value}". Expected: "auto" or valid CSS width value (e.g., "100px", "50%", "2rem").`)
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewDesc',
+      propName: 'labelWidth',
+    }),
   },
   direction: {
-    type: String as PropType<DescDirection>,
+    type: String as PropType<LewDirection>,
     default: 'x',
-    validator(value: DescDirection): boolean {
-      if (!['x', 'y'].includes(value)) {
-        console.warn(`[LewDesc] Invalid direction: "${value}". Expected: "x" or "y".`)
-        return false
-      }
-      return true
-    },
+    validator: validators.direction({
+      componentName: 'LewDesc',
+      propName: 'direction',
+    }),
   },
   id: {
     type: String,
     hidden: true,
+    validator: validators.string({
+      componentName: 'LewDesc',
+      propName: 'id',
+    }),
   },
   bordered: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewDesc',
+      propName: 'bordered',
+    }),
   },
 }
 
@@ -137,97 +121,114 @@ export const descItemProps = {
   label: {
     type: String,
     required: true,
+    validator: validators.string({
+      componentName: 'LewDescItem',
+      propName: 'label',
+    }),
   },
   field: {
     type: String,
     required: true,
+    validator: validators.string({
+      componentName: 'LewDescItem',
+      propName: 'field',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator(value: LewSize): boolean {
-      if (!validSizes.includes(value)) {
-        console.warn(`[LewDescItem] Invalid size: "${value}". Expected: ${validSizes.join(', ')}.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewDescItem',
+      propName: 'size',
+    }),
   },
   bordered: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewDescItem',
+      propName: 'bordered',
+    }),
   },
   width: {
-    type: [Number, String] as PropType<Property.Width | number>,
-    validator(value: Property.Width | number): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn(`[LewDescItem] Invalid width: "${value}". Expected: non-negative number.`)
-        return false
-      }
-      if (value && typeof value === 'string' && !/^\d+(%|px|rem|em|vw|vh)?$/.test(value)) {
-        console.warn(`[LewDescItem] Invalid width: "${value}". Expected: valid CSS width value (e.g., "100px", "50%", "2rem").`)
-        return false
-      }
-      return true
-    },
+    type: String as PropType<Property.Width>,
+    validator: validators.widthHeight({
+      componentName: 'LewDescItem',
+      propName: 'width',
+    }),
   },
   labelWidth: {
-    type: [Number, String] as PropType<Property.Width | number>,
+    type: String as PropType<Property.Width>,
     default: 'auto',
-    validator(value: Property.Width | number): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn(`[LewDescItem] Invalid labelWidth: "${value}". Expected: non-negative number.`)
-        return false
-      }
-      if (
-        typeof value === 'string'
-        && value !== 'auto'
-        && !/^\d+(px|rem|em|%)?$/.test(value)
-      ) {
-        console.warn(`[LewDescItem] Invalid labelWidth: "${value}". Expected: "auto" or valid CSS width value (e.g., "100px", "50%", "2rem").`)
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewDescItem',
+      propName: 'labelWidth',
+    }),
   },
   direction: {
-    type: String as PropType<DescDirection>,
+    type: String as PropType<LewDirection>,
     default: 'x',
-    validator(value: DescDirection): boolean {
-      if (!['x', 'y'].includes(value)) {
-        console.warn(`[LewDescItem] Invalid direction: "${value}". Expected: "x" or "y".`)
-        return false
-      }
-      return true
-    },
+    validator: validators.direction({
+      componentName: 'LewDescItem',
+      propName: 'direction',
+    }),
   },
   tips: {
     type: String,
+    validator: validators.string({
+      componentName: 'LewDescItem',
+      propName: 'tips',
+    }),
   },
   type: {
     type: String as PropType<'text-trim'>,
+    validator: validators.enum({
+      componentName: 'LewDescItem',
+      propName: 'type',
+      values: ['text-trim'],
+    }),
   },
   labelX: {
     type: String as PropType<Property.TextAlign>,
     default: 'start',
+    validator: validators.xAlignment({
+      componentName: 'LewDescItem',
+      propName: 'labelX',
+    }),
   },
   valueX: {
     type: String as PropType<Property.TextAlign>,
     default: 'start',
+    validator: validators.xAlignment({
+      componentName: 'LewDescItem',
+      propName: 'valueX',
+    }),
   },
   gridArea: {
     type: String,
+    validator: validators.girdArea({
+      componentName: 'LewDescItem',
+      propName: 'gridArea',
+    }),
   },
   customRender: {
-    type: Function as PropType<(params: { field: string, label: string, dataSource: Record<string, any> }) => any>,
+    type: null,
   },
   id: {
     type: String,
     hidden: true,
+    validator: validators.string({
+      componentName: 'LewDescItem',
+      propName: 'id',
+    }),
   },
   dataSource: {
     type: Object as PropType<Record<string, any>>,
     default: () => ({}),
+    validator: validators.object({
+      componentName: 'LewDescItem',
+      propName: 'dataSource',
+    }),
     hidden: true,
   },
 }

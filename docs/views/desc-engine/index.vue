@@ -6,7 +6,7 @@ import { downloadObjectAsFile } from 'docs/lib/utils'
 import { lewDescSizePaddingMap } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
-import { flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
+import { any2px, flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
@@ -208,7 +208,8 @@ function getModel() {
   const componentModel = {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
-    width: formWidth.value,
+    bordered: formGlobal.value.bordered === 1 ? true : false,
+    width: any2px(formWidth.value),
     id: `desc_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     options: _options,
   }
@@ -348,7 +349,7 @@ onMounted(() => {
               "
             >
               <lew-flex x="end" y="center" class="handle-box">
-                <lew-flex x="end" gap="5" y="center">
+                <lew-flex x="end" gap="5px" y="center">
                   <CommonIcon
                     v-if="(element.spanMap?.[formGlobal.columns] || 1) > 1"
                     class="handle-icon handle-resize" :size="14" type="minimize-2" @click="minimize(element)"

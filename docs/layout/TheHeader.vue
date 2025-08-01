@@ -221,19 +221,13 @@ getInitialLocale().then((locale) => {
 <template>
   <lew-flex mode="between" class="Header">
     <lew-flex id="logo" class="logo" x="start" @click="goHome">
-      <img
-        src="../assets/images/logo.png"
-        alt="logo"
-        srcset=""
-        width="30"
-        height="30"
-      >
+      <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30">
       <span style="margin-left: 10px"> Lew UI</span>
       <lew-tag type="light" size="small" style="margin-left: 10px">
         Beta {{ version }}
       </lew-tag>
     </lew-flex>
-    <lew-flex gap="15" class="menu">
+    <lew-flex gap="15px" class="menu">
       <div class="menu-item" @click="goToPage('/')">
         {{ docsLocale.t('home.home') }}
       </div>
@@ -244,17 +238,17 @@ getInitialLocale().then((locale) => {
         {{ docsLocale.t('home.components') }}
       </div>
       <div class="menu-item" @click="goToPage('/form-engine', true)">
-        <lew-flex gap="5">
+        <lew-flex gap="5px">
           {{ docsLocale.t('home.formEngine') }}
         </lew-flex>
       </div>
       <div class="menu-item" @click="goToPage('/desc-engine', true)">
-        <lew-flex gap="5">
+        <lew-flex gap="5px">
           {{ docsLocale.t('home.descEngine') }}
         </lew-flex>
       </div>
     </lew-flex>
-    <lew-flex gap="15" x="end" class="menu">
+    <lew-flex gap="15px" x="end" class="menu">
       <div v-if="isDev" class="menu-item menu-item-icon" @click="goToSettings">
         <Settings :size="18" />
       </div>
@@ -287,6 +281,7 @@ getInitialLocale().then((locale) => {
   box-sizing: border-box;
   user-select: none;
   white-space: nowrap;
+
   .logo {
     display: flex;
     align-items: center;
@@ -315,14 +310,17 @@ getInitialLocale().then((locale) => {
       height: 30px;
       border-radius: var(--lew-border-radius-small);
       font-weight: bold;
+
       svg {
         cursor: pointer;
       }
     }
+
     .menu-item-icon {
       width: 30px;
       padding: 0px;
     }
+
     .menu-item:nth-child(5) {
       margin-right: 50px;
     }

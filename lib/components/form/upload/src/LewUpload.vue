@@ -339,7 +339,7 @@ const getTips = computed(() => {
         :style="{
           padding: uploadPaddingMap[size],
         }"
-        gap="5"
+        gap="5px"
       >
         <CommonIcon
           :stroke-width="1.5"

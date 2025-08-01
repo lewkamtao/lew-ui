@@ -1,17 +1,17 @@
 <template>
-  <lew-title :size="14">
+  <lew-title size="14px">
     Micro Robot Medical Care
   </lew-title>
-  <lew-title :size="16">
+  <lew-title size="16px">
     Space-Time Travel Theory
   </lew-title>
-  <lew-title :size="18">
+  <lew-title size="18px">
     Underwater City Construction
   </lew-title>
-  <lew-title :size="22">
+  <lew-title size="22px">
     Anti-Gravity Transport System
   </lew-title>
-  <lew-title :size="26">
+  <lew-title size="26px">
     Interstellar Migration Plan
   </lew-title>
 </template>

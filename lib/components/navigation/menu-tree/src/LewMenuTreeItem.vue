@@ -1,29 +1,20 @@
 <script setup lang="ts">
 import { LewCollapseTransition, LewFlex } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { isValidComponent } from 'lew-ui/utils'
+import { CommonIcon, isValidComponent, RenderComponent } from 'lew-ui/render'
 import { cloneDeep } from 'lodash-es'
 import { inject } from 'vue'
 import { menuTreeItemProps } from './props'
 
-// Types
-interface MenuTreeItemEmits {
-  change: []
-}
-
 interface MenuTreeContext {
-  modelValue: { value: string | number }
-  expandKeys: { value: (string | number)[] | undefined }
-  modelValueKeyPath: { value: (string | number)[] | undefined }
+  modelValue: { value: string }
+  expandKeys: { value: (string)[] | undefined }
+  modelValueKeyPath: { value: (string)[] | undefined }
   collapsed: { value: boolean }
 }
 
-// Props & Emits
 const props = defineProps(menuTreeItemProps)
-const emit = defineEmits<MenuTreeItemEmits>()
+const emit = defineEmits<{ change: [] }>()
 
-// Inject
 const menuTreeContext = inject<MenuTreeContext>('lew-menu-tree')
 if (!menuTreeContext) {
   throw new Error('LewMenuTreeItem must be used within LewMenuTree')
@@ -53,7 +44,6 @@ function handleChange(): void {
     }
   }
   else {
-    // Handle selection for leaf nodes
     if (context.modelValue.value !== props.value) {
       context.modelValue.value = props.value as never
     }
@@ -67,7 +57,10 @@ function handleChange(): void {
 <template>
   <div class="lew-menu-tree-item">
     <LewFlex
-      x="start" y="center" class="lew-menu-tree-item-label" :class="{
+      x="start"
+      y="center"
+      class="lew-menu-tree-item-label"
+      :class="{
         'lew-menu-tree-item-label-active': context.modelValue.value === props.value,
         'lew-menu-tree-item-label-selected': context.modelValueKeyPath.value?.includes(
           props.value as never,
@@ -75,39 +68,47 @@ function handleChange(): void {
         'lew-menu-tree-item-label-leaf': props.isLeaf,
         'lew-menu-tree-item-label-disabled': props.disabled,
         'lew-menu-tree-item-label-collapsed': context.collapsed.value,
-      }" :style="{
+      }"
+      :style="{
         paddingLeft: context.collapsed.value
           ? '0px'
           : isValidComponent(props.icon)
             ? '36px'
             : '11.5px',
-      }" @click.stop="handleChange"
+      }"
+      @click.stop="handleChange"
     >
-      <slot v-if="$slots.label" name="label" :props="props" />
-      <template v-else>
-        <RenderComponent :render-fn="props.icon" class="lew-menu-tree-item-icon" />
-        <RenderComponent
-          :render-fn="props.label" type="text-trim" :component-props="{
-            placement: 'right',
-            delay: [250, 250],
-          }" :style="{
-            maxWidth: `calc(100% - ${isValidComponent(props.icon) ? 30 : 0}px)`,
-          }" class="lew-menu-tree-item-text"
-        />
-        <lew-tag v-if="props.tagProps?.text" v-bind="{ ...props.tagProps, size: props.tagProps.size || 'small' }" />
-        <CommonIcon
-          v-if="!props.isLeaf && !context.collapsed.value" class="lew-menu-tree-item-chevron-right"
-          :size="14" :style="{
-            transform: `rotate(${context.expandKeys.value?.includes(props.value as never) ? 270 : 90}deg)`,
-            transition: 'all 0.2s',
-          }" type="chevron-right"
-        />
-      </template>
+      <RenderComponent
+        :render-fn="props.icon"
+        class="lew-menu-tree-item-icon"
+      />
+      <RenderComponent
+        :render-fn="props.label"
+        type="text-trim"
+        :component-props="{
+          placement: 'right',
+          delay: [250, 250],
+        }"
+        :style="{
+          maxWidth: `calc(100% - ${isValidComponent(props.icon) ? 30 : 0}px)`,
+        }"
+        class="lew-menu-tree-item-text"
+      />
+      <lew-tag v-if="props.tagProps?.text" v-bind="{ ...props.tagProps, size: props.tagProps.size || 'small' }" />
+      <CommonIcon
+        v-if="!props.isLeaf && !context.collapsed.value"
+        class="lew-menu-tree-item-chevron-right"
+        :size="14"
+        :style="{
+          transform: `rotate(${context.expandKeys.value?.includes(props.value as never) ? 270 : 90}deg)`,
+          transition: 'all 0.2s',
+        }"
+        type="chevron-right"
+      />
     </LewFlex>
     <LewCollapseTransition v-if="!props.isLeaf">
       <div
-        v-if="context.expandKeys.value?.includes(props.value as never) && !context.collapsed.value"
-        :style="{
+        v-if="context.expandKeys.value?.includes(props.value as never) && !context.collapsed.value" :style="{
           marginTop: props.level === 1 ? '5px' : 0,
         }" class="lew-menu-tree-item-main"
       >

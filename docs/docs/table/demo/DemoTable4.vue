@@ -169,7 +169,7 @@ function options(row: any, column: any) {
       <lew-action-box
         :key="row.id"
         :options="options(row, column)"
-        dropdown-threshold="1"
+        :dropdown-threshold="1"
         dropdown-label="More"
       />
     </template>

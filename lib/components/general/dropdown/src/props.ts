@@ -1,7 +1,7 @@
 import type { ContextMenus } from 'lew-ui'
 import type { LewPopoverPlacement, LewPopoverTrigger } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validPopoverPlacement, validPopoverTrigger } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export const dropdownModel = {
   selectedKeys: {
@@ -14,35 +14,26 @@ export const dropdownProps = {
   trigger: {
     type: String as PropType<LewPopoverTrigger>,
     default: 'hover',
-    validator(value: LewPopoverTrigger): boolean {
-      if (!validPopoverTrigger.includes(value)) {
-        console.warn(`[LewDropdown] Invalid trigger: "${value}". Expected: "hover" or "click".`)
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewDropdown',
+      propName: 'trigger',
+    }),
   },
   placement: {
     type: String as PropType<LewPopoverPlacement>,
     default: 'bottom',
-    validator(value: LewPopoverPlacement): boolean {
-      if (!validPopoverPlacement.includes(value)) {
-        console.warn(`[LewDropdown] Invalid placement: "${value}". Expected one of: ${validPopoverPlacement.join(', ')}.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewDropdown',
+      propName: 'placement',
+    }),
   },
   options: {
     type: Array as PropType<ContextMenus[]>,
     default: () => [],
-    validator(value: ContextMenus[]): boolean {
-      if (!Array.isArray(value)) {
-        console.warn(`[LewDropdown] Invalid options: "${value}". Expected: array.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewDropdown',
+      propName: 'options',
+    }),
   },
   checkable: {
     type: Boolean,

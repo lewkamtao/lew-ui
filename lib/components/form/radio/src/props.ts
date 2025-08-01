@@ -1,6 +1,6 @@
 import type { LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validDirection, validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export type RadioDirection = 'x' | 'y'
 
@@ -14,51 +14,67 @@ export const radioProps = {
   checked: {
     type: Boolean,
     default: false,
-    description: '是否选中',
+    validator: validators.boolean({
+      componentName: 'LewRadio',
+      propName: 'checked',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewRadio',
+      propName: 'disabled',
+    }),
   },
   iconable: {
     type: Boolean,
     default: true,
-    description: '是否显示图标',
+    validator: validators.boolean({
+      componentName: 'LewRadio',
+      propName: 'iconable',
+    }),
   },
   label: {
     type: String,
     default: '',
-    description: '单选框文本',
+    validator: validators.string({
+      componentName: 'LewRadio',
+      propName: 'label',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewRadio',
+      propName: 'readonly',
+    }),
   },
   round: {
     type: Boolean,
     default: true,
-    description: '是否为圆角样式',
+    validator: validators.boolean({
+      componentName: 'LewRadio',
+      propName: 'round',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          '[LewRadio] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewRadio',
+      propName: 'size',
+    }),
   },
   block: {
     type: Boolean,
     default: false,
-    description: '是否为块级元素',
+    validator: validators.boolean({
+      componentName: 'LewRadio',
+      propName: 'block',
+    }),
   },
 }
 
@@ -74,58 +90,68 @@ export const radioGroupProps = {
   block: {
     type: Boolean,
     default: false,
-    description: '是否为块级元素',
+    validator: validators.boolean({
+      componentName: 'LewRadioGroup',
+      propName: 'block',
+    }),
   },
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
     description: '复选框组的排列方向',
-    validator: (value: LewDirection) => {
-      if (!validDirection.includes(value)) {
-        console.warn('[LewRadioGroup] 无效的 direction 值，请使用 "x" 或 "y"')
-        return false
-      }
-      return true
-    },
+    validator: validators.direction({
+      componentName: 'LewRadioGroup',
+      propName: 'direction',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用所有单选框',
+    validator: validators.boolean({
+      componentName: 'LewRadioGroup',
+      propName: 'disabled',
+    }),
   },
   iconable: {
     type: Boolean,
     default: true,
-    description: '是否显示图标',
+    validator: validators.boolean({
+      componentName: 'LewRadioGroup',
+      propName: 'iconable',
+    }),
   },
   options: {
     type: Array as PropType<RadioOptions[]>,
     default: () => [],
-    description: '单选框选项数组',
+    validator: validators.basicArray({
+      componentName: 'LewRadioGroup',
+      propName: 'options',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewRadioGroup',
+      propName: 'readonly',
+    }),
   },
   round: {
     type: Boolean,
     default: true,
-    description: '是否为圆角样式',
+    validator: validators.boolean({
+      componentName: 'LewRadioGroup',
+      propName: 'round',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '复选框组中复选框的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          '[LewRadioGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewRadioGroup',
+      propName: 'size',
+    }),
   },
 }
 

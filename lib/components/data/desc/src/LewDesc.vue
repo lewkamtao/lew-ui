@@ -44,7 +44,7 @@ const getBind = computed(() => (item: DescOptions) => {
     labelX,
     valueX,
     bordered,
-    labelWidth: labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth,
+    labelWidth: any2px(labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth),
     ...item,
   }
 })
@@ -76,12 +76,7 @@ watch(
 <template>
   <div class="lew-desc" :style="getDescStyle" :class="getDescClassNames">
     <LewGetLabelWidth ref="descLabelRef" :size="size" :options="componentOptions" />
-    <LewDescItem
-      v-for="item in componentOptions"
-      :key="item.field"
-      :data-source="dataSource"
-      v-bind="getBind(item)"
-    />
+    <LewDescItem v-for="item in componentOptions" :key="item.field" :data-source="dataSource" v-bind="getBind(item)" />
   </div>
 </template>
 

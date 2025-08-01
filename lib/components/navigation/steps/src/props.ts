@@ -1,4 +1,6 @@
+import type { Property } from 'csstype'
 import type { ExtractPropTypes } from 'vue'
+import validators from 'lew-ui/validators'
 
 export interface StepsOptions {
   title: string
@@ -63,9 +65,12 @@ export const stepsProps = {
     },
   },
   minWidth: {
-    type: String as PropType<string>,
+    type: [String, Number] as PropType<Property.Width | number>,
     default: '300px',
-    description: '步骤条的最小宽度',
+    validator: validators.widthHeight({
+      componentName: 'LewSteps',
+      propName: 'minWidth',
+    }),
   },
 }
 

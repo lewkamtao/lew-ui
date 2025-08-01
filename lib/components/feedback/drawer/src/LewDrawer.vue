@@ -1,25 +1,35 @@
 <script lang="ts" setup>
+import type { Ref } from 'vue'
+import type { DrawerPosition } from './props'
 import { onClickOutside, useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { drawerProps } from './props'
 
+// Types
+interface DrawerEmits {
+  close: []
+}
+
+// Props & Emits
 const props = defineProps(drawerProps)
+const emit = defineEmits<DrawerEmits>()
 
-const emit = defineEmits(['close'])
-
+// Composables
 const { Escape } = useMagicKeys()
-
 useDOMCreate('lew-drawer')
 
+// Models
 const visible: Ref<boolean | undefined> = defineModel('visible')
 
+// Refs
 const drawerBodyRef = ref<HTMLElement | null>(null)
-const drawerId = `lew-drawer-${getUniqueId()}`
 
-// 用于强制重新计算顶层状态的响应式变量
+// Constants
+const drawerId = `lew-drawer-${getUniqueId()}`
 const recomputeTrigger = ref<number>(0)
 
 // 计算当前 drawer 是否在顶层
@@ -148,29 +158,23 @@ if (props.closeByEsc) {
   })
 }
 
-function getStyle(position: string, width: number | string, height: number | string) {
-  switch (true) {
-    case !position:
-      return 'width:30%;height:100%'
-
-    case position === 'left':
+// Methods
+function getStyle(position: DrawerPosition, width: number | string, height: number | string): string {
+  switch (position) {
+    case 'left':
       return `width:${any2px(width)};height:100vh`
-
-    case position === 'right':
+    case 'right':
       return `width:${any2px(width)};height:100vh`
-
-    case position === 'top':
+    case 'top':
       return `width:100vw;height:${any2px(height)}`
-
-    case position === 'bottom':
+    case 'bottom':
       return `width:100vw;height:${any2px(height)}`
-
     default:
-      break
+      return 'width:30%;height:100%'
   }
 }
 
-function close() {
+function handleClose(): void {
   visible.value = false
   emit('close')
 }
@@ -180,23 +184,24 @@ function close() {
   <teleport to="#lew-drawer">
     <div :id="drawerId" class="lew-drawer-container">
       <transition name="lew-drawer-mask">
-        <div v-if="visible" :style="{ zIndex }" class="lew-drawer-mask" />
+        <div v-if="visible" :style="{ zIndex: props.zIndex }" class="lew-drawer-mask" />
       </transition>
       <div
-        ref="drawerBodyRef" :style="`${getStyle(position, width, height)}; z-index:${zIndex}`"
-        class="lew-drawer-body" :class="`${object2class('lew-drawer-body', { position })} ${visible ? 'lew-drawer-body-show' : ''
+        ref="drawerBodyRef"
+        :style="`${getStyle(props.position, props.width, props.height)}; z-index:${props.zIndex}`"
+        class="lew-drawer-body" :class="`${object2class('lew-drawer-body', { position: props.position })} ${visible ? 'lew-drawer-body-show' : ''
         }`"
       >
         <div v-if="$slots.header" class="lew-drawer-header-slot">
           <slot name="header" />
         </div>
-        <LewFlex v-else-if="title" mode="between" y="center" class="lew-drawer-header">
+        <LewFlex v-else-if="props.title" mode="between" y="center" class="lew-drawer-header">
           <div class="lew-drawer-title">
-            {{ title }}
+            {{ props.title }}
           </div>
           <LewButton
             type="light" color="gray" round single-icon size="small" class="lew-drawer-icon-close"
-            @click="close"
+            @click="handleClose"
           >
             <CommonIcon :size="14" type="close" />
           </LewButton>
@@ -207,15 +212,15 @@ function close() {
         <div v-if="$slots.footer" class="lew-drawer-footer-slot">
           <slot name="footer" />
         </div>
-        <LewFlex v-else-if="!hideFooter" x="end" y="center" class="lew-drawer-footer">
+        <LewFlex v-else-if="!props.hideFooter" x="end" y="center" class="lew-drawer-footer">
           <LewButton
             v-bind="{
               size: 'small',
               text: locale.t('drawer.closeText'),
               type: 'light',
               color: 'normal',
-              request: close,
-              ...(closeButtonProps as any),
+              request: handleClose,
+              ...(props.closeButtonProps as any),
             }"
           />
           <LewButton
@@ -223,7 +228,7 @@ function close() {
               size: 'small',
               text: locale.t('drawer.okText'),
               color: 'primary',
-              ...(okButtonProps as any),
+              ...(props.okButtonProps as any),
             }"
           />
         </LewFlex>

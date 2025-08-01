@@ -116,7 +116,7 @@ function setSelectedBrands() {
       row-key="id"
     >
       <template #popularItems="{ row }">
-        <lew-flex gap="5" x="start">
+        <lew-flex gap="5px" x="start">
           <lew-tag
             v-for="(item, index) in row.popularItems"
             :key="index"

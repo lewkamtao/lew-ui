@@ -49,7 +49,7 @@ export type LewDirection = 'x' | 'y'
 /**
  * 可能的组件源类型定义
  */
-export type ComponentSource
+export type LewComponentSource
   = | string
     | number
     | boolean
@@ -76,3 +76,6 @@ export type LewPopoverPlacement
     | 'right'
     | 'right-start'
     | 'right-end'
+
+export type LewXAlignment = 'start' | 'center' | 'end' | 'left' | 'right'
+export type LewYAlignment = 'start' | 'center' | 'end' | 'top' | 'bottom'

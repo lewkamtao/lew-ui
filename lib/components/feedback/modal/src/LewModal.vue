@@ -1,26 +1,35 @@
 <script lang="ts" setup name="Modal">
+import type { Ref } from 'vue'
 import { onClickOutside, useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, LewTextTrim, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId } from 'lew-ui/utils'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { modalProps } from './props'
 
+// Types
+interface ModalEmits {
+  close: []
+}
+
+// Props & Emits
 const props = defineProps(modalProps)
+const emit = defineEmits<ModalEmits>()
 
-const emit = defineEmits(['close'])
-
+// Composables
 const { Escape } = useMagicKeys()
-
 useDOMCreate('lew-modal')
 
+// Models
 const visible: Ref<boolean | undefined> = defineModel('visible')
 
-const modalBodyRef = ref(null)
-const modalId = `lew-modal-${getUniqueId()}`
+// Refs
+const modalBodyRef = ref<HTMLElement | null>(null)
 
-// 用于强制重新计算顶层状态的响应式变量
-const recomputeTrigger = ref(0)
+// Constants
+const modalId = `lew-modal-${getUniqueId()}`
+const recomputeTrigger = ref<number>(0)
 
 // 计算当前 modal 是否在顶层
 const isTopModal = computed(() => {
@@ -137,6 +146,7 @@ onClickOutside(modalBodyRef, (e: any) => {
   }
 })
 
+// Computed
 const getModalStyle = computed(() => {
   const { width, top } = props
   return {
@@ -145,7 +155,8 @@ const getModalStyle = computed(() => {
   }
 })
 
-function close() {
+// Methods
+function handleClose(): void {
   visible.value = false
   emit('close')
 }
@@ -165,21 +176,21 @@ if (props.closeByEsc) {
   <teleport to="#lew-modal">
     <div :id="modalId" class="lew-modal-container">
       <transition name="lew-modal-mask">
-        <div v-if="visible" :style="{ zIndex }" class="lew-modal-mask" />
+        <div v-if="visible" :style="{ zIndex: props.zIndex }" class="lew-modal-mask" />
       </transition>
       <transition name="lew-modal">
-        <div v-if="visible" :style="{ zIndex }" class="lew-modal">
+        <div v-if="visible" :style="{ zIndex: props.zIndex }" class="lew-modal">
           <div ref="modalBodyRef" :style="getModalStyle" class="lew-modal-body">
             <div v-if="$slots.header" class="lew-modal-header-slot">
               <slot name="header" />
             </div>
             <LewFlex
-              v-else-if="title"
+              v-else-if="props.title"
               mode="between"
               y="center"
               class="lew-modal-header"
             >
-              <LewTextTrim class="lew-modal-title" :text="title" />
+              <LewTextTrim class="lew-modal-title" :text="props.title" />
               <LewButton
                 type="light"
                 color="gray"
@@ -187,14 +198,14 @@ if (props.closeByEsc) {
                 single-icon
                 size="small"
                 class="lew-modal-icon-close"
-                @click="close"
+                @click="handleClose"
               >
                 <CommonIcon :size="14" type="close" />
               </LewButton>
             </LewFlex>
             <div
               class="lew-modal-body-main lew-scrollbar"
-              :style="{ maxHeight }"
+              :style="{ maxHeight: any2px(props.maxHeight) }"
             >
               <slot />
             </div>
@@ -202,7 +213,7 @@ if (props.closeByEsc) {
               <slot name="footer" />
             </div>
             <LewFlex
-              v-else-if="!hideFooter"
+              v-else-if="!props.hideFooter"
               x="end"
               y="center"
               class="lew-modal-footer"
@@ -213,8 +224,7 @@ if (props.closeByEsc) {
                   type: 'light',
                   color: 'gray',
                   text: locale.t('modal.closeText'),
-                  request: close,
-                  ...(closeButtonProps as any),
+                  ...(props.closeButtonProps as any),
                 }"
               />
               <LewButton
@@ -222,7 +232,7 @@ if (props.closeByEsc) {
                   size: 'small',
                   text: locale.t('modal.okText'),
                   color: 'primary',
-                  ...(okButtonProps as any),
+                  ...(props.okButtonProps as any),
                 }"
               />
             </LewFlex>

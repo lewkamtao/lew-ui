@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export type FormDirection = 'x' | 'y'
 
@@ -22,15 +22,10 @@ export const formProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '表单整体尺寸，影响所有表单项大小',
-    validator(value: LewSize): boolean {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewForm] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewForm',
+      propName: 'size',
+    }),
   },
   width: {
     type: [Number, String],

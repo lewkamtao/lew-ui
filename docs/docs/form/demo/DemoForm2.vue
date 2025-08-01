@@ -157,7 +157,7 @@ const options = ref([
 </script>
 
 <template>
-  <lew-flex width="500" x="start" y="start" :gap="50">
+  <lew-flex width="500px" x="start" y="start" :gap="50">
     <lew-form
       ref="formRef"
       direction="y"

@@ -1,6 +1,6 @@
 import type { LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validDirection, validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export type CheckboxGroupDirectionType = 'x' | 'y'
 export type CheckboxValue = string | number
@@ -31,7 +31,10 @@ export const checkboxProps = {
   label: {
     type: String,
     default: '',
-    description: '复选框的标签文本',
+    validator: validators.string({
+      componentName: 'LewCheckbox',
+      propName: 'label',
+    }),
   },
   disabled: {
     type: Boolean,
@@ -52,15 +55,10 @@ export const checkboxProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '复选框的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          '[LewCheckbox] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewCheckbox',
+      propName: 'size',
+    }),
   },
   block: {
     type: Boolean,
@@ -90,16 +88,10 @@ export const checkboxGroupProps = {
     default: () => [],
     required: true,
     description: '复选框组的选项配置数组',
-    validator: (value: CheckboxOptions[]) => {
-      if (
-        !Array.isArray(value)
-        || value.some(item => typeof item !== 'object')
-      ) {
-        console.warn('[LewCheckboxGroup] options 必须是一个对象数组')
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewCheckboxGroup',
+      propName: 'options',
+    }),
   },
   disabled: {
     type: Boolean,
@@ -115,29 +107,19 @@ export const checkboxGroupProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '复选框组中复选框的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          '[LewCheckboxGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewCheckboxGroup',
+      propName: 'size',
+    }),
   },
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
     description: '复选框组的排列方向',
-    validator: (value: LewDirection) => {
-      if (!validDirection.includes(value)) {
-        console.warn(
-          '[LewCheckboxGroup] 无效的 direction 值，请使用 "x" 或 "y"',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.direction({
+      componentName: 'LewCheckboxGroup',
+      propName: 'direction',
+    }),
   },
   block: {
     type: Boolean,

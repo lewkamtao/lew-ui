@@ -5,28 +5,16 @@ import { useEventListener } from 'lew-ui/hooks'
 import { throttle } from 'lodash-es'
 import { backTopProps } from './props'
 
-// Types
-interface BackTopEmits {
-  click: [event?: MouseEvent]
-  show: []
-  hide: []
-}
-
-// Props & Emits
 const props = defineProps(backTopProps)
-const emit = defineEmits<BackTopEmits>()
 
-// Refs
 const dom = shallowRef<HTMLElement>()
 const showBackTop = ref(false)
 
-// Computed
 const backTopStyle = computed((): CSSProperties => ({
   right: `${props.right}px`,
   bottom: `${props.bottom}px`,
 }))
 
-// Methods
 function handleScroll(): void {
   if (!dom.value)
     return
@@ -35,12 +23,6 @@ function handleScroll(): void {
 
   if (shouldShow !== showBackTop.value) {
     showBackTop.value = shouldShow
-    if (shouldShow) {
-      emit('show')
-    }
-    else {
-      emit('hide')
-    }
   }
 }
 
@@ -72,22 +54,17 @@ function scrollToTop(): void {
   requestAnimationFrame(animate)
 }
 
-function handleClick(event: MouseEvent): void {
+function handleClick(): void {
   scrollToTop()
-  emit('click', event)
 }
 
-// Throttled scroll handler
 const throttledScrollHandler = throttle(handleScroll, 100)
 
 useEventListener(window, 'scroll', throttledScrollHandler)
 
-// Lifecycle hooks
 onMounted(() => {
-  // Set default scroll target
   dom.value = document.documentElement
 
-  // Override with custom target if provided
   if (props.target) {
     const targetElement = document.querySelector<HTMLElement>(`.${props.target}`)
     if (targetElement) {
@@ -97,8 +74,6 @@ onMounted(() => {
       console.warn(`[LewBackTop] Target element not found: "${props.target}". Using document.documentElement as fallback.`)
     }
   }
-
-  // Initial check
   handleScroll()
 })
 </script>
@@ -139,7 +114,6 @@ onMounted(() => {
   }
 }
 
-// Fade transition
 .fade-enter-active,
 .fade-leave-active {
   transition: var(--lew-form-transition-bezier);

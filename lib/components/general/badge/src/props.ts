@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validColors } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export type BadgeColor
   = | 'red'
@@ -34,17 +34,10 @@ export const badgeProps = {
   offset: {
     type: Array as unknown as PropType<BadgeOffset>,
     default: (): BadgeOffset => [0, 0],
-    validator(value: BadgeOffset): boolean {
-      if (!Array.isArray(value) || value.length !== 2) {
-        console.warn(`[LewBadge] Invalid offset: "${value}". Expected: array with exactly 2 numbers.`)
-        return false
-      }
-      if (!value.every(v => typeof v === 'number')) {
-        console.warn(`[LewBadge] Invalid offset: "${value}". Expected: all values must be numbers.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewBadge',
+      propName: 'offset',
+    }),
   },
   processing: {
     type: Boolean,
@@ -68,13 +61,10 @@ export const badgeProps = {
   color: {
     type: String as PropType<BadgeColor>,
     default: 'red',
-    validator(value: BadgeColor): boolean {
-      if (!validColors.includes(value)) {
-        console.warn(`[LewBadge] Invalid color: "${value}". Expected one of: ${validColors.join(', ')}.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewBadge',
+      propName: 'color',
+    }),
   },
   value: {
     type: [String, Number] as PropType<BadgeValue>,

@@ -40,7 +40,7 @@ defineExpose({
     <LewFlex
       v-for="(item, index) in options"
       :key="index"
-      gap="5"
+      gap="5px"
       :style="{
         fontSize: `var(--lew-form-font-size-${size})`,
       }"

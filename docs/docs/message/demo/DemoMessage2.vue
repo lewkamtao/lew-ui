@@ -13,7 +13,7 @@ function close() {
 </script>
 
 <template>
-  <lew-flex wrap x="start" gap="20">
+  <lew-flex wrap x="start" gap="20px">
     <lew-button round @click="open()">
       Show Ticket Alert
     </lew-button>

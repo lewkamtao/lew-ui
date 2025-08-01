@@ -251,7 +251,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
         </LewFlex>
       </template>
       <template #action="{ row, index }">
-        <LewFlex gap="5" x="center">
+        <LewFlex gap="5px" x="center">
           <LewButton
             v-if="addable"
             type="text"

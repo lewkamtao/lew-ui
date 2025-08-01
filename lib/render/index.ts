@@ -1,5 +1,6 @@
 import type { Component, VNode } from 'vue'
-import type { ComponentSource } from '../types'
+import type { LewComponentSource } from '../types'
+import { getUniqueId } from 'lew-ui/utils'
 import { defineAsyncComponent, defineComponent, isVNode } from 'vue'
 
 /**
@@ -20,7 +21,7 @@ enum ComponentType {
  * @param componentSource 组件源输入
  * @returns 组件类型
  */
-function detectComponentType(componentSource: ComponentSource): ComponentType {
+function detectComponentType(componentSource: LewComponentSource): ComponentType {
   if (componentSource === null || componentSource === undefined || componentSource === '') {
     return ComponentType.Unknown
   }
@@ -111,7 +112,7 @@ function detectObjectComponentType(obj: any): ComponentType {
  */
 function createFunctionalComponent(component: any): Component {
   return defineComponent({
-    name: component.name || 'FunctionalComponent',
+    name: getUniqueId(),
     setup(props, ctx) {
       return () => {
         try {
@@ -234,7 +235,7 @@ function createVNodeComponent(vnode: VNode): Component {
  * @param componentSource 组件源
  * @returns 是否有效
  */
-export function isValidComponent(componentSource: ComponentSource): boolean {
+export function isValidComponent(componentSource: LewComponentSource): boolean {
   const componentType = detectComponentType(componentSource)
   return componentType !== ComponentType.Unknown
 }
@@ -244,9 +245,8 @@ export function isValidComponent(componentSource: ComponentSource): boolean {
  * @param componentSource 可能是组件、组件名称、配置对象等
  * @returns 有效的 Vue 组件
  */
-export function formatComponent(componentSource: ComponentSource): Component | undefined {
+export function formatComponent(componentSource: LewComponentSource): Component | undefined {
   const componentType = detectComponentType(componentSource)
-
   try {
     switch (componentType) {
       case ComponentType.VNode:
@@ -275,3 +275,5 @@ export function formatComponent(componentSource: ComponentSource): Component | u
     return undefined
   }
 }
+
+export * from './components'

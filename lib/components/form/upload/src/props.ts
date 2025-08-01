@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui'
 import type { ExtractPropTypes } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export type UploadStatus
   = | 'success'
@@ -78,13 +78,10 @@ export const uploadProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '上传组件的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewUpload] size 必须是 small、medium 或 large')
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewUpload',
+      propName: 'size',
+    }),
   },
   tips: {
     type: String,
@@ -147,13 +144,10 @@ export const uploadByListProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '上传组件的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewUpload] size 必须是 small、medium 或 large')
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewUpload',
+      propName: 'size',
+    }),
   },
 }
 
@@ -162,13 +156,10 @@ export const uploadByCardProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '上传组件的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewUpload] size 必须是 small、medium 或 large')
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewUpload',
+      propName: 'size',
+    }),
   },
 }
 

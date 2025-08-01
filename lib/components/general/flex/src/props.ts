@@ -1,48 +1,27 @@
 import type { Property } from 'csstype'
+import type { LewDirection, LewXAlignment, LewYAlignment } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
+import validators from 'lew-ui/validators'
 
-export type FlexDirection = 'x' | 'y'
-export type FlexXAlignment = 'start' | 'center' | 'end' | 'left' | 'right'
-export type FlexYAlignment = 'start' | 'center' | 'end' | 'top' | 'bottom'
 export type FlexMode = 'around' | 'between'
 export type FlexGap = Property.Gap | number
 export type FlexWidth = Property.Width | number
 
 export const flexProps = {
   direction: {
-    type: String as PropType<FlexDirection>,
+    type: String as PropType<LewDirection>,
     default: 'x',
-    validator(value: FlexDirection): boolean {
-      if (!['x', 'y'].includes(value)) {
-        console.warn('[LewFlex] direction must be either "x" or "y"')
-        return false
-      }
-      return true
-    },
+    validator: validators.direction({ componentName: 'LewFlex', propName: 'direction' }),
   },
   x: {
-    type: String as PropType<FlexXAlignment>,
+    type: String as PropType<LewXAlignment>,
     default: 'start',
-    validator(value: FlexXAlignment): boolean {
-      const validValues: FlexXAlignment[] = ['start', 'center', 'end', 'left', 'right']
-      if (!validValues.includes(value)) {
-        console.warn(`[LewFlex] x must be one of: ${validValues.join(', ')}`)
-        return false
-      }
-      return true
-    },
+    validator: validators.xAlignment({ componentName: 'LewFlex', propName: 'x' }),
   },
   y: {
-    type: String as PropType<FlexYAlignment>,
+    type: String as PropType<LewYAlignment>,
     default: 'center',
-    validator(value: FlexYAlignment): boolean {
-      const validValues: FlexYAlignment[] = ['start', 'center', 'end', 'top', 'bottom']
-      if (!validValues.includes(value)) {
-        console.warn(`[LewFlex] y must be one of: ${validValues.join(', ')}`)
-        return false
-      }
-      return true
-    },
+    validator: validators.yAlignment({ componentName: 'LewFlex', propName: 'y' }),
   },
   mode: {
     type: String as PropType<FlexMode>,
@@ -60,48 +39,11 @@ export const flexProps = {
   gap: {
     type: [String, Number] as PropType<FlexGap>,
     default: 10,
-    validator(value: FlexGap): boolean {
-      if (typeof value === 'number') {
-        if (value < 0) {
-          console.warn(`[LewFlex] Invalid gap: "${value}". Expected: non-negative number.`)
-          return false
-        }
-        return true
-      }
-      if (typeof value === 'string') {
-        // Check if it's a valid CSS gap value
-        if (!value.match(/^(normal|0|(\d+(\.\d+)?(px|em|rem|%|ch|ex|vh|vw|vmin|vmax)))$/)) {
-          console.warn(`[LewFlex] Invalid gap: "${value}". Expected: valid CSS gap value.`)
-          return false
-        }
-        return true
-      }
-      return true
-    },
+    validator: validators.gap({ componentName: 'LewFlex', propName: 'gap' }),
   },
   width: {
     type: [String, Number] as PropType<FlexWidth>,
-    validator(value: FlexWidth): boolean {
-      if (value === undefined || value === '') {
-        return true
-      }
-      if (typeof value === 'number') {
-        if (value < 0) {
-          console.warn('[LewFlex] width must be a non-negative number')
-          return false
-        }
-        return true
-      }
-      if (typeof value === 'string') {
-        // Check if it's a valid CSS width value
-        if (!value.match(/^(auto|max-content|min-content|fit-content|\d+(\.\d+)?(px|em|rem|%|ch|ex|vh|vw|vmin|vmax))$/)) {
-          console.warn('[LewFlex] width must be a valid CSS width value')
-          return false
-        }
-        return true
-      }
-      return true
-    },
+    validator: validators.widthHeight({ componentName: 'LewFlex', propName: 'width' }),
   },
 }
 

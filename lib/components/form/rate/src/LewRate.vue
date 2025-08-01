@@ -106,7 +106,7 @@ const getTips = computed(() => (index: number) => {
 </script>
 
 <template>
-  <lew-flex :gap="5" x="start" class="lew-rate" :class="getRateClass">
+  <lew-flex gap="5px" x="start" class="lew-rate" :class="getRateClass">
     <div
       v-for="i in getCount"
       :key="i"

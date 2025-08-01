@@ -1,34 +1,46 @@
 <script setup lang="ts">
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
+import { computed } from 'vue'
 import { alertProps } from './props'
 
+// Types
+interface AlertEmits {
+  close: []
+}
+
+// Props & Emits
 const props = defineProps(alertProps)
+const emit = defineEmits<AlertEmits>()
 
-const emit = defineEmits(['close'])
-
+// Computed
 const alertClassName = computed(() => {
   const { type } = props
   return object2class('lew-alert', { type })
 })
+
+// Methods
+function handleClose(): void {
+  emit('close')
+}
 </script>
 
 <template>
   <div class="lew-alert" :class="alertClassName">
-    <CommonIcon dark :size="18" :type />
+    <CommonIcon dark :size="18" :type="props.type" />
     <div class="lew-alert-message">
       <div v-if="$slots.title" class="lew-alert-title">
         <slot name="title" />
       </div>
-      <div v-else class="lew-alert-title">
-        {{ title }}
+      <div v-else-if="props.title" class="lew-alert-title">
+        {{ props.title }}
       </div>
 
       <div v-if="$slots.content" class="lew-alert-content">
         <slot name="content" />
       </div>
-      <div v-else-if="content" class="lew-alert-content">
-        {{ content }}
+      <div v-else-if="props.content" class="lew-alert-content">
+        {{ props.content }}
       </div>
 
       <div v-if="$slots.footer" class="lew-alert-footer">
@@ -36,8 +48,8 @@ const alertClassName = computed(() => {
       </div>
     </div>
     <CommonIcon
-      v-if="closeable" class="lew-form-icon-close lew-alert-close-icon" type="close"
-      @click="emit('close')"
+      v-if="props.closeable" class="lew-form-icon-close lew-alert-close-icon" type="close"
+      @click="handleClose"
     />
   </div>
 </template>

@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui'
 import type { PropType } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export interface TableColumn {
   title: string
@@ -19,14 +19,10 @@ export const tableModel = {
       string[] | string | number | undefined
     >,
     default: undefined,
-    description: '选中的行键值，当 multiple 为 true 时，为数组，否则为字符串',
-    validator: (value: string[] | string) => {
-      if (!Array.isArray(value) && typeof value !== 'string') {
-        console.warn('[LewTable] selectedKey 必须是一个数组或字符串')
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewTable',
+      propName: 'selectedKeys',
+    }),
   },
 }
 
@@ -34,88 +30,81 @@ export const tableProps = {
   columns: {
     type: Array as PropType<TableColumn[]>,
     default: () => [],
-    description: '表格列的配置描述',
-    validator: (value: TableColumn[]) => {
-      if (!Array.isArray(value)) {
-        console.warn('[LewTable] columns 必须是一个数组')
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewTable',
+      propName: 'columns',
+    }),
   },
   bordered: {
     type: Boolean,
     default: false,
-    description: '是否显示边框',
+    validator: validators.boolean({
+      componentName: 'LewTable',
+      propName: 'bordered',
+    }),
   },
   dataSource: {
     type: Array as PropType<Record<string, any>[]>,
     default: () => [],
-    description: '表格的数据源',
-    validator: (value: any[]) => {
-      if (!Array.isArray(value)) {
-        console.warn('[LewTable] dataSource 必须是一个数组')
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewTable',
+      propName: 'dataSource',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '标签的尺寸',
-    validator(value: LewSize): boolean {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewTable] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewTable',
+      propName: 'size',
+    }),
   },
   checkable: {
     type: Boolean,
     default: false,
-    description: '是否显示复选框列',
+    validator: validators.boolean({
+      componentName: 'LewTable',
+      propName: 'checkable',
+    }),
   },
   sortable: {
     type: Boolean,
     default: false,
-    description: '是否启用行拖拽排序功能',
+    validator: validators.boolean({
+      componentName: 'LewTable',
+      propName: 'sortable',
+    }),
   },
   sortTooltipCustomRender: {
     type: Function as PropType<(row: Record<string, any>) => any>,
     default: undefined,
-    description: '自定义行拖拽排序的提示',
+    validator: validators.function({
+      componentName: 'LewTable',
+      propName: 'sortTooltipCustomRender',
+    }),
   },
   maxHeight: {
     type: [Number, String],
     default: '',
-    description: '表格的最大高度，超出后会出现滚动条',
-    validator: (value: number | string) => {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewTable] maxHeight 必须大于 0')
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewTable',
+      propName: 'maxHeight',
+    }),
   },
   multiple: {
     type: Boolean,
     default: false,
-    description: '是否允许多选',
+    validator: validators.boolean({
+      componentName: 'LewTable',
+      propName: 'multiple',
+    }),
   },
   rowKey: {
     type: String,
     default: 'id',
-    description: '用于标识每一行数据的唯一键',
-    validator: (value: string) => {
-      if (!value) {
-        console.warn('[LewTable] rowKey 不能为空')
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewTable',
+      propName: 'rowKey',
+    }),
   },
 }

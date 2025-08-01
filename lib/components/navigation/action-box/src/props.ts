@@ -1,55 +1,46 @@
-import type { FlexXAlignment } from 'lew-ui'
-import type { ComponentSource } from 'lew-ui/types'
+import type { LewXAlignment } from 'lew-ui'
+import type { LewComponentSource } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-// Types
+import validators from 'lew-ui/validators'
+
 export interface ActionBoxOption {
-  label: ComponentSource
-  icon?: ComponentSource
-  customRender?: ComponentSource
+  label: LewComponentSource
+  icon?: LewComponentSource
+  customRender?: LewComponentSource
   onClick?: (event?: MouseEvent) => void
 }
 
-// Constants
-const ALIGNMENT_OPTIONS: FlexXAlignment[] = ['start', 'center', 'end', 'left', 'right']
-
 export const actionBoxProps = {
-  // Content props
   options: {
     type: Array as unknown as PropType<ActionBoxOption[]>,
     default: () => [],
+    validator: validators.array({
+      componentName: 'LewActionBox',
+      propName: 'options',
+    }),
   },
-
-  // Layout props
   x: {
-    type: String as PropType<FlexXAlignment>,
+    type: String as PropType<LewXAlignment>,
     default: 'start',
-    validator(value: FlexXAlignment): boolean {
-      if (!ALIGNMENT_OPTIONS.includes(value)) {
-        console.warn(
-          `[LewActionBox] Invalid x: "${value}". Expected one of: ${ALIGNMENT_OPTIONS.join(', ')}.`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.xAlignment({
+      componentName: 'LewActionBox',
+      propName: 'x',
+    }),
   },
   divider: {
     type: Boolean,
+    default: true,
+    validator: validators.boolean({
+      componentName: 'LewActionBox',
+      propName: 'divider',
+    }),
   },
-
-  // Dropdown props
   dropdownThreshold: {
     type: [Number, String] as PropType<number | string>,
-    validator(value: number | string): boolean {
-      const numValue = Number(value)
-      if (Number.isNaN(numValue) || numValue < 0) {
-        console.warn(
-          `[LewActionBox] Invalid dropdownThreshold: "${value}". Expected: non-negative number.`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.nonNegativeInteger({
+      componentName: 'LewActionBox',
+      propName: 'dropdownThreshold',
+    }),
   },
   dropdownLabel: {
     type: null,
@@ -58,10 +49,12 @@ export const actionBoxProps = {
   dropdownIcon: {
     type: null,
   },
-
-  // Style props
   iconOnly: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewActionBox',
+      propName: 'iconOnly',
+    }),
   },
 }
 

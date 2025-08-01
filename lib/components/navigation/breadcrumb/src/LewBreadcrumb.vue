@@ -4,7 +4,6 @@ import { breadcrumbProps } from './props'
 
 // Types
 interface BreadcrumbEmits {
-  itemClick: [item: BreadcrumbOption, index: number, event: MouseEvent]
   change: [item: BreadcrumbOption, index: number]
 }
 
@@ -13,10 +12,9 @@ const props = defineProps(breadcrumbProps)
 const emit = defineEmits<BreadcrumbEmits>()
 
 // Methods
-function handleItemClick(item: BreadcrumbOption, index: number, event: MouseEvent): void {
+function handleItemClick(item: BreadcrumbOption, index: number): void {
   // Only emit if item has a value (is clickable)
   if (item.value !== undefined) {
-    emit('itemClick', item, index, event)
     emit('change', item, index)
   }
 }
@@ -29,9 +27,8 @@ function handleItemClick(item: BreadcrumbOption, index: number, event: MouseEven
       :class="{ 'lew-breadcrumb-active': item.active }"
     >
       <span
-        class="lew-breadcrumb-item-label"
-        :class="{ 'lew-breadcrumb-isPath': !!item.value }"
-        @click="(event: MouseEvent) => handleItemClick(item, index, event)"
+        class="lew-breadcrumb-item-label" :class="{ 'lew-breadcrumb-isPath': !!item.value }"
+        @click="handleItemClick(item, index)"
       >
         {{ item.label }}
       </span>
@@ -59,7 +56,6 @@ function handleItemClick(item: BreadcrumbOption, index: number, event: MouseEven
   display: inline-flex;
   align-items: center;
   font-size: 14px;
-  line-height: 1.5;
 
   .lew-breadcrumb-item {
     display: inline-flex;
@@ -75,9 +71,6 @@ function handleItemClick(item: BreadcrumbOption, index: number, event: MouseEven
       padding: 2px 4px;
       border-radius: 6px;
       transition: all 0.2s ease;
-      display: inline-block;
-      min-height: 1.5em;
-      line-height: 1.3;
     }
 
     .lew-breadcrumb-isPath {
@@ -110,7 +103,7 @@ function handleItemClick(item: BreadcrumbOption, index: number, event: MouseEven
     flex-shrink: 0;
 
     svg {
-      margin: 0 5px;
+      margin: 0 2px;
       height: 1em;
       width: auto;
       color: var(--lew-text-color-5);

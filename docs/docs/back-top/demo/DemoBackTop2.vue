@@ -5,7 +5,7 @@ function getEvent() {
 </script>
 
 <template>
-  <lew-flex style="height: 50vh" x="center" y="center" gap="20">
+  <lew-flex style="height: 50vh" x="center" y="center" gap="20px">
     请往下滚动，留意右下角
     <lew-back-top target="component-main" @click="getEvent" />
     <lew-back-top :bottom="100" target="component-main">

@@ -397,7 +397,7 @@ onMounted(() => {
       }"
       class="form-box"
       :options="options"
-      :width="450"
+      width="450px"
       @mounted="setForm"
       @change="change"
     />

@@ -26,7 +26,7 @@ function handleCancel() {
 </script>
 
 <template>
-  <lew-flex gap="20" x="start">
+  <lew-flex gap="20px" x="start">
     <lew-drawer
       v-model:visible="visible"
       title="Product Details"
@@ -35,7 +35,7 @@ function handleCancel() {
       width="500px"
     >
       <div class="product-details">
-        <lew-flex direction="column" gap="16">
+        <lew-flex direction="y" gap="16">
           <div class="product-header">
             <h3>{{ productData.name }}</h3>
             <div class="price">

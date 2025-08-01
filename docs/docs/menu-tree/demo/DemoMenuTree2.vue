@@ -9,7 +9,7 @@ import {
   Users,
 } from 'lucide-vue-next'
 
-const value = ref(['1', '1-1', '1-1-1'])
+const value = ref('')
 const options = [
   {
     value: '1',

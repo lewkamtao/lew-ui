@@ -141,7 +141,7 @@ function getTitle(title: string) {
       direction="y"
       x="start"
     >
-      <lew-title :id="item.title" :size="18" class="demo-docs-title">
+      <lew-title :id="item.title" size="18px" class="demo-docs-title">
         {{ getTitle(item.title) }}
         <LewTag
           v-if="getTag(item.title)"

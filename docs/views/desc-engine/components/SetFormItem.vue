@@ -58,7 +58,7 @@ const asMap: Record<string, any> = {
 
 <template>
   <div x="start" class="set-form-item" :class="[`set-form-item-${direction}`]">
-    <lew-flex v-if="as" x="start" gap="5" class="set-form-item-label">
+    <lew-flex v-if="as" x="start" gap="5px" class="set-form-item-label">
       {{ label || '标签' }}
       <CommonIcon
         v-if="props?.tips"

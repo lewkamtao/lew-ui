@@ -2,7 +2,7 @@
   <p>
     Spring is the burden of life and death; Summer is the
     <lew-mark>burst of desire</lew-mark>; Autumn is the resolution of karma;
-    Winter is the <lew-mark bold="800" color="red">
+    Winter is the <lew-mark :bold="800" color="red">
       self-cultivation
     </lew-mark>.
     Spring, summer, autumn, winter and another spring represent the entire cycle

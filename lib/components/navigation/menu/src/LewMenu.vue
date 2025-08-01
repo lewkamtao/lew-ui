@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import type { MenuOptions } from './props'
 import { LewTag } from 'lew-ui'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { RenderComponent } from 'lew-ui/render'
 import { menuProps } from './props'
 
 defineProps(menuProps)
 
-const emit = defineEmits(['change'])
+const emit = defineEmits<{
+  change: [item: MenuOptions]
+}>()
 
 const modelValue = defineModel()
 

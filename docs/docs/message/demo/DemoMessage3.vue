@@ -27,7 +27,7 @@ function request(type: string) {
 </script>
 
 <template>
-  <lew-flex wrap x="start" gap="20">
+  <lew-flex wrap x="start" gap="20px">
     <lew-button round color="green" @click="request('success')">
       Simulate Success
     </lew-button>

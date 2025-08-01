@@ -5,7 +5,7 @@ import {
   LewMessage,
 } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import RenderComponent from 'lew-ui/render/components/RenderComponent.vue'
 import {
   findAllChildrenKeys,
   findNodeByKey,

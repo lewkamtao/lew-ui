@@ -1,15 +1,11 @@
 import type { LewColor, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validColors, validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 // Types
 export type TagType = 'fill' | 'light' | 'ghost'
 
-// Constants
-const TAG_TYPES: TagType[] = ['fill', 'light', 'ghost']
-
 export const tagProps = {
-  // Content props
   text: {
     type: String,
   },
@@ -18,41 +14,27 @@ export const tagProps = {
   type: {
     type: String as PropType<TagType>,
     default: 'light',
-    validator(value: TagType): boolean {
-      if (!TAG_TYPES.includes(value)) {
-        console.warn(
-          `[LewTag] Invalid tag type: "${value}". Expected one of: ${TAG_TYPES.join(', ')}.`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewTag',
+      propName: 'type',
+      values: ['fill', 'light', 'ghost'],
+    }),
   },
   color: {
     type: String as PropType<LewColor>,
     default: 'primary',
-    validator(value: LewColor): boolean {
-      if (!validColors.includes(value)) {
-        console.warn(
-          `[LewTag] Invalid color: "${value}". Expected one of: ${validColors.join(', ')}.`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewTag',
+      propName: 'color',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator(value: LewSize): boolean {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewTag] Invalid size: "${value}". Expected one of: ${validSizes.join(', ')}.`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewTag',
+      propName: 'size',
+    }),
   },
   round: {
     type: Boolean,

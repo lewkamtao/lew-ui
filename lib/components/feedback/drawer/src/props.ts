@@ -1,75 +1,97 @@
+import type { Property } from 'csstype'
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { ButtonProps } from '../../../general/button/index'
+import validators from 'lew-ui/validators'
 
+// Type definitions
+export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom'
+
+// Model definitions
 export const drawerModel = {
   visible: {
     type: Boolean,
     default: false,
-    description: '控制抽屉的显示状态',
   },
 }
 
+// Props definitions
 export const drawerProps = {
   title: {
     type: String,
-    default: '',
-    description: '抽屉的标题',
+    validator: validators.string({
+      componentName: 'LewDrawer',
+      propName: 'title',
+    }),
   },
   position: {
-    type: String,
+    type: String as PropType<DrawerPosition>,
     default: 'right',
-    validator: (value: string) =>
-      ['left', 'right', 'top', 'bottom'].includes(value),
-    description: '抽屉的弹出位置',
+    validator: validators.enum({
+      componentName: 'LewDrawer',
+      propName: 'position',
+      values: ['left', 'right', 'top', 'bottom'],
+    }),
   },
   width: {
-    type: [Number, String],
-    default: 500,
-    validator: (value: number | string) => {
-      const numValue = typeof value === 'string' ? Number.parseFloat(value) : value
-      return !Number.isNaN(numValue) && numValue > 0
-    },
-    description: '抽屉的宽度，单位为像素或百分比',
+    type: String as PropType<Property.Width>,
+    default: '500px',
+    validator: validators.widthHeight({
+      componentName: 'LewDrawer',
+      propName: 'width',
+    }),
   },
   height: {
-    type: [Number, String],
-    default: 500,
-    validator: (value: number | string) => {
-      const numValue = typeof value === 'string' ? Number.parseFloat(value) : value
-      return !Number.isNaN(numValue) && numValue > 0
-    },
-    description: '抽屉的高度，单位为像素或百分比',
+    type: String as PropType<Property.Height>,
+    default: '500px',
+    validator: validators.widthHeight({
+      componentName: 'LewDrawer',
+      propName: 'height',
+    }),
   },
   closeOnClickOverlay: {
     type: Boolean,
-    default: false,
-    description: '是否允许点击遮罩层关闭抽屉',
+    validator: validators.boolean({
+      componentName: 'LewDrawer',
+      propName: 'closeOnClickOverlay',
+    }),
   },
   closeByEsc: {
     type: Boolean,
-    default: false,
-    description: '是否允许按 ESC 键关闭抽屉',
+    validator: validators.boolean({
+      componentName: 'LewDrawer',
+      propName: 'closeByEsc',
+    }),
   },
   hideFooter: {
     type: Boolean,
-    default: false,
-    description: '是否隐藏抽屉底部的操作区域',
+    validator: validators.boolean({
+      componentName: 'LewDrawer',
+      propName: 'hideFooter',
+    }),
   },
   okButtonProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({}),
-    description: '确定按钮的属性配置',
+    validator: validators.object({
+      componentName: 'LewDrawer',
+      propName: 'okButtonProps',
+    }),
   },
   closeButtonProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({}),
-    description: '取消按钮的属性配置',
+    validator: validators.object({
+      componentName: 'LewDrawer',
+      propName: 'closeButtonProps',
+    }),
   },
   zIndex: {
     type: Number,
     default: 1001,
-    description: '层级',
+    validator: validators.number({
+      componentName: 'LewDrawer',
+      propName: 'zIndex',
+    }),
   },
 }
 
+// Extract prop types
 export type DrawerProps = ExtractPropTypes<typeof drawerProps>

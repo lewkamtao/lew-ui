@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { FlexXAlignment, FlexYAlignment } from 'lew-ui'
+import type { LewXAlignment, LewYAlignment } from 'lew-ui/types'
 import { useResizeObserver } from '@vueuse/core'
 import { LewCheckbox, LewEmpty, LewFlex, LewTextTrim } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import RenderComponent from 'lew-ui/render/components/RenderComponent.vue'
 import { any2px, getUniqueId } from 'lew-ui/utils'
 import {
   cloneDeep,
@@ -985,10 +985,10 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               v-for="(column, index) in getFixedHeaderColumns('left')"
               :key="`columns${index}`"
               :column="column"
-              :x="(column.x as FlexXAlignment) || 'start'"
-              :y="column.y as FlexYAlignment"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getHeaderColumnStyle(column)"
-              gap="5"
+              gap="5px"
             />
           </div>
         </div>
@@ -998,10 +998,10 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               v-for="column in nonFixedHeaderColumns"
               :key="column.field"
               :column="column"
-              :x="(column.x as FlexXAlignment) || 'start'"
-              :y="column.y as FlexYAlignment"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getHeaderColumnStyle(column)"
-              gap="5"
+              gap="5px"
             />
           </div>
         </div>
@@ -1019,10 +1019,10 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               :class="{
                 'lew-table-td-sortable': column.sortable,
               }"
-              :x="(column.x as FlexXAlignment) || 'start'"
-              :y="column.y as FlexYAlignment"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getHeaderColumnStyle(column)"
-              gap="5"
+              gap="5px"
             />
           </div>
         </div>
@@ -1092,8 +1092,8 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               v-for="column in getFixedColumns('left')"
               :key="column.field"
               class="lew-table-td"
-              :x="(column.x as FlexXAlignment) || 'start'"
-              :y="column.y as FlexYAlignment"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
@@ -1144,8 +1144,8 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               v-for="column in nonFixedColumns"
               :key="column.field"
               class="lew-table-td"
-              :x="(column.x as FlexXAlignment) || 'start'"
-              :y="column.y as FlexYAlignment"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
@@ -1197,8 +1197,8 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               v-for="(column, j) in getFixedColumns('right')"
               :key="`col${j}`"
               class="lew-table-td"
-              :x="(column.x as FlexXAlignment) || 'start'"
-              :y="column.y as FlexYAlignment"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">

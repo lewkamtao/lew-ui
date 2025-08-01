@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export const dateRangePickerModel = {
   modelValue: {
@@ -44,15 +44,10 @@ export const dateRangePickerProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '选择器尺寸',
-    validator(value: LewSize) {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewDateRangePicker] size 必须是 'small'、'medium' 或 'large'`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewDateRangePicker',
+      propName: 'size',
+    }),
   },
   width: {
     type: [String, Number],

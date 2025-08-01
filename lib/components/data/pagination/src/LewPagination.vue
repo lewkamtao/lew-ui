@@ -137,7 +137,7 @@ const getIconSize = computed(() => {
   <div class="lew-pagination" :class="getPaginationClassName">
     <LewFlex class="lew-pagination-control" gap="10">
       <slot name="left" />
-      <LewFlex class="lew-pagination-page-box" gap="5">
+      <LewFlex class="lew-pagination-page-box" gap="5px">
         <LewButton
           type="text"
           single-icon

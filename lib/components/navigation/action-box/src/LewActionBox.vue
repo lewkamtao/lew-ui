@@ -2,20 +2,12 @@
 import type { ContextMenus } from 'lew-ui'
 import type { ActionBoxOption } from './props'
 import { LewDropdown, LewFlex } from 'lew-ui'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { isValidComponent } from 'lew-ui/utils'
+import { isValidComponent, RenderComponent } from 'lew-ui/render'
 import { computed } from 'vue'
 import { actionBoxProps } from './props'
 
-// Types
-interface ActionBoxEmits {
-  click: [option: ActionBoxOption, index: number, event: MouseEvent]
-  dropdownClick: [option: ActionBoxOption, index: number, event: MouseEvent]
-}
-
 // Props & Emits
 const props = defineProps(actionBoxProps)
-const emit = defineEmits<ActionBoxEmits>()
 
 // Computed
 const threshold = computed((): number => Number(props.dropdownThreshold || 0))
@@ -51,33 +43,19 @@ const dropdownOptions = computed((): ContextMenus[] => {
   return convertToContextMenus(props.options.slice(threshold.value))
 })
 
-function handleOptionClick(option: ActionBoxOption, index: number, event: MouseEvent): void {
+function handleOptionClick(option: ActionBoxOption, event: MouseEvent): void {
   option.onClick?.(event)
-  emit('click', option, index, event)
-}
-
-function handleDropdownClick(item: ContextMenus): void {
-  // Find the original ActionBoxOption
-  const originalOptions = props.options.slice(threshold.value)
-  const originalIndex = originalOptions.findIndex(option =>
-    (typeof option.label === 'string' ? option.label : '') === item.label,
-  )
-
-  if (originalIndex !== -1) {
-    const originalOption = originalOptions[originalIndex]
-    emit('dropdownClick', originalOption, originalIndex + threshold.value, new MouseEvent('click'))
-  }
 }
 </script>
 
 <template>
-  <LewFlex class="lew-action-box" :gap="5" :x="x">
+  <LewFlex class="lew-action-box" gap="5px" :x="x">
     <template v-for="(option, index) in visibleOptions" :key="index">
       <RenderComponent
         v-if="isValidComponent(option.customRender)" :render-fn="option.customRender"
-        @click="(event: MouseEvent) => handleOptionClick(option, index, event)"
+        @click="(event: MouseEvent) => handleOptionClick(option, event)"
       />
-      <div v-else class="lew-action-box-item" @click="(event: MouseEvent) => handleOptionClick(option, index, event)">
+      <div v-else class="lew-action-box-item" @click="(event: MouseEvent) => handleOptionClick(option, event)">
         <RenderComponent v-if="option.icon && !iconOnly" :render-fn="option.icon" class="lew-action-box-icon" />
         <RenderComponent v-if="!iconOnly" :render-fn="option.label" />
         <RenderComponent v-else :render-fn="option.icon || option.label" class="lew-action-box-icon" />
@@ -90,10 +68,7 @@ function handleDropdownClick(item: ContextMenus): void {
         " class="lew-action-box-divider"
       />
     </template>
-    <LewDropdown
-      v-if="dropdownOptions.length > 0" :options="dropdownOptions"
-      @select="handleDropdownClick"
-    >
+    <LewDropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
       <div class="lew-action-box-item">
         <RenderComponent v-if="dropdownIcon" :render-fn="dropdownIcon" class="lew-action-box-icon" />
         <RenderComponent v-if="!iconOnly" :render-fn="dropdownLabel" />

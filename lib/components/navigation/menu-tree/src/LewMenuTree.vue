@@ -19,8 +19,8 @@ const props = defineProps(menuTreeProps)
 const emit = defineEmits<MenuTreeEmits>()
 
 // Models
-const modelValue = defineModel<string | number>({ default: '' })
-const expandKeys = defineModel<(string | number)[]>('expandKeys', { default: () => [] })
+const modelValue = defineModel<string>({ default: '' })
+const expandKeys = defineModel<(string)[]>('expandKeys', { default: () => [] })
 const collapsed = defineModel<boolean>('collapsed', { default: false })
 
 // Computed

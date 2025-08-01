@@ -32,7 +32,7 @@ onMounted(() => {
     <slot />
     <LewFlex
       v-if="collapseHeight"
-      gap="5"
+      gap="5px"
       x="center"
       class="lew-expand-btn"
       @click="collapse = !collapse"

@@ -5,7 +5,7 @@ const rightAlignedText = ref('这是右对齐文本')
 </script>
 
 <template>
-  <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
+  <lew-flex style="width: 300px" gap="20px" x="start" direction="y">
     <lew-input
       v-model="leftAlignedText"
       align="left"

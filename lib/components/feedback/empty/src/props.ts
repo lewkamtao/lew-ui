@@ -1,6 +1,8 @@
+import type { Property } from 'csstype'
 import type { ExtractPropTypes, PropType } from 'vue'
 
-type EmptyType
+// Type definitions
+export type EmptyType
   = | '404'
     | 'address'
     | 'article'
@@ -12,11 +14,12 @@ type EmptyType
     | 'order'
     | 'search'
 
+// Props definitions
 export const emptyProps = {
   type: {
     type: String as PropType<EmptyType>,
     default: 'search',
-    validator: (value: EmptyType) => {
+    validator(value: EmptyType): boolean {
       const validTypes: EmptyType[] = [
         '404',
         'address',
@@ -30,79 +33,142 @@ export const emptyProps = {
         'search',
       ]
       if (!validTypes.includes(value)) {
-        console.warn(
-          '[LewEmpty] 无效的类型: type 应该是 404, address, article, goods, likes, car, comment, network, order, search 之一',
-        )
+        console.warn(`[LewEmpty] Invalid type: "${value}". Expected: ${validTypes.join(', ')}.`)
         return false
       }
       return true
     },
-    description: '空状态的类型，用于展示不同场景下的空状态样式',
   },
   title: {
     type: String,
     default: '暂无数据',
-    validator: (value: string) => {
-      if (typeof value !== 'string') {
-        console.warn('[LewEmpty] 无效的标题: title 应该是一个字符串')
-        return false
-      }
-      return true
-    },
-    description: '空状态的标题文本，用于提示用户当前无数据',
-  },
-  fontSize: {
-    type: [String, Number],
-    default: '14px',
-    validator: (value: string | number) => {
-      if (typeof value !== 'string' && typeof value !== 'number') {
-        console.warn(
-          '[LewEmpty] 无效的字体大小: fontSize 应该是一个字符串或数字',
-        )
-        return false
-      }
-      return true
-    },
-    description:
-      '标题文本的字体大小，可以是像素值或其他有效的 CSS 字体大小单位',
-  },
-  padding: {
-    type: String,
-    default: '20px',
-    validator: (value: string) => {
-      if (typeof value !== 'string') {
-        console.warn('[LewEmpty] 无效的内边距: padding 应该是一个字符串')
-        return false
-      }
-      return true
-    },
-    description: '空状态组件的内边距，用于调整内容与边界的距离',
   },
   width: {
-    type: [String, Number],
+    type: [String, Number] as PropType<Property.Width | number>,
     default: '200px',
-    validator: (value: string | number) => {
-      if (typeof value !== 'string' && typeof value !== 'number') {
-        console.warn('[LewEmpty] 无效的宽度: width 应该是一个字符串或数字')
+    validator(value: Property.Width | number): boolean {
+      if (typeof value === 'number') {
+        if (value <= 0) {
+          console.warn(`[LewEmpty] Invalid width: "${value}". Expected: positive number.`)
+          return false
+        }
+        return true
+      }
+
+      if (typeof value === 'string') {
+        const autoRegex = /^auto$/i
+        const calcRegex = /^calc\((.+)\)$/
+        const percentRegex = /^-?\d+(\.\d+)?%$/
+        const pixelRegex = /^-?\d+(\.\d+)?(px|rem|em|vw|vh)?$/
+
+        if (
+          autoRegex.test(value)
+          || calcRegex.test(value)
+          || percentRegex.test(value)
+          || pixelRegex.test(value)
+        ) {
+          return true
+        }
+
+        console.warn(`[LewEmpty] Invalid width: "${value}". Expected: valid CSS width value (e.g., "200px", "50%", "auto", "calc(100% - 20px)").`)
         return false
       }
-      return true
+
+      console.warn(`[LewEmpty] Invalid width: "${value}". Expected: number or string.`)
+      return false
     },
-    description: '空状态组件的宽度，可以是像素值或其他有效的 CSS 宽度单位',
   },
   height: {
-    type: String,
+    type: [String, Number] as PropType<Property.Height | number>,
     default: 'auto',
-    validator: (value: string) => {
-      if (typeof value !== 'string') {
-        console.warn('[LewEmpty] 无效的高度: height 应该是一个字符串')
+    validator(value: Property.Height | number): boolean {
+      if (typeof value === 'number') {
+        if (value <= 0) {
+          console.warn(`[LewEmpty] Invalid height: "${value}". Expected: positive number.`)
+          return false
+        }
+        return true
+      }
+
+      if (typeof value === 'string') {
+        const autoRegex = /^auto$/i
+        const calcRegex = /^calc\((.+)\)$/
+        const percentRegex = /^-?\d+(\.\d+)?%$/
+        const pixelRegex = /^-?\d+(\.\d+)?(px|rem|em|vh|vw)?$/
+
+        if (
+          autoRegex.test(value)
+          || calcRegex.test(value)
+          || percentRegex.test(value)
+          || pixelRegex.test(value)
+        ) {
+          return true
+        }
+
+        console.warn(`[LewEmpty] Invalid height: "${value}". Expected: valid CSS height value (e.g., "200px", "50%", "auto", "calc(100% - 20px)").`)
         return false
       }
-      return true
+
+      console.warn(`[LewEmpty] Invalid height: "${value}". Expected: number or string.`)
+      return false
     },
-    description:
-      '空状态组件的高度，默认为自适应，也可以设置为具体的 CSS 高度值',
+  },
+  fontSize: {
+    type: [String, Number] as PropType<Property.FontSize | number>,
+    default: '14px',
+    validator(value: Property.FontSize | number): boolean {
+      if (typeof value === 'number') {
+        if (value <= 0) {
+          console.warn(`[LewEmpty] Invalid fontSize: "${value}". Expected: positive number.`)
+          return false
+        }
+        return true
+      }
+
+      if (typeof value === 'string') {
+        const pixelRegex = /^-?\d+(\.\d+)?(px|rem|em|%)?$/
+        const keywordRegex = /^(xx-small|x-small|small|medium|large|x-large|xx-large|smaller|larger|inherit|initial|unset)$/i
+
+        if (pixelRegex.test(value) || keywordRegex.test(value)) {
+          return true
+        }
+
+        console.warn(`[LewEmpty] Invalid fontSize: "${value}". Expected: valid CSS font-size value (e.g., "14px", "1rem", "medium").`)
+        return false
+      }
+
+      console.warn(`[LewEmpty] Invalid fontSize: "${value}". Expected: number or string.`)
+      return false
+    },
+  },
+  padding: {
+    type: [String, Number] as PropType<Property.Padding | number>,
+    default: '20px',
+    validator(value: Property.Padding | number): boolean {
+      if (typeof value === 'number') {
+        if (value < 0) {
+          console.warn(`[LewEmpty] Invalid padding: "${value}". Expected: non-negative number.`)
+          return false
+        }
+        return true
+      }
+
+      if (typeof value === 'string') {
+        const paddingRegex = /^(\d+(\.\d+)?(px|rem|em|%)?(\s+\d+(\.\d+)?(px|rem|em|%)?){0,3})$/
+
+        if (paddingRegex.test(value.trim())) {
+          return true
+        }
+
+        console.warn(`[LewEmpty] Invalid padding: "${value}". Expected: valid CSS padding value (e.g., "20px", "10px 20px", "5px 10px 15px 20px").`)
+        return false
+      }
+
+      console.warn(`[LewEmpty] Invalid padding: "${value}". Expected: number or string.`)
+      return false
+    },
   },
 }
 
+// Extract prop types
 export type EmptyProps = ExtractPropTypes<typeof emptyProps>

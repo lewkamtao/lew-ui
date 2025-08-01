@@ -436,7 +436,7 @@ onUnmounted(() => {
               Lew Design 40px
             </lew-title>
           </lew-flex>
-          <lew-flex style="width: 500px" x="end" gap="20">
+          <lew-flex style="width: 500px" x="end" gap="20px">
             <lew-avatar size="40" shape="circle" />
             <lew-avatar alt="Larry Page" size="40" shape="circle" />
             <lew-avatar alt="Tim Cook" size="40" shape="circle" />
@@ -486,7 +486,7 @@ onUnmounted(() => {
             </lew-tag>
           </lew-flex>
 
-          <lew-flex x="end" gap="20">
+          <lew-flex x="end" gap="20px">
             <lew-button round text="Explore" color="red" type="light" />
             <lew-button round text="Shop" color="yellow" type="light" />
             <lew-button text="Learn" color="orange" type="light" />
@@ -502,7 +502,7 @@ onUnmounted(() => {
             <lew-tabs v-model="tabValue" :options="tab_options" />
           </lew-flex>
 
-          <lew-flex gap="20" x="end">
+          <lew-flex gap="20px" x="end">
             <lew-dropdown :options="dropdown_options">
               <lew-button text="Hover" type="light" color="normal" />
             </lew-dropdown>
@@ -511,7 +511,7 @@ onUnmounted(() => {
         <lew-flex style="width: 450px; margin-top: 0px" class="item">
           <lew-form ref="formRef" row-gap="30" :options="options" />
         </lew-flex>
-        <lew-flex class="item" direction="y" gap="20">
+        <lew-flex class="item" direction="y" gap="20px">
           <lew-alert type="warning" title="Please confirm deletion" />
           <lew-alert type="info">
             <template #title>

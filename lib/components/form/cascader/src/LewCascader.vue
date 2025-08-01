@@ -599,7 +599,7 @@ defineExpose({ show, hide })
           </div>
         </transition>
 
-        <LewFlex v-if="free" x="end" gap="5" class="lew-cascader-control">
+        <LewFlex v-if="free" x="end" gap="5px" class="lew-cascader-control">
           <LewButton color="gray" type="text" size="small" @click="close">
             {{ locale.t("cascader.closeText") }}
           </LewButton>

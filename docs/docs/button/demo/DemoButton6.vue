@@ -10,7 +10,7 @@ function handleRequest() {
 </script>
 
 <template>
-  <lew-flex wrap x="start" y="end" gap="20">
+  <lew-flex wrap x="start" y="end" gap="20px">
     <lew-button :request="handleRequest" text="Submit" type="light" />
   </lew-flex>
 </template>

@@ -80,7 +80,7 @@ if (props.closeByEsc) {
         <div v-if="visible" class="lew-dialog" @click="maskClick">
           <LewFlex
             direction="y"
-            gap="20"
+            gap="20px"
             class="lew-dialog-box lew-dialog-box-normal"
             @click.stop
           >

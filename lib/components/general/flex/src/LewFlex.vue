@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
-import type { FlexXAlignment, FlexYAlignment } from './props'
+import type { LewXAlignment, LewYAlignment } from './props'
 import { any2px } from 'lew-ui/utils'
 import { computed } from 'vue'
 import { flexProps } from './props'
@@ -14,7 +14,7 @@ const emit = defineEmits<{
 }>()
 
 // Constants
-const alignmentMap: Record<FlexXAlignment | FlexYAlignment, string> = {
+const alignmentMap: Record<LewXAlignment | LewYAlignment, string> = {
   start: 'flex-start',
   left: 'flex-start',
   end: 'flex-end',

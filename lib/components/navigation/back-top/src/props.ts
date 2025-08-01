@@ -1,57 +1,37 @@
 import type { ExtractPropTypes } from 'vue'
+import validators from 'lew-ui/validators'
 
 export const backTopProps = {
-  // Layout props
   right: {
     type: Number,
     default: 40,
-    validator(value: number): boolean {
-      if (value < 0) {
-        console.warn(`[LewBackTop] Invalid right: "${value}". Expected: non-negative number.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.spacing({
+      componentName: 'LewBackTop',
+      propName: 'right',
+    }),
   },
   bottom: {
     type: Number,
     default: 40,
-    validator(value: number): boolean {
-      if (value < 0) {
-        console.warn(`[LewBackTop] Invalid bottom: "${value}". Expected: non-negative number.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.spacing({
+      componentName: 'LewBackTop',
+      propName: 'bottom',
+    }),
   },
-
-  // Behavior props
   valveHeight: {
     type: Number,
     default: 50,
-    validator(value: number): boolean {
-      if (value < 0) {
-        console.warn(`[LewBackTop] Invalid valveHeight: "${value}". Expected: non-negative number.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewBackTop',
+      propName: 'valveHeight',
+    }),
   },
   target: {
     type: String,
-    validator(value: string): boolean {
-      // Skip validation in SSR environment
-      if (typeof document === 'undefined')
-        return true
-
-      if (value && !document.querySelector(value)) {
-        console.warn(
-          `[LewBackTop] Invalid target: "${value}". Expected: valid CSS selector or empty string.`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewBackTop',
+      propName: 'target',
+    }),
   },
 }
 

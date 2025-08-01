@@ -327,7 +327,7 @@ function update() {
         {{ formatPerformance(row.performance) }}
       </template>
       <template #features="{ row }">
-        <lew-flex :gap="5" x="start" wrap>
+        <lew-flex gap="5px" x="start" wrap>
           <lew-tag
             v-for="(item, index) in row.features"
             :key="index"

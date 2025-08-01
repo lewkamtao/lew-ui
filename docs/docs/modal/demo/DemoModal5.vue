@@ -62,7 +62,7 @@ function close2() {
         <lew-image
           preview-group-key="cover"
           object-position="top"
-          :width="500"
+          width="500px"
           :height="618.5"
           src="https://www.ikea.com/ext/ingkadam/m/25a9522d6281b1e6/original/PH198117.JPG?f=xl"
         />

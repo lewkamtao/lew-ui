@@ -1,6 +1,6 @@
 import type { ContextMenus, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import validators from 'lew-ui/validators'
 
 export type InputType = 'text' | 'password'
 export type InputAlign = 'left' | 'center' | 'right'
@@ -29,167 +29,179 @@ export const inputProps = {
   type: {
     type: String,
     default: 'text',
-    description: '输入框类型',
-    validator: (value: InputType) => {
-      if (!['text', 'password'].includes(value)) {
-        console.warn(
-          `[LewInput] type 属性 ${value} 无效，必须是 "text" 或 "password"`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewInput',
+      propName: 'type',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewInput] size 属性必须是 "small"、"medium" 或 "large"')
-        return false
-      }
-      return true
-    },
+    validator: validators.size({
+      componentName: 'LewInput',
+      propName: 'size',
+    }),
   },
   width: {
     type: [String, Number],
     default: '300px',
-    description: '输入框宽度，支持数字（单位：像素）或带单位的字符串',
+    validator: validators.widthHeight({
+      componentName: 'LewInput',
+      propName: 'width',
+    }),
   },
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '输入框占位文本',
+    validator: validators.string({
+      componentName: 'LewInput',
+      propName: 'placeholder',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用输入框',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否将输入框设为只读',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'readonly',
+    }),
   },
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否显示清空按钮',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'clearable',
+    }),
   },
   showPassword: {
     type: Boolean,
     default: false,
-    description: '是否显示切换密码可见性的按钮',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'showPassword',
+    }),
   },
   maxLength: {
     type: [Number, String],
     default: undefined,
-    description: '输入框最大字符数',
-    validator: (value: number | string) => {
-      const num = Number(value)
-      if (Number.isNaN(num) || num <= 0) {
-        console.warn('[LewInput] maxLength 属性必须是大于 0 的数字')
-        return false
-      }
-      return true
-    },
+    validator: validators.positiveInteger({
+      componentName: 'LewInput',
+      propName: 'maxLength',
+    }),
   },
   showCount: {
     type: Boolean,
     default: false,
-    description: '是否显示字符计数（仅在 type 为 text 时有效）',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'showCount',
+    }),
   },
   align: {
     type: String,
     default: 'left',
-    description: '输入框文本对齐方式',
-    validator: (value: InputAlign) => {
-      if (!['left', 'center', 'right'].includes(value)) {
-        console.warn('[LewInput] align 属性必须是 "left"、"center" 或 "right"')
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewInput',
+      propName: 'align',
+    }),
   },
   minWidth: {
     type: [Number, String],
     default: '60px',
-    description: '输入框最小宽度，支持数字（单位：像素）或带单位的字符串',
-    validator: (value: number | string) => {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewInput] minWidth 属性必须大于 0')
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewInput',
+      propName: 'minWidth',
+    }),
   },
   autoWidth: {
     type: Boolean,
     default: false,
-    description: '是否根据内容自动调整宽度',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'autoWidth',
+    }),
   },
   selectByFocus: {
     type: Boolean,
     default: false,
-    description: '聚焦时是否自动选中输入框内容',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'selectByFocus',
+    }),
   },
   copyable: {
     type: Boolean,
     default: false,
-    description:
-      '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'copyable',
+    }),
   },
   prefixes: {
     type: String,
     default: '',
-    description: '输入框前缀类型',
-    validator: (value: InputPrefixesType) => {
-      if (value && !['icon', 'select', 'text'].includes(value)) {
-        console.warn(
-          '[LewInput] prefixes 属性必须是 "icon"、"select" 或 "text"',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewInput',
+      propName: 'prefixes',
+    }),
   },
   prefixesOptions: {
     type: Array as PropType<ContextMenus[]>,
     default: () => [],
-    description: '输入框前缀选项列表，当 prefixes 为 select 时使用',
+    validator: validators.basicArray({
+      componentName: 'LewInput',
+      propName: 'prefixesOptions',
+    }),
   },
   prefixesTooltip: {
     type: String,
     default: '',
-    description: '输入框前缀的 tooltip 提示文本',
+    validator: validators.string({
+      componentName: 'LewInput',
+      propName: 'prefixesTooltip',
+    }),
   },
   suffix: {
     type: String,
     default: '',
-    description: '输入框后缀类型',
-    validator: (value: InputSuffixType) => {
-      if (value && !['icon', 'select', 'text'].includes(value)) {
-        console.warn('[LewInput] suffix 属性必须是 "icon"、"select" 或 "text"')
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewInput',
+      propName: 'suffix',
+    }),
   },
   suffixOptions: {
     type: Array as PropType<ContextMenus[]>,
     default: () => [],
-    description: '输入框后缀选项列表，当 suffix 为 select 时使用',
+    validator: validators.basicArray({
+      componentName: 'LewInput',
+      propName: 'suffixOptions',
+    }),
   },
   suffixTooltip: {
     type: String,
     default: '',
-    description: '输入框后缀的 tooltip 提示文本',
+    validator: validators.string({
+      componentName: 'LewInput',
+      propName: 'suffixTooltip',
+    }),
   },
   okByEnter: {
     type: Boolean,
     default: false,
-    description: '是否允许通过回车键确认输入',
+    validator: validators.boolean({
+      componentName: 'LewInput',
+      propName: 'okByEnter',
+    }),
   },
 }
 

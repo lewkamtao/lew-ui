@@ -1,49 +1,40 @@
 import type { LewStatusColor } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import { validStatusColors } from 'lew-ui/constants'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators from 'lew-ui/validators'
 
+// Props definitions
 export const alertProps = {
   type: {
-    type: String,
+    type: String as PropType<LewStatusColor>,
     default: 'normal',
-    description: '提示类型',
-    validator: (value: LewStatusColor) => {
-      if (!validStatusColors.includes(value)) {
-        console.warn(
-          `[LewAlert] 无效的类型值: ${value}. 请使用预定义的类型之一。`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.color({
+      componentName: 'LewAlert',
+      propName: 'type',
+    }),
   },
-
   title: {
     type: String,
-    typeGhost: 'String | Slot',
-    default: '',
-    description: '提示信息',
+    validator: validators.string({
+      componentName: 'LewAlert',
+      propName: 'title',
+    }),
   },
-
   content: {
     type: String,
-    typeGhost: 'String | Slot',
-    default: '',
-    description: '描述信息',
+    validator: validators.string({
+      componentName: 'LewAlert',
+      propName: 'content',
+    }),
   },
-
   closeable: {
     type: Boolean,
     default: false,
-    description: '关闭按钮',
-  },
-
-  footer: {
-    type: String,
-    typeGhost: 'slot',
-    default: '',
-    description: '底部插槽',
+    validator: validators.boolean({
+      componentName: 'LewAlert',
+      propName: 'closeable',
+    }),
   },
 }
 
+// Extract prop types
 export type AlertProps = ExtractPropTypes<typeof alertProps>

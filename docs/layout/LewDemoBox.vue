@@ -74,7 +74,7 @@ async function copyCode(code: string) {
 
 <template>
   <div class="demo-box">
-    <lew-title :id="title" :size="18" class="demo-docs-title">
+    <lew-title :id="title" size="18px" class="demo-docs-title">
       {{ title }}
       <lew-tag v-if="checkHasContent(tag)" type="light" color="blue" style="margin: 2px 0px 0px 5px">
         {{ tag }}
