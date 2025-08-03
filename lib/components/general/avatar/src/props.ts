@@ -19,7 +19,10 @@ export const avatarProps = {
   },
   loading: {
     type: Boolean,
-    default: false,
+    validator: validators.boolean({
+      componentName: 'LewAvatar',
+      propName: 'loading',
+    }),
   },
   shape: {
     type: String as PropType<AvatarShape>,
@@ -32,13 +35,16 @@ export const avatarProps = {
   },
   src: {
     type: String,
+    validator: validators.string({
+      componentName: 'LewAvatar',
+      propName: 'src',
+    }),
   },
   alt: {
     type: String,
-    validator: validators.stringLength({
+    validator: validators.string({
       componentName: 'LewAvatar',
       propName: 'alt',
-      maxLength: 100,
     }),
   },
   status: {

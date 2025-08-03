@@ -1,17 +1,10 @@
+import type { LewBreadcrumbOptions, LewBreadcrumbSeparator } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
-export interface BreadcrumbOption {
-  label: string
-  value?: string | number
-  active?: boolean
-}
-
-export type BreadcrumbSeparator = 'shoulder' | 'sprit'
-
 export const breadcrumbProps = {
   options: {
-    type: Array as PropType<BreadcrumbOption[]>,
+    type: Array as PropType<LewBreadcrumbOptions>,
     default: () => [],
     validator: validators.array({
       componentName: 'LewBreadcrumb',
@@ -19,7 +12,7 @@ export const breadcrumbProps = {
     }),
   },
   separator: {
-    type: String as PropType<BreadcrumbSeparator>,
+    type: String as PropType<LewBreadcrumbSeparator>,
     default: 'sprit',
     validator: validators.enum ({
       componentName: 'LewBreadcrumb',

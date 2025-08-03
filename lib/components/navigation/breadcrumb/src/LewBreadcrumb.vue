@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import type { BreadcrumbOption } from './props'
+import type { LewBreadcrumbOption } from 'lew-ui/types'
 import { breadcrumbProps } from './props'
 
-// Types
 interface BreadcrumbEmits {
-  change: [item: BreadcrumbOption, index: number]
+  change: [item: LewBreadcrumbOption, index: number]
 }
 
-// Props & Emits
 const props = defineProps(breadcrumbProps)
 const emit = defineEmits<BreadcrumbEmits>()
 
-// Methods
-function handleItemClick(item: BreadcrumbOption, index: number): void {
-  // Only emit if item has a value (is clickable)
+function handleItemClick(item: LewBreadcrumbOption, index: number): void {
   if (item.value !== undefined) {
     emit('change', item, index)
   }
@@ -113,7 +109,6 @@ function handleItemClick(item: BreadcrumbOption, index: number): void {
   }
 }
 
-// Responsive design
 @media (max-width: 768px) {
   .lew-breadcrumb {
     font-size: 13px;

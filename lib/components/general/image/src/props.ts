@@ -1,77 +1,57 @@
 import type { ExtractPropTypes, PropType } from 'vue'
+import validators from 'lew-ui/validators'
 
 export type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
 
 export const imageProps = {
   src: {
     type: String,
-    validator: (value: string) => {
-      if (!value) {
-        console.warn(`[LewImage] Invalid src: "${value}". Expected: non-empty string.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewImage',
+      propName: 'src',
+    }),
   },
   alt: {
     type: String,
-    validator: (value: string) => {
-      if (value && value.length > 100) {
-        console.warn(`[LewImage] Invalid alt: "${value}". Expected: text length ≤ 100 characters.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewImage',
+      propName: 'alt',
+    }),
   },
   width: {
-    type: [Number, String],
+    type: String,
     default: 200,
-    validator: (value: number | string) => {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn(`[LewImage] Invalid width: "${value}". Expected: positive number.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewImage',
+      propName: 'width',
+    }),
   },
   height: {
-    type: [Number, String],
+    type: String,
     default: 200,
-    validator: (value: number | string) => {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn(`[LewImage] Invalid height: "${value}". Expected: positive number.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewImage',
+      propName: 'height',
+    }),
   },
   objectFit: {
     type: String as PropType<ObjectFit>,
     default: 'cover',
     typeDesc: `fill | contain | cover | none | scale-down`,
-    validator: (value: ObjectFit) => {
-      const validValues: ObjectFit[] = [
-        'fill',
-        'contain',
-        'cover',
-        'none',
-        'scale-down',
-      ]
-      if (!validValues.includes(value)) {
-        console.warn(
-          `[LewImage] Invalid objectFit: "${value}". Expected one of: ${validValues.join(', ')}.`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewImage',
+      propName: 'objectFit',
+      values: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+    }),
   },
   objectPosition: {
     type: String,
     default: 'center',
     typeDesc: `center | top | bottom | left | right | top left | top right | bottom left | bottom right`,
-    validator: (value: string) => {
-      const validPositions = [
+    validator: validators.enum({
+      componentName: 'LewImage',
+      propName: 'objectPosition',
+      values: [
         'center',
         'top',
         'bottom',
@@ -81,35 +61,29 @@ export const imageProps = {
         'top right',
         'bottom left',
         'bottom right',
-      ]
-      if (
-        !validPositions.includes(value)
-        && !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
-      ) {
-        console.warn('[LewImage] objectPosition 格式不正确')
-        return false
-      }
-      return true
-    },
+      ],
+    }),
   },
   lazy: {
     type: Boolean,
-    default: false,
+    validator: validators.boolean({
+      componentName: 'LewImage',
+      propName: 'lazy',
+    }),
   },
   loading: {
     type: Boolean,
-    default: false,
+    validator: validators.boolean({
+      componentName: 'LewImage',
+      propName: 'loading',
+    }),
   },
   title: {
     type: String,
-    default: '',
-    validator: (value: string) => {
-      if (value.length > 50) {
-        console.warn('[LewImage] title 不应超过50个字符')
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewImage',
+      propName: 'title',
+    }),
   },
 }
 

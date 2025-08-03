@@ -1,18 +1,8 @@
 import type { Property } from 'csstype'
 import type { TagProps } from 'lew-ui'
-import type { LewComponentSource } from 'lew-ui/types'
+import type { LewMenuTreeItemOptions } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
-
-export interface MenuTreeItem {
-  label: LewComponentSource
-  icon?: LewComponentSource
-  value: string
-  active?: boolean
-  disabled?: boolean
-  children?: MenuTreeItem[]
-  tagProps?: TagProps
-}
 
 export const menuTreeModel = {
   modelValue: {
@@ -30,7 +20,7 @@ export const menuTreeModel = {
 
 export const menuTreeProps = {
   options: {
-    type: Array as PropType<MenuTreeItem[]>,
+    type: Array as PropType<LewMenuTreeItemOptions>,
     default: () => [],
     validator: validators.array({
       componentName: 'LewMenuTree',
@@ -38,7 +28,7 @@ export const menuTreeProps = {
     }),
   },
   width: {
-    type: [String, Number] as PropType<Property.Width | number>,
+    type: String as PropType<Property.Width>,
     default: '240px',
     validator: validators.widthHeight({
       componentName: 'LewMenuTree',
@@ -51,6 +41,9 @@ export const menuTreeItemProps = {
   label: {
     type: null,
   },
+  icon: {
+    type: null,
+  },
   value: {
     type: String,
     required: true,
@@ -58,9 +51,6 @@ export const menuTreeItemProps = {
       componentName: 'LewMenuTreeItem',
       propName: 'value',
     }),
-  },
-  icon: {
-    type: null,
   },
   tagProps: {
     type: Object as PropType<TagProps>,
@@ -79,7 +69,6 @@ export const menuTreeItemProps = {
   },
   disabled: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewMenuTreeItem',
       propName: 'disabled',
@@ -87,7 +76,6 @@ export const menuTreeItemProps = {
   },
   isLeaf: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewMenuTreeItem',
       propName: 'isLeaf',

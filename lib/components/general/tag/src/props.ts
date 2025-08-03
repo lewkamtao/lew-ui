@@ -8,9 +8,11 @@ export type TagType = 'fill' | 'light' | 'ghost'
 export const tagProps = {
   text: {
     type: String,
+    validator: validators.string({
+      componentName: 'LewTag',
+      propName: 'text',
+    }),
   },
-
-  // Style props
   type: {
     type: String as PropType<TagType>,
     default: 'light',
@@ -38,27 +40,33 @@ export const tagProps = {
   },
   round: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'round',
+    }),
   },
   oversize: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'oversize',
+    }),
   },
 
-  // State props
   disabled: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'disabled',
+    }),
   },
 
-  // Feature props
   closable: {
     type: Boolean,
-  },
-}
-
-// Export model for documentation
-export const model = {
-  tag: {
-    type: 'String | Object',
-    description: 'Tag model value',
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'closable',
+    }),
   },
 }
 

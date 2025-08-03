@@ -1,4 +1,5 @@
 import type { Property } from 'csstype'
+import type { LewStepsStatus } from 'lew-ui/types'
 import type { ExtractPropTypes } from 'vue'
 import validators from 'lew-ui/validators'
 
@@ -6,8 +7,6 @@ export interface StepsOptions {
   title: string
   description: string
 }
-
-export type StepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
 
 export const stepsModel = {
   modelValue: {
@@ -50,23 +49,17 @@ export const stepsProps = {
     },
   },
   status: {
-    type: String as PropType<StepsStatus>,
+    type: String as PropType<LewStepsStatus>,
     default: 'pending',
     description: '步骤条的当前状态',
-    validator: (value: StepsStatus) => {
-      const validStatus = ['pending', 'loading', 'done', 'error', 'warning']
-      if (!validStatus.includes(value)) {
-        console.warn(
-          `[LewSteps] status 必须是 ${validStatus.join(', ')} 中的一个`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewSteps',
+      propName: 'status',
+      values: ['pending', 'loading', 'done', 'error', 'warning'],
+    }),
   },
   minWidth: {
-    type: [String, Number] as PropType<Property.Width | number>,
-    default: '300px',
+    type: String as PropType<Property.Width>,
     validator: validators.widthHeight({
       componentName: 'LewSteps',
       propName: 'minWidth',

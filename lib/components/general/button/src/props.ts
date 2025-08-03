@@ -41,6 +41,10 @@ export const buttonProps = {
   },
   singleIcon: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'singleIcon',
+    }),
   },
   color: {
     type: String as PropType<LewColor>,
@@ -52,18 +56,38 @@ export const buttonProps = {
   },
   round: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'round',
+    }),
   },
   dashed: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'dashed',
+    }),
   },
   loading: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'loading',
+    }),
   },
   disabled: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'disabled',
+    }),
   },
   request: {
     type: Function as PropType<() => Promise<void>>,
+    validator: validators.function({
+      componentName: 'LewButton',
+      propName: 'request',
+    }),
   },
 }
 

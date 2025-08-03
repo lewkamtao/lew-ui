@@ -25,16 +25,11 @@ export const flexProps = {
   },
   mode: {
     type: String as PropType<FlexMode>,
-    validator(value: FlexMode): boolean {
-      if (value && !['around', 'between'].includes(value)) {
-        console.warn('[LewFlex] mode must be either "around" or "between"')
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({ componentName: 'LewFlex', propName: 'mode', values: ['around', 'between'] }),
   },
   wrap: {
     type: Boolean,
+    validator: validators.boolean({ componentName: 'LewFlex', propName: 'wrap' }),
   },
   gap: {
     type: [String, Number] as PropType<FlexGap>,

@@ -53,6 +53,5 @@ function handleClick(event: MouseEvent): void {
   text-overflow: ellipsis;
   color: var(--lew-text-color-0);
   margin-bottom: 10px;
-  cursor: pointer;
 }
 </style>

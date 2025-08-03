@@ -22,9 +22,17 @@ export const markProps = {
   },
   cursor: {
     type: String as PropType<Property.Cursor>,
+    validator: validators.string({
+      componentName: 'LewMark',
+      propName: 'cursor',
+    }),
   },
   round: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewMark',
+      propName: 'round',
+    }),
   },
 }
 

@@ -1,3 +1,4 @@
+import type { TagProps } from 'lew-ui'
 import type { Component, VNode } from 'vue'
 
 /**
@@ -79,3 +80,25 @@ export type LewPopoverPlacement
 
 export type LewXAlignment = 'start' | 'center' | 'end' | 'left' | 'right'
 export type LewYAlignment = 'start' | 'center' | 'end' | 'top' | 'bottom'
+export type LewStepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
+
+export interface LewMenuTreeItemOption {
+  label: LewComponentSource
+  icon?: LewComponentSource
+  value: string
+  active?: boolean
+  disabled?: boolean
+  children?: LewMenuTreeItemOption[]
+  tagProps?: TagProps
+}
+
+export type LewMenuTreeItemOptions = LewMenuTreeItemOption[]
+
+export interface LewBreadcrumbOption {
+  label: string
+  value?: string
+  active?: boolean
+}
+
+export type LewBreadcrumbOptions = LewBreadcrumbOption[]
+export type LewBreadcrumbSeparator = 'shoulder' | 'sprit'

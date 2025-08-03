@@ -30,6 +30,10 @@ export const badgeProps = {
   text: {
     type: String,
     default: '',
+    validator: validators.string({
+      componentName: 'LewBadge',
+      propName: 'text',
+    }),
   },
   offset: {
     type: Array as unknown as PropType<BadgeOffset>,
@@ -41,6 +45,10 @@ export const badgeProps = {
   },
   processing: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewBadge',
+      propName: 'processing',
+    }),
   },
   max: {
     type: [Number, String] as PropType<number | string>,

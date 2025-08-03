@@ -37,6 +37,10 @@ export const dropdownProps = {
   },
   checkable: {
     type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewDropdown',
+      propName: 'checkable',
+    }),
   },
 }
 
