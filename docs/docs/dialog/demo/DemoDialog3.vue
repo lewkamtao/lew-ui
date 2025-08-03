@@ -7,12 +7,14 @@ function open() {
     content: 'Do you want to save the changes to your profile?',
     closeOnClickOverlay: true,
     ok: () => {
-      LewMessage.success({
-        content: 'Profile updated successfully',
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          LewMessage.success({
+            content: 'Profile updated successfully',
+          })
+          resolve(true)
+        }, 1000)
       })
-    },
-    cancel: () => {
-      // Cancel update
     },
   })
 }

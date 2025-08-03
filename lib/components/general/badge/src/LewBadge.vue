@@ -85,6 +85,7 @@ function handleClick(event: MouseEvent) {
     cursor: normal;
     border-radius: 50%;
     box-sizing: border-box;
+    border-radius: 50%;
 
     &.is-processing {
       &::after {
@@ -120,17 +121,10 @@ function handleClick(event: MouseEvent) {
     z-index: 1;
     font-weight: normal;
     box-sizing: border-box;
-    color: var(--lew-color-white-text);
+    color: var(--lew-color-white);
     background-color: var(--lew-color-error-dark);
+    border-radius: 25px;
   }
-}
-
-.lew-badge-value {
-  border-radius: 25px;
-}
-
-.lew-badge-dot {
-  border-radius: 50%;
 }
 
 @keyframes badge-processing {

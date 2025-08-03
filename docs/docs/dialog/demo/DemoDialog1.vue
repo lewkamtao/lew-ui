@@ -4,7 +4,6 @@ function open() {
     title: 'Delete GitHub Repository',
     cancelText: 'Cancel',
     okText: 'Delete',
-    size: 'large',
     content:
       'Are you sure you want to permanently delete this repository? This action cannot be undone and will remove all code, issues, and pull requests. Please be certain before proceeding.',
     ok: () => {
@@ -16,9 +15,6 @@ function open() {
           })
         }, 1000)
       })
-    },
-    cancel: () => {
-      // Cancel deletion
     },
   })
 }

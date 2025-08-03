@@ -53,12 +53,6 @@ function handleClick(event: MouseEvent): void {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-
-  &:hover {
-    opacity: 0.8;
-  }
 
   .lew-empty-icon {
     width: 100%;
@@ -75,7 +69,9 @@ function handleClick(event: MouseEvent): void {
   }
 }
 
-:global(.lew-dark) .lew-empty-container .lew-empty-icon {
-  opacity: 0.6;
+.lew-dark {
+  .lew-empty-container .lew-empty-icon {
+    opacity: 0.6;
+  }
 }
 </style>

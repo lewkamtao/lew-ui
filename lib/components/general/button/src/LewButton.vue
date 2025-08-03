@@ -6,7 +6,6 @@ import { buttonProps } from './props'
 
 // Props & Emit
 const props = defineProps(buttonProps)
-
 const emit = defineEmits<{
   click: [event: MouseEvent]
   focus: [event: FocusEvent]
@@ -117,12 +116,15 @@ const getStyle = computed(() => {
   const { round, type, color, dashed, width } = props
   const styleObj: Record<string, string> = {}
   const _color = getColorType(color) || 'primary'
+  const fillTextColor = () => {
+    return ['green', 'yellow', 'mint', 'teal', 'cyan'].includes(_color) ? 'var(--lew-text-color-0-invert)' : 'var(--lew-color-white)'
+  }
 
   // 基础样式
   const baseStyle = {
     fill: {
       backgroundColor: `var(--lew-color-${_color})`,
-      color: 'var(--lew-color-white)',
+      color: fillTextColor(),
     },
     light: {
       backgroundColor: `var(--lew-color-${_color}-light)`,
@@ -215,7 +217,7 @@ defineExpose({
   width: auto;
   white-space: nowrap;
   box-sizing: border-box;
-  transition: all var(--lew-form-transition-ease);
+  transition: var(--lew-form-transition-ease);
   border: none;
   cursor: pointer;
   border-radius: var(--lew-border-radius-small);
@@ -249,11 +251,13 @@ defineExpose({
   }
 }
 .lew-button-text {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
 }
+
 .lew-button::after {
   position: absolute;
   left: 0px;
@@ -261,37 +265,9 @@ defineExpose({
   width: 100%;
   height: 100%;
   background-color: rgba($color: #000, $alpha: 0.2);
-  transition: all var(--lew-form-transition-ease);
+  transition: all 0.1s;
   opacity: 0;
   content: '';
-}
-
-.lew-button-color-black::after {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba($color: #fff, $alpha: 0.2);
-  transition: 0.1s all;
-  opacity: 0;
-  content: '';
-}
-
-.lew-button-type-text.lew-button-color-black::after {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba($color: #000, $alpha: 0.2);
-  transition: 0.1s all;
-  opacity: 0;
-  content: '';
-}
-
-.lew-button-type-ghost::after {
-  display: none;
 }
 
 .lew-button:hover:after {
@@ -443,20 +419,10 @@ defineExpose({
 }
 
 .lew-button-type-text:hover {
-  background-color: var(--lew-bgcolor-2) !important;
+  background-color: var(--lew-bgcolor-1) !important;
 }
 
 .lew-button-type-ghost:hover {
-  background-color: var(--lew-bgcolor-2) !important;
-}
-
-.lew-button-type-ghost:active {
-  background-color: var(--lew-bgcolor-3) !important;
-}
-</style>
-
-<style lang="scss">
-.lew-dark .lew-button-color-black.lew-button-type-fill {
-  color: #000 !important;
+  background-color: var(--lew-bgcolor-1) !important;
 }
 </style>

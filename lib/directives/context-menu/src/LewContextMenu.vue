@@ -1,18 +1,18 @@
 <script setup lang="ts" name="LewContextMenu">
-import type { ContextMenus } from './index'
+import type { LewContextMenusOption } from 'lew-ui/types'
 import { LewEmpty, LewFlex } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/render/components/RenderComponent.vue'
 import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
-import { contextMenuProps, initLewContextMenu } from './index'
+import { contextMenuProps, initLewContextMenu } from '../index'
 
 const props = defineProps(contextMenuProps)
 
 const emit = defineEmits(['select'])
 
-function clickItem(item: ContextMenus) {
+function clickItem(item: LewContextMenusOption) {
   if (isFunction(item.onClick)) {
     // 创建一个item的代理
     const proxy = new Proxy(item, {

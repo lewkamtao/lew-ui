@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ContextMenus } from 'lew-ui'
+import type { LewContextMenusOption } from 'lew-ui'
 import type { ActionBoxOption } from './props'
 import { LewDropdown, LewFlex } from 'lew-ui'
 import { isValidComponent, RenderComponent } from 'lew-ui/render'
@@ -20,11 +20,11 @@ const visibleOptions = computed((): ActionBoxOption[] => {
 })
 
 // Methods
-function convertToContextMenus(options: ActionBoxOption[]): ContextMenus[] {
+function convertToContextMenus(options: ActionBoxOption[]): LewContextMenusOption[] {
   return options.map(option => ({
     label: option.label,
     icon: option.icon,
-    onClick: (item: ContextMenus) => {
+    onClick: (item: LewContextMenusOption) => {
       // Find original option for proper callback
       const originalOption = options.find(opt =>
         (typeof opt.label === 'string' ? opt.label : '') === item.label,
@@ -36,7 +36,7 @@ function convertToContextMenus(options: ActionBoxOption[]): ContextMenus[] {
   }))
 }
 
-const dropdownOptions = computed((): ContextMenus[] => {
+const dropdownOptions = computed((): LewContextMenusOption[] => {
   if (threshold.value <= 0) {
     return []
   }

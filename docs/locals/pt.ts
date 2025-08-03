@@ -406,7 +406,7 @@ export default {
         placement: 'Posição do menu',
         checkable: 'Permite seleção',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Callback ao mostrar menu',
         hide: 'Callback ao ocultar menu',
@@ -457,7 +457,7 @@ export default {
         options: 'Configuração do menu',
         disabled: 'Desabilita o menu',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     actionBox: {
       name: 'Caixa de ação',

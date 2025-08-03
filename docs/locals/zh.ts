@@ -400,7 +400,7 @@ export default {
         placement: '菜单弹出位置',
         checkable: '是否可选择',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: '菜单显示事件回调',
         hide: '菜单隐藏事件回调',
@@ -451,7 +451,7 @@ export default {
         options: '右键菜单配置',
         disabled: '是否禁用右键菜单',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     actionBox: {
       name: '操作按钮 ActionBox',

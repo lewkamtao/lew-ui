@@ -60,6 +60,7 @@ export const stepsProps = {
   },
   minWidth: {
     type: String as PropType<Property.Width>,
+    default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewSteps',
       propName: 'minWidth',

@@ -420,7 +420,7 @@ export default {
         placement: 'Position',
         checkable: 'Ist auswählbar',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Callback beim Anzeigen des Menüs',
         hide: 'Callback beim Ausblenden des Menüs',
@@ -472,7 +472,7 @@ export default {
         options: 'Kontextmenü-Konfiguration',
         disabled: 'Kontextmenü deaktivieren',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'Formular',

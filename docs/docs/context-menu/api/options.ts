@@ -1,5 +1,5 @@
 export default {
-  title: 'Options(ContextMenus)',
+  title: 'Options(LewContextMenusOption[])',
   columnsKey: 'props',
   orderNum: 2,
   data: [
@@ -25,7 +25,7 @@ export default {
     },
     {
       name: 'children',
-      type: 'ContextMenus[]',
+      type: 'LewContextMenusOption[]',
       default: '-',
     },
     {

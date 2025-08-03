@@ -1,30 +1,17 @@
 import type { LewColor } from 'lew-ui'
+import type { LewDialogInstance, LewDialogOptions, LewDialogType } from 'lew-ui/types'
 import { useMouse } from '@vueuse/core'
 import { locale } from 'lew-ui'
 import _LewDialog from './LewDialog.vue'
 
 const { x, y } = useMouse()
 
-interface Options {
-  title: string
-  content: string
-  ok?: () => boolean | Promise<boolean>
-  cancel?: () => boolean | Promise<boolean>
-  layout?: string
-  okText?: string
-  cancelText?: string
-  closeOnClickOverlay?: boolean
-  closeByEsc?: boolean
-}
-
-type DialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'
-
-function createDialog(type: DialogType) {
-  return (options: Options) =>
+function createDialog(type: LewDialogType) {
+  return (options: LewDialogOptions) =>
     dialog(type as LewColor, options)
 }
 
-const dialogTypes: Record<DialogType, (options: Options) => void> = {
+const dialogTypes: Record<LewDialogType, (options: LewDialogOptions) => void> = {
   warning: createDialog('warning'),
   error: createDialog('error'),
   info: createDialog('info'),
@@ -32,7 +19,7 @@ const dialogTypes: Record<DialogType, (options: Options) => void> = {
   success: createDialog('success'),
 }
 
-function dialog(type: LewColor, options: Options) {
+function dialog(type: LewColor, options: LewDialogOptions) {
   const {
     title,
     content,
@@ -40,7 +27,6 @@ function dialog(type: LewColor, options: Options) {
     cancel = () => true,
     okText,
     cancelText,
-    layout,
     closeOnClickOverlay,
     closeByEsc,
   } = options
@@ -57,7 +43,6 @@ function dialog(type: LewColor, options: Options) {
           closeOnClickOverlay,
           closeByEsc,
           type,
-          layout,
           okText,
           cancelText,
           transformOrigin,
@@ -79,13 +64,9 @@ function dialog(type: LewColor, options: Options) {
   app.mount(div)
 }
 
-export const LewDialog = {
+export const LewDialog: LewDialogInstance = {
   name: 'LewDialog',
   ...dialogTypes,
 }
-
-export type LewDialogType = {
-  name: string
-} & Record<DialogType, (options: Options) => void>
 
 export * from './props'

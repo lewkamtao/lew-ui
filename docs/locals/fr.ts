@@ -425,7 +425,7 @@ export default {
         placement: 'Position d\'apparition du menu',
         checkable: 'Permet la sélection',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Callback d\'affichage du menu',
         hide: 'Callback de masquage du menu',
@@ -478,7 +478,7 @@ export default {
         options: 'Configuration du menu contextuel',
         disabled: 'Désactiver le menu contextuel',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'Formulaire',

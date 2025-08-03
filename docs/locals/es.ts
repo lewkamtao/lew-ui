@@ -419,7 +419,7 @@ export default {
         placement: 'Menu pop-up position',
         checkable: 'Permite selección',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Menu show event callback',
         hide: 'Menu hide event callback',
@@ -470,7 +470,7 @@ export default {
         options: 'Right-click menu configuration',
         disabled: 'Disable right-click menu',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'Form',

@@ -17,9 +17,6 @@ function open() {
         }, 1000)
       })
     },
-    cancel: () => {
-      // Cancel action
-    },
   })
 }
 </script>

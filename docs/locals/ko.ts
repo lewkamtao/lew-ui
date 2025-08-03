@@ -410,7 +410,7 @@ export default {
         placement: '메뉴 팝업 위치',
         checkable: '선택 가능 여부',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: '메뉴 표시 이벤트 콜백',
         hide: '메뉴 숨김 이벤트 콜백',
@@ -461,7 +461,7 @@ export default {
         options: '우클릭 메뉴 구성',
         disabled: '우클릭 메뉴 비활성화 여부',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     actionBox: {
       name: '액션 박스',

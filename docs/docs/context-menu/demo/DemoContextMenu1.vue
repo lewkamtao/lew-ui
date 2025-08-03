@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ContextMenus } from 'lew-ui'
+import type { LewContextMenusOption } from 'lew-ui/types'
 import {
   CornerUpRight,
   DownloadCloud,
@@ -11,18 +11,18 @@ import {
   Search,
 } from 'lucide-vue-next'
 
-const options1: ContextMenus = [
+const options1: LewContextMenusOption[] = [
   {
     label: 'Back',
-    value: 1,
+    value: '1',
     icon: h(Home, { size: 14 }),
-    onClick: (e: ContextMenus) => {
+    onClick: (e: LewContextMenusOption) => {
       LewMessage.info('Back', e)
     },
   },
   {
     label: 'Forward',
-    value: 2,
+    value: '2',
     icon: h(CornerUpRight, { size: 14 }),
     onClick: () => {
       LewMessage.info('Forward')
@@ -30,7 +30,7 @@ const options1: ContextMenus = [
   },
   {
     label: 'Reload',
-    value: 3,
+    value: '3',
     icon: h(RotateCw, { size: 14 }),
     onClick: () => {
       LewMessage.info('Reload')
@@ -41,7 +41,7 @@ const options1: ContextMenus = [
   },
   {
     label: 'Save As',
-    value: 4,
+    value: '4',
     icon: h(DownloadCloud, { size: 14 }),
     onClick: () => {
       LewMessage.info('Save As')
@@ -49,7 +49,7 @@ const options1: ContextMenus = [
   },
   {
     label: 'Print',
-    value: 4,
+    value: '4',
     disabled: true,
     icon: h(File, { size: 14 }),
     onClick: () => {
@@ -58,7 +58,7 @@ const options1: ContextMenus = [
   },
   {
     label: 'Cast',
-    value: 4,
+    value: '4',
     icon: h(Navigation, { size: 14 }),
     onClick: () => {
       LewMessage.info('Cast')
@@ -66,7 +66,7 @@ const options1: ContextMenus = [
   },
   {
     label: 'Search image with Google',
-    value: 4,
+    value: '4',
     icon: h(Search, { size: 14 }),
     onClick: () => {
       LewMessage.info('Search image with Google')
@@ -74,7 +74,7 @@ const options1: ContextMenus = [
   },
   {
     label: 'Open in Reader Mode',
-    value: 4,
+    value: '4',
     icon: h(Eye, { size: 14 }),
     onClick: () => {
       LewMessage.info('Open in Reader Mode')
@@ -85,18 +85,18 @@ const options1: ContextMenus = [
 const options2 = [
   {
     label: 'Translate to English',
-    value: 1,
+    value: '1',
   },
   {
     isDividerLine: true,
   },
   {
     label: 'View Source',
-    value: 2,
+    value: '2',
   },
   {
     label: 'Inspect',
-    value: 3,
+    value: '3',
   },
 ]
 </script>

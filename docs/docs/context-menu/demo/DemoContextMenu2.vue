@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { ContextMenus } from 'lew-ui/directives'
+import type { LewContextMenusOption } from 'lew-ui/directives'
 
-const options: ContextMenus = [
+const options: LewContextMenusOption[] = [
   {
     label: 'New File',
     value: 'new-file',

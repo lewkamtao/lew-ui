@@ -186,7 +186,7 @@ function getModel() {
   const componentModel = {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
-    bordered: formGlobal.value.bordered === 1 ? true : false,
+    bordered: formGlobal.value.bordered === 1,
     width: any2px(formWidth.value),
     id: `form_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     options: _options,

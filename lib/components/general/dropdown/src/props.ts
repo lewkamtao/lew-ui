@@ -1,4 +1,4 @@
-import type { ContextMenus } from 'lew-ui'
+import type { LewContextMenusOption } from 'lew-ui'
 import type { LewPopoverPlacement, LewPopoverTrigger } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
@@ -28,7 +28,7 @@ export const dropdownProps = {
     }),
   },
   options: {
-    type: Array as PropType<ContextMenus[]>,
+    type: Array as PropType<LewContextMenusOption[]>,
     default: () => [],
     validator: validators.array({
       componentName: 'LewDropdown',

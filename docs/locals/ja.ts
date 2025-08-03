@@ -408,7 +408,7 @@ export default {
         placement: 'メニューの表示位置',
         checkable: '選択可能',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'メニュー表示イベントコールバック',
         hide: 'メニュー非表示イベントコールバック',
@@ -459,7 +459,7 @@ export default {
         options: '右クリックメニューの設定',
         disabled: '右クリックメニューを無効化するかどうか',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'フォーム Form',

@@ -28,9 +28,8 @@ declare module './LewCollapseTransition.vue' {
   export default component
 }
 
-declare module 'highlight.js'
-declare const hljs
 declare module '@vueuse/core'
 declare module 'lodash-es'
 
-// Window interface is declared in individual directive files to avoid conflicts
+// 引入指令的全局类型声明
+/// <reference path="./directives/global.d.ts" />

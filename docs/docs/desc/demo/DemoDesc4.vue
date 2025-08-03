@@ -25,10 +25,10 @@ const dataSource = ref({
   userInterface: '直观的用户界面设计',
   afterSalesService: '优质的售后服务',
 })
-</script> 
+</script>
 
 <template>
   <lew-flex x="start" y="start" :gap="50">
-    <lew-desc  v-bind="options" :data-source="dataSource" />
+    <lew-desc v-bind="options" :data-source="dataSource" />
   </lew-flex>
 </template>

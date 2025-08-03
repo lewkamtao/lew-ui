@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { LewContextMenu, LewPopover } from 'lew-ui'
+import { LewPopover } from 'lew-ui'
+import LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
 import { ref } from 'vue'
 import { dropdownProps } from './props'
 
