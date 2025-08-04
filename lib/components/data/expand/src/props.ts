@@ -3,7 +3,7 @@ import validators from 'lew-ui/validators'
 
 export const expandProps = {
   collapseHeight: {
-    type: [Number, String],
+    type: String,
     validator: validators.widthHeight({
       componentName: 'LewExpand',
       propName: 'collapseHeight',

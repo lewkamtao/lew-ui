@@ -1,5 +1,6 @@
 import type { TagProps } from 'lew-ui'
-import type { LewComponentSource, LewPlacement, LewStatus, LewTrigger } from './base'
+import type { LewComponentSource, LewDirection, LewPlacement, LewSize, LewStatus, LewTrigger } from './base'
+import type { Property } from 'csstype'
 
 export type LewPopoverTrigger = LewTrigger
 export type LewPopoverPlacement = LewPlacement
@@ -53,4 +54,20 @@ export interface LewHoverMenusOption {
   isDividerLine?: boolean
   onClick?: (item: LewHoverMenusOption) => void
   [key: string]: any
+}
+
+
+export interface LewDescOptions {
+  label: string
+  field: string
+  gridArea?: string
+  direction?: LewDirection
+  customRender?: (params: { field: string, label: string, dataSource: Record<string, any> }) => any
+  size?: LewSize
+  width?: string
+  labelWidth?: string
+  tips?: string
+  type?: 'text-trim'
+  labelX?: Property.TextAlign
+  valueX?: Property.TextAlign
 }

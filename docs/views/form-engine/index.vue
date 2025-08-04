@@ -219,7 +219,10 @@ function deleteItem(item: any) {
     content: '删除后无法恢复，请谨慎操作',
     cancelText: '手滑了',
     ok: () => {
-      options.value = options.value.filter((e: any) => e.id !== item.id)
+      return new Promise((resolve) => {
+        options.value = options.value.filter((e: any) => e.id !== item.id)
+        resolve(true)
+      })
     },
   })
 }
@@ -247,7 +250,10 @@ if (!isInfo) {
     cancelText: '',
     okText: '知道了',
     ok: () => {
-      localStorage.setItem('isAlertByFormEngine', '1')
+      return new Promise((resolve) => {
+        localStorage.setItem('isAlertByFormEngine', '1')
+        resolve(true)
+      })
     },
   })
 }

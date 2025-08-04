@@ -1,26 +1,13 @@
 import type { Property } from 'csstype'
-import type { LewDirection, LewSize } from 'lew-ui'
+import type { LewDescOptions, LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
-export interface DescOptions {
-  label: string
-  field: string
-  gridArea?: string
-  direction?: LewDirection
-  customRender?: (params: { field: string, label: string, dataSource: Record<string, any> }) => any
-  size?: LewSize
-  width?: string
-  labelWidth?: string
-  tips?: string
-  type?: 'text-trim'
-  labelX?: Property.TextAlign
-  valueX?: Property.TextAlign
-}
+
 
 export const descProps = {
   options: {
-    type: Array as PropType<DescOptions[]>,
+    type: Array as PropType<LewDescOptions[]>,
     required: true,
     validator: validators.array({
       componentName: 'LewDesc',
@@ -233,11 +220,7 @@ export const descItemProps = {
   },
 }
 
-export const lewDescSizePaddingMap: Record<LewSize, number> = {
-  small: 14,
-  medium: 20,
-  large: 26,
-}
+
 
 export type DescProps = ExtractPropTypes<typeof descProps>
 export type DescItemProps = ExtractPropTypes<typeof descItemProps>

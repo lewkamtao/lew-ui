@@ -5,7 +5,7 @@ import type {
   LewNotificationResult,
 } from 'lew-ui/types'
 import { h, render } from 'vue'
-import NotificationContainer from './components/NotificationContainer.vue'
+import NotificationContainer from './NotificationContainer.vue'
 
 let containerInstance: any = null
 

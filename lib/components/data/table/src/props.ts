@@ -2,7 +2,7 @@ import type { LewSize } from 'lew-ui'
 import type { PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
-export interface TableColumn {
+export interface LewTableColumn {
   title: string
   field: string
   fixed?: 'left' | 'right'
@@ -28,7 +28,7 @@ export const tableModel = {
 
 export const tableProps = {
   columns: {
-    type: Array as PropType<TableColumn[]>,
+    type: Array as PropType<LewTableColumn[]>,
     default: () => [],
     validator: validators.array({
       componentName: 'LewTable',

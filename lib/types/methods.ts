@@ -1,8 +1,8 @@
 export interface LewDialogOptions {
   title: string
   content: string
-  ok?: () => boolean | Promise<boolean>
-  cancel?: () => boolean | Promise<boolean>
+  ok?: () => Promise<boolean>
+  cancel?: () => Promise<boolean>
   okText?: string
   cancelText?: string
   closeOnClickOverlay?: boolean
@@ -49,7 +49,7 @@ export interface LewMessageRequestErrorResult {
 export type LewMessageType = 'warning' | 'error' | 'info' | 'normal' | 'success' | 'loading'
 
 export interface LewMessageMethod {
-  (options: LewMessageOptions): void
+  (content: string | LewMessageOptions): void
 }
 
 export interface LewMessageCloseMethod {

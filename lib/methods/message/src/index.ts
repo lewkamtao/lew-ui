@@ -5,8 +5,10 @@ import type {
   LewMessageRequestErrorResult,
   LewMessageRequestOptions,
   LewMessageRequestResult,
+  LewMessageType,
 } from 'lew-ui/types'
 import { getIconInnerHTML } from 'lew-ui/utils'
+import { nextTick } from 'vue'
 import '../styles/index.scss'
 
 interface MessageInternalOptions {
@@ -14,7 +16,6 @@ interface MessageInternalOptions {
   e: LewMessageOptions
 }
 
-// 添加 LewMessage 的类型定义
 const LewMessage: LewMessageInstance = {
   name: 'LewMessage',
   timer: {} as Record<string, NodeJS.Timeout>,
@@ -96,7 +97,6 @@ function addClass(element: any, className: any) {
   element.classList.add(className)
 }
 
-// 添加方法到 LewMessage 对象
 LewMessage.message = ({ type, e }: MessageInternalOptions) => {
   if (!document.getElementById('lew-message')) {
     createMessageList()
@@ -125,7 +125,6 @@ LewMessage.request = async (
   asyncFn: () => Promise<LewMessageRequestResult>,
 ) => {
   try {
-    // 显示loading消息
     LewMessage.loading({
       id: 'lew-request-loading',
       content: loadingMessage,
@@ -134,7 +133,6 @@ LewMessage.request = async (
 
     const startTime = new Date().getTime()
 
-    // 执行异步方法
     asyncFn()
       .then(
         async ({
@@ -142,7 +140,6 @@ LewMessage.request = async (
           duration = 3000,
           type = 'success',
         }: LewMessageRequestResult) => {
-          // 最小延迟 250ms 保持动画流畅
           const endTime = new Date().getTime()
           const delay = 250
           if (endTime - startTime < delay) {
@@ -151,7 +148,6 @@ LewMessage.request = async (
             )
           }
           LewMessage.close({ id: 'lew-request-loading' })
-          // 显示success消息
           const messageMethod = LewMessage[type as keyof typeof LewMessage] as LewMessageMethod
           if (typeof messageMethod === 'function') {
             messageMethod({
@@ -166,9 +162,7 @@ LewMessage.request = async (
           content = '加载失败！',
           duration = 3000,
         }: LewMessageRequestErrorResult) => {
-          // 隐藏loading消息
           LewMessage.close({ id: 'lew-request-loading' })
-          // 显示success消息
           LewMessage.error({
             id: 'lew-request-fail',
             content,
@@ -178,30 +172,33 @@ LewMessage.request = async (
       )
   }
   catch (err) {
-    // 处理异步方法执行出错的情况
     console.error('Request error:', err)
     LewMessage.error({
       id: 'lew-request-loading',
       content: 'An error occurred',
       duration: 3000,
       onClose: () => {
-        // 可以选择性地处理错误消息关闭时的逻辑
       },
     })
   }
 }
 
-LewMessage.warning = (e: LewMessageOptions) =>
-  LewMessage.message({ type: 'warning', e })
-LewMessage.error = (e: LewMessageOptions) =>
-  LewMessage.message({ type: 'error', e })
-LewMessage.info = (e: LewMessageOptions) =>
-  LewMessage.message({ type: 'info', e })
-LewMessage.normal = (e: LewMessageOptions) =>
-  LewMessage.message({ type: 'normal', e })
-LewMessage.success = (e: LewMessageOptions) =>
-  LewMessage.message({ type: 'success', e })
-LewMessage.loading = (e: LewMessageOptions) =>
-  LewMessage.message({ type: 'loading', e })
+function createMessage(type: LewMessageType) {
+  return (e: string | LewMessageOptions) => {
+    const options = typeof e === 'string' ? { content: e } : e
+    LewMessage.message({ type, e: options })
+  }
+}
+
+const messageTypes: Record<LewMessageType, LewMessageMethod> = {
+  warning: createMessage('warning'),
+  error: createMessage('error'),
+  info: createMessage('info'),
+  normal: createMessage('normal'),
+  success: createMessage('success'),
+  loading: createMessage('loading'),
+}
+
+Object.assign(LewMessage, messageTypes)
 
 export default LewMessage

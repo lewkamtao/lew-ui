@@ -2,10 +2,9 @@ import type { Property } from 'csstype'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
-// Model definitions (使用 type 定义联合类型场景)
 export const collapseModel = {
   modelValue: {
-    type: [Array, String, Number] as PropType<string[] | string | number | null>,
+    type: [Array, String] as PropType<string[] | string>,
   },
 }
 
@@ -16,11 +15,9 @@ export const collapseItemModel = {
   },
 }
 
-// Type definitions
 export type CollapseModelValue = (string | number)[] | string | number | null
 export type CollapseItemModelValue = boolean
 
-// Props definitions
 export const collapseProps = {
   width: {
     type: String as PropType<Property.Width>,
@@ -34,7 +31,7 @@ export const collapseProps = {
 
 export const collapseItemProps = {
   collapseKey: {
-    type: [String, Number] as PropType<string | number>,
+    type: String,
     required: true,
     validator: validators.string({
       componentName: 'LewCollapseItem',
@@ -50,7 +47,7 @@ export const collapseItemProps = {
     }),
   },
   radius: {
-    type: [String, Number] as PropType<Property.BorderRadius>,
+    type: String as PropType<Property.BorderRadius>,
     default: '0px',
     validator: validators.widthHeight({
       componentName: 'LewCollapseItem',
@@ -59,6 +56,5 @@ export const collapseItemProps = {
   },
 }
 
-// Extract prop types
 export type CollapseProps = ExtractPropTypes<typeof collapseProps>
 export type CollapseItemProps = ExtractPropTypes<typeof collapseItemProps>

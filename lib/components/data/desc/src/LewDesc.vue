@@ -1,82 +1,95 @@
 <script setup lang="ts">
-import type { DescOptions } from './props'
-import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
-import { any2px, object2class } from 'lew-ui/utils'
-import { cloneDeep } from 'lodash-es'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
-import LewDescItem from './LewDescItem.vue'
-import { descProps, lewDescSizePaddingMap } from './props'
+import type { LewDescOptions, LewSize } from "lew-ui";
+import LewGetLabelWidth from "lew-ui/components/form/form/src/LewGetLabelWidth.vue";
+import { any2px, object2class } from "lew-ui/utils";
+import { cloneDeep } from "lodash-es";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
+import LewDescItem from "./LewDescItem.vue";
+import { descProps } from "./props";
 
-const props = defineProps(descProps)
+const lewDescSizePaddingMap: Record<LewSize, number> = {
+  small: 14,
+  medium: 20,
+  large: 26,
+};
+
+const props = defineProps(descProps);
 const emit = defineEmits<{
-  ready: []
-}>()
+  ready: [];
+}>();
 
 // Refs
-const descLabelRef = ref<InstanceType<typeof LewGetLabelWidth>>()
-const autoLabelWidth = ref(0)
+const descLabelRef = ref<InstanceType<typeof LewGetLabelWidth>>();
+const autoLabelWidth = ref(0);
 
 // Computed
-const componentOptions = computed(() => cloneDeep(props.options) || [])
+const componentOptions = computed(() => cloneDeep(props.options) || []);
 
 const getDescClassNames = computed(() => {
-  const { bordered } = props
-  return object2class('lew-desc', { bordered })
-})
+  const { bordered } = props;
+  return object2class("lew-desc", { bordered });
+});
 
 const getDescStyle = computed(() => {
-  const { width, gap, bordered, columns } = props
-  const columnsCount = Number(columns)
+  const { width, gap, bordered, columns } = props;
+  const columnsCount = Number(columns);
 
   return {
     width: any2px(width),
     minWidth: 320,
     gap: bordered ? 0 : any2px(gap),
     gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
-  }
-})
+  };
+});
 
-const getBind = computed(() => (item: DescOptions) => {
-  const { direction, size, labelX, valueX, bordered, labelWidth } = props
+const getBind = computed(() => (item: LewDescOptions) => {
+  const { direction, size, labelX, valueX, bordered, labelWidth } = props;
   return {
     direction,
     size,
     labelX,
     valueX,
     bordered,
-    labelWidth: any2px(labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth),
+    labelWidth: any2px(
+      labelWidth === "auto" ? autoLabelWidth.value || labelWidth : labelWidth
+    ),
     ...item,
-  }
-})
+  };
+});
 
 // Methods
 function calculateLabelWidth() {
-  autoLabelWidth.value
-    = (descLabelRef.value?.getWidth() || 0)
-      + (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
+  autoLabelWidth.value =
+    (descLabelRef.value?.getWidth() || 0) +
+    (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0);
 }
 
 // Lifecycle
 onMounted(() => {
-  calculateLabelWidth()
-  emit('ready')
-})
+  calculateLabelWidth();
+  emit("ready");
+});
 
 // Watchers
 watch(
   () => props.size,
   () => {
     nextTick(() => {
-      calculateLabelWidth()
-    })
-  },
-)
+      calculateLabelWidth();
+    });
+  }
+);
 </script>
 
 <template>
   <div class="lew-desc" :style="getDescStyle" :class="getDescClassNames">
     <LewGetLabelWidth ref="descLabelRef" :size="size" :options="componentOptions" />
-    <LewDescItem v-for="item in componentOptions" :key="item.field" :data-source="dataSource" v-bind="getBind(item)" />
+    <LewDescItem
+      v-for="item in componentOptions"
+      :key="item.field"
+      :data-source="dataSource"
+      v-bind="getBind(item)"
+    />
   </div>
 </template>
 
