@@ -18,12 +18,9 @@ const stepsValue: Ref<number | undefined> = defineModel()
       :class="{
         'lew-steps-item-active': index === (stepsValue || 1) - 1,
         'lew-steps-item-succeeded': index < (stepsValue || 1) - 1,
-        'lew-steps-item-error':
-          index === (stepsValue || 1) - 1 && status === 'error',
-        'lew-steps-item-warning':
-          index === (stepsValue || 1) - 1 && status === 'warning',
-        'lew-steps-item-done':
-          index === (stepsValue || 1) - 1 && status === 'done',
+        'lew-steps-item-error': index === (stepsValue || 1) - 1 && status === 'error',
+        'lew-steps-item-warning': index === (stepsValue || 1) - 1 && status === 'warning',
+        'lew-steps-item-done': index === (stepsValue || 1) - 1 && status === 'done',
       }"
     >
       <div class="lew-steps-item-index">
@@ -60,10 +57,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
         <span v-else class="index">{{ index + 1 }}</span>
       </div>
       <div class="lew-steps-item-info">
-        <div
-          :style="{ maxWidth: any2px(minWidth) }"
-          class="lew-steps-item-title"
-        >
+        <div :style="{ maxWidth: any2px(minWidth) }" class="lew-steps-item-title">
           <RenderComponent
             :render-fn="item.title"
             type="text-trim"
@@ -72,10 +66,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
             }"
           />
         </div>
-        <div
-          :style="{ maxWidth: any2px(minWidth) }"
-          class="lew-steps-item-description"
-        >
+        <div :style="{ maxWidth: any2px(minWidth) }" class="lew-steps-item-description">
           <RenderComponent
             :render-fn="item.description"
             type="text-trim"
@@ -122,6 +113,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       font-size: 16px;
       background-color: var(--lew-bgcolor-3);
       transition: 0.25s all;
+
       span {
         display: flex;
         align-items: center;
@@ -140,6 +132,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       margin-left: 10px;
       transition: 0.25s all;
     }
+
     .lew-steps-item-title {
       position: relative;
       font-size: 16px;
@@ -148,6 +141,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       box-sizing: border-box;
       white-space: nowrap;
     }
+
     .lew-steps-item-title::before {
       position: absolute;
       content: '';
@@ -158,6 +152,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       height: 1px;
       background-color: var(--lew-bgcolor-3);
     }
+
     .lew-steps-item-title::after {
       position: absolute;
       content: '';
@@ -169,6 +164,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       background-color: var(--lew-color-primary);
       transition: 0.5s all ease-in;
     }
+
     .lew-steps-item-description {
       font-size: 14px;
       max-width: 200px;
@@ -176,33 +172,40 @@ const stepsValue: Ref<number | undefined> = defineModel()
       color: var(--lew-text-color-5);
     }
   }
+
   .lew-steps-item-active {
     .lew-steps-item-index {
       background-color: var(--lew-color-primary);
       color: var(--lew-color-white);
     }
+
     .lew-steps-item-title {
       font-weight: bold;
     }
   }
+
   .lew-steps-item-warning {
     .lew-steps-item-index {
       background-color: var(--lew-color-warning);
       color: var(--lew-color-white);
     }
+
     .lew-steps-item-title {
       font-weight: bold;
     }
   }
+
   .lew-steps-item-error {
     .lew-steps-item-index {
       background-color: var(--lew-color-error);
       color: var(--lew-color-white);
     }
+
     .lew-steps-item-title {
       font-weight: bold;
     }
   }
+
   .lew-steps-item-succeeded,
   .lew-steps-item-done {
     .lew-steps-item-index {
@@ -212,6 +215,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
         display: none;
       }
     }
+
     .lew-steps-item-title::after {
       width: 40vw;
     }
@@ -219,9 +223,11 @@ const stepsValue: Ref<number | undefined> = defineModel()
 
   .lew-steps-item:last-child {
     flex: none;
+
     .lew-steps-item-title::after {
       width: 0px;
     }
+
     .lew-steps-item-title::before {
       display: none;
     }

@@ -1,11 +1,6 @@
-import type { TagProps } from 'lew-ui'
-import type { LewComponentSource, LewDirection, LewPlacement, LewSize, LewStatus, LewTrigger } from './base'
 import type { Property } from 'csstype'
-
-export type LewPopoverTrigger = LewTrigger
-export type LewPopoverPlacement = LewPlacement
-
-export type LewStepsStatus = LewStatus
+import type { LewTagProps } from 'lew-ui'
+import type { LewComponentSource, LewDirection, LewSize } from './base'
 
 export interface LewMenuTreeItemOption {
   label: LewComponentSource
@@ -14,7 +9,7 @@ export interface LewMenuTreeItemOption {
   active?: boolean
   disabled?: boolean
   children?: LewMenuTreeItemOption[]
-  tagProps?: TagProps
+  tagProps?: LewTagProps
 }
 
 export type LewMenuTreeItemOptions = LewMenuTreeItemOption[]
@@ -56,7 +51,6 @@ export interface LewHoverMenusOption {
   [key: string]: any
 }
 
-
 export interface LewDescOptions {
   label: string
   field: string
@@ -70,4 +64,36 @@ export interface LewDescOptions {
   type?: 'text-trim'
   labelX?: Property.TextAlign
   valueX?: Property.TextAlign
+}
+export interface LewCascaderOptions {
+  label: string
+  value: string
+  labelPaths?: string[]
+  valuePaths?: string[]
+  level: number
+  isLeaf?: boolean
+  loading?: boolean
+  disabled?: boolean
+  parentLabelPaths?: string[]
+  parentValuePaths?: string[]
+  children?: LewCascaderOptions[]
+}
+
+export interface LewCheckboxOptions {
+  label: string
+  value: string
+  disabled?: boolean
+}
+
+export interface LewMenuOptions {
+  label: string
+  value?: string
+  children?: LewMenuOptions[]
+  disabled?: boolean
+  icon?: LewComponentSource
+  tagProps?: LewTagProps
+}
+export interface LewStepsOptions {
+  title: LewComponentSource
+  description?: LewComponentSource
 }

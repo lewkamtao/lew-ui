@@ -27,7 +27,7 @@ export default {
   },
   base: {
     base: 'Basis',
-    navigator: 'Navigation',
+    navigation: 'Navigation',
     form: 'Formular',
     data: 'Datenkomponenten',
     feedback: 'Rückmeldung',

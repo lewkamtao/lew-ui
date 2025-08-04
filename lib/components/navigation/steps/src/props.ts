@@ -1,57 +1,26 @@
 import type { Property } from 'csstype'
-import type { LewStepsStatus } from 'lew-ui/types'
+import type { LewStatus, LewStepsOptions } from 'lew-ui/types'
 import type { ExtractPropTypes } from 'vue'
 import validators from 'lew-ui/validators'
 
-export interface StepsOptions {
-  title: string
-  description: string
-}
-
 export const stepsModel = {
   modelValue: {
-    type: [String, Number],
-    default: '',
-    description: '当前激活步骤的索引值',
-    validator: (value: string | number) => {
-      if (typeof value !== 'string' && typeof value !== 'number') {
-        console.warn('[LewSteps] modelValue 必须是字符串或数字')
-        return false
-      }
-      return true
-    },
+    type: Number,
   },
 }
 
 export const stepsProps = {
   options: {
-    type: Array as PropType<StepsOptions[]>,
+    type: Array as PropType<LewStepsOptions[]>,
     default: () => [],
-    description: '步骤配置项数组',
-    validator: (value: StepsOptions[]) => {
-      if (!Array.isArray(value)) {
-        console.warn('[LewSteps] options 必须是数组')
-        return false
-      }
-      if (
-        value.some(
-          item =>
-            typeof item.title !== 'string'
-            || typeof item.description !== 'string',
-        )
-      ) {
-        console.warn(
-          '[LewSteps] options 数组中的每个项目必须包含 title 和 description 字符串属性',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewSteps',
+      propName: 'options',
+    }),
   },
   status: {
-    type: String as PropType<LewStepsStatus>,
+    type: String as PropType<LewStatus>,
     default: 'pending',
-    description: '步骤条的当前状态',
     validator: validators.enum({
       componentName: 'LewSteps',
       propName: 'status',

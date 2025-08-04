@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewPopoverPlacement } from 'lew-ui/types'
+import type { LewPlacement } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
@@ -37,7 +37,7 @@ export const textTrimProps = {
   },
 
   placement: {
-    type: String as PropType<LewPopoverPlacement>,
+    type: String as PropType<LewPlacement>,
     default: 'top',
     validator: validators.popoverPlacement({
       componentName: 'LewTextTrim',

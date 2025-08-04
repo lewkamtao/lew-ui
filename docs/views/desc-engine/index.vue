@@ -3,8 +3,8 @@ import type { LewSize } from 'lew-ui/types'
 import { useDark } from '@vueuse/core'
 import dayjs from 'dayjs'
 import { downloadObjectAsFile } from 'docs/lib/utils'
-import { lewDescSizePaddingMap } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { lewDescSizePaddingMap } from 'lew-ui/components/data/desc/src/props'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
 import { any2px, flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
 import { cloneDeep, debounce, has } from 'lodash-es'
@@ -242,7 +242,10 @@ function deleteItem(item: any) {
     content: '删除后无法恢复，请谨慎操作',
     cancelText: '手滑了',
     ok: () => {
-      options.value = options.value.filter((e: any) => e.id !== item.id)
+      return new Promise((resolve) => {
+        options.value = options.value.filter((e: any) => e.id !== item.id)
+        resolve(true)
+      })
     },
   })
 }
@@ -306,7 +309,11 @@ onMounted(() => {
 
 <template>
   <div class="playground">
-    <LewGetLabelWidth ref="formLabelRef" :size="formGlobal.size as LewSize" :options="options" />
+    <LewGetLabelWidth
+      ref="formLabelRef"
+      :size="formGlobal.size as LewSize"
+      :options="options"
+    />
     <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activeId = '')">
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-button class="add-btn" @click="addField">
@@ -315,33 +322,58 @@ onMounted(() => {
         <lew-button class="import-btn" type="light" @click="importField">
           导入字段
         </lew-button>
-        <lew-tabs v-model="formGlobal.columns" width="420px" item-width="80px" :options="colOptions" />
-        <lew-button class="dark-btn" type="light" color="gray" size="small" round single-icon @click="isDark = !isDark">
+        <lew-tabs
+          v-model="formGlobal.columns"
+          width="420px"
+          item-width="80px"
+          :options="colOptions"
+        />
+        <lew-button
+          class="dark-btn"
+          type="light"
+          color="gray"
+          size="small"
+          round
+          single-icon
+          @click="isDark = !isDark"
+        >
           <Sun v-if="!isDark" :size="16" />
           <Moon v-else :size="16" />
         </lew-button>
       </lew-flex>
       <div
-        ref="formMainRef" class="form-main" :style="{
+        ref="formMainRef"
+        class="form-main"
+        :style="{
           'max-width': `${formWidth + 40}px`,
         }"
       >
         <draggable
-          v-model="options" group="form" class="lew-form-wrapper-draggable lew-scrollbar" :class="{
+          v-model="options"
+          group="form"
+          class="lew-form-wrapper-draggable lew-scrollbar"
+          :class="{
             'lew-form-wrapper-draggable-empty': options.length === 0,
-          }" :style="getDynamicGridStyle" item-key="id" v-bind="{
+          }"
+          :style="getDynamicGridStyle"
+          item-key="id"
+          v-bind="{
             animation: 200,
             chosenClass: 'chosen',
           }"
         >
           <template #item="{ element }">
             <div
-              :ref="(el: any) => (itemRefMap[element.id] = el)" class="lew-form-wrapper-draggable-item" :class="{
+              :ref="(el: any) => (itemRefMap[element.id] = el)"
+              class="lew-form-wrapper-draggable-item"
+              :class="{
                 'lew-form-wrapper-draggable-item-active': activeId === element.id,
-              }" :style="{
+              }"
+              :style="{
                 'grid-column-end': `span ${element.spanMap?.[formGlobal.columns] || 1}`,
                 'padding': formGlobal.bordered ? 0 : `15px 13px 15px 13px`,
-              }" @click.stop="
+              }"
+              @click.stop="
                 activeId === element.id || element.as === ''
                   ? (activeId = '')
                   : (activeId = element.id),
@@ -352,35 +384,58 @@ onMounted(() => {
                 <lew-flex x="end" gap="5px" y="center">
                   <CommonIcon
                     v-if="(element.spanMap?.[formGlobal.columns] || 1) > 1"
-                    class="handle-icon handle-resize" :size="14" type="minimize-2" @click="minimize(element)"
+                    class="handle-icon handle-resize"
+                    :size="14"
+                    type="minimize-2"
+                    @click="minimize(element)"
                   />
                   <CommonIcon
                     v-if="
                       (element.spanMap?.[formGlobal.columns] || 1) < formGlobal.columns
-                    " class="handle-icon handle-resize" :size="14" type="maximize-2" @click="maximize(element)"
+                    "
+                    class="handle-icon handle-resize"
+                    :size="14"
+                    type="maximize-2"
+                    @click="maximize(element)"
                   />
-                  <CommonIcon class="handle-icon" :size="14" type="trash" @click="deleteItem(element)" />
+                  <CommonIcon
+                    class="handle-icon"
+                    :size="14"
+                    type="trash"
+                    @click="deleteItem(element)"
+                  />
                 </lew-flex>
               </lew-flex>
               <CommonIcon
-                v-if="!element.field" v-tooltip="{
+                v-if="!element.field"
+                v-tooltip="{
                   content: '未绑定字段',
                   trigger: 'mouseenter',
-                }" class="tips-icon" :size="14" type="error"
+                }"
+                class="tips-icon"
+                :size="14"
+                type="error"
               />
               <lew-desc-item
                 v-bind="{
                   ...formGlobal,
                   labelWidth: autoLabelWidth,
                   ...element,
-                }" readonly
+                }"
+                readonly
               />
             </div>
           </template>
         </draggable>
       </div>
     </div>
-    <lew-flex direction="y" gap="0" x="start" y="start" class="lew-form-options lew-scrollbar">
+    <lew-flex
+      direction="y"
+      gap="0"
+      x="start"
+      y="start"
+      class="lew-form-options lew-scrollbar"
+    >
       <lew-flex x="end" class="lew-form-options-btns">
         <lew-button @click="preview">
           <Monitor :size="16" />
@@ -395,7 +450,10 @@ onMounted(() => {
       </lew-flex>
       <lew-flex class="lew-form-setting-tabs">
         <lew-tabs
-          v-model="settingTab" width="100%" item-width="auto" :options="[
+          v-model="settingTab"
+          width="100%"
+          item-width="auto"
+          :options="[
             { label: '属性', value: 'options' },
             { label: '模型', value: 'model' },
           ]"
@@ -417,7 +475,8 @@ onMounted(() => {
             </div>
             <SetForm
               v-model="options[options.findIndex((e: any) => e.id === activeId)]
-              " :options="baseSchema"
+              "
+              :options="baseSchema"
             />
           </lew-flex>
         </div>

@@ -26,7 +26,7 @@ export default {
   },
   base: {
     base: '基础',
-    navigator: '导航',
+    navigation: '导航',
     form: '表单',
     data: '数据组件',
     feedback: '反馈',

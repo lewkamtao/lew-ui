@@ -1,63 +1,66 @@
 <script setup lang="ts">
-import type { Ref } from "vue";
-import type { CollapseModelValue } from "./props";
-import { LewFlex, LewTextTrim } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px } from "lew-ui/utils";
-import { inject, ref, watch } from "vue";
-import LewCollapseTransition from "./LewCollapseTransition.vue";
-import { collapseItemProps } from "./props";
+import type { Ref } from 'vue'
+import type { CollapseModelValue } from './props'
+import { LewFlex, LewTextTrim } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px } from 'lew-ui/utils'
+import { inject, ref, watch } from 'vue'
+import LewCollapseTransition from './LewCollapseTransition.vue'
+import { collapseItemProps } from './props'
 
-const props = defineProps(collapseItemProps);
+const props = defineProps(collapseItemProps)
 const emit = defineEmits<{
-  change: [expanded: boolean, key: string | number];
-}>();
+  change: [expanded: boolean, key: string | number]
+}>()
 
-const modelValue = defineModel<boolean>({ default: false });
+const modelValue = defineModel<boolean>({ default: false })
 
 // Inject
-const expandKeys = inject<Ref<CollapseModelValue>>("expandKeys", ref(null));
+const expandKeys = inject<Ref<CollapseModelValue>>('expandKeys', ref(null))
 
 // Methods
 function setModelValue() {
-  if (!expandKeys) return;
+  if (!expandKeys)
+    return
 
-  const currentValue = expandKeys.value;
+  const currentValue = expandKeys.value
   if (currentValue === null || currentValue === undefined) {
-    modelValue.value = false;
-    return;
+    modelValue.value = false
+    return
   }
 
   modelValue.value = Array.isArray(currentValue)
     ? currentValue.includes(props.collapseKey!)
-    : props.collapseKey === currentValue;
+    : props.collapseKey === currentValue
 }
 
 function change() {
-  if (!expandKeys) return;
+  if (!expandKeys)
+    return
 
-  modelValue.value = !modelValue.value;
+  modelValue.value = !modelValue.value
 
-  const currentValue = expandKeys.value;
+  const currentValue = expandKeys.value
   if (Array.isArray(currentValue)) {
     const newArray = modelValue.value
       ? [...currentValue, props.collapseKey]
-      : currentValue.filter((item: string | number) => item !== props.collapseKey);
-    expandKeys.value = newArray as CollapseModelValue;
-  } else {
+      : currentValue.filter((item: string | number) => item !== props.collapseKey)
+    expandKeys.value = newArray as CollapseModelValue
+  }
+  else {
     expandKeys.value = (modelValue.value
       ? props.collapseKey
-      : null) as CollapseModelValue;
+      : null) as CollapseModelValue
   }
 
-  emit("change", modelValue.value, props.collapseKey!);
+  emit('change', modelValue.value, props.collapseKey!)
 }
 
 // Watchers
-watch(() => expandKeys?.value, setModelValue, { deep: true });
+watch(() => expandKeys?.value, setModelValue, { deep: true })
 
 // Initialize
-setModelValue();
+setModelValue()
 </script>
 
 <template>

@@ -1,9 +1,10 @@
 import type { LewSize } from 'lew-ui/types'
+import type { PropType } from 'vue'
+import validators from 'lew-ui/validators'
 
 export const colorPickerModel = {
   modelValue: {
     type: String,
-    description: '颜色值',
   },
 }
 
@@ -12,26 +13,39 @@ export const colorPickerProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '颜色选择器尺寸',
+    validator: validators.size({
+      componentName: 'LewColorPicker',
+      propName: 'size',
+    }),
   },
   width: {
     type: [Number, String],
     default: 'auto',
-    description: '颜色选择器宽度',
+    validator: validators.widthHeight({
+      componentName: 'LewColorPicker',
+      propName: 'width',
+    }),
   },
   placeholder: {
     type: String,
-    default: '请选择',
-    description: '颜色选择器占位文本',
+    defaultLocale: true,
+    validator: validators.string({
+      componentName: 'LewColorPicker',
+      propName: 'placeholder',
+    }),
   },
   disabled: {
     type: Boolean,
-    default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewColorPicker',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
-    default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewColorPicker',
+      propName: 'readonly',
+    }),
   },
 }

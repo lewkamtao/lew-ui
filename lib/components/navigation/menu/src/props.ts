@@ -1,15 +1,6 @@
-import type { TagProps } from 'lew-ui'
+import type { LewMenuOptions } from 'lew-ui'
 import type { ExtractPropTypes } from 'vue'
 import validators from 'lew-ui/validators'
-
-export interface MenuOptions {
-  label: string // 标题
-  value?: string // 值
-  children?: MenuOptions[] // 子菜单
-  disabled?: boolean // 是否禁用
-  icon?: () => any
-  tagProps?: TagProps
-}
 
 export const menuModel = {
   modelValue: {
@@ -19,7 +10,7 @@ export const menuModel = {
 
 export const menuProps = {
   options: {
-    type: Array as PropType<MenuOptions[]>,
+    type: Array as PropType<LewMenuOptions[]>,
     default: [],
     typeGhost: 'MenuOptions[]',
     validator: validators.array({

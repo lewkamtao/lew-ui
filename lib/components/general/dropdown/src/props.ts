@@ -1,5 +1,5 @@
 import type { LewContextMenusOption } from 'lew-ui'
-import type { LewPopoverPlacement, LewPopoverTrigger } from 'lew-ui/types'
+import type { LewPlacement, LewTrigger } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
@@ -12,7 +12,7 @@ export const dropdownModel = {
 
 export const dropdownProps = {
   trigger: {
-    type: String as PropType<LewPopoverTrigger>,
+    type: String as PropType<LewTrigger>,
     default: 'hover',
     validator: validators.string({
       componentName: 'LewDropdown',
@@ -20,7 +20,7 @@ export const dropdownProps = {
     }),
   },
   placement: {
-    type: String as PropType<LewPopoverPlacement>,
+    type: String as PropType<LewPlacement>,
     default: 'bottom',
     validator: validators.string({
       componentName: 'LewDropdown',

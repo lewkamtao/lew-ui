@@ -1,11 +1,11 @@
 import type {
   LewColor,
   LewDirection,
-  LewPopoverPlacement,
-  LewPopoverTrigger,
+  LewPlacement,
   LewSize,
   LewStatusColor,
   LewThemeColor,
+  LewTrigger,
   LewXAlignment,
   LewYAlignment,
 } from '../types'
@@ -67,9 +67,9 @@ const validSizes: LewSize[] = ['small', 'medium', 'large']
 
 const validDirection: LewDirection[] = ['x', 'y']
 
-const validPopoverTrigger: LewPopoverTrigger[] = ['hover', 'click']
+const validPopoverTrigger: LewTrigger[] = ['hover', 'click']
 
-const validPopoverPlacement: LewPopoverPlacement[] = [
+const validPopoverPlacement: LewPlacement[] = [
   'top',
   'top-start',
   'top-end',
@@ -570,13 +570,13 @@ function createDirectionValidator(options: {
  * @param options.propName - 属性名称
  * @returns 弹出框触发方式验证函数
  */
-function createPopoverTriggerValidator(options: {
+function createTriggerValidator(options: {
   componentName: string
   propName: string
 }) {
   const { componentName, propName } = options
 
-  return (value: LewPopoverTrigger | undefined): boolean => {
+  return (value: LewTrigger | undefined): boolean => {
     if (value === undefined) {
       return true
     }
@@ -603,7 +603,7 @@ function createPopoverPlacementValidator(options: {
 }) {
   const { componentName, propName } = options
 
-  return (value: LewPopoverPlacement | undefined): boolean => {
+  return (value: LewPlacement | undefined): boolean => {
     if (value === undefined) {
       return true
     }
@@ -1232,8 +1232,8 @@ export default {
   direction: ({ componentName, propName }: { componentName: string, propName: string }) =>
     createDirectionValidator({ componentName, propName }),
 
-  popoverTrigger: ({ componentName, propName }: { componentName: string, propName: string }) =>
-    createPopoverTriggerValidator({ componentName, propName }),
+  trigger: ({ componentName, propName }: { componentName: string, propName: string }) =>
+    createTriggerValidator({ componentName, propName }),
 
   popoverPlacement: ({ componentName, propName }: { componentName: string, propName: string }) =>
     createPopoverPlacementValidator({ componentName, propName }),

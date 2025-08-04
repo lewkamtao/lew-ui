@@ -26,7 +26,7 @@ export default {
   },
   base: {
     base: 'Base',
-    navigator: 'Navigator',
+    navigation: 'Navigator',
     form: 'Form',
     data: 'Data Components',
     feedback: 'Feedback',

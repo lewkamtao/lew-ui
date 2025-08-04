@@ -70,4 +70,4 @@ export const tagProps = {
   },
 }
 
-export type TagProps = ExtractPropTypes<typeof tagProps>
+export type LewTagProps = ExtractPropTypes<typeof tagProps>

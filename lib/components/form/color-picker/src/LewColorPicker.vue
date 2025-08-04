@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { locale } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
 import { colorPickerProps } from './props'
 
@@ -105,11 +106,7 @@ function change() {
 
 <template>
   <div class="lew-color-picker-view" :style="getPickerViewStyle">
-    <div
-      class="lew-color-picker"
-      :style="getPickerStyle"
-      :class="getPickerClassName"
-    >
+    <div class="lew-color-picker" :style="getPickerStyle" :class="getPickerClassName">
       <input
         v-model="modelValue"
         class="lew-color-picker-input"
@@ -123,7 +120,7 @@ function change() {
         :style="getPickerValueInputStyle"
         class="lew-color-value-input"
         type="text"
-        :placeholder="placeholder"
+        :placeholder="placeholder ? placeholder : locale.t('colorPicker.placeholder')"
         @focus="focus"
         @blur="blur"
       >

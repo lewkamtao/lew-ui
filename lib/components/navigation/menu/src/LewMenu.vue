@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { MenuOptions } from './props'
+import type { LewMenuOptions } from 'lew-ui'
 import { LewTag } from 'lew-ui'
 import { RenderComponent } from 'lew-ui/render'
 import { menuProps } from './props'
@@ -7,12 +7,12 @@ import { menuProps } from './props'
 defineProps(menuProps)
 
 const emit = defineEmits<{
-  change: [item: MenuOptions]
+  change: [item: LewMenuOptions]
 }>()
 
 const modelValue = defineModel()
 
-function select(item: MenuOptions) {
+function select(item: LewMenuOptions) {
   modelValue.value = item.value
   emit('change', item)
 }
@@ -42,16 +42,12 @@ function select(item: MenuOptions) {
         <div
           class="lew-menu-item lew-menu-item-child"
           :class="{
-            'lew-menu-item-last':
-              item.children && index === item.children.length - 1,
+            'lew-menu-item-last': item.children && index === item.children.length - 1,
             'lew-menu-item-active': cItem.value === modelValue,
           }"
           @click="select(cItem)"
         >
-          <RenderComponent
-            :render-fn="cItem.icon"
-            class="lew-menu-icon"
-          />
+          <RenderComponent :render-fn="cItem.icon" class="lew-menu-icon" />
           <RenderComponent
             :render-fn="cItem.label"
             type="text-trim"

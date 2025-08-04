@@ -1,20 +1,11 @@
-import type { LewDirection, LewSize } from 'lew-ui'
+import type { LewCheckboxOptions, LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
-
-export type CheckboxGroupDirectionType = 'x' | 'y'
-export type CheckboxValue = string | number
-export interface CheckboxOptions {
-  label: string
-  value: CheckboxValue
-  disabled?: boolean
-}
 
 export const checkboxModel = {
   modelValue: {
     type: Boolean,
     default: false,
-    description: '复选框的选中状态',
   },
 }
 
@@ -23,14 +14,12 @@ export const checkboxGroupModel = {
     type: Array,
     default: () => [],
     required: true,
-    description: '复选框组的选中值数组',
   },
 }
 
 export const checkboxProps = {
   label: {
     type: String,
-    default: '',
     validator: validators.string({
       componentName: 'LewCheckbox',
       propName: 'label',
@@ -38,23 +27,28 @@ export const checkboxProps = {
   },
   disabled: {
     type: Boolean,
-    default: false,
-    description: '是否禁用复选框',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
-    default: false,
-    description: '是否将复选框设置为只读',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'readonly',
+    }),
   },
   checked: {
     type: Boolean,
-    default: false,
-    description: '是否选中复选框',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'checked',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '复选框的尺寸',
     validator: validators.size({
       componentName: 'LewCheckbox',
       propName: 'size',
@@ -62,32 +56,39 @@ export const checkboxProps = {
   },
   block: {
     type: Boolean,
-    default: false,
-    description: '是否将复选框显示为块级元素',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'block',
+    }),
   },
   round: {
     type: Boolean,
-    default: false,
-    description: '是否将复选框显示为圆形',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'round',
+    }),
   },
   iconable: {
     type: Boolean,
-    default: true,
-    description: '是否显示复选框的图标',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'iconable',
+    }),
   },
   certain: {
     type: Boolean,
-    default: false,
-    description: '复选框是否处于确定状态',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'certain',
+    }),
   },
 }
 
 export const checkboxGroupProps = {
   options: {
-    type: Array as PropType<CheckboxOptions[]>,
+    type: Array as PropType<LewCheckboxOptions[]>,
     default: () => [],
     required: true,
-    description: '复选框组的选项配置数组',
     validator: validators.array({
       componentName: 'LewCheckboxGroup',
       propName: 'options',
@@ -95,18 +96,21 @@ export const checkboxGroupProps = {
   },
   disabled: {
     type: Boolean,
-    default: false,
-    description: '是否禁用整个复选框组',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
-    default: false,
-    description: '是否将复选框组设置为只读',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'readonly',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '复选框组中复选框的尺寸',
     validator: validators.size({
       componentName: 'LewCheckboxGroup',
       propName: 'size',
@@ -115,7 +119,6 @@ export const checkboxGroupProps = {
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
-    description: '复选框组的排列方向',
     validator: validators.direction({
       componentName: 'LewCheckboxGroup',
       propName: 'direction',
@@ -123,18 +126,24 @@ export const checkboxGroupProps = {
   },
   block: {
     type: Boolean,
-    default: false,
-    description: '是否将复选框组显示为块级元素',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'round',
+    }),
   },
   round: {
     type: Boolean,
-    default: false,
-    description: '是否将复选框组中的复选框显示为圆形',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'round',
+    }),
   },
   iconable: {
     type: Boolean,
-    default: true,
-    description: '是否显示复选框的图标（仅在块状模式下生效）',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'iconable',
+    }),
   },
 }
 

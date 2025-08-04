@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { MenuOptions } from 'lew-ui'
+import type { LewMenuOptions } from 'lew-ui'
+import docsLocale from 'docs/locals'
 import { Menu } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 import LewRightNav from '../layout/LewRightNav.vue'
@@ -35,287 +36,288 @@ watch(route, () => {
   isShowSider.value = false
 })
 
-const options: MenuOptions[] = [
-  {
-    label: '基础',
-    value: '基础',
-    children: [
-      {
-        label: 'Image',
-        value: '/Image',
-      },
-      {
-        label: 'Avatar',
-        value: '/Avatar',
-      },
-      {
-        label: 'Button',
-        value: '/Button',
-      },
-
-      {
-        label: 'Tag',
-        value: '/Tag',
-      },
-      {
-        label: 'Badge',
-        value: '/Badge',
-      },
-      {
-        label: 'Title',
-        value: '/Title',
-      },
-      {
-        label: 'TextTrim',
-        value: '/TextTrim',
-      },
-      {
-        label: 'Flex',
-        value: '/Flex',
-      },
-      {
-        label: 'Mark',
-        value: '/Mark',
-      },
-    ],
-  },
-
-  {
-    label: '导航',
-    value: '导航',
-    children: [
-      {
-        label: 'BackTop',
-        value: '/BackTop',
-      },
-      {
-        label: 'Steps',
-        value: '/Steps',
-      },
-      {
-        label: 'Menu',
-        value: '/Menu',
-      },
-      {
-        label: 'MenuTree',
-        value: '/MenuTree',
-      },
-      {
-        label: 'Dropdown',
-        value: '/Dropdown',
-      },
-      {
-        label: 'Breadcrumb',
-        value: '/Breadcrumb',
-      },
-      {
-        label: 'ContextMenu',
-        value: '/ContextMenu',
-        tagProps: {
-          text: 'New',
-          type: 'ghost',
-          round: true,
-          color: 'green',
+const options = computed(() => {
+  return [
+    {
+      label: docsLocale.t('base.base'),
+      value: docsLocale.t('base.base'),
+      children: [
+        {
+          label: 'Image',
+          value: '/Image',
         },
-      },
-      {
-        label: 'ActionBox',
-        value: '/ActionBox',
-        tagProps: {
-          text: 'New',
-          color: 'green',
-          type: 'ghost',
-          round: true,
+        {
+          label: 'Avatar',
+          value: '/Avatar',
         },
-      },
-    ],
-  },
-  {
-    label: '表单',
-    value: '表单',
-    children: [
-      {
-        label: 'Form',
-        value: '/Form',
-      },
-      {
-        label: 'Input',
-        value: '/Input',
-      },
-      {
-        label: 'InputNumber',
-        value: '/InputNumber',
-      },
-      {
-        label: 'Textarea',
-        value: '/Textarea',
-      },
-      {
-        label: 'InputTag',
-        value: '/InputTag',
-      },
-      {
-        label: 'Checkbox',
-        value: '/Checkbox',
-      },
-      {
-        label: 'Radio',
-        value: '/Radio',
-      },
-      {
-        label: 'Tabs',
-        value: '/Tabs',
-      },
-      {
-        label: 'Select',
-        value: '/Select',
-      },
-      {
-        label: 'SelectMultiple',
-        value: '/SelectMultiple',
-      },
-      {
-        label: 'DatePicker',
-        value: '/DatePicker',
-      },
-      {
-        label: 'DateRangePicker',
-        value: '/DateRangePicker',
-      },
-      {
-        label: 'Cascader',
-        value: '/Cascader',
-      },
-      {
-        label: 'TreeSelect',
-        value: '/TreeSelect',
-      },
-      {
-        label: 'InputTable',
-        value: '/InputTable',
-        tagProps: {
-          text: 'New',
-          type: 'ghost',
-          round: true,
-          color: 'green',
+        {
+          label: 'Button',
+          value: '/Button',
         },
-      },
-      {
-        label: 'Switch',
-        value: '/Switch',
-      },
 
-      {
-        label: 'Slider',
-        value: '/Slider',
-      },
-      {
-        label: 'SliderRange',
-        value: '/SliderRange',
-      },
-      {
-        label: 'Rate',
-        value: '/Rate',
-        tagProps: {
-          text: 'New',
-          type: 'ghost',
-          round: true,
-          color: 'green',
+        {
+          label: 'Tag',
+          value: '/Tag',
         },
-      },
-      {
-        label: 'ColorPicker',
-        value: '/ColorPicker',
-      },
-      {
-        label: 'Upload',
-        value: '/Upload',
-      },
-    ],
-  },
-  {
-    label: '数据展示',
-    value: '数据展示',
-    children: [
-      {
-        label: 'Table',
-        value: '/Table',
-      },
-      {
-        label: 'Pagination',
-        value: '/Pagination',
-      },
-      {
-        label: 'Tree',
-        value: '/Tree',
-      },
+        {
+          label: 'Badge',
+          value: '/Badge',
+        },
+        {
+          label: 'Title',
+          value: '/Title',
+        },
+        {
+          label: 'TextTrim',
+          value: '/TextTrim',
+        },
+        {
+          label: 'Flex',
+          value: '/Flex',
+        },
+        {
+          label: 'Mark',
+          value: '/Mark',
+        },
+      ],
+    },
+    {
+      label: docsLocale.t('base.navigation'),
+      value: docsLocale.t('base.navigation'),
+      children: [
+        {
+          label: 'BackTop',
+          value: '/BackTop',
+        },
+        {
+          label: 'Steps',
+          value: '/Steps',
+        },
+        {
+          label: 'Menu',
+          value: '/Menu',
+        },
+        {
+          label: 'MenuTree',
+          value: '/MenuTree',
+        },
+        {
+          label: 'Dropdown',
+          value: '/Dropdown',
+        },
+        {
+          label: 'Breadcrumb',
+          value: '/Breadcrumb',
+        },
+        {
+          label: 'ContextMenu',
+          value: '/ContextMenu',
+          tagProps: {
+            text: 'New',
+            type: 'ghost',
+            round: true,
+            color: 'green',
+          },
+        },
+        {
+          label: 'ActionBox',
+          value: '/ActionBox',
+          tagProps: {
+            text: 'New',
+            color: 'green',
+            type: 'ghost',
+            round: true,
+          },
+        },
+      ],
+    },
+    {
+      label: docsLocale.t('base.form'),
+      value: docsLocale.t('base.form'),
+      children: [
+        {
+          label: 'Form',
+          value: '/Form',
+        },
+        {
+          label: 'Input',
+          value: '/Input',
+        },
+        {
+          label: 'InputNumber',
+          value: '/InputNumber',
+        },
+        {
+          label: 'Textarea',
+          value: '/Textarea',
+        },
+        {
+          label: 'InputTag',
+          value: '/InputTag',
+        },
+        {
+          label: 'Checkbox',
+          value: '/Checkbox',
+        },
+        {
+          label: 'Radio',
+          value: '/Radio',
+        },
+        {
+          label: 'Tabs',
+          value: '/Tabs',
+        },
+        {
+          label: 'Select',
+          value: '/Select',
+        },
+        {
+          label: 'SelectMultiple',
+          value: '/SelectMultiple',
+        },
+        {
+          label: 'DatePicker',
+          value: '/DatePicker',
+        },
+        {
+          label: 'DateRangePicker',
+          value: '/DateRangePicker',
+        },
+        {
+          label: 'Cascader',
+          value: '/Cascader',
+        },
+        {
+          label: 'TreeSelect',
+          value: '/TreeSelect',
+        },
+        {
+          label: 'InputTable',
+          value: '/InputTable',
+          tagProps: {
+            text: 'New',
+            type: 'ghost',
+            round: true,
+            color: 'green',
+          },
+        },
+        {
+          label: 'Switch',
+          value: '/Switch',
+        },
 
-      {
-        label: 'Collapse',
-        value: '/Collapse',
-      },
-      {
-        label: 'Desc',
-        value: '/Desc',
-      },
-    ],
-  },
-  {
-    label: '反馈',
-    value: '反馈',
-    children: [
-      {
-        label: 'Alert',
-        value: '/Alert',
-      },
-      {
-        label: 'Message',
-        value: '/Message',
-      },
-      {
-        label: 'Notification',
-        value: '/Notification',
-      },
-      {
-        label: 'Drawer',
-        value: '/Drawer',
-      },
-      {
-        label: 'Dialog',
-        value: '/Dialog',
-      },
-      {
-        label: 'Modal',
-        value: '/Modal',
-      },
-      {
-        label: 'Popok',
-        value: '/Popok',
-      },
-      {
-        label: 'Popover',
-        value: '/Popover',
-      },
+        {
+          label: 'Slider',
+          value: '/Slider',
+        },
+        {
+          label: 'SliderRange',
+          value: '/SliderRange',
+        },
+        {
+          label: 'Rate',
+          value: '/Rate',
+          tagProps: {
+            text: 'New',
+            type: 'ghost',
+            round: true,
+            color: 'green',
+          },
+        },
+        {
+          label: 'ColorPicker',
+          value: '/ColorPicker',
+        },
+        {
+          label: 'Upload',
+          value: '/Upload',
+        },
+      ],
+    },
+    {
+      label: docsLocale.t('base.data'),
+      value: docsLocale.t('base.data'),
+      children: [
+        {
+          label: 'Table',
+          value: '/Table',
+        },
+        {
+          label: 'Pagination',
+          value: '/Pagination',
+        },
+        {
+          label: 'Tree',
+          value: '/Tree',
+        },
 
-      {
-        label: 'Tooltip',
-        value: '/Tooltip',
-      },
-      {
-        label: 'Loading',
-        value: '/Loading',
-      },
-      {
-        label: 'Empty',
-        value: '/Empty',
-      },
-    ],
-  },
-].map((item: any) => {
-  return {
-    ...item,
-    label: `${item.label}（${(item?.children || []).length}）`,
-  }
+        {
+          label: 'Collapse',
+          value: '/Collapse',
+        },
+        {
+          label: 'Desc',
+          value: '/Desc',
+        },
+      ],
+    },
+    {
+      label: docsLocale.t('base.feedback'),
+      value: docsLocale.t('base.feedback'),
+      children: [
+        {
+          label: 'Alert',
+          value: '/Alert',
+        },
+        {
+          label: 'Message',
+          value: '/Message',
+        },
+        {
+          label: 'Notification',
+          value: '/Notification',
+        },
+        {
+          label: 'Drawer',
+          value: '/Drawer',
+        },
+        {
+          label: 'Dialog',
+          value: '/Dialog',
+        },
+        {
+          label: 'Modal',
+          value: '/Modal',
+        },
+        {
+          label: 'Popok',
+          value: '/Popok',
+        },
+        {
+          label: 'Popover',
+          value: '/Popover',
+        },
+
+        {
+          label: 'Tooltip',
+          value: '/Tooltip',
+        },
+        {
+          label: 'Loading',
+          value: '/Loading',
+        },
+        {
+          label: 'Empty',
+          value: '/Empty',
+        },
+      ],
+    },
+  ].map((item: any) => {
+    return {
+      ...item,
+      label: `${item.label}（${(item?.children || []).length}）`,
+    }
+  })
 })
 </script>
 

@@ -89,6 +89,9 @@ export default {
     cancelText: '取消',
     okText: '确定',
   },
+  colorPicker: {
+    placeholder: '请输入',
+  },
   upload: {
     dropActive: '松开即可开始上传',
     click: '点击上传、',

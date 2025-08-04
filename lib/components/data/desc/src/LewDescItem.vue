@@ -69,9 +69,10 @@ const getLabelBoxStyle = computed(() => {
 const getDescItemMainStyle = computed(() => {
   const { direction, labelWidth, valueX } = props
   return {
-    width: direction === 'x'
-      ? `calc(${descItemRef.value?.offsetWidth || 0}px - ${any2px(labelWidth)} - 10px)`
-      : '100%',
+    width:
+      direction === 'x'
+        ? `calc(${descItemRef.value?.offsetWidth || 0}px - ${any2px(labelWidth)} - 10px)`
+        : '100%',
     justifyContent: valueX === 'center' ? valueX : `flex-${valueX}`,
     padding: getPadding.value,
   }
@@ -93,7 +94,12 @@ function showTextAndEmpty(): string {
 </script>
 
 <template>
-  <div ref="descItemRef" class="lew-desc-item" :class="getDescItemClassNames" :style="getDescItemStyle">
+  <div
+    ref="descItemRef"
+    class="lew-desc-item"
+    :class="getDescItemClassNames"
+    :style="getDescItemStyle"
+  >
     <div :style="{ width: getLabelBoxWidth }" class="lew-label-box-wrapper">
       <div class="lew-label-box" :style="getLabelBoxStyle">
         {{ label }}
@@ -111,11 +117,7 @@ function showTextAndEmpty(): string {
         <component :is="customRender({ field: field!, label: label!, dataSource })" />
       </template>
       <template v-else-if="type === 'text-trim'">
-        <LewTextTrim
-          :x="valueX"
-          style="width: 100%"
-          :text="showTextAndEmpty()"
-        />
+        <LewTextTrim :x="valueX" style="width: 100%" :text="showTextAndEmpty()" />
       </template>
       <template v-else>
         {{ showTextAndEmpty() }}

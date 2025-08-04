@@ -3,10 +3,8 @@ import type { ExtractPropTypes, PropType } from 'vue'
 import type { ButtonProps } from '../../../general/button/index'
 import validators from 'lew-ui/validators'
 
-// Type definitions
 export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom'
 
-// Model definitions
 export const drawerModel = {
   visible: {
     type: Boolean,
@@ -14,7 +12,6 @@ export const drawerModel = {
   },
 }
 
-// Props definitions
 export const drawerProps = {
   title: {
     type: String,
@@ -93,5 +90,4 @@ export const drawerProps = {
   },
 }
 
-// Extract prop types
 export type DrawerProps = ExtractPropTypes<typeof drawerProps>

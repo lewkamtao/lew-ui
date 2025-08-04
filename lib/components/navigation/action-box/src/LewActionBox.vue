@@ -26,8 +26,8 @@ function convertToContextMenus(options: ActionBoxOption[]): LewContextMenusOptio
     icon: option.icon,
     onClick: (item: LewContextMenusOption) => {
       // Find original option for proper callback
-      const originalOption = options.find(opt =>
-        (typeof opt.label === 'string' ? opt.label : '') === item.label,
+      const originalOption = options.find(
+        opt => (typeof opt.label === 'string' ? opt.label : '') === item.label,
       )
       if (originalOption?.onClick) {
         originalOption.onClick()
@@ -52,25 +52,43 @@ function handleOptionClick(option: ActionBoxOption, event: MouseEvent): void {
   <LewFlex class="lew-action-box" gap="5px" :x="x">
     <template v-for="(option, index) in visibleOptions" :key="index">
       <RenderComponent
-        v-if="isValidComponent(option.customRender)" :render-fn="option.customRender"
+        v-if="isValidComponent(option.customRender)"
+        :render-fn="option.customRender"
         @click="(event: MouseEvent) => handleOptionClick(option, event)"
       />
-      <div v-else class="lew-action-box-item" @click="(event: MouseEvent) => handleOptionClick(option, event)">
-        <RenderComponent v-if="option.icon && !iconOnly" :render-fn="option.icon" class="lew-action-box-icon" />
+      <div
+        v-else
+        class="lew-action-box-item"
+        @click="(event: MouseEvent) => handleOptionClick(option, event)"
+      >
+        <RenderComponent
+          v-if="option.icon && !iconOnly"
+          :render-fn="option.icon"
+          class="lew-action-box-icon"
+        />
         <RenderComponent v-if="!iconOnly" :render-fn="option.label" />
-        <RenderComponent v-else :render-fn="option.icon || option.label" class="lew-action-box-icon" />
+        <RenderComponent
+          v-else
+          :render-fn="option.icon || option.label"
+          class="lew-action-box-icon"
+        />
       </div>
       <i
         v-if="
           divider
             && (dropdownOptions.length > 0
               || (visibleOptions.length === options.length && index !== options.length - 1))
-        " class="lew-action-box-divider"
+        "
+        class="lew-action-box-divider"
       />
     </template>
     <LewDropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
       <div class="lew-action-box-item">
-        <RenderComponent v-if="dropdownIcon" :render-fn="dropdownIcon" class="lew-action-box-icon" />
+        <RenderComponent
+          v-if="dropdownIcon"
+          :render-fn="dropdownIcon"
+          class="lew-action-box-icon"
+        />
         <RenderComponent v-if="!iconOnly" :render-fn="dropdownLabel" />
       </div>
     </LewDropdown>

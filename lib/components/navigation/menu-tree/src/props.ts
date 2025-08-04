@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { TagProps } from 'lew-ui'
+import type { LewTagProps } from 'lew-ui'
 import type { LewMenuTreeItemOptions } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
@@ -53,7 +53,7 @@ export const menuTreeItemProps = {
     }),
   },
   tagProps: {
-    type: Object as PropType<TagProps>,
+    type: Object as PropType<LewTagProps>,
     validator: validators.object({
       componentName: 'LewMenuTreeItem',
       propName: 'tagProps',
@@ -83,5 +83,5 @@ export const menuTreeItemProps = {
   },
 }
 
-export type MenuTreeProps = ExtractPropTypes<typeof menuTreeProps>
-export type MenuTreeItemProps = ExtractPropTypes<typeof menuTreeItemProps>
+export type LewMenuTreeProps = ExtractPropTypes<typeof menuTreeProps>
+export type LewMenuTreeItemProps = ExtractPropTypes<typeof menuTreeItemProps>

@@ -1,79 +1,79 @@
 <script lang="ts" setup name="Modal">
-import type { Ref } from "vue";
-import { onClickOutside, useMagicKeys } from "@vueuse/core";
-import { LewButton, LewFlex, LewTextTrim, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { useDOMCreate } from "lew-ui/hooks";
-import { any2px, getUniqueId } from "lew-ui/utils";
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
-import { modalProps } from "./props";
+import type { Ref } from 'vue'
+import { onClickOutside, useMagicKeys } from '@vueuse/core'
+import { LewButton, LewFlex, LewTextTrim, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { useDOMCreate } from 'lew-ui/hooks'
+import { any2px, getUniqueId } from 'lew-ui/utils'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { modalProps } from './props'
 
 // Types
 interface ModalEmits {
-  close: [];
+  close: []
 }
 
 // Props & Emits
-const props = defineProps(modalProps);
-const emit = defineEmits<ModalEmits>();
+const props = defineProps(modalProps)
+const emit = defineEmits<ModalEmits>()
 
 // Composables
-const { Escape } = useMagicKeys();
-useDOMCreate("lew-modal");
+const { Escape } = useMagicKeys()
+useDOMCreate('lew-modal')
 
 // Models
-const visible: Ref<boolean | undefined> = defineModel("visible");
+const visible: Ref<boolean | undefined> = defineModel('visible')
 
 // Refs
-const modalBodyRef = ref<HTMLElement | null>(null);
+const modalBodyRef = ref<HTMLElement | null>(null)
 
 // Constants
-const modalId = `lew-modal-${getUniqueId()}`;
-const recomputeTrigger = ref<number>(0);
+const modalId = `lew-modal-${getUniqueId()}`
+const recomputeTrigger = ref<number>(0)
 
 // 计算当前 modal 是否在顶层
 const isTopModal = computed(() => {
   // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
-  void recomputeTrigger.value;
+  void recomputeTrigger.value
 
   if (!visible.value) {
-    return false;
+    return false
   }
 
-  const modalEl = document.getElementById(modalId);
+  const modalEl = document.getElementById(modalId)
   if (!modalEl) {
-    return false;
+    return false
   }
 
   // 检查是否有 dialog 在顶层
-  const dialogEl = document.getElementById("lew-dialog");
-  const hasDialog = dialogEl && dialogEl.children.length > 0;
+  const dialogEl = document.getElementById('lew-dialog')
+  const hasDialog = dialogEl && dialogEl.children.length > 0
   if (hasDialog) {
-    return false;
+    return false
   }
 
   // 获取所有 modal 元素
-  const modalContainer = modalEl?.parentElement;
+  const modalContainer = modalEl?.parentElement
   if (!modalContainer) {
-    return false;
+    return false
   }
 
   const openModals = Array.from(modalContainer.childNodes)
     .filter((e): e is Element => e instanceof Element)
-    .filter((e) => e.children.length > 0)
+    .filter(e => e.children.length > 0)
     .filter((e) => {
       // 只考虑可见的 modal
-      const modalBody = e.querySelector(".lew-modal") as HTMLElement;
-      return modalBody && modalBody.style.display !== "none";
-    });
+      const modalBody = e.querySelector('.lew-modal') as HTMLElement
+      return modalBody && modalBody.style.display !== 'none'
+    })
 
   // 检查当前 modal 是否是最后一个（顶层）
-  return openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId;
-});
+  return openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId
+})
 
 // 强制重新计算顶层状态的函数
 function forceRecomputeTopModal() {
-  recomputeTrigger.value++;
+  recomputeTrigger.value++
 }
 
 // 监听 modalBodyRef 变化，确保在 DOM 更新后重新计算顶层状态
@@ -81,91 +81,92 @@ watch(
   modalBodyRef,
   async (newVal) => {
     if (newVal && visible.value) {
-      await nextTick();
-      forceRecomputeTopModal();
+      await nextTick()
+      forceRecomputeTopModal()
     }
   },
-  { immediate: true }
-);
+  { immediate: true },
+)
 
 // 监听 visible 变化，确保状态正确更新
 watch(visible, async (newVal) => {
-  await nextTick();
+  await nextTick()
   // modal 状态变化时，强制重新计算
-  forceRecomputeTopModal();
+  forceRecomputeTopModal()
 
   // 控制全局检查定时器
   if (newVal) {
-    startGlobalCheck();
-  } else {
-    stopGlobalCheck();
+    startGlobalCheck()
   }
-});
+  else {
+    stopGlobalCheck()
+  }
+})
 
 // 监听全局 modal 状态变化（通过定时器检查）
-let globalCheckTimer: ReturnType<typeof setInterval> | null = null;
+let globalCheckTimer: ReturnType<typeof setInterval> | null = null
 
 function startGlobalCheck() {
   if (globalCheckTimer) {
-    clearInterval(globalCheckTimer);
+    clearInterval(globalCheckTimer)
   }
 
   globalCheckTimer = setInterval(() => {
     if (visible.value) {
-      forceRecomputeTopModal();
+      forceRecomputeTopModal()
     }
-  }, 100); // 每100ms检查一次
+  }, 100) // 每100ms检查一次
 }
 
 function stopGlobalCheck() {
   if (globalCheckTimer) {
-    clearInterval(globalCheckTimer);
-    globalCheckTimer = null;
+    clearInterval(globalCheckTimer)
+    globalCheckTimer = null
   }
 }
 
 onMounted(() => {
   if (visible.value) {
-    startGlobalCheck();
+    startGlobalCheck()
   }
-});
+})
 
 onUnmounted(() => {
-  stopGlobalCheck();
-});
+  stopGlobalCheck()
+})
 
 onClickOutside(modalBodyRef, (e: any) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { parentElement } = e?.target as Element;
+    const { parentElement } = e?.target as Element
     if (parentElement?.id === modalId) {
-      visible.value = false;
+      visible.value = false
     }
   }
-});
+})
 
 // Computed
 const getModalStyle = computed(() => {
-  const { width, top } = props;
+  const { width, top } = props
   return {
     width: any2px(width),
     top: any2px(top),
-  };
-});
+  }
+})
 
 // Methods
 function handleClose(): void {
-  visible.value = false;
-  emit("close");
+  visible.value = false
+  emit('close')
 }
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (!visible.value || !v || !isTopModal.value) {
-      return;
+      return
     }
 
-    visible.value = false;
-  });
+    visible.value = false
+  })
 }
 </script>
 
@@ -217,20 +218,20 @@ if (props.closeByEsc) {
             >
               <LewButton
                 v-bind="{
-                size: 'small',
-                type: 'light',
-                color: 'gray',
-                text: locale.t('modal.closeText'),
-                ...(props.closeButtonProps as any),
-              }"
+                  size: 'small',
+                  type: 'light',
+                  color: 'gray',
+                  text: locale.t('modal.closeText'),
+                  ...(props.closeButtonProps as any),
+                }"
               />
               <LewButton
                 v-bind="{
-                size: 'small',
-                text: locale.t('modal.okText'),
-                color: 'primary',
-                ...(props.okButtonProps as any),
-              }"
+                  size: 'small',
+                  text: locale.t('modal.okText'),
+                  color: 'primary',
+                  ...(props.okButtonProps as any),
+                }"
               />
             </LewFlex>
           </div>

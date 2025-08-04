@@ -26,7 +26,7 @@ export default {
   },
   base: {
     base: '基本',
-    navigator: 'ナビゲーション',
+    navigation: 'ナビゲーション',
     form: 'フォーム',
     data: 'データコンポーネント',
     feedback: 'フィードバック',
