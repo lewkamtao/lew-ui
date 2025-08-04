@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { LewMenuOptions } from 'lew-ui'
 import docsLocale from 'docs/locals'
 import { Menu } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
