@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import LewCodeHighlighter from "./LewCodeHighlighter.vue";
+
 defineProps({
   code: {
     type: String,
     required: true,
   },
-})
+});
 </script>
 
 <template>
   <div class="popover-body">
     <div class="pre-box">
-      <highlightjs autodetect :code="code" />
+      <LewCodeHighlighter :code="code" lang="typescript" />
     </div>
   </div>
 </template>
@@ -21,12 +23,5 @@ defineProps({
   max-width: 500px;
   border-radius: var(--lew-border-radius-small);
   overflow: hidden;
-
-  :deep(.pre-box) {
-    .hljs {
-      outline: none !important;
-      border: none !important;
-    }
-  }
 }
 </style>

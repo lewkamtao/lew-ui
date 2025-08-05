@@ -4,6 +4,7 @@ import docsLocale from "docs/locals";
 import { LewCollapseTransition } from "lew-ui";
 import { Check, ChevronDown, ChevronUp, Copy } from "lucide-vue-next";
 import LewCodeHighlighter from "./LewCodeHighlighter.vue";
+
 defineProps({
   title: {
     type: String,
@@ -115,7 +116,11 @@ async function copyCode(code: string) {
           <ChevronDown v-if="!isShowCode" :size="16" />
           <ChevronUp v-else :size="16" />
         </div>
-        {{ isShowCode ? docsLocale.t("base.close") : docsLocale.t("base.showCode") }}
+        {{
+          isShowCode
+            ? docsLocale.t("base.close")
+            : docsLocale.t("base.showCode")
+        }}
       </div>
     </div>
   </div>
