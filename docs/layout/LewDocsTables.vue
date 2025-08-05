@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import allTypes from 'docs/assets/all-types'
 import docsLocale from 'docs/locals'
-import { LewFlex, LewTag, locale } from 'lew-ui'
+import { LewFlex, LewPopover, LewTag, locale } from 'lew-ui'
+import LewTypeCode from './LewTypeCode.vue'
 
 const props = defineProps({
   options: {
@@ -19,97 +21,129 @@ function getComponentName() {
     .replace(/^[A-Z]/, letter => letter.toLowerCase())
 }
 
-const getColumns = computed(
-  () =>
-    ({ columnsKey, title }: { columnsKey: string, title: string }) => {
-      const nameMap: Record<string, string> = {
-        model: '参数名称',
-        props: '参数名称',
-        slots: '插槽名称',
-        events: '事件名称',
-        methods: '方法名称',
-      }
-      let columns: any = [
-        {
-          title: nameMap[columnsKey],
-          width: 120,
-          field: 'name',
-          type: 'text-trim',
-        },
-      ]
+function getColumns({ columnsKey, title }: { columnsKey: string, title: string }) {
+  const nameMap: Record<string, string> = {
+    model: '参数名称',
+    props: '参数名称',
+    slots: '插槽名称',
+    events: '事件名称',
+    methods: '方法名称',
+  }
+  let columns: any = [
+    {
+      title: nameMap[columnsKey],
+      width: 120,
+      field: 'name',
+      type: 'text-trim',
+    },
+    {
+      title: '描述',
+      width: ['events', 'methods'].includes(columnsKey) ? 400 : 200,
+      field: 'description',
+      customRender: ({ row }: any) => {
+        const { name } = row
+        return docsLocale.t(
+          `components.${getComponentName()}.${title.replace(/^[A-Z]/, match =>
+            match.toLowerCase())}.${name}`,
+        )
+      },
+    },
+  ]
 
-      if (!['events', 'methods', 'slots'].includes(columnsKey)) {
-        columns = [
-          ...columns,
-          {
-            title: '类型',
-            width: 120,
-            field: 'type',
-            customRender: ({ row }: any) => {
-              const { typeDesc, type } = row
-              const tags = (typeDesc || type || '')
-                .split('|')
-                .map((text: any) => {
-                  // 去除前后的空格
-                  return h(
-                    LewTag,
-                    {
-                      type: 'light',
-                      color: 'pink',
-                      size: 'small',
-                    },
-                    {
-                      default: () => text.trim(),
-                    },
-                  )
-                })
+  if (!['events', 'methods', 'slots'].includes(columnsKey)) {
+    columns = [
+      ...columns,
+      {
+        title: '类型',
+        width: 240,
+        field: 'type',
+        customRender: ({ row }: any) => {
+          const { typeValues, type, typePopKeys } = row
+          if ((typePopKeys || []).length > 0) {
+            const tags = typePopKeys.map((key: string) => {
+              const typeAlias = allTypes[key as keyof typeof allTypes]
               return h(
-                LewFlex,
+                LewPopover,
                 {
-                  x: 'start',
-                  y: 'center',
-                  gap: 5,
-                  wrap: true,
+                  trigger: 'click',
                 },
                 {
-                  default: () => tags,
+                  'trigger': () =>
+                    h(
+                      LewTag,
+                      {
+                        style: { cursor: 'pointer' },
+                        type: 'light',
+                        color: 'pink',
+                        size: 'small',
+                      },
+                      {
+                        default: () => key,
+                      },
+                    ),
+                  'popover-body': () => h(LewTypeCode, { code: typeAlias }),
                 },
               )
-            },
-          },
-          {
-            title: '默认值',
-            width: 120,
-            field: 'default',
-            customRender: ({ text, row }: any) => {
-              const { name, defaultLocale } = row
-              return defaultLocale
-                ? locale.t(`${getComponentName()}.${name}`)
-                : text || '-'
-            },
-          },
-        ]
-      }
-      columns = [
-        ...columns,
-        {
-          title: '描述',
-          width: ['events', 'methods'].includes(columnsKey) ? 400 : 200,
-          field: 'description',
-          customRender: ({ row }: any) => {
-            const { name } = row
-            return docsLocale.t(
-              `components.${getComponentName()}.${title.replace(
-                /^[A-Z]/,
-                match => match.toLowerCase(),
-              )}.${name}`,
+            })
+            return h(
+              LewFlex,
+              {
+                x: 'start',
+                y: 'center',
+                gap: 5,
+                wrap: true,
+              },
+              {
+                default: () => tags,
+              },
             )
-          },
+          }
+          else {
+            const _types
+              = (typeValues || []).length > 0 ? typeValues : (type || '').split('|')
+            const tags = _types.map((text: any) => {
+              return h(
+                LewTag,
+                {
+                  type: 'light',
+                  color: 'blue',
+                  size: 'small',
+                },
+                {
+                  default: () => text.trim(),
+                },
+              )
+            })
+            return h(
+              LewFlex,
+              {
+                x: 'start',
+                y: 'center',
+                gap: 5,
+                wrap: true,
+              },
+              {
+                default: () => tags,
+              },
+            )
+          }
         },
-      ]
-      return columns
-    },
-)
+      },
+      {
+        title: '默认值',
+        width: 100,
+        field: 'default',
+        customRender: ({ text, row }: any) => {
+          const { name, defaultLocale } = row
+          return defaultLocale ? locale.t(`${getComponentName()}.${name}`) : text || '-'
+        },
+      },
+    ]
+  }
+
+  return columns
+}
+
 const sortValue = computed(() => {
   return props.options
     .map((e: any) => {
@@ -135,12 +169,7 @@ function getTitle(title: string) {
 
 <template>
   <LewFlex direction="y" gap="70px" class="docs-wrapper">
-    <LewFlex
-      v-for="(item, index) in sortValue"
-      :key="index"
-      direction="y"
-      x="start"
-    >
+    <LewFlex v-for="(item, index) in sortValue" :key="index" direction="y" x="start">
       <lew-title :id="item.title" size="18px" class="demo-docs-title">
         {{ getTitle(item.title) }}
         <LewTag
@@ -152,7 +181,12 @@ function getTitle(title: string) {
           {{ getTag(item.title) }}
         </LewTag>
       </lew-title>
-      <lew-table :data-source="item.data" :columns="getColumns(item)" />
+      <lew-table
+        :key="`${item.title}_${docsLocale.t('name')}`"
+        bordered
+        :data-source="item.data"
+        :columns="getColumns(item)"
+      />
     </LewFlex>
   </LewFlex>
 </template>
@@ -162,6 +196,7 @@ function getTitle(title: string) {
   text-transform: capitalize;
   letter-spacing: 0.8px;
 }
+
 :deep(.lew-tag-value) {
   letter-spacing: 1px;
 }

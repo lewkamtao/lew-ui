@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import validators from 'lew-ui/validators'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export type UploadStatus
   = | 'success'
@@ -77,10 +77,11 @@ export const uploadProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '上传组件的尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewUpload',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   tips: {
@@ -143,10 +144,11 @@ export const uploadByListProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '上传组件的尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewUpload',
       propName: 'size',
+      values: validSizeList,
     }),
   },
 }
@@ -155,10 +157,11 @@ export const uploadByCardProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '上传组件的尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewUpload',
       propName: 'size',
+      values: validSizeList,
     }),
   },
 }

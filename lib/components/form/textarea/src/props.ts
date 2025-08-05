@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import validators from 'lew-ui/validators'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const textareaModel = {
   modelValue: {
@@ -51,10 +51,11 @@ export const textareaProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '文本域尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewTextarea',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   resize: {

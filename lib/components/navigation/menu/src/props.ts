@@ -1,5 +1,5 @@
-import type { LewMenuOptions } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
+import type { LewMenuOption } from 'lew-ui/types'
+import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
 export const menuModel = {
@@ -10,9 +10,9 @@ export const menuModel = {
 
 export const menuProps = {
   options: {
-    type: Array as PropType<LewMenuOptions[]>,
+    type: Array as PropType<LewMenuOption[]>,
     default: [],
-    typeGhost: 'MenuOptions[]',
+    typePopKeys: ['LewMenuOption'],
     validator: validators.array({
       componentName: 'LewMenu',
       propName: 'options',

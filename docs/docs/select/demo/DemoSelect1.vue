@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { SelectOptions } from 'lew-ui'
+import type { LewSelectOptions } from 'lew-ui'
 
-const options = ref<SelectOptions[]>([
+const options = ref<LewSelectOptions[]>([
   { label: 'Standard Delivery', value: 'standard' },
   { label: 'Express Delivery', value: 'express' },
   { label: 'Next Day Delivery', value: 'nextDay' },

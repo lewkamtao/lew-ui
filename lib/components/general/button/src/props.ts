@@ -1,12 +1,9 @@
-import type { Property } from 'csstype'
-import type { LewColor, LewSize } from 'lew-ui'
+import type { LewButtonSize, LewButtonType, LewColor } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validColorList } from 'lew-ui/validators'
 
-export type ButtonSize = 'mini' | LewSize
-export type ButtonType = 'fill' | 'light' | 'ghost' | 'text'
-export type IconPosition = 'left' | 'right'
-export type ButtonWidth = Property.Width | number
+const typeValues = ['fill', 'light', 'ghost', 'text']
+const sizeValues = ['mini', 'small', 'medium', 'large']
 
 export const buttonProps = {
   text: {
@@ -17,30 +14,35 @@ export const buttonProps = {
     }),
   },
   width: {
-    type: [String, Number] as PropType<ButtonWidth>,
+    type: String,
     validator: validators.widthHeight({
       componentName: 'LewButton',
       propName: 'width',
     }),
   },
   type: {
-    type: String as PropType<ButtonType>,
+    type: String as PropType<LewButtonType>,
+    typeValues,
     default: 'fill',
-    validator: validators.string({
+    validator: validators.enum({
       componentName: 'LewButton',
       propName: 'type',
+      values: typeValues,
     }),
   },
   size: {
-    type: String as PropType<ButtonSize>,
+    type: String as PropType<LewButtonSize>,
+    typeValues: sizeValues,
     default: 'medium',
-    validator: validators.size({
+    validator: validators.enum({
       componentName: 'LewButton',
       propName: 'size',
+      values: sizeValues,
     }),
   },
   singleIcon: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewButton',
       propName: 'singleIcon',
@@ -49,13 +51,16 @@ export const buttonProps = {
   color: {
     type: String as PropType<LewColor>,
     default: 'primary',
-    validator: validators.string({
+    typeValues: validColorList,
+    validator: validators.enum({
       componentName: 'LewButton',
       propName: 'color',
+      values: validColorList,
     }),
   },
   round: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewButton',
       propName: 'round',
@@ -63,6 +68,7 @@ export const buttonProps = {
   },
   dashed: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewButton',
       propName: 'dashed',
@@ -70,6 +76,7 @@ export const buttonProps = {
   },
   loading: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewButton',
       propName: 'loading',
@@ -77,6 +84,7 @@ export const buttonProps = {
   },
   disabled: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewButton',
       propName: 'disabled',
@@ -84,6 +92,7 @@ export const buttonProps = {
   },
   request: {
     type: Function as PropType<() => Promise<void>>,
+    default: () => Promise.resolve(),
     validator: validators.function({
       componentName: 'LewButton',
       propName: 'request',

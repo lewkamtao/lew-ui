@@ -1,9 +1,11 @@
-import type { LewColor, LewSize } from 'lew-ui'
+import type { LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validColorList, validSizeList } from 'lew-ui/validators'
 
 // Types
 export type TagType = 'fill' | 'light' | 'ghost'
+
+const typeValues = ['fill', 'light', 'ghost']
 
 export const tagProps = {
   text: {
@@ -14,32 +16,38 @@ export const tagProps = {
     }),
   },
   type: {
-    type: String as PropType<TagType>,
+    type: String,
+    typeValues,
     default: 'light',
     validator: validators.enum({
       componentName: 'LewTag',
       propName: 'type',
-      values: ['fill', 'light', 'ghost'],
+      values: typeValues,
     }),
   },
   color: {
-    type: String as PropType<LewColor>,
+    type: String,
+    typeValues: validColorList,
     default: 'primary',
-    validator: validators.string({
+    validator: validators.enum({
       componentName: 'LewTag',
       propName: 'color',
+      values: validColorList,
     }),
   },
   size: {
     type: String as PropType<LewSize>,
+    typeValues: validSizeList,
     default: 'medium',
-    validator: validators.size({
+    validator: validators.enum({
       componentName: 'LewTag',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   round: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewTag',
       propName: 'round',
@@ -47,6 +55,7 @@ export const tagProps = {
   },
   oversize: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewTag',
       propName: 'oversize',
@@ -55,6 +64,7 @@ export const tagProps = {
 
   disabled: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewTag',
       propName: 'disabled',
@@ -63,6 +73,7 @@ export const tagProps = {
 
   closable: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewTag',
       propName: 'closable',

@@ -1,13 +1,9 @@
-import type {
-  SelectMultipleOptions,
-  SelectMultipleOptionsGroup,
-} from 'lew-ui/components/form/select-multiple/src/props'
-import type { SelectOptions, SelectOptionsGroup } from './props'
+import type { LewSelectMultipleOptions, LewSelectMultipleOptionsGroup, LewSelectOptions, LewSelectOptionsGroup } from 'lew-ui'
 
-type Options = SelectOptions | SelectMultipleOptions
-type OptionsGroup = SelectOptionsGroup | SelectMultipleOptionsGroup
+type Options = LewSelectOptions | LewSelectMultipleOptions
+type OptionsGroup = LewSelectOptionsGroup | LewSelectMultipleOptionsGroup
 
-export function flattenOptions(options: (Options | OptionsGroup)[]) {
+export function flattenSelectOptions(options: (Options | OptionsGroup)[]) {
   const result: Options[] = []
   options.forEach((option: any) => {
     if (option.children && option.children.length > 0) {
@@ -36,7 +32,7 @@ export function flattenOptions(options: (Options | OptionsGroup)[]) {
   return result
 }
 
-export function defaultSearchMethod(params: any) {
+export function filterSelectOptionsByKeyword(params: any) {
   const { options, keyword } = params
   if (!keyword) {
     return options
@@ -65,5 +61,5 @@ export function defaultSearchMethod(params: any) {
       group.push(e)
     }
   })
-  return flattenOptions(group)
+  return flattenSelectOptions(group)
 }

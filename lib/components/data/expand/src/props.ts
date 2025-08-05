@@ -11,4 +11,4 @@ export const expandProps = {
   },
 }
 
-export type ExpandProps = ExtractPropTypes<typeof expandProps>
+export type LewExpandProps = ExtractPropTypes<typeof expandProps>

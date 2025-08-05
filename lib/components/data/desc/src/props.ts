@@ -1,11 +1,12 @@
 import type { Property } from 'csstype'
 import type { LewDescOptions, LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validDirectionList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const descProps = {
   options: {
     type: Array as PropType<LewDescOptions[]>,
+    typePopKeys: ['LewDescOptions'],
     required: true,
     validator: validators.array({
       componentName: 'LewDesc',
@@ -24,29 +25,35 @@ export const descProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewDesc',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   labelX: {
     type: String as PropType<Property.TextAlign>,
     default: 'start',
-    validator: validators.xAlignment({
+    typeValues: validXAlignmentList,
+    validator: validators.enum({
       componentName: 'LewDesc',
       propName: 'labelX',
+      values: validXAlignmentList,
     }),
   },
   valueX: {
     type: String as PropType<Property.TextAlign>,
     default: 'start',
-    validator: validators.xAlignment({
+    typeValues: validXAlignmentList,
+    validator: validators.enum({
       componentName: 'LewDesc',
       propName: 'valueX',
+      values: validXAlignmentList,
     }),
   },
   gap: {
-    type: String as PropType<string>,
+    type: String,
     default: '30px',
     validator: validators.gap({
       componentName: 'LewDesc',
@@ -79,9 +86,11 @@ export const descProps = {
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
-    validator: validators.direction({
+    typeValues: validDirectionList,
+    validator: validators.enum({
       componentName: 'LewDesc',
       propName: 'direction',
+      values: validDirectionList,
     }),
   },
   id: {
@@ -122,9 +131,11 @@ export const descItemProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewDescItem',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   bordered: {
@@ -153,9 +164,11 @@ export const descItemProps = {
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
-    validator: validators.direction({
+    typeValues: validDirectionList,
+    validator: validators.enum({
       componentName: 'LewDescItem',
       propName: 'direction',
+      values: validDirectionList,
     }),
   },
   tips: {
@@ -176,17 +189,21 @@ export const descItemProps = {
   labelX: {
     type: String as PropType<Property.TextAlign>,
     default: 'start',
-    validator: validators.xAlignment({
+    typeValues: validXAlignmentList,
+    validator: validators.enum({
       componentName: 'LewDescItem',
       propName: 'labelX',
+      values: validXAlignmentList,
     }),
   },
   valueX: {
     type: String as PropType<Property.TextAlign>,
     default: 'start',
-    validator: validators.xAlignment({
+    typeValues: validXAlignmentList,
+    validator: validators.enum({
       componentName: 'LewDescItem',
       propName: 'valueX',
+      values: validXAlignmentList,
     }),
   },
   gridArea: {
@@ -224,5 +241,5 @@ export const lewDescSizePaddingMap: Record<LewSize, number> = {
   large: 26,
 }
 
-export type DescProps = ExtractPropTypes<typeof descProps>
-export type DescItemProps = ExtractPropTypes<typeof descItemProps>
+export type LewDescProps = ExtractPropTypes<typeof descProps>
+export type LewDescItemProps = ExtractPropTypes<typeof descItemProps>

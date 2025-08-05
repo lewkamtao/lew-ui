@@ -1,17 +1,17 @@
-import type { Property } from 'csstype'
+import type { LewAvatarObjectFit, LewAvatarObjectPosition, LewAvatarPlacement, LewAvatarShape, LewAvatarStatus } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
-// Type definitions
-export type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-export type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
-export type AvatarShape = 'circle' | 'square' | 'sharp'
-export type AvatarSize = number | string
+const statusValues = ['online', 'processing', 'away', 'offline', 'busy']
+const objectFitValues = ['fill', 'contain', 'cover', 'none', 'scale-down']
+const objectPositionValues = ['center', 'top', 'bottom', 'left', 'right', 'top left', 'top right', 'bottom left', 'bottom right']
+const placementValues = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
+const shapeValues = ['circle', 'square', 'sharp']
 
 export const avatarProps = {
   size: {
-    type: [Number, String] as PropType<AvatarSize>,
-    default: 40,
+    type: String,
+    default: '40px',
     validator: validators.widthHeight({
       componentName: 'LewAvatar',
       propName: 'size',
@@ -19,18 +19,20 @@ export const avatarProps = {
   },
   loading: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewAvatar',
       propName: 'loading',
     }),
   },
   shape: {
-    type: String as PropType<AvatarShape>,
+    type: String as PropType<LewAvatarShape>,
+    typeValues: shapeValues,
     default: 'square',
     validator: validators.enum({
       componentName: 'LewAvatar',
       propName: 'shape',
-      values: ['circle', 'square', 'sharp'],
+      values: shapeValues,
     }),
   },
   src: {
@@ -48,38 +50,42 @@ export const avatarProps = {
     }),
   },
   status: {
-    type: String as PropType<AvatarStatus>,
+    type: String as PropType<LewAvatarStatus>,
+    typeValues: statusValues,
     validator: validators.enum({
       componentName: 'LewAvatar',
       propName: 'status',
-      values: ['online', 'processing', 'away', 'offline', 'busy'],
+      values: statusValues,
     }),
   },
   objectFit: {
-    type: String as PropType<Property.ObjectFit>,
+    type: String as PropType<LewAvatarObjectFit>,
+    typeValues: objectFitValues,
     default: 'cover',
     validator: validators.enum({
       componentName: 'LewAvatar',
       propName: 'objectFit',
-      values: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+      values: objectFitValues,
     }),
   },
   objectPosition: {
-    type: String as PropType<Property.ObjectPosition>,
+    type: String as PropType<LewAvatarObjectPosition>,
+    typeValues: objectPositionValues,
     default: 'center',
     validator: validators.enum({
       componentName: 'LewAvatar',
       propName: 'objectPosition',
-      values: ['center', 'top', 'bottom', 'left', 'right', 'top left', 'top right', 'bottom left', 'bottom right'],
+      values: objectPositionValues,
     }),
   },
   statusPlacement: {
-    type: String as PropType<AvatarPlacement>,
+    type: String as PropType<LewAvatarPlacement>,
+    typeValues: placementValues,
     default: 'top-right',
     validator: validators.enum({
       componentName: 'LewAvatar',
       propName: 'statusPlacement',
-      values: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+      values: placementValues,
     }),
   },
 }

@@ -183,11 +183,7 @@ onUnmounted(() => {
 })
 
 // Watchers
-watch(
-  () => [props.text, props.reserveEnd],
-  calculateDisplayText,
-  { flush: 'post' },
-)
+watch(() => [props.text, props.reserveEnd], calculateDisplayText, { flush: 'post' })
 </script>
 
 <template>

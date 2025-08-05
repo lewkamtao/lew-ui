@@ -1,7 +1,7 @@
 import type { LewXAlignment } from 'lew-ui'
 import type { LewComponentSource } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validXAlignmentList } from 'lew-ui/validators'
 
 export interface ActionBoxOption {
   label: LewComponentSource
@@ -22,9 +22,11 @@ export const actionBoxProps = {
   x: {
     type: String as PropType<LewXAlignment>,
     default: 'start',
-    validator: validators.xAlignment({
+    typeValues: validXAlignmentList,
+    validator: validators.enum({
       componentName: 'LewActionBox',
       propName: 'x',
+      values: validXAlignmentList,
     }),
   },
   divider: {

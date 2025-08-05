@@ -63,3 +63,5 @@ export type LewPlacement
     | 'right'
     | 'right-start'
     | 'right-end'
+
+export type LewOffset = [number, number]

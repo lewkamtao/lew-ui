@@ -413,7 +413,7 @@ onUnmounted(() => {
     </div>
     <div class="home">
       <lew-flex direction="x" gap="40">
-        <lew-flex class="item" direction="y" x="end" gap="40">
+        <lew-flex class="item" width="350px" direction="y" x="end" gap="40">
           <lew-flex direction="y" x="end" gap="0px">
             <lew-title :size="16" :bold="200">
               Lew Design 16px
@@ -500,10 +500,10 @@ onUnmounted(() => {
             </lew-dropdown>
           </lew-flex>
         </lew-flex>
-        <lew-flex style="width: 450px; margin-top: 0px" class="item">
+        <lew-flex style="margin-top: 0px" width="500px" class="item">
           <lew-form ref="formRef" row-gap="30" :options="options" />
         </lew-flex>
-        <lew-flex class="item" direction="y" gap="20px">
+        <lew-flex class="item" width="400px" direction="y" gap="20px">
           <lew-alert type="warning" title="Please confirm deletion" />
           <lew-alert type="info">
             <template #title>
@@ -655,10 +655,12 @@ onUnmounted(() => {
       font-weight: 900;
     }
   }
+
   .home-start-button {
     position: relative;
     z-index: 9999;
   }
+
   .home {
     position: relative;
     min-height: 100vh;
@@ -666,12 +668,13 @@ onUnmounted(() => {
     animation: demo 4s ease;
     animation-fill-mode: forwards;
     opacity: 0;
-    margin-top: -50px;
-    margin-left: 30px;
     z-index: 99;
+    width: 1440px;
+    margin: 0 auto;
+    margin-top: -50px;
+
     .item {
       flex-shrink: 0;
-      width: 350px;
       height: calc(100vh - 70px);
     }
   }

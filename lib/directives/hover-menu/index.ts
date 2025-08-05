@@ -1,9 +1,9 @@
 import type { App, DirectiveBinding, PropType } from 'vue'
+import { LewContextMenu } from 'lew-ui'
 import { getUniqueId } from 'lew-ui/utils'
 // 导入所需的依赖
 import tippy from 'tippy.js'
 import { createApp, h } from 'vue'
-import _LewContextMenu from '../context-menu/src/LewContextMenu.vue'
 
 interface LewHoverMenuConfig {
   menu: Record<string, any>
@@ -125,7 +125,7 @@ export const LewVHoverMenu = {
             // 创建悬浮菜单组件实例
             createApp({
               render() {
-                return h(_LewContextMenu, {
+                return h(LewContextMenu, {
                   options,
                 })
               },

@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import type { SelectOptions } from './props'
+import type { LewSelectOptions } from 'lew-ui/types'
 import { useDebounceFn } from '@vueuse/core'
 import { LewEmpty, LewFlex, LewPopover, LewTextTrim, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
+import { any2px, filterSelectOptionsByKeyword, flattenSelectOptions, numFormat, object2class, poll } from 'lew-ui/utils'
 import { cloneDeep, isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
 import { selectProps } from './props'
-import { defaultSearchMethod, flattenOptions } from './util'
 
 const props = defineProps(selectProps)
 const emit = defineEmits(['change', 'blur', 'clear', 'focus'])
@@ -25,12 +24,12 @@ const state = reactive({
   loading: false,
   initLoading: true,
   sourceOptions: props.options,
-  options: flattenOptions(props.options),
+  options: flattenSelectOptions(props.options),
   hideBySelect: false, // 记录是否通过选择隐藏
   keyword: props.defaultValue || (selectValue.value as any),
   keywordBackup: props.defaultValue as any,
   autoWidth: 0, // 新增自动宽度
-  searchCache: new Map<string, SelectOptions[]>(), // 新增搜索结果缓存
+  searchCache: new Map<string, LewSelectOptions[]>(), // 新增搜索结果缓存
 })
 
 const _searchMethod = computed(() => {
@@ -41,7 +40,7 @@ const _searchMethod = computed(() => {
     return formMethods[props.searchMethodId]
   }
   else {
-    return defaultSearchMethod
+    return filterSelectOptionsByKeyword
   }
 })
 
@@ -60,7 +59,7 @@ async function init() {
     try {
       const newOptions = await _initMethod.value()
       state.sourceOptions = newOptions
-      state.options = flattenOptions(newOptions)
+      state.options = flattenSelectOptions(newOptions)
       findKeyword() // Update keyword based on new options and modelValue
     }
     catch (error) {
@@ -86,7 +85,7 @@ watch(
     if (!_initMethod.value) {
       // 只有在没有使用 initMethod 时才响应 options 的变化
       state.sourceOptions = newOptions
-      state.options = flattenOptions(newOptions)
+      state.options = flattenSelectOptions(newOptions)
       state.keyword
         = newOptions.find((e: any) => e.value === selectValue.value)?.label || ''
       // 如果启用搜索缓存，清除搜索缓存，因为数据源已经更新
@@ -180,7 +179,7 @@ async function search(e: any) {
   state.loading = true
   const keyword = e.target.value
   if (props.searchable) {
-    let result: SelectOptions[] = []
+    let result: LewSelectOptions[] = []
 
     // 检查是否启用搜索缓存，以及缓存中是否已有该关键词的搜索结果
     if (props.enableSearchCache && state.searchCache.has(keyword)) {
@@ -188,7 +187,7 @@ async function search(e: any) {
     }
     else {
       // 如果没输入关键词
-      const optionsToSearch = flattenOptions(state.sourceOptions)
+      const optionsToSearch = flattenSelectOptions(state.sourceOptions)
       if (!keyword && optionsToSearch.length > 0) {
         result = optionsToSearch
       }
@@ -217,7 +216,7 @@ function clearHandle() {
   emit('change')
 }
 
-function selectHandle(item: SelectOptions) {
+function selectHandle(item: LewSelectOptions) {
   if (item.disabled || item.isGroup) {
     return
   }
@@ -314,9 +313,7 @@ async function showHandle() {
   if (props.searchable) {
     await search({ target: { value: '' } })
   }
-  const index = state.options.findIndex(
-    (e: any) => e.value === selectValue.value,
-  )
+  const index = state.options.findIndex((e: any) => e.value === selectValue.value)
   poll({
     callback: () => {
       const i = index > -1 ? index : 0
@@ -396,11 +393,7 @@ defineExpose({
         :class="getSelectClassName"
       >
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <CommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
         <CommonIcon
@@ -427,6 +420,7 @@ defineExpose({
         <input
           ref="inputRef"
           v-model="state.keyword"
+          :title="state.keyword"
           class="lew-value"
           :style="getValueStyle"
           :readonly="!searchable"
@@ -581,6 +575,8 @@ defineExpose({
       color: var(--lew-text-color-1);
       cursor: pointer;
       transition: all 0.2s;
+      overflow: hidden;
+      text-overflow: ellipsis;
       height: 100%;
     }
 
@@ -596,6 +592,7 @@ defineExpose({
   .lew-select-size-small {
     height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
+
     .lew-value {
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
@@ -605,6 +602,7 @@ defineExpose({
   .lew-select-size-medium {
     height: var(--lew-form-item-height-medium);
     line-height: var(--lew-form-input-line-height-medium);
+
     .lew-value {
       padding: var(--lew-form-input-padding-medium);
       font-size: var(--lew-form-font-size-medium);
@@ -614,6 +612,7 @@ defineExpose({
   .lew-select-size-large {
     height: var(--lew-form-item-height-large);
     line-height: var(--lew-form-input-line-height-large);
+
     .lew-value {
       padding: var(--lew-form-input-padding-large);
       font-size: var(--lew-form-font-size-large);
@@ -647,6 +646,7 @@ defineExpose({
       cursor: text;
     }
   }
+
   .lew-select:hover {
     background-color: var(--lew-form-bgcolor-hover);
   }
@@ -663,6 +663,7 @@ defineExpose({
   .lew-select-focus {
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
     background-color: var(--lew-form-bgcolor-focus);
+
     .lew-icon-select {
       color: var(--lew-text-color-1);
       transform: translateY(-50%) rotate(180deg);
@@ -673,6 +674,7 @@ defineExpose({
       transform: translate(100%, -50%) rotate(180deg);
     }
   }
+
   .lew-select-focus:hover {
     background-color: var(--lew-form-bgcolor-focus-hover);
   }
@@ -780,6 +782,7 @@ defineExpose({
       box-sizing: border-box;
       cursor: no-drop;
       pointer-events: none;
+
       .lew-select-label {
         font-size: 12px;
         box-sizing: border-box;

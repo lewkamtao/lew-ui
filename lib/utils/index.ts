@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash-es'
 import CommonIcon from '../_components/CommonIcon.vue'
 
 export * from './dragmove'
+export * from './select'
 
 export const iconColorType: Record<string, string> = {
   normal: 'gray',

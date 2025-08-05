@@ -1,14 +1,16 @@
 import type { LewStatusColor } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validStatusColorList } from 'lew-ui/validators'
 
 export const alertProps = {
   type: {
     type: String as PropType<LewStatusColor>,
     default: 'normal',
-    validator: validators.color({
+    typeValues: validStatusColorList,
+    validator: validators.enum({
       componentName: 'LewAlert',
       propName: 'type',
+      values: validStatusColorList,
     }),
   },
   title: {

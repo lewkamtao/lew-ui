@@ -1,30 +1,6 @@
+import type { LewColor, LewOffset } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
-
-export type BadgeColor
-  = | 'red'
-    | 'orange'
-    | 'yellow'
-    | 'green'
-    | 'mint'
-    | 'teal'
-    | 'black'
-    | 'cyan'
-    | 'blue'
-    | 'indigo'
-    | 'purple'
-    | 'pink'
-    | 'gray'
-    | 'brown'
-    | 'success'
-    | 'normal'
-    | 'warning'
-    | 'error'
-    | 'info'
-    | 'primary'
-
-export type BadgeValue = string | number
-export type BadgeOffset = [number, number]
+import validators, { validColorList } from 'lew-ui/validators'
 
 export const badgeProps = {
   text: {
@@ -36,8 +12,8 @@ export const badgeProps = {
     }),
   },
   offset: {
-    type: Array as unknown as PropType<BadgeOffset>,
-    default: (): BadgeOffset => [0, 0],
+    type: Array as unknown as PropType<LewOffset>,
+    default: (): LewOffset => [0, 0],
     validator: validators.array({
       componentName: 'LewBadge',
       propName: 'offset',
@@ -45,44 +21,36 @@ export const badgeProps = {
   },
   processing: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewBadge',
       propName: 'processing',
     }),
   },
   max: {
-    type: [Number, String] as PropType<number | string>,
+    type: Number,
     default: 99,
-    validator(value: string | number): boolean {
-      const numberValue = Number(value)
-      if (Number.isNaN(numberValue)) {
-        console.warn(`[LewBadge] Invalid max: "${value}". Expected: valid number or string convertible to number.`)
-        return false
-      }
-      if (numberValue < 0) {
-        console.warn(`[LewBadge] Invalid max: "${value}". Expected: number ≥ 0.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.number({
+      componentName: 'LewBadge',
+      propName: 'max',
+    }),
   },
   color: {
-    type: String as PropType<BadgeColor>,
+    type: String as PropType<LewColor>,
+    typeValues: validColorList,
     default: 'red',
-    validator: validators.string({
+    validator: validators.enum({
       componentName: 'LewBadge',
       propName: 'color',
+      values: validColorList,
     }),
   },
   value: {
-    type: [String, Number] as PropType<BadgeValue>,
-    validator(value: BadgeValue): boolean {
-      if (value !== undefined && typeof value !== 'string' && typeof value !== 'number') {
-        console.warn(`[LewBadge] Invalid value: "${value}". Expected: string or number.`)
-        return false
-      }
-      return true
-    },
+    type: String,
+    validator: validators.string({
+      componentName: 'LewBadge',
+      propName: 'value',
+    }),
   },
 }
 

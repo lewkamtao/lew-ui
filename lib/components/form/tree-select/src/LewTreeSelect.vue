@@ -90,14 +90,13 @@ const getValueStyle = computed(() => {
 })
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, align, disabled, readonly, searchable } = props
+  let { clearable, size, disabled, readonly, searchable } = props
   clearable = clearable ? !!treeSelectValue.value : false
   const focus = state.visible
 
   return object2class('lew-select', {
     clearable,
     size,
-    align,
     disabled,
     readonly,
     searchable,
@@ -352,17 +351,6 @@ defineExpose({ show, hide })
     .lew-value::placeholder {
       color: rgb(165, 165, 165);
     }
-  }
-  .lew-select-align-left {
-    text-align: left;
-  }
-
-  .lew-select-align-center {
-    text-align: center;
-  }
-
-  .lew-select-align-right {
-    text-align: right;
   }
 
   .lew-select-placeholder {

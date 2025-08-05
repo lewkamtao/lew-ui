@@ -1,191 +1,202 @@
-import type { LewSize } from 'lew-ui'
-import type { PropType } from 'vue'
-import type { TreeDataSource } from '../../../data/tree'
-import validators from 'lew-ui/validators'
-
-export interface TreeSelectOptions {
-  label: string
-  value: string | number
-  labelPaths?: string[]
-  keysPaths?: string[]
-  level: number
-  isLeaf?: boolean
-  loading?: boolean
-  disabled?: boolean
-  parentLabelPaths?: string[]
-  parentKeysPaths?: string[]
-  parentChildren?: TreeSelectOptions[]
-  children?: TreeSelectOptions[]
-}
-
-export type TreeSelectTriggerType = 'click' | 'hover'
-export type TreeSelectAlign = 'left' | 'center' | 'right'
+import type { LewSize, LewTreeDataSource, LewTrigger } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const treeSelectModel = {
   modelValue: {
-    type: [String, Number],
+    type: String,
     default: undefined,
-    description: '当前选中的值',
   },
-}
-
-export interface TreeSelectSearchMethodParams {
-  item?: TreeDataSource
-  keyword?: string
 }
 
 export const treeSelectProps = {
   dataSource: {
-    type: Array as PropType<TreeDataSource[]>,
+    type: Array as PropType<LewTreeDataSource[]>,
     default: () => [],
-    description: '树形数据源',
-    validator: (value: TreeDataSource[]) => {
-      if (!Array.isArray(value)) {
-        console.warn('[LewTreeSelect] dataSource 必须是一个数组')
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewTreeSelect',
+      propName: 'dataSource',
+    }),
   },
   width: {
-    type: [String, Number],
+    type: String,
     default: '240px',
-    description: '选择器宽度，支持数字（单位：像素）或带单位的字符串',
+    validator: validators.widthHeight({
+      componentName: 'LewTreeSelect',
+      propName: 'width',
+    }),
   },
   defaultValue: {
-    type: [String, Number],
-    default: '',
-    description: '默认选中值',
+    type: String,
+    validator: validators.string({
+      componentName: 'LewTreeSelect',
+      propName: 'defaultValue',
+    }),
   },
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '占位文本',
+    validator: validators.string({
+      componentName: 'LewTreeSelect',
+      propName: 'placeholder',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '组件尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewTreeSelect',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'disabled',
+    }),
   },
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否可清空',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'clearable',
+    }),
   },
   checkable: {
     type: Boolean,
     default: false,
-    description: '是否显示复选框',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'checkable',
+    }),
   },
   showAllLevels: {
     type: Boolean,
     default: true,
-    description: '是否显示完整路径',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'showAllLevels',
+    }),
   },
   showCheckIcon: {
     type: Boolean,
     default: true,
-    description: '是否显示选中图标',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'showCheckIcon',
+    }),
   },
   showLine: {
     type: Boolean,
     default: false,
-    description: '是否显示连接线',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'showLine',
+    }),
   },
   expandAll: {
     type: Boolean,
     default: false,
-    description: '是否默认展开所有节点',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'expandAll',
+    }),
   },
   searchable: {
     type: Boolean,
     default: false,
-    description: '是否可搜索',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'searchable',
+    }),
   },
   searchDelay: {
     type: Number,
     default: 250,
-    description: '搜索防抖延迟（毫秒）',
-    validator: (value: number) => {
-      if (value < 0) {
-        console.warn('[LewTreeSelect] searchDelay 必须大于或等于 0')
-        return false
-      }
-      return true
-    },
+    validator: validators.number({
+      componentName: 'LewTreeSelect',
+      propName: 'searchDelay',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'readonly',
+    }),
   },
   free: {
     type: Boolean,
     default: true,
-    description: '是否为自由模式（父子节点选中状态不关联）',
-  },
-  align: {
-    type: String as PropType<TreeSelectAlign>,
-    default: 'left',
-    description: '文本对齐方式',
-    validator: (value: TreeSelectAlign) => {
-      if (!['left', 'center', 'right'].includes(value)) {
-        console.warn('[LewTreeSelect] align 必须是 left、center 或 right')
-        return false
-      }
-      return true
-    },
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'free',
+    }),
   },
   trigger: {
-    type: String as PropType<TreeSelectTriggerType>,
+    type: String as PropType<LewTrigger>,
     default: 'click',
-    description: '子菜单触发方式',
-    validator: (value: TreeSelectTriggerType) => {
-      if (!['click', 'hover'].includes(value)) {
-        console.warn('[LewTreeSelect] trigger 必须是 click 或 hover')
-        return false
-      }
-      return true
-    },
+    typeValues: validTriggerList,
+    validator: validators.enum({
+      componentName: 'LewTreeSelect',
+      propName: 'trigger',
+      values: validTriggerList,
+    }),
   },
   keyField: {
     type: String,
     default: 'key',
-    description: '节点标识字段名',
+    validator: validators.string({
+      componentName: 'LewTreeSelect',
+      propName: 'keyField',
+    }),
   },
   labelField: {
     type: String,
     default: 'label',
-    description: '节点标签字段名',
+    validator: validators.string({
+      componentName: 'LewTreeSelect',
+      propName: 'labelField',
+    }),
   },
   disabledField: {
     type: String,
     default: 'disabled',
-    description: '节点禁用状态字段名',
+    validator: validators.string({
+      componentName: 'LewTreeSelect',
+      propName: 'disabledField',
+    }),
   },
   initMethod: {
     type: Function as PropType<() => void>,
     default: undefined,
-    description: '初始化树数据的方法',
+    validator: validators.function({
+      componentName: 'LewTreeSelect',
+      propName: 'initMethod',
+    }),
   },
   initMethodId: {
     type: String,
-    default: '',
     hidden: true,
-    description: '初始化选项方法函数的标识',
+    validator: validators.string({
+      componentName: 'LewTreeSelect',
+      propName: 'initMethodId',
+    }),
   },
   loadMethod: {
     type: Function as PropType<() => void>,
     default: undefined,
-    description: '异步加载子节点数据的方法',
+    validator: validators.function({
+      componentName: 'LewTreeSelect',
+      propName: 'loadMethod',
+    }),
   },
 }
+
+export type LewTreeSelectProps = ExtractPropTypes<typeof treeSelectProps>

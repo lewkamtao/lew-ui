@@ -1,25 +1,6 @@
-import type { LewSize } from 'lew-ui'
+import type { LewSelectMultipleOptions, LewSelectMultipleOptionsGroup, LewSelectSearchMultipleMethodParams, LewSize } from 'lew-ui'
 import type { PropType } from 'vue'
-import validators from 'lew-ui/validators'
-
-export interface SelectMultipleOptions {
-  label: string
-  value: string | number
-  disabled?: boolean
-  isGroup?: boolean
-  groupValue?: string | number
-  groupLabel?: string
-}
-
-export interface SelectMultipleOptionsGroup {
-  label: string
-  children: SelectMultipleOptions[]
-}
-
-export interface SelectSearchMultipleMethodParams {
-  options?: SelectMultipleOptions[]
-  keyword?: string
-}
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const selectMultipleModel = {
   modelValue: {
@@ -31,7 +12,7 @@ export const selectMultipleModel = {
 
 export const selectMultipleProps = {
   options: {
-    type: Array as PropType<SelectMultipleOptions[]>,
+    type: Array as PropType<LewSelectMultipleOptions[]>,
     default: () => [],
     description: '可选项列表',
   },
@@ -63,10 +44,11 @@ export const selectMultipleProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewSelectMultiple',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   itemHeight: {
@@ -86,7 +68,7 @@ export const selectMultipleProps = {
   },
   searchMethod: {
     type: Function as PropType<
-      (params: SelectSearchMultipleMethodParams) => SelectMultipleOptions[]
+      (params: LewSelectSearchMultipleMethodParams) => LewSelectMultipleOptions[]
     >,
     default: undefined,
     description: '自定义搜索方法，接收搜索参数并返回过滤后的选项列表',
@@ -94,8 +76,8 @@ export const selectMultipleProps = {
   initMethod: {
     type: Function as PropType<
       () =>
-        | (SelectMultipleOptions[] | SelectMultipleOptionsGroup[])
-        | Promise<SelectMultipleOptions[] | SelectMultipleOptionsGroup[]>
+        | (LewSelectMultipleOptions[] | LewSelectMultipleOptionsGroup[])
+        | Promise<LewSelectMultipleOptions[] | LewSelectMultipleOptionsGroup[]>
     >,
     default: undefined,
     description: '初始化选项的方法，用于异步加载选项',

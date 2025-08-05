@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewTagProps } from 'lew-ui'
-import type { LewMenuTreeItemOptions } from 'lew-ui/types'
+import type { LewMenuTreeOption } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
@@ -20,8 +20,9 @@ export const menuTreeModel = {
 
 export const menuTreeProps = {
   options: {
-    type: Array as PropType<LewMenuTreeItemOptions>,
-    default: () => [],
+    type: Array as PropType<LewMenuTreeOption[]>,
+    default: [],
+    typePopKeys: ['LewMenuTreeOption'],
     validator: validators.array({
       componentName: 'LewMenuTree',
       propName: 'options',

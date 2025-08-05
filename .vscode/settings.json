@@ -2,7 +2,6 @@
   // ========== Visuals ==========
   "editor.fontFamily": "Input Mono, monospace",
   "editor.guides.bracketPairs": "active",
-  "editor.lineNumbers": "interval",
   "window.autoDetectColorScheme": true,
   "workbench.fontAliasing": "antialiased",
   "workbench.list.smoothScrolling": true,
@@ -33,7 +32,7 @@
   "scm.diffDecorationsGutterWidth": 2,
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.fontWeight": "200",
+  "terminal.integrated.fontWeight": "400",
   "terminal.integrated.persistentSessionReviveProcess": "never",
   "terminal.integrated.tabs.enabled": true,
   "workbench.editor.closeOnFileDelete": true,

@@ -56,5 +56,5 @@ export const collapseItemProps = {
   },
 }
 
-export type CollapseProps = ExtractPropTypes<typeof collapseProps>
-export type CollapseItemProps = ExtractPropTypes<typeof collapseItemProps>
+export type LewCollapseProps = ExtractPropTypes<typeof collapseProps>
+export type LewCollapseItemProps = ExtractPropTypes<typeof collapseItemProps>

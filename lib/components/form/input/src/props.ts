@@ -1,6 +1,6 @@
 import type { LewContextMenusOption, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export type InputType = 'text' | 'password'
 export type InputAlign = 'left' | 'center' | 'right'
@@ -37,10 +37,11 @@ export const inputProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewInput',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   width: {
@@ -158,7 +159,7 @@ export const inputProps = {
   prefixesOptions: {
     type: Array as PropType<LewContextMenusOption[]>,
     default: () => [],
-    validator: validators.basicArray({
+    validator: validators.array({
       componentName: 'LewInput',
       propName: 'prefixesOptions',
     }),
@@ -182,7 +183,7 @@ export const inputProps = {
   suffixOptions: {
     type: Array as PropType<LewContextMenusOption[]>,
     default: () => [],
-    validator: validators.basicArray({
+    validator: validators.array({
       componentName: 'LewInput',
       propName: 'suffixOptions',
     }),

@@ -1,13 +1,11 @@
-import type { LewSize, SelectOptions } from 'lew-ui'
-import validators from 'lew-ui/validators'
-
-export type PaginationOptions = SelectOptions
+import type { LewSelectOptions, LewSize } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const paginationModel = {
   total: {
     type: Number,
     default: 100,
-    description: '数据总条数',
     validator: validators.nonNegativeInteger({
       componentName: 'LewPagination',
       propName: 'total',
@@ -16,7 +14,6 @@ export const paginationModel = {
   currentPage: {
     type: Number,
     default: 1,
-    description: '当前页码',
     validator: validators.positiveInteger({
       componentName: 'LewPagination',
       propName: 'currentPage',
@@ -26,7 +23,6 @@ export const paginationModel = {
     type: Number,
     required: true,
     default: 10,
-    description: '每页显示的条目数',
     validator: validators.positiveInteger({
       componentName: 'LewPagination',
       propName: 'pageSize',
@@ -38,16 +34,17 @@ export const paginationProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '分页组件的尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewPagination',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   pageSizeOptions: {
-    type: Array as PropType<number[] | SelectOptions[]>,
+    type: Array as PropType<number[] | LewSelectOptions[]>,
+    typePopKeys: ['LewSelectOptions'],
     default: () => [10, 20, 30, 50, 100],
-    description: '每页显示条目数的选项列表',
     validator: validators.array({
       componentName: 'LewPagination',
       propName: 'pageSizeOptions',
@@ -56,7 +53,6 @@ export const paginationProps = {
   visiblePagesCount: {
     type: Number,
     default: 5,
-    description: '可见页码按钮的数量',
     validator: validators.range({
       componentName: 'LewPagination',
       propName: 'visiblePagesCount',
@@ -65,3 +61,5 @@ export const paginationProps = {
     }),
   },
 }
+
+export type LewPaginationProps = ExtractPropTypes<typeof paginationProps>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { LewPopover } from 'lew-ui'
-import LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
+import { LewContextMenu, LewPopover } from 'lew-ui'
 import { ref } from 'vue'
 import { dropdownProps } from './props'
 
@@ -27,7 +26,9 @@ defineExpose({
 
 <template>
   <LewPopover
-    ref="lewPopoverRef" popover-body-class-name="lew-dropdown-popover-body" :trigger="trigger"
+    ref="lewPopoverRef"
+    popover-body-class-name="lew-dropdown-popover-body"
+    :trigger="trigger"
     :placement="placement"
   >
     <template #trigger>

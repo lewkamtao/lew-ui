@@ -1,11 +1,13 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes } from 'vue'
 import validators from 'lew-ui/validators'
 
-export type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
+const objectFitValues = ['fill', 'contain', 'cover', 'none', 'scale-down']
+const objectPositionValues = ['center', 'top', 'bottom', 'left', 'right', 'top left', 'top right', 'bottom left', 'bottom right']
 
 export const imageProps = {
   src: {
     type: String,
+    default: '',
     validator: validators.string({
       componentName: 'LewImage',
       propName: 'src',
@@ -13,6 +15,7 @@ export const imageProps = {
   },
   alt: {
     type: String,
+    default: '',
     validator: validators.string({
       componentName: 'LewImage',
       propName: 'alt',
@@ -35,37 +38,28 @@ export const imageProps = {
     }),
   },
   objectFit: {
-    type: String as PropType<ObjectFit>,
+    type: String,
     default: 'cover',
-    typeDesc: `fill | contain | cover | none | scale-down`,
+    typeValues: objectFitValues,
     validator: validators.enum({
       componentName: 'LewImage',
       propName: 'objectFit',
-      values: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+      values: objectFitValues,
     }),
   },
   objectPosition: {
     type: String,
     default: 'center',
-    typeDesc: `center | top | bottom | left | right | top left | top right | bottom left | bottom right`,
+    typeValues: objectPositionValues,
     validator: validators.enum({
       componentName: 'LewImage',
       propName: 'objectPosition',
-      values: [
-        'center',
-        'top',
-        'bottom',
-        'left',
-        'right',
-        'top left',
-        'top right',
-        'bottom left',
-        'bottom right',
-      ],
+      values: objectPositionValues,
     }),
   },
   lazy: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewImage',
       propName: 'lazy',
@@ -73,6 +67,7 @@ export const imageProps = {
   },
   loading: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewImage',
       propName: 'loading',
@@ -80,6 +75,7 @@ export const imageProps = {
   },
   title: {
     type: String,
+    default: '',
     validator: validators.string({
       componentName: 'LewImage',
       propName: 'title',

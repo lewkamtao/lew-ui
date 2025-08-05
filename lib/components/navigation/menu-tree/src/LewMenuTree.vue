@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LewMenuTreeItemOption, LewMenuTreeItemOptions } from 'lew-ui/types'
+import type { LewMenuTreeOption } from 'lew-ui/types'
 import { any2px } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { computed, h, onMounted, provide, resolveDirective, withDirectives } from 'vue'
@@ -8,8 +8,8 @@ import { menuTreeProps } from './props'
 
 // Types
 interface MenuTreeEmits {
-  change: [item: LewMenuTreeItemOption]
-  select: [value: string | number, item: LewMenuTreeItemOption]
+  change: [item: LewMenuTreeOption]
+  select: [value: string | number, item: LewMenuTreeOption]
   expand: [expandKeys: (string | number)[]]
   collapse: [expandKeys: (string | number)[]]
 }
@@ -20,13 +20,13 @@ const emit = defineEmits<MenuTreeEmits>()
 
 // Models
 const modelValue = defineModel<string>({ default: '' })
-const expandKeys = defineModel<(string)[]>('expandKeys', { default: () => [] })
+const expandKeys = defineModel<string[]>('expandKeys', { default: () => [] })
 const collapsed = defineModel<boolean>('collapsed', { default: false })
 
 // Computed
 const getModelValueKeyPath = computed(() => {
   function findKeyPath(
-    items: LewMenuTreeItemOptions,
+    items: LewMenuTreeOption[],
     parentPath: (string | number)[] = [],
   ): (string | number)[] | undefined {
     for (const item of items) {
@@ -64,7 +64,7 @@ provide('lew-menu-tree', {
 const hoverMenu = resolveDirective('hover-menu')
 
 // Methods
-function handleMenuSelect(item: LewMenuTreeItemOption): void {
+function handleMenuSelect(item: LewMenuTreeOption): void {
   if (item.disabled) {
     return
   }
@@ -94,7 +94,7 @@ function handleMenuSelect(item: LewMenuTreeItemOption): void {
   expandKeys.value = cloneDeep(expandKeys.value)
   emit('change', item)
 }
-function transformTree(tree: LewMenuTreeItemOptions = []): LewMenuTreeItemOptions {
+function transformTree(tree: LewMenuTreeOption[] = []): LewMenuTreeOption[] {
   return tree.map(item => ({
     ...item,
     active:
@@ -105,24 +105,27 @@ function transformTree(tree: LewMenuTreeItemOptions = []): LewMenuTreeItemOption
   }))
 }
 
-function renderMenuTreeItem(item: LewMenuTreeItemOption, level: number = 1): any {
-  function buildHoverMenuOptions(item: LewMenuTreeItemOption) {
+function renderMenuTreeItem(item: LewMenuTreeOption, level: number = 1): any {
+  function buildHoverMenuOptions(item: LewMenuTreeOption) {
     return [
       { label: item.label, disabled: true },
       { isDividerLine: true },
-      ...(transformTree(item.children as LewMenuTreeItemOptions) || []),
+      ...(transformTree(item.children as LewMenuTreeOption[]) || []),
     ]
   }
 
-  const directives: any = level === 1
-    ? [[
-        hoverMenu,
-        {
-          options: buildHoverMenuOptions(item),
-          disabled: !collapsed.value,
-        },
-      ]]
-    : []
+  const directives: any
+    = level === 1
+      ? [
+          [
+            hoverMenu,
+            {
+              options: buildHoverMenuOptions(item),
+              disabled: !collapsed.value,
+            },
+          ],
+        ]
+      : []
 
   const { disabled, icon, label, value, tagProps } = item
 

@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui/types'
-import type { ExtractPropTypes } from 'vue'
-import validators from 'lew-ui/validators'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export type InputNumberAlign = 'left' | 'center' | 'right'
 
@@ -47,12 +47,12 @@ export const inputNumberProps = {
   },
   size: {
     type: String as PropType<LewSize>,
-    typeDesc: 'small | medium | large',
     default: 'medium',
-    description: '尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewInputNumber',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   placeholder: {
@@ -81,7 +81,7 @@ export const inputNumberProps = {
   },
   align: {
     type: String as PropType<InputNumberAlign>,
-    typeDesc: 'left | center | right',
+    typeValues: 'left | center | right',
     default: 'left',
     description: '对齐方式',
     validator(value: InputNumberAlign) {

@@ -2,6 +2,8 @@
 import type { LewColor } from 'lew-ui'
 import { LewButton, LewPopover, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+
 import { any2px } from 'lew-ui/utils'
 import { popokButtonProps } from './props'
 
@@ -62,12 +64,12 @@ onMounted(() => {
           <CommonIcon :size="24" :type />
         </div>
         <div class="lew-popok-right">
-          <div v-if="title" class="lew-popok-title">
-            {{ title }}
-          </div>
-          <div v-if="content" class="lew-popok-content">
-            {{ content }}
-          </div>
+          <RenderComponent v-if="title" class="lew-popok-title" :render-fn="title" />
+          <RenderComponent
+            v-if="content"
+            class="lew-popok-content"
+            :render-fn="content"
+          />
           <div class="lew-popok-footer">
             <LewButton
               :text="cancelText || locale.t('popok.cancelText')"

@@ -1,4 +1,4 @@
-import type { TreeDataSource } from './props'
+import type { LewTreeDataSource } from 'lew-ui'
 import { has } from 'lodash-es'
 
 /**
@@ -7,7 +7,7 @@ import { has } from 'lodash-es'
  * @param keyField 键字段名
  * @returns 所有节点值的数组
  */
-function findAllNodes(tree: TreeDataSource[] = [], keyField = 'key') {
+function findAllNodes(tree: LewTreeDataSource[] = [], keyField = 'key') {
   // 使用Set避免重复值
   const nodes = new Set()
 
@@ -31,7 +31,7 @@ function findAllNodes(tree: TreeDataSource[] = [], keyField = 'key') {
  * @param keyField 键字段名
  * @returns 所有叶子节点值的数组
  */
-function findLeafNodes(tree: TreeDataSource[] = [], keyField = 'key') {
+function findLeafNodes(tree: LewTreeDataSource[] = [], keyField = 'key') {
   const leafNodes = new Set()
 
   const traverse = (node: any) => {
@@ -57,15 +57,15 @@ export function formatTree({
   labelField = 'label',
   free = false,
 }: {
-  dataSource: TreeDataSource[]
+  dataSource: LewTreeDataSource[]
   parent?: any
   parentKeyPaths?: string[]
   parentLabelPaths?: string[]
   keyField?: string
   labelField?: string
   free?: boolean
-}): TreeDataSource[] {
-  return dataSource.map((node: TreeDataSource, index: number) => {
+}): LewTreeDataSource[] {
+  return dataSource.map((node: LewTreeDataSource, index: number) => {
     const { children, ...rest }: any = node
     const key = rest[keyField]
     const label = rest[labelField]
@@ -131,20 +131,20 @@ async function transformTree({
   keyword = '',
 }: {
   initMethod?: any
-  dataSource?: TreeDataSource[]
+  dataSource?: LewTreeDataSource[]
   keyField?: string
   labelField?: string
   free?: boolean
   keyword?: string
 }) {
-  let tree: TreeDataSource[] = []
+  let tree: LewTreeDataSource[] = []
   const status = 'success'
 
   try {
     // 处理初始化树或使用提供的数据源
     if (initMethod) {
       try {
-        const _tree: TreeDataSource[] = await initMethod()
+        const _tree: LewTreeDataSource[] = await initMethod()
         if (Array.isArray(_tree)) {
           tree = formatTree({
             dataSource: _tree,
@@ -186,10 +186,10 @@ async function transformTree({
 
     // 关键词过滤
     if (keyword) {
-      const _tree: TreeDataSource[] = []
+      const _tree: LewTreeDataSource[] = []
 
       // 优化：使用更高效的过滤算法
-      const filterTree = (nodes: TreeDataSource[]) => {
+      const filterTree = (nodes: LewTreeDataSource[]) => {
         nodes.forEach((node) => {
           const { labelPaths, children } = node
 

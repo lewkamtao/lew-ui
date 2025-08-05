@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export interface InputTableColumn {
   title: string
@@ -47,9 +47,11 @@ export const inputTableProps = {
     type: String as PropType<LewSize>,
     default: 'medium',
     description: '表格尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewInputTable',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   width: {

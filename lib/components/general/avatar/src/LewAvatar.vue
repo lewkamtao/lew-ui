@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { AvatarPlacement, AvatarShape, AvatarStatus } from './props'
 import { useImage } from '@vueuse/core'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px } from 'lew-ui/utils'
@@ -14,27 +13,27 @@ const emit = defineEmits<{
 }>()
 
 // Constants
-const BORDER_RADIUS_MAP: Record<AvatarShape, string> = {
+const BORDER_RADIUS_MAP: Record<string, string> = {
   circle: '50%',
   sharp: '0',
   square: 'var(--lew-border-radius-small)',
 }
 
-const STATUS_PLACEMENT_CONFIG_CIRCLE: Record<AvatarPlacement, Record<string, string>> = {
+const STATUS_PLACEMENT_CONFIG_CIRCLE: Record<string, Record<string, string>> = {
   'top-left': { top: '-0.05rem', left: '-0.05rem', bottom: 'auto', right: 'auto' },
   'top-right': { top: '-0.05rem', left: 'auto', bottom: 'auto', right: '-0.05rem' },
   'bottom-left': { top: 'auto', left: '-0.05rem', bottom: '-0.05rem', right: 'auto' },
   'bottom-right': { top: 'auto', left: 'auto', bottom: '-0.05rem', right: '-0.05rem' },
 }
 
-const STATUS_PLACEMENT_CONFIG_SQUARE: Record<AvatarPlacement, Record<string, string>> = {
+const STATUS_PLACEMENT_CONFIG_SQUARE: Record<string, Record<string, string>> = {
   'top-left': { top: '-0.25rem', left: '-0.25rem', bottom: 'auto', right: 'auto' },
   'top-right': { top: '-0.25rem', left: 'auto', bottom: 'auto', right: '-0.25rem' },
   'bottom-left': { top: 'auto', left: '-0.25rem', bottom: '-0.25rem', right: 'auto' },
   'bottom-right': { top: 'auto', left: 'auto', bottom: '-0.25rem', right: '-0.25rem' },
 }
 
-const STATUS_COLOR_CONFIG: Record<AvatarStatus, string> = {
+const STATUS_COLOR_CONFIG: Record<string, string> = {
   online: 'var(--lew-color-success)',
   busy: 'var(--lew-color-error)',
   offline: 'var(--lew-color-normal-dark)',
@@ -93,9 +92,8 @@ const dotStyleObject = computed(() => {
   if (!status)
     return {}
 
-  const statusPlacementConfig = shape === 'circle'
-    ? STATUS_PLACEMENT_CONFIG_CIRCLE
-    : STATUS_PLACEMENT_CONFIG_SQUARE
+  const statusPlacementConfig
+    = shape === 'circle' ? STATUS_PLACEMENT_CONFIG_CIRCLE : STATUS_PLACEMENT_CONFIG_SQUARE
 
   return {
     ...statusPlacementConfig[statusPlacement],
@@ -121,7 +119,13 @@ const getIconSize = computed(() => {
     <div class="lew-avatar-box" :style="avatarBoxStyleObject">
       <template v-if="src">
         <div v-if="isLoading || loading" class="skeleton" />
-        <img v-else-if="!error" :alt="alt" :src="src" lazy :style="imageStyleObject">
+        <img
+          v-else-if="!error"
+          :alt="alt"
+          :src="src"
+          lazy
+          :style="imageStyleObject as any"
+        >
         <div v-else-if="alt" class="lew-avatar-text" :style="textStyleObject">
           {{ altText }}
         </div>
@@ -177,6 +181,7 @@ const getIconSize = computed(() => {
     0% {
       background-position: 200% 0;
     }
+
     100% {
       background-position: -200% 0;
     }
@@ -190,10 +195,12 @@ const getIconSize = computed(() => {
     animation-fill-mode: forwards;
     opacity: 0;
   }
+
   @keyframes img-enter {
     0% {
       opacity: 0;
     }
+
     100% {
       opacity: 1;
     }

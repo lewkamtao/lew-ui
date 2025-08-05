@@ -1,12 +1,11 @@
 import type { LewSize } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import validators from 'lew-ui/validators'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const rateModel = {
   modelValue: {
     type: Number,
     default: undefined,
-    description: '绑定值',
   },
 }
 
@@ -14,16 +13,16 @@ export const rateProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '复选框组中复选框的尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewRate',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   count: {
     type: Number,
     default: 5,
-    description: '评分的总数',
   },
   tips: {
     type: [Array, String] as PropType<string[] | string>,

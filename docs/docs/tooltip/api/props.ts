@@ -6,7 +6,7 @@ export default {
       name: 'content',
       description: '内容',
       type: 'null',
-      typeDesc: 'vnode|string',
+      typeValues: 'vnode|string',
       default: '-',
     },
     {

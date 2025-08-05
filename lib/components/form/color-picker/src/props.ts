@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui/types'
-import type { PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const colorPickerModel = {
   modelValue: {
@@ -13,13 +13,15 @@ export const colorPickerProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewColorPicker',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   width: {
-    type: [Number, String],
+    type: String,
     default: 'auto',
     validator: validators.widthHeight({
       componentName: 'LewColorPicker',
@@ -36,6 +38,7 @@ export const colorPickerProps = {
   },
   disabled: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewColorPicker',
       propName: 'disabled',
@@ -43,9 +46,12 @@ export const colorPickerProps = {
   },
   readonly: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewColorPicker',
       propName: 'readonly',
     }),
   },
 }
+
+export type LewColorPickerProps = ExtractPropTypes<typeof colorPickerProps>

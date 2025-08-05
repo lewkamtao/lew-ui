@@ -1,6 +1,6 @@
 import type { LewCheckboxOptions, LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validDirectionList, validSizeList } from 'lew-ui/validators'
 
 export const checkboxModel = {
   modelValue: {
@@ -49,9 +49,11 @@ export const checkboxProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewCheckbox',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   block: {
@@ -111,17 +113,21 @@ export const checkboxGroupProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewCheckboxGroup',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
-    validator: validators.direction({
+    typeValues: validDirectionList,
+    validator: validators.enum({
       componentName: 'LewCheckboxGroup',
       propName: 'direction',
+      values: validDirectionList,
     }),
   },
   block: {
@@ -147,5 +153,5 @@ export const checkboxGroupProps = {
   },
 }
 
-export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>
-export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>
+export type LewCheckboxProps = ExtractPropTypes<typeof checkboxProps>
+export type LewCheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>

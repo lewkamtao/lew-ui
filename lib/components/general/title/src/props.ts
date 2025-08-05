@@ -1,7 +1,7 @@
 import type { Property } from 'csstype'
 import type { LewColor } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validColorList, } from 'lew-ui/validators'
 
 export const titleProps = {
   text: {
@@ -21,9 +21,11 @@ export const titleProps = {
   },
   color: {
     type: String as PropType<LewColor>,
-    validator: validators.color({
+    typeValues: validColorList,
+    validator: validators.enum({
       componentName: 'LewTitle',
       propName: 'color',
+      values: validColorList,
     }),
   },
   bold: {

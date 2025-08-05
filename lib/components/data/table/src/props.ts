@@ -1,17 +1,6 @@
-import type { LewSize } from 'lew-ui'
-import type { PropType } from 'vue'
-import validators from 'lew-ui/validators'
-
-export interface LewTableColumn {
-  title: string
-  field: string
-  fixed?: 'left' | 'right'
-  x?: string
-  y?: string
-  width?: number
-  columnStyle?: string
-  sortable?: boolean
-}
+import type { LewSize, LewTableColumn } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const tableModel = {
   selectedKeys: {
@@ -54,9 +43,11 @@ export const tableProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewTable',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   checkable: {
@@ -108,3 +99,5 @@ export const tableProps = {
     }),
   },
 }
+
+export type LewTableProps = ExtractPropTypes<typeof tableProps>

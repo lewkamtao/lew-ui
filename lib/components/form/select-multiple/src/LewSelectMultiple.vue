@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from './props'
+import type { LewSelectMultipleOptions, LewSelectMultipleOptionsGroup } from 'lew-ui'
 import { useDebounceFn } from '@vueuse/core'
 import {
   LewCheckbox,
@@ -11,10 +11,9 @@ import {
   locale,
 } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
+import { any2px, filterSelectOptionsByKeyword, flattenSelectOptions, numFormat, object2class, poll } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
-import { defaultSearchMethod, flattenOptions } from '../../select/src/util'
 import { selectMultipleProps } from './props'
 
 const props = defineProps(selectMultipleProps)
@@ -32,12 +31,12 @@ const state = reactive({
   loading: false,
   initLoading: true,
   sourceOptions: props.options as (
-    | SelectMultipleOptions
-    | SelectMultipleOptionsGroup
+    | LewSelectMultipleOptions
+    | LewSelectMultipleOptionsGroup
   )[],
-  options: flattenOptions(props.options),
+  options: flattenSelectOptions(props.options),
   keyword: '',
-  searchCache: new Map<string, SelectMultipleOptions[]>(),
+  searchCache: new Map<string, LewSelectMultipleOptions[]>(),
 })
 
 const formMethods: any = inject('formMethods', {})
@@ -50,7 +49,7 @@ const _searchMethod = computed(() => {
     return formMethods[props.searchMethodId]
   }
   else {
-    return defaultSearchMethod
+    return filterSelectOptionsByKeyword
   }
 })
 
@@ -94,7 +93,7 @@ async function search(e?: any) {
       result = state.searchCache.get(keyword)!
     }
     else {
-      const optionsToSearch = flattenOptions(state.sourceOptions)
+      const optionsToSearch = flattenSelectOptions(state.sourceOptions)
       if (!keyword && optionsToSearch.length > 0) {
         result = optionsToSearch
       }
@@ -125,9 +124,7 @@ function clearHandle() {
 }
 
 function deleteTag({ value }: { value: any }) {
-  const valueIndex = selectValue.value.findIndex(
-    (_value: any) => value === _value,
-  )
+  const valueIndex = selectValue.value.findIndex((_value: any) => value === _value)
 
   if (valueIndex > -1) {
     const item = selectValue.value[valueIndex]
@@ -144,7 +141,7 @@ function deleteTag({ value }: { value: any }) {
   }
 }
 
-function selectHandle(item: SelectMultipleOptions) {
+function selectHandle(item: LewSelectMultipleOptions) {
   if (item.disabled || item.isGroup) {
     return
   }
@@ -186,7 +183,7 @@ const getSelectedRows = computed(() => {
     const selectedRows
       = selectValue.value
         && selectValue.value.map((v: number | string) => {
-          return state.options.find((e: SelectMultipleOptions) => v === e.value)
+          return state.options.find((e: LewSelectMultipleOptions) => v === e.value)
         })
     if (!selectedRows || selectedRows.length === 0) {
       return _defaultValue
@@ -283,7 +280,7 @@ async function init() {
     try {
       const newOptions = await _initMethod.value()
       state.sourceOptions = newOptions
-      state.options = flattenOptions(newOptions)
+      state.options = flattenSelectOptions(newOptions)
     }
     catch (error) {
       console.error('[LewSelectMultiple] initMethod failed', error)
@@ -315,7 +312,7 @@ watch(
   (newOptions) => {
     if (!_initMethod.value) {
       state.sourceOptions = newOptions
-      state.options = flattenOptions(newOptions)
+      state.options = flattenSelectOptions(newOptions)
       if (props.enableSearchCache) {
         state.searchCache.clear()
       }
@@ -351,11 +348,7 @@ const getResultText = computed(() => {
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <CommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
         <CommonIcon
           v-else
@@ -369,12 +362,7 @@ const getResultText = computed(() => {
         />
         <transition name="lew-form-icon-ani">
           <CommonIcon
-            v-if="
-              clearable
-                && getSelectedRows
-                && getSelectedRows.length > 0
-                && !readonly
-            "
+            v-if="clearable && getSelectedRows && getSelectedRows.length > 0 && !readonly"
             :size="getIconSize"
             type="close"
             class="lew-form-icon-close"
@@ -462,9 +450,7 @@ const getResultText = computed(() => {
           }"
           class="lew-placeholder"
         >
-          {{
-            placeholder ? placeholder : locale.t('selectMultiple.placeholder')
-          }}
+          {{ placeholder ? placeholder : locale.t("selectMultiple.placeholder") }}
         </div>
       </div>
     </template>
@@ -577,6 +563,7 @@ const getResultText = computed(() => {
     transition: all var(--lew-form-transition-ease);
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     box-shadow: var(--lew-form-box-shadow);
+
     .lew-icon-loading-box {
       display: flex;
       align-items: center;
@@ -587,6 +574,7 @@ const getResultText = computed(() => {
       box-sizing: border-box;
       transform: translateY(-50%);
     }
+
     .lew-icon-select {
       position: absolute;
       top: 50%;
@@ -633,6 +621,7 @@ const getResultText = computed(() => {
       transition: all 0.2s;
       height: 100%;
     }
+
     .lew-value {
       display: flex;
       align-items: center;
@@ -762,6 +751,7 @@ const getResultText = computed(() => {
     opacity: 0;
     transform: translateX(-5px);
   }
+
   &-leave-to {
     opacity: 0;
     transform: scaleX(0);
@@ -806,10 +796,12 @@ const getResultText = computed(() => {
       transition: all var(--lew-form-transition-bezier);
       border-bottom: var(--lew-form-border-width) var(--lew-form-bgcolor-hover) solid;
       color: var(--lew-text-color-2);
+
       &:focus {
         border-bottom: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
       }
     }
+
     input:placeholder {
       color: rgb(165, 165, 165);
     }

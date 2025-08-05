@@ -22,7 +22,7 @@ export function convertProps(json: any) {
           ...json[key],
           name: key,
           description: json[key].description,
-          type: json[key].typeGhost ? json[key].typeGhost : type,
+          type,
           default: JSON.stringify(json[key].default),
         }
         props.push(prop)

@@ -17,6 +17,7 @@ import {
   sumBy,
   throttle,
 } from 'lodash-es'
+import { markRaw } from 'vue'
 import { tableProps } from './props'
 import SortIcon from './SortIcon.vue'
 
@@ -35,7 +36,6 @@ let tooltipAnimationFrame: number | null = null
 const state = reactive({
   isInitialized: false,
   columns: [],
-  hoverRowIndex: -1,
   isAllChecked: false,
   isScrollbarVisible: false,
   isScroll: false,
@@ -57,8 +57,65 @@ const state = reactive({
   lastMouseY: 0 as number,
   dragRowId: '',
   targetRowId: '',
-  tooltipComponent: null as any,
 })
+
+// 使用 shallowRef 来管理 tooltipComponent，避免深层响应式
+const tooltipComponent = shallowRef(null as any)
+
+// 使用 shallowRef 来避免深层响应式，提高性能
+const hoverRowIndex = shallowRef(-1)
+
+// 缓存 RenderComponent 的渲染函数结果
+const renderCache = new Map<string, any>()
+
+// 计算属性来优化行样式计算
+const getRowClass = computed(() => {
+  return (index: number, row: any) => ({
+    'lew-table-tr-hover': hoverRowIndex.value === index && !state.isDragging,
+    'lew-table-tr-dragging': state.dragIndex === index,
+    'lew-table-tr-selected': state.selectedRowsMap[row[props.rowKey]],
+  })
+})
+
+// 优化行选择状态的计算
+const getRowSelectedState = computed(() => {
+  return (row: any) => state.selectedRowsMap[row[props.rowKey]]
+})
+
+// 缓存 customRender 的结果
+function getCachedRenderResult(column: any, row: any, index: number) {
+  // 使用更稳定的缓存键，避免不必要的缓存失效
+  const cacheKey = `${column.field}_${row[props.rowKey]}_${index}`
+
+  if (!renderCache.has(cacheKey)) {
+    const renderResult = column.customRender({
+      row,
+      column,
+      index,
+      text: row[column.field],
+    })
+    // 使用 markRaw 来避免深层响应式
+    renderCache.set(cacheKey, markRaw(renderResult))
+  }
+
+  return renderCache.get(cacheKey)
+}
+
+// 清理缓存函数
+function clearRenderCache() {
+  renderCache.clear()
+}
+
+// 智能缓存清理：只清理特定行的缓存
+// function clearRowRenderCache(rowId: string) {
+//   const keysToDelete: string[] = []
+//   for (const key of renderCache.keys()) {
+//     if (key.includes(rowId)) {
+//       keysToDelete.push(key)
+//     }
+//   }
+//   keysToDelete.forEach(key => renderCache.delete(key))
+// }
 
 const getCheckableWidth = computed(() => {
   const sizeMap = {
@@ -545,6 +602,7 @@ function init() {
   nextTick(() => {
     updateScrollState()
     handleTableResize()
+
     if (props.checkable) {
       updateSelectedKeys(selectedKeys.value)
     }
@@ -585,6 +643,8 @@ onUnmounted(() => {
 watch(
   () => props.dataSource,
   (newVal) => {
+    // 清理渲染缓存
+    clearRenderCache()
     // 先计算新数据的高度
     const newDataSource = addUniqueIdToDataSource(cloneDeep(newVal))
     nextTick(() => {
@@ -669,9 +729,16 @@ function dragStart(event: DragEvent, row: any, index: number) {
 
   state.showTooltip = true
   state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`
-  state.tooltipComponent = props.sortTooltipCustomRender
-    ? props.sortTooltipCustomRender(row)
-    : h('div', {}, `Row ${row[props.rowKey]}`)
+
+  // 缓存 tooltip 组件
+  const tooltipCacheKey = `tooltip_${row[props.rowKey]}`
+  if (!renderCache.has(tooltipCacheKey)) {
+    const tooltipComponent = props.sortTooltipCustomRender
+      ? props.sortTooltipCustomRender(row)
+      : h('div', {}, `Row ${row[props.rowKey]}`)
+    renderCache.set(tooltipCacheKey, tooltipComponent)
+  }
+  tooltipComponent.value = renderCache.get(tooltipCacheKey)
   document.addEventListener('mousemove', throttledTooltipUpdate)
   document.addEventListener('mouseup', dragEnd)
 }
@@ -849,14 +916,17 @@ function addUniqueIdToDataSource(dataSource: any[]) {
     if (!row._lew_table_tr_id) {
       row._lew_table_tr_id = getUniqueId()
     }
-    return row
+    // 使用 markRaw 来避免深层响应式，提高性能
+    return markRaw(row)
   })
 }
+
 function getRowHeight(row: any) {
   if (!row || !row._lew_table_tr_id)
     return 'auto'
   return `${state.trHeightMap[row._lew_table_tr_id] || 0}px`
 }
+
 function setTrRef(el: HTMLElement | null, row: any) {
   if (row && row._lew_table_tr_id) {
     trRefMap.value[row._lew_table_tr_id] = el
@@ -934,7 +1004,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
       }"
       :style="`max-height: ${any2px(maxHeight)}`"
       @scroll="updateScrollState"
-      @mouseleave="state.hoverRowIndex = -1"
+      @mouseleave.stop="hoverRowIndex = -1"
     >
       <div
         class="lew-table-head"
@@ -943,7 +1013,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
           width: `${totalColumnWidth}px`,
           height: `${getHeadHeight * columnLevel + columnLevel * 1}px`,
         }"
-        @mouseenter="state.hoverRowIndex = -1"
+        @mouseenter.stop="hoverRowIndex = -1"
       >
         <div
           v-if="getFixedHeaderColumns('left').length > 0 || checkable || sortable"
@@ -1051,24 +1121,19 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
             v-for="(row, i) in state.dataSource"
             :key="row._lew_table_tr_id"
             class="lew-table-tr"
-            :class="{
-              'lew-table-tr-hover': state.hoverRowIndex === i && !state.isDragging,
-              'lew-table-tr-dragging': state.dragIndex === i,
-              'lew-table-tr-selected': state.selectedRowsMap[row[rowKey]],
-            }"
+            :class="getRowClass(i, row)"
             :style="{
               height: getRowHeight(row),
             }"
             @click="toggleRowSelection(row)"
-            @mouseenter="state.hoverRowIndex = i"
+            @mouseenter.stop="hoverRowIndex = i"
           >
-            <!-- 拖拽把手 -->
             <LewFlex
               v-if="sortable"
               :style="{ width: `${getDragColumnWidth}px` }"
               x="center"
               class="lew-table-drag-handle"
-              @mousedown="dragStart($event, row, i)"
+              @mousedown.stop="dragStart($event, row, i)"
             >
               <CommonIcon
                 :size="getIconSize"
@@ -1085,7 +1150,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
               <LewCheckbox
                 :size="size"
                 class="lew-table-checkbox"
-                :checked="state.selectedRowsMap[row[rowKey]]"
+                :checked="getRowSelectedState(row)"
               />
             </LewFlex>
             <LewFlex
@@ -1108,16 +1173,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent
-                    :render-fn="
-                      column.customRender({
-                        row,
-                        column,
-                        index: i,
-                        text: row[column.field],
-                      })
-                    "
-                  />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row, i)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1132,13 +1188,9 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
             :key="row._lew_table_tr_id"
             :ref="(e: any) => setTrRef(e, row)"
             class="lew-table-tr"
-            :class="{
-              'lew-table-tr-hover': state.hoverRowIndex === i && !state.isDragging,
-              'lew-table-tr-dragging': state.dragIndex === i,
-              'lew-table-tr-selected': state.selectedRowsMap[row[rowKey]],
-            }"
+            :class="getRowClass(i, row)"
             @click="toggleRowSelection(row)"
-            @mouseenter="state.hoverRowIndex = i"
+            @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
               v-for="column in nonFixedColumns"
@@ -1160,16 +1212,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent
-                    :render-fn="
-                      column.customRender({
-                        row,
-                        column,
-                        index: i,
-                        text: row[column.field],
-                      })
-                    "
-                  />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row, i)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1186,12 +1229,8 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
             :style="{
               height: getRowHeight(row),
             }"
-            :class="{
-              'lew-table-tr-hover': state.hoverRowIndex === i && !state.isDragging,
-              'lew-table-tr-dragging': state.dragIndex === i,
-              'lew-table-tr-selected': state.selectedRowsMap[row[rowKey]],
-            }"
-            @mouseenter="state.hoverRowIndex = i"
+            :class="getRowClass(i, row)"
+            @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
               v-for="(column, j) in getFixedColumns('right')"
@@ -1213,16 +1252,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent
-                    :render-fn="
-                      column.customRender({
-                        row,
-                        column,
-                        index: i,
-                        text: row[column.field],
-                      })
-                    "
-                  />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row, i)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1242,7 +1272,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
       class="lew-table-drag-tooltip"
       :style="state.tooltipStyle"
     >
-      <RenderComponent :render-fn="state.tooltipComponent" />
+      <RenderComponent :render-fn="tooltipComponent" />
     </div>
   </div>
 </template>

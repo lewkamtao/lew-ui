@@ -1,12 +1,11 @@
 import type { Property } from 'csstype'
 import type { LewPlacement } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validPlacementList, validXAlignmentList } from 'lew-ui/validators'
 
 export const textTrimProps = {
-  // Content props
   text: {
-    type: [String, Number],
+    type: String,
     validator: validators.string({
       componentName: 'LewTextTrim',
       propName: 'text',
@@ -30,23 +29,27 @@ export const textTrimProps = {
   textAlign: {
     type: String as PropType<Property.TextAlign>,
     default: 'left',
-    validator: validators.xAlignment({
+    typeValues: validXAlignmentList,
+    validator: validators.enum({
       componentName: 'LewTextTrim',
       propName: 'textAlign',
+      values: validXAlignmentList,
     }),
   },
 
   placement: {
     type: String as PropType<LewPlacement>,
     default: 'top',
-    validator: validators.popoverPlacement({
+    typeValues: validPlacementList,
+    validator: validators.enum({
       componentName: 'LewTextTrim',
       propName: 'placement',
+      values: validPlacementList,
     }),
   },
   offset: {
     type: Array as unknown as PropType<[number, number]>,
-    default: () => [0, 15],
+    default: [0, 15],
     validator: validators.offset({
       componentName: 'LewTextTrim',
       propName: 'offset',
@@ -54,7 +57,7 @@ export const textTrimProps = {
   },
   delay: {
     type: Array as unknown as PropType<[number, number]>,
-    default: () => [120, 120],
+    default: [120, 120],
     validator: validators.offset({
       componentName: 'LewTextTrim',
       propName: 'delay',

@@ -1,6 +1,6 @@
 import type { LewSize } from 'lew-ui/types'
 import type { PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const switchModel = {
   modelValue: {
@@ -21,10 +21,11 @@ export const switchProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '开关的尺寸',
-    validator: validators.size({
+    typeValues: validSizeList,
+    validator: validators.enum({
       componentName: 'LewSwitch',
       propName: 'size',
+      values: validSizeList,
     }),
   },
   round: {

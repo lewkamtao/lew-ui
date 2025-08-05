@@ -1,22 +1,11 @@
 import type { LewContextMenusOption } from 'lew-ui/types'
-import type { App, DirectiveBinding, PropType } from 'vue'
+import type { App, DirectiveBinding } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
 import tippy from 'tippy.js'
 import { createApp, defineAsyncComponent, h } from 'vue'
 
-export const contextMenuProps = {
-  options: {
-    type: Array as PropType<LewContextMenusOption[]>,
-    default: () => [],
-    description: '右键菜单配置',
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-    description: '是否禁用右键菜单',
-  },
-}
-
+export { default as LewContextMenu } from './src/LewContextMenu.vue'
+export { contextMenuProps } from './src/props'
 interface LewContextMenuConfig {
   menu: Record<
     string,

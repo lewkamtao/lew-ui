@@ -6,7 +6,8 @@ import RenderComponent from 'lew-ui/render/components/RenderComponent.vue'
 import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
-import { contextMenuProps, initLewContextMenu } from '../index'
+import { initLewContextMenu } from '../index'
+import { contextMenuProps } from './props'
 
 const props = defineProps(contextMenuProps)
 
@@ -52,7 +53,9 @@ function initTippy() {
       return
     }
     const menuDom = document.createElement('div')
-    const LewContextMenuComponent = defineAsyncComponent(() => import('./LewContextMenu.vue'))
+    const LewContextMenuComponent = defineAsyncComponent(
+      () => import('./LewContextMenu.vue'),
+    )
     createApp({
       render() {
         return h(LewContextMenuComponent, {
@@ -84,15 +87,17 @@ function initTippy() {
       content: menuDom,
     })
 
-    window.LewContextMenu.menuInstance[
-      uniqueId
-    ].popper.children[0].setAttribute('data-lew', 'popover')
+    window.LewContextMenu.menuInstance[uniqueId].popper.children[0].setAttribute(
+      'data-lew',
+      'popover',
+    )
   })
 }
 
 onMounted(() => {
   initTippy()
 })
+
 onUnmounted(() => {
   if (window.LewContextMenu?.menuInstance[uniqueId]?.destroy) {
     window.LewContextMenu.menuInstance[uniqueId].destroy()
@@ -126,17 +131,10 @@ onUnmounted(() => {
             v-if="options.filter((e: any) => e.checkable).length > 0"
             class="lew-context-menu-checkable"
           >
-            <CommonIcon
-              v-if="item.checked"
-              :size="12"
-              :stroke-width="2.5"
-              type="check"
-            />
+            <CommonIcon v-if="item.checked" :size="12" :stroke-width="2.5" type="check" />
           </div>
           <div class="lew-context-menu-label">
-            <RenderComponent
-              :render-fn="item.icon"
-            />
+            <RenderComponent :render-fn="item.icon" />
             <RenderComponent
               class="lew-context-menu-label-text"
               :render-fn="item.label"
@@ -194,16 +192,19 @@ onUnmounted(() => {
       padding: 0px 5px;
       animation: enterAni 0.3s cubic-bezier(0.3, 1.3, 0.3, 1) forwards;
       opacity: 0;
+
       @keyframes enterAni {
         0% {
           transform: translateX(-10px);
           opacity: 0;
         }
+
         100% {
           transform: translateX(0px);
           opacity: 1;
         }
       }
+
       .lew-context-menu-checkable {
         display: flex;
         align-items: center;
@@ -212,6 +213,7 @@ onUnmounted(() => {
         height: 16px;
         flex-shrink: 0;
       }
+
       .lew-context-menu-label {
         display: flex;
         align-items: center;
@@ -225,6 +227,7 @@ onUnmounted(() => {
         line-height: 30px;
         box-sizing: border-box;
         cursor: pointer !important;
+
         .lew-context-menu-label-text {
           max-width: 180px;
           overflow: hidden;
@@ -232,6 +235,7 @@ onUnmounted(() => {
           white-space: nowrap;
         }
       }
+
       .lew-context-menu-item-chevron {
         flex-shrink: 0;
       }
@@ -260,10 +264,12 @@ onUnmounted(() => {
     width: 100%;
     height: 12px;
     overflow: hidden;
+
     .lew-context-menu-item {
       display: none;
     }
   }
+
   .lew-context-menu-box-divider-line::after {
     content: '';
     width: calc(100% - 20px);
@@ -271,6 +277,7 @@ onUnmounted(() => {
     border-bottom: var(--lew-pop-border);
   }
 }
+
 .lew-context-menu-item-active {
   .lew-context-menu-label-text {
     color: var(--lew-color-primary-dark);
