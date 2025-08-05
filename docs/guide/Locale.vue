@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import LewCodeHighlighter from "../layout/LewCodeHighlighter.vue";
+
+const code = ref(`import { setLocale } from 'lew-ui'
+
+setLocale('en');`);
+</script>
+
 <template>
   <div class="guide-wrapper">
     <lew-title>国际化</lew-title>
@@ -6,22 +14,11 @@
       <lew-mark>main.ts</lew-mark> 入口文件中进行如下设置：
     </p>
 
-    <div class="hl-pre lew-scrollbar">
-      <div class="pre-box">
-        <highlightjs
-          autodetect
-          code="import { setLocale } from 'lew-ui'
+    <LewCodeHighlighter :code="code" lang="ts" />
 
-setLocale('en');"
-        />
-      </div>
-    </div>
-
-    <br>
-    <br>
-    <lew-title :size="16">
-      支持的语言
-    </lew-title>
+    <br />
+    <br />
+    <lew-title :size="16"> 支持的语言 </lew-title>
     <p>Lew UI 目前内置支持以下 9 种语言：</p>
     <table class="language-table">
       <thead>

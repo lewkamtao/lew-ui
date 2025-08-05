@@ -1,73 +1,72 @@
 <script setup lang="ts">
-import { renderDescription } from 'docs/lib/utils'
-import docsLocale from 'docs/locals'
-import { LewCollapseTransition } from 'lew-ui'
-import { Check, ChevronDown, ChevronUp, Copy } from 'lucide-vue-next'
-
+import { renderDescription } from "docs/lib/utils";
+import docsLocale from "docs/locals";
+import { LewCollapseTransition } from "lew-ui";
+import { Check, ChevronDown, ChevronUp, Copy } from "lucide-vue-next";
+import LewCodeHighlighter from "./LewCodeHighlighter.vue";
 defineProps({
   title: {
     type: String,
-    default: '',
+    default: "",
   },
   tag: {
     type: String,
-    default: '',
+    default: "",
   },
   tipsContent: {
     type: String,
-    default: '',
+    default: "",
   },
   tipsType: {
     type: String,
-    default: 'info',
+    default: "info",
   },
   tipsTitle: {
     type: String,
-    default: '',
+    default: "",
   },
   description: {
     type: String,
-    default: '',
+    default: "",
   },
   code: {
     type: String,
-    default: '',
+    default: "",
   },
-})
+});
 
-const isShowCode = ref(false)
-const isCopied = ref(false)
+const isShowCode = ref(false);
+const isCopied = ref(false);
 
 const checkHasContent = computed(() => (text: string) => {
-  if (text && text.indexOf('components.') !== 0) {
-    return true
+  if (text && text.indexOf("components.") !== 0) {
+    return true;
   }
-  return false
-})
+  return false;
+});
 
 // 复制代码功能
 async function copyCode(code: string) {
   try {
-    await navigator.clipboard.writeText(code)
-    isCopied.value = true
-    LewMessage.success(docsLocale.t('base.copySuccess'))
+    await navigator.clipboard.writeText(code);
+    isCopied.value = true;
+    LewMessage.success(docsLocale.t("base.copySuccess"));
     setTimeout(() => {
-      isCopied.value = false
-    }, 2000)
-  }
-  catch (err) {
-    console.error('复制失败:', err)
+      isCopied.value = false;
+    }, 2000);
+  } catch (err) {
+    console.error("复制失败:", err);
     // 降级方案：使用传统的复制方法
-    const textArea = document.createElement('textarea')
-    textArea.value = code
-    document.body.appendChild(textArea)
-    textArea.select()
-    document.execCommand('copy')
-    document.body.removeChild(textArea)
-    isCopied.value = true
+    const textArea = document.createElement("textarea");
+    textArea.value = code;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    isCopied.value = true;
     setTimeout(() => {
-      isCopied.value = false
-    }, 2000)
+      isCopied.value = false;
+    }, 2000);
   }
 }
 </script>
@@ -76,27 +75,38 @@ async function copyCode(code: string) {
   <div class="demo-box">
     <lew-title :id="title" size="18px" class="demo-docs-title">
       {{ title }}
-      <lew-tag v-if="checkHasContent(tag)" type="light" color="blue" style="margin: 2px 0px 0px 5px">
+      <lew-tag
+        v-if="checkHasContent(tag)"
+        type="light"
+        color="blue"
+        style="margin: 2px 0px 0px 5px"
+      >
         {{ tag }}
       </lew-tag>
     </lew-title>
     <lew-alert
-      v-if="checkHasContent(tipsContent)" :type="checkHasContent(tipsType) ? tipsType : 'info'"
-      :title="tipsTitle" :content="tipsContent"
+      v-if="checkHasContent(tipsContent)"
+      :type="checkHasContent(tipsType) ? tipsType : 'info'"
+      :title="tipsTitle"
+      :content="tipsContent"
     />
-    <div v-if="checkHasContent(description)" class="desc" v-html="renderDescription(description)" />
+    <div
+      v-if="checkHasContent(description)"
+      class="desc"
+      v-html="renderDescription(description)"
+    />
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
         <slot />
       </div>
       <LewCollapseTransition>
-        <div v-if="isShowCode && code" class="hl-pre lew-scrollbar">
+        <div v-show="isShowCode && code" class="hl-pre">
           <div class="copy-btn" @click="copyCode(code)">
             <Check v-if="isCopied" :size="16" class="copy-icon success" />
             <Copy v-else :size="16" class="copy-icon" />
           </div>
-          <div class="pre-box">
-            <highlightjs autodetect :code="code" />
+          <div class="pre-box lew-scrollbar">
+            <LewCodeHighlighter :code="code" lang="vue" />
           </div>
         </div>
       </LewCollapseTransition>
@@ -105,11 +115,7 @@ async function copyCode(code: string) {
           <ChevronDown v-if="!isShowCode" :size="16" />
           <ChevronUp v-else :size="16" />
         </div>
-        {{
-          isShowCode
-            ? docsLocale.t('base.close')
-            : docsLocale.t('base.showCode')
-        }}
+        {{ isShowCode ? docsLocale.t("base.close") : docsLocale.t("base.showCode") }}
       </div>
     </div>
   </div>
@@ -138,10 +144,7 @@ async function copyCode(code: string) {
 
   .hl-pre {
     position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
     border-top: var(--lew-border-1);
-    max-height: 500px;
 
     .pre-box {
       border-radius: var(--lew-border-radius-small);

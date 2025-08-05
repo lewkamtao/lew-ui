@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { LewTextTrim } from "lew-ui";
-import { formatComponent } from "lew-ui/render";
+import { LewTextTrim } from 'lew-ui'
+import { formatComponent } from 'lew-ui/render'
 
 defineProps({
   renderFn: {
@@ -9,13 +9,13 @@ defineProps({
   },
   type: {
     type: String,
-    default: "",
+    default: '',
   },
   componentProps: {
     type: Object,
     default: () => ({}),
   },
-});
+})
 </script>
 
 <template>
