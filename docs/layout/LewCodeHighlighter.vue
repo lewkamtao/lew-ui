@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CodeBlock from "shiki-code-block-vue";
+import CodeBlock from 'shiki-code-block-vue'
 
 defineProps({
   code: {
@@ -11,9 +11,9 @@ defineProps({
   },
   maxHeight: {
     type: String,
-    default: "500px",
+    default: '500px',
   },
-});
+})
 </script>
 
 <template>

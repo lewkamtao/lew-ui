@@ -1,45 +1,46 @@
 <script setup lang="ts">
-import { Check, Copy } from "lucide-vue-next";
-import LewCodeHighlighter from "../layout/LewCodeHighlighter.vue";
+import { Check, Copy } from 'lucide-vue-next'
+import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
 
 defineProps({
   code: {
     type: String,
-    default: "",
+    default: '',
   },
   title: {
     type: String,
-    default: "",
+    default: '',
   },
   description: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 
-const isCopied = ref(false);
+const isCopied = ref(false)
 
 // 复制代码功能
 async function copyCode(code: string) {
   try {
-    await navigator.clipboard.writeText(code);
-    isCopied.value = true;
+    await navigator.clipboard.writeText(code)
+    isCopied.value = true
     setTimeout(() => {
-      isCopied.value = false;
-    }, 2000);
-  } catch (err) {
-    console.error("复制失败:", err);
+      isCopied.value = false
+    }, 2000)
+  }
+  catch (err) {
+    console.error('复制失败:', err)
     // 降级方案：使用传统的复制方法
-    const textArea = document.createElement("textarea");
-    textArea.value = code;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textArea);
-    isCopied.value = true;
+    const textArea = document.createElement('textarea')
+    textArea.value = code
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    isCopied.value = true
     setTimeout(() => {
-      isCopied.value = false;
-    }, 2000);
+      isCopied.value = false
+    }, 2000)
   }
 }
 </script>

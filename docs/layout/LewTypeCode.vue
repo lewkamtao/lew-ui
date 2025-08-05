@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import LewCodeHighlighter from "./LewCodeHighlighter.vue";
+import LewCodeHighlighter from './LewCodeHighlighter.vue'
 
 defineProps({
   code: {
     type: String,
     required: true,
   },
-});
+})
 </script>
 
 <template>
