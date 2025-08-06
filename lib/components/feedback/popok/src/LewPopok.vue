@@ -64,12 +64,12 @@ onMounted(() => {
           <CommonIcon :size="24" :type />
         </div>
         <div class="lew-popok-right">
-          <RenderComponent v-if="title" class="lew-popok-title" :render-fn="title" />
-          <RenderComponent
-            v-if="content"
-            class="lew-popok-content"
-            :render-fn="content"
-          />
+          <div class="lew-popok-title">
+            <RenderComponent v-if="title" :render-fn="title" />
+          </div>
+          <div class="lew-popok-content">
+            <RenderComponent v-if="content" :render-fn="content" />
+          </div>
           <div class="lew-popok-footer">
             <LewButton
               :text="cancelText || locale.t('popok.cancelText')"

@@ -116,15 +116,12 @@ const getStyle = computed(() => {
   const { round, type, color, dashed, width } = props
   const styleObj: Record<string, string> = {}
   const _color = getColorType(color) || 'primary'
-  const fillTextColor = () => {
-    return ['green', 'yellow', 'mint', 'teal', 'cyan'].includes(_color) ? 'var(--lew-text-color-0-invert)' : 'var(--lew-color-white)'
-  }
 
   // 基础样式
   const baseStyle = {
     fill: {
       backgroundColor: `var(--lew-color-${_color})`,
-      color: fillTextColor(),
+      color: `var(--lew-color-${_color}-text)`,
     },
     light: {
       backgroundColor: `var(--lew-color-${_color}-light)`,
@@ -250,6 +247,7 @@ defineExpose({
     opacity: 1;
   }
 }
+
 .lew-button-text {
   position: relative;
   display: flex;
@@ -289,10 +287,12 @@ defineExpose({
   font-size: var(--lew-form-font-size-mini);
   gap: 2px;
   padding: 0px 14px;
+
   .lew-button-text {
     font-size: var(--lew-form-font-size-mini);
     gap: 2px;
   }
+
   .lew-button-loading-icon {
     left: 7px;
   }
@@ -304,10 +304,12 @@ defineExpose({
   line-height: calc(var(--lew-form-item-height-small));
   gap: 3px;
   padding: 0px 16px;
+
   .lew-button-text {
     font-size: var(--lew-form-font-size-small);
     gap: 3px;
   }
+
   .lew-button-loading-icon {
     left: 8px;
   }
@@ -319,6 +321,7 @@ defineExpose({
   line-height: calc(var(--lew-form-item-height-medium));
   gap: 4px;
   padding: 0px 18px;
+
   .lew-button-text {
     font-size: var(--lew-form-font-size-medium);
     gap: 4px;
@@ -335,10 +338,12 @@ defineExpose({
   line-height: calc(var(--lew-form-item-height-large));
   gap: 5px;
   padding: 0px 20px;
+
   .lew-button-text {
     font-size: var(--lew-form-font-size-large);
     gap: 5px;
   }
+
   .lew-button-loading-icon {
     left: 10px;
   }

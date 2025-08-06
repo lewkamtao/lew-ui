@@ -127,7 +127,7 @@ const getTips = computed(() => (index: number) => {
           fill:
             Number(tobeValue) >= i
               ? 'var(--lew-color-yellow)'
-              : 'var(--lew-form-bgcolor-2)',
+              : 'var(--lew-form-bgcolor)',
         }"
         type="star"
         :stroke-width="0"

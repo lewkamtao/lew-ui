@@ -7,8 +7,8 @@ import { menuTreeItemProps } from './props'
 
 interface MenuTreeContext {
   modelValue: { value: string }
-  expandKeys: { value: (string)[] | undefined }
-  modelValueKeyPath: { value: (string)[] | undefined }
+  expandKeys: { value: string[] | undefined }
+  modelValueKeyPath: { value: string[] | undefined }
   collapsed: { value: boolean }
 }
 
@@ -78,10 +78,7 @@ function handleChange(): void {
       }"
       @click.stop="handleChange"
     >
-      <RenderComponent
-        :render-fn="props.icon"
-        class="lew-menu-tree-item-icon"
-      />
+      <RenderComponent :render-fn="props.icon" class="lew-menu-tree-item-icon" />
       <RenderComponent
         :render-fn="props.label"
         type="text-trim"
@@ -94,7 +91,10 @@ function handleChange(): void {
         }"
         class="lew-menu-tree-item-text"
       />
-      <lew-tag v-if="props.tagProps?.text" v-bind="{ ...props.tagProps, size: props.tagProps.size || 'small' }" />
+      <lew-tag
+        v-if="props.tagProps?.text"
+        v-bind="{ ...props.tagProps, size: props.tagProps.size || 'small' }"
+      />
       <CommonIcon
         v-if="!props.isLeaf && !context.collapsed.value"
         class="lew-menu-tree-item-chevron-right"
@@ -108,9 +108,11 @@ function handleChange(): void {
     </LewFlex>
     <LewCollapseTransition v-if="!props.isLeaf">
       <div
-        v-if="context.expandKeys.value?.includes(props.value as never) && !context.collapsed.value" :style="{
+        v-if="context.expandKeys.value?.includes(props.value as never) && !context.collapsed.value"
+        :style="{
           marginTop: props.level === 1 ? '5px' : 0,
-        }" class="lew-menu-tree-item-main"
+        }"
+        class="lew-menu-tree-item-main"
       >
         <slot />
       </div>
@@ -204,7 +206,7 @@ function handleChange(): void {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  background-color: var(--lew-bgcolor-1);
+  background-color: var(--lew-form-bgcolor);
   border-radius: var(--lew-border-radius-medium);
   padding: 5px;
   margin-left: 20px;

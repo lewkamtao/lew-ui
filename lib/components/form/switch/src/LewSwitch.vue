@@ -98,12 +98,7 @@ const getSwitchStyle = computed(() => {
     :style="getSwitchStyle"
     @click="handleClick"
   >
-    <input
-      v-show="false"
-      v-model="modelValue"
-      type="checkbox"
-      :disabled="disabled"
-    >
+    <input v-show="false" v-model="modelValue" type="checkbox" :disabled="disabled">
     <div class="lew-switch-dot" />
   </div>
 </template>
@@ -115,7 +110,7 @@ const getSwitchStyle = computed(() => {
   cursor: pointer;
   width: var(--lew-switch-width);
   height: var(--lew-switch-height);
-  background: var(--lew-form-bgcolor-2);
+  background: var(--lew-switch-bgcolor);
   border-radius: var(--lew-border-radius-small);
   transition: all var(--lew-form-transition-ease);
   box-shadow: var(--lew-form-box-shadow);
@@ -184,13 +179,11 @@ const getSwitchStyle = computed(() => {
 }
 
 .lew-switch:hover {
-  background: var(--lew-bgcolor-4);
+  background: var(--lew-switch-bgcolor-hover);
   outline: var(--lew-form-outline);
 }
 
 .lew-switch:active {
-  background: var(--lew-bgcolor-5);
-
   .lew-switch-dot {
     width: var(--lew-switch-dot-width-active);
   }
