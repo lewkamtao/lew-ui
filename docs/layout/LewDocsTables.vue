@@ -21,7 +21,13 @@ function getComponentName() {
     .replace(/^[A-Z]/, letter => letter.toLowerCase())
 }
 
-function getColumns({ columnsKey, title }: { columnsKey: string, title: string }) {
+function getColumns({
+  columnsKey,
+  title,
+}: {
+  columnsKey: string
+  title: string
+}) {
   const nameMap: Record<string, string> = {
     model: '参数名称',
     props: '参数名称',
@@ -72,7 +78,10 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
                     h(
                       LewTag,
                       {
-                        style: { cursor: 'pointer' },
+                        style: {
+                          cursor: 'pointer',
+                          textDecoration: 'underline dotted',
+                        },
                         type: 'light',
                         color: 'pink',
                         size: 'small',
@@ -100,7 +109,9 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
           }
           else {
             const _types
-              = (typeValues || []).length > 0 ? typeValues : (type || '').split('|')
+              = (typeValues || []).length > 0
+                ? typeValues
+                : (type || '').split('|')
             const tags = _types.map((text: any) => {
               return h(
                 LewTag,
@@ -135,7 +146,9 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
         field: 'default',
         customRender: ({ text, row }: any) => {
           const { name, defaultLocale } = row
-          return defaultLocale ? locale.t(`${getComponentName()}.${name}`) : text || '-'
+          return defaultLocale
+            ? locale.t(`${getComponentName()}.${name}`)
+            : text || '-'
         },
       },
     ]
@@ -169,7 +182,12 @@ function getTitle(title: string) {
 
 <template>
   <LewFlex direction="y" gap="70px" class="docs-wrapper">
-    <LewFlex v-for="(item, index) in sortValue" :key="index" direction="y" x="start">
+    <LewFlex
+      v-for="(item, index) in sortValue"
+      :key="index"
+      direction="y"
+      x="start"
+    >
       <lew-title :id="item.title" size="18px" class="demo-docs-title">
         {{ getTitle(item.title) }}
         <LewTag

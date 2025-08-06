@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import LewCodeHighlighter from "../layout/LewCodeHighlighter.vue";
+import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
 
 const code = ref(`import { setLocale } from 'lew-ui'
 
-setLocale('en');`);
+setLocale('en');`)
 </script>
 
 <template>
@@ -16,9 +16,11 @@ setLocale('en');`);
 
     <LewCodeHighlighter :code="code" lang="ts" />
 
-    <br />
-    <br />
-    <lew-title :size="16"> 支持的语言 </lew-title>
+    <br>
+    <br>
+    <lew-title :size="16">
+      支持的语言
+    </lew-title>
     <p>Lew UI 目前内置支持以下 9 种语言：</p>
     <table class="language-table">
       <thead>

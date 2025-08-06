@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import CodeBlock from "shiki-code-block-vue";
+import CodeBlock from 'shiki-code-block-vue'
+
 defineProps({
   code: {
     type: String,
@@ -10,10 +11,11 @@ defineProps({
   },
   maxHeight: {
     type: String,
-    default: "500px",
+    default: '500px',
   },
-});
+})
 </script>
+
 <template>
   <div class="lew-code-highlighter lew-scrollbar" :style="{ maxHeight }">
     <CodeBlock
@@ -32,16 +34,6 @@ defineProps({
   box-sizing: border-box;
   overflow-x: auto;
 }
-
-.lew-dark .shiki,
-.lew-dark .shiki span {
-  color: var(--shiki-dark) !important;
-  font-weight: var(--shiki-dark-font-weight) !important;
-  font-style: var(--shiki-dark-font-style) !important;
-  text-decoration: var(--shiki-dark-text-decoration) !important;
-  background-color: var(--lew-bgcolor-0) !important;
-}
-
 pre {
   z-index: 1;
   padding: 15px;
@@ -52,9 +44,17 @@ pre {
   background-color: var(--lew-bgcolor-0) !important;
   border-radius: var(--lew-border-radius-small);
 }
-
 code {
   display: block;
-  line-height: 1.7;
+  line-height: 1.5;
+  font-size: var(--lew-font-size-code) !important;
+  letter-spacing: 0.05em;
+  white-space: pre-wrap;
+  font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace !important;
+}
+
+.lew-dark .shiki,
+.lew-dark .shiki span {
+  color: var(--shiki-dark) !important;
 }
 </style>

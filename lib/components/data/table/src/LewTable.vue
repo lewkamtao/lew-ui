@@ -587,6 +587,7 @@ const handleTableResize = throttle(() => {
   }
 
   state.isInitialized = true;
+  computeTableRowHeight();
   updateScrollState();
 }, 120);
 
@@ -849,9 +850,6 @@ function updateDragTarget(mouseY: number) {
         if (mouseY - positionEntries[i].bottom < positionEntries[i + 1].top - mouseY) {
           targetRowId = positionEntries[i].id;
           isAbove = false;
-        } else {
-          targetRowId = positionEntries[i + 1].id;
-          isAbove = true;
         }
         break;
       }
@@ -943,6 +941,33 @@ const getFixedColumns = computed(() => (direction: string) => {
   return fixedColumns.value[direction as keyof typeof fixedColumns.value] || [];
 });
 
+const getScrollLineLeftClassName = computed(() => {
+  return !state.isScrollbarVisible ||
+    !state.isInitialized ||
+    ["all", "left"].includes(state.hiddenScrollLine)
+    ? "lew-hide-line-left"
+    : "";
+});
+
+const getScrollLineRightClassName = computed(() => {
+  return !state.isScrollbarVisible ||
+    !state.isInitialized ||
+    ["all", "right"].includes(state.hiddenScrollLine)
+    ? "lew-hide-line-right"
+    : "";
+});
+
+const getTableClass = computed(() => {
+  return {
+    "lew-table-bordered": props.bordered,
+    "lew-table-scroll": state.isScroll,
+    "lew-table-dragging": state.isDragging,
+    "lew-table-has-fixed-left":
+      getFixedColumns.value("left").length > 0 || props.checkable || props.sortable,
+    "lew-table-has-fixed-right": getFixedColumns.value("right").length > 0,
+  };
+});
+
 // 获取非固定表头列
 const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed);
 </script>
@@ -951,22 +976,12 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed);
   <div ref="tableWrapperRef" class="lew-table-wrapper">
     <i
       :style="{ left: any2px(state.fixedLeftWidth) }"
-      :class="{
-        'lew-hide-line-left':
-          !state.isScrollbarVisible ||
-          !state.isInitialized ||
-          ['all', 'left'].includes(state.hiddenScrollLine),
-      }"
+      :class="getScrollLineLeftClassName"
       class="lew-table-scroll-line-left"
     />
     <i
       :style="{ right: any2px(state.fixedRightWidth) }"
-      :class="{
-        'lew-hide-line-right':
-          !state.isScrollbarVisible ||
-          !state.isInitialized ||
-          ['all', 'right'].includes(state.hiddenScrollLine),
-      }"
+      :class="getScrollLineRightClassName"
       class="lew-table-scroll-line-right"
     />
     <div class="lew-table-header">
@@ -976,14 +991,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed);
     <div
       ref="tableRef"
       class="lew-table lew-scrollbar"
-      :class="{
-        'lew-table-bordered': bordered,
-        'lew-table-scroll': state.isScroll,
-        'lew-table-dragging': state.isDragging,
-        'lew-table-has-fixed-left':
-          getFixedColumns('left').length > 0 || checkable || sortable,
-        'lew-table-has-fixed-right': getFixedColumns('right').length > 0,
-      }"
+      :class="getTableClass"
       :style="`max-height: ${any2px(maxHeight)}`"
       @scroll="updateScrollState"
       @mouseleave.stop="hoverRowIndex = -1"

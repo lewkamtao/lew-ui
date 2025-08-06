@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import LewCodeHighlighter from "../layout/LewCodeHighlighter.vue";
+import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
 
-const code = ref(`pnpm add lew-ui --save`);
+const code = ref(`pnpm add lew-ui --save`)
 </script>
 
 <template>

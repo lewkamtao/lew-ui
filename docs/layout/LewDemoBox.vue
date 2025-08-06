@@ -1,72 +1,74 @@
 <script setup lang="ts">
-import { renderDescription } from "docs/lib/utils";
-import docsLocale from "docs/locals";
-import { LewCollapseTransition } from "lew-ui";
-import { Check, ChevronDown, ChevronUp, Copy } from "lucide-vue-next";
-import LewCodeHighlighter from "./LewCodeHighlighter.vue";
+import { renderDescription } from 'docs/lib/utils'
+import docsLocale from 'docs/locals'
+import { LewCollapseTransition } from 'lew-ui'
+import { Check, ChevronDown, ChevronUp, Copy } from 'lucide-vue-next'
+import LewCodeHighlighter from './LewCodeHighlighter.vue'
+
 defineProps({
   title: {
     type: String,
-    default: "",
+    default: '',
   },
   tag: {
     type: String,
-    default: "",
+    default: '',
   },
   tipsContent: {
     type: String,
-    default: "",
+    default: '',
   },
   tipsType: {
     type: String,
-    default: "info",
+    default: 'info',
   },
   tipsTitle: {
     type: String,
-    default: "",
+    default: '',
   },
   description: {
     type: String,
-    default: "",
+    default: '',
   },
   code: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 
-const isShowCode = ref(false);
-const isCopied = ref(false);
+const isShowCode = ref(false)
+const isCopied = ref(false)
 
 const checkHasContent = computed(() => (text: string) => {
-  if (text && text.indexOf("components.") !== 0) {
-    return true;
+  if (text && text.indexOf('components.') !== 0) {
+    return true
   }
-  return false;
-});
+  return false
+})
 
 // 复制代码功能
 async function copyCode(code: string) {
   try {
-    await navigator.clipboard.writeText(code);
-    isCopied.value = true;
-    LewMessage.success(docsLocale.t("base.copySuccess"));
+    await navigator.clipboard.writeText(code)
+    isCopied.value = true
+    LewMessage.success(docsLocale.t('base.copySuccess'))
     setTimeout(() => {
-      isCopied.value = false;
-    }, 2000);
-  } catch (err) {
-    console.error("复制失败:", err);
+      isCopied.value = false
+    }, 2000)
+  }
+  catch (err) {
+    console.error('复制失败:', err)
     // 降级方案：使用传统的复制方法
-    const textArea = document.createElement("textarea");
-    textArea.value = code;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textArea);
-    isCopied.value = true;
+    const textArea = document.createElement('textarea')
+    textArea.value = code
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    isCopied.value = true
     setTimeout(() => {
-      isCopied.value = false;
-    }, 2000);
+      isCopied.value = false
+    }, 2000)
   }
 }
 </script>
@@ -115,7 +117,11 @@ async function copyCode(code: string) {
           <ChevronDown v-if="!isShowCode" :size="16" />
           <ChevronUp v-else :size="16" />
         </div>
-        {{ isShowCode ? docsLocale.t("base.close") : docsLocale.t("base.showCode") }}
+        {{
+          isShowCode
+            ? docsLocale.t("base.close")
+            : docsLocale.t("base.showCode")
+        }}
       </div>
     </div>
   </div>
