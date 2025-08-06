@@ -22,8 +22,8 @@ defineProps({
       :lang="lang as any"
       :code="code"
       :theme="{
-        light: 'github-light',
-        dark: 'github-dark',
+        light: 'slack-ochin',
+        dark: 'slack-dark',
       }"
     />
   </div>
@@ -46,11 +46,16 @@ pre {
 }
 code {
   display: block;
-  line-height: 1.5;
+  line-height: 1.7;
   font-size: var(--lew-font-size-code) !important;
   letter-spacing: 0.05em;
   white-space: pre-wrap;
   font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace !important;
+}
+
+.shiki,
+.shiki span {
+  font-size: 15px;
 }
 
 .lew-dark .shiki,

@@ -3,7 +3,15 @@ import type { LewSelectOptions } from 'lew-ui/types'
 import { useDebounceFn } from '@vueuse/core'
 import { LewEmpty, LewFlex, LewPopover, LewTextTrim, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, filterSelectOptionsByKeyword, flattenSelectOptions, numFormat, object2class, poll } from 'lew-ui/utils'
+import {
+  any2px,
+  filterSelectOptionsByKeyword,
+  flattenSelectOptions,
+  numFormat,
+  object2class,
+  parseDimension,
+  poll,
+} from 'lew-ui/utils'
 import { cloneDeep, isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
 import { selectProps } from './props'
@@ -102,11 +110,9 @@ watch(
 // 计算选择框的宽度
 const computedWidth = computed(() => {
   if (props.autoWidth && state.autoWidth > 0) {
-    // 确保最小宽度不小于300px
-
-    return Number(state.autoWidth)
+    return parseDimension(state.autoWidth)
   }
-  return Number(props.width)
+  return parseDimension(props.width)
 })
 
 // 在组件挂载后初始化自动宽度
@@ -313,7 +319,9 @@ async function showHandle() {
   if (props.searchable) {
     await search({ target: { value: '' } })
   }
-  const index = state.options.findIndex((e: any) => e.value === selectValue.value)
+  const index = state.options.findIndex(
+    (e: any) => e.value === selectValue.value,
+  )
   poll({
     callback: () => {
       const i = index > -1 ? index : 0
@@ -393,7 +401,11 @@ defineExpose({
         :class="getSelectClassName"
       >
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
+          <CommonIcon
+            :size="getIconSize"
+            :loading="state.initLoading"
+            type="loading"
+          />
         </div>
 
         <CommonIcon

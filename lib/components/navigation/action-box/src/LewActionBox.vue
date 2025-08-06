@@ -3,14 +3,16 @@ import type { LewContextMenusOption } from 'lew-ui'
 import type { ActionBoxOption } from './props'
 import { LewDropdown, LewFlex } from 'lew-ui'
 import { isValidComponent, RenderComponent } from 'lew-ui/render'
+import { parseDimension } from 'lew-ui/utils'
 import { computed } from 'vue'
 import { actionBoxProps } from './props'
-
 // Props & Emits
 const props = defineProps(actionBoxProps)
 
 // Computed
-const threshold = computed((): number => Number(props.dropdownThreshold || 0))
+const threshold = computed((): number =>
+  parseDimension(props.dropdownThreshold || 0),
+)
 
 const visibleOptions = computed((): ActionBoxOption[] => {
   if (threshold.value <= 0) {
@@ -20,7 +22,9 @@ const visibleOptions = computed((): ActionBoxOption[] => {
 })
 
 // Methods
-function convertToContextMenus(options: ActionBoxOption[]): LewContextMenusOption[] {
+function convertToContextMenus(
+  options: ActionBoxOption[],
+): LewContextMenusOption[] {
   return options.map(option => ({
     label: option.label,
     icon: option.icon,
@@ -77,7 +81,8 @@ function handleOptionClick(option: ActionBoxOption, event: MouseEvent): void {
         v-if="
           divider
             && (dropdownOptions.length > 0
-              || (visibleOptions.length === options.length && index !== options.length - 1))
+              || (visibleOptions.length === options.length
+                && index !== options.length - 1))
         "
         class="lew-action-box-divider"
       />

@@ -1,5 +1,4 @@
-import { cloneDeep } from 'lodash-es'
-
+import { cloneDeep, toNumber } from 'lodash-es'
 import CommonIcon from '../_components/CommonIcon.vue'
 
 export * from './dragmove'
@@ -336,4 +335,12 @@ export function findNodeByKey(key: string | number, tree: any) {
   }
 
   return null
+}
+
+export function parseDimension(value: string | number) {
+  if (typeof value === 'string') {
+    // 提取数值部分后转换
+    return toNumber(value.replace(/[^\d.-]/g, ''))
+  }
+  return toNumber(value) // 处理非字符串情况
 }

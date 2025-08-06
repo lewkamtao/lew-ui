@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getUniqueId } from 'lew-ui/utils'
+import { getUniqueId, parseDimension } from 'lew-ui/utils'
 
 import NotificationItem from './NotificationItem.vue'
 
@@ -21,7 +21,7 @@ const width = ref(0)
 function updateWidth() {
   width.value = notifications.value.reduce(
     (max, item: NotificationItemType) => {
-      return Math.max(max, Number(item.width))
+      return Math.max(max, parseDimension(item.width))
     },
     0,
   )
