@@ -33,6 +33,8 @@ const tableWrapperRef = ref()
 
 let tooltipAnimationFrame: number | null = null
 
+const _rowKey = props.rowKey || '_lew_table_tr_id'
+
 const state = reactive({
   isInitialized: false,
   columns: [],
@@ -73,25 +75,24 @@ const getRowClass = computed(() => {
   return (index: number, row: any) => ({
     'lew-table-tr-hover': hoverRowIndex.value === index && !state.isDragging,
     'lew-table-tr-dragging': state.dragIndex === index,
-    'lew-table-tr-selected': state.selectedRowsMap[row[props.rowKey]],
+    'lew-table-tr-selected': state.selectedRowsMap[row[_rowKey]],
   })
 })
 
 // 优化行选择状态的计算
 const getRowSelectedState = computed(() => {
-  return (row: any) => state.selectedRowsMap[row[props.rowKey]]
+  return (row: any) => state.selectedRowsMap[row[_rowKey]]
 })
 
 // 缓存 customRender 的结果
-function getCachedRenderResult(column: any, row: any, index: number) {
+function getCachedRenderResult(column: any, row: any) {
   // 使用更稳定的缓存键，避免不必要的缓存失效
-  const cacheKey = `${column.field}_${row[props.rowKey]}_${index}`
+  const cacheKey = `${column.field}_${row._lew_table_tr_id}`
 
   if (!renderCache.has(cacheKey)) {
     const renderResult = column.customRender({
       row,
       column,
-      index,
       text: row[column.field],
     })
     // 使用 markRaw 来避免深层响应式
@@ -334,37 +335,33 @@ function getLeafColumns(columns: any[]) {
 
 const hasPartialSelection = computed(() => {
   const selectedRowsMap = state.selectedRowsMap
-  return state.dataSource.some((row: any) => selectedRowsMap[row[props.rowKey]])
+  return state.dataSource.some((row: any) => selectedRowsMap[row[_rowKey]])
 })
 
 function updateAllCheckedState() {
   const checkedKeys = keys(pickBy(state.selectedRowsMap, Boolean))
-  const allDataKeys = state.dataSource.map((row: any) => String(row[props.rowKey]))
+  const allDataKeys = state.dataSource.map((row: any) => String(row[_rowKey]))
   const uncheckedKeys = difference(allDataKeys, checkedKeys)
   state.isAllChecked
     = isEmpty(uncheckedKeys) && props.multiple && props.checkable && checkedKeys.length > 0
 }
 
 function setAllRowsChecked(checked: boolean) {
-  state.selectedRowsMap = mapValues(keyBy(state.dataSource, props.rowKey), () => checked)
+  state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => checked)
   if (props.multiple) {
     selectedKeys.value = checked ? keys(state.selectedRowsMap) : []
   }
 }
 
 function toggleRowSelection(row: any) {
-  if (!props.checkable)
-    return
-  const rowKey = row[props.rowKey]
-  const isChecked = state.selectedRowsMap[rowKey]
-
+  const isChecked = state.selectedRowsMap[row[_rowKey]]
   if (props.multiple) {
-    state.selectedRowsMap[rowKey] = !isChecked
+    state.selectedRowsMap[row[_rowKey]] = !isChecked
     selectedKeys.value = keys(pickBy(state.selectedRowsMap, Boolean))
   }
   else {
-    state.selectedRowsMap = { [rowKey]: !isChecked }
-    selectedKeys.value = isChecked ? undefined : rowKey
+    state.selectedRowsMap = { [row[_rowKey]]: !isChecked }
+    selectedKeys.value = isChecked ? undefined : row[_rowKey]
   }
   emit('selectChange', cloneDeep(selectedKeys.value))
   updateAllCheckedState()
@@ -372,7 +369,7 @@ function toggleRowSelection(row: any) {
 
 function updateSelectedKeys(keys: any) {
   if (props.multiple) {
-    state.selectedRowsMap = mapValues(keyBy(state.dataSource, props.rowKey), () => false)
+    state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => false)
     keys.forEach((key: string) => {
       state.selectedRowsMap[key] = true
     })
@@ -655,7 +652,7 @@ watch(
       // 延迟执行其他操作，让过渡动画更平滑
       updateScrollState()
       handleTableResize()
-      state.selectedRowsMap = mapValues(keyBy(newVal, props.rowKey), () => false)
+      state.selectedRowsMap = mapValues(keyBy(newVal, _rowKey), () => false)
       updateAllCheckedState()
       initDragState()
       computeTableRowHeight()
@@ -734,11 +731,11 @@ function dragStart(event: DragEvent, row: any, index: number) {
   state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`
 
   // 缓存 tooltip 组件
-  const tooltipCacheKey = `tooltip_${row[props.rowKey]}`
+  const tooltipCacheKey = `tooltip_${row._lew_table_tr_id}`
   if (!renderCache.has(tooltipCacheKey)) {
     const tooltipComponent = props.sortTooltipCustomRender
       ? props.sortTooltipCustomRender(row)
-      : h('div', {}, `Row ${row[props.rowKey]}`)
+      : h('div', {}, `Row ${row._lew_table_tr_id}`)
     renderCache.set(tooltipCacheKey, tooltipComponent)
   }
   tooltipComponent.value = renderCache.get(tooltipCacheKey)
@@ -994,13 +991,11 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 <template>
   <div ref="tableWrapperRef" class="lew-table-wrapper">
     <i
-      :style="{ left: any2px(state.fixedLeftWidth) }"
-      :class="getScrollLineLeftClassName"
+      :style="{ left: any2px(state.fixedLeftWidth) }" :class="getScrollLineLeftClassName"
       class="lew-table-scroll-line-left"
     />
     <i
-      :style="{ right: any2px(state.fixedRightWidth) }"
-      :class="getScrollLineRightClassName"
+      :style="{ right: any2px(state.fixedRightWidth) }" :class="getScrollLineRightClassName"
       class="lew-table-scroll-line-right"
     />
     <div class="lew-table-header">
@@ -1008,181 +1003,109 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
     </div>
     <div class="lew-table-drag-indicator" :style="getIndicatorStyle()" />
     <div
-      ref="tableRef"
-      class="lew-table lew-scrollbar"
-      :class="getTableClass"
-      :style="`max-height: ${any2px(maxHeight)}`"
-      @scroll="updateScrollState"
-      @mouseleave.stop="hoverRowIndex = -1"
+      ref="tableRef" class="lew-table lew-scrollbar" :class="getTableClass"
+      :style="`max-height: ${any2px(maxHeight)}`" @scroll="updateScrollState" @mouseleave.stop="hoverRowIndex = -1"
     >
       <div
-        class="lew-table-head"
-        :class="{ 'lew-table-head-bordered': columnLevel > 1 }"
-        :style="{
+        class="lew-table-head" :class="{ 'lew-table-head-bordered': columnLevel > 1 }" :style="{
           width: `${totalColumnWidth}px`,
           height: `${getHeadHeight * columnLevel + columnLevel * 1}px`,
-        }"
-        @mouseenter.stop="hoverRowIndex = -1"
+        }" @mouseenter.stop="hoverRowIndex = -1"
       >
         <div
-          v-if="getFixedHeaderColumns('left').length > 0 || checkable || sortable"
-          ref="fixedLeftRef"
+          v-if="getFixedHeaderColumns('left').length > 0 || checkable || sortable" ref="fixedLeftRef"
           class="lew-table-fixed-left"
         >
           <div class="lew-table-tr">
             <LewFlex
-              v-if="sortable"
-              class="lew-table-td"
-              :style="{
+              v-if="sortable" class="lew-table-td" :style="{
                 width: `${getDragColumnWidth}px`,
                 padding: getPadding,
-              }"
-              x="center"
+              }" x="center"
             >
               <CommonIcon :size="getIconSize" type="grip-vertical" />
             </LewFlex>
             <LewFlex
-              v-if="checkable"
-              class="lew-table-td"
-              :style="{
+              v-if="checkable" class="lew-table-td" :style="{
                 width: `${getCheckableWidth}px`,
                 padding: getPadding,
-              }"
-              x="center"
+              }" x="center"
             >
               <LewCheckbox
-                v-if="multiple"
-                v-model="state.isAllChecked"
-                :size="size"
-                :disabled="state.dataSource.length === 0"
-                :certain="hasPartialSelection && !state.isAllChecked"
+                v-if="multiple" v-model="state.isAllChecked" :size="size"
+                :disabled="state.dataSource.length === 0" :certain="hasPartialSelection && !state.isAllChecked"
                 @change="setAllRowsChecked($event)"
               />
               <CommonIcon v-else :size="getIconSize" type="square-mouse-pointer" />
             </LewFlex>
             <readerHeaderTd
-              v-for="(column, index) in getFixedHeaderColumns('left')"
-              :key="`columns${index}`"
-              :column="column"
-              :x="(column.x as LewXAlignment) || 'start'"
-              :y="column.y as LewYAlignment"
-              :style="getHeaderColumnStyle(column)"
-              gap="5px"
+              v-for="(column, index) in getFixedHeaderColumns('left')" :key="`columns${index}`"
+              :column="column" :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
+              :style="getHeaderColumnStyle(column)" gap="5px"
             />
           </div>
         </div>
         <div class="lew-table-main">
           <div class="lew-table-tr">
             <readerHeaderTd
-              v-for="column in nonFixedHeaderColumns"
-              :key="column.field"
-              :column="column"
-              :x="(column.x as LewXAlignment) || 'start'"
-              :y="column.y as LewYAlignment"
-              :style="getHeaderColumnStyle(column)"
-              gap="5px"
+              v-for="column in nonFixedHeaderColumns" :key="column.field" :column="column"
+              :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
+              :style="getHeaderColumnStyle(column)" gap="5px"
             />
           </div>
         </div>
-        <div
-          v-if="getFixedHeaderColumns('right').length > 0"
-          ref="fixedRightRef"
-          class="lew-table-fixed-right"
-        >
+        <div v-if="getFixedHeaderColumns('right').length > 0" ref="fixedRightRef" class="lew-table-fixed-right">
           <div class="lew-table-tr">
             <readerHeaderTd
-              v-for="column in getFixedHeaderColumns('right')"
-              :key="column.field"
-              :column="column"
-              class="lew-table-td"
-              :class="{
+              v-for="column in getFixedHeaderColumns('right')" :key="column.field" :column="column"
+              class="lew-table-td" :class="{
                 'lew-table-td-sortable': column.sortable,
-              }"
-              :x="(column.x as LewXAlignment) || 'start'"
-              :y="column.y as LewYAlignment"
-              :style="getHeaderColumnStyle(column)"
-              gap="5px"
+              }" :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
+              :style="getHeaderColumnStyle(column)" gap="5px"
             />
           </div>
         </div>
       </div>
       <div v-if="state.dataSource.length === 0" class="lew-table-empty">
         <slot v-if="$slots.empty" name="empty" />
-        <LewFlex
-          v-else
-          x="center"
-          y="center"
-          :style="{ padding: `${getEmptyPadding}px` }"
-        >
+        <LewFlex v-else x="center" y="center" :style="{ padding: `${getEmptyPadding}px` }">
           <LewEmpty v-bind="getEmptyProps" />
         </LewFlex>
       </div>
-      <div
-        v-if="state.dataSource.length > 0"
-        class="lew-table-body"
-        :style="`width: ${totalColumnWidth}px`"
-      >
-        <div
-          v-if="getFixedColumns('left').length > 0 || checkable || sortable"
-          class="lew-table-fixed-left"
-        >
+      <div v-if="state.dataSource.length > 0" class="lew-table-body" :style="`width: ${totalColumnWidth}px`">
+        <div v-if="getFixedColumns('left').length > 0 || checkable || sortable" class="lew-table-fixed-left">
           <div
-            v-for="(row, i) in state.dataSource"
-            :key="row._lew_table_tr_id"
-            class="lew-table-tr"
-            :class="getRowClass(i, row)"
-            :style="{
+            v-for="(row, i) in state.dataSource" :key="row._lew_table_tr_id" class="lew-table-tr"
+            :class="getRowClass(i, row)" :style="{
               height: getRowHeight(row),
-            }"
-            @click="toggleRowSelection(row)"
-            @mouseenter.stop="hoverRowIndex = i"
+            }" @click="toggleRowSelection(row)" @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
-              v-if="sortable"
-              :style="{ width: `${getDragColumnWidth}px` }"
-              x="center"
-              class="lew-table-drag-handle"
-              @mousedown.stop="dragStart($event, row, i)"
+              v-if="sortable" :style="{ width: `${getDragColumnWidth}px` }" x="center"
+              class="lew-table-drag-handle" @mousedown.stop="dragStart($event, row, i)"
             >
-              <CommonIcon
-                :size="getIconSize"
-                type="grip-vertical"
-                class="lew-table-drag-icon"
-              />
+              <CommonIcon :size="getIconSize" type="grip-vertical" class="lew-table-drag-icon" />
             </LewFlex>
             <LewFlex
-              v-if="checkable"
-              :style="{ width: `${getCheckableWidth}px` }"
-              x="center"
+              v-if="checkable" :style="{ width: `${getCheckableWidth}px` }" x="center"
               class="lew-table-checkbox-wrapper"
             >
-              <LewCheckbox
-                :size="size"
-                class="lew-table-checkbox"
-                :checked="getRowSelectedState(row)"
-              />
+              <LewCheckbox :size="size" class="lew-table-checkbox" :checked="getRowSelectedState(row)" />
             </LewFlex>
             <LewFlex
-              v-for="column in getFixedColumns('left')"
-              :key="column.field"
-              class="lew-table-td"
-              :x="(column.x as LewXAlignment) || 'start'"
-              :y="column.y as LewYAlignment"
+              v-for="column in getFixedColumns('left')" :key="column.field" class="lew-table-td"
+              :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
                 <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
-                <LewFlex
-                  v-if="column.type === 'text-trim'"
-                  :x="column.x"
-                  style="width: 100%"
-                >
+                <LewFlex v-if="column.type === 'text-trim'" :x="column.x" style="width: 100%">
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent :render-fn="getCachedRenderResult(column, row, i)" />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1193,35 +1116,24 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
         </div>
         <div class="lew-table-main">
           <div
-            v-for="(row, i) in state.dataSource"
-            :key="row._lew_table_tr_id"
-            :ref="(e: any) => setTrRef(e, row)"
-            class="lew-table-tr"
-            :class="getRowClass(i, row)"
-            @click="toggleRowSelection(row)"
+            v-for="(row, i) in state.dataSource" :key="row._lew_table_tr_id" :ref="(e: any) => setTrRef(e, row)"
+            class="lew-table-tr" :class="getRowClass(i, row)" @click="toggleRowSelection(row)"
             @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
-              v-for="column in nonFixedColumns"
-              :key="column.field"
-              class="lew-table-td"
-              :x="(column.x as LewXAlignment) || 'start'"
-              :y="column.y as LewYAlignment"
+              v-for="column in nonFixedColumns" :key="column.field" class="lew-table-td"
+              :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
                 <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
-                <LewFlex
-                  v-if="column.type === 'text-trim'"
-                  :x="column.x"
-                  style="width: 100%"
-                >
+                <LewFlex v-if="column.type === 'text-trim'" :x="column.x" style="width: 100%">
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent :render-fn="getCachedRenderResult(column, row, i)" />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1232,36 +1144,24 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
         </div>
         <div v-if="getFixedColumns('right').length > 0" class="lew-table-fixed-right">
           <div
-            v-for="(row, i) in state.dataSource"
-            :key="row._lew_table_tr_id"
-            class="lew-table-tr"
-            :style="{
+            v-for="(row, i) in state.dataSource" :key="row._lew_table_tr_id" class="lew-table-tr" :style="{
               height: getRowHeight(row),
-            }"
-            :class="getRowClass(i, row)"
-            @mouseenter.stop="hoverRowIndex = i"
+            }" :class="getRowClass(i, row)" @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
-              v-for="(column, j) in getFixedColumns('right')"
-              :key="`col${j}`"
-              class="lew-table-td"
-              :x="(column.x as LewXAlignment) || 'start'"
-              :y="column.y as LewYAlignment"
+              v-for="(column, j) in getFixedColumns('right')" :key="`col${j}`" class="lew-table-td"
+              :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
                 <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
-                <LewFlex
-                  v-if="column.type === 'text-trim'"
-                  :x="column.x"
-                  style="width: 100%"
-                >
+                <LewFlex v-if="column.type === 'text-trim'" :x="column.x" style="width: 100%">
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent :render-fn="getCachedRenderResult(column, row, i)" />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1276,11 +1176,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
       <slot name="table-footer" />
     </div>
 
-    <div
-      v-show="state.showTooltip"
-      class="lew-table-drag-tooltip"
-      :style="state.tooltipStyle"
-    >
+    <div v-show="state.showTooltip" class="lew-table-drag-tooltip" :style="state.tooltipStyle">
       <RenderComponent :render-fn="tooltipComponent" />
     </div>
   </div>
@@ -1459,7 +1355,8 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
           position: absolute;
           top: 50%;
           right: 0px;
-          transform: translate(30px, -50%);
+          width: auto;
+          transform: translate(calc(100% + 10px), -50%);
           transition: all 0.2s;
         }
       }

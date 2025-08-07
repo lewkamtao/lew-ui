@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import { LewLoading } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
 import tippy from 'tippy.js'
 import { popoverProps } from './props'
 
 const props = defineProps(popoverProps)
+
 const emit = defineEmits(['show', 'hide'])
+
+const slots: any = useSlots()
+
+nextTick(() => {
+  console.log(slots.trigger()[0])
+})
+
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('loading')) {
@@ -152,7 +161,11 @@ defineExpose({ show, hide, refresh })
 
 <template>
   <div class="lew-popover">
-    <div ref="triggerRef" class="lew-popover-trigger">
+    <div
+      ref="triggerRef"
+      class="lew-popover-trigger"
+      :style="{ width: any2px(triggerWidth) }"
+    >
       <slot name="trigger" />
     </div>
     <div
@@ -176,9 +189,10 @@ defineExpose({ show, hide, refresh })
 <style lang="scss">
 .lew-popover {
   .lew-popover-trigger {
-    display: flex;
+    display: inline-block;
   }
 }
+
 .lew-popover-body {
   border-radius: var(--lew-border-radius-small);
 }

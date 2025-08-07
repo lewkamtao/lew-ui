@@ -1,10 +1,8 @@
-import type { LewAvatarObjectFit, LewAvatarObjectPosition, LewAvatarPlacement, LewAvatarShape, LewAvatarStatus } from 'lew-ui'
+import type { LewAvatarPlacement, LewAvatarShape, LewAvatarStatus, LewImageObjectFit, LewImageObjectPosition } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validObjectFitList, validObjectPositionList } from 'lew-ui/validators'
 
 const statusValues = ['online', 'processing', 'away', 'offline', 'busy']
-const objectFitValues = ['fill', 'contain', 'cover', 'none', 'scale-down']
-const objectPositionValues = ['center', 'top', 'bottom', 'left', 'right', 'top left', 'top right', 'bottom left', 'bottom right']
 const placementValues = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
 const shapeValues = ['circle', 'square', 'sharp']
 
@@ -59,23 +57,23 @@ export const avatarProps = {
     }),
   },
   objectFit: {
-    type: String as PropType<LewAvatarObjectFit>,
-    typeValues: objectFitValues,
+    type: String as PropType<LewImageObjectFit>,
+    typeValues: validObjectFitList,
     default: 'cover',
     validator: validators.enum({
       componentName: 'LewAvatar',
       propName: 'objectFit',
-      values: objectFitValues,
+      values: validObjectFitList,
     }),
   },
   objectPosition: {
-    type: String as PropType<LewAvatarObjectPosition>,
-    typeValues: objectPositionValues,
+    type: String as PropType<LewImageObjectPosition>,
+    typeValues: validObjectPositionList,
     default: 'center',
     validator: validators.enum({
       componentName: 'LewAvatar',
       propName: 'objectPosition',
-      values: objectPositionValues,
+      values: validObjectPositionList,
     }),
   },
   statusPlacement: {
@@ -90,4 +88,4 @@ export const avatarProps = {
   },
 }
 
-export type AvatarProps = ExtractPropTypes<typeof avatarProps>
+export type LewAvatarProps = ExtractPropTypes<typeof avatarProps>

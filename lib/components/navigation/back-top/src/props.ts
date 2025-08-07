@@ -35,4 +35,4 @@ export const backTopProps = {
   },
 }
 
-export type BackTopProps = ExtractPropTypes<typeof backTopProps>
+export type LewBackTopProps = ExtractPropTypes<typeof backTopProps>

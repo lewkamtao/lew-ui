@@ -12,7 +12,7 @@ const props = defineProps({
     default: '',
   },
   checkUniqueFieldFn: {
-    type: Function,
+    type: Function as PropType<(formData: Record<string, any>) => boolean>,
     default: () => true,
   },
 })

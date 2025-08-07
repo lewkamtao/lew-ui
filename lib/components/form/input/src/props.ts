@@ -1,34 +1,29 @@
+import type { Property } from 'csstype'
 import type { LewContextMenusOption, LewSize } from 'lew-ui'
+import type { LewInputPrefixesType, LewInputSuffixType, LewInputType, LewXAlignment } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators, { validSizeList } from 'lew-ui/validators'
-
-export type InputType = 'text' | 'password'
-export type InputAlign = 'left' | 'center' | 'right'
-export type InputPrefixesType = 'icon' | 'select' | 'text'
-export type InputSuffixType = 'icon' | 'select' | 'text'
+import validators, { validInputPrefixesTypeList, validInputSuffixTypeList, validInputTypeList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const inputModel = {
   modelValue: {
     type: [String, Number],
     default: undefined,
-    description: '输入框的值，支持 v-model 双向绑定',
   },
   prefixValue: {
     type: [String, Number],
     default: undefined,
-    description: '输入框前缀的值',
   },
   suffixValue: {
     type: [String, Number],
     default: undefined,
-    description: '输入框后缀的值',
   },
 }
 
 export const inputProps = {
   type: {
-    type: String,
+    type: String as PropType<LewInputType>,
     default: 'text',
+    typeValues: validInputTypeList,
     validator: validators.string({
       componentName: 'LewInput',
       propName: 'type',
@@ -45,7 +40,7 @@ export const inputProps = {
     }),
   },
   width: {
-    type: [String, Number],
+    type: String as PropType<Property.Width>,
     default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewInput',
@@ -109,11 +104,13 @@ export const inputProps = {
     }),
   },
   align: {
-    type: String,
+    type: String as PropType<LewXAlignment>,
     default: 'left',
-    validator: validators.string({
+    typeValues: validXAlignmentList,
+    validator: validators.enum({
       componentName: 'LewInput',
       propName: 'align',
+      values: validXAlignmentList,
     }),
   },
   minWidth: {
@@ -149,11 +146,13 @@ export const inputProps = {
     }),
   },
   prefixes: {
-    type: String,
+    type: String as PropType<LewInputPrefixesType>,
     default: '',
-    validator: validators.string({
+    typeValues: validInputPrefixesTypeList,
+    validator: validators.enum({
       componentName: 'LewInput',
       propName: 'prefixes',
+      values: validInputPrefixesTypeList,
     }),
   },
   prefixesOptions: {
@@ -173,11 +172,13 @@ export const inputProps = {
     }),
   },
   suffix: {
-    type: String,
+    type: String as PropType<LewInputSuffixType>,
     default: '',
-    validator: validators.string({
+    typeValues: validInputSuffixTypeList,
+    validator: validators.enum({
       componentName: 'LewInput',
       propName: 'suffix',
+      values: validInputSuffixTypeList,
     }),
   },
   suffixOptions: {

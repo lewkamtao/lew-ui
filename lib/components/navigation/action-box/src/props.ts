@@ -1,19 +1,13 @@
 import type { LewXAlignment } from 'lew-ui'
-import type { LewComponentSource } from 'lew-ui/types'
+import type { LewActionBoxOption } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validXAlignmentList } from 'lew-ui/validators'
 
-export interface ActionBoxOption {
-  label: LewComponentSource
-  icon?: LewComponentSource
-  customRender?: LewComponentSource
-  onClick?: (event?: MouseEvent) => void
-}
-
 export const actionBoxProps = {
   options: {
-    type: Array as unknown as PropType<ActionBoxOption[]>,
-    default: () => [],
+    type: Array as PropType<LewActionBoxOption[]>,
+    typePopKeys: ['LewActionBoxOption'],
+    required: true,
     validator: validators.array({
       componentName: 'LewActionBox',
       propName: 'options',
@@ -53,6 +47,7 @@ export const actionBoxProps = {
   },
   iconOnly: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewActionBox',
       propName: 'iconOnly',
@@ -60,4 +55,4 @@ export const actionBoxProps = {
   },
 }
 
-export type ActionBoxProps = ExtractPropTypes<typeof actionBoxProps>
+export type LewActionBoxProps = ExtractPropTypes<typeof actionBoxProps>

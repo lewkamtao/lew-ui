@@ -23,21 +23,34 @@ export const rateProps = {
   count: {
     type: Number,
     default: 5,
+    validator: validators.number({
+      componentName: 'LewRate',
+      propName: 'count',
+    }),
   },
   tips: {
     type: [Array, String] as PropType<string[] | string>,
     default: () => [],
-    description: '评分的提示文字,使用逗号分隔每个等级的提示文字,或者使用数组',
+    validator: validators.array({
+      componentName: 'LewRate',
+      propName: 'tips',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewRate',
+      propName: 'readonly',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewRate',
+      propName: 'disabled',
+    }),
   },
 }
 

@@ -15,5 +15,9 @@ export const contextMenuProps = {
   disabled: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewContextMenu',
+      propName: 'disabled',
+    }),
   },
 }

@@ -1,11 +1,8 @@
-import type { Property } from 'csstype'
 import type { LewDirection, LewXAlignment, LewYAlignment } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validXAlignmentList, validYAlignmentList } from 'lew-ui/validators'
 
 export type FlexMode = 'around' | 'between'
-export type FlexGap = Property.Gap | number
-export type FlexWidth = Property.Width | number
 
 export const flexProps = {
   direction: {
@@ -35,14 +32,15 @@ export const flexProps = {
     validator: validators.boolean({ componentName: 'LewFlex', propName: 'wrap' }),
   },
   gap: {
-    type: [String, Number] as PropType<FlexGap>,
-    default: 10,
+    type: String,
+    default: '10px',
     validator: validators.gap({ componentName: 'LewFlex', propName: 'gap' }),
   },
   width: {
-    type: [String, Number] as PropType<FlexWidth>,
+    type: String,
+    default: '',
     validator: validators.widthHeight({ componentName: 'LewFlex', propName: 'width' }),
   },
 }
 
-export type FlexProps = ExtractPropTypes<typeof flexProps>
+export type LewFlexProps = ExtractPropTypes<typeof flexProps>

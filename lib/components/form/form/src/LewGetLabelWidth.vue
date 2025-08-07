@@ -50,7 +50,12 @@ defineExpose({
         :size="requiredIconSizeMap[size]"
       />
       {{ item.label }}
-      <CommonIcon v-if="item.tips" :size="tipsIconSizeMap[size]" type="normal" color="black" />
+      <CommonIcon
+        v-if="item.tips"
+        :size="tipsIconSizeMap[size]"
+        type="normal"
+        color="black"
+      />
     </LewFlex>
   </div>
 </template>

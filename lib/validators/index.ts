@@ -511,11 +511,8 @@ export default {
   spacing: ({ componentName, propName }: { componentName: string, propName: string }) =>
     createDimValidator({ componentName, propName, allowNegative: true }),
 
-  girdArea: ({ componentName, propName }: { componentName: string, propName: string }) =>
+  gridArea: ({ componentName, propName }: { componentName: string, propName: string }) =>
     createGirdAreaValidator({ componentName, propName }),
-
-  leftRightTopBottom: ({ componentName, propName }: { componentName: string, propName: string }) =>
-    createDimValidator({ componentName, propName, allowNegative: true }),
 
   offset: ({ componentName, propName }: { componentName: string, propName: string }) =>
     createOffsetValidator({ componentName, propName }),

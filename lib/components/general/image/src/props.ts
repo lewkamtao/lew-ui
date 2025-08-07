@@ -1,8 +1,7 @@
-import type { ExtractPropTypes } from 'vue'
-import validators from 'lew-ui/validators'
-
-const objectFitValues = ['fill', 'contain', 'cover', 'none', 'scale-down']
-const objectPositionValues = ['center', 'top', 'bottom', 'left', 'right', 'top left', 'top right', 'bottom left', 'bottom right']
+import type { Property } from 'csstype'
+import type { LewImageObjectFit, LewImageObjectPosition } from 'lew-ui/types'
+import type { ExtractPropTypes, PropType } from 'vue'
+import validators, { validObjectFitList, validObjectPositionList } from 'lew-ui/validators'
 
 export const imageProps = {
   src: {
@@ -22,7 +21,7 @@ export const imageProps = {
     }),
   },
   width: {
-    type: String,
+    type: String as PropType<Property.Width>,
     default: 200,
     validator: validators.widthHeight({
       componentName: 'LewImage',
@@ -30,7 +29,7 @@ export const imageProps = {
     }),
   },
   height: {
-    type: String,
+    type: String as PropType<Property.Height>,
     default: 200,
     validator: validators.widthHeight({
       componentName: 'LewImage',
@@ -38,23 +37,23 @@ export const imageProps = {
     }),
   },
   objectFit: {
-    type: String,
+    type: String as PropType<LewImageObjectFit>,
     default: 'cover',
-    typeValues: objectFitValues,
+    typeValues: validObjectFitList,
     validator: validators.enum({
       componentName: 'LewImage',
       propName: 'objectFit',
-      values: objectFitValues,
+      values: validObjectFitList,
     }),
   },
   objectPosition: {
-    type: String,
+    type: String as PropType<LewImageObjectPosition>,
     default: 'center',
-    typeValues: objectPositionValues,
+    typeValues: validObjectPositionList,
     validator: validators.enum({
       componentName: 'LewImage',
       propName: 'objectPosition',
-      values: objectPositionValues,
+      values: validObjectPositionList,
     }),
   },
   lazy: {
@@ -83,4 +82,4 @@ export const imageProps = {
   },
 }
 
-export type ImageProps = ExtractPropTypes<typeof imageProps>
+export type LewImageProps = ExtractPropTypes<typeof imageProps>

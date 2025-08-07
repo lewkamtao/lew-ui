@@ -1,4 +1,4 @@
-import type { LewCheckboxOptions, LewDirection, LewSize } from 'lew-ui'
+import type { LewCheckboxOption, LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList } from 'lew-ui/validators'
 
@@ -27,6 +27,7 @@ export const checkboxProps = {
   },
   disabled: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCheckbox',
       propName: 'disabled',
@@ -34,6 +35,7 @@ export const checkboxProps = {
   },
   readonly: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCheckbox',
       propName: 'readonly',
@@ -41,6 +43,7 @@ export const checkboxProps = {
   },
   checked: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCheckbox',
       propName: 'checked',
@@ -58,6 +61,7 @@ export const checkboxProps = {
   },
   block: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCheckbox',
       propName: 'block',
@@ -65,6 +69,7 @@ export const checkboxProps = {
   },
   round: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCheckbox',
       propName: 'round',
@@ -72,6 +77,7 @@ export const checkboxProps = {
   },
   iconable: {
     type: Boolean,
+    default: true,
     validator: validators.boolean({
       componentName: 'LewCheckbox',
       propName: 'iconable',
@@ -79,6 +85,7 @@ export const checkboxProps = {
   },
   certain: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCheckbox',
       propName: 'certain',
@@ -88,8 +95,8 @@ export const checkboxProps = {
 
 export const checkboxGroupProps = {
   options: {
-    type: Array as PropType<LewCheckboxOptions[]>,
-    default: () => [],
+    type: Array as PropType<LewCheckboxOption[]>,
+    typePopKeys: ['LewCheckboxOption'],
     required: true,
     validator: validators.array({
       componentName: 'LewCheckboxGroup',
@@ -139,6 +146,7 @@ export const checkboxGroupProps = {
   },
   round: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCheckboxGroup',
       propName: 'round',
@@ -146,6 +154,7 @@ export const checkboxGroupProps = {
   },
   iconable: {
     type: Boolean,
+    default: true,
     validator: validators.boolean({
       componentName: 'LewCheckboxGroup',
       propName: 'iconable',

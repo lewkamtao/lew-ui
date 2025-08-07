@@ -1,17 +1,11 @@
-import type { LewSize } from 'lew-ui/types'
+import type { LewSize, LewSliderRangeOption } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
-
-export interface SliderRangeOptions {
-  label: string
-  value: string | number
-}
 
 export const sliderRangeModel = {
   modelValue: {
     type: Array as PropType<number[] | undefined>,
     default: undefined,
-    description: '滑块范围的绑定值',
   },
 }
 
@@ -27,55 +21,48 @@ export const sliderRangeProps = {
     }),
   },
   min: {
-    type: [Number, String],
-    default: '0',
-    description: '最小值',
-    validator(value: number | string) {
-      if (value && typeof value === 'string' && Number.isNaN(Number(value))) {
-        console.warn('[LewInputNumber] min 必须是有效的数字')
-        return false
-      }
-      return true
-    },
+    type: Number,
+    default: 0,
+    validator: validators.number({
+      componentName: 'LewSliderRange',
+      propName: 'min',
+    }),
   },
   max: {
-    type: [Number, String],
-    default: '',
-    description: '最大值',
-    validator(value: number | string) {
-      if (value && typeof value === 'string' && Number.isNaN(Number(value))) {
-        console.warn('[LewInputNumber] max 必须是有效的数字')
-        return false
-      }
-      return true
-    },
+    type: Number,
+    default: 100,
+    validator: validators.number({
+      componentName: 'LewSliderRange',
+      propName: 'max',
+    }),
   },
   step: {
-    type: [Number, String],
+    type: Number,
     default: 1,
-    description: '步长',
-    validator(value: number | string) {
-      const numValue = Number(value)
-      if (Number.isNaN(numValue) || numValue <= 0) {
-        console.warn('[LewInputNumber] step 必须是大于 0 的数字')
-        return false
-      }
-      return true
-    },
+    validator: validators.number({
+      componentName: 'LewSliderRange',
+      propName: 'step',
+    }),
   },
 
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewSliderRange',
+      propName: 'readonly',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewSliderRange',
+      propName: 'disabled',
+    }),
   },
   options: {
-    type: Array as PropType<SliderRangeOptions[]>,
+    type: Array as PropType<LewSliderRangeOption[]>,
     default: () => [
       {
         label: '0',
@@ -86,12 +73,18 @@ export const sliderRangeProps = {
         value: 100,
       },
     ],
-    description: '步进器配置',
+    validator: validators.array({
+      componentName: 'LewSliderRange',
+      propName: 'options',
+    }),
   },
   formatTooltip: {
     type: Function as PropType<(value: number) => string>,
     default: (value: number) => value.toString(),
-    description: '格式化 tooltip 内容',
+    validator: validators.function({
+      componentName: 'LewSliderRange',
+      propName: 'formatTooltip',
+    }),
   },
 }
 

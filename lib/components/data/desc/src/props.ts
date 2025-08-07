@@ -1,12 +1,12 @@
 import type { Property } from 'csstype'
-import type { LewDescOptions, LewDirection, LewSize } from 'lew-ui'
+import type { LewDescOption, LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const descProps = {
   options: {
-    type: Array as PropType<LewDescOptions[]>,
-    typePopKeys: ['LewDescOptions'],
+    type: Array as PropType<LewDescOption[]>,
+    typePopKeys: ['LewDescOption'],
     required: true,
     validator: validators.array({
       componentName: 'LewDesc',
@@ -53,7 +53,7 @@ export const descProps = {
     }),
   },
   gap: {
-    type: String,
+    type: String as PropType<Property.Gap>,
     default: '30px',
     validator: validators.gap({
       componentName: 'LewDesc',
@@ -208,7 +208,7 @@ export const descItemProps = {
   },
   gridArea: {
     type: String,
-    validator: validators.girdArea({
+    validator: validators.gridArea({
       componentName: 'LewDescItem',
       propName: 'gridArea',
     }),

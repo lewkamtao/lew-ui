@@ -1,21 +1,17 @@
-import type { LewSize } from 'lew-ui'
+import type { Property } from 'csstype'
+import type { LewDirection, LewFormItemAs, LewSize } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators, { validSizeList } from 'lew-ui/validators'
-
-export type FormDirection = 'x' | 'y'
+import validators, { validDirectionList, validFormItemAsList, validSizeList } from 'lew-ui/validators'
 
 export const formProps = {
   options: {
     type: Array as PropType<Array<Record<string, any>>>,
     required: true,
     default: () => [],
-    validator(value: Array<Record<string, any>>): boolean {
-      if (!Array.isArray(value)) {
-        console.warn('[LewForm] options 必须是一个数组')
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewForm',
+      propName: 'options',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
@@ -28,80 +24,71 @@ export const formProps = {
     }),
   },
   width: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: '',
-    validator(value: number | string): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn('[LewForm] width 不能为负数')
-        return false
-      }
-      if (value && typeof value === 'string' && !/^\d+(%|px)?$/.test(value)) {
-        console.warn('[LewForm] width 字符串必须是有效的 CSS 宽度值')
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewForm',
+      propName: 'width',
+    }),
   },
   columns: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: 1,
-    validator(value: number | string): boolean {
-      const numValue = Number(value)
-      if (Number.isNaN(numValue) || numValue < 1 || !Number.isInteger(numValue)) {
-        console.warn('[LewForm] columns 必须是大于等于1的整数')
-        return false
-      }
-      return true
-    },
+    validator: validators.number({
+      componentName: 'LewForm',
+      propName: 'columns',
+    }),
   },
   labelWidth: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: 'auto',
-    validator(value: number | string): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn('[LewForm] labelWidth 不能为负数')
-        return false
-      }
-      if (
-        typeof value === 'string'
-        && value !== 'auto'
-        && !/^\d+px$/.test(value)
-      ) {
-        console.warn('[LewForm] labelWidth 字符串必须是 "auto" 或有效的像素值')
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewForm',
+      propName: 'labelWidth',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewForm',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewForm',
+      propName: 'readonly',
+    }),
   },
   direction: {
-    type: String as PropType<FormDirection>,
+    type: String as PropType<LewDirection>,
     default: 'x',
-    validator(value: FormDirection): boolean {
-      if (!['x', 'y'].includes(value)) {
-        console.warn(
-          `[LewForm] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validDirectionList,
+    validator: validators.enum({
+      componentName: 'LewForm',
+      propName: 'direction',
+      values: validDirectionList,
+    }),
   },
   id: {
     type: String,
     default: '',
     hidden: true,
+    validator: validators.string({
+      componentName: 'LewForm',
+      propName: 'id',
+    }),
   },
   formMethods: {
     type: Object as PropType<Record<string, (...args: any[]) => any>>,
     default: () => ({}),
+    validator: validators.object({
+      componentName: 'LewForm',
+      propName: 'formMethods',
+    }),
   },
 }
 
@@ -109,124 +96,160 @@ export const formItemProps = {
   label: {
     type: String,
     default: '',
+    validator: validators.string({
+      componentName: 'LewFormItem',
+      propName: 'label',
+    }),
   },
   field: {
     type: String,
     default: '',
+    validator: validators.string({
+      componentName: 'LewFormItem',
+      propName: 'field',
+    }),
   },
   required: {
-    type: [Boolean, Function],
+    type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewFormItem',
+      propName: 'required',
+    }),
   },
   as: {
-    type: String,
+    type: String as PropType<LewFormItemAs>,
     default: 'input',
+    typeValues: validFormItemAsList,
+    validator: validators.enum({
+      componentName: 'LewFormItem',
+      propName: 'as',
+      values: validFormItemAsList,
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    validator(value: LewSize): boolean {
-      if (!['small', 'medium', 'large'].includes(value)) {
-        console.warn(
-          `[LewFormItem] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewFormItem',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   width: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: '',
-    validator(value: number | string): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn('[LewFormItem] width 不能为负数')
-        return false
-      }
-      if (value && typeof value === 'string' && !/^\d+(%|px)?$/.test(value)) {
-        console.warn('[LewFormItem] width 字符串必须是有效的 CSS 宽度值')
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewFormItem',
+      propName: 'width',
+    }),
   },
   labelWidth: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: 'auto',
-    validator(value: number | string): boolean {
-      if (typeof value === 'number' && value < 0) {
-        console.warn('[LewFormItem] labelWidth 不能为负数')
-        return false
-      }
-      if (
-        typeof value === 'string'
-        && value !== 'auto'
-        && !/^\d+px$/.test(value)
-      ) {
-        console.warn(
-          '[LewFormItem] labelWidth 字符串必须是 "auto" 或有效的像素值',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewFormItem',
+      propName: 'labelWidth',
+    }),
   },
   direction: {
-    type: String as PropType<FormDirection>,
+    type: String as PropType<LewDirection>,
     default: 'x',
-    validator(value: FormDirection): boolean {
-      if (!['x', 'y'].includes(value)) {
-        console.warn(
-          `[LewFormItem] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validDirectionList,
+    validator: validators.enum({
+      componentName: 'LewFormItem',
+      propName: 'direction',
+      values: validDirectionList,
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewFormItem',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewFormItem',
+      propName: 'readonly',
+    }),
   },
   tips: {
     type: String,
     default: '',
+    validator: validators.string({
+      componentName: 'LewFormItem',
+      propName: 'tips',
+    }),
   },
   errMessage: {
     type: String,
     default: '',
+    validator: validators.string({
+      componentName: 'LewFormItem',
+      propName: 'errMessage',
+    }),
   },
   rule: {
     type: [Object, String] as PropType<any | string>,
+    validator: validators.object({
+      componentName: 'LewFormItem',
+      propName: 'rule',
+    }),
   },
   props: {
     type: Object as PropType<Record<string, any>>,
     default: () => ({}),
+    validator: validators.object({
+      componentName: 'LewFormItem',
+      propName: 'props',
+    }),
   },
   between: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewFormItem',
+      propName: 'between',
+    }),
   },
   gridArea: {
     type: String,
     default: '',
+    validator: validators.gridArea({
+      componentName: 'LewFormItem',
+      propName: 'gridArea',
+    }),
   },
   id: {
     type: String,
     default: '',
     hidden: true,
+    validator: validators.string({
+      componentName: 'LewFormItem',
+      propName: 'id',
+    }),
   },
   outputFormat: {
     type: Function as PropType<(params: { value: unknown }) => unknown>,
     default: ({ value }: { value: unknown }) => value,
+    validator: validators.function({
+      componentName: 'LewFormItem',
+      propName: 'outputFormat',
+    }),
   },
   inputFormat: {
     type: Function as PropType<(params: { value: unknown }) => unknown>,
     default: ({ value }: { value: unknown }) => value,
+    validator: validators.function({
+      componentName: 'LewFormItem',
+      propName: 'inputFormat',
+    }),
   },
 }
 
@@ -262,4 +285,9 @@ export const formTypeAsMap: Record<string, any> = {
   'button': 'void',
   'upload': 'array',
   'input-number': 'number',
+  'slider': 'number',
+  'slider-range': 'array',
+  'color-picker': 'string',
+  'rate': 'number',
+  'tree-select': 'string',
 }

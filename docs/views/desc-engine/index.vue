@@ -1,150 +1,150 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui/types'
-import { useDark } from '@vueuse/core'
-import dayjs from 'dayjs'
-import { downloadObjectAsFile } from 'docs/lib/utils'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { lewDescSizePaddingMap } from 'lew-ui/components/data/desc/src/props'
-import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
-import { any2px, flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
-import { cloneDeep, debounce, has } from 'lodash-es'
-import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
-import draggable from 'vuedraggable'
-import SetForm from '../form-engine/components/SetForm.vue'
-import ImportModal from './components/ImportModal.vue'
-import PreviewModal from './components/PreviewModal.vue'
-import { baseSchema, globalSchema } from './schema'
+import type { LewSize } from "lew-ui/types";
+import { useDark } from "@vueuse/core";
+import dayjs from "dayjs";
+import { downloadObjectAsFile } from "docs/lib/utils";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { lewDescSizePaddingMap } from "lew-ui/components/data/desc/src/props";
+import LewGetLabelWidth from "lew-ui/components/form/form/src/LewGetLabelWidth.vue";
+import { any2px, flattenNestedObject, formatFormByMap, getUniqueId } from "lew-ui/utils";
+import { cloneDeep, debounce, has } from "lodash-es";
+import { Monitor, Moon, Sun, Upload } from "lucide-vue-next";
+import draggable from "vuedraggable";
+import SetForm from "../form-engine/components/SetForm.vue";
+import ImportModal from "./components/ImportModal.vue";
+import PreviewModal from "./components/PreviewModal.vue";
+import { baseSchema, globalSchema } from "./schema";
 
 const isDark = useDark({
-  selector: 'html',
-  valueDark: 'lew-dark',
-  valueLight: 'lew-light',
-})
+  selector: "html",
+  valueDark: "lew-dark",
+  valueLight: "lew-light",
+});
 
-const previewModalRef = ref()
-const importModalRef = ref()
+const previewModalRef = ref();
+const importModalRef = ref();
 const options = ref<any>([
   {
-    id: 'desc_20230201_1',
-    label: '姓名',
+    id: "desc_20230201_1",
+    label: "姓名",
     spanMap: {
       1: 1,
       2: 1,
       3: 1,
       4: 1,
     },
-    field: 'name',
+    field: "name",
   },
   {
-    id: 'desc_20230201_2',
-    label: '年龄',
+    id: "desc_20230201_2",
+    label: "年龄",
     spanMap: {
       1: 1,
       2: 1,
       3: 1,
       4: 1,
     },
-    field: 'age',
+    field: "age",
   },
   {
-    id: 'desc_20230201_3',
-    label: '性别',
+    id: "desc_20230201_3",
+    label: "性别",
     spanMap: {
       1: 1,
       2: 1,
       3: 1,
       4: 1,
     },
-    field: 'gender',
+    field: "gender",
   },
-])
-const formMap = ref<Record<string, any>>({})
-const itemRefMap = ref<Record<string, any>>({})
-const formMainRef = ref()
+]);
+const formMap = ref<Record<string, any>>({});
+const itemRefMap = ref<Record<string, any>>({});
+const formMainRef = ref();
 
-const settingTab = ref('options')
-const activeId = ref('')
-const formLabelRef = ref()
-const autoLabelWidth = ref(0)
+const settingTab = ref("options");
+const activeId = ref("");
+const formLabelRef = ref();
+const autoLabelWidth = ref(0);
 
 const formGlobal = ref({
-  direction: 'x',
+  direction: "x",
   columns: 1,
-  labelX: 'start',
-  valueX: 'start',
-  size: 'medium',
+  labelX: "start",
+  valueX: "start",
+  size: "medium",
   bordered: 0,
-})
+});
 
 const formWidth = computed(() => {
-  return 320 * formGlobal.value.columns
-})
+  return 320 * formGlobal.value.columns;
+});
 
 const refreshForm = debounce(() => {
   nextTick(() => {
     if (formLabelRef.value) {
-      const { bordered, size } = formGlobal.value
-      autoLabelWidth.value
-        = formLabelRef.value.$el.offsetWidth
-          + (bordered
-            ? lewDescSizePaddingMap[size as keyof typeof lewDescSizePaddingMap] * 2
-            : 0)
+      const { bordered, size } = formGlobal.value;
+      autoLabelWidth.value =
+        formLabelRef.value.$el.offsetWidth +
+        (bordered
+          ? lewDescSizePaddingMap[size as keyof typeof lewDescSizePaddingMap] * 2
+          : 0);
     }
-  })
-  formatFormMap()
-}, 100)
+  });
+  formatFormMap();
+}, 100);
 
 const formModel = computed(() => {
-  return formatFormByMap(cloneDeep(formMap.value))
-})
+  return formatFormByMap(cloneDeep(formMap.value));
+});
 
 // 动态生成columns选项，支持1-12栏
 const colOptions = computed(() => {
-  const options = []
+  const options = [];
   const columnLabels = [
-    '单栏',
-    '两栏',
-    '三栏',
-    '四栏',
-    '五栏',
-    '六栏',
-    '七栏',
-    '八栏',
-    '九栏',
-    '十栏',
-    '十一栏',
-    '十二栏',
-  ]
+    "单栏",
+    "两栏",
+    "三栏",
+    "四栏",
+    "五栏",
+    "六栏",
+    "七栏",
+    "八栏",
+    "九栏",
+    "十栏",
+    "十一栏",
+    "十二栏",
+  ];
 
   for (let i = 1; i <= 12; i++) {
     options.push({
       label: columnLabels[i - 1] || `${i}栏`,
       value: i,
-    })
+    });
   }
 
-  return options
-})
+  return options;
+});
 
 // 动态生成网格样式
 const getDynamicGridStyle = computed(() => {
-  const columns = formGlobal.value.columns
+  const columns = formGlobal.value.columns;
   return {
     gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-  }
-})
+  };
+});
 
 // 确保spanMap包含当前columns的键
 function ensureSpanMap(item: any) {
-  const currentColumns = formGlobal.value.columns
+  const currentColumns = formGlobal.value.columns;
   if (!item.spanMap) {
-    item.spanMap = {}
+    item.spanMap = {};
   }
 
   // 确保spanMap有当前columns数的键
   for (let i = 1; i <= Math.max(currentColumns, 12); i++) {
     if (!item.spanMap[i]) {
-      item.spanMap[i] = 1
+      item.spanMap[i] = 1;
     }
   }
 }
@@ -152,159 +152,159 @@ function ensureSpanMap(item: any) {
 // 当columns改变时，确保所有item的spanMap都有对应的键
 function updateSpanMapsForColumns() {
   options.value.forEach((item: any) => {
-    ensureSpanMap(item)
-  })
+    ensureSpanMap(item);
+  });
 }
 
 // 监听columns变化，更新spanMap
 watch(
   () => formGlobal.value.columns,
   () => {
-    updateSpanMapsForColumns()
-  },
-)
+    updateSpanMapsForColumns();
+  }
+);
 
 function formatFormMap() {
-  const _formMap: Record<string, any> = {}
+  const _formMap: Record<string, any> = {};
   cloneDeep(options.value).forEach((item: any) => {
     if (!has(_formMap, item.field) && item.field) {
-      _formMap[item.field] = ''
+      _formMap[item.field] = "";
     }
-  })
-  formMap.value = _formMap
+  });
+  formMap.value = _formMap;
 }
 
 function minimize(item: any) {
-  ensureSpanMap(item)
+  ensureSpanMap(item);
   if (item.spanMap[formGlobal.value.columns] > 1) {
-    item.spanMap[formGlobal.value.columns] -= 1
+    item.spanMap[formGlobal.value.columns] -= 1;
   }
 }
 
 function maximize(item: any) {
-  ensureSpanMap(item)
+  ensureSpanMap(item);
   if (item.spanMap[formGlobal.value.columns] < formGlobal.value.columns) {
-    item.spanMap[formGlobal.value.columns] += 1
+    item.spanMap[formGlobal.value.columns] += 1;
   }
 }
 
 function getModel() {
   if (options.value.length === 0) {
-    LewMessage.warning('请先添加组件')
-    return false
+    LewMessage.warning("请先添加组件");
+    return false;
   }
-  const width = formMainRef.value.offsetWidth / formGlobal.value.columns
+  const width = formMainRef.value.offsetWidth / formGlobal.value.columns;
 
-  const _options = cloneDeep(options.value)
+  const _options = cloneDeep(options.value);
   _options.forEach((item: any) => {
-    ensureSpanMap(item)
-    const rowStart = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
-    const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
-    item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
-    delete item.spanMap
-    delete item.fieldType
-    delete item.schema
-  })
+    ensureSpanMap(item);
+    const rowStart = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1;
+    const rowEnd = rowStart + item.spanMap[formGlobal.value.columns];
+    item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`;
+    delete item.spanMap;
+    delete item.fieldType;
+    delete item.schema;
+  });
   const componentModel = {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
     bordered: formGlobal.value.bordered === 1,
     width: any2px(formWidth.value),
-    id: `desc_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
+    id: `desc_${dayjs().format("YYYYMMDD")}_${getUniqueId()}`,
     options: _options,
-  }
-  return componentModel
+  };
+  return componentModel;
 }
 
 watch(
   () => options.value,
   () => {
-    refreshForm()
+    refreshForm();
   },
   {
     deep: true,
-  },
-)
+  }
+);
 
 watch(
   () => formGlobal.value,
   () => {
-    refreshForm()
+    refreshForm();
   },
   {
     deep: true,
-  },
-)
+  }
+);
 
 function deleteItem(item: any) {
   LewDialog.error({
-    title: '确认删除',
-    content: '删除后无法恢复，请谨慎操作',
-    cancelText: '手滑了',
+    title: "确认删除",
+    content: "删除后无法恢复，请谨慎操作",
+    cancelText: "手滑了",
     ok: () => {
       return new Promise((resolve) => {
-        options.value = options.value.filter((e: any) => e.id !== item.id)
-        resolve(true)
-      })
+        options.value = options.value.filter((e: any) => e.id !== item.id);
+        resolve(true);
+      });
     },
-  })
+  });
 }
 
 function exportFile() {
-  const model = getModel()
+  const model = getModel();
   if (model) {
-    downloadObjectAsFile(model, `${model.id}.json`)
+    downloadObjectAsFile(model, `${model.id}.json`);
   }
 }
 
 function preview() {
-  const model = getModel()
+  const model = getModel();
   if (model) {
-    previewModalRef.value && previewModalRef.value.open(model)
+    previewModalRef.value && previewModalRef.value.open(model);
   }
 }
 
 // 创建新字段的spanMap，支持更多columns
 function createInitialSpanMap() {
-  const spanMap: Record<number, number> = {}
+  const spanMap: Record<number, number> = {};
   // 为1-12栏创建初始spanMap
   for (let i = 1; i <= 12; i++) {
-    spanMap[i] = 1
+    spanMap[i] = 1;
   }
-  return spanMap
+  return spanMap;
 }
 
 function addField() {
-  const field = `${getUniqueId()}`
+  const field = `${getUniqueId()}`;
   const newItem = {
-    id: `desc_${dayjs().format('YYYYMMDD')}_${field}`,
+    id: `desc_${dayjs().format("YYYYMMDD")}_${field}`,
     label: `字段 ${field}`,
     spanMap: createInitialSpanMap(),
     field,
-  }
-  options.value.push(cloneDeep(newItem))
+  };
+  options.value.push(cloneDeep(newItem));
 }
 
 function importField() {
-  importModalRef.value.open()
+  importModalRef.value.open();
 }
 
 function importFieldOptions(_options: any) {
   options.value = Object.keys(flattenNestedObject(_options)).map((key: string) => {
     return {
-      id: `desc_${dayjs().format('YYYYMMDD')}_${key}`,
+      id: `desc_${dayjs().format("YYYYMMDD")}_${key}`,
       label: _options[key],
       spanMap: createInitialSpanMap(),
       field: key,
-    }
-  })
+    };
+  });
 }
 
 onMounted(() => {
   // 初始化时确保所有item都有完整的spanMap
-  updateSpanMapsForColumns()
-  refreshForm()
-})
+  updateSpanMapsForColumns();
+  refreshForm();
+});
 </script>
 
 <template>
@@ -316,9 +316,7 @@ onMounted(() => {
     />
     <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activeId = '')">
       <lew-flex x="center" y="center" class="lew-form-select-columns">
-        <lew-button class="add-btn" @click="addField">
-          新增字段
-        </lew-button>
+        <lew-button class="add-btn" @click="addField"> 新增字段 </lew-button>
         <lew-button class="import-btn" type="light" @click="importField">
           导入字段
         </lew-button>
@@ -371,13 +369,13 @@ onMounted(() => {
               }"
               :style="{
                 'grid-column-end': `span ${element.spanMap?.[formGlobal.columns] || 1}`,
-                'padding': formGlobal.bordered ? 0 : `15px 13px 15px 13px`,
+                padding: formGlobal.bordered ? 0 : `15px 13px 15px 13px`,
               }"
               @click.stop="
                 activeId === element.id || element.as === ''
                   ? (activeId = '')
                   : (activeId = element.id),
-                (settingTab = 'options')
+                  (settingTab = 'options')
               "
             >
               <lew-flex x="end" y="center" class="handle-box">
@@ -463,16 +461,12 @@ onMounted(() => {
         <div v-show="settingTab === 'options'" class="lew-form-options-panel">
           <lew-flex direction="y" gap="0">
             <lew-flex direction="y" x="start" gap="0">
-              <div class="title">
-                全局属性
-              </div>
+              <div class="title">全局属性</div>
               <SetForm v-model="formGlobal" :options="globalSchema" />
             </lew-flex>
           </lew-flex>
           <lew-flex v-if="activeId" direction="y" x="start" gap="0">
-            <div class="title">
-              基础属性
-            </div>
+            <div class="title">基础属性</div>
             <SetForm
               v-model="options[options.findIndex((e: any) => e.id === activeId)]
               "
@@ -740,7 +734,7 @@ onMounted(() => {
 
   .lew-form-wrapper-draggable-empty::after {
     position: absolute;
-    content: '请添加字段描述';
+    content: "请添加字段描述";
     top: 50%;
     left: 50%;
     opacity: 0.4;

@@ -34,12 +34,12 @@ export const dialogProps = {
     description: '取消按钮文本',
   },
   ok: {
-    type: Function,
+    type: Function as PropType<() => Promise<boolean>>,
     default: () => true,
     description: '点击确认按钮时的回调函数',
   },
   cancel: {
-    type: Function,
+    type: Function as PropType<() => Promise<boolean>>,
     default: () => true,
     description: '点击取消按钮时的回调函数',
   },

@@ -18,7 +18,6 @@ export const textTrimProps = {
       propName: 'allowHTML',
     }),
   },
-
   lineClamp: {
     type: Number,
     validator: validators.number({
@@ -36,7 +35,6 @@ export const textTrimProps = {
       values: validXAlignmentList,
     }),
   },
-
   placement: {
     type: String as PropType<LewPlacement>,
     default: 'top',
@@ -72,4 +70,4 @@ export const textTrimProps = {
   },
 }
 
-export type TextTrimProps = ExtractPropTypes<typeof textTrimProps>
+export type LewTextTrimProps = ExtractPropTypes<typeof textTrimProps>

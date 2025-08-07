@@ -2,8 +2,83 @@ import type { Property } from 'csstype'
 import type { LewTagProps } from 'lew-ui'
 import type { LewComponentSource, LewDirection, LewSize } from './base'
 
-export type LewBreadcrumbOptions = LewBreadcrumbOption[]
+export type LewButtonType = 'fill' | 'light' | 'ghost' | 'text'
+
+
+export type LewButtonSize = 'mini' | 'small' | 'medium' | 'large'
+
+
+export type LewTagType = 'fill' | 'light' | 'ghost'
+
+
+export type LewAvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+
+
+export type LewAvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
+
+
+export type LewAvatarShape = 'circle' | 'square' | 'sharp'
+
+
+export type LewImageObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
+
+
+export type LewImageObjectPosition = 'center' | 'top' | 'bottom' | 'left' | 'right' | 'top left' | 'top right' | 'bottom left' | 'bottom right'
+
+
+export type LewInputType = 'text' | 'password'
+
+
+export type LewInputPrefixesType = 'icon' | 'select' | 'text'
+
+
+export type LewInputSuffixType = 'icon' | 'select' | 'text'
+
+
+export type LewTextareaResize = 'none' | 'both' | 'horizontal' | 'vertical'
+
+
+export type LewTabsType = 'block' | 'line'
+
+
 export type LewBreadcrumbSeparator = 'shoulder' | 'sprit'
+
+
+export type LewUploadStatus = 'success' | 'fail' | 'uploading' | 'complete' | 'wrong_type' | 'wrong_size' | 'pending'
+
+
+export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group' | 'radio-group' | 'checkbox' | 'select' | 'select-multiple' | 'date-picker' | 'date-range-picker' | 'tabs' | 'cascader' | 'switch' | 'button' | 'upload' | 'input-number' | 'slider' | 'slider-range' | 'color-picker' | 'rate' | 'tree-select'
+
+
+export type LewSelectMultipleValueLayout = 'tag' | 'text'
+
+
+export type LewStepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
+
+
+export interface LewActionBoxOption {
+  label: LewComponentSource
+  icon?: LewComponentSource
+  customRender?: LewComponentSource
+  onClick?: (event?: MouseEvent) => void
+}
+
+export interface LewBreadcrumbOption {
+  label: string
+  value?: string
+  active?: boolean
+}
+
+export interface LewStepsOption {
+  title: LewComponentSource
+  description?: LewComponentSource
+}
+
+export interface LewTabsOption {
+  label: string
+  value: string
+  disabled?: boolean
+}
 
 export interface LewMenuOption {
   label: string
@@ -22,12 +97,6 @@ export interface LewMenuTreeOption {
   disabled?: boolean
   children?: LewMenuTreeOption[]
   tagProps?: LewTagProps
-}
-
-export interface LewBreadcrumbOption {
-  label: string
-  value?: string
-  active?: boolean
 }
 
 export interface LewContextMenusOption {
@@ -57,7 +126,25 @@ export interface LewHoverMenusOption {
   [key: string]: any
 }
 
-export interface LewDescOptions {
+export interface LewInputTableColumn {
+  title: string
+  width?: number
+  field: string
+  as: string
+}
+
+export interface LewTableColumn {
+  title: string
+  field: string
+  fixed?: 'left' | 'right'
+  width?: number
+  x?: string
+  y?: string
+  columnStyle?: string
+  sortable?: boolean
+}
+
+export interface LewDescOption {
   label: string
   field: string
   direction?: LewDirection
@@ -72,29 +159,67 @@ export interface LewDescOptions {
   customRender?: (params: { field: string, label: string, dataSource: Record<string, any> }) => any
 }
 
-export interface LewStepsOptions {
-  title: LewComponentSource
-  description?: LewComponentSource
+export interface LewSelectOption {
+  label: string // 12
+  value: string
+  disabled?: boolean
+  isGroup?: boolean
+  groupValue?: string
+  groupLabel?: string
 }
 
-export interface LewTableColumn {
-  title: string
-  field: string
-  fixed?: 'left' | 'right'
-  width?: number
-  x?: string
-  y?: string
-  columnStyle?: string
-  sortable?: boolean
+export interface LewTreeSelectOption {
+  label: string
+  value: string
+  level: number
+  labelPaths?: string[]
+  keysPaths?: string[]
+  isLeaf?: boolean
+  loading?: boolean
+  disabled?: boolean
+  parentLabelPaths?: string[]
+  parentKeysPaths?: string[]
+  parentChildren?: LewTreeSelectOption[]
+  children?: LewTreeSelectOption[]
 }
 
-export interface LewCheckboxOptions {
+export interface LewSelectMultipleOption {
+  label: string
+  value: string
+  disabled?: boolean
+  isGroup?: boolean
+  groupValue?: string
+  groupLabel?: string
+}
+
+export interface LewCheckboxOption {
   label: string
   value: string
   disabled?: boolean
 }
 
-export interface LewCascaderOptions {
+export interface LewRadioOption {
+  label: string
+  value: string
+  disabled?: boolean
+}
+
+export interface LewSliderOption {
+  label: string
+  value: number
+}
+
+export interface LewSliderRangeOption {
+  label: string
+  value: number
+}
+
+export interface LewDatePickerPresetsOption {
+  label: string
+  value: string
+}
+
+export interface LewCascaderOption {
   label: string
   value: string
   level: number
@@ -105,50 +230,7 @@ export interface LewCascaderOptions {
   disabled?: boolean
   parentLabelPaths?: string[]
   parentValuePaths?: string[]
-  children?: LewCascaderOptions[]
-}
-
-export interface LewDatePickerPresetsOption {
-  label: string
-  value: string
-}
-
-export interface LewSelectOptions {
-  label: string // 12
-  value: string | number
-  disabled?: boolean
-  isGroup?: boolean
-  groupValue?: string | number
-  groupLabel?: string
-}
-
-export interface LewSelectOptionsGroup {
-  label: string
-  children: LewSelectOptions[]
-}
-
-export interface LewSelectSearchMethodParams {
-  options?: LewSelectOptions[]
-  keyword?: string
-}
-
-export interface LewSelectMultipleOptions {
-  label: string
-  value: string | number
-  disabled?: boolean
-  isGroup?: boolean
-  groupValue?: string | number
-  groupLabel?: string
-}
-
-export interface LewSelectMultipleOptionsGroup {
-  label: string
-  children: LewSelectMultipleOptions[]
-}
-
-export interface LewSelectSearchMultipleMethodParams {
-  options?: LewSelectMultipleOptions[]
-  keyword?: string
+  children?: LewCascaderOption[]
 }
 
 export interface LewTreeDataSource {
@@ -158,7 +240,7 @@ export interface LewTreeDataSource {
   isLeaf?: boolean
   loading?: boolean
   disabled?: boolean
-  parentKey?: string | number
+  parentKey?: string
   treeIndex?: number
   labelPaths?: string[]
   valueKeys?: string[]
@@ -169,31 +251,30 @@ export interface LewTreeDataSource {
   children?: LewTreeDataSource[]
 }
 
+export interface LewUploadFileItem {
+  key: string
+  name?: string
+  url?: string
+  status?: LewUploadStatus
+  percent?: number
+  file?: File
+  size?: number
+  type?: string
+  lastModifiedDate?: string
+  lastModified?: number
+}
+
+export interface LewSelectSearchMethodParams {
+  options?: LewSelectOption[]
+  keyword?: string
+}
+
 export interface LewTreeSelectSearchMethodParams {
   item?: LewTreeDataSource
   keyword?: string
 }
 
-export interface LewTreeSelectOptions {
-  label: string
-  value: string | number
-  level: number
-  labelPaths?: string[]
-  keysPaths?: string[]
-  isLeaf?: boolean
-  loading?: boolean
-  disabled?: boolean
-  parentLabelPaths?: string[]
-  parentKeysPaths?: string[]
-  parentChildren?: LewTreeSelectOptions[]
-  children?: LewTreeSelectOptions[]
+export interface LewSelectSearchMultipleMethodParams {
+  options?: LewSelectMultipleOption[]
+  keyword?: string
 }
-
-export type LewAvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-export type LewAvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
-export type LewAvatarShape = 'circle' | 'square' | 'sharp'
-export type LewAvatarObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
-export type LewAvatarObjectPosition = 'center' | 'top' | 'bottom' | 'left' | 'right' | 'top left' | 'top right' | 'bottom left' | 'bottom right'
-
-export type LewButtonType = 'fill' | 'light' | 'ghost' | 'text'
-export type LewButtonSize = 'mini' | 'small' | 'medium' | 'large'

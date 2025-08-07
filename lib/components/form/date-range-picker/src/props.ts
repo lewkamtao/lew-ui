@@ -1,3 +1,4 @@
+import type { Property } from 'csstype'
 import type { LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
@@ -29,6 +30,10 @@ export const dateRangePickerProps = {
   valueFormat: {
     type: String,
     default: 'YYYY-MM-DD',
+    validator: validators.string({
+      componentName: 'LewDateRangePicker',
+      propName: 'valueFormat',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
@@ -41,7 +46,7 @@ export const dateRangePickerProps = {
     }),
   },
   width: {
-    type: String,
+    type: String as PropType<Property.Width>,
     default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewDateRangePicker',

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
-import type { UploadFileItem } from './props'
+import type { LewUploadFileItem } from 'lew-ui/types'
 import { LewFlex, LewImage, LewTag, LewTextTrim, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import {
@@ -75,9 +75,9 @@ const rightTopBorderRadiusMap: Record<string, number> = {
   large: 8.5,
 }
 
-const modelValue = defineModel<UploadFileItem[]>()
+const modelValue = defineModel<LewUploadFileItem[]>()
 
-const getFileName = computed(() => (item: UploadFileItem) => {
+const getFileName = computed(() => (item: LewUploadFileItem) => {
   return item.name || getLastValueAfterSlash(item.url)
 })
 
@@ -87,7 +87,7 @@ function getLastValueAfterSlash(url: string = '') {
   return urlParts[urlParts.length - 1]
 }
 
-const getStatusText = computed(() => (item: UploadFileItem) => {
+const getStatusText = computed(() => (item: LewUploadFileItem) => {
   return locale.t(`upload.${item.status || 'complete'}`)
 })
 </script>

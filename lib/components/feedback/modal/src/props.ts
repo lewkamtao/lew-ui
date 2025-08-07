@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
+import type { LewButtonProps } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { ButtonProps } from '../../../general/button/index'
 
 // Model definitions
 export const modalModel = {
@@ -23,7 +23,7 @@ export const modalProps = {
     },
   },
   width: {
-    type: [String, Number] as PropType<Property.Width | number>,
+    type: String as PropType<Property.Width>,
     default: 'auto',
     validator(value: Property.Width | number): boolean {
       if (typeof value === 'number') {
@@ -142,10 +142,10 @@ export const modalProps = {
     default: false,
   },
   okButtonProps: {
-    type: Object as PropType<ButtonProps>,
+    type: Object as PropType<LewButtonProps>,
   },
   closeButtonProps: {
-    type: Object as PropType<ButtonProps>,
+    type: Object as PropType<LewButtonProps>,
   },
   zIndex: {
     type: Number,

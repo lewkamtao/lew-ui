@@ -15,9 +15,6 @@ export const collapseItemModel = {
   },
 }
 
-export type CollapseModelValue = (string | number)[] | string | number | null
-export type CollapseItemModelValue = boolean
-
 export const collapseProps = {
   width: {
     type: String as PropType<Property.Width>,

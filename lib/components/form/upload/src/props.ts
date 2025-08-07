@@ -1,28 +1,6 @@
-import type { LewSize } from 'lew-ui'
+import type { LewSize, LewUploadFileItem } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
-
-export type UploadStatus
-  = | 'success'
-    | 'fail'
-    | 'uploading'
-    | 'complete'
-    | 'wrong_type'
-    | 'wrong_size'
-    | 'pending'
-
-export interface UploadFileItem {
-  key: string
-  name?: string
-  url?: string
-  status?: UploadStatus
-  percent?: number
-  file?: File
-  size?: number
-  type?: string
-  lastModifiedDate?: string
-  lastModified?: number
-}
 
 export const uploadProps = {
   accept: {
@@ -97,7 +75,7 @@ export const uploadProps = {
     },
   },
   uploadHelper: {
-    type: Function,
+    type: Function as PropType<() => Promise<LewUploadFileItem[]>>,
     default: undefined,
     description: '自定义文件上传处理函数',
     validator: (value: any) => {
@@ -127,7 +105,7 @@ export const uploadProps = {
     },
   },
   beforeDelete: {
-    type: Function,
+    type: Function as PropType<(fileItem: LewUploadFileItem) => Promise<boolean>>,
     default: undefined,
     description: '删除文件前的回调函数，返回 Promise<boolean> 或 boolean，true 表示继续删除',
     validator: (value: any) => {

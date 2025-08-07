@@ -21,7 +21,7 @@ export const menuTreeModel = {
 export const menuTreeProps = {
   options: {
     type: Array as PropType<LewMenuTreeOption[]>,
-    default: [],
+    required: true,
     typePopKeys: ['LewMenuTreeOption'],
     validator: validators.array({
       componentName: 'LewMenuTree',

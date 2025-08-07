@@ -1,3 +1,4 @@
+import type { Property } from 'csstype'
 import type { LewOffset, LewPlacement, LewTrigger } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validPlacementList, validTriggerList } from 'lew-ui/validators'
@@ -11,6 +12,14 @@ export const popoverProps = {
       componentName: 'LewPopover',
       propName: 'trigger',
       values: validTriggerList,
+    }),
+  },
+  triggerWidth: {
+    type: String as PropType<Property.Width>,
+    default: '',
+    validator: validators.string({
+      componentName: 'LewPopover',
+      propName: 'triggerWidth',
     }),
   },
   placement: {

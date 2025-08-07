@@ -1,3 +1,4 @@
+import type { Property } from 'csstype'
 import type { LewDatePickerPresetsOption, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
@@ -28,7 +29,7 @@ export const datePickerProps = {
     }),
   },
   width: {
-    type: String,
+    type: String as PropType<Property.Width>,
     default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewDatePicker',
@@ -68,6 +69,7 @@ export const datePickerProps = {
   },
   presets: {
     type: Array as PropType<LewDatePickerPresetsOption[]>,
+    typePopKeys: ['LewDatePickerPresetsOption'],
     default: () => [],
     validator: validators.array({
       componentName: 'LewDatePicker',

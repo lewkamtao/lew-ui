@@ -1,11 +1,8 @@
 <script setup lang="ts">
-interface TabOption {
-  label: string
-  value: string
-}
+import type { LewTabsOption } from 'lew-ui/types'
 
-const options: TabOption[] = [
-  { label: 'Nike', value: 'nike' },
+const options: LewTabsOption[] = [
+  { label: 'Nike', value: 'nike', disabled: true },
   { label: 'Adidas', value: 'adidas' },
   { label: 'Puma', value: 'puma' },
   { label: 'Under Armour', value: 'under_armour' },

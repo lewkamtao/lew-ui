@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { LewFormItemAs } from 'lew-ui/types'
 import {
   LewButton,
   LewCascader,
@@ -38,7 +39,7 @@ import RequiredIcon from './RequiredIcon.vue'
 
 const props = defineProps(formItemProps)
 const emit = defineEmits(['change'])
-const asMap: Record<string, any> = {
+const asMap: Record<LewFormItemAs, Component> = {
   'input': LewInput,
   'textarea': LewTextarea,
   'input-tag': LewInputTag,
@@ -85,7 +86,7 @@ function setIgnoreValidate(value: boolean) {
   ignoreValidate.value = value
 }
 
-function getRequiredRuleByMap(as: string) {
+function getRequiredRuleByMap(as: LewFormItemAs) {
   const type = formTypeAsMap[as]
   switch (type) {
     case 'string':
@@ -213,10 +214,7 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
       class="lew-label-box-wrapper"
     >
       <div v-if="as" class="lew-label-box">
-        <RequiredIcon
-          v-if="curRequired && label"
-          :size="requiredIconSizeMap[size]"
-        />
+        <RequiredIcon v-if="curRequired && label" :size="requiredIconSizeMap[size]" />
         {{ label }}
         <CommonIcon
           v-if="tips"
@@ -262,8 +260,10 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
 <style lang="scss" scoped>
 .lew-form-item {
   transition: opacity 0.25s;
+
   .lew-label-box-wrapper {
     transition: all 0.25s;
+
     .lew-label-box {
       display: inline-flex;
       align-items: center;
@@ -304,14 +304,17 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
     min-height: var(--lew-form-item-height-large);
   }
 }
+
 .lew-form-item-main {
   display: flex;
   align-items: center;
 }
+
 .lew-label-tips {
   cursor: pointer;
   border-bottom: 2px dashed var(--lew-color-primary);
 }
+
 .lew-form-item-direction-x {
   display: flex;
   align-items: flex-start;
@@ -323,6 +326,7 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
     flex-shrink: 0;
     white-space: nowrap;
   }
+
   .lew-form-item-main {
     flex: 1;
   }
@@ -343,10 +347,12 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
     white-space: nowrap;
   }
 }
+
 .lew-form-item {
   .lew-form-item-main {
     position: relative;
   }
+
   .lew-error-message {
     position: absolute;
     left: 0px;
@@ -384,6 +390,7 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
 .lew-form-item-readonly {
   pointer-events: none;
 }
+
 .lew-form-item-disabled {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;

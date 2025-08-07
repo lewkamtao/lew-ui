@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
-import type { UploadFileItem } from './props'
+import type { LewUploadFileItem } from 'lew-ui/types'
 import { LewFlex, LewImage, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
@@ -45,7 +45,7 @@ const getCardSize: Record<string, number> = {
   large: 88,
 }
 
-const getStatusText = computed(() => (item: UploadFileItem) => {
+const getStatusText = computed(() => (item: LewUploadFileItem) => {
   return locale.t(`upload.${item.status || 'complete'}`)
 })
 
@@ -58,7 +58,7 @@ const statusColorMap = {
   wrong_size: 'red',
   pending: 'gray',
 }
-const modelValue = defineModel<UploadFileItem[]>()
+const modelValue = defineModel<LewUploadFileItem[]>()
 </script>
 
 <template>

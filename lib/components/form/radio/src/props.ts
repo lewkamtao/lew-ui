@@ -1,14 +1,6 @@
-import type { LewDirection, LewSize } from 'lew-ui'
+import type { LewDirection, LewRadioOption, LewSize } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList } from 'lew-ui/validators'
-
-export type RadioDirection = 'x' | 'y'
-
-export interface RadioOptions {
-  label: string
-  value: string | number
-  disabled?: boolean
-}
 
 export const radioProps = {
   checked: {
@@ -83,7 +75,6 @@ export const radioGroupModel = {
   modelValue: {
     type: [String, Number],
     default: '',
-    description: '单选框组绑定值',
   },
 }
 
@@ -99,7 +90,6 @@ export const radioGroupProps = {
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
-    description: '复选框组的排列方向',
     typeValues: validDirectionList,
     validator: validators.enum({
       componentName: 'LewRadioGroup',
@@ -124,7 +114,9 @@ export const radioGroupProps = {
     }),
   },
   options: {
-    type: Array as PropType<RadioOptions[]>,
+    type: Array as PropType<LewRadioOption[]>,
+    typePopKeys: ['LewRadioOption'],
+    required: true,
     default: () => [],
     validator: validators.array({
       componentName: 'LewRadioGroup',

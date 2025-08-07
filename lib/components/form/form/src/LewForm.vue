@@ -35,9 +35,7 @@ const getDynamicGridStyle = computed(() => {
 
 // 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
 function getForm() {
-  const formData: Record<string, any> = formatFormByMap(
-    cloneDeep(formMap.value),
-  )
+  const formData: Record<string, any> = formatFormByMap(cloneDeep(formMap.value))
   // 应用 outputFormat
   componentOptions.forEach((item) => {
     if (item.outputFormat && item.field && formData[item.field]) {
@@ -107,7 +105,7 @@ function validate() {
         resolve(true)
       })
       .catch((error: any) => {
-        ;(error?.inner || []).forEach((item: any) => {
+        (error?.inner || []).forEach((item: any) => {
           const path = item.path.replace(`["`, '').replace(`"]`, '')
           const ref = formItemRefMap.value[path]
           if (ref) {
@@ -145,7 +143,7 @@ const getFormStyle = computed(() => {
   }
   return {
     width: any2px(props.width),
-    minWidth: 320,
+    minWidth: '320px',
     gap: gapMap[props.size],
     ...getDynamicGridStyle.value,
   }
@@ -156,28 +154,23 @@ defineExpose({ getForm, setForm, resetError, validate })
 
 <template>
   <div class="lew-form" :style="getFormStyle" :class="getFormClassNames">
-    <LewGetLabelWidth
-      ref="formLabelRef"
-      :size="size"
-      :options="componentOptions"
-    />
+    <LewGetLabelWidth ref="formLabelRef" :size="size" :options="componentOptions" />
     <LewFormItem
       v-for="item in componentOptions"
-      :ref="(el:any) => (formItemRefMap[item.field] = el)"
+      :ref="(el: any) => (formItemRefMap[item.field] = el)"
       :key="item.field"
       v-model="formMap[item.field]"
       v-bind="{
         direction,
         size,
-        labelWidth:
-          labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
+        labelWidth: labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
         disabled,
         readonly,
         ...item,
       }"
       @change="
         () => {
-          emit('change', getForm())
+          emit('change', getForm());
         }
       "
     />

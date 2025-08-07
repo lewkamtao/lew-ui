@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LewSelectMultipleOptions, LewSelectMultipleOptionsGroup } from 'lew-ui'
+import type { LewSelectMultipleOption } from 'lew-ui'
 import { useDebounceFn } from '@vueuse/core'
 import {
   LewCheckbox,
@@ -37,13 +37,10 @@ const state = reactive({
   visible: false,
   loading: false,
   initLoading: true,
-  sourceOptions: props.options as (
-    | LewSelectMultipleOptions
-    | LewSelectMultipleOptionsGroup
-  )[],
-  options: flattenSelectOptions(props.options),
+  sourceOptions: props.options || [],
+  options: flattenSelectOptions(props.options || []),
   keyword: '',
-  searchCache: new Map<string, LewSelectMultipleOptions[]>(),
+  searchCache: new Map<string, LewSelectMultipleOption[]>(),
 })
 
 const formMethods: any = inject('formMethods', {})
@@ -148,7 +145,7 @@ function deleteTag({ value }: { value: any }) {
   }
 }
 
-function selectHandle(item: LewSelectMultipleOptions) {
+function selectHandle(item: LewSelectMultipleOption) {
   if (item.disabled || item.isGroup) {
     return
   }
@@ -190,7 +187,7 @@ const getSelectedRows = computed(() => {
     const selectedRows
       = selectValue.value
         && selectValue.value.map((v: number | string) => {
-          return state.options.find((e: LewSelectMultipleOptions) => v === e.value)
+          return state.options.find((e: LewSelectMultipleOption) => v === e.value)
         })
     if (!selectedRows || selectedRows.length === 0) {
       return _defaultValue
@@ -318,8 +315,8 @@ watch(
   () => props.options,
   (newOptions) => {
     if (!_initMethod.value) {
-      state.sourceOptions = newOptions
-      state.options = flattenSelectOptions(newOptions)
+      state.sourceOptions = newOptions || []
+      state.options = flattenSelectOptions(newOptions || [])
       if (props.enableSearchCache) {
         state.searchCache.clear()
       }
@@ -345,6 +342,7 @@ const getResultText = computed(() => {
     popover-body-class-name="lew-select-multiple-popover-body"
     class="lew-select-view"
     :trigger="trigger"
+    :trigger-width="width"
     :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :style="{ width: any2px(width) }"
@@ -385,7 +383,7 @@ const getResultText = computed(() => {
             :style="{ padding: '4px' }"
             x="start"
             y="center"
-            :gap="4"
+            gap="4px"
             wrap
             class="lew-value"
           >

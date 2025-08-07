@@ -22,8 +22,8 @@ defineProps({
       :lang="lang as any"
       :code="code"
       :theme="{
-        light: 'slack-ochin',
-        dark: 'slack-dark',
+        light: 'github-light',
+        dark: 'github-dark',
       }"
     />
   </div>
@@ -34,6 +34,7 @@ defineProps({
   box-sizing: border-box;
   overflow-x: auto;
 }
+
 pre {
   z-index: 1;
   padding: 15px;
@@ -44,6 +45,7 @@ pre {
   background-color: var(--lew-bgcolor-0) !important;
   border-radius: var(--lew-border-radius-small);
 }
+
 code {
   display: block;
   line-height: 1.7;
@@ -55,7 +57,7 @@ code {
 
 .shiki,
 .shiki span {
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .lew-dark .shiki,

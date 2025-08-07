@@ -44,7 +44,7 @@ export const emptyProps = {
     default: '暂无数据',
   },
   width: {
-    type: [String, Number] as PropType<Property.Width | number>,
+    type: String as PropType<Property.Width>,
     default: '200px',
     validator(value: Property.Width | number): boolean {
       if (typeof value === 'number') {

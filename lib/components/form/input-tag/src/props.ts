@@ -1,55 +1,81 @@
+import type { Property } from 'csstype'
+import type { LewSize } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-
-export type InputTagSize = 'small' | 'medium' | 'large'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const inputTagModel = {
   modelValue: {
     type: Array as PropType<string[]>,
     default: () => [],
-    description: '标签输入框的值，支持双向绑定',
   },
 }
 
 export const inputTagProps = {
   size: {
-    type: String as PropType<InputTagSize>,
+    type: String as PropType<LewSize>,
     default: 'medium',
-    description: '标签输入框的尺寸，可选值为 small、medium 或 large',
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewInputTag',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用标签输入框',
+    validator: validators.boolean({
+      componentName: 'LewInputTag',
+      propName: 'disabled',
+    }),
   },
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否显示清空按钮，点击可清空所有标签',
+    validator: validators.boolean({
+      componentName: 'LewInputTag',
+      propName: 'clearable',
+    }),
   },
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '输入框的占位文本，当没有标签时显示',
+    validator: validators.string({
+      componentName: 'LewInputTag',
+      propName: 'placeholder',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否将标签输入框设为只读，只读状态下无法添加或删除标签',
+    validator: validators.boolean({
+      componentName: 'LewInputTag',
+      propName: 'readonly',
+    }),
   },
   allowDuplicates: {
     type: Boolean,
     default: false,
-    description: '是否允许添加重复的标签',
+    validator: validators.boolean({
+      componentName: 'LewInputTag',
+      propName: 'allowDuplicates',
+    }),
   },
   maxLength: {
     type: Number,
     default: 0,
-    description: '允许添加标签的最大数量',
+    validator: validators.number({
+      componentName: 'LewInputTag',
+      propName: 'maxLength',
+    }),
   },
   width: {
-    type: [String, Number],
+    type: String as PropType<Property.Width>,
     default: '300px',
-    description: '输入框宽度，支持数字（单位：像素）或带单位的字符串',
+    validator: validators.widthHeight({
+      componentName: 'LewInputTag',
+      propName: 'width',
+    }),
   },
 }
 

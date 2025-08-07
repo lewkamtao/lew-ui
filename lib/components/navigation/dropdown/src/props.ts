@@ -32,8 +32,8 @@ export const dropdownProps = {
   },
   options: {
     type: Array as PropType<LewContextMenusOption[]>,
-    typePopKey: ['LewContextMenusOption'],
-    default: () => [],
+    typePopKeys: ['LewContextMenusOption'],
+    required: true,
     validator: validators.array({
       componentName: 'LewDropdown',
       propName: 'options',
@@ -49,4 +49,4 @@ export const dropdownProps = {
   },
 }
 
-export type DropdownProps = ExtractPropTypes<typeof dropdownProps>
+export type LewDropdownProps = ExtractPropTypes<typeof dropdownProps>

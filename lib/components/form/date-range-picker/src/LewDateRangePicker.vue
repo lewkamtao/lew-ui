@@ -15,7 +15,7 @@ if (app && !app.directive('tooltip')) {
 
 type DateRangePickerModel
   = | {
-    [key in typeof startKey | typeof endKey]: string
+    [key in typeof startKey | typeof endKey]: string;
   }
   | undefined
 
@@ -100,6 +100,7 @@ defineExpose({ show, hide })
     ref="lewPopoverRef"
     trigger="click"
     placement="bottom-start"
+    :trigger-width="width"
     :offset="[1, 8]"
     :disabled="disabled || readonly"
     :style="{ width: any2px(width) }"
@@ -127,7 +128,7 @@ defineExpose({ show, hide })
               {{
                 placeholderStart
                   ? placeholderStart
-                  : locale.t('dateRangePicker.placeholderStart')
+                  : locale.t("dateRangePicker.placeholderStart")
               }}
             </div>
             <div
@@ -146,13 +147,10 @@ defineExpose({ show, hide })
               {{
                 placeholderEnd
                   ? placeholderEnd
-                  : locale.t('dateRangePicker.placeholderEnd')
+                  : locale.t("dateRangePicker.placeholderEnd")
               }}
             </div>
-            <div
-              v-else
-              class="lew-date-range-picker-dateValue lew-date-range-picker-end"
-            >
+            <div v-else class="lew-date-range-picker-dateValue lew-date-range-picker-end">
               {{ modelValue[endKey] }}
             </div>
             <CommonIcon

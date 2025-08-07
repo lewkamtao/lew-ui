@@ -95,6 +95,7 @@ defineExpose({ show, hide })
     ref="lewPopoverRef"
     trigger="click"
     placement="bottom-start"
+    :trigger-width="width"
     :disabled="disabled || readonly"
     :offset="[0, 8]"
     :style="{ width: any2px(width) }"
@@ -116,9 +117,7 @@ defineExpose({ show, hide })
             }"
           >
             <div v-show="!modelValue" class="lew-date-picker-placeholder">
-              {{
-                placeholder ? placeholder : locale.t('datePicker.placeholder')
-              }}
+              {{ placeholder ? placeholder : locale.t("datePicker.placeholder") }}
             </div>
             <div v-show="modelValue" class="lew-date-picker-dateValue">
               {{ modelValue }}
@@ -152,7 +151,8 @@ defineExpose({ show, hide })
         <lew-flex
           v-if="(presets || []).length > 0"
           direction="y"
-          gap="7"
+          gap="7px"
+          width="120px"
           y="start"
           class="lew-date-picker-presets lew-scrollbar"
         >
@@ -193,6 +193,7 @@ defineExpose({ show, hide })
   .lew-date-picker-view {
     width: 100%;
   }
+
   .lew-date-picker {
     width: 100%;
     display: inline-flex;
@@ -210,6 +211,7 @@ defineExpose({ show, hide })
     user-select: none;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     box-shadow: var(--lew-form-box-shadow);
+
     .lew-date-picker-icon-calendar {
       position: absolute;
       top: 50%;
@@ -237,48 +239,53 @@ defineExpose({ show, hide })
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   }
+
   .lew-date-picker-focus:hover {
     background-color: var(--lew-form-bgcolor-focus);
   }
 }
+
 .lew-date-picker-readonly {
   pointer-events: none;
 }
+
 .lew-date-picker-disabled {
   pointer-events: none;
   opacity: var(--lew-disabled-opacity);
 }
+</style>
 
-:deep() {
-  .lew-date-picker-date-panel {
-    width: 260px;
-    flex-shrink: 0;
+<style lang="scss">
+.lew-date-picker-presets {
+  flex-shrink: 0;
+  height: 325px;
+  overflow-y: auto;
+  padding: 7px;
+  box-sizing: border-box;
+  border-right: var(--lew-pop-border);
+
+  .lew-date-picker-presets-item {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    border-radius: var(--lew-border-radius-small);
+    text-align: center;
+    background-color: var(--lew-form-bgcolor);
+    cursor: pointer;
   }
 
-  .lew-date-picker-presets {
-    flex-shrink: 0;
-    height: 325px;
-    overflow-y: auto;
-    padding: 7px;
-    box-sizing: border-box;
-    width: 120px;
-    border-right: var(--lew-pop-border);
-    .lew-date-picker-presets-item {
-      width: 100%;
-      height: 30px;
-      line-height: 30px;
-      border-radius: var(--lew-border-radius-small);
-      text-align: center;
-      background-color: var(--lew-form-bgcolor);
-      cursor: pointer;
-    }
-    .lew-date-picker-presets-item:hover {
-      background-color: var(--lew-form-bgcolor-hover);
-    }
-    .lew-date-picker-presets-item-active {
-      background-color: var(--lew-color-primary) !important;
-      color: var(--lew-color-white);
-    }
+  .lew-date-picker-presets-item:hover {
+    background-color: var(--lew-form-bgcolor-hover);
   }
+
+  .lew-date-picker-presets-item-active {
+    background-color: var(--lew-color-primary) !important;
+    color: var(--lew-color-white);
+  }
+}
+
+.lew-date-picker-date-panel {
+  width: 260px;
+  flex-shrink: 0;
 }
 </style>

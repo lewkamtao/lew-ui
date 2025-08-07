@@ -26,12 +26,7 @@ function show() {
 </script>
 
 <template>
-  <lew-popover
-    trigger="click"
-    placement="bottom-start"
-    :loading="loading"
-    @show="show"
-  >
+  <lew-popover trigger="click" placement="bottom-start" :loading="loading" @show="show">
     <template #trigger>
       <lew-avatar
         style="cursor: pointer"

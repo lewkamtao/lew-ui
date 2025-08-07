@@ -223,11 +223,11 @@
   --lew-switch-bgcolor-hover: rgb(206, 207, 210);
 
   /* 复选框和单选框 */
-  --lew-checkbox-border-color: var(--lew-bgcolor-4);
+  --lew-checkbox-border-color: var(--lew-bgcolor-5);
   --lew-checkbox-color: var(--lew-color-primary);
   --lew-checkbox-color-light: var(--lew-color-primary-light);
   --lew-checkbox-border-color-hover: var(--lew-color-primary);
-  --lew-radio-border-color: var(--lew-bgcolor-4);
+  --lew-radio-border-color: var(--lew-bgcolor-5);
   --lew-radio-border-color-hover: var(--lew-color-primary);
   --lew-radio-color: var(--lew-color-primary);
   --lew-radio-color-light: var(--lew-color-primary-light);
@@ -508,13 +508,13 @@
     drop-shadow(0px 2px 8px rgb(255 255 255 / 4%)) drop-shadow(0px 30px 70px rgb(0 0 0 / 10%));
 
   /* 表格 */
-  --lew-table-bgcolor: var(--lew-bgcolor-0);
-  --lew-table-bgcolor-hover: rgb(40 41 44);
-  --lew-table-bgcolor-active: rgb(48 49 52);
-  --lew-table-header-bgcolor: rgb(49 49 53);
-  --lew-table-header-bgcolor-hover: rgb(36 36 38);
-  --lew-table-header-bgcolor-active: rgb(44 44 46);
-  --lew-table-tr-hover-bgcolor: rgb(40 41 44);
+  --lew-table-bgcolor: rgb(24 24 24);
+  --lew-table-bgcolor-hover: rgb(32 32 32);
+  --lew-table-bgcolor-active: rgb(36 36 36);
+  --lew-table-header-bgcolor: rgb(36 36 36);
+  --lew-table-header-bgcolor-hover: rgb(42 42 42);
+  --lew-table-header-bgcolor-active: rgb(48 48 48);
+  --lew-table-tr-hover-bgcolor: rgb(32 32 32);
   --lew-table-border: var(--lew-pop-border);
   --lew-table-tr-selected: rgb(29 35 42);
   --lew-table-scroll-line-color-start: rgb(0 0 0 / 0%);

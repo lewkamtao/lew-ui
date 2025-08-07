@@ -1,9 +1,9 @@
-import type { LewSelectMultipleOptions, LewSelectMultipleOptionsGroup, LewSelectOptions, LewSelectOptionsGroup } from 'lew-ui'
+import type { LewSelectMultipleOption, LewSelectOption } from 'lew-ui'
 
-type Options = LewSelectOptions | LewSelectMultipleOptions
-type OptionsGroup = LewSelectOptionsGroup | LewSelectMultipleOptionsGroup
+type Options = LewSelectOption | LewSelectMultipleOption
+type OptionsGroup = LewSelectOption | LewSelectMultipleOption
 
-export function flattenSelectOptions(options: (Options | OptionsGroup)[]) {
+export function flattenSelectOptions(options: (Options | OptionsGroup)[] = []) {
   const result: Options[] = []
   options.forEach((option: any) => {
     if (option.children && option.children.length > 0) {

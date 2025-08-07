@@ -1,4 +1,5 @@
-import type { LewCascaderOptions, LewSize, LewTrigger } from 'lew-ui'
+import type { Property } from 'csstype'
+import type { LewCascaderOption, LewSize, LewTrigger } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
@@ -10,17 +11,17 @@ export const cascaderModel = {
 
 export const cascaderProps = {
   options: {
-    type: Array as PropType<LewCascaderOptions[]>,
-    typePopKey: ['LewCascaderOptions'],
-    default: () => [],
+    type: Array as PropType<LewCascaderOption[]>,
+    typePopKey: ['LewCascaderOption'],
+    required: true,
     validator: validators.array({
       componentName: 'LewCascader',
       propName: 'options',
     }),
   },
   width: {
-    type: String,
-    default: '300px',
+    type: String as PropType<Property.Width>,
+    default: '100%',
     validator: validators.widthHeight({
       componentName: 'LewCascader',
       propName: 'width',
@@ -95,7 +96,8 @@ export const cascaderProps = {
     }),
   },
   loadMethod: {
-    type: Function,
+    type: Function as PropType<() => Promise<LewCascaderOption[]>>,
+    default: null,
     validator: validators.function({
       componentName: 'LewCascader',
       propName: 'loadMethod',
@@ -110,7 +112,8 @@ export const cascaderProps = {
     }),
   },
   initMethod: {
-    type: Function,
+    type: Function as PropType<() => Promise<LewCascaderOption[]>>,
+    default: null,
     validator: validators.function({
       componentName: 'LewCascader',
       propName: 'initMethod',
@@ -126,6 +129,7 @@ export const cascaderProps = {
   },
   readonly: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCascader',
       propName: 'readonly',

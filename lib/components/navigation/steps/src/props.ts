@@ -1,7 +1,7 @@
 import type { Property } from 'csstype'
-import type { LewStatus, LewStepsOptions } from 'lew-ui/types'
+import type { LewStepsOption, LewStepsStatus } from 'lew-ui/types'
 import type { ExtractPropTypes } from 'vue'
-import validators from 'lew-ui/validators'
+import validators, { validStepsStatusList } from 'lew-ui/validators'
 
 export const stepsModel = {
   modelValue: {
@@ -11,20 +11,22 @@ export const stepsModel = {
 
 export const stepsProps = {
   options: {
-    type: Array as PropType<LewStepsOptions[]>,
-    default: () => [],
+    type: Array as PropType<LewStepsOption[]>,
+    typePopKeys: ['LewStepsOption'],
+    required: true,
     validator: validators.array({
       componentName: 'LewSteps',
       propName: 'options',
     }),
   },
   status: {
-    type: String as PropType<LewStatus>,
+    type: String as PropType<LewStepsStatus>,
     default: 'pending',
+    typeValues: validStepsStatusList,
     validator: validators.enum({
       componentName: 'LewSteps',
       propName: 'status',
-      values: ['pending', 'loading', 'done', 'error', 'warning'],
+      values: validStepsStatusList,
     }),
   },
   minWidth: {
@@ -37,4 +39,4 @@ export const stepsProps = {
   },
 }
 
-export type StepsProps = ExtractPropTypes<typeof stepsProps>
+export type LewStepsProps = ExtractPropTypes<typeof stepsProps>

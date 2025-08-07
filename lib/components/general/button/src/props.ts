@@ -1,3 +1,4 @@
+import type { Property } from 'csstype'
 import type { LewButtonSize, LewButtonType, LewColor } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validColorList } from 'lew-ui/validators'
@@ -14,7 +15,7 @@ export const buttonProps = {
     }),
   },
   width: {
-    type: String,
+    type: String as PropType<Property.Width>,
     validator: validators.widthHeight({
       componentName: 'LewButton',
       propName: 'width',
@@ -92,7 +93,6 @@ export const buttonProps = {
   },
   request: {
     type: Function as PropType<() => Promise<void>>,
-    default: () => Promise.resolve(),
     validator: validators.function({
       componentName: 'LewButton',
       propName: 'request',
@@ -100,4 +100,4 @@ export const buttonProps = {
   },
 }
 
-export type ButtonProps = ExtractPropTypes<typeof buttonProps>
+export type LewButtonProps = ExtractPropTypes<typeof buttonProps>

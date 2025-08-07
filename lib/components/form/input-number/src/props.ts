@@ -1,8 +1,7 @@
-import type { LewSize } from 'lew-ui/types'
+import type { Property } from 'csstype'
+import type { LewSize, LewXAlignment } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
-import validators, { validSizeList } from 'lew-ui/validators'
-
-export type InputNumberAlign = 'left' | 'center' | 'right'
+import validators, { validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const inputNumberModel = {
   modelValue: {
@@ -14,25 +13,23 @@ export const inputNumberModel = {
 
 export const inputNumberProps = {
   min: {
-    type: [Number, String],
-    default: '',
+    type: Number,
     validator: validators.number({
       componentName: 'LewInputNumber',
       propName: 'min',
     }),
   },
   max: {
-    type: [Number, String],
-    default: '',
+    type: Number,
     validator: validators.number({
       componentName: 'LewInputNumber',
       propName: 'max',
     }),
   },
   step: {
-    type: [Number, String],
+    type: Number,
     default: 1,
-    validator: validators.positiveInteger({
+    validator: validators.number({
       componentName: 'LewInputNumber',
       propName: 'step',
     }),
@@ -72,7 +69,7 @@ export const inputNumberProps = {
     }),
   },
   width: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: '150px',
     validator: validators.widthHeight({
       componentName: 'LewInputNumber',
@@ -80,22 +77,22 @@ export const inputNumberProps = {
     }),
   },
   align: {
-    type: String as PropType<InputNumberAlign>,
-    typeValues: 'left | center | right',
+    type: String as PropType<LewXAlignment>,
+    typeValues: validXAlignmentList,
     default: 'left',
-    description: '对齐方式',
-    validator(value: InputNumberAlign) {
-      if (!['left', 'center', 'right'].includes(value)) {
-        console.warn('[LewInputNumber] align 必须是 left、center 或 right')
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewInputNumber',
+      propName: 'align',
+      values: validXAlignmentList,
+    }),
   },
   selectByFocus: {
     type: Boolean,
     default: true,
-    description: '聚焦时是否选中内容',
+    validator: validators.boolean({
+      componentName: 'LewInputNumber',
+      propName: 'selectByFocus',
+    }),
   },
 }
 

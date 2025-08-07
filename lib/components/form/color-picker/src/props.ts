@@ -1,3 +1,4 @@
+import type { Property } from 'csstype'
 import type { LewSize } from 'lew-ui/types'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
@@ -8,7 +9,6 @@ export const colorPickerModel = {
   },
 }
 
-export type ColorPickerTrigger = 'click' | 'hover'
 export const colorPickerProps = {
   size: {
     type: String as PropType<LewSize>,
@@ -21,7 +21,7 @@ export const colorPickerProps = {
     }),
   },
   width: {
-    type: String,
+    type: String as PropType<Property.Width>,
     default: 'auto',
     validator: validators.widthHeight({
       componentName: 'LewColorPicker',

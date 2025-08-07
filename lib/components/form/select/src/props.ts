@@ -1,4 +1,5 @@
-import type { LewSelectOptions, LewSelectOptionsGroup, LewSelectSearchMethodParams, LewSize, LewTrigger } from 'lew-ui'
+import type { Property } from 'csstype'
+import type { LewSelectOption, LewSelectSearchMethodParams, LewSize, LewTrigger } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
@@ -19,16 +20,16 @@ export const selectProps = {
     }),
   },
   options: {
-    type: Array as PropType<LewSelectOptions[] | LewSelectOptionsGroup[]>,
-    typePopKeys: ['LewSelectOptions', 'LewSelectOptionsGroup'],
-    default: () => [],
+    type: Array as PropType<LewSelectOption[]>,
+    typePopKeys: ['LewSelectOption'],
+    required: true,
     validator: validators.array({
       componentName: 'LewSelect',
       propName: 'options',
     }),
   },
   width: {
-    type: String,
+    type: String as PropType<Property.Width>,
     default: '240px',
     validator: validators.widthHeight({
       componentName: 'LewSelect',
@@ -36,7 +37,7 @@ export const selectProps = {
     }),
   },
   popoverWidth: {
-    type: String,
+    type: String as PropType<Property.Width>,
     default: '240px',
     validator: validators.widthHeight({
       componentName: 'LewSelect',
@@ -82,6 +83,10 @@ export const selectProps = {
   itemHeight: {
     type: Number,
     default: 38,
+    validator: validators.number({
+      componentName: 'LewSelect',
+      propName: 'itemHeight',
+    }),
   },
   searchable: {
     type: Boolean,
@@ -93,7 +98,7 @@ export const selectProps = {
   },
   searchMethod: {
     type: Function as PropType<
-      (params: LewSelectSearchMethodParams) => LewSelectOptions[]
+      (params: LewSelectSearchMethodParams) => LewSelectOption[]
     >,
     default: undefined,
     validator: validators.function({
@@ -104,8 +109,8 @@ export const selectProps = {
   initMethod: {
     type: Function as PropType<
       () =>
-        | (LewSelectOptions[] | LewSelectOptionsGroup[])
-        | Promise<LewSelectOptions[] | LewSelectOptionsGroup[]>
+        | (LewSelectOption[] | LewSelectOption[])
+        | Promise<LewSelectOption[] | LewSelectOption[]>
     >,
     default: undefined,
     validator: validators.function({

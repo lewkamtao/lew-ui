@@ -75,6 +75,7 @@ function handleClick(event: MouseEvent) {
 <style lang="scss">
 .lew-badge {
   position: relative;
+
   .lew-badge-dot {
     position: absolute;
     left: 100%;
@@ -132,6 +133,7 @@ function handleClick(event: MouseEvent) {
     transform: scale(1);
     opacity: 0.5;
   }
+
   100% {
     transform: scale(2.4);
     opacity: 0;

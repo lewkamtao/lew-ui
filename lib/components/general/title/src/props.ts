@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewColor } from 'lew-ui'
+import type { LewColor, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validColorList } from 'lew-ui/validators'
 
@@ -12,7 +12,7 @@ export const titleProps = {
     }),
   },
   size: {
-    type: String,
+    type: String as PropType<LewSize>,
     default: '24px',
     validator: validators.fontSize({
       componentName: 'LewTitle',
@@ -38,4 +38,4 @@ export const titleProps = {
   },
 }
 
-export type TitleProps = ExtractPropTypes<typeof titleProps>
+export type LewTitleProps = ExtractPropTypes<typeof titleProps>

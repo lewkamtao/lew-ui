@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UploadFileItem, UploadStatus } from './props'
+import type { LewUploadFileItem, LewUploadStatus } from 'lew-ui/types'
 import { useClipboardItems } from '@vueuse/core'
 import { LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -53,7 +53,7 @@ const getCardSize: Record<string, number> = {
 const inputClickRef = ref<HTMLInputElement | null>(null)
 const inputPasteRef = ref<HTMLInputElement | null>(null)
 const dropActive = ref(false)
-const modelValue = defineModel<UploadFileItem[]>()
+const modelValue = defineModel<LewUploadFileItem[]>()
 const isFocus = ref(false)
 
 const formMethods: any = inject('formMethods', {})
@@ -72,7 +72,7 @@ function addImageToList(files: any) {
   if ((files || []).length > 0) {
     const item = files.pop()
     const { size, type, name, lastModifiedDate, lastModified } = item
-    let status: UploadStatus = 'pending'
+    let status: LewUploadStatus = 'pending'
 
     if (!checkFileAccept({ ...item, file: item })) {
       status = 'wrong_type'
@@ -119,7 +119,7 @@ function addImageToList(files: any) {
 
 async function deleteFile(key: string) {
   const fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
+  const index = (fileList || []).findIndex((e: LewUploadFileItem) => e.key === key)
   if (index >= 0) {
     const { status } = fileList[index]
     const fileItem = fileList[index]
@@ -203,7 +203,7 @@ function pasteUpload(e: any) {
 }
 
 // 定义判断文件是否符合accept规则的方法
-function checkFileAccept(fileItem: UploadFileItem) {
+function checkFileAccept(fileItem: LewUploadFileItem) {
   const acceptedFiles = props.accept
   const file = fileItem.file
   if (file && acceptedFiles) {
@@ -251,10 +251,10 @@ onMounted(() => {
   })
 })
 
-function setFileItem(item: UploadFileItem) {
+function setFileItem(item: LewUploadFileItem) {
   const { key, percent } = item
   const fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
+  const index = (fileList || []).findIndex((e: LewUploadFileItem) => e.key === key)
   let _percent = percent || 0
   if (index >= 0) {
     if (percent) {
@@ -387,7 +387,8 @@ const getTips = computed(() => {
           @paste="pasteUpload"
           @focus="isFocus = true"
           @blur="isFocus = false"
-        ></LewFlex>
+        >
+      </LewFlex>
     </label>
     <LewUploadByList
       v-if="viewMode === 'list'"
@@ -403,6 +404,7 @@ const getTips = computed(() => {
 .lew-upload-wrapper {
   display: flex;
   flex-wrap: wrap;
+
   .lew-upload {
     position: relative;
     width: 100%;
@@ -413,23 +415,28 @@ const getTips = computed(() => {
     transition: all var(--lew-form-transition-ease);
     cursor: pointer;
     box-shadow: var(--lew-form-box-shadow);
+
     .lew-upload-icon {
       color: var(--lew-color-primary);
       transition: all var(--lew-form-transition-ease);
     }
+
     .lew-upload-tip {
       transition: all var(--lew-form-transition-ease);
     }
+
     .lew-upload-max-size {
       color: var(--lew-text-color-5);
       transition: all var(--lew-form-transition-ease);
     }
+
     .lew-upload-input {
       position: fixed;
       opacity: 0;
       z-index: -99;
     }
   }
+
   .lew-upload-label {
     user-select: none;
     min-width: 280px;
@@ -437,6 +444,7 @@ const getTips = computed(() => {
     flex-shrink: 0;
     transition: all var(--lew-form-transition-ease);
   }
+
   .lew-upload-label-readonly {
     user-select: text;
     pointer-events: none; //鼠标点击不可修改
@@ -446,6 +454,7 @@ const getTips = computed(() => {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
   }
+
   .lew-upload-label-viewMode-card {
     display: flex;
     justify-content: center;
@@ -454,10 +463,12 @@ const getTips = computed(() => {
     height: 100%;
     min-width: auto;
   }
+
   .lew-upload {
     width: 100%;
     height: 100%;
   }
+
   // 防止拖拽时出现闪烁
   .lew-upload::after {
     position: absolute;
@@ -468,20 +479,25 @@ const getTips = computed(() => {
     width: 100%;
     height: 100%;
   }
+
   .lew-upload:hover {
     border-color: var(--lew-form-border-color-focus);
     background-color: var(--lew-color-primary-light);
   }
+
   .lew-upload-drop-active {
     border-color: var(--lew-form-border-color-focus);
     background-color: var(--lew-color-primary-light);
   }
+
   .lew-upload:active {
     border-color: var(--lew-form-border-color-focus);
     background-color: var(--lew-form-bgcolor-focus);
   }
+
   .lew-upload-file-list {
     position: relative;
+
     .lew-upload-file-item {
       position: relative;
       background-color: var(--lew-bgcolor-0);
@@ -500,9 +516,11 @@ const getTips = computed(() => {
         transition: all var(--lew-form-transition-ease);
         cursor: pointer;
         transition: all 0.15s;
+
         &:hover {
           transform: scale(1.1);
         }
+
         &:active {
           transform: scale(1);
         }
@@ -513,6 +531,7 @@ const getTips = computed(() => {
         background-color: var(--lew-color-primary);
         color: var(--lew-color-white);
       }
+
       .lew-upload-delete-btn {
         right: -7px;
         background-color: var(--lew-color-red);
@@ -522,12 +541,14 @@ const getTips = computed(() => {
       .lew-upload-icon-wrapper {
         padding: 2px;
         box-sizing: border-box;
+
         .lew-upload-file-icon {
           width: 100%;
           height: 100%;
           border-radius: 4px;
           overflow: hidden;
         }
+
         .lew-upload-file-image {
           width: 100%;
           height: 100%;
@@ -542,6 +563,7 @@ const getTips = computed(() => {
         width: 100%;
         color: var(--lew-text-color-2);
       }
+
       .lew-upload-progress {
         position: relative;
         height: 14px;
@@ -558,6 +580,7 @@ const getTips = computed(() => {
             opacity: 1;
             height: 14px;
           }
+
           100% {
             opacity: 0;
             height: 0px;
@@ -578,6 +601,7 @@ const getTips = computed(() => {
           background-color: var(--lew-bgcolor-4);
           border-radius: 2px;
         }
+
         .lew-upload-progress-bar-upload {
           position: absolute;
           left: 0;
@@ -594,6 +618,7 @@ const getTips = computed(() => {
       .lew-upload-progress-success {
         animation-play-state: running;
       }
+
       .lew-upload-progress-fail {
         .lew-upload-progress-bar-upload {
           background-color: var(--lew-color-red);
@@ -606,6 +631,7 @@ const getTips = computed(() => {
         color: var(--lew-text-color-6);
       }
     }
+
     .lew-upload-file-item-invalid {
       opacity: 0.5;
     }

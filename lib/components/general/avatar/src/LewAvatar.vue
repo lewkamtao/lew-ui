@@ -106,11 +106,10 @@ const imageStyleObject = computed(() => ({
 }))
 
 const textStyleObject = computed(() => {
-  const size
-    = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
+  const size = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
   return {
     fontSize: `${size * 0.45}px`,
-    lineHeight: `${size}px`,
+    lineHeight: `${size - 2}px`,
     textAlign: 'center' as const,
     color: 'var(--lew-color-text-2)',
     userSelect: 'none' as const,
@@ -132,12 +131,8 @@ const dotStyleObject = computed(() => {
   const { status, statusPlacement, shape, size } = props
   if (!status)
     return {}
-
   const statusPlacementConfig
-    = shape === 'circle'
-      ? STATUS_PLACEMENT_CONFIG_CIRCLE
-      : STATUS_PLACEMENT_CONFIG_SQUARE
-  console.log(parseDimension(size))
+    = shape === 'circle' ? STATUS_PLACEMENT_CONFIG_CIRCLE : STATUS_PLACEMENT_CONFIG_SQUARE
   return {
     ...statusPlacementConfig[statusPlacement],
     backgroundColor: STATUS_COLOR_CONFIG[status],
@@ -161,18 +156,12 @@ const getIconSize = computed(() => {
   <div class="lew-avatar" :style="avatarStyleObject">
     <div class="lew-avatar-box" :style="avatarBoxStyleObject">
       <template v-if="src">
-        <div v-if="isLoading || loading" class="skeleton" />
-        <img
-          v-else-if="!error"
-          :alt="alt"
-          :src="src"
-          lazy
-          :style="imageStyleObject as any"
-        >
+        <div v-if="isLoading || loading" class="skeletons" />
+        <img v-else-if="!error" :alt="alt" :src="src" lazy :style="imageStyleObject">
         <div v-else-if="alt" class="lew-avatar-text" :style="textStyleObject">
           {{ altText }}
         </div>
-        <CommonIcon v-else :size="getIconSize" type="user" />
+        <CommonIcon v-else class="lew-avatar-user-icon" :size="getIconSize" type="user" />
       </template>
       <template v-else-if="alt">
         <div class="lew-avatar-text" :style="textStyleObject">
@@ -180,7 +169,7 @@ const getIconSize = computed(() => {
         </div>
       </template>
       <template v-else>
-        <CommonIcon :size="getIconSize" type="user" />
+        <CommonIcon class="lew-avatar-user-icon" :size="getIconSize" type="user" />
       </template>
     </div>
     <i v-if="status" :style="dotStyleObject" />
@@ -194,47 +183,39 @@ const getIconSize = computed(() => {
   flex-shrink: 0;
 
   .lew-avatar-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
     height: 100%;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
     background-color: var(--lew-bgcolor-2);
     border: var(--lew-pop-border);
+    box-sizing: border-box;
   }
 
   .lew-avatar-text {
     width: 100%;
     height: 100%;
     background-color: var(--lew-bgcolor-2);
-  }
-
-  // 添加 skeleton 样式
-  .skeleton {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--lew-bgcolor-3) 25%, var(--lew-bgcolor-2) 50%, var(--lew-bgcolor-3) 75%);
-    background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
-  }
-
-  @keyframes skeleton-loading {
-    0% {
-      background-position: 200% 0;
-    }
-
-    100% {
-      background-position: -200% 0;
-    }
+    animation: img-enter 0.1s ease;
+    animation-fill-mode: forwards;
+    opacity: 0;
   }
 
   img {
     width: 100%;
     height: 100%;
     background-color: var(--lew-bgcolor-2);
-    animation: img-enter 0.25s ease;
+    animation: img-enter 0.1s ease;
+    animation-fill-mode: forwards;
+    opacity: 0;
+  }
+
+  .lew-avatar-user-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: img-enter 0.1s ease;
     animation-fill-mode: forwards;
     opacity: 0;
   }

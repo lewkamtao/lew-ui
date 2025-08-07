@@ -1,3 +1,4 @@
+import type { Property } from 'csstype'
 import type { LewColor, LewPlacement, LewTrigger } from 'lew-ui'
 import type { PropType } from 'vue'
 import validators, { validColorList, validPlacementList, validTriggerList } from 'lew-ui/validators'
@@ -52,7 +53,7 @@ export const popokButtonProps = {
     }),
   },
   width: {
-    type: String,
+    type: String as PropType<Property.Width>,
     default: '280px',
     validator: validators.widthHeight({
       componentName: 'LewPopok',

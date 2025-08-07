@@ -1,4 +1,4 @@
-import type { LewSelectOptions, LewSize } from 'lew-ui'
+import type { LewSelectOption, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
@@ -42,8 +42,8 @@ export const paginationProps = {
     }),
   },
   pageSizeOptions: {
-    type: Array as PropType<number[] | LewSelectOptions[]>,
-    typePopKeys: ['LewSelectOptions'],
+    type: Array as PropType<number[] | LewSelectOption[]>,
+    typePopKeys: ['LewSelectOption'],
     default: () => [10, 20, 30, 50, 100],
     validator: validators.array({
       componentName: 'LewPagination',

@@ -11,7 +11,7 @@ export const menuModel = {
 export const menuProps = {
   options: {
     type: Array as PropType<LewMenuOption[]>,
-    default: [],
+    required: true,
     typePopKeys: ['LewMenuOption'],
     validator: validators.array({
       componentName: 'LewMenu',
@@ -20,4 +20,4 @@ export const menuProps = {
   },
 }
 
-export type MenuProps = ExtractPropTypes<typeof menuProps>
+export type LewMenuProps = ExtractPropTypes<typeof menuProps>

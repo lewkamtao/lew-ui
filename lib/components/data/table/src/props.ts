@@ -92,7 +92,6 @@ export const tableProps = {
   },
   rowKey: {
     type: String,
-    default: 'id',
     validator: validators.string({
       componentName: 'LewTable',
       propName: 'rowKey',

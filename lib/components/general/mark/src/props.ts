@@ -36,4 +36,4 @@ export const markProps = {
   },
 }
 
-export type MarkProps = ExtractPropTypes<typeof markProps>
+export type LewMarkProps = ExtractPropTypes<typeof markProps>

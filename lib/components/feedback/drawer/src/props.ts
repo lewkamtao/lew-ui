@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
+import type { LewButtonProps } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { ButtonProps } from '../../../general/button/index'
 import validators from 'lew-ui/validators'
 
 export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom'
@@ -67,14 +67,14 @@ export const drawerProps = {
     }),
   },
   okButtonProps: {
-    type: Object as PropType<ButtonProps>,
+    type: Object as PropType<LewButtonProps>,
     validator: validators.object({
       componentName: 'LewDrawer',
       propName: 'okButtonProps',
     }),
   },
   closeButtonProps: {
-    type: Object as PropType<ButtonProps>,
+    type: Object as PropType<LewButtonProps>,
     validator: validators.object({
       componentName: 'LewDrawer',
       propName: 'closeButtonProps',

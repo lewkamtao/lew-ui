@@ -184,6 +184,7 @@ defineExpose({ show, hide })
     class="lew-select-view"
     :style="{ width: any2px(width) }"
     :trigger="trigger"
+    :trigger-width="width"
     :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :loading="state.searchLoading"

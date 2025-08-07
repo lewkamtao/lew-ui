@@ -613,7 +613,7 @@ const headDate = computed(() => {
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
 
@@ -661,7 +661,7 @@ const headDate = computed(() => {
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
         }
       }
 
@@ -685,7 +685,7 @@ const headDate = computed(() => {
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
         }
       }
     }
@@ -699,7 +699,7 @@ const headDate = computed(() => {
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
         }
       }
     }

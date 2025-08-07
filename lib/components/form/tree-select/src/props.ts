@@ -1,3 +1,4 @@
+import type { Property } from 'csstype'
 import type { LewSize, LewTreeDataSource, LewTrigger } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
@@ -19,7 +20,7 @@ export const treeSelectProps = {
     }),
   },
   width: {
-    type: String,
+    type: String as PropType<Property.Width>,
     default: '240px',
     validator: validators.widthHeight({
       componentName: 'LewTreeSelect',

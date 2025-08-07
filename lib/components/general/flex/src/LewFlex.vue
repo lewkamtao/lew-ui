@@ -1,11 +1,10 @@
 <script setup lang="ts">
+import type { LewXAlignment, LewYAlignment } from 'lew-ui/types'
 import type { CSSProperties } from 'vue'
-import type { LewXAlignment, LewYAlignment } from './props'
 import { any2px } from 'lew-ui/utils'
 import { computed } from 'vue'
 import { flexProps } from './props'
 
-// Props & Emit
 const props = defineProps(flexProps)
 
 const emit = defineEmits<{
@@ -13,7 +12,6 @@ const emit = defineEmits<{
   click: [event: MouseEvent]
 }>()
 
-// Constants
 const alignmentMap: Record<LewXAlignment | LewYAlignment, string> = {
   start: 'flex-start',
   left: 'flex-start',
@@ -24,7 +22,6 @@ const alignmentMap: Record<LewXAlignment | LewYAlignment, string> = {
   bottom: 'flex-end',
 }
 
-// Methods
 function getJustifyContent(): string {
   if (props.mode) {
     return `space-${props.mode}`
@@ -44,21 +41,23 @@ function handleClick(event: MouseEvent) {
 
 // Computed
 
-const styleObject = computed((): CSSProperties => {
-  const gap = any2px(props.gap)
-  const width = props.width ? any2px(props.width) : undefined
+const styleObject = computed(
+  (): CSSProperties => {
+    const gap = any2px(props.gap)
+    const width = props.width ? any2px(props.width) : undefined
 
-  return {
-    display: 'flex',
-    flexDirection: props.direction === 'x' ? 'row' : 'column',
-    flexWrap: props.wrap ? 'wrap' : 'nowrap',
-    justifyContent: getJustifyContent(),
-    alignItems: getAlignItems(),
-    gap: `${gap}`,
-    width,
-    boxSizing: 'border-box',
-  }
-})
+    return {
+      display: 'flex',
+      flexDirection: props.direction === 'x' ? 'row' : 'column',
+      flexWrap: props.wrap ? 'wrap' : 'nowrap',
+      justifyContent: getJustifyContent(),
+      alignItems: getAlignItems(),
+      gap: `${gap}`,
+      width,
+      boxSizing: 'border-box',
+    }
+  },
+)
 </script>
 
 <template>

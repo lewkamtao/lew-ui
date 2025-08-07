@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LewSelectOptions } from 'lew-ui/types'
+import type { LewSelectOption } from 'lew-ui/types'
 import { useDebounceFn } from '@vueuse/core'
 import { LewEmpty, LewFlex, LewPopover, LewTextTrim, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -37,7 +37,7 @@ const state = reactive({
   keyword: props.defaultValue || (selectValue.value as any),
   keywordBackup: props.defaultValue as any,
   autoWidth: 0, // 新增自动宽度
-  searchCache: new Map<string, LewSelectOptions[]>(), // 新增搜索结果缓存
+  searchCache: new Map<string, LewSelectOption[]>(), // 新增搜索结果缓存
 })
 
 const _searchMethod = computed(() => {
@@ -95,7 +95,7 @@ watch(
       state.sourceOptions = newOptions
       state.options = flattenSelectOptions(newOptions)
       state.keyword
-        = newOptions.find((e: any) => e.value === selectValue.value)?.label || ''
+        = newOptions?.find((e: any) => e.value === selectValue.value)?.label || ''
       // 如果启用搜索缓存，清除搜索缓存，因为数据源已经更新
       if (props.enableSearchCache) {
         state.searchCache.clear()
@@ -185,7 +185,7 @@ async function search(e: any) {
   state.loading = true
   const keyword = e.target.value
   if (props.searchable) {
-    let result: LewSelectOptions[] = []
+    let result: LewSelectOption[] = []
 
     // 检查是否启用搜索缓存，以及缓存中是否已有该关键词的搜索结果
     if (props.enableSearchCache && state.searchCache.has(keyword)) {
@@ -222,7 +222,7 @@ function clearHandle() {
   emit('change')
 }
 
-function selectHandle(item: LewSelectOptions) {
+function selectHandle(item: LewSelectOption) {
   if (item.disabled || item.isGroup) {
     return
   }
@@ -319,9 +319,7 @@ async function showHandle() {
   if (props.searchable) {
     await search({ target: { value: '' } })
   }
-  const index = state.options.findIndex(
-    (e: any) => e.value === selectValue.value,
-  )
+  const index = state.options.findIndex((e: any) => e.value === selectValue.value)
   poll({
     callback: () => {
       const i = index > -1 ? index : 0
@@ -387,6 +385,7 @@ defineExpose({
     class="lew-select-view"
     :style="{ width: autoWidth ? 'auto' : any2px(width) }"
     :trigger="trigger"
+    :trigger-width="width"
     :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :loading="state.loading"
@@ -401,11 +400,7 @@ defineExpose({
         :class="getSelectClassName"
       >
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <CommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
         <CommonIcon
