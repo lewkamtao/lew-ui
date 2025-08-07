@@ -1,137 +1,139 @@
 <script setup lang="ts">
-import { any2px, getColorType, object2class } from "lew-ui/utils";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { computed, getCurrentInstance, ref } from "vue";
-import { buttonProps } from "./props";
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, getColorType, object2class } from 'lew-ui/utils'
+import { computed, getCurrentInstance, ref } from 'vue'
+import { buttonProps } from './props'
 
-const props = defineProps(buttonProps);
+const props = defineProps(buttonProps)
 
 const emit = defineEmits<{
-  click: [event: MouseEvent];
-}>();
+  click: [event: MouseEvent]
+}>()
 
-const buttonRef = ref<HTMLButtonElement>();
-const _loading = ref(false);
+const buttonRef = ref<HTMLButtonElement>()
+const _loading = ref(false)
 
 function focus() {
-  buttonRef.value?.focus();
+  buttonRef.value?.focus()
 }
 
 function blur() {
-  buttonRef.value?.blur();
+  buttonRef.value?.blur()
 }
 
 async function handleClick(event: MouseEvent) {
   if (props.disabled || _loading.value || props.loading) {
-    return;
+    return
   }
 
-  emit("click", event);
+  emit('click', event)
 
-  if (typeof props.request === "function") {
+  if (typeof props.request === 'function') {
     if (_loading.value) {
-      return;
+      return
     }
-    _loading.value = true;
+    _loading.value = true
     try {
-      await props.request();
-    } catch (error) {
-      console.error("[LewButton] Request failed:", error);
-    } finally {
-      _loading.value = false;
+      await props.request()
+    }
+    catch (error) {
+      console.error('[LewButton] Request failed:', error)
+    }
+    finally {
+      _loading.value = false
     }
   }
 }
 // Slot detection
-const instance = getCurrentInstance();
-const hasDefaultSlot = ref(false);
+const instance = getCurrentInstance()
+const hasDefaultSlot = ref(false)
 
 if (instance?.slots.default) {
-  hasDefaultSlot.value = true;
+  hasDefaultSlot.value = true
 }
 
 // Computed
 const getButtonClass = computed(() => {
-  const { size, type, color, singleIcon } = props;
-  const loading = _loading.value || props.loading;
-  return object2class("lew-button", {
+  const { size, type, color, singleIcon } = props
+  const loading = _loading.value || props.loading
+  return object2class('lew-button', {
     size,
     type,
     loading,
     singleIcon,
     color,
-  });
-});
+  })
+})
 
 const getIconSize = computed(() => {
-  const { size } = props;
+  const { size } = props
   switch (size) {
-    case "mini":
-      return 12;
-    case "small":
-      return 14;
-    case "medium":
-      return 16;
-    case "large":
-      return 18;
+    case 'mini':
+      return 12
+    case 'small':
+      return 14
+    case 'medium':
+      return 16
+    case 'large':
+      return 18
     default:
-      return 16;
+      return 16
   }
-});
+})
 
 const getStyle = computed(() => {
-  const { round, type, color, dashed, width } = props;
-  const styleObj: Record<string, string> = {};
-  const _color = getColorType(color) || "primary";
+  const { round, type, color, dashed, width } = props
+  const styleObj: Record<string, string> = {}
+  const _color = getColorType(color) || 'primary'
 
   // 基础样式
   const baseStyle = {
     fill: {
       backgroundColor: `var(--lew-color-${_color})`,
-      color: "var(--lew-color-white)",
+      color: 'var(--lew-color-white)',
     },
     light: {
       backgroundColor: `var(--lew-color-${_color}-light)`,
       color: `var(--lew-color-${_color}-dark)`,
     },
     ghost: {
-      backgroundColor: "transparent",
+      backgroundColor: 'transparent',
       border: `var(--lew-form-border-width) ${
-        dashed ? "dashed" : "solid"
+        dashed ? 'dashed' : 'solid'
       } var(--lew-color-${_color}-dark)`,
       color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: "none",
+      boxShadow: 'none',
     },
     text: {
-      backgroundColor: "transparent",
+      backgroundColor: 'transparent',
       color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: "none",
+      boxShadow: 'none',
     },
-  };
+  }
 
   // 合并样式
   Object.assign(
     styleObj,
     baseStyle[type as keyof typeof baseStyle] || {
       backgroundColor: `var(--lew-color-${_color})`,
-    }
-  );
+    },
+  )
 
   // 圆角样式
-  styleObj.borderRadius = round ? "50px" : "none";
+  styleObj.borderRadius = round ? '50px' : 'none'
 
   if (width) {
-    styleObj.width = any2px(width);
+    styleObj.width = any2px(width)
   }
 
-  return styleObj;
-});
+  return styleObj
+})
 
 // Expose methods
 defineExpose({
   focus,
   blur,
-});
+})
 </script>
 
 <template>
@@ -227,7 +229,7 @@ defineExpose({
   background-color: rgba($color: #000, $alpha: 0.2);
   transition: all var(--lew-form-transition-ease);
   opacity: 0;
-  content: "";
+  content: '';
 }
 
 .lew-button-color-black::after {
@@ -239,7 +241,7 @@ defineExpose({
   background-color: rgba($color: #fff, $alpha: 0.2);
   transition: 0.1s all;
   opacity: 0;
-  content: "";
+  content: '';
 }
 
 .lew-button-type-text.lew-button-color-black::after {
@@ -251,7 +253,7 @@ defineExpose({
   background-color: rgba($color: #000, $alpha: 0.2);
   transition: 0.1s all;
   opacity: 0;
-  content: "";
+  content: '';
 }
 
 .lew-button-type-ghost::after {

@@ -4,57 +4,39 @@ import type { LewComponentSource, LewDirection, LewSize } from './base'
 
 export type LewButtonType = 'fill' | 'light' | 'ghost' | 'text'
 
-
 export type LewButtonSize = 'mini' | 'small' | 'medium' | 'large'
-
 
 export type LewTagType = 'fill' | 'light' | 'ghost'
 
-
 export type LewAvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-
 
 export type LewAvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
 
-
 export type LewAvatarShape = 'circle' | 'square' | 'sharp'
-
 
 export type LewImageObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
 
-
 export type LewImageObjectPosition = 'center' | 'top' | 'bottom' | 'left' | 'right' | 'top left' | 'top right' | 'bottom left' | 'bottom right'
-
 
 export type LewInputType = 'text' | 'password'
 
-
 export type LewInputPrefixesType = 'icon' | 'select' | 'text'
-
 
 export type LewInputSuffixType = 'icon' | 'select' | 'text'
 
-
 export type LewTextareaResize = 'none' | 'both' | 'horizontal' | 'vertical'
-
 
 export type LewTabsType = 'block' | 'line'
 
-
 export type LewBreadcrumbSeparator = 'shoulder' | 'sprit'
-
 
 export type LewUploadStatus = 'success' | 'fail' | 'uploading' | 'complete' | 'wrong_type' | 'wrong_size' | 'pending'
 
-
 export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group' | 'radio-group' | 'checkbox' | 'select' | 'select-multiple' | 'date-picker' | 'date-range-picker' | 'tabs' | 'cascader' | 'switch' | 'button' | 'upload' | 'input-number' | 'slider' | 'slider-range' | 'color-picker' | 'rate' | 'tree-select'
-
 
 export type LewSelectMultipleValueLayout = 'tag' | 'text'
 
-
 export type LewStepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
-
 
 export interface LewActionBoxOption {
   label: LewComponentSource
