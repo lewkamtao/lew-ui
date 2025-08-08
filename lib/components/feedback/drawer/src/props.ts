@@ -1,14 +1,17 @@
 import type { Property } from 'csstype'
 import type { LewButtonProps } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
-import validators from 'lew-ui/validators'
-
-export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom'
+import type { LewDrawerPosition } from 'lew-ui/types'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validDrawerPositionList } from 'lew-ui/validators'
 
 export const drawerModel = {
   visible: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewDrawer',
+      propName: 'visible',
+    }),
   },
 }
 
@@ -21,12 +24,13 @@ export const drawerProps = {
     }),
   },
   position: {
-    type: String as PropType<DrawerPosition>,
+    type: String as PropType<LewDrawerPosition>,
     default: 'right',
+    typeValues: validDrawerPositionList,
     validator: validators.enum({
       componentName: 'LewDrawer',
       propName: 'position',
-      values: ['left', 'right', 'top', 'bottom'],
+      values: validDrawerPositionList,
     }),
   },
   width: {
@@ -47,6 +51,7 @@ export const drawerProps = {
   },
   closeOnClickOverlay: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewDrawer',
       propName: 'closeOnClickOverlay',
@@ -54,6 +59,7 @@ export const drawerProps = {
   },
   closeByEsc: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewDrawer',
       propName: 'closeByEsc',
@@ -61,6 +67,7 @@ export const drawerProps = {
   },
   hideFooter: {
     type: Boolean,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewDrawer',
       propName: 'hideFooter',
@@ -83,11 +90,11 @@ export const drawerProps = {
   zIndex: {
     type: Number,
     default: 1001,
-    validator: validators.number({
+    validator: validators.nonNegativeInteger({
       componentName: 'LewDrawer',
       propName: 'zIndex',
     }),
   },
 }
 
-export type DrawerProps = ExtractPropTypes<typeof drawerProps>
+export type LewDrawerProps = ExtractPublicPropTypes<typeof drawerProps>

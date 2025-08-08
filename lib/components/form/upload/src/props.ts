@@ -1,5 +1,5 @@
 import type { LewSize, LewUploadFileItem } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
 export const uploadProps = {
@@ -144,4 +144,4 @@ export const uploadByCardProps = {
   },
 }
 
-export type UploadProps = ExtractPropTypes<typeof uploadProps>
+export type UploadProps = ExtractPublicPropTypes<typeof uploadProps>

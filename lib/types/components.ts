@@ -142,7 +142,7 @@ export interface LewDescOption {
 }
 
 export interface LewSelectOption {
-  label: string // 12
+  label: string
   value: string
   disabled?: boolean
   isGroup?: boolean
@@ -204,7 +204,7 @@ export interface LewDatePickerPresetsOption {
 export interface LewCascaderOption {
   label: string
   value: string
-  level: number
+  level?: number
   labelPaths?: string[]
   valuePaths?: string[]
   isLeaf?: boolean
@@ -260,3 +260,17 @@ export interface LewSelectSearchMultipleMethodParams {
   options?: LewSelectMultipleOption[]
   keyword?: string
 }
+
+export type LewEmptyType
+  = | '404'
+    | 'address'
+    | 'article'
+    | 'goods'
+    | 'likes'
+    | 'car'
+    | 'comment'
+    | 'network'
+    | 'order'
+    | 'search'
+
+export type LewDrawerPosition = 'left' | 'right' | 'top' | 'bottom'

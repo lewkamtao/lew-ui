@@ -48,7 +48,9 @@ function handleClose(): void {
       </div>
     </div>
     <CommonIcon
-      v-if="props.closeable" class="lew-form-icon-close lew-alert-close-icon" type="close"
+      v-if="props.closeable"
+      class="lew-form-icon-close lew-alert-close-icon"
+      type="close"
       @click="handleClose"
     />
   </div>

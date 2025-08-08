@@ -1,5 +1,5 @@
 import type { LewStatusColor } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validStatusColorList } from 'lew-ui/validators'
 
 export const alertProps = {
@@ -37,4 +37,4 @@ export const alertProps = {
   },
 }
 
-export type AlertProps = ExtractPropTypes<typeof alertProps>
+export type LewAlertProps = ExtractPublicPropTypes<typeof alertProps>

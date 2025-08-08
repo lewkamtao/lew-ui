@@ -1,7 +1,7 @@
 {
   "name": "lew-ui",
   "type": "module",
-  "version": "2.7.15",
+  "version": "2.7.16",
   "description": "A Component Library for Vue3.js.",
   "author": "lewkamtao",
   "license": "MIT",
@@ -34,7 +34,7 @@
   "scripts": {
     "dev": "vite",
     "build:tsdown": "tsdown",
-    "build:docs": "vue-tsc --noEmit && vite build --mode docs",
+    "build:docs": "pnpm lint:fix && pnpm lint:css:fix && node ./extract-types.js && vue-tsc --noEmit && vite build --mode docs",
     "build:lib": "vue-tsc --noEmit && vite build --mode lib",
     "analyze": "vite build --mode analyze",
     "format": "pnpm lint:fix && pnpm lint:css:fix && node ./extract-types.js",

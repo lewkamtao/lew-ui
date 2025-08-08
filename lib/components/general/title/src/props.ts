@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewColor, LewSize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validColorList } from 'lew-ui/validators'
 
 export const titleProps = {
@@ -38,4 +38,4 @@ export const titleProps = {
   },
 }
 
-export type LewTitleProps = ExtractPropTypes<typeof titleProps>
+export type LewTitleProps = ExtractPublicPropTypes<typeof titleProps>

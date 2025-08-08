@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewInputTableColumn, LewSize } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
 export const inputTableModel = {
@@ -145,4 +145,4 @@ export const inputTableProps = {
   },
 }
 
-export type InputTableProps = ExtractPropTypes<typeof inputTableProps>
+export type InputTableProps = ExtractPublicPropTypes<typeof inputTableProps>

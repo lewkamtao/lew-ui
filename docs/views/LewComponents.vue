@@ -271,10 +271,20 @@ const options = computed(() => {
         {
           label: 'Message',
           value: '/Message',
+          tagProps: {
+            text: 'func',
+            type: 'ghost',
+            round: true,
+          },
         },
         {
           label: 'Notification',
           value: '/Notification',
+          tagProps: {
+            text: 'func',
+            type: 'ghost',
+            round: true,
+          },
         },
         {
           label: 'Drawer',
@@ -283,6 +293,11 @@ const options = computed(() => {
         {
           label: 'Dialog',
           value: '/Dialog',
+          tagProps: {
+            text: 'func',
+            type: 'ghost',
+            round: true,
+          },
         },
         {
           label: 'Modal',

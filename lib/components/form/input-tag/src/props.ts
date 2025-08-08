@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewSize } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
 export const inputTagModel = {
@@ -79,4 +79,4 @@ export const inputTagProps = {
   },
 }
 
-export type InputTagProps = ExtractPropTypes<typeof inputTagProps>
+export type InputTagProps = ExtractPublicPropTypes<typeof inputTagProps>

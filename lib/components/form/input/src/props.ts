@@ -1,7 +1,7 @@
 import type { Property } from 'csstype'
 import type { LewContextMenusOption, LewSize } from 'lew-ui'
 import type { LewInputPrefixesType, LewInputSuffixType, LewInputType, LewXAlignment } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validInputPrefixesTypeList, validInputSuffixTypeList, validInputTypeList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const inputModel = {
@@ -207,4 +207,4 @@ export const inputProps = {
   },
 }
 
-export type InputProps = ExtractPropTypes<typeof inputProps>
+export type InputProps = ExtractPublicPropTypes<typeof inputProps>

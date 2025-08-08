@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LewDescOptions } from 'lew-ui'
+import type { LewDescOption } from 'lew-ui/types'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
@@ -37,7 +37,7 @@ const getDescStyle = computed(() => {
   }
 })
 
-const getBind = computed(() => (item: LewDescOptions) => {
+const getBind = computed(() => (item: LewDescOption) => {
   const { direction, size, labelX, valueX, bordered, labelWidth } = props
   return {
     direction,

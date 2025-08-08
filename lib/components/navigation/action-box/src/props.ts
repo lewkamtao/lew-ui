@@ -1,6 +1,6 @@
 import type { LewXAlignment } from 'lew-ui'
 import type { LewActionBoxOption } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validXAlignmentList } from 'lew-ui/validators'
 
 export const actionBoxProps = {
@@ -55,4 +55,4 @@ export const actionBoxProps = {
   },
 }
 
-export type LewActionBoxProps = ExtractPropTypes<typeof actionBoxProps>
+export type LewActionBoxProps = ExtractPublicPropTypes<typeof actionBoxProps>

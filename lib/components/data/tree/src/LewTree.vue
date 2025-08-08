@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TreeDataSource } from './props'
+import type { LewTreeDataSource } from 'lew-ui/types'
 import { LewFlex, LewMessage, locale } from 'lew-ui'
 import { any2px, numFormat } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
@@ -11,13 +11,13 @@ const props = defineProps(treeProps)
 const emit = defineEmits(['change', 'expand', 'loadStart', 'loadEnd'])
 const modelValue = defineModel()
 const expandKeys = defineModel('expandKeys', { required: false, default: [] })
-const _dataSource: any = ref<TreeDataSource[]>([])
+const _dataSource: any = ref<LewTreeDataSource[]>([])
 const loading = ref<boolean>(false)
 const keyword = ref<string>('')
 const lastSearchKeyword = ref<string>('')
 const searchTimer = ref<NodeJS.Timeout | null>(null)
 const DEBOUNCE_TIME = 250
-const cacheDataSource = ref<TreeDataSource[]>([])
+const cacheDataSource = ref<LewTreeDataSource[]>([])
 
 provide('lew-tree', {
   modelValue,
@@ -42,7 +42,7 @@ const getResultText = computed(() => {
     : ''
 })
 
-function renderMenuTreeItem(item: TreeDataSource, level: number = 0): any {
+function renderMenuTreeItem(item: LewTreeDataSource, level: number = 0): any {
   const { disabled, label, key, isLeaf, children } = item
   return h(
     LewTreeItem,
@@ -58,7 +58,7 @@ function renderMenuTreeItem(item: TreeDataSource, level: number = 0): any {
       onExpand: () => emit('expand', cloneDeep({ extend: item, key, value: key })),
     },
     () =>
-      (item.children || []).map((child: TreeDataSource) =>
+      (item.children || []).map((child: LewTreeDataSource) =>
         renderMenuTreeItem(child, level + 1),
       ),
   )
@@ -144,11 +144,17 @@ onMounted(() => {
     v-loading="{
       visible: loading,
       text: '加载中...',
-    }" direction="y" gap="0" class="lew-tree-wrapper"
+    }"
+    direction="y"
+    gap="0"
+    class="lew-tree-wrapper"
   >
     <LewFlex v-if="searchable && !isSelect" direction="y" gap="0" class="lew-tree-header">
       <lew-input
-        v-model="keyword" width="100%" size="small" :placeholder="locale.t('tree.searchPlaceholder')"
+        v-model="keyword"
+        width="100%"
+        size="small"
+        :placeholder="locale.t('tree.searchPlaceholder')"
         @input="search(keyword)"
       />
 
@@ -163,8 +169,13 @@ onMounted(() => {
       </LewFlex>
     </template>
     <LewFlex
-      v-else direction="y" y="start" gap="0" class="lew-tree lew-scrollbar"
-      :class="{ 'lew-tree-line': showLine }" :style="{ height: any2px(height) }"
+      v-else
+      direction="y"
+      y="start"
+      gap="0"
+      class="lew-tree lew-scrollbar"
+      :class="{ 'lew-tree-line': showLine }"
+      :style="{ height: any2px(height) }"
     >
       <template v-for="item in _dataSource" :key="item.key">
         <component :is="renderMenuTreeItem(item)" />

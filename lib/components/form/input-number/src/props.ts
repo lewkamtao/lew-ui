@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewSize, LewXAlignment } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const inputNumberModel = {
@@ -96,4 +96,4 @@ export const inputNumberProps = {
   },
 }
 
-export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>
+export type InputNumberProps = ExtractPublicPropTypes<typeof inputNumberProps>

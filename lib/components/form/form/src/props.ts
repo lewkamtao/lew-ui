@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewDirection, LewFormItemAs, LewSize } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validFormItemAsList, validSizeList } from 'lew-ui/validators'
 
 export const formProps = {
@@ -265,8 +265,8 @@ export const tipsIconSizeMap: Record<LewSize, number> = {
   large: 16,
 }
 
-export type FormProps = ExtractPropTypes<typeof formProps>
-export type FormItemProps = ExtractPropTypes<typeof formItemProps>
+export type FormProps = ExtractPublicPropTypes<typeof formProps>
+export type FormItemProps = ExtractPublicPropTypes<typeof formItemProps>
 
 export const formTypeAsMap: Record<string, any> = {
   'input': 'string',

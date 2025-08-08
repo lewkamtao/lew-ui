@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewImageObjectFit, LewImageObjectPosition } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validObjectFitList, validObjectPositionList } from 'lew-ui/validators'
 
 export const imageProps = {
@@ -82,4 +82,4 @@ export const imageProps = {
   },
 }
 
-export type LewImageProps = ExtractPropTypes<typeof imageProps>
+export type LewImageProps = ExtractPublicPropTypes<typeof imageProps>

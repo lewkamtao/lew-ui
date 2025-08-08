@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewSize, LewTabsOption, LewTabsType } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTabsTypeList } from 'lew-ui/validators'
 
 export const tabsModel = {
@@ -82,4 +82,4 @@ export const tabsProps = {
   },
 }
 
-export type TabsProps = ExtractPropTypes<typeof tabsProps>
+export type TabsProps = ExtractPublicPropTypes<typeof tabsProps>

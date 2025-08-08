@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewDescOption, LewDirection, LewSize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const descProps = {
@@ -241,5 +241,5 @@ export const lewDescSizePaddingMap: Record<LewSize, number> = {
   large: 26,
 }
 
-export type LewDescProps = ExtractPropTypes<typeof descProps>
-export type LewDescItemProps = ExtractPropTypes<typeof descItemProps>
+export type LewDescProps = ExtractPublicPropTypes<typeof descProps>
+export type LewDescItemProps = ExtractPublicPropTypes<typeof descItemProps>

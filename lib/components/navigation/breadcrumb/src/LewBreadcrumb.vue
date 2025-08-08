@@ -28,7 +28,7 @@ function handleItemClick(item: LewBreadcrumbOption, index: number): void {
       >
         {{ item.label }}
       </span>
-      <div v-if="index !== props.options.length - 1" class="lew-breadcrumb-parting">
+      <div v-if="index !== (props.options?.length || 0) - 1" class="lew-breadcrumb-parting">
         <svg
           v-if="props.separator === 'sprit'" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"
           stroke="currentColor" stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter"

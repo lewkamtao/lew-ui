@@ -1,5 +1,5 @@
 import type { LewAvatarPlacement, LewAvatarShape, LewAvatarStatus, LewImageObjectFit, LewImageObjectPosition } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validObjectFitList, validObjectPositionList } from 'lew-ui/validators'
 
 const statusValues = ['online', 'processing', 'away', 'offline', 'busy']
@@ -88,4 +88,4 @@ export const avatarProps = {
   },
 }
 
-export type LewAvatarProps = ExtractPropTypes<typeof avatarProps>
+export type LewAvatarProps = ExtractPublicPropTypes<typeof avatarProps>

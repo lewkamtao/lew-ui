@@ -16,8 +16,8 @@ const options1: LewContextMenusOption[] = [
     label: 'Back',
     value: '1',
     icon: h(Home, { size: 14 }),
-    onClick: (e: LewContextMenusOption) => {
-      LewMessage.info('Back', e)
+    onClick: () => {
+      LewMessage.info('Back')
     },
   },
   {

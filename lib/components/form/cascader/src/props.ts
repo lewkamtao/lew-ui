@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewCascaderOption, LewSize, LewTrigger } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const cascaderModel = {
@@ -137,4 +137,4 @@ export const cascaderProps = {
   },
 }
 
-export type LewCascaderProps = ExtractPropTypes<typeof cascaderProps>
+export type LewCascaderProps = ExtractPublicPropTypes<typeof cascaderProps>

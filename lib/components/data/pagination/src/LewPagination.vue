@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { LewSelectOptions } from 'lew-ui/types'
+import type { LewSelectOption } from 'lew-ui/types'
 import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
@@ -220,7 +220,7 @@ const getIconSize = computed(() => {
         popover-width="150px"
         :size="size"
         :show-check-icon="false"
-        :options="getPageSizeOptions as LewSelectOptions[]"
+        :options="getPageSizeOptions as LewSelectOption[]"
         @change="checkPageSize"
       />
       <LewInput

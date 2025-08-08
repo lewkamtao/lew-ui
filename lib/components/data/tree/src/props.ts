@@ -1,5 +1,5 @@
 import type { LewTreeDataSource } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
 export const treeModel = {
@@ -176,4 +176,4 @@ export const treeItemProps = {
   },
 }
 
-export type LewTreeProps = ExtractPropTypes<typeof treeProps>
+export type LewTreeProps = ExtractPublicPropTypes<typeof treeProps>

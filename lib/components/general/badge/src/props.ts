@@ -1,5 +1,5 @@
 import type { LewColor, LewOffset } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validColorList } from 'lew-ui/validators'
 
 export const badgeProps = {
@@ -54,4 +54,4 @@ export const badgeProps = {
   },
 }
 
-export type LewBadgeProps = ExtractPropTypes<typeof badgeProps>
+export type LewBadgeProps = ExtractPublicPropTypes<typeof badgeProps>

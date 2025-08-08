@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { LewCheckboxOptions } from 'lew-ui'
+import type { LewCheckboxOption } from 'lew-ui'
 import { LewCheckbox, LewFlex } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
@@ -24,7 +24,7 @@ watch(
   },
 )
 
-function change({ item, checked }: { item: LewCheckboxOptions, checked: boolean }) {
+function change({ item, checked }: { item: LewCheckboxOption, checked: boolean }) {
   const _value = modelValue.value || []
   if (checked) {
     _value.push(item.value as string & number)
@@ -43,7 +43,9 @@ function change({ item, checked }: { item: LewCheckboxOptions, checked: boolean 
 }
 
 function initCheckbox() {
-  checkList.value = props.options.map((item: LewCheckboxOptions) => {
+  if (!props.options)
+    return
+  checkList.value = props.options.map((item: LewCheckboxOption) => {
     if (modelValue.value && modelValue.value.includes(item.value as string & number)) {
       return true
     }

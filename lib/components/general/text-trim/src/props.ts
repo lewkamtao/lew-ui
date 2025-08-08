@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewPlacement } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validPlacementList, validXAlignmentList } from 'lew-ui/validators'
 
 export const textTrimProps = {
@@ -70,4 +70,4 @@ export const textTrimProps = {
   },
 }
 
-export type LewTextTrimProps = ExtractPropTypes<typeof textTrimProps>
+export type LewTextTrimProps = ExtractPublicPropTypes<typeof textTrimProps>

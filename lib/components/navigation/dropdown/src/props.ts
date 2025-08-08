@@ -1,6 +1,6 @@
 import type { LewContextMenusOption } from 'lew-ui'
 import type { LewPlacement, LewTrigger } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validPlacementList, validTriggerList } from 'lew-ui/validators'
 
 export const dropdownModel = {
@@ -49,4 +49,4 @@ export const dropdownProps = {
   },
 }
 
-export type LewDropdownProps = ExtractPropTypes<typeof dropdownProps>
+export type LewDropdownProps = ExtractPublicPropTypes<typeof dropdownProps>

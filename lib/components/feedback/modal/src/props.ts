@@ -1,6 +1,7 @@
 import type { Property } from 'csstype'
 import type { LewButtonProps } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators from 'lew-ui/validators'
 
 // Model definitions
 export const modalModel = {
@@ -14,151 +15,83 @@ export const modalModel = {
 export const modalProps = {
   title: {
     type: String,
-    validator(value: string): boolean {
-      if (value && value.length > 100) {
-        console.warn(`[LewModal] Invalid title: "${value}". Expected: string with length <= 100 characters.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.stringLength({
+      componentName: 'LewModal',
+      propName: 'title',
+      maxLength: 100,
+    }),
   },
   width: {
     type: String as PropType<Property.Width>,
     default: 'auto',
-    validator(value: Property.Width | number): boolean {
-      if (typeof value === 'number') {
-        if (value <= 0) {
-          console.warn(`[LewModal] Invalid width: "${value}". Expected: positive number.`)
-          return false
-        }
-        return true
-      }
-
-      if (typeof value === 'string') {
-        const autoRegex = /^auto$/i
-        const calcRegex = /^calc\((.+)\)$/
-        const percentRegex = /^-?\d+(\.\d+)?%$/
-        const pixelRegex = /^-?\d+(\.\d+)?(px|rem|em|vw|vh)?$/
-
-        if (
-          autoRegex.test(value)
-          || calcRegex.test(value)
-          || percentRegex.test(value)
-          || pixelRegex.test(value)
-        ) {
-          return true
-        }
-
-        console.warn(`[LewModal] Invalid width: "${value}". Expected: valid CSS width value (e.g., "500px", "50%", "auto", "calc(100% - 20px)").`)
-        return false
-      }
-
-      console.warn(`[LewModal] Invalid width: "${value}". Expected: number or string.`)
-      return false
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewModal',
+      propName: 'width',
+    }),
   },
   maxHeight: {
     type: [String, Number] as PropType<Property.MaxHeight | number>,
     default: 'auto',
-    validator(value: Property.MaxHeight | number): boolean {
-      if (typeof value === 'number') {
-        if (value <= 0) {
-          console.warn(`[LewModal] Invalid maxHeight: "${value}". Expected: positive number.`)
-          return false
-        }
-        return true
-      }
-
-      if (typeof value === 'string') {
-        const autoRegex = /^auto$/i
-        const calcRegex = /^calc\((.+)\)$/
-        const percentRegex = /^-?\d+(\.\d+)?%$/
-        const pixelRegex = /^-?\d+(\.\d+)?(px|rem|em|vh|vw)?$/
-        const noneRegex = /^none$/i
-
-        if (
-          autoRegex.test(value)
-          || calcRegex.test(value)
-          || percentRegex.test(value)
-          || pixelRegex.test(value)
-          || noneRegex.test(value)
-        ) {
-          return true
-        }
-
-        console.warn(`[LewModal] Invalid maxHeight: "${value}". Expected: valid CSS max-height value (e.g., "500px", "50%", "auto", "none", "calc(100vh - 240px)").`)
-        return false
-      }
-
-      console.warn(`[LewModal] Invalid maxHeight: "${value}". Expected: number or string.`)
-      return false
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewModal',
+      propName: 'maxHeight',
+    }),
   },
   top: {
     type: [String, Number] as PropType<Property.Top | number>,
     default: 120,
-    validator(value: Property.Top | number): boolean {
-      if (typeof value === 'number') {
-        if (value < 0) {
-          console.warn(`[LewModal] Invalid top: "${value}". Expected: non-negative number.`)
-          return false
-        }
-        return true
-      }
-
-      if (typeof value === 'string') {
-        const autoRegex = /^auto$/i
-        const calcRegex = /^calc\((.+)\)$/
-        const percentRegex = /^-?\d+(\.\d+)?%$/
-        const pixelRegex = /^-?\d+(\.\d+)?(px|rem|em|vh|vw)?$/
-
-        if (
-          autoRegex.test(value)
-          || calcRegex.test(value)
-          || percentRegex.test(value)
-          || pixelRegex.test(value)
-        ) {
-          return true
-        }
-
-        console.warn(`[LewModal] Invalid top: "${value}". Expected: valid CSS top value (e.g., "120px", "50%", "auto", "calc(50vh - 200px)").`)
-        return false
-      }
-
-      console.warn(`[LewModal] Invalid top: "${value}". Expected: number or string.`)
-      return false
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewModal',
+      propName: 'top',
+    }),
   },
   hideFooter: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewModal',
+      propName: 'hideFooter',
+    }),
   },
   closeByEsc: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewModal',
+      propName: 'closeByEsc',
+    }),
   },
   closeOnClickOverlay: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewModal',
+      propName: 'closeOnClickOverlay',
+    }),
   },
   okButtonProps: {
     type: Object as PropType<LewButtonProps>,
+    validator: validators.object({
+      componentName: 'LewModal',
+      propName: 'okButtonProps',
+    }),
   },
   closeButtonProps: {
     type: Object as PropType<LewButtonProps>,
+    validator: validators.object({
+      componentName: 'LewModal',
+      propName: 'closeButtonProps',
+    }),
   },
   zIndex: {
     type: Number,
     default: 1001,
-    validator(value: number): boolean {
-      if (!Number.isInteger(value) || value < 0) {
-        console.warn(`[LewModal] Invalid zIndex: "${value}". Expected: non-negative integer.`)
-        return false
-      }
-      return true
-    },
+    validator: validators.nonNegativeInteger({
+      componentName: 'LewModal',
+      propName: 'zIndex',
+    }),
   },
 }
 
 // Extract prop types
-export type ModalProps = ExtractPropTypes<typeof modalProps>
+export type ModalProps = ExtractPublicPropTypes<typeof modalProps>

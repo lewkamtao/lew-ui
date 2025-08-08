@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewColor } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
 export const markProps = {
@@ -36,4 +36,4 @@ export const markProps = {
   },
 }
 
-export type LewMarkProps = ExtractPropTypes<typeof markProps>
+export type LewMarkProps = ExtractPublicPropTypes<typeof markProps>

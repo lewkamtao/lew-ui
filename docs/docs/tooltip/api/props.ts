@@ -6,7 +6,7 @@ export default {
       name: 'content',
       description: '内容',
       type: 'null',
-      typeValues: 'vnode|string',
+      typePopKeys: ['LewComponentSource'],
       default: '-',
     },
     {

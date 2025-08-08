@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewSize, LewTextareaResize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validResizeList, validSizeList } from 'lew-ui/validators'
 
 export const textareaModel = {
@@ -144,4 +144,4 @@ export const textareaProps = {
   },
 }
 
-export type TextareaProps = ExtractPropTypes<typeof textareaProps>
+export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>

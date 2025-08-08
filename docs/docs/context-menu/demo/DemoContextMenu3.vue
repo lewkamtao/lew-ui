@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { LewContextMenusOption } from 'lew-ui/directives'
+import type { LewContextMenusOption } from 'lew-ui/types'
 import dayjs from 'dayjs'
 
 const options = ref<LewContextMenusOption[]>([

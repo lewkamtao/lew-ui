@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
 export const collapseModel = {
@@ -53,5 +53,5 @@ export const collapseItemProps = {
   },
 }
 
-export type LewCollapseProps = ExtractPropTypes<typeof collapseProps>
-export type LewCollapseItemProps = ExtractPropTypes<typeof collapseItemProps>
+export type LewCollapseProps = ExtractPublicPropTypes<typeof collapseProps>
+export type LewCollapseItemProps = ExtractPublicPropTypes<typeof collapseItemProps>

@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewOffset, LewPlacement, LewTrigger } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validPlacementList, validTriggerList } from 'lew-ui/validators'
 
 export const popoverProps = {
@@ -82,4 +82,4 @@ export const popoverProps = {
   },
 }
 
-export type PopoverProps = ExtractPropTypes<typeof popoverProps>
+export type PopoverProps = ExtractPublicPropTypes<typeof popoverProps>

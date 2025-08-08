@@ -1,5 +1,5 @@
 import type { LewDirection, LewRadioOption, LewSize } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList } from 'lew-ui/validators'
 
 export const radioProps = {
@@ -151,5 +151,5 @@ export const radioGroupProps = {
   },
 }
 
-export type RadioProps = ExtractPropTypes<typeof radioProps>
-export type RadioGroupProps = ExtractPropTypes<typeof radioGroupProps>
+export type RadioProps = ExtractPublicPropTypes<typeof radioProps>
+export type RadioGroupProps = ExtractPublicPropTypes<typeof radioGroupProps>

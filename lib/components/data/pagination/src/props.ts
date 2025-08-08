@@ -1,5 +1,5 @@
 import type { LewSelectOption, LewSize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
 export const paginationModel = {
@@ -62,4 +62,4 @@ export const paginationProps = {
   },
 }
 
-export type LewPaginationProps = ExtractPropTypes<typeof paginationProps>
+export type LewPaginationProps = ExtractPublicPropTypes<typeof paginationProps>

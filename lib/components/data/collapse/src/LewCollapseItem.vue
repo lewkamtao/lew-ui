@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { LewCollapseModelValue } from 'lew-ui/types'
 import type { Ref } from 'vue'
-import type { CollapseModelValue } from './props'
 import { LewFlex, LewTextTrim } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px } from 'lew-ui/utils'
@@ -16,7 +16,7 @@ const emit = defineEmits<{
 const modelValue = defineModel<boolean>({ default: false })
 
 // Inject
-const expandKeys = inject<Ref<CollapseModelValue>>('expandKeys', ref(null))
+const expandKeys = inject<Ref<LewCollapseModelValue>>('expandKeys', ref(null))
 
 // Methods
 function setModelValue() {
@@ -45,12 +45,12 @@ function change() {
     const newArray = modelValue.value
       ? [...currentValue, props.collapseKey]
       : currentValue.filter((item: string | number) => item !== props.collapseKey)
-    expandKeys.value = newArray as CollapseModelValue
+    expandKeys.value = newArray as LewCollapseModelValue
   }
   else {
     expandKeys.value = (modelValue.value
       ? props.collapseKey
-      : null) as CollapseModelValue
+      : null) as LewCollapseModelValue
   }
 
   emit('change', modelValue.value, props.collapseKey!)
@@ -97,6 +97,7 @@ setModelValue()
 <style scoped lang="scss">
 .lew-collapse-item {
   border-bottom: 1px solid var(--lew-bgcolor-4);
+
   .lew-collapse-item-title {
     cursor: pointer;
     padding: 10px 0px;
@@ -110,6 +111,7 @@ setModelValue()
     padding-bottom: 10px;
   }
 }
+
 .lew-collapse-item:last-child {
   border-bottom: none;
 }

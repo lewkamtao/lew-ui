@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPublicPropTypes } from 'vue'
 import validators from 'lew-ui/validators'
 
 export const backTopProps = {
@@ -35,4 +35,4 @@ export const backTopProps = {
   },
 }
 
-export type LewBackTopProps = ExtractPropTypes<typeof backTopProps>
+export type LewBackTopProps = ExtractPublicPropTypes<typeof backTopProps>

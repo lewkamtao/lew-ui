@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewSelectOption, LewSelectSearchMethodParams, LewSize, LewTrigger } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const selectModel = {
@@ -186,4 +186,4 @@ export const selectProps = {
   },
 }
 
-export type LewSelectProps = ExtractPropTypes<typeof selectProps>
+export type LewSelectProps = ExtractPublicPropTypes<typeof selectProps>

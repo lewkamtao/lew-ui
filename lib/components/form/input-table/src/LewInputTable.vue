@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import type { InputTableColumn } from './props'
-import { LewButton, LewDialog, LewFlex, LewMessage, LewTable, locale } from 'lew-ui'
+import type { LewInputTableColumn } from 'lew-ui/types'
+import {
+  LewButton,
+  LewDialog,
+  LewFlex,
+  LewMessage,
+  LewTable,
+  LewTooltip,
+  locale,
+} from 'lew-ui'
 
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, getUniqueId } from 'lew-ui/utils'
@@ -19,7 +27,7 @@ const props = defineProps(inputTableProps)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
-  app.use(LewMessage)
+  app.use(LewTooltip)
 }
 const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
@@ -41,7 +49,7 @@ watch(
 )
 
 // 缓存列配置，避免重复计算
-const inputTableColumns = computed(() => {
+const inputTableColumns: ComputedRef<LewInputTableColumn[]> = computed(() => {
   const actionColumn
     = props.deletable || props.addable
       ? [
@@ -51,6 +59,7 @@ const inputTableColumns = computed(() => {
             field: 'action',
             x: 'center',
             fixed: 'right',
+            as: 'action',
           },
         ]
       : []
@@ -136,7 +145,7 @@ function del({ row }: { row: any, index: number }) {
       if (actualIndex !== -1) {
         modelValue.value.splice(actualIndex, 1)
       }
-      return true
+      return Promise.resolve(true)
     },
   })
 }
@@ -227,7 +236,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
       :row-key="rowKey"
       :sort-tooltip-custom-render="sortTooltipCustomRender"
       multiple
-      :columns="inputTableColumns as InputTableColumn[]"
+      :columns="inputTableColumns"
       :data-source="modelValue"
       @drag-sort="dragSort"
     >
@@ -297,6 +306,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
   border-bottom: 1px var(--lew-bgcolor-3) solid;
   background-color: var(--lew-table-header-bgcolor);
 }
+
 .add-btn {
   padding: 10px 0px;
   width: 100%;
@@ -305,16 +315,20 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
   background-color: var(--lew-table-header-bgcolor);
   border-top: var(--lew-table-border);
 }
+
 .add-btn:hover {
   background-color: var(--lew-table-header-bgcolor-hover);
 }
+
 .add-btn:active {
   background-color: var(--lew-table-header-bgcolor-active);
 }
+
 .add-btn.disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
 .add-btn.disabled:hover,
 .add-btn.disabled:active {
   background-color: var(--lew-bgcolor-2);

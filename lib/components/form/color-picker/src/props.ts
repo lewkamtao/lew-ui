@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewSize } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
 export const colorPickerModel = {
@@ -54,4 +54,4 @@ export const colorPickerProps = {
   },
 }
 
-export type LewColorPickerProps = ExtractPropTypes<typeof colorPickerProps>
+export type LewColorPickerProps = ExtractPublicPropTypes<typeof colorPickerProps>

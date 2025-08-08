@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { LewSize } from 'lew-ui'
+import type { LewTagType } from 'lew-ui/types'
 import type { CSSProperties } from 'vue'
-import type { TagType } from './props'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { getColorType } from 'lew-ui/utils'
 import { computed } from 'vue'
@@ -73,7 +73,7 @@ const SIZE_CONFIG: Record<LewSize, SizeConfig> = {
   },
 } as const
 
-const TYPE_STYLES: Record<TagType, TagStyleFunction> = {
+const TYPE_STYLES: Record<LewTagType, TagStyleFunction> = {
   fill: (color: string): CSSProperties => ({
     backgroundColor: `var(--lew-color-${color})`,
     color: 'var(--lew-color-white)',
@@ -91,21 +91,23 @@ const TYPE_STYLES: Record<TagType, TagStyleFunction> = {
 } as const
 
 // Computed
-const tagStyle = computed((): TagStyle => {
-  const { round, type, color, size, disabled, oversize } = props
-  const resolvedColor = getColorType(color) || 'primary'
-  const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium
-  const styleFunction = TYPE_STYLES[type] || TYPE_STYLES.fill
+const tagStyle = computed(
+  (): TagStyle => {
+    const { round, type, color, size, disabled, oversize } = props
+    const resolvedColor = getColorType(color) || 'primary'
+    const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium
+    const styleFunction = TYPE_STYLES[type] || TYPE_STYLES.fill
 
-  return {
-    ...styleFunction(resolvedColor),
-    ...sizeConfig,
-    padding: oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
-    borderRadius: round ? '20px' : sizeConfig.borderRadius,
-    opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
-    pointerEvents: disabled ? 'none' : undefined,
-  }
-})
+    return {
+      ...styleFunction(resolvedColor),
+      ...sizeConfig,
+      padding: oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
+      borderRadius: round ? '20px' : sizeConfig.borderRadius,
+      opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
+      pointerEvents: disabled ? 'none' : undefined,
+    }
+  },
+)
 
 // Methods
 function handleClose(): void {

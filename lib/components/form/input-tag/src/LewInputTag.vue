@@ -7,16 +7,6 @@ import { inputTagProps } from './props'
 
 const props = defineProps(inputTagProps)
 const emit = defineEmits(['remove', 'change', 'clear', 'add'])
-// 获取app实例
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  try {
-    app.use(LewMessage)
-  }
-  catch (error) {
-    console.error('注册LewMessage失败:', error)
-  }
-}
 
 const modelValue = defineModel<string[] | undefined>()
 const inputValue = ref<string>('')

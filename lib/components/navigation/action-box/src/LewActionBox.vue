@@ -15,6 +15,8 @@ const threshold = computed((): number =>
 )
 
 const visibleOptions = computed((): LewActionBoxOption[] => {
+  if (!props.options)
+    return []
   if (threshold.value <= 0) {
     return props.options
   }
@@ -41,7 +43,7 @@ function convertToContextMenus(
 }
 
 const dropdownOptions = computed((): LewContextMenusOption[] => {
-  if (threshold.value <= 0) {
+  if (!props.options || threshold.value <= 0) {
     return []
   }
   return convertToContextMenus(props.options.slice(threshold.value))
@@ -68,8 +70,8 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
         v-if="
           divider
             && (dropdownOptions.length > 0
-              || (visibleOptions.length === options.length
-                && index !== options.length - 1))
+              || (visibleOptions.length === (props.options?.length || 0)
+                && index !== (props.options?.length || 0) - 1))
         " class="lew-action-box-divider"
       />
     </template>

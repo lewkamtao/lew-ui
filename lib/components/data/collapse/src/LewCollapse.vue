@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import type { CollapseModelValue } from './props'
+import type { LewCollapseModelValue } from 'lew-ui/types'
 import { any2px } from 'lew-ui/utils'
 import { computed, provide, watch } from 'vue'
 import { collapseProps } from './props'
 
 const props = defineProps(collapseProps)
+
 const emit = defineEmits<{
-  change: [value: CollapseModelValue]
+  change: [value: LewCollapseModelValue]
 }>()
 
-const modelValue = defineModel<CollapseModelValue>()
+const modelValue = defineModel<LewCollapseModelValue>()
 
 // Provide/Inject
 provide('expandKeys', modelValue)
@@ -20,11 +21,15 @@ const collapseStyle = computed(() => ({
 }))
 
 // Watch for changes and emit
-watch(modelValue, (newValue) => {
-  if (newValue !== undefined) {
-    emit('change', newValue)
-  }
-}, { deep: true })
+watch(
+  modelValue,
+  (newValue) => {
+    if (newValue !== undefined) {
+      emit('change', newValue)
+    }
+  },
+  { deep: true },
+)
 </script>
 
 <template>

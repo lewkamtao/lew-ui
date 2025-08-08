@@ -102,7 +102,7 @@ function plus() {
       modelValue.value = lewInputRef.value.value
       emit('change', modelValue.value)
       if (
-        props.max !== ''
+        props.max !== undefined
         && lewInputRef.value.value >= Number(props.max || 0)
       ) {
         clearTimer()
@@ -119,7 +119,7 @@ function minus() {
       modelValue.value = lewInputRef.value.value
       emit('change', modelValue.value)
       if (
-        props.min !== ''
+        props.min !== undefined
         && lewInputRef.value.value <= Number(props.min || 0)
       ) {
         clearTimer()

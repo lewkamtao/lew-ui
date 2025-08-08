@@ -1,5 +1,5 @@
 import type { LewMenuOption } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
 export const menuModel = {
@@ -20,4 +20,4 @@ export const menuProps = {
   },
 }
 
-export type LewMenuProps = ExtractPropTypes<typeof menuProps>
+export type LewMenuProps = ExtractPublicPropTypes<typeof menuProps>

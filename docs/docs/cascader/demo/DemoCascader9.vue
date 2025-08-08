@@ -1,14 +1,11 @@
 <script setup lang="ts">
+import type { LewCascaderOption } from 'lew-ui/types'
 import { LewCascader } from 'lew-ui'
 
 const cascaderValue = ref()
-
-// Simulate async initialization data
-async function initMethod() {
-  // Simulate network request delay, increase delay time to better demonstrate initLoading effect
+async function initMethod(): Promise<LewCascaderOption[]> {
   await new Promise(resolve => setTimeout(resolve, 2000))
-
-  return [
+  return Promise.resolve([
     {
       label: 'Beijing',
       value: 'beijing',
@@ -53,7 +50,7 @@ async function initMethod() {
         },
       ],
     },
-  ]
+  ])
 }
 
 const updateKey = ref(0)

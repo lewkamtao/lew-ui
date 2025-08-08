@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import type { LewDrawerPosition } from 'lew-ui/types'
 import type { Ref } from 'vue'
-import type { DrawerPosition } from './props'
 import { onClickOutside, useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -157,7 +157,7 @@ if (props.closeByEsc) {
 
 // Methods
 function getStyle(
-  position: DrawerPosition,
+  position: LewDrawerPosition,
   width: number | string,
   height: number | string,
 ): string {

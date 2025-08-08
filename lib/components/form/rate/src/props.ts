@@ -1,5 +1,5 @@
 import type { LewSize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
 export const rateModel = {
@@ -54,4 +54,4 @@ export const rateProps = {
   },
 }
 
-export type RateProps = ExtractPropTypes<typeof rateProps>
+export type RateProps = ExtractPublicPropTypes<typeof rateProps>

@@ -1,5 +1,5 @@
 import type { LewSize, LewSliderRangeOption } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
 export const sliderRangeModel = {
@@ -88,4 +88,4 @@ export const sliderRangeProps = {
   },
 }
 
-export type SliderRangeProps = ExtractPropTypes<typeof sliderRangeProps>
+export type SliderRangeProps = ExtractPublicPropTypes<typeof sliderRangeProps>

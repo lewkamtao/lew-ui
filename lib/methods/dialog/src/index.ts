@@ -1,14 +1,13 @@
-import type { LewColor } from 'lew-ui'
 import type { LewDialogInstance, LewDialogOptions, LewDialogType } from 'lew-ui/types'
 import { useMouse } from '@vueuse/core'
 import { locale } from 'lew-ui'
+import { createApp, h } from 'vue'
 import _LewDialog from './LewDialog.vue'
 
 const { x, y } = useMouse()
 
 function createDialog(type: LewDialogType) {
-  return (options: LewDialogOptions) =>
-    dialog(type as LewColor, options)
+  return (options: LewDialogOptions) => dialog(type, options)
 }
 
 const dialogTypes: Record<LewDialogType, (options: LewDialogOptions) => void> = {
@@ -19,16 +18,16 @@ const dialogTypes: Record<LewDialogType, (options: LewDialogOptions) => void> = 
   success: createDialog('success'),
 }
 
-function dialog(type: LewColor, options: LewDialogOptions) {
+function dialog(type: LewDialogType, options: LewDialogOptions) {
   const {
     title,
     content,
-    ok = () => true,
-    cancel = () => true,
+    ok = () => Promise.resolve(true),
+    cancel = () => Promise.resolve(true),
     okText,
     cancelText,
-    closeOnClickOverlay,
-    closeByEsc,
+    closeOnClickOverlay = false,
+    closeByEsc = false,
   } = options
 
   const div = document.createElement('div')

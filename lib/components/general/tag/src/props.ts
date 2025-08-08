@@ -1,11 +1,12 @@
 import type { LewSize } from 'lew-ui'
 import type { LewTagType } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validColorList, validSizeList, validTagTypeList } from 'lew-ui/validators'
 
 export const tagProps = {
   text: {
     type: String,
+    required: true,
     validator: validators.string({
       componentName: 'LewTag',
       propName: 'text',
@@ -77,4 +78,4 @@ export const tagProps = {
   },
 }
 
-export type LewTagProps = ExtractPropTypes<typeof tagProps>
+export type LewTagProps = ExtractPublicPropTypes<typeof tagProps>

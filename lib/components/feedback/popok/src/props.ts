@@ -6,9 +6,11 @@ import validators, { validColorList, validPlacementList, validTriggerList } from
 export const popokButtonProps = {
   title: {
     type: null,
+    typePopKeys: ['LewComponentSource'],
   },
   content: {
     type: null,
+    typePopKeys: ['LewComponentSource'],
   },
   type: {
     type: String as PropType<LewColor>,

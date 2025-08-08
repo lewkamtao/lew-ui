@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewDatePickerPresetsOption, LewSize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
 export const datePickerModel = {
@@ -89,4 +89,4 @@ export const dateProps = {
   },
 }
 
-export type LewDatePickerProps = ExtractPropTypes<typeof datePickerProps>
+export type LewDatePickerProps = ExtractPublicPropTypes<typeof datePickerProps>

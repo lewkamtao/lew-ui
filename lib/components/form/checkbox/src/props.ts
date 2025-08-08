@@ -1,5 +1,5 @@
 import type { LewCheckboxOption, LewDirection, LewSize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList } from 'lew-ui/validators'
 
 export const checkboxModel = {
@@ -162,5 +162,5 @@ export const checkboxGroupProps = {
   },
 }
 
-export type LewCheckboxProps = ExtractPropTypes<typeof checkboxProps>
-export type LewCheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>
+export type LewCheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
+export type LewCheckboxGroupProps = ExtractPublicPropTypes<typeof checkboxGroupProps>

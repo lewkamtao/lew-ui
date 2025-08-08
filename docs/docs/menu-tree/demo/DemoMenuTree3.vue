@@ -1,17 +1,10 @@
 <script lang="ts" setup>
-import type { MenuTreeItem } from 'lew-ui'
-import {
-  BarChart2,
-  Calendar,
-  FileText,
-  Settings,
-  Target,
-  Users,
-} from 'lucide-vue-next'
+import type { LewMenuTreeOption } from 'lew-ui/types'
+import { BarChart2, Calendar, FileText, Settings, Target, Users } from 'lucide-vue-next'
 
 const value = ref('1-1-1')
 const expandKeys = ref(['1', '1-1', '1-1-1'])
-const options = [
+const options: LewMenuTreeOption[] = [
   {
     value: '1',
     label: 'Employee Mgmt',
@@ -164,7 +157,7 @@ const options = [
   },
 ]
 
-function change(item: MenuTreeItem) {
+function change(item: LewMenuTreeOption) {
   console.log(item)
 }
 </script>

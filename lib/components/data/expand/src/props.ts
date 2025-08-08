@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPublicPropTypes } from 'vue'
 import validators from 'lew-ui/validators'
 
 export const expandProps = {
@@ -11,4 +11,4 @@ export const expandProps = {
   },
 }
 
-export type LewExpandProps = ExtractPropTypes<typeof expandProps>
+export type LewExpandProps = ExtractPublicPropTypes<typeof expandProps>

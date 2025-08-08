@@ -45,7 +45,7 @@ const getModelValueKeyPath = computed(() => {
     }
   }
 
-  return findKeyPath(props.options) || []
+  return findKeyPath(props.options || []) || []
 })
 
 const menuTreeStyle = computed(() => ({

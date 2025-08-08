@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewSize, LewTreeDataSource, LewTrigger } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const treeSelectModel = {
@@ -200,4 +200,4 @@ export const treeSelectProps = {
   },
 }
 
-export type LewTreeSelectProps = ExtractPropTypes<typeof treeSelectProps>
+export type LewTreeSelectProps = ExtractPublicPropTypes<typeof treeSelectProps>

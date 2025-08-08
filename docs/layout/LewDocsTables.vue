@@ -35,7 +35,7 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
   let columns: any = [
     {
       title: nameMap[columnsKey],
-      width: 120,
+      width: 150,
       field: 'name',
       customRender: ({ row }: any) => {
         const { name } = row
@@ -72,11 +72,24 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
       ...columns,
       {
         title: '类型',
-        width: 240,
+        width: 200,
         field: 'type',
         customRender: ({ row }: any) => {
-          const { typeValues, type, typePopKeys } = row
-          if ((typePopKeys || []).length > 0) {
+          const { typeValues, typeGhost, type, typePopKeys } = row
+          if (typeGhost) {
+            return h(
+              LewTag,
+              {
+                type: 'light',
+                size: 'small',
+                color: 'pink',
+              },
+              {
+                default: () => typeGhost,
+              },
+            )
+          }
+          else if ((typePopKeys || []).length > 0) {
             const tags = typePopKeys.map((key: string) => {
               const typeAlias = allTypes[key as keyof typeof allTypes]
               return h(
@@ -121,7 +134,8 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
           else {
             const _types
               = (typeValues || []).length > 0 ? typeValues : (type || '').split('|')
-            const tags = _types.map((text: any) => {
+            console.log(type, typeValues, (type || '').split('|'), 13)
+            const tags = (_types || []).map((text: any) => {
               return h(
                 LewTag,
                 {

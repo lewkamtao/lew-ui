@@ -17,7 +17,7 @@ async function handleClick(e: any) {
       return
     }
     _loading.value = true
-    const isSuccess = await props.request(!modelValue.value)
+    const isSuccess = await props.request()
     if (isSuccess) {
       modelValue.value = !modelValue.value
       _loading.value = false

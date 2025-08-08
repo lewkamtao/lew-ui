@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { LewMenuOptions } from 'lew-ui'
+import type { LewMenuOption } from 'lew-ui'
 import { LewTag } from 'lew-ui'
 import { RenderComponent } from 'lew-ui/render'
 import { menuProps } from './props'
@@ -7,12 +7,12 @@ import { menuProps } from './props'
 defineProps(menuProps)
 
 const emit = defineEmits<{
-  change: [item: LewMenuOptions]
+  change: [item: LewMenuOption]
 }>()
 
 const modelValue = defineModel()
 
-function select(item: LewMenuOptions) {
+function select(item: LewMenuOption) {
   modelValue.value = item.value
   emit('change', item)
 }

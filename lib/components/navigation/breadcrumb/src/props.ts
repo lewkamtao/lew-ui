@@ -1,5 +1,5 @@
 import type { LewBreadcrumbOption, LewBreadcrumbSeparator } from 'lew-ui/types'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validBreadcrumbSeparatorList } from 'lew-ui/validators'
 
 export const breadcrumbProps = {
@@ -24,4 +24,4 @@ export const breadcrumbProps = {
   },
 }
 
-export type LewBreadcrumbProps = ExtractPropTypes<typeof breadcrumbProps>
+export type LewBreadcrumbProps = ExtractPublicPropTypes<typeof breadcrumbProps>

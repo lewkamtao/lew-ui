@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { RadioOptions } from './props'
+import type { LewRadioOption } from 'lew-ui/types'
 import { LewFlex } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import LewRadio from './LewRadio.vue'
@@ -9,7 +9,7 @@ const props = defineProps(radioGroupProps)
 const emit = defineEmits(['change'])
 const modelValue: Ref<string | number | undefined> = defineModel()
 
-function change({ item }: { item: RadioOptions }) {
+function change({ item }: { item: LewRadioOption }) {
   modelValue.value = item.value
   emit('change', {
     value: item.value,
@@ -73,6 +73,7 @@ const getRadioGroupClassName = computed(() => {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;
 }
+
 .lew-radio-group-readonly {
   pointer-events: none;
 }

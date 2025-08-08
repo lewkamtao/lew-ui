@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewStepsOption, LewStepsStatus } from 'lew-ui/types'
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPublicPropTypes } from 'vue'
 import validators, { validStepsStatusList } from 'lew-ui/validators'
 
 export const stepsModel = {
@@ -39,4 +39,4 @@ export const stepsProps = {
   },
 }
 
-export type LewStepsProps = ExtractPropTypes<typeof stepsProps>
+export type LewStepsProps = ExtractPublicPropTypes<typeof stepsProps>

@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewButtonSize, LewButtonType, LewColor } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validColorList } from 'lew-ui/validators'
 
 const typeValues = ['fill', 'light', 'ghost', 'text']
@@ -100,4 +100,4 @@ export const buttonProps = {
   },
 }
 
-export type LewButtonProps = ExtractPropTypes<typeof buttonProps>
+export type LewButtonProps = ExtractPublicPropTypes<typeof buttonProps>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { MenuTreeItem } from 'lew-ui'
+import type { LewMenuTreeOption } from 'lew-ui/types'
 import { FileText, MessageSquare, Tag, Users } from 'lucide-vue-next'
 
 const value = ref('')
@@ -18,7 +18,7 @@ const expandKeys = ref([
   '2-1-1',
   '2-1-2',
 ])
-const options = [
+const options: LewMenuTreeOption[] = [
   {
     value: '1',
     label: 'Article Mgmt',
@@ -269,7 +269,7 @@ const options = [
   },
 ]
 
-function change(item: MenuTreeItem) {
+function change(item: LewMenuTreeOption) {
   console.log(item)
 }
 </script>
