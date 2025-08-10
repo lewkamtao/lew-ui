@@ -1,6 +1,11 @@
+import type { LewComponentSource } from 'lew-ui'
+
 export interface LewDialogOptions {
-  title: string
-  content: string
+  type?: LewDialogType
+  icon?: LewComponentSource
+  title?: LewComponentSource
+  content?: LewComponentSource
+  hideIcon?: boolean
   ok?: () => Promise<boolean>
   cancel?: () => Promise<boolean>
   okText?: string

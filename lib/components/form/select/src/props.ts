@@ -30,7 +30,7 @@ export const selectProps = {
   },
   width: {
     type: String as PropType<Property.Width>,
-    default: '240px',
+    default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewSelect',
       propName: 'width',
@@ -38,7 +38,7 @@ export const selectProps = {
   },
   popoverWidth: {
     type: String as PropType<Property.Width>,
-    default: '240px',
+    default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewSelect',
       propName: 'popoverWidth',

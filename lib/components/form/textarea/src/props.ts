@@ -96,7 +96,7 @@ export const textareaProps = {
   },
   minWidth: {
     type: String as PropType<Property.Width>,
-    default: '240px',
+    default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewTextarea',
       propName: 'minWidth',

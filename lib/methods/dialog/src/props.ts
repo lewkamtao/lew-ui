@@ -3,6 +3,18 @@ import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDialogTypeList } from 'lew-ui/validators'
 
 export const dialogProps = {
+  icon: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
+  title: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
+  content: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
   type: {
     type: String as PropType<LewDialogType>,
     default: 'normal',
@@ -11,6 +23,14 @@ export const dialogProps = {
       componentName: 'LewDialog',
       propName: 'type',
       values: validDialogTypeList,
+    }),
+  },
+  hideIcon: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewDialog',
+      propName: 'hideIcon',
     }),
   },
   okText: {

@@ -1,9 +1,13 @@
 import type { Property } from 'csstype'
-import type { LewColor, LewPlacement, LewTrigger } from 'lew-ui'
+import type { LewPlacement, LewPopokType, LewTrigger } from 'lew-ui/types'
 import type { PropType } from 'vue'
-import validators, { validColorList, validPlacementList, validTriggerList } from 'lew-ui/validators'
+import validators, { validPlacementList, validPopokTypeList, validTriggerList } from 'lew-ui/validators'
 
 export const popokButtonProps = {
+  icon: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
   title: {
     type: null,
     typePopKeys: ['LewComponentSource'],
@@ -12,14 +16,22 @@ export const popokButtonProps = {
     type: null,
     typePopKeys: ['LewComponentSource'],
   },
+  hideIcon: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewPopok',
+      propName: 'hideIcon',
+    }),
+  },
   type: {
-    type: String as PropType<LewColor>,
-    typeValues: validColorList,
+    type: String as PropType<LewPopokType>,
+    typeValues: validPopokTypeList,
     default: 'error',
     validator: validators.enum({
       componentName: 'LewPopok',
       propName: 'type',
-      values: validColorList,
+      values: validPopokTypeList,
     }),
   },
   okText: {
@@ -72,7 +84,6 @@ export const popokButtonProps = {
       values: validTriggerList,
     }),
   },
-
   placement: {
     type: String as PropType<LewPlacement>,
     default: 'top',

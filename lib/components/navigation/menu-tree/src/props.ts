@@ -30,7 +30,7 @@ export const menuTreeProps = {
   },
   width: {
     type: String as PropType<Property.Width>,
-    default: '240px',
+    default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewMenuTree',
       propName: 'width',

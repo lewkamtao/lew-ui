@@ -1,8 +1,13 @@
-import type { LewTooltipDirectiveBinding } from 'lew-ui/types'
+import type { LewPlacement, LewTooltipDirectiveBinding, LewTrigger } from 'lew-ui/types'
 import type { App as Application, DirectiveBinding } from 'vue'
 import RenderComponent from 'lew-ui/render/components/RenderComponent.vue'
 import tippy, { roundArrow } from 'tippy.js'
 import { createApp, defineComponent, h } from 'vue'
+
+// 默认值
+const defaultDelay: [number, number] = [120, 120]
+const defaultPlacement: LewPlacement = 'top'
+const defaultTrigger: LewTrigger = 'mouseenter'
 
 function createTooltipContent(renderFn: any) {
   const tooltipContainer = document.createElement('div')
@@ -30,7 +35,7 @@ export const LewTooltip = {
         }
 
         if (!trigger) {
-          _trigger = 'mouseenter'
+          _trigger = defaultTrigger
         }
 
         const { tooltipContainer, vueApp } = createTooltipContent(content)
@@ -44,12 +49,12 @@ export const LewTooltip = {
           animation: 'scale-subtle',
           interactive: true,
           appendTo: () => document.body,
-          placement,
+          placement: placement || defaultPlacement,
           hideOnClick: _trigger === 'click',
           arrow: roundArrow,
           maxWidth: 250,
           duration: [250, 250],
-          delay: _trigger === 'mouseenter' ? delay || [120, 120] : undefined,
+          delay: _trigger === 'mouseenter' ? delay || defaultDelay : undefined,
         })
 
         el.instance?.popper.children[0].setAttribute('data-lew', 'tooltip')

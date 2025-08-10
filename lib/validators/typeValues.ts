@@ -12,6 +12,7 @@ import type {
   LewInputSuffixType,
   LewInputType,
   LewPlacement,
+  LewPopokType,
   LewSelectMultipleValueLayout,
   LewSize,
   LewStatusColor,
@@ -24,6 +25,8 @@ import type {
   LewXAlignment,
   LewYAlignment,
 } from '../types'
+
+export const validPopokTypeList: LewPopokType[] = ['normal', 'error', 'warning', 'success', 'info']
 
 export const validColorList: LewColor[] = [
   'blue',

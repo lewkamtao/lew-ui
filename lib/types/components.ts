@@ -274,3 +274,5 @@ export type LewEmptyType
     | 'search'
 
 export type LewDrawerPosition = 'left' | 'right' | 'top' | 'bottom'
+
+export type LewPopokType = 'error' | 'warning' | 'success' | 'info' | 'normal'

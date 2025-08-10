@@ -1809,6 +1809,12 @@ export default {
       demo4: {
         title: 'ESC 关闭',
       },
+      demo5: {
+        title: '隐藏图标',
+      },
+      demo6: {
+        title: '自定义图标',
+      },
       props: {
         type: '类型',
         width: '宽度',
@@ -1867,6 +1873,15 @@ export default {
       demo2: {
         title: '触发方式',
       },
+      demo3: {
+        title: '隐藏图标',
+      },
+      demo4: {
+        title: '自定义图标',
+      },
+      demo5: {
+        title: '自定义内容',
+      },
       props: {
         type: '类型',
         width: '宽度',
@@ -1905,6 +1920,7 @@ export default {
         loading: '加载状态',
         hideOnClick: '点击气泡区域外是否自动关闭',
         offset: '偏移量',
+        triggerWidth: '弹窗宽度',
         popoverBodyClassName: '气泡内容类名',
         triggerTarget: '触发目标',
       },
@@ -1929,7 +1945,7 @@ export default {
         title: '支持HTML',
       },
       props: {
-        tips: '提示内容',
+        content: '提示内容',
         placement: '位置',
         trigger: '触发方式',
         allowHTML: '是否支持HTML',

@@ -13,7 +13,9 @@ export const treeSelectModel = {
 export const treeSelectProps = {
   dataSource: {
     type: Array as PropType<LewTreeDataSource[]>,
-    default: () => [],
+    typePopKeys: ['LewTreeDataSource'],
+    required: true,
+
     validator: validators.array({
       componentName: 'LewTreeSelect',
       propName: 'dataSource',
@@ -21,7 +23,7 @@ export const treeSelectProps = {
   },
   width: {
     type: String as PropType<Property.Width>,
-    default: '240px',
+    default: '300px',
     validator: validators.widthHeight({
       componentName: 'LewTreeSelect',
       propName: 'width',

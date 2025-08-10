@@ -1,6 +1,5 @@
 import type { LewDialogInstance, LewDialogOptions, LewDialogType } from 'lew-ui/types'
 import { useMouse } from '@vueuse/core'
-import { locale } from 'lew-ui'
 import { createApp, h } from 'vue'
 import _LewDialog from './LewDialog.vue'
 
@@ -22,6 +21,8 @@ function dialog(type: LewDialogType, options: LewDialogOptions) {
   const {
     title,
     content,
+    icon,
+    hideIcon,
     ok = () => Promise.resolve(true),
     cancel = () => Promise.resolve(true),
     okText,
@@ -42,9 +43,13 @@ function dialog(type: LewDialogType, options: LewDialogOptions) {
           closeOnClickOverlay,
           closeByEsc,
           type,
+          hideIcon,
           okText,
           cancelText,
           transformOrigin,
+          icon,
+          title,
+          content,
           ok,
           onClose: () => {
             app.unmount()
@@ -53,8 +58,7 @@ function dialog(type: LewDialogType, options: LewDialogOptions) {
           cancel,
         },
         {
-          title: () => title || locale.t('dialog.title'),
-          content: () => content,
+          default: () => [],
         },
       )
     },

@@ -112,4 +112,7 @@ export default {
     pageSize: '{pageSize} 条/页',
     jumpTo: '跳转至',
   },
+  empty: {
+    title: '暂无数据',
+  },
 }

@@ -17,7 +17,7 @@ export const emptyProps = {
   },
   title: {
     type: String,
-    default: '暂无数据',
+    defaultLocale: true,
     validator: validators.string({
       componentName: 'LewEmpty',
       propName: 'title',

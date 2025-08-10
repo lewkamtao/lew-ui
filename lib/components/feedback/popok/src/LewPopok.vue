@@ -1,46 +1,45 @@
 <script setup lang="ts">
-import type { LewColor } from 'lew-ui'
-import { LewButton, LewPopover, locale } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import type { LewColor } from "lew-ui";
+import { LewButton, LewPopover, locale } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
 
-import { any2px } from 'lew-ui/utils'
-import { popokButtonProps } from './props'
+import { any2px } from "lew-ui/utils";
+import { popokButtonProps } from "./props";
 
-const props = defineProps(popokButtonProps)
+const props = defineProps(popokButtonProps);
 
-const lewPopoverRef = ref()
-const okLoading = ref(false)
-const cancelLoading = ref(false)
-const okRef = ref()
+const lewPopoverRef = ref();
+const okLoading = ref(false);
+const cancelLoading = ref(false);
+const okRef = ref();
 
-async function handleAction(action: 'ok' | 'cancel') {
-  const actionFunction = props[action]
-  const loadingRef = action === 'ok' ? okLoading : cancelLoading
+async function handleAction(action: "ok" | "cancel") {
+  const actionFunction = props[action];
+  const loadingRef = action === "ok" ? okLoading : cancelLoading;
 
-  if (typeof actionFunction === 'function') {
-    loadingRef.value = true
-    const result = await actionFunction()
+  if (typeof actionFunction === "function") {
+    loadingRef.value = true;
+    const result = await actionFunction();
     if (result !== false) {
-      hide()
+      hide();
     }
-    loadingRef.value = false
+    loadingRef.value = false;
   }
 }
 
-const ok = () => handleAction('ok')
-const cancel = () => handleAction('cancel')
+const ok = () => handleAction("ok");
+const cancel = () => handleAction("cancel");
 
 function hide() {
-  lewPopoverRef.value.hide()
+  lewPopoverRef.value.hide();
 }
 
 onMounted(() => {
   nextTick(() => {
-    if (okRef.value)
-      okRef.value.focus()
-  })
-})
+    if (okRef.value) okRef.value.focus();
+  });
+});
 </script>
 
 <template>
@@ -60,17 +59,22 @@ onMounted(() => {
           width: any2px(width),
         }"
       >
-        <div class="lew-popok-left">
-          <CommonIcon :size="24" :type />
-        </div>
-        <div class="lew-popok-right">
-          <div class="lew-popok-title">
-            <RenderComponent v-if="title" :render-fn="title" />
-          </div>
-          <div class="lew-popok-content">
-            <RenderComponent v-if="content" :render-fn="content" />
-          </div>
-          <div class="lew-popok-footer">
+        <LewFlex direction="y" gap="20px" class="lew-popok-box" @click.stop>
+          <LewFlex y="start">
+            <div v-if="!hideIcon" class="lew-popok-box-left">
+              <CommonIcon v-if="!icon" :type :size="24" />
+              <RenderComponent v-else :render-fn="icon" />
+            </div>
+            <div class="lew-popok-box-right">
+              <div class="lew-popok-box-right-header">
+                <RenderComponent :render-fn="title" />
+              </div>
+              <div class="lew-popok-box-right-main">
+                <RenderComponent :render-fn="content" />
+              </div>
+            </div>
+          </LewFlex>
+          <div class="lew-popok-box-footer">
             <LewButton
               :text="cancelText || locale.t('popok.cancelText')"
               color="gray"
@@ -83,13 +87,13 @@ onMounted(() => {
               ref="okRef"
               :text="okText || locale.t('popok.okText')"
               type="fill"
-              :color="type as LewColor"
               size="small"
+              :color="type as LewColor"
               :loading="okLoading"
               @click.stop="ok"
             />
           </div>
-        </div>
+        </LewFlex>
       </div>
     </template>
   </LewPopover>
@@ -100,59 +104,46 @@ onMounted(() => {
   display: inline-block;
 }
 
-.lew-popok-body {
+.lew-popok-box {
+  position: relative;
   display: flex;
-  padding: 15px;
+  width: 450px;
+  height: auto;
+  padding: 20px;
+  border-radius: var(--lew-border-radius-large);
+  background-color: var(--lew-modal-body-bgcolor);
+  font-size: 0;
+  .lew-popok-box-left {
+    width: 28px;
+    margin-left: -2.5px;
+  }
 
-  .lew-popok-left {
-    width: 30px;
-    margin-right: 5px;
+  .lew-popok-box-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: calc(450px - 15px - 30px);
 
-    .lew-popok-icon-success {
-      color: var(--lew-color-success);
+    .lew-popok-box-right-header {
+      width: 100%;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
     }
 
-    .lew-popok-icon-warning {
-      color: var(--lew-color-warning);
-    }
-
-    .lew-popok-icon-normal {
-      color: var(--lew-color-normal);
-    }
-
-    .lew-popok-icon-info {
-      color: var(--lew-color-info);
-    }
-
-    .lew-popok-icon-error {
-      color: var(--lew-color-error);
+    .lew-popok-box-right-main {
+      height: auto;
+      font-size: 14px;
+      color: var(--lew-text-color-5);
     }
   }
 
-  .lew-popok-right {
-    width: calc(100% - 30px);
-
-    .lew-popok-title {
-      width: 100%;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-
-    .lew-popok-content {
-      width: 100%;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .lew-popok-footer {
-      width: 100%;
-      display: flex;
-      justify-content: end;
-
-      .lew-button {
-        margin-left: 10px;
-      }
-    }
+  .lew-popok-box-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
   }
 }
 </style>
