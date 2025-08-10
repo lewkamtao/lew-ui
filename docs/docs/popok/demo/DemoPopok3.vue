@@ -1,9 +1,9 @@
 <script setup lang="ts">
 function ok() {
-  LewMessage.success("Confirmed");
+  LewMessage.success('Confirmed')
 }
 function cancel() {
-  LewMessage.info("Cancelled");
+  LewMessage.info('Cancelled')
 }
 </script>
 

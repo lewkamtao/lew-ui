@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Trash } from "lucide-vue-next";
-import { h } from "vue";
+import { Trash } from 'lucide-vue-next'
+import { h } from 'vue'
 
 function ok() {
-  LewMessage.success("Confirmed");
+  LewMessage.success('Confirmed')
 }
 function cancel() {
-  LewMessage.info("Cancelled");
+  LewMessage.info('Cancelled')
 }
 </script>
 

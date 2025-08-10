@@ -1,64 +1,65 @@
 <script lang="ts" setup name="dialog">
-import type { LewColor } from "lew-ui";
-import { useMagicKeys } from "@vueuse/core";
-import { LewButton, LewFlex, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
-import { useDOMCreate } from "lew-ui/hooks";
-import { dialogProps } from "./props";
+import type { LewColor } from 'lew-ui'
+import { useMagicKeys } from '@vueuse/core'
+import { LewButton, LewFlex, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { useDOMCreate } from 'lew-ui/hooks'
+import { dialogProps } from './props'
 
-const props = defineProps(dialogProps);
-const emit = defineEmits(["close"]);
-const { Escape } = useMagicKeys();
-useDOMCreate("lew-dialog");
+const props = defineProps(dialogProps)
+const emit = defineEmits(['close'])
+const { Escape } = useMagicKeys()
+useDOMCreate('lew-dialog')
 
-const visible = ref(false);
-const okLoading = ref(false);
-const cancelLoading = ref(false);
-const okRef = ref();
+const visible = ref(false)
+const okLoading = ref(false)
+const cancelLoading = ref(false)
+const okRef = ref()
 
 function maskClick() {
   if (props.closeOnClickOverlay) {
-    visible.value = false;
+    visible.value = false
   }
 }
 
 onMounted(() => {
-  visible.value = true;
+  visible.value = true
   nextTick(() => {
-    if (okRef.value) okRef.value.focus();
-  });
-});
+    if (okRef.value)
+      okRef.value.focus()
+  })
+})
 
 watch(visible, (newVal) => {
   if (!newVal) {
-    setTimeout(() => emit("close"), 500);
+    setTimeout(() => emit('close'), 500)
   }
-});
+})
 
-async function handleAction(action: "ok" | "cancel") {
-  const actionFunction = props[action];
-  const loadingRef = action === "ok" ? okLoading : cancelLoading;
+async function handleAction(action: 'ok' | 'cancel') {
+  const actionFunction = props[action]
+  const loadingRef = action === 'ok' ? okLoading : cancelLoading
 
-  if (typeof actionFunction === "function") {
-    loadingRef.value = true;
-    const result = await actionFunction();
+  if (typeof actionFunction === 'function') {
+    loadingRef.value = true
+    const result = await actionFunction()
     if (result !== false) {
-      visible.value = false;
+      visible.value = false
     }
-    loadingRef.value = false;
+    loadingRef.value = false
   }
 }
 
-const ok = () => handleAction("ok");
-const cancel = () => handleAction("cancel");
+const ok = () => handleAction('ok')
+const cancel = () => handleAction('cancel')
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (v && visible.value) {
-      visible.value = false;
+      visible.value = false
     }
-  });
+  })
 }
 </script>
 
@@ -194,7 +195,8 @@ if (props.closeByEsc) {
 
 .lew-dialog-enter-active,
 .lew-dialog-leave-active {
-  transition: opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
+  transition:
+    opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
     transform 0.4s cubic-bezier(0.3, 1.3, 0.3, 1);
   transform-origin: var(--lew-dialog-transform-origin);
 }
