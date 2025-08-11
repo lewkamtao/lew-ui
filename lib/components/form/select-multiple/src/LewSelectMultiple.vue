@@ -380,7 +380,7 @@ const getResultText = computed(() => {
         <template v-if="getSelectedRows && getSelectedRows.length > 0">
           <LewFlex
             v-if="valueLayout === 'tag'"
-            :style="{ padding: '4px' }"
+            :style="{ padding: '5px' }"
             x="start"
             y="center"
             gap="4px"

@@ -186,7 +186,6 @@ export const treeSelectProps = {
   },
   initMethodId: {
     type: String,
-    hidden: true,
     validator: validators.string({
       componentName: 'LewTreeSelect',
       propName: 'initMethodId',

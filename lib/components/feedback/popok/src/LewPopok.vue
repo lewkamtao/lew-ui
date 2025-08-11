@@ -1,45 +1,46 @@
 <script setup lang="ts">
-import type { LewColor } from "lew-ui";
-import { LewButton, LewPopover, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import type { LewColor } from 'lew-ui'
+import { LewButton, LewPopover, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 
-import { any2px } from "lew-ui/utils";
-import { popokButtonProps } from "./props";
+import { any2px } from 'lew-ui/utils'
+import { popokButtonProps } from './props'
 
-const props = defineProps(popokButtonProps);
+const props = defineProps(popokButtonProps)
 
-const lewPopoverRef = ref();
-const okLoading = ref(false);
-const cancelLoading = ref(false);
-const okRef = ref();
+const lewPopoverRef = ref()
+const okLoading = ref(false)
+const cancelLoading = ref(false)
+const okRef = ref()
 
-async function handleAction(action: "ok" | "cancel") {
-  const actionFunction = props[action];
-  const loadingRef = action === "ok" ? okLoading : cancelLoading;
+async function handleAction(action: 'ok' | 'cancel') {
+  const actionFunction = props[action]
+  const loadingRef = action === 'ok' ? okLoading : cancelLoading
 
-  if (typeof actionFunction === "function") {
-    loadingRef.value = true;
-    const result = await actionFunction();
+  if (typeof actionFunction === 'function') {
+    loadingRef.value = true
+    const result = await actionFunction()
     if (result !== false) {
-      hide();
+      hide()
     }
-    loadingRef.value = false;
+    loadingRef.value = false
   }
 }
 
-const ok = () => handleAction("ok");
-const cancel = () => handleAction("cancel");
+const ok = () => handleAction('ok')
+const cancel = () => handleAction('cancel')
 
 function hide() {
-  lewPopoverRef.value.hide();
+  lewPopoverRef.value.hide()
 }
 
 onMounted(() => {
   nextTick(() => {
-    if (okRef.value) okRef.value.focus();
-  });
-});
+    if (okRef.value)
+      okRef.value.focus()
+  })
+})
 </script>
 
 <template>

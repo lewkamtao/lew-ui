@@ -2,22 +2,25 @@
 interface TabOption {
   label: string
   value: string
+  disabled?: boolean
 }
 
+// 主题：Luxury Brands
 const options: TabOption[] = [
-  { label: 'Google', value: 'google' },
-  { label: 'Amazon', value: 'amazon' },
-  { label: 'Microsoft', value: 'microsoft' },
-  { label: 'Apple', value: 'apple' },
-  { label: 'Facebook', value: 'facebook' },
-  { label: 'Tesla', value: 'tesla' },
-  { label: 'Intel', value: 'intel' },
-  { label: 'Nvidia', value: 'nvidia' },
+  { label: 'Louis Vuitton', value: 'louis_vuitton' },
+  { label: 'Chanel', value: 'chanel' },
+  { label: 'Gucci', value: 'gucci' },
+  { label: 'Hermès', value: 'hermes', disabled: true },
+  { label: 'Prada', value: 'prada' },
+  { label: 'Dior', value: 'dior', disabled: true },
+  { label: 'Rolex', value: 'rolex' },
+  { label: 'Cartier', value: 'cartier', disabled: true },
+  { label: 'Versace', value: 'versace' },
 ]
 
-const modelValue = ref('microsoft')
+const modelValue = ref('gucci')
 </script>
 
 <template>
-  <lew-tabs v-model="modelValue" width="auto" round :options="options" />
+  <lew-tabs v-model="modelValue" width="auto" :options="options" />
 </template>

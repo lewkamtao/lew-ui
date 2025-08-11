@@ -119,8 +119,6 @@ export const selectProps = {
   },
   initMethodId: {
     type: String,
-    default: '',
-    hidden: true,
     validator: validators.string({
       componentName: 'LewSelect',
       propName: 'initMethodId',

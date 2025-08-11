@@ -121,7 +121,6 @@ export const selectMultipleProps = {
   },
   initMethodId: {
     type: String,
-    hidden: true,
     validator: validators.string({
       componentName: 'LewSelectMultiple',
       propName: 'initMethodId',

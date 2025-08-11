@@ -1,13 +1,14 @@
 import type { Property } from 'csstype'
-import type { LewDirection, LewFormItemAs, LewSize } from 'lew-ui/types'
+import type { LewDirection, LewFormItemAs, LewFormOption, LewSize } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validFormItemAsList, validSizeList } from 'lew-ui/validators'
 
 export const formProps = {
   options: {
-    type: Array as PropType<Array<Record<string, any>>>,
+    type: Array as PropType<LewFormOption[]>,
     required: true,
     default: () => [],
+    typePopKeys: ['LewFormOption'],
     validator: validators.array({
       componentName: 'LewForm',
       propName: 'options',
@@ -118,7 +119,7 @@ export const formItemProps = {
     }),
   },
   as: {
-    type: String as PropType<LewFormItemAs>,
+    type: String as PropType<LewFormItemAs | ''>,
     default: 'input',
     typeValues: validFormItemAsList,
     validator: validators.enum({

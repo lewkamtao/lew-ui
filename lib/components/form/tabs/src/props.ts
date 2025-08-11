@@ -14,6 +14,7 @@ export const tabsProps = {
   options: {
     type: Array as PropType<LewTabsOption[]>,
     default: () => [],
+    typePopKeys: ['LewTabsOption'],
     required: true,
     validator: validators.array({
       componentName: 'LewTabs',

@@ -884,6 +884,9 @@ export default {
       demo5: {
         title: '圆角的',
       },
+      demo6: {
+        title: '禁用选项',
+      },
       model: {
         modelValue: '绑定值',
       },

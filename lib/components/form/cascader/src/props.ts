@@ -120,7 +120,6 @@ export const cascaderProps = {
   },
   initMethodId: {
     type: String,
-    hidden: true,
     validator: validators.string({
       componentName: 'LewCascader',
       propName: 'initMethodId',

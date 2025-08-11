@@ -2,20 +2,9 @@
 import type { LewSize } from 'lew-ui'
 import { LewForm, LewMessage, LewModal, locale } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
+import { formModalProps } from './props'
 
-const props = defineProps({
-  options: {
-    type: Object,
-  },
-  size: {
-    type: String,
-    default: '',
-  },
-  checkUniqueFieldFn: {
-    type: Function as PropType<(formData: Record<string, any>) => boolean>,
-    default: () => true,
-  },
-})
+const props = defineProps(formModalProps)
 
 const emit = defineEmits(['addSuccess', 'editSuccess'])
 const visible = ref(false)
@@ -69,17 +58,15 @@ defineExpose({ open })
 <template>
   <LewModal
     v-model:visible="visible"
-    :close-button-props="
-      {
-        request: () => {
-          visible = false
-        },
-      } as any
+    :close-button-props="{
+      request: () => {
+        visible = false
+      },
+    } as any
     "
-    :ok-button-props="
-      {
-        request: ok,
-      } as any
+    :ok-button-props="{
+      request: ok,
+    } as any
     "
     :title="`${
       isEditing ? locale.t('inputTable.editTitle') : locale.t('inputTable.modelTitle')
@@ -90,7 +77,7 @@ defineExpose({ open })
         ref="formRef"
         :size="size as LewSize"
         width="350"
-        :options="options as Record<string, any>[]"
+        :options="options"
         @mounted="formMounted"
       />
     </div>

@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { LewSelectMultiple } from 'lew-ui'
-
 const selectValue = ref([])
 
-// 模拟表单方法
 const formMethods = {
   async loadProductOptions() {
-    // 模拟网络请求延迟
     await new Promise(resolve => setTimeout(resolve, 1000))
-
     return [
       { label: 'iPhone 15', value: 'iphone15' },
       { label: 'MacBook Pro', value: 'macbook-pro' },
@@ -20,7 +15,6 @@ const formMethods = {
   },
 }
 
-// 提供表单方法给子组件
 provide('formMethods', formMethods)
 </script>
 
@@ -29,13 +23,13 @@ provide('formMethods', formMethods)
     <LewSelectMultiple
       v-model="selectValue"
       init-method-id="loadProductOptions"
-      placeholder="请选择产品"
+      placeholder="Select a product"
       width="300px"
       searchable
       value-layout="tag"
     />
     <div class="demo-result">
-      选中值: {{ selectValue }}
+      Selected value: {{ selectValue }}
     </div>
   </div>
 </template>

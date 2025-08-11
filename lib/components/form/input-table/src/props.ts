@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewInputTableColumn, LewSize } from 'lew-ui/types'
+import type { LewFormOption, LewInputTableColumn, LewSize } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
@@ -142,6 +142,29 @@ export const inputTableProps = {
       componentName: 'LewInputTable',
       propName: 'uniqueField',
     }),
+  },
+}
+
+export const formModalProps = {
+  options: {
+    type: Array as PropType<LewFormOption[]>,
+    required: true,
+    default: () => [],
+    typePopKeys: ['LewFormOption'],
+  },
+  size: {
+    type: String as PropType<LewSize>,
+    default: 'medium',
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewForm',
+      propName: 'size',
+      values: validSizeList,
+    }),
+  },
+  checkUniqueFieldFn: {
+    type: Function as PropType<(formData: Record<string, any>) => boolean>,
+    default: () => true,
   },
 }
 

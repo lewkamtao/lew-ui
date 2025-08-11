@@ -113,7 +113,6 @@ function initTippy() {
     },
   })
   instance?.popper.children[0].setAttribute('data-lew', 'popover')
-
   // 判断入参
   if (disabled && instance) {
     instance.disable()
@@ -185,6 +184,10 @@ defineExpose({ show, hide, refresh })
 </template>
 
 <style lang="scss">
+.lew-popover {
+  font-size: 0;
+}
+
 .lew-popover-body {
   border-radius: var(--lew-border-radius-small);
 }
