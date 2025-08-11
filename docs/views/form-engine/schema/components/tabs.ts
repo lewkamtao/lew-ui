@@ -9,7 +9,7 @@ export default [
     label: '宽度',
     as: 'input-number',
     componentWidth: 100,
-    props: { min: 80, max: 500, align: 'center', placeholder: '宽度' },
+    props: { min: 240, align: 'center', placeholder: '宽度' },
     field: 'width',
   },
   {

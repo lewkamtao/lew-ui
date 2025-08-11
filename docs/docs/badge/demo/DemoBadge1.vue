@@ -12,7 +12,7 @@
       />
     </lew-badge>
 
-    <lew-badge round color="red" value="142232" max="99">
+    <lew-badge round color="red" value="142232" :max="99">
       <lew-avatar
         shape="circle"
         src="https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_3_kntap6_.jpeg"

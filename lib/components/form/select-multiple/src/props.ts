@@ -14,7 +14,6 @@ export const selectMultipleProps = {
   options: {
     type: Array as PropType<LewSelectMultipleOption[]>,
     typePopKeys: ['LewSelectMultipleOption'],
-    required: true,
     validator: validators.array({
       componentName: 'LewSelectMultiple',
       propName: 'options',

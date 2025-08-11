@@ -96,8 +96,8 @@ export const checkboxProps = {
 export const checkboxGroupProps = {
   options: {
     type: Array as PropType<LewCheckboxOption[]>,
-    typePopKeys: ['LewCheckboxOption'],
     required: true,
+    typePopKeys: ['LewCheckboxOption'],
     validator: validators.array({
       componentName: 'LewCheckboxGroup',
       propName: 'options',

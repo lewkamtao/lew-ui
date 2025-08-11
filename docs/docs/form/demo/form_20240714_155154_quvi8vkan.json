@@ -2,7 +2,7 @@
   "direction": "x",
   "columns": 3,
   "size": "medium",
-  "width": 1128,
+  "width": "1128px",
   "id": "form_20240810_42aeb6115",
   "options": [
     {
@@ -10,10 +10,22 @@
       "as": "checkbox-group",
       "props": {
         "options": [
-          { "label": "唱歌", "value": "1" },
-          { "label": "跳舞", "value": "2" },
-          { "label": "Rap", "value": "3" },
-          { "label": "上海", "value": "4" }
+          {
+            "label": "唱歌",
+            "value": "1"
+          },
+          {
+            "label": "跳舞",
+            "value": "2"
+          },
+          {
+            "label": "Rap",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          }
         ]
       },
       "id": "checkbox-group_20240810_1b28381",
@@ -26,11 +38,26 @@
       "props": {
         "clearable": true,
         "options": [
-          { "label": "广东", "value": "1" },
-          { "label": "深圳", "value": "2" },
-          { "label": "杭州", "value": "3" },
-          { "label": "上海", "value": "4" },
-          { "label": "北京", "value": "5" }
+          {
+            "label": "广东",
+            "value": "1"
+          },
+          {
+            "label": "深圳",
+            "value": "2"
+          },
+          {
+            "label": "杭州",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          },
+          {
+            "label": "北京",
+            "value": "5"
+          }
         ]
       },
       "id": "select_20240810_e0aae03",
@@ -42,10 +69,22 @@
       "as": "checkbox-group",
       "props": {
         "options": [
-          { "label": "唱歌", "value": "1" },
-          { "label": "跳舞", "value": "2" },
-          { "label": "Rap", "value": "3" },
-          { "label": "上海", "value": "4" }
+          {
+            "label": "唱歌",
+            "value": "1"
+          },
+          {
+            "label": "跳舞",
+            "value": "2"
+          },
+          {
+            "label": "Rap",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          }
         ]
       },
       "id": "checkbox-group_20240810_4433755",
@@ -57,9 +96,18 @@
       "as": "tabs",
       "props": {
         "options": [
-          { "label": "Beijing", "value": "1" },
-          { "label": "Shanghai", "value": "2" },
-          { "label": "Guangzhou", "value": "3" }
+          {
+            "label": "Beijing",
+            "value": "1"
+          },
+          {
+            "label": "Shanghai",
+            "value": "2"
+          },
+          {
+            "label": "Guangzhou",
+            "value": "3"
+          }
         ]
       },
       "id": "tabs_20240810_cbe2467",
@@ -71,10 +119,22 @@
       "as": "checkbox-group",
       "props": {
         "options": [
-          { "label": "唱歌", "value": "1" },
-          { "label": "跳舞", "value": "2" },
-          { "label": "Rap", "value": "3" },
-          { "label": "上海", "value": "4" }
+          {
+            "label": "唱歌",
+            "value": "1"
+          },
+          {
+            "label": "跳舞",
+            "value": "2"
+          },
+          {
+            "label": "Rap",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          }
         ]
       },
       "id": "checkbox-group_20240810_c2d6c59",
@@ -96,27 +156,54 @@
                 "value": 2,
                 "label": "China",
                 "children": [
-                  { "value": 3, "label": "Beijing" },
-                  { "value": 4, "label": "Shanghai" },
-                  { "value": 5, "label": "Hangzhou" }
+                  {
+                    "value": 3,
+                    "label": "Beijing"
+                  },
+                  {
+                    "value": 4,
+                    "label": "Shanghai"
+                  },
+                  {
+                    "value": 5,
+                    "label": "Hangzhou"
+                  }
                 ]
               },
               {
                 "value": 6,
                 "label": "Japan",
                 "children": [
-                  { "value": 7, "label": "Tokyo" },
-                  { "value": 8, "label": "Osaka" },
-                  { "value": 9, "label": "Kyoto" }
+                  {
+                    "value": 7,
+                    "label": "Tokyo"
+                  },
+                  {
+                    "value": 8,
+                    "label": "Osaka"
+                  },
+                  {
+                    "value": 9,
+                    "label": "Kyoto"
+                  }
                 ]
               },
               {
                 "value": 10,
                 "label": "Korea",
                 "children": [
-                  { "value": 11, "label": "Seoul" },
-                  { "value": 12, "label": "Busan" },
-                  { "value": 13, "label": "Taegu" }
+                  {
+                    "value": 11,
+                    "label": "Seoul"
+                  },
+                  {
+                    "value": 12,
+                    "label": "Busan"
+                  },
+                  {
+                    "value": 13,
+                    "label": "Taegu"
+                  }
                 ]
               }
             ]
@@ -129,18 +216,36 @@
                 "value": 15,
                 "label": "France",
                 "children": [
-                  { "value": 16, "label": "Paris" },
-                  { "value": 17, "label": "Marseille" },
-                  { "value": 18, "label": "Lyon" }
+                  {
+                    "value": 16,
+                    "label": "Paris"
+                  },
+                  {
+                    "value": 17,
+                    "label": "Marseille"
+                  },
+                  {
+                    "value": 18,
+                    "label": "Lyon"
+                  }
                 ]
               },
               {
                 "value": 19,
                 "label": "UK",
                 "children": [
-                  { "value": 20, "label": "London" },
-                  { "value": 21, "label": "Birmingham" },
-                  { "value": 22, "label": "Manchester" }
+                  {
+                    "value": 20,
+                    "label": "London"
+                  },
+                  {
+                    "value": 21,
+                    "label": "Birmingham"
+                  },
+                  {
+                    "value": 22,
+                    "label": "Manchester"
+                  }
                 ]
               }
             ]
@@ -153,18 +258,36 @@
                 "value": 24,
                 "label": "US",
                 "children": [
-                  { "value": 25, "label": "New York" },
-                  { "value": 26, "label": "Los Angeles" },
-                  { "value": 27, "label": "Washington" }
+                  {
+                    "value": 25,
+                    "label": "New York"
+                  },
+                  {
+                    "value": 26,
+                    "label": "Los Angeles"
+                  },
+                  {
+                    "value": 27,
+                    "label": "Washington"
+                  }
                 ]
               },
               {
                 "value": 28,
                 "label": "Canada",
                 "children": [
-                  { "value": 29, "label": "Toronto" },
-                  { "value": 30, "label": "Montreal" },
-                  { "value": 31, "label": "Ottawa" }
+                  {
+                    "value": 29,
+                    "label": "Toronto"
+                  },
+                  {
+                    "value": 30,
+                    "label": "Montreal"
+                  },
+                  {
+                    "value": 31,
+                    "label": "Ottawa"
+                  }
                 ]
               }
             ]
@@ -190,27 +313,54 @@
                 "value": 2,
                 "label": "China",
                 "children": [
-                  { "value": 3, "label": "Beijing" },
-                  { "value": 4, "label": "Shanghai" },
-                  { "value": 5, "label": "Hangzhou" }
+                  {
+                    "value": 3,
+                    "label": "Beijing"
+                  },
+                  {
+                    "value": 4,
+                    "label": "Shanghai"
+                  },
+                  {
+                    "value": 5,
+                    "label": "Hangzhou"
+                  }
                 ]
               },
               {
                 "value": 6,
                 "label": "Japan",
                 "children": [
-                  { "value": 7, "label": "Tokyo" },
-                  { "value": 8, "label": "Osaka" },
-                  { "value": 9, "label": "Kyoto" }
+                  {
+                    "value": 7,
+                    "label": "Tokyo"
+                  },
+                  {
+                    "value": 8,
+                    "label": "Osaka"
+                  },
+                  {
+                    "value": 9,
+                    "label": "Kyoto"
+                  }
                 ]
               },
               {
                 "value": 10,
                 "label": "Korea",
                 "children": [
-                  { "value": 11, "label": "Seoul" },
-                  { "value": 12, "label": "Busan" },
-                  { "value": 13, "label": "Taegu" }
+                  {
+                    "value": 11,
+                    "label": "Seoul"
+                  },
+                  {
+                    "value": 12,
+                    "label": "Busan"
+                  },
+                  {
+                    "value": 13,
+                    "label": "Taegu"
+                  }
                 ]
               }
             ]
@@ -223,18 +373,36 @@
                 "value": 15,
                 "label": "France",
                 "children": [
-                  { "value": 16, "label": "Paris" },
-                  { "value": 17, "label": "Marseille" },
-                  { "value": 18, "label": "Lyon" }
+                  {
+                    "value": 16,
+                    "label": "Paris"
+                  },
+                  {
+                    "value": 17,
+                    "label": "Marseille"
+                  },
+                  {
+                    "value": 18,
+                    "label": "Lyon"
+                  }
                 ]
               },
               {
                 "value": 19,
                 "label": "UK",
                 "children": [
-                  { "value": 20, "label": "London" },
-                  { "value": 21, "label": "Birmingham" },
-                  { "value": 22, "label": "Manchester" }
+                  {
+                    "value": 20,
+                    "label": "London"
+                  },
+                  {
+                    "value": 21,
+                    "label": "Birmingham"
+                  },
+                  {
+                    "value": 22,
+                    "label": "Manchester"
+                  }
                 ]
               }
             ]
@@ -247,18 +415,36 @@
                 "value": 24,
                 "label": "US",
                 "children": [
-                  { "value": 25, "label": "New York" },
-                  { "value": 26, "label": "Los Angeles" },
-                  { "value": 27, "label": "Washington" }
+                  {
+                    "value": 25,
+                    "label": "New York"
+                  },
+                  {
+                    "value": 26,
+                    "label": "Los Angeles"
+                  },
+                  {
+                    "value": 27,
+                    "label": "Washington"
+                  }
                 ]
               },
               {
                 "value": 28,
                 "label": "Canada",
                 "children": [
-                  { "value": 29, "label": "Toronto" },
-                  { "value": 30, "label": "Montreal" },
-                  { "value": 31, "label": "Ottawa" }
+                  {
+                    "value": 29,
+                    "label": "Toronto"
+                  },
+                  {
+                    "value": 30,
+                    "label": "Montreal"
+                  },
+                  {
+                    "value": 31,
+                    "label": "Ottawa"
+                  }
                 ]
               }
             ]
@@ -274,9 +460,18 @@
       "as": "date-range-picker",
       "props": {
         "options": [
-          { "label": "Beijing", "value": "1" },
-          { "label": "Shanghai", "value": "2" },
-          { "label": "Guangzhou", "value": "3" }
+          {
+            "label": "Beijing",
+            "value": "1"
+          },
+          {
+            "label": "Shanghai",
+            "value": "2"
+          },
+          {
+            "label": "Guangzhou",
+            "value": "3"
+          }
         ]
       },
       "id": "date-range-picker_20240810_6cd68715",
@@ -288,9 +483,18 @@
       "as": "date-picker",
       "props": {
         "options": [
-          { "label": "Beijing", "value": "1" },
-          { "label": "Shanghai", "value": "2" },
-          { "label": "Guangzhou", "value": "3" }
+          {
+            "label": "Beijing",
+            "value": "1"
+          },
+          {
+            "label": "Shanghai",
+            "value": "2"
+          },
+          {
+            "label": "Guangzhou",
+            "value": "3"
+          }
         ]
       },
       "id": "date-picker_20240810_8666a517",
@@ -302,9 +506,18 @@
       "as": "date-picker",
       "props": {
         "options": [
-          { "label": "Beijing", "value": "1" },
-          { "label": "Shanghai", "value": "2" },
-          { "label": "Guangzhou", "value": "3" }
+          {
+            "label": "Beijing",
+            "value": "1"
+          },
+          {
+            "label": "Shanghai",
+            "value": "2"
+          },
+          {
+            "label": "Guangzhou",
+            "value": "3"
+          }
         ]
       },
       "id": "date-picker_20240810_248d6019",
@@ -316,9 +529,18 @@
       "as": "radio-group",
       "props": {
         "options": [
-          { "label": "男", "value": "1" },
-          { "label": "女", "value": "2" },
-          { "label": "不公开", "value": "3" }
+          {
+            "label": "男",
+            "value": "1"
+          },
+          {
+            "label": "女",
+            "value": "2"
+          },
+          {
+            "label": "不公开",
+            "value": "3"
+          }
         ]
       },
       "id": "radio-group_20240810_34b9dc21",
@@ -330,10 +552,22 @@
       "as": "checkbox-group",
       "props": {
         "options": [
-          { "label": "唱歌", "value": "1" },
-          { "label": "跳舞", "value": "2" },
-          { "label": "Rap", "value": "3" },
-          { "label": "上海", "value": "4" }
+          {
+            "label": "唱歌",
+            "value": "1"
+          },
+          {
+            "label": "跳舞",
+            "value": "2"
+          },
+          {
+            "label": "Rap",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          }
         ]
       },
       "id": "checkbox-group_20240810_4890f823",
@@ -343,7 +577,11 @@
     {
       "label": "文本域",
       "as": "textarea",
-      "props": { "clearable": true, "showCount": true, "maxLength": 300 },
+      "props": {
+        "clearable": true,
+        "showCount": true,
+        "maxLength": 300
+      },
       "id": "textarea_20240810_76b10c25",
       "field": "fbaa5b26",
       "gridArea": "auto  / 1 / auto  / 2"
@@ -353,9 +591,18 @@
       "as": "radio-group",
       "props": {
         "options": [
-          { "label": "男", "value": "1" },
-          { "label": "女", "value": "2" },
-          { "label": "不公开", "value": "3" }
+          {
+            "label": "男",
+            "value": "1"
+          },
+          {
+            "label": "女",
+            "value": "2"
+          },
+          {
+            "label": "不公开",
+            "value": "3"
+          }
         ]
       },
       "id": "radio-group_20240810_2c3bb729",
@@ -365,7 +612,11 @@
     {
       "label": "文本域",
       "as": "textarea",
-      "props": { "clearable": true, "showCount": true, "maxLength": 300 },
+      "props": {
+        "clearable": true,
+        "showCount": true,
+        "maxLength": 300
+      },
       "id": "textarea_20240810_c5e1b331",
       "field": "31b94b32",
       "gridArea": "auto  / 3 / auto  / 4"
@@ -376,11 +627,26 @@
       "props": {
         "clearable": true,
         "options": [
-          { "label": "广东", "value": "1" },
-          { "label": "深圳", "value": "2" },
-          { "label": "杭州", "value": "3" },
-          { "label": "上海", "value": "4" },
-          { "label": "北京", "value": "5" }
+          {
+            "label": "广东",
+            "value": "1"
+          },
+          {
+            "label": "深圳",
+            "value": "2"
+          },
+          {
+            "label": "杭州",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          },
+          {
+            "label": "北京",
+            "value": "5"
+          }
         ]
       },
       "id": "select_20240810_09e36533",
@@ -394,11 +660,26 @@
       "props": {
         "clearable": true,
         "options": [
-          { "label": "广东", "value": "1" },
-          { "label": "深圳", "value": "2" },
-          { "label": "杭州", "value": "3" },
-          { "label": "上海", "value": "4" },
-          { "label": "北京", "value": "5" }
+          {
+            "label": "广东",
+            "value": "1"
+          },
+          {
+            "label": "深圳",
+            "value": "2"
+          },
+          {
+            "label": "杭州",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          },
+          {
+            "label": "北京",
+            "value": "5"
+          }
         ]
       },
       "id": "select-multiple_20240810_0d7efd35",
@@ -411,11 +692,26 @@
       "props": {
         "clearable": true,
         "options": [
-          { "label": "广东", "value": "1" },
-          { "label": "深圳", "value": "2" },
-          { "label": "杭州", "value": "3" },
-          { "label": "上海", "value": "4" },
-          { "label": "北京", "value": "5" }
+          {
+            "label": "广东",
+            "value": "1"
+          },
+          {
+            "label": "深圳",
+            "value": "2"
+          },
+          {
+            "label": "杭州",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          },
+          {
+            "label": "北京",
+            "value": "5"
+          }
         ]
       },
       "id": "select-multiple_20240810_c7cdd137",
@@ -426,9 +722,18 @@
       "as": "tabs",
       "props": {
         "options": [
-          { "label": "Beijing", "value": "1" },
-          { "label": "Shanghai", "value": "2" },
-          { "label": "Guangzhou", "value": "3" }
+          {
+            "label": "Beijing",
+            "value": "1"
+          },
+          {
+            "label": "Shanghai",
+            "value": "2"
+          },
+          {
+            "label": "Guangzhou",
+            "value": "3"
+          }
         ]
       },
       "id": "tabs_20240810_6b212439",
@@ -440,10 +745,22 @@
       "as": "checkbox-group",
       "props": {
         "options": [
-          { "label": "唱歌", "value": "1" },
-          { "label": "跳舞", "value": "2" },
-          { "label": "Rap", "value": "3" },
-          { "label": "上海", "value": "4" }
+          {
+            "label": "唱歌",
+            "value": "1"
+          },
+          {
+            "label": "跳舞",
+            "value": "2"
+          },
+          {
+            "label": "Rap",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          }
         ]
       },
       "id": "checkbox-group_20240810_4f5c0741",
@@ -465,27 +782,54 @@
                 "value": 2,
                 "label": "China",
                 "children": [
-                  { "value": 3, "label": "Beijing" },
-                  { "value": 4, "label": "Shanghai" },
-                  { "value": 5, "label": "Hangzhou" }
+                  {
+                    "value": 3,
+                    "label": "Beijing"
+                  },
+                  {
+                    "value": 4,
+                    "label": "Shanghai"
+                  },
+                  {
+                    "value": 5,
+                    "label": "Hangzhou"
+                  }
                 ]
               },
               {
                 "value": 6,
                 "label": "Japan",
                 "children": [
-                  { "value": 7, "label": "Tokyo" },
-                  { "value": 8, "label": "Osaka" },
-                  { "value": 9, "label": "Kyoto" }
+                  {
+                    "value": 7,
+                    "label": "Tokyo"
+                  },
+                  {
+                    "value": 8,
+                    "label": "Osaka"
+                  },
+                  {
+                    "value": 9,
+                    "label": "Kyoto"
+                  }
                 ]
               },
               {
                 "value": 10,
                 "label": "Korea",
                 "children": [
-                  { "value": 11, "label": "Seoul" },
-                  { "value": 12, "label": "Busan" },
-                  { "value": 13, "label": "Taegu" }
+                  {
+                    "value": 11,
+                    "label": "Seoul"
+                  },
+                  {
+                    "value": 12,
+                    "label": "Busan"
+                  },
+                  {
+                    "value": 13,
+                    "label": "Taegu"
+                  }
                 ]
               }
             ]
@@ -498,18 +842,36 @@
                 "value": 15,
                 "label": "France",
                 "children": [
-                  { "value": 16, "label": "Paris" },
-                  { "value": 17, "label": "Marseille" },
-                  { "value": 18, "label": "Lyon" }
+                  {
+                    "value": 16,
+                    "label": "Paris"
+                  },
+                  {
+                    "value": 17,
+                    "label": "Marseille"
+                  },
+                  {
+                    "value": 18,
+                    "label": "Lyon"
+                  }
                 ]
               },
               {
                 "value": 19,
                 "label": "UK",
                 "children": [
-                  { "value": 20, "label": "London" },
-                  { "value": 21, "label": "Birmingham" },
-                  { "value": 22, "label": "Manchester" }
+                  {
+                    "value": 20,
+                    "label": "London"
+                  },
+                  {
+                    "value": 21,
+                    "label": "Birmingham"
+                  },
+                  {
+                    "value": 22,
+                    "label": "Manchester"
+                  }
                 ]
               }
             ]
@@ -522,18 +884,36 @@
                 "value": 24,
                 "label": "US",
                 "children": [
-                  { "value": 25, "label": "New York" },
-                  { "value": 26, "label": "Los Angeles" },
-                  { "value": 27, "label": "Washington" }
+                  {
+                    "value": 25,
+                    "label": "New York"
+                  },
+                  {
+                    "value": 26,
+                    "label": "Los Angeles"
+                  },
+                  {
+                    "value": 27,
+                    "label": "Washington"
+                  }
                 ]
               },
               {
                 "value": 28,
                 "label": "Canada",
                 "children": [
-                  { "value": 29, "label": "Toronto" },
-                  { "value": 30, "label": "Montreal" },
-                  { "value": 31, "label": "Ottawa" }
+                  {
+                    "value": 29,
+                    "label": "Toronto"
+                  },
+                  {
+                    "value": 30,
+                    "label": "Montreal"
+                  },
+                  {
+                    "value": 31,
+                    "label": "Ottawa"
+                  }
                 ]
               }
             ]
@@ -547,7 +927,9 @@
     {
       "label": "开关",
       "as": "switch",
-      "props": { "round": 1 },
+      "props": {
+        "round": 1
+      },
       "id": "switch_20240810_4c561647",
       "field": "fcc18c48",
       "gridArea": "auto  / 1 / auto  / 2"
@@ -565,9 +947,18 @@
       "as": "date-range-picker",
       "props": {
         "options": [
-          { "label": "Beijing", "value": "1" },
-          { "label": "Shanghai", "value": "2" },
-          { "label": "Guangzhou", "value": "3" }
+          {
+            "label": "Beijing",
+            "value": "1"
+          },
+          {
+            "label": "Shanghai",
+            "value": "2"
+          },
+          {
+            "label": "Guangzhou",
+            "value": "3"
+          }
         ]
       },
       "id": "date-range-picker_20240810_59964461",
@@ -589,27 +980,54 @@
                 "value": 2,
                 "label": "China",
                 "children": [
-                  { "value": 3, "label": "Beijing" },
-                  { "value": 4, "label": "Shanghai" },
-                  { "value": 5, "label": "Hangzhou" }
+                  {
+                    "value": 3,
+                    "label": "Beijing"
+                  },
+                  {
+                    "value": 4,
+                    "label": "Shanghai"
+                  },
+                  {
+                    "value": 5,
+                    "label": "Hangzhou"
+                  }
                 ]
               },
               {
                 "value": 6,
                 "label": "Japan",
                 "children": [
-                  { "value": 7, "label": "Tokyo" },
-                  { "value": 8, "label": "Osaka" },
-                  { "value": 9, "label": "Kyoto" }
+                  {
+                    "value": 7,
+                    "label": "Tokyo"
+                  },
+                  {
+                    "value": 8,
+                    "label": "Osaka"
+                  },
+                  {
+                    "value": 9,
+                    "label": "Kyoto"
+                  }
                 ]
               },
               {
                 "value": 10,
                 "label": "Korea",
                 "children": [
-                  { "value": 11, "label": "Seoul" },
-                  { "value": 12, "label": "Busan" },
-                  { "value": 13, "label": "Taegu" }
+                  {
+                    "value": 11,
+                    "label": "Seoul"
+                  },
+                  {
+                    "value": 12,
+                    "label": "Busan"
+                  },
+                  {
+                    "value": 13,
+                    "label": "Taegu"
+                  }
                 ]
               }
             ]
@@ -622,18 +1040,36 @@
                 "value": 15,
                 "label": "France",
                 "children": [
-                  { "value": 16, "label": "Paris" },
-                  { "value": 17, "label": "Marseille" },
-                  { "value": 18, "label": "Lyon" }
+                  {
+                    "value": 16,
+                    "label": "Paris"
+                  },
+                  {
+                    "value": 17,
+                    "label": "Marseille"
+                  },
+                  {
+                    "value": 18,
+                    "label": "Lyon"
+                  }
                 ]
               },
               {
                 "value": 19,
                 "label": "UK",
                 "children": [
-                  { "value": 20, "label": "London" },
-                  { "value": 21, "label": "Birmingham" },
-                  { "value": 22, "label": "Manchester" }
+                  {
+                    "value": 20,
+                    "label": "London"
+                  },
+                  {
+                    "value": 21,
+                    "label": "Birmingham"
+                  },
+                  {
+                    "value": 22,
+                    "label": "Manchester"
+                  }
                 ]
               }
             ]
@@ -646,18 +1082,36 @@
                 "value": 24,
                 "label": "US",
                 "children": [
-                  { "value": 25, "label": "New York" },
-                  { "value": 26, "label": "Los Angeles" },
-                  { "value": 27, "label": "Washington" }
+                  {
+                    "value": 25,
+                    "label": "New York"
+                  },
+                  {
+                    "value": 26,
+                    "label": "Los Angeles"
+                  },
+                  {
+                    "value": 27,
+                    "label": "Washington"
+                  }
                 ]
               },
               {
                 "value": 28,
                 "label": "Canada",
                 "children": [
-                  { "value": 29, "label": "Toronto" },
-                  { "value": 30, "label": "Montreal" },
-                  { "value": 31, "label": "Ottawa" }
+                  {
+                    "value": 29,
+                    "label": "Toronto"
+                  },
+                  {
+                    "value": 30,
+                    "label": "Montreal"
+                  },
+                  {
+                    "value": 31,
+                    "label": "Ottawa"
+                  }
                 ]
               }
             ]
@@ -673,9 +1127,18 @@
       "as": "tabs",
       "props": {
         "options": [
-          { "label": "Beijing", "value": "1" },
-          { "label": "Shanghai", "value": "2" },
-          { "label": "Guangzhou", "value": "3" }
+          {
+            "label": "Beijing",
+            "value": "1"
+          },
+          {
+            "label": "Shanghai",
+            "value": "2"
+          },
+          {
+            "label": "Guangzhou",
+            "value": "3"
+          }
         ]
       },
       "id": "tabs_20240810_c5e3b569",
@@ -687,10 +1150,22 @@
       "as": "checkbox-group",
       "props": {
         "options": [
-          { "label": "唱歌", "value": "1" },
-          { "label": "跳舞", "value": "2" },
-          { "label": "Rap", "value": "3" },
-          { "label": "上海", "value": "4" }
+          {
+            "label": "唱歌",
+            "value": "1"
+          },
+          {
+            "label": "跳舞",
+            "value": "2"
+          },
+          {
+            "label": "Rap",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          }
         ]
       },
       "id": "checkbox-group_20240810_96577d71",
@@ -702,9 +1177,18 @@
       "as": "radio-group",
       "props": {
         "options": [
-          { "label": "男", "value": "1" },
-          { "label": "女", "value": "2" },
-          { "label": "不公开", "value": "3" }
+          {
+            "label": "男",
+            "value": "1"
+          },
+          {
+            "label": "女",
+            "value": "2"
+          },
+          {
+            "label": "不公开",
+            "value": "3"
+          }
         ]
       },
       "id": "radio-group_20240810_74c62c73",
@@ -714,7 +1198,11 @@
     {
       "label": "文本域",
       "as": "textarea",
-      "props": { "clearable": true, "showCount": true, "maxLength": 300 },
+      "props": {
+        "clearable": true,
+        "showCount": true,
+        "maxLength": 300
+      },
       "id": "textarea_20240810_4f677975",
       "field": "38dc5176",
       "gridArea": "auto  / 2 / auto  / 3"
@@ -725,11 +1213,26 @@
       "props": {
         "clearable": true,
         "options": [
-          { "label": "广东", "value": "1" },
-          { "label": "深圳", "value": "2" },
-          { "label": "杭州", "value": "3" },
-          { "label": "上海", "value": "4" },
-          { "label": "北京", "value": "5" }
+          {
+            "label": "广东",
+            "value": "1"
+          },
+          {
+            "label": "深圳",
+            "value": "2"
+          },
+          {
+            "label": "杭州",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          },
+          {
+            "label": "北京",
+            "value": "5"
+          }
         ]
       },
       "id": "select_20240810_852d2b77",
@@ -743,11 +1246,26 @@
       "props": {
         "clearable": true,
         "options": [
-          { "label": "广东", "value": "1" },
-          { "label": "深圳", "value": "2" },
-          { "label": "杭州", "value": "3" },
-          { "label": "上海", "value": "4" },
-          { "label": "北京", "value": "5" }
+          {
+            "label": "广东",
+            "value": "1"
+          },
+          {
+            "label": "深圳",
+            "value": "2"
+          },
+          {
+            "label": "杭州",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          },
+          {
+            "label": "北京",
+            "value": "5"
+          }
         ]
       },
       "id": "select-multiple_20240810_9e1d4181",
@@ -756,7 +1274,10 @@
     {
       "label": "输入框",
       "as": "input",
-      "props": { "type": "text", "align": "left" },
+      "props": {
+        "type": "text",
+        "align": "left"
+      },
       "id": "input_20240810_1d31fd83",
       "field": "1f23ec84",
       "gridArea": "auto  / 2 / auto  / 3"
@@ -799,27 +1320,54 @@
                 "value": 2,
                 "label": "China",
                 "children": [
-                  { "value": 3, "label": "Beijing" },
-                  { "value": 4, "label": "Shanghai" },
-                  { "value": 5, "label": "Hangzhou" }
+                  {
+                    "value": 3,
+                    "label": "Beijing"
+                  },
+                  {
+                    "value": 4,
+                    "label": "Shanghai"
+                  },
+                  {
+                    "value": 5,
+                    "label": "Hangzhou"
+                  }
                 ]
               },
               {
                 "value": 6,
                 "label": "Japan",
                 "children": [
-                  { "value": 7, "label": "Tokyo" },
-                  { "value": 8, "label": "Osaka" },
-                  { "value": 9, "label": "Kyoto" }
+                  {
+                    "value": 7,
+                    "label": "Tokyo"
+                  },
+                  {
+                    "value": 8,
+                    "label": "Osaka"
+                  },
+                  {
+                    "value": 9,
+                    "label": "Kyoto"
+                  }
                 ]
               },
               {
                 "value": 10,
                 "label": "Korea",
                 "children": [
-                  { "value": 11, "label": "Seoul" },
-                  { "value": 12, "label": "Busan" },
-                  { "value": 13, "label": "Taegu" }
+                  {
+                    "value": 11,
+                    "label": "Seoul"
+                  },
+                  {
+                    "value": 12,
+                    "label": "Busan"
+                  },
+                  {
+                    "value": 13,
+                    "label": "Taegu"
+                  }
                 ]
               }
             ]
@@ -832,18 +1380,36 @@
                 "value": 15,
                 "label": "France",
                 "children": [
-                  { "value": 16, "label": "Paris" },
-                  { "value": 17, "label": "Marseille" },
-                  { "value": 18, "label": "Lyon" }
+                  {
+                    "value": 16,
+                    "label": "Paris"
+                  },
+                  {
+                    "value": 17,
+                    "label": "Marseille"
+                  },
+                  {
+                    "value": 18,
+                    "label": "Lyon"
+                  }
                 ]
               },
               {
                 "value": 19,
                 "label": "UK",
                 "children": [
-                  { "value": 20, "label": "London" },
-                  { "value": 21, "label": "Birmingham" },
-                  { "value": 22, "label": "Manchester" }
+                  {
+                    "value": 20,
+                    "label": "London"
+                  },
+                  {
+                    "value": 21,
+                    "label": "Birmingham"
+                  },
+                  {
+                    "value": 22,
+                    "label": "Manchester"
+                  }
                 ]
               }
             ]
@@ -856,18 +1422,36 @@
                 "value": 24,
                 "label": "US",
                 "children": [
-                  { "value": 25, "label": "New York" },
-                  { "value": 26, "label": "Los Angeles" },
-                  { "value": 27, "label": "Washington" }
+                  {
+                    "value": 25,
+                    "label": "New York"
+                  },
+                  {
+                    "value": 26,
+                    "label": "Los Angeles"
+                  },
+                  {
+                    "value": 27,
+                    "label": "Washington"
+                  }
                 ]
               },
               {
                 "value": 28,
                 "label": "Canada",
                 "children": [
-                  { "value": 29, "label": "Toronto" },
-                  { "value": 30, "label": "Montreal" },
-                  { "value": 31, "label": "Ottawa" }
+                  {
+                    "value": 29,
+                    "label": "Toronto"
+                  },
+                  {
+                    "value": 30,
+                    "label": "Montreal"
+                  },
+                  {
+                    "value": 31,
+                    "label": "Ottawa"
+                  }
                 ]
               }
             ]
@@ -883,9 +1467,18 @@
       "as": "date-range-picker",
       "props": {
         "options": [
-          { "label": "Beijing", "value": "1" },
-          { "label": "Shanghai", "value": "2" },
-          { "label": "Guangzhou", "value": "3" }
+          {
+            "label": "Beijing",
+            "value": "1"
+          },
+          {
+            "label": "Shanghai",
+            "value": "2"
+          },
+          {
+            "label": "Guangzhou",
+            "value": "3"
+          }
         ]
       },
       "id": "date-range-picker_20240810_22df1197",
@@ -897,10 +1490,22 @@
       "as": "checkbox-group",
       "props": {
         "options": [
-          { "label": "唱歌", "value": "1" },
-          { "label": "跳舞", "value": "2" },
-          { "label": "Rap", "value": "3" },
-          { "label": "上海", "value": "4" }
+          {
+            "label": "唱歌",
+            "value": "1"
+          },
+          {
+            "label": "跳舞",
+            "value": "2"
+          },
+          {
+            "label": "Rap",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          }
         ]
       },
       "id": "checkbox-group_20240810_81ce0d99",
@@ -912,9 +1517,18 @@
       "as": "radio-group",
       "props": {
         "options": [
-          { "label": "男", "value": "1" },
-          { "label": "女", "value": "2" },
-          { "label": "不公开", "value": "3" }
+          {
+            "label": "男",
+            "value": "1"
+          },
+          {
+            "label": "女",
+            "value": "2"
+          },
+          {
+            "label": "不公开",
+            "value": "3"
+          }
         ]
       },
       "id": "radio-group_20240810_b355f7101",
@@ -927,11 +1541,26 @@
       "props": {
         "clearable": true,
         "options": [
-          { "label": "广东", "value": "1" },
-          { "label": "深圳", "value": "2" },
-          { "label": "杭州", "value": "3" },
-          { "label": "上海", "value": "4" },
-          { "label": "北京", "value": "5" }
+          {
+            "label": "广东",
+            "value": "1"
+          },
+          {
+            "label": "深圳",
+            "value": "2"
+          },
+          {
+            "label": "杭州",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          },
+          {
+            "label": "北京",
+            "value": "5"
+          }
         ]
       },
       "id": "select_20240810_42ba12105",
@@ -945,11 +1574,26 @@
       "props": {
         "clearable": true,
         "options": [
-          { "label": "广东", "value": "1" },
-          { "label": "深圳", "value": "2" },
-          { "label": "杭州", "value": "3" },
-          { "label": "上海", "value": "4" },
-          { "label": "北京", "value": "5" }
+          {
+            "label": "广东",
+            "value": "1"
+          },
+          {
+            "label": "深圳",
+            "value": "2"
+          },
+          {
+            "label": "杭州",
+            "value": "3"
+          },
+          {
+            "label": "上海",
+            "value": "4"
+          },
+          {
+            "label": "北京",
+            "value": "5"
+          }
         ]
       },
       "id": "select-multiple_20240810_8fcd72107",
@@ -958,7 +1602,10 @@
     {
       "label": "输入框",
       "as": "input",
-      "props": { "type": "text", "align": "left" },
+      "props": {
+        "type": "text",
+        "align": "left"
+      },
       "id": "input_20240810_4017c2111",
       "field": "f2b102112",
       "gridArea": "auto  / 3 / auto  / 4"

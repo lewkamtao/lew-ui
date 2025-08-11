@@ -5,6 +5,7 @@ import validators from 'lew-ui/validators'
 export const contextMenuProps = {
   options: {
     type: Array as PropType<LewContextMenusOption[]>,
+    required: true,
     typePopKeys: ['LewContextMenusOption'],
     validator: validators.array({
       componentName: 'LewContextMenu',

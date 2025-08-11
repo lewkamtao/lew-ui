@@ -13,7 +13,6 @@ export const cascaderProps = {
   options: {
     type: Array as PropType<LewCascaderOption[]>,
     typePopKey: ['LewCascaderOption'],
-    required: true,
     validator: validators.array({
       componentName: 'LewCascader',
       propName: 'options',

@@ -22,7 +22,6 @@ export const selectProps = {
   options: {
     type: Array as PropType<LewSelectOption[]>,
     typePopKeys: ['LewSelectOption'],
-    required: true,
     validator: validators.array({
       componentName: 'LewSelect',
       propName: 'options',

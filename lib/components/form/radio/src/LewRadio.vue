@@ -1,34 +1,34 @@
 <script lang="ts" setup>
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { object2class } from 'lew-ui/utils'
-import { radioProps } from './props'
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { object2class } from "lew-ui/utils";
+import { radioProps } from "./props";
 
-const props = defineProps(radioProps)
+const props = defineProps(radioProps);
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(["change"]);
 
 function setChecked() {
-  emit('change')
+  emit("change");
 }
 
 const getIconSize = computed(() => {
-  const { size, block } = props
+  const { size, block } = props;
   switch (size) {
-    case 'small':
-      return block ? 14 : 12
-    case 'medium':
-      return block ? 16 : 14
-    case 'large':
-      return block ? 18 : 16
+    case "small":
+      return block ? 14 : 12;
+    case "medium":
+      return block ? 16 : 14;
+    case "large":
+      return block ? 18 : 16;
     default:
-      return block ? 16 : 14
+      return block ? 16 : 14;
   }
-})
+});
 
 const getRadioClassName = computed(() => {
-  const { block, checked, iconable, size, disabled, round, readonly } = props
-  const unicon = !iconable && block
-  return object2class('lew-radio', {
+  const { block, checked, iconable, size, disabled, round, readonly } = props;
+  const unicon = !iconable && block;
+  return object2class("lew-radio", {
     block,
     checked,
     unicon,
@@ -36,14 +36,19 @@ const getRadioClassName = computed(() => {
     disabled,
     round,
     readonly,
-  })
-})
+  });
+});
 </script>
 
 <template>
   <div class="lew-radio" :class="getRadioClassName" @click.stop="setChecked">
     <div v-if="iconable || (!iconable && !block)" class="lew-icon-radio-box">
-      <CommonIcon :stroke-width="4" class="lew-icon-radio" type="check" :size="getIconSize" />
+      <CommonIcon
+        :stroke-width="4"
+        class="lew-icon-radio"
+        type="check"
+        :size="getIconSize"
+      />
     </div>
     <span v-if="label" class="lew-radio-label"> {{ label }}</span>
   </div>
@@ -98,7 +103,7 @@ const getRadioClassName = computed(() => {
   .lew-icon-radio-box {
     width: 16px;
     height: 16px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 }
 
@@ -110,7 +115,7 @@ const getRadioClassName = computed(() => {
   .lew-icon-radio-box {
     width: 18px;
     height: 18px;
-    border-radius: 5px;
+    border-radius: 7px;
   }
 }
 
@@ -122,7 +127,7 @@ const getRadioClassName = computed(() => {
   .lew-icon-radio-box {
     width: 20px;
     height: 20px;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 }
 
@@ -170,6 +175,7 @@ const getRadioClassName = computed(() => {
 
   .lew-icon-radio-box {
     box-shadow: none;
+
     .lew-icon-radio {
       padding: 1px;
     }

@@ -115,8 +115,8 @@ export const radioGroupProps = {
   },
   options: {
     type: Array as PropType<LewRadioOption[]>,
-    typePopKeys: ['LewRadioOption'],
     required: true,
+    typePopKeys: ['LewRadioOption'],
     default: () => [],
     validator: validators.array({
       componentName: 'LewRadioGroup',

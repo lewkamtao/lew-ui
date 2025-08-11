@@ -32,7 +32,7 @@ export const emptyProps = {
     }),
   },
   height: {
-    type: [String, Number] as PropType<Property.Height | number>,
+    type: String as PropType<Property.Height>,
     default: 'auto',
     validator: validators.widthHeight({
       componentName: 'LewEmpty',
@@ -40,7 +40,7 @@ export const emptyProps = {
     }),
   },
   fontSize: {
-    type: [String, Number] as PropType<Property.FontSize | number>,
+    type: String as PropType<Property.FontSize>,
     default: '14px',
     validator: validators.fontSize({
       componentName: 'LewEmpty',
@@ -48,7 +48,7 @@ export const emptyProps = {
     }),
   },
   padding: {
-    type: [String, Number] as PropType<Property.Padding | number>,
+    type: String as PropType<Property.Padding>,
     default: '20px',
     validator: validators.spacing({
       componentName: 'LewEmpty',

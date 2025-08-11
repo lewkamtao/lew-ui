@@ -6,8 +6,8 @@ import validators, { validDirectionList, validSizeList, validXAlignmentList } fr
 export const descProps = {
   options: {
     type: Array as PropType<LewDescOption[]>,
-    typePopKeys: ['LewDescOption'],
     required: true,
+    typePopKeys: ['LewDescOption'],
     validator: validators.array({
       componentName: 'LewDesc',
       propName: 'options',

@@ -32,7 +32,7 @@ export const formProps = {
     }),
   },
   columns: {
-    type: String as PropType<Property.Width>,
+    type: Number,
     default: 1,
     validator: validators.number({
       componentName: 'LewForm',

@@ -28,7 +28,7 @@ const dataSource = ref({
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
+  <lew-flex x="start" y="start" gap="50px">
     <lew-desc v-bind="options" :data-source="dataSource" />
   </lew-flex>
 </template>

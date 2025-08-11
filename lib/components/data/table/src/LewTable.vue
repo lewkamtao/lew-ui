@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { LewXAlignment, LewYAlignment } from 'lew-ui/types'
-import { useResizeObserver } from '@vueuse/core'
-import { LewCheckbox, LewEmpty, LewFlex, LewTextTrim } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/render/components/RenderComponent.vue'
-import { any2px, getUniqueId } from 'lew-ui/utils'
+import type { LewXAlignment, LewYAlignment } from "lew-ui/types";
+import { useResizeObserver } from "@vueuse/core";
+import { LewCheckbox, LewEmpty, LewFlex, LewTextTrim } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import RenderComponent from "lew-ui/render/components/RenderComponent.vue";
+import { any2px, getUniqueId } from "lew-ui/utils";
 import {
   cloneDeep,
   difference,
@@ -16,24 +16,24 @@ import {
   pickBy,
   sumBy,
   throttle,
-} from 'lodash-es'
-import { markRaw } from 'vue'
-import { tableProps } from './props'
-import SortIcon from './SortIcon.vue'
+} from "lodash-es";
+import { markRaw } from "vue";
+import { tableProps } from "./props";
+import SortIcon from "./SortIcon.vue";
 
-const props = defineProps(tableProps)
-const emit = defineEmits(['sortChange', 'selectChange', 'dragSort'])
-const selectedKeys = defineModel('selectedKeys')
-const sortValue: any = defineModel('sortValue', { default: {} })
-const tableRef = ref()
-const fixedLeftRef = ref()
-const fixedRightRef = ref()
-const trRefMap = ref<Record<string, HTMLElement | null>>({})
-const tableWrapperRef = ref()
+const props = defineProps(tableProps);
+const emit = defineEmits(["sortChange", "selectChange", "dragSort"]);
+const selectedKeys = defineModel("selectedKeys");
+const sortValue: any = defineModel("sortValue", { default: {} });
+const tableRef = ref();
+const fixedLeftRef = ref();
+const fixedRightRef = ref();
+const trRefMap = ref<Record<string, HTMLElement | null>>({});
+const tableWrapperRef = ref();
 
-let tooltipAnimationFrame: number | null = null
+let tooltipAnimationFrame: number | null = null;
 
-const _rowKey = props.rowKey || '_lew_table_tr_id'
+const _rowKey = props.rowKey || "_lew_table_tr_id";
 
 const state = reactive({
   isInitialized: false,
@@ -42,7 +42,7 @@ const state = reactive({
   isScrollbarVisible: false,
   isScroll: false,
   scrollClientWidth: 0,
-  hiddenScrollLine: 'all',
+  hiddenScrollLine: "all",
   fixedLeftWidth: 0,
   fixedRightWidth: 0,
   selectedRowsMap: {} as any,
@@ -57,54 +57,54 @@ const state = reactive({
   isAboveTarget: false,
   initialDragY: 0 as number,
   lastMouseY: 0 as number,
-  dragRowId: '',
-  targetRowId: '',
-})
+  dragRowId: "",
+  targetRowId: "",
+});
 
 // 使用 shallowRef 来管理 tooltipComponent，避免深层响应式
-const tooltipComponent = shallowRef(null as any)
+const tooltipComponent = shallowRef(null as any);
 
 // 使用 shallowRef 来避免深层响应式，提高性能
-const hoverRowIndex = shallowRef(-1)
+const hoverRowIndex = shallowRef(-1);
 
 // 缓存 RenderComponent 的渲染函数结果
-const renderCache = new Map<string, any>()
+const renderCache = new Map<string, any>();
 
 // 计算属性来优化行样式计算
 const getRowClass = computed(() => {
   return (index: number, row: any) => ({
-    'lew-table-tr-hover': hoverRowIndex.value === index && !state.isDragging,
-    'lew-table-tr-dragging': state.dragIndex === index,
-    'lew-table-tr-selected': state.selectedRowsMap[row[_rowKey]],
-  })
-})
+    "lew-table-tr-hover": hoverRowIndex.value === index && !state.isDragging,
+    "lew-table-tr-dragging": state.dragIndex === index,
+    "lew-table-tr-selected": state.selectedRowsMap[row[_rowKey]],
+  });
+});
 
 // 优化行选择状态的计算
 const getRowSelectedState = computed(() => {
-  return (row: any) => state.selectedRowsMap[row[_rowKey]]
-})
+  return (row: any) => state.selectedRowsMap[row[_rowKey]];
+});
 
 // 缓存 customRender 的结果
 function getCachedRenderResult(column: any, row: any) {
   // 使用更稳定的缓存键，避免不必要的缓存失效
-  const cacheKey = `${column.field}_${row._lew_table_tr_id}`
+  const cacheKey = `${column.field}_${row._lew_table_tr_id}`;
 
   if (!renderCache.has(cacheKey)) {
     const renderResult = column.customRender({
       row,
       column,
       text: row[column.field],
-    })
+    });
     // 使用 markRaw 来避免深层响应式
-    renderCache.set(cacheKey, markRaw(renderResult))
+    renderCache.set(cacheKey, markRaw(renderResult));
   }
 
-  return renderCache.get(cacheKey)
+  return renderCache.get(cacheKey);
 }
 
 // 清理缓存函数
 function clearRenderCache() {
-  renderCache.clear()
+  renderCache.clear();
 }
 
 // 智能缓存清理：只清理特定行的缓存
@@ -123,313 +123,306 @@ const getCheckableWidth = computed(() => {
     small: 50,
     medium: 60,
     large: 70,
-  }
-  return sizeMap[props.size]
-})
+  };
+  return sizeMap[props.size];
+});
 
 const getDragColumnWidth = computed(() => {
   const sizeMap = {
     small: 40,
     medium: 45,
     large: 50,
-  }
-  return sizeMap[props.size]
-})
+  };
+  return sizeMap[props.size];
+});
 
 const getHeadHeight = computed(() => {
   const sizeMap = {
     small: 34,
     medium: 38,
     large: 44,
-  }
-  return sizeMap[props.size]
-})
+  };
+  return sizeMap[props.size];
+});
 
 const getFontSize = computed(() => {
   const sizeMap = {
     small: 13,
     medium: 14,
     large: 16,
-  }
-  return sizeMap[props.size]
-})
+  };
+  return sizeMap[props.size];
+});
 
 const getIconSize = computed(() => {
   const sizeMap = {
     small: 15,
     medium: 16,
     large: 17,
-  }
-  return sizeMap[props.size]
-})
+  };
+  return sizeMap[props.size];
+});
 
 const getPadding = computed(() => {
   const paddingMap = {
-    small: '8px',
-    medium: '10px',
-    large: '12px',
-  }
-  return paddingMap[props.size]
-})
+    small: "8px",
+    medium: "10px",
+    large: "12px",
+  };
+  return paddingMap[props.size];
+});
 
 const getEmptyPadding = computed(() => {
   const paddingMap = {
     small: 20,
     medium: 30,
     large: 40,
-  }
-  return paddingMap[props.size]
-})
+  };
+  return paddingMap[props.size];
+});
 
 const getEmptyProps: any = computed(() => {
   const widthMap = {
     small: 150,
     medium: 200,
     large: 250,
-  }
+  };
   const fontSizeMap = {
     small: 13,
     medium: 14,
     large: 16,
-  }
+  };
   return {
-    width: widthMap[props.size],
-    fontSize: fontSizeMap[props.size],
-  }
-})
+    width: any2px(widthMap[props.size]),
+    fontSize: any2px(fontSizeMap[props.size]),
+  };
+});
 
 // 缓存列宽计算
-const columnWidthCache = new Map()
+const columnWidthCache = new Map();
 
 function calculateColumnWidth(column: any): number {
-  const cacheKey = JSON.stringify(column)
+  const cacheKey = JSON.stringify(column);
   if (columnWidthCache.has(cacheKey)) {
-    return columnWidthCache.get(cacheKey)
+    return columnWidthCache.get(cacheKey);
   }
 
-  let width
+  let width;
   if (column.children && column.children.length > 0) {
     width = column.children.reduce((sum: number, child: any) => {
-      return sum + (calculateColumnWidth(child) || 100)
-    }, 0)
-  }
-  else {
-    width = column.width || 100
+      return sum + (calculateColumnWidth(child) || 100);
+    }, 0);
+  } else {
+    width = column.width || 100;
   }
 
-  columnWidthCache.set(cacheKey, width)
-  return width
+  columnWidthCache.set(cacheKey, width);
+  return width;
 }
 
 function processColumnsWidth(columns: any[]) {
   return columns.map((col) => {
-    const cloneCol = { ...col }
-    cloneCol.width = calculateColumnWidth(cloneCol)
-    return cloneCol
-  })
+    const cloneCol = { ...col };
+    cloneCol.width = calculateColumnWidth(cloneCol);
+    return cloneCol;
+  });
 }
 
 // 缓存列处理结果
 const processedColumns = computed(() => {
-  return processColumnsWidth(props.columns)
-})
+  return processColumnsWidth(props.columns);
+});
 
 // 缓存叶子节点列
 const leafColumns = computed(() => {
-  return getLeafColumns(processedColumns.value)
-})
+  return getLeafColumns(processedColumns.value);
+});
 
 // 缓存非固定列
 const nonFixedColumns = computed(() => {
-  return leafColumns.value.filter(col => !col.fixed)
-})
+  return leafColumns.value.filter((col) => !col.fixed);
+});
 
 // 缓存固定列
 const fixedColumns = computed(() => ({
-  left: leafColumns.value.filter(col => col.fixed === 'left'),
-  right: leafColumns.value.filter(col => col.fixed === 'right'),
-}))
+  left: leafColumns.value.filter((col) => col.fixed === "left"),
+  right: leafColumns.value.filter((col) => col.fixed === "right"),
+}));
 
 // 缓存表头列
 const headerColumns = computed(() => ({
-  left: processedColumns.value.filter(col => col.fixed === 'left'),
-  right: processedColumns.value.filter(col => col.fixed === 'right'),
-  nonFixed: processedColumns.value.filter(col => !col.fixed),
-}))
+  left: processedColumns.value.filter((col) => col.fixed === "left"),
+  right: processedColumns.value.filter((col) => col.fixed === "right"),
+  nonFixed: processedColumns.value.filter((col) => !col.fixed),
+}));
 
 // 缓存总列宽
 const totalColumnWidth = computed(() => {
-  let width = sumBy(processedColumns.value, 'width')
-  if (props.checkable)
-    width += getCheckableWidth.value
-  if (props.sortable)
-    width += getDragColumnWidth.value
-  return width
-})
+  let width = sumBy(processedColumns.value, "width");
+  if (props.checkable) width += getCheckableWidth.value;
+  if (props.sortable) width += getDragColumnWidth.value;
+  return width;
+});
 
 // 缓存固定列宽度
 const fixedWidths = computed(() => {
-  const leftWidth = sumBy(fixedColumns.value.left, 'width')
-  const rightWidth = sumBy(fixedColumns.value.right, 'width')
+  const leftWidth = sumBy(fixedColumns.value.left, "width");
+  const rightWidth = sumBy(fixedColumns.value.right, "width");
   return {
     left: leftWidth + (props.checkable ? getCheckableWidth.value : 0),
     right: rightWidth,
-  }
-})
+  };
+});
 
 // 优化列样式计算
 const getColumnStyle = computed(() => {
-  const sizeStyle = `padding: ${getPadding.value}; fontSize:${getFontSize.value}px;`
+  const sizeStyle = `padding: ${getPadding.value}; fontSize:${getFontSize.value}px;`;
 
   return (column: any, row?: any) => {
-    const width = column.width
-    const customStyle = row && row.tdStyle?.[column.field]
+    const width = column.width;
+    const customStyle = row && row.tdStyle?.[column.field];
 
     if (state.isScrollbarVisible || column.fixed) {
-      return `${sizeStyle};width: ${width}px;${customStyle}`
+      return `${sizeStyle};width: ${width}px;${customStyle}`;
     }
 
-    const tdWidth
-      = (width
-        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
-      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
-    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
-  }
-})
+    const tdWidth =
+      (width /
+        (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right)) *
+      (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right);
+    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`;
+  };
+});
 
 // 优化表头列样式计算
 const getHeaderColumnStyle = computed(() => {
-  const sizeStyle = `fontSize:${getFontSize.value}px;`
+  const sizeStyle = `fontSize:${getFontSize.value}px;`;
 
   return (column: any, row?: any) => {
-    const width = column.width
-    const customStyle = row && row.tdStyle?.[column.field]
+    const width = column.width;
+    const customStyle = row && row.tdStyle?.[column.field];
 
     if (state.isScrollbarVisible || column.fixed) {
-      return `${sizeStyle};width: ${width}px;${customStyle}`
+      return `${sizeStyle};width: ${width}px;${customStyle}`;
     }
 
-    const tdWidth
-      = (width
-        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
-      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
-    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
-  }
-})
+    const tdWidth =
+      (width /
+        (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right)) *
+      (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right);
+    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`;
+  };
+});
 
 function getLeafColumns(columns: any[]) {
-  const result: any[] = []
+  const result: any[] = [];
   const traverse = (cols: any[]) => {
     cols.forEach((col) => {
       if (col.children && col.children.length > 0) {
-        traverse(col.children)
+        traverse(col.children);
+      } else {
+        result.push(col);
       }
-      else {
-        result.push(col)
-      }
-    })
-  }
-  traverse(columns)
-  return result
+    });
+  };
+  traverse(columns);
+  return result;
 }
 
 const hasPartialSelection = computed(() => {
-  const selectedRowsMap = state.selectedRowsMap
-  return state.dataSource.some((row: any) => selectedRowsMap[row[_rowKey]])
-})
+  const selectedRowsMap = state.selectedRowsMap;
+  return state.dataSource.some((row: any) => selectedRowsMap[row[_rowKey]]);
+});
 
 function updateAllCheckedState() {
-  const checkedKeys = keys(pickBy(state.selectedRowsMap, Boolean))
-  const allDataKeys = state.dataSource.map((row: any) => String(row[_rowKey]))
-  const uncheckedKeys = difference(allDataKeys, checkedKeys)
-  state.isAllChecked
-    = isEmpty(uncheckedKeys) && props.multiple && props.checkable && checkedKeys.length > 0
+  const checkedKeys = keys(pickBy(state.selectedRowsMap, Boolean));
+  const allDataKeys = state.dataSource.map((row: any) => String(row[_rowKey]));
+  const uncheckedKeys = difference(allDataKeys, checkedKeys);
+  state.isAllChecked =
+    isEmpty(uncheckedKeys) && props.multiple && props.checkable && checkedKeys.length > 0;
 }
 
 function setAllRowsChecked(checked: boolean) {
-  state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => checked)
+  state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => checked);
   if (props.multiple) {
-    selectedKeys.value = checked ? keys(state.selectedRowsMap) : []
+    selectedKeys.value = checked ? keys(state.selectedRowsMap) : [];
   }
 }
 
 function toggleRowSelection(row: any) {
-  const isChecked = state.selectedRowsMap[row[_rowKey]]
+  const isChecked = state.selectedRowsMap[row[_rowKey]];
   if (props.multiple) {
-    state.selectedRowsMap[row[_rowKey]] = !isChecked
-    selectedKeys.value = keys(pickBy(state.selectedRowsMap, Boolean))
+    state.selectedRowsMap[row[_rowKey]] = !isChecked;
+    selectedKeys.value = keys(pickBy(state.selectedRowsMap, Boolean));
+  } else {
+    state.selectedRowsMap = { [row[_rowKey]]: !isChecked };
+    selectedKeys.value = isChecked ? undefined : row[_rowKey];
   }
-  else {
-    state.selectedRowsMap = { [row[_rowKey]]: !isChecked }
-    selectedKeys.value = isChecked ? undefined : row[_rowKey]
-  }
-  emit('selectChange', cloneDeep(selectedKeys.value))
-  updateAllCheckedState()
+  emit("selectChange", cloneDeep(selectedKeys.value));
+  updateAllCheckedState();
 }
 
 function updateSelectedKeys(keys: any) {
   if (props.multiple) {
-    state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => false)
+    state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => false);
     keys.forEach((key: string) => {
-      state.selectedRowsMap[key] = true
-    })
-  }
-  else {
-    state.selectedRowsMap = { [keys]: true }
+      state.selectedRowsMap[key] = true;
+    });
+  } else {
+    state.selectedRowsMap = { [keys]: true };
   }
 }
 
 function showTextAndEmpty(text: any) {
-  if (text === null || text === undefined || text === '') {
-    return '-'
-  }
-  else {
-    return isString(text) ? text : String(text)
+  if (text === null || text === undefined || text === "") {
+    return "-";
+  } else {
+    return isString(text) ? text : String(text);
   }
 }
 function readerHeaderTd({ column }: any) {
-  const tdClass = ['lew-table-td']
+  const tdClass = ["lew-table-td"];
   if (column.sortable) {
-    tdClass.push('lew-table-td-sortable')
+    tdClass.push("lew-table-td-sortable");
   }
 
   const xMap: Record<string, string> = {
-    start: 'start',
-    left: 'start',
-    center: 'center',
-    right: 'end',
-    end: 'end',
-  }
+    start: "start",
+    left: "start",
+    center: "center",
+    right: "end",
+    end: "end",
+  };
 
   const tdStyle = {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     width: any2px(column.width),
-    justifyContent: 'center',
-    alignItems: xMap[column.x] || 'start',
-  }
+    justifyContent: "center",
+    alignItems: xMap[column.x] || "start",
+  };
 
   const titleSpanStyle = {
     padding: getPadding.value,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     justifyContent: xMap[column.x],
     width: any2px(column.width),
-    height: '100%',
-    boxSizing: 'border-box',
-  }
+    height: "100%",
+    boxSizing: "border-box",
+  };
 
   const tdGroupStyle = {
-    display: 'flex',
-  }
+    display: "flex",
+  };
 
   return h(
-    'div',
+    "div",
     {
       class: tdClass,
       onClick: () => {
         if (column.sortable) {
-          sort(column)
+          sort(column);
         }
       },
       style: tdStyle,
@@ -437,454 +430,446 @@ function readerHeaderTd({ column }: any) {
     {
       default: () => [
         h(
-          'span',
+          "span",
           {
             style: titleSpanStyle,
           },
           {
             default: () => [
               h(
-                'span',
+                "span",
                 {
-                  class: 'lew-table-title-span',
+                  class: "lew-table-title-span",
                 },
                 {
                   default: () => [
                     column?.title,
-                    column.sortable
-                    && h(SortIcon, {
-                      'sort-value': sortValue.value[column.field],
-                      'size': props.size,
-                      'class': 'lew-table-sorter',
-                    }),
+                    column.sortable &&
+                      h(SortIcon, {
+                        "sort-value": sortValue.value[column.field],
+                        size: props.size,
+                        class: "lew-table-sorter",
+                      }),
                   ],
-                },
+                }
               ),
             ],
-          },
+          }
         ),
         column?.children && column.children.length > 0
           ? h(
-              'div',
+              "div",
               {
-                class: 'lew-table-td-group',
+                class: "lew-table-td-group",
                 style: tdGroupStyle,
               },
               {
                 default: () =>
                   column.children.map((child: any) => readerHeaderTd({ column: child })),
-              },
+              }
             )
           : null,
       ],
-    },
-  )
+    }
+  );
 }
 
 // ==================== Sort Methods ====================
 function sort(column: any) {
   if (column.sortable) {
-    let value = sortValue.value?.[column.field]
+    let value = sortValue.value?.[column.field];
 
     switch (value) {
-      case 'desc':
-        value = 'asc'
-        break
-      case 'asc':
-        value = undefined
-        break
+      case "desc":
+        value = "asc";
+        break;
+      case "asc":
+        value = undefined;
+        break;
       default:
-        value = 'desc'
-        break
+        value = "desc";
+        break;
     }
 
     sortValue.value = {
       ...(sortValue.value || {}),
       [column.field]: value,
-    }
+    };
 
-    emit('sortChange', cloneDeep(sortValue.value))
+    emit("sortChange", cloneDeep(sortValue.value));
   }
 }
 
 function updateScrollState() {
-  if (!tableRef.value)
-    return
-  const element = tableRef.value
-  const { clientWidth, scrollWidth, scrollLeft } = element
-  const scrollThreshold = 10
+  if (!tableRef.value) return;
+  const element = tableRef.value;
+  const { clientWidth, scrollWidth, scrollLeft } = element;
+  const scrollThreshold = 10;
 
   if (scrollWidth === clientWidth) {
-    state.hiddenScrollLine = 'all'
-    return
+    state.hiddenScrollLine = "all";
+    return;
   }
   if (scrollLeft < scrollThreshold) {
-    state.hiddenScrollLine = 'left'
-    return
+    state.hiddenScrollLine = "left";
+    return;
   }
   if (scrollLeft + clientWidth > scrollWidth - scrollThreshold) {
-    state.hiddenScrollLine = 'right'
-    return
+    state.hiddenScrollLine = "right";
+    return;
   }
 
-  state.hiddenScrollLine = ''
+  state.hiddenScrollLine = "";
 }
 
 // 优化行高计算
 function computeTableRowHeight() {
   nextTick(() => {
-    const newTrHeightMap: Record<string, number | undefined> = {}
-    const newTrPositionsMap: Record<string, any> = {}
+    const newTrHeightMap: Record<string, number | undefined> = {};
+    const newTrPositionsMap: Record<string, any> = {};
 
     Object.entries(trRefMap.value).forEach(([rowId, element]) => {
       if (element) {
-        const rect = element.getBoundingClientRect()
-        newTrHeightMap[rowId] = rect.height
+        const rect = element.getBoundingClientRect();
+        newTrHeightMap[rowId] = rect.height;
         newTrPositionsMap[rowId] = {
           top: rect.top,
           bottom: rect.bottom,
           height: rect.height,
           middle: rect.top + rect.height / 2,
-        }
+        };
       }
-    })
+    });
 
     // 批量更新状态
-    state.trHeightMap = newTrHeightMap
-    state.trPositionsMap = newTrPositionsMap
-  })
+    state.trHeightMap = newTrHeightMap;
+    state.trPositionsMap = newTrPositionsMap;
+  });
 }
 
 // 优化表格大小变化处理
 const handleTableResize = throttle(() => {
-  const table = tableRef.value
-  if (!table)
-    return
+  const table = tableRef.value;
+  if (!table) return;
 
-  const newScrollClientWidth = table.clientWidth
-  const newIsScroll = table.scrollWidth > table.clientWidth + 5
+  const newScrollClientWidth = table.clientWidth;
+  const newIsScroll = table.scrollWidth > table.clientWidth + 5;
 
   // 只在必要时更新状态
   if (state.scrollClientWidth !== newScrollClientWidth) {
-    state.scrollClientWidth = newScrollClientWidth
+    state.scrollClientWidth = newScrollClientWidth;
   }
   if (state.isScroll !== newIsScroll) {
-    state.isScroll = newIsScroll
+    state.isScroll = newIsScroll;
   }
 
   // 更新固定列宽度
   if (fixedLeftRef.value) {
-    const newLeftWidth = fixedLeftRef.value.clientWidth || 0
+    const newLeftWidth = fixedLeftRef.value.clientWidth || 0;
     if (state.fixedLeftWidth !== newLeftWidth) {
-      state.fixedLeftWidth = newLeftWidth
+      state.fixedLeftWidth = newLeftWidth;
     }
   }
   if (fixedRightRef.value) {
-    const newRightWidth = fixedRightRef.value.clientWidth || 0
+    const newRightWidth = fixedRightRef.value.clientWidth || 0;
     if (state.fixedRightWidth !== newRightWidth) {
-      state.fixedRightWidth = newRightWidth
+      state.fixedRightWidth = newRightWidth;
     }
   }
 
   // 计算是否显示滚动条
-  const totalWidth = totalColumnWidth.value
-  const newIsScrollbarVisible = totalWidth > state.scrollClientWidth
+  const totalWidth = totalColumnWidth.value;
+  const newIsScrollbarVisible = totalWidth > state.scrollClientWidth;
   if (state.isScrollbarVisible !== newIsScrollbarVisible) {
-    state.isScrollbarVisible = newIsScrollbarVisible
+    state.isScrollbarVisible = newIsScrollbarVisible;
   }
 
-  state.isInitialized = true
-  computeTableRowHeight()
-  updateScrollState()
-}, 120)
+  state.isInitialized = true;
+  computeTableRowHeight();
+  updateScrollState();
+}, 120);
 
 function init() {
   nextTick(() => {
-    updateScrollState()
-    handleTableResize()
+    updateScrollState();
+    handleTableResize();
 
     if (props.checkable) {
-      updateSelectedKeys(selectedKeys.value)
+      updateSelectedKeys(selectedKeys.value);
     }
-    initDragState()
-    state.dataSource = addUniqueIdToDataSource(cloneDeep(props.dataSource))
-    computeTableRowHeight()
-  })
+    initDragState();
+    state.dataSource = addUniqueIdToDataSource(cloneDeep(props.dataSource));
+    computeTableRowHeight();
+  });
 }
 
 onMounted(() => {
-  init()
+  init();
 
   // 只在客户端环境下使用 ResizeObserver
   useResizeObserver(tableRef, () => {
-    state.isInitialized = false
-    handleTableResize()
-  })
+    state.isInitialized = false;
+    handleTableResize();
+  });
 
   if (props.checkable && !props.rowKey) {
-    throw new Error('LewTable error: rowKey is required when checkable is enabled!')
+    throw new Error("LewTable error: rowKey is required when checkable is enabled!");
   }
   if (
     props.columns.some(
-      (col: any) => !col.width && (!col.children || col.children.length === 0),
+      (col: any) => !col.width && (!col.children || col.children.length === 0)
     )
   ) {
-    throw new Error('LewTable error: width must be set for every column')
+    throw new Error("LewTable error: width must be set for every column");
   }
-})
+});
 
 onUnmounted(() => {
   if (tooltipAnimationFrame) {
-    cancelAnimationFrame(tooltipAnimationFrame)
-    tooltipAnimationFrame = null
+    cancelAnimationFrame(tooltipAnimationFrame);
+    tooltipAnimationFrame = null;
   }
-})
+});
 
 watch(
   () => props.dataSource,
   (newVal) => {
     // 清理渲染缓存
-    clearRenderCache()
+    clearRenderCache();
     // 先计算新数据的高度
-    const newDataSource = addUniqueIdToDataSource(cloneDeep(newVal))
+    const newDataSource = addUniqueIdToDataSource(cloneDeep(newVal));
     nextTick(() => {
-      state.dataSource = newDataSource
+      state.dataSource = newDataSource;
       // 延迟执行其他操作，让过渡动画更平滑
-      updateScrollState()
-      handleTableResize()
-      state.selectedRowsMap = mapValues(keyBy(newVal, _rowKey), () => false)
-      updateAllCheckedState()
-      initDragState()
-      computeTableRowHeight()
-    })
+      updateScrollState();
+      handleTableResize();
+      state.selectedRowsMap = mapValues(keyBy(newVal, _rowKey), () => false);
+      updateAllCheckedState();
+      initDragState();
+      computeTableRowHeight();
+    });
   },
-  { deep: true },
-)
+  { deep: true }
+);
 
 watch(selectedKeys, (newVal: any) => {
   if (props.checkable) {
-    updateSelectedKeys(newVal)
+    updateSelectedKeys(newVal);
   }
-})
+});
 
 watch(
   () => trRefMap.value,
   () => {
-    computeTableRowHeight()
+    computeTableRowHeight();
   },
   {
     deep: true,
-  },
-)
+  }
+);
 
 watch(
   () => props.size,
   () => {
     nextTick(() => {
-      updateScrollState()
-      handleTableResize()
-      computeTableRowHeight()
+      updateScrollState();
+      handleTableResize();
+      computeTableRowHeight();
       if (props.checkable) {
-        updateSelectedKeys(selectedKeys.value)
+        updateSelectedKeys(selectedKeys.value);
       }
-    })
-  },
-)
+    });
+  }
+);
 
 function initDragState() {
-  state.dragIndex = -1
-  state.targetIndex = -1
-  state.dragRowId = ''
-  state.targetRowId = ''
-  state.initialDragY = 0
-  state.lastMouseY = 0
-  state.showTooltip = false
-  state.isDragging = false
+  state.dragIndex = -1;
+  state.targetIndex = -1;
+  state.dragRowId = "";
+  state.targetRowId = "";
+  state.initialDragY = 0;
+  state.lastMouseY = 0;
+  state.showTooltip = false;
+  state.isDragging = false;
 }
 
-const throttledTooltipUpdate = throttle(updateTooltipPosition, 16)
+const throttledTooltipUpdate = throttle(updateTooltipPosition, 16);
 
 function dragStart(event: DragEvent, row: any, index: number) {
-  if (!props.sortable)
-    return
-  initDragState()
-  computeTableRowHeight()
-  state.dragIndex = index
-  state.dragRowId = row._lew_table_tr_id
-  state.isDragging = true
-  document.body.style.cursor = 'grabbing'
+  if (!props.sortable) return;
+  initDragState();
+  computeTableRowHeight();
+  state.dragIndex = index;
+  state.dragRowId = row._lew_table_tr_id;
+  state.isDragging = true;
+  document.body.style.cursor = "grabbing";
 
-  state.initialDragY = event.clientY
-  state.lastMouseY = event.clientY
+  state.initialDragY = event.clientY;
+  state.lastMouseY = event.clientY;
 
   if (event.dataTransfer) {
-    event.dataTransfer.effectAllowed = 'move'
+    event.dataTransfer.effectAllowed = "move";
 
-    const canvas = document.createElement('canvas')
-    event.dataTransfer.setDragImage(canvas, 0, 0)
+    const canvas = document.createElement("canvas");
+    event.dataTransfer.setDragImage(canvas, 0, 0);
   }
 
-  document.body.style.userSelect = 'none'
-  document.body.style.webkitUserSelect = 'none'
+  document.body.style.userSelect = "none";
+  document.body.style.webkitUserSelect = "none";
 
-  state.showTooltip = true
-  state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`
+  state.showTooltip = true;
+  state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`;
 
   // 缓存 tooltip 组件
-  const tooltipCacheKey = `tooltip_${row._lew_table_tr_id}`
+  const tooltipCacheKey = `tooltip_${row._lew_table_tr_id}`;
   if (!renderCache.has(tooltipCacheKey)) {
     const tooltipComponent = props.sortTooltipCustomRender
       ? props.sortTooltipCustomRender(row)
-      : h('div', {}, `Row ${row._lew_table_tr_id}`)
-    renderCache.set(tooltipCacheKey, tooltipComponent)
+      : h("div", {}, `Row ${row._lew_table_tr_id}`);
+    renderCache.set(tooltipCacheKey, tooltipComponent);
   }
-  tooltipComponent.value = renderCache.get(tooltipCacheKey)
-  document.addEventListener('mousemove', throttledTooltipUpdate)
-  document.addEventListener('mouseup', dragEnd)
+  tooltipComponent.value = renderCache.get(tooltipCacheKey);
+  document.addEventListener("mousemove", throttledTooltipUpdate);
+  document.addEventListener("mouseup", dragEnd);
 }
 
 function updateTooltipPosition(event: MouseEvent) {
   if (tooltipAnimationFrame) {
-    cancelAnimationFrame(tooltipAnimationFrame)
+    cancelAnimationFrame(tooltipAnimationFrame);
   }
 
   tooltipAnimationFrame = requestAnimationFrame(() => {
-    state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`
-    updateDragTarget(event.clientY)
-  })
+    state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`;
+    updateDragTarget(event.clientY);
+  });
 }
 
 function dragEnd() {
-  const dragDistance = Math.abs(state.initialDragY - state.lastMouseY)
-  const minDragDistance = 10
-  document.body.style.cursor = 'default'
+  const dragDistance = Math.abs(state.initialDragY - state.lastMouseY);
+  const minDragDistance = 10;
+  document.body.style.cursor = "default";
   if (
-    state.dragRowId
-    && state.targetRowId
-    && state.dragRowId !== state.targetRowId
-    && dragDistance >= minDragDistance
+    state.dragRowId &&
+    state.targetRowId &&
+    state.dragRowId !== state.targetRowId &&
+    dragDistance >= minDragDistance
   ) {
     const dragIndex = state.dataSource.findIndex(
-      row => row._lew_table_tr_id === state.dragRowId,
-    )
+      (row) => row._lew_table_tr_id === state.dragRowId
+    );
     const targetIndex = state.dataSource.findIndex(
-      row => row._lew_table_tr_id === state.targetRowId,
-    )
+      (row) => row._lew_table_tr_id === state.targetRowId
+    );
     if (dragIndex !== -1 && targetIndex !== -1 && dragIndex !== targetIndex) {
-      const targetPosition = state.isAboveTarget ? targetIndex : targetIndex + 1
+      const targetPosition = state.isAboveTarget ? targetIndex : targetIndex + 1;
 
-      let actualTargetPosition = targetPosition
+      let actualTargetPosition = targetPosition;
       if (dragIndex < targetPosition) {
-        actualTargetPosition--
+        actualTargetPosition--;
       }
 
       if (actualTargetPosition !== dragIndex) {
-        const newDataSource = [...state.dataSource]
-        const [movedItem] = newDataSource.splice(dragIndex, 1)
-        newDataSource.splice(actualTargetPosition, 0, movedItem)
-        state.dataSource = newDataSource
-        emit('dragSort', newDataSource)
+        const newDataSource = [...state.dataSource];
+        const [movedItem] = newDataSource.splice(dragIndex, 1);
+        newDataSource.splice(actualTargetPosition, 0, movedItem);
+        state.dataSource = newDataSource;
+        emit("dragSort", newDataSource);
       }
     }
   }
 
   if (tooltipAnimationFrame) {
-    cancelAnimationFrame(tooltipAnimationFrame)
-    tooltipAnimationFrame = null
+    cancelAnimationFrame(tooltipAnimationFrame);
+    tooltipAnimationFrame = null;
   }
 
-  document.body.style.userSelect = ''
-  document.body.style.webkitUserSelect = ''
+  document.body.style.userSelect = "";
+  document.body.style.webkitUserSelect = "";
 
-  state.dragIndex = -1
-  state.targetIndex = -1
-  state.dragRowId = ''
-  state.targetRowId = ''
-  state.initialDragY = 0
-  state.lastMouseY = 0
-  state.showTooltip = false
+  state.dragIndex = -1;
+  state.targetIndex = -1;
+  state.dragRowId = "";
+  state.targetRowId = "";
+  state.initialDragY = 0;
+  state.lastMouseY = 0;
+  state.showTooltip = false;
   setTimeout(() => {
-    state.isDragging = false
-  }, 250)
+    state.isDragging = false;
+  }, 250);
 
-  document.removeEventListener('mousemove', throttledTooltipUpdate)
-  document.removeEventListener('mouseup', dragEnd)
+  document.removeEventListener("mousemove", throttledTooltipUpdate);
+  document.removeEventListener("mouseup", dragEnd);
 
   setTimeout(() => {
-    computeTableRowHeight()
-  }, 250)
+    computeTableRowHeight();
+  }, 250);
 }
 
 function updateDragTarget(mouseY: number) {
-  state.lastMouseY = mouseY
+  state.lastMouseY = mouseY;
 
-  if (!state.dragRowId || Object.keys(state.trPositionsMap).length === 0)
-    return
+  if (!state.dragRowId || Object.keys(state.trPositionsMap).length === 0) return;
 
-  const dragDistance = Math.abs(state.initialDragY - mouseY)
-  const minDragDistance = 5
+  const dragDistance = Math.abs(state.initialDragY - mouseY);
+  const minDragDistance = 5;
 
   if (dragDistance < minDragDistance) {
-    return
+    return;
   }
 
-  let targetRowId = ''
-  let isAbove = false
+  let targetRowId = "";
+  let isAbove = false;
   const positionEntries = Object.entries(state.trPositionsMap).map(([id, pos]) => ({
     id,
     ...pos,
-  }))
+  }));
 
-  positionEntries.sort((a, b) => a.top - b.top)
+  positionEntries.sort((a, b) => a.top - b.top);
 
   for (const entry of positionEntries) {
-    if (entry.id === state.dragRowId)
-      continue
+    if (entry.id === state.dragRowId) continue;
 
-    const position = entry
+    const position = entry;
 
     if (mouseY >= position.top && mouseY <= position.bottom) {
-      targetRowId = position.id
+      targetRowId = position.id;
 
-      isAbove = mouseY < position.top + position.height / 2
-      break
+      isAbove = mouseY < position.top + position.height / 2;
+      break;
     }
   }
 
   if (!targetRowId) {
     for (let i = 0; i < positionEntries.length - 1; i++) {
-      if (positionEntries[i].id === state.dragRowId)
-        continue
-      if (positionEntries[i + 1].id === state.dragRowId)
-        continue
+      if (positionEntries[i].id === state.dragRowId) continue;
+      if (positionEntries[i + 1].id === state.dragRowId) continue;
 
       if (mouseY > positionEntries[i].bottom && mouseY < positionEntries[i + 1].top) {
         if (mouseY - positionEntries[i].bottom < positionEntries[i + 1].top - mouseY) {
-          targetRowId = positionEntries[i].id
-          isAbove = false
+          targetRowId = positionEntries[i].id;
+          isAbove = false;
         }
-        break
+        break;
       }
     }
   }
 
   if (!targetRowId && positionEntries.length > 0) {
     if (mouseY < positionEntries[0].top) {
-      targetRowId = positionEntries[0].id
-      isAbove = true
-    }
-    else if (mouseY > positionEntries[positionEntries.length - 1].bottom) {
-      targetRowId = positionEntries[positionEntries.length - 1].id
-      isAbove = false
+      targetRowId = positionEntries[0].id;
+      isAbove = true;
+    } else if (mouseY > positionEntries[positionEntries.length - 1].bottom) {
+      targetRowId = positionEntries[positionEntries.length - 1].id;
+      isAbove = false;
     }
   }
 
   if (targetRowId) {
-    state.targetRowId = targetRowId
+    state.targetRowId = targetRowId;
     state.targetIndex = state.dataSource.findIndex(
-      row => row._lew_table_tr_id === targetRowId,
-    )
-    state.isAboveTarget = isAbove
+      (row) => row._lew_table_tr_id === targetRowId
+    );
+    state.isAboveTarget = isAbove;
   }
 }
 
@@ -893,109 +878,108 @@ function getIndicatorStyle() {
     return `
       display: none;
       transform: translateY(0);
-    `
+    `;
   }
-  const targetPosition = state.trPositionsMap[state.targetRowId]
-  if (!targetPosition)
-    return 'display: none;'
-  const top = state.isAboveTarget ? targetPosition.top : targetPosition.bottom
-  const tableRect = tableRef.value?.getBoundingClientRect()
-  const offsetTop = tableRect ? top - tableRect.top : 0
+  const targetPosition = state.trPositionsMap[state.targetRowId];
+  if (!targetPosition) return "display: none;";
+  const top = state.isAboveTarget ? targetPosition.top : targetPosition.bottom;
+  const tableRect = tableRef.value?.getBoundingClientRect();
+  const offsetTop = tableRect ? top - tableRect.top : 0;
   return `
     display: block;
     transform: translateY(${offsetTop}px);
     opacity: 1;
-  `
+  `;
 }
 function addUniqueIdToDataSource(dataSource: any[]) {
   return dataSource.map((row) => {
     if (!row._lew_table_tr_id) {
-      row._lew_table_tr_id = getUniqueId()
+      row._lew_table_tr_id = getUniqueId();
     }
     // 使用 markRaw 来避免深层响应式，提高性能
-    return markRaw(row)
-  })
+    return markRaw(row);
+  });
 }
 
 function getRowHeight(row: any) {
-  if (!row || !row._lew_table_tr_id)
-    return 'auto'
-  return `${state.trHeightMap[row._lew_table_tr_id] || 0}px`
+  if (!row || !row._lew_table_tr_id) return "auto";
+  return `${state.trHeightMap[row._lew_table_tr_id] || 0}px`;
 }
 
 function setTrRef(el: HTMLElement | null, row: any) {
   if (row && row._lew_table_tr_id) {
-    trRefMap.value[row._lew_table_tr_id] = el
+    trRefMap.value[row._lew_table_tr_id] = el;
   }
 }
 
 // 缓存列层级
 const columnLevel = computed(() => {
   const findMaxDepth = (columns: any[], currentDepth = 1): number => {
-    if (!columns || columns.length === 0)
-      return currentDepth
+    if (!columns || columns.length === 0) return currentDepth;
 
-    let maxDepth = currentDepth
+    let maxDepth = currentDepth;
     for (const col of columns) {
       if (col.children && col.children.length > 0) {
-        const childDepth = findMaxDepth(col.children, currentDepth + 1)
-        maxDepth = Math.max(maxDepth, childDepth)
+        const childDepth = findMaxDepth(col.children, currentDepth + 1);
+        maxDepth = Math.max(maxDepth, childDepth);
       }
     }
-    return maxDepth
-  }
-  return findMaxDepth(props.columns)
-})
+    return maxDepth;
+  };
+  return findMaxDepth(props.columns);
+});
 
 // 获取固定表头列
 const getFixedHeaderColumns = computed(() => (direction: string) => {
-  return headerColumns.value[direction as keyof typeof headerColumns.value] || []
-})
+  return headerColumns.value[direction as keyof typeof headerColumns.value] || [];
+});
 
 // 获取固定列
 const getFixedColumns = computed(() => (direction: string) => {
-  return fixedColumns.value[direction as keyof typeof fixedColumns.value] || []
-})
+  return fixedColumns.value[direction as keyof typeof fixedColumns.value] || [];
+});
 
 const getScrollLineLeftClassName = computed(() => {
-  return !state.isScrollbarVisible
-    || !state.isInitialized
-    || ['all', 'left'].includes(state.hiddenScrollLine)
-    ? 'lew-hide-line-left'
-    : ''
-})
+  return !state.isScrollbarVisible ||
+    !state.isInitialized ||
+    ["all", "left"].includes(state.hiddenScrollLine)
+    ? "lew-hide-line-left"
+    : "";
+});
 
 const getScrollLineRightClassName = computed(() => {
-  return !state.isScrollbarVisible
-    || !state.isInitialized
-    || ['all', 'right'].includes(state.hiddenScrollLine)
-    ? 'lew-hide-line-right'
-    : ''
-})
+  return !state.isScrollbarVisible ||
+    !state.isInitialized ||
+    ["all", "right"].includes(state.hiddenScrollLine)
+    ? "lew-hide-line-right"
+    : "";
+});
 
 const getTableClass = computed(() => {
   return {
-    'lew-table-bordered': props.bordered,
-    'lew-table-scroll': state.isScroll,
-    'lew-table-dragging': state.isDragging,
-    'lew-table-has-fixed-left':
-      getFixedColumns.value('left').length > 0 || props.checkable || props.sortable,
-    'lew-table-has-fixed-right': getFixedColumns.value('right').length > 0,
-  }
-})
+    "lew-table-bordered": props.bordered,
+    "lew-table-scroll": state.isScroll,
+    "lew-table-dragging": state.isDragging,
+    "lew-table-has-fixed-left":
+      getFixedColumns.value("left").length > 0 || props.checkable || props.sortable,
+    "lew-table-has-fixed-right": getFixedColumns.value("right").length > 0,
+  };
+});
 
 // 获取非固定表头列
-const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
+const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed);
 </script>
 
 <template>
   <div ref="tableWrapperRef" class="lew-table-wrapper">
     <i
-      :style="{ left: any2px(state.fixedLeftWidth) }" :class="getScrollLineLeftClassName"
+      :style="{ left: any2px(state.fixedLeftWidth) }"
+      :class="getScrollLineLeftClassName"
       class="lew-table-scroll-line-left"
     />
     <i
-      :style="{ right: any2px(state.fixedRightWidth) }" :class="getScrollLineRightClassName"
+      :style="{ right: any2px(state.fixedRightWidth) }"
+      :class="getScrollLineRightClassName"
       class="lew-table-scroll-line-right"
     />
     <div class="lew-table-header">
@@ -1003,105 +987,177 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
     </div>
     <div class="lew-table-drag-indicator" :style="getIndicatorStyle()" />
     <div
-      ref="tableRef" class="lew-table lew-scrollbar" :class="getTableClass"
-      :style="`max-height: ${any2px(maxHeight)}`" @scroll="updateScrollState" @mouseleave.stop="hoverRowIndex = -1"
+      ref="tableRef"
+      class="lew-table lew-scrollbar"
+      :class="getTableClass"
+      :style="`max-height: ${any2px(maxHeight)}`"
+      @scroll="updateScrollState"
+      @mouseleave.stop="hoverRowIndex = -1"
     >
       <div
-        class="lew-table-head" :class="{ 'lew-table-head-bordered': columnLevel > 1 }" :style="{
+        class="lew-table-head"
+        :class="{ 'lew-table-head-bordered': columnLevel > 1 }"
+        :style="{
           width: `${totalColumnWidth}px`,
           height: `${getHeadHeight * columnLevel + columnLevel * 1}px`,
-        }" @mouseenter.stop="hoverRowIndex = -1"
+        }"
+        @mouseenter.stop="hoverRowIndex = -1"
       >
         <div
-          v-if="getFixedHeaderColumns('left').length > 0 || checkable || sortable" ref="fixedLeftRef"
+          v-if="getFixedHeaderColumns('left').length > 0 || checkable || sortable"
+          ref="fixedLeftRef"
           class="lew-table-fixed-left"
         >
           <div class="lew-table-tr">
             <LewFlex
-              v-if="sortable" class="lew-table-td" :style="{
+              v-if="sortable"
+              class="lew-table-td"
+              :style="{
                 width: `${getDragColumnWidth}px`,
                 padding: getPadding,
-              }" x="center"
+              }"
+              x="center"
             >
               <CommonIcon :size="getIconSize" type="grip-vertical" />
             </LewFlex>
             <LewFlex
-              v-if="checkable" class="lew-table-td" :style="{
+              v-if="checkable"
+              class="lew-table-td"
+              :style="{
                 width: `${getCheckableWidth}px`,
                 padding: getPadding,
-              }" x="center"
+              }"
+              x="center"
             >
               <LewCheckbox
-                v-if="multiple" v-model="state.isAllChecked" :size="size"
-                :disabled="state.dataSource.length === 0" :certain="hasPartialSelection && !state.isAllChecked"
+                v-if="multiple"
+                v-model="state.isAllChecked"
+                :size="size"
+                :disabled="state.dataSource.length === 0"
+                :certain="hasPartialSelection && !state.isAllChecked"
                 @change="setAllRowsChecked($event)"
               />
               <CommonIcon v-else :size="getIconSize" type="square-mouse-pointer" />
             </LewFlex>
             <readerHeaderTd
-              v-for="(column, index) in getFixedHeaderColumns('left')" :key="`columns${index}`"
-              :column="column" :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
-              :style="getHeaderColumnStyle(column)" gap="5px"
+              v-for="(column, index) in getFixedHeaderColumns('left')"
+              :key="`columns${index}`"
+              :column="column"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
+              :style="getHeaderColumnStyle(column)"
+              gap="5px"
             />
           </div>
         </div>
         <div class="lew-table-main">
           <div class="lew-table-tr">
             <readerHeaderTd
-              v-for="column in nonFixedHeaderColumns" :key="column.field" :column="column"
-              :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
-              :style="getHeaderColumnStyle(column)" gap="5px"
+              v-for="column in nonFixedHeaderColumns"
+              :key="column.field"
+              :column="column"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
+              :style="getHeaderColumnStyle(column)"
+              gap="5px"
             />
           </div>
         </div>
-        <div v-if="getFixedHeaderColumns('right').length > 0" ref="fixedRightRef" class="lew-table-fixed-right">
+        <div
+          v-if="getFixedHeaderColumns('right').length > 0"
+          ref="fixedRightRef"
+          class="lew-table-fixed-right"
+        >
           <div class="lew-table-tr">
             <readerHeaderTd
-              v-for="column in getFixedHeaderColumns('right')" :key="column.field" :column="column"
-              class="lew-table-td" :class="{
+              v-for="column in getFixedHeaderColumns('right')"
+              :key="column.field"
+              :column="column"
+              class="lew-table-td"
+              :class="{
                 'lew-table-td-sortable': column.sortable,
-              }" :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
-              :style="getHeaderColumnStyle(column)" gap="5px"
+              }"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
+              :style="getHeaderColumnStyle(column)"
+              gap="5px"
             />
           </div>
         </div>
       </div>
       <div v-if="state.dataSource.length === 0" class="lew-table-empty">
         <slot v-if="$slots.empty" name="empty" />
-        <LewFlex v-else x="center" y="center" :style="{ padding: `${getEmptyPadding}px` }">
+        <LewFlex
+          v-else
+          x="center"
+          y="center"
+          :style="{ padding: `${getEmptyPadding}px` }"
+        >
           <LewEmpty v-bind="getEmptyProps" />
         </LewFlex>
       </div>
-      <div v-if="state.dataSource.length > 0" class="lew-table-body" :style="`width: ${totalColumnWidth}px`">
-        <div v-if="getFixedColumns('left').length > 0 || checkable || sortable" class="lew-table-fixed-left">
+      <div
+        v-if="state.dataSource.length > 0"
+        class="lew-table-body"
+        :style="`width: ${totalColumnWidth}px`"
+      >
+        <div
+          v-if="getFixedColumns('left').length > 0 || checkable || sortable"
+          class="lew-table-fixed-left"
+        >
           <div
-            v-for="(row, i) in state.dataSource" :key="row._lew_table_tr_id" class="lew-table-tr"
-            :class="getRowClass(i, row)" :style="{
+            v-for="(row, i) in state.dataSource"
+            :key="row._lew_table_tr_id"
+            class="lew-table-tr"
+            :class="getRowClass(i, row)"
+            :style="{
               height: getRowHeight(row),
-            }" @click="toggleRowSelection(row)" @mouseenter.stop="hoverRowIndex = i"
+            }"
+            @click="toggleRowSelection(row)"
+            @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
-              v-if="sortable" :style="{ width: `${getDragColumnWidth}px` }" x="center"
-              class="lew-table-drag-handle" @mousedown.stop="dragStart($event, row, i)"
+              v-if="sortable"
+              :style="{ width: `${getDragColumnWidth}px` }"
+              x="center"
+              class="lew-table-drag-handle"
+              @mousedown.stop="dragStart($event, row, i)"
             >
-              <CommonIcon :size="getIconSize" type="grip-vertical" class="lew-table-drag-icon" />
+              <CommonIcon
+                :size="getIconSize"
+                type="grip-vertical"
+                class="lew-table-drag-icon"
+              />
             </LewFlex>
             <LewFlex
-              v-if="checkable" :style="{ width: `${getCheckableWidth}px` }" x="center"
+              v-if="checkable"
+              :style="{ width: `${getCheckableWidth}px` }"
+              x="center"
               class="lew-table-checkbox-wrapper"
             >
-              <LewCheckbox :size="size" class="lew-table-checkbox" :checked="getRowSelectedState(row)" />
+              <LewCheckbox
+                :size="size"
+                class="lew-table-checkbox"
+                :checked="getRowSelectedState(row)"
+              />
             </LewFlex>
             <LewFlex
-              v-for="column in getFixedColumns('left')" :key="column.field" class="lew-table-td"
-              :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
+              v-for="column in getFixedColumns('left')"
+              :key="column.field"
+              class="lew-table-td"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
                 <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
-                <LewFlex v-if="column.type === 'text-trim'" :x="column.x" style="width: 100%">
+                <LewFlex
+                  v-if="column.type === 'text-trim'"
+                  :x="column.x"
+                  style="width: 100%"
+                >
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
@@ -1116,20 +1172,31 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
         </div>
         <div class="lew-table-main">
           <div
-            v-for="(row, i) in state.dataSource" :key="row._lew_table_tr_id" :ref="(e: any) => setTrRef(e, row)"
-            class="lew-table-tr" :class="getRowClass(i, row)" @click="toggleRowSelection(row)"
+            v-for="(row, i) in state.dataSource"
+            :key="row._lew_table_tr_id"
+            :ref="(e: any) => setTrRef(e, row)"
+            class="lew-table-tr"
+            :class="getRowClass(i, row)"
+            @click="toggleRowSelection(row)"
             @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
-              v-for="column in nonFixedColumns" :key="column.field" class="lew-table-td"
-              :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
+              v-for="column in nonFixedColumns"
+              :key="column.field"
+              class="lew-table-td"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
                 <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
-                <LewFlex v-if="column.type === 'text-trim'" :x="column.x" style="width: 100%">
+                <LewFlex
+                  v-if="column.type === 'text-trim'"
+                  :x="column.x"
+                  style="width: 100%"
+                >
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
@@ -1144,20 +1211,32 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
         </div>
         <div v-if="getFixedColumns('right').length > 0" class="lew-table-fixed-right">
           <div
-            v-for="(row, i) in state.dataSource" :key="row._lew_table_tr_id" class="lew-table-tr" :style="{
+            v-for="(row, i) in state.dataSource"
+            :key="row._lew_table_tr_id"
+            class="lew-table-tr"
+            :style="{
               height: getRowHeight(row),
-            }" :class="getRowClass(i, row)" @mouseenter.stop="hoverRowIndex = i"
+            }"
+            :class="getRowClass(i, row)"
+            @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
-              v-for="(column, j) in getFixedColumns('right')" :key="`col${j}`" class="lew-table-td"
-              :x="(column.x as LewXAlignment) || 'start'" :y="column.y as LewYAlignment"
+              v-for="(column, j) in getFixedColumns('right')"
+              :key="`col${j}`"
+              class="lew-table-td"
+              :x="(column.x as LewXAlignment) || 'start'"
+              :y="column.y as LewYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
                 <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
-                <LewFlex v-if="column.type === 'text-trim'" :x="column.x" style="width: 100%">
+                <LewFlex
+                  v-if="column.type === 'text-trim'"
+                  :x="column.x"
+                  style="width: 100%"
+                >
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
@@ -1176,7 +1255,11 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
       <slot name="table-footer" />
     </div>
 
-    <div v-show="state.showTooltip" class="lew-table-drag-tooltip" :style="state.tooltipStyle">
+    <div
+      v-show="state.showTooltip"
+      class="lew-table-drag-tooltip"
+      :style="state.tooltipStyle"
+    >
       <RenderComponent :render-fn="tooltipComponent" />
     </div>
   </div>
@@ -1444,7 +1527,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 
 .lew-table-tr-dragging::after {
   position: absolute;
-  content: '';
+  content: "";
   left: 0;
   top: 0;
   width: 100%;
@@ -1528,7 +1611,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 .lew-table-checkbox-wrapper::after {
   position: absolute;
   z-index: 1;
-  content: '';
+  content: "";
   top: 0px;
   left: 0px;
   width: 100%;

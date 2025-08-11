@@ -6,7 +6,6 @@ import validators, { validColorList, validSizeList, validTagTypeList } from 'lew
 export const tagProps = {
   text: {
     type: String,
-    required: true,
     validator: validators.string({
       componentName: 'LewTag',
       propName: 'text',
