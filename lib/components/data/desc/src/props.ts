@@ -215,6 +215,7 @@ export const descItemProps = {
   },
   customRender: {
     type: null,
+    typePopKeys: ['LewComponentSource'],
   },
   id: {
     type: String,

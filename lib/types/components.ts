@@ -288,3 +288,5 @@ export interface LewFormOption {
   outputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
   inputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
 }
+
+export type LewTagClose = () => Promise<boolean>

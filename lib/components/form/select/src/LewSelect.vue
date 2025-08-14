@@ -95,8 +95,7 @@ watch(
       state.sourceOptions = newOptions
       state.options = flattenSelectOptions(newOptions)
       state.keyword
-        = newOptions?.find((e: any) => e.value === selectValue.value)?.label
-          || ''
+        = newOptions?.find((e: any) => e.value === selectValue.value)?.label || ''
       // 如果启用搜索缓存，清除搜索缓存，因为数据源已经更新
       if (props.enableSearchCache) {
         state.searchCache.clear()
@@ -320,9 +319,7 @@ async function showHandle() {
   if (props.searchable) {
     await search({ target: { value: '' } })
   }
-  const index = state.options.findIndex(
-    (e: any) => e.value === selectValue.value,
-  )
+  const index = state.options.findIndex((e: any) => e.value === selectValue.value)
   poll({
     callback: () => {
       const i = index > -1 ? index : 0
@@ -397,7 +394,7 @@ defineExpose({
     class="lew-select-view"
     :style="{ width: autoWidth ? 'auto' : any2px(width) }"
     :trigger="trigger"
-    :trigger-width="width"
+    :trigger-width="any2px(computedWidth)"
     :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :loading="state.loading"
@@ -412,11 +409,7 @@ defineExpose({
         :class="getSelectClassName"
       >
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <CommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
         <CommonIcon

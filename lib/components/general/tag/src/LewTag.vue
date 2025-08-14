@@ -4,7 +4,7 @@ import type { LewTagType } from 'lew-ui/types'
 import type { CSSProperties } from 'vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { getColorType } from 'lew-ui/utils'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { tagProps } from './props'
 
 // Types
@@ -28,13 +28,10 @@ interface TagStyleFunction {
   (color: string): CSSProperties
 }
 
-interface TagEmits {
-  close: []
-}
-
 // Props & Emits
 const props = defineProps(tagProps)
-const emit = defineEmits<TagEmits>()
+const visible = ref(true)
+const isClosing = ref(false)
 
 // Constants
 const SIZE_CONFIG: Record<LewSize, SizeConfig> = {
@@ -110,15 +107,40 @@ const tagStyle = computed(
 )
 
 // Methods
-function handleClose(): void {
-  if (props.disabled)
+async function handleClose(): Promise<void> {
+  if (props.disabled || isClosing.value)
     return
-  emit('close')
+
+  // 如果有自定义的 close 函数，调用它并等待结果
+  if (props.close) {
+    isClosing.value = true
+    try {
+      const shouldClose = await props.close()
+      if (shouldClose) {
+        visible.value = false
+      }
+    }
+    catch (error) {
+      console.error('[LewTag] Error in close function:', error)
+      // 发生错误时默认不关闭
+    }
+    finally {
+      isClosing.value = false
+    }
+  }
+  else {
+    // 如果没有自定义 close 函数，直接触发 close 事件
+    visible.value = false
+  }
 }
+
+const isShowClose = computed(() => {
+  return props.close && visible.value
+})
 </script>
 
 <template>
-  <div class="lew-tag" :style="tagStyle">
+  <div v-if="visible" class="lew-tag" :style="tagStyle">
     <div v-if="$slots.left" class="lew-tag-left">
       <slot name="left" />
     </div>
@@ -134,8 +156,14 @@ function handleClose(): void {
       <slot name="right" />
     </div>
 
-    <div v-if="closable" class="lew-tag-close" @click.stop="handleClose">
-      <CommonIcon :size="tagStyle.closeIconSize" type="close" />
+    <div v-if="isShowClose" class="lew-tag-close" @click.stop="handleClose">
+      <CommonIcon
+        v-if="isClosing"
+        :size="tagStyle.closeIconSize"
+        type="loading"
+        class="lew-tag-loading"
+      />
+      <CommonIcon v-else :size="tagStyle.closeIconSize" type="close" />
     </div>
   </div>
 </template>
@@ -184,6 +212,10 @@ function handleClose(): void {
     &:active {
       background-color: rgba(0, 0, 0, 0.2);
     }
+
+    .lew-tag-loading {
+      animation: spin 1s linear infinite;
+    }
   }
 
   .lew-tag-left,
@@ -207,6 +239,16 @@ function handleClose(): void {
 
 .lew-tag-to {
   cursor: pointer;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
 

@@ -1,11 +1,19 @@
 <script setup lang="ts">
+const tags = ['Javascript', 'Typescript', 'Vue', 'React', 'Angular', 'Node.js', 'Python']
+
 function close() {
-  LewMessage.success('你点击了关闭')
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true)
+    }, 1000)
+  })
 }
 </script>
 
 <template>
-  <lew-tag closable @close="close">
-    Closable
-  </lew-tag>
+  <lew-flex>
+    <lew-tag v-for="tag in tags" :key="tag" :close="close">
+      {{ tag }}
+    </lew-tag>
+  </lew-flex>
 </template>

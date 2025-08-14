@@ -10,10 +10,12 @@ const props = defineProps(backTopProps)
 const dom = shallowRef<HTMLElement>()
 const showBackTop = ref(false)
 
-const backTopStyle = computed((): CSSProperties => ({
-  right: `${props.right}px`,
-  bottom: `${props.bottom}px`,
-}))
+const backTopStyle = computed(
+  (): CSSProperties => ({
+    right: `${props.right}px`,
+    bottom: `${props.bottom}px`,
+  }),
+)
 
 function handleScroll(): void {
   if (!dom.value)
@@ -40,9 +42,10 @@ function scrollToTop(): void {
     const progress = Math.min(elapsed / duration, 1)
 
     // Easing function for smooth animation
-    const easeInOutCubic = progress < 0.5
-      ? 4 * progress * progress * progress
-      : 1 - (-2 * progress + 2) ** 3 / 2
+    const easeInOutCubic
+      = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - (-2 * progress + 2) ** 3 / 2
 
     scrollElement.scrollTop = startPosition * (1 - easeInOutCubic)
 
@@ -71,7 +74,9 @@ onMounted(() => {
       dom.value = targetElement
     }
     else {
-      console.warn(`[LewBackTop] Target element not found: "${props.target}". Using document.documentElement as fallback.`)
+      console.warn(
+        `[LewBackTop] Target element not found: "${props.target}". Using document.documentElement as fallback.`,
+      )
     }
   }
   handleScroll()
@@ -80,7 +85,12 @@ onMounted(() => {
 
 <template>
   <transition name="fade">
-    <div v-if="showBackTop" class="lew-back-top" :style="backTopStyle" @click="handleClick">
+    <div
+      v-if="showBackTop"
+      class="lew-back-top"
+      :style="backTopStyle"
+      @click="handleClick"
+    >
       <slot>
         <CommonIcon :size="20" type="chevron-up" />
       </slot>
