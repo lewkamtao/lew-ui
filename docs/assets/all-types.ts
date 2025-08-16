@@ -34,6 +34,7 @@ export default {
   "LewEmptyType": `export type LewEmptyType = '404' | 'address' | 'article' | 'goods' | 'likes' | 'car' | 'comment' | 'network' | 'order' | 'search'`,
   "LewPopokType": `export type LewPopokType = 'error' | 'warning' | 'success' | 'info' | 'normal'`,
   "LewDrawerPosition": `export type LewDrawerPosition = 'left' | 'right' | 'top' | 'bottom'`,
+  "LewTagClose": `export type LewTagClose = () => Promise<boolean>`,
   "LewActionBoxOption": `export interface LewActionBoxOption {\n  label: LewComponentSource\n  icon?: LewComponentSource\n  customRender?: LewComponentSource\n  onClick?: (event?: MouseEvent) => void\n}`,
   "LewBreadcrumbOption": `export interface LewBreadcrumbOption {\n  label: string\n  value?: string\n  active?: boolean\n}`,
   "LewStepsOption": `export interface LewStepsOption {\n  title: LewComponentSource\n  description?: LewComponentSource\n}`,

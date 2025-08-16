@@ -4,14 +4,13 @@ import type { Ref } from 'vue'
 import { LewFlex, LewTextTrim } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px } from 'lew-ui/utils'
-import { inject, ref, watch } from 'vue'
+import { inject, ref, toRaw, watch } from 'vue'
+import { collapseItemEmits } from './collapseItemEmits'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { collapseItemProps } from './props'
 
 const props = defineProps(collapseItemProps)
-const emit = defineEmits<{
-  change: [expanded: boolean, key: string | number]
-}>()
+const emit = defineEmits(collapseItemEmits)
 
 const modelValue = defineModel<boolean>({ default: false })
 
@@ -53,7 +52,7 @@ function change() {
       : null) as LewCollapseModelValue
   }
 
-  emit('change', modelValue.value, props.collapseKey!)
+  emit('change', modelValue.value, toRaw(props.collapseKey!))
 }
 
 // Watchers

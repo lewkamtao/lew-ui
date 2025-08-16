@@ -3,10 +3,12 @@ import type { LewSelectOption } from 'lew-ui/types'
 import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
+import { toRaw } from 'vue'
+import { paginationEmits } from './emits'
 import { paginationProps } from './props'
 
 const props = defineProps(paginationProps)
-const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize'])
+const emit = defineEmits(paginationEmits)
 
 const total: Ref<number> = defineModel('total', { default: 0 })
 const currentPage: Ref<number> = defineModel('currentPage', { default: 1 })
@@ -78,10 +80,13 @@ function changePage(page: number) {
 
   currentPage.value = page
   pageSize.value = state.pageSize
-  emit('change', {
-    currentPage: currentPage.value,
-    pageSize: state.pageSize,
-  })
+  emit(
+    'change',
+    toRaw({
+      currentPage: currentPage.value,
+      pageSize: state.pageSize,
+    }),
+  )
 }
 
 // 是否显示省略号
@@ -146,11 +151,7 @@ const getIconSize = computed(() => {
         >
           <CommonIcon type="chevron-left" :size="getIconSize" />
         </LewButton>
-        <div
-          v-if="showOne"
-          class="lew-pagination-page-btn"
-          @click="changePage(1)"
-        >
+        <div v-if="showOne" class="lew-pagination-page-btn" @click="changePage(1)">
           1
         </div>
         <div
@@ -162,8 +163,7 @@ const getIconSize = computed(() => {
         </div>
         <div
           v-else-if="
-            currentPage > visiblePages.length / 2 + 2
-              && visiblePagesCount < totalPages
+            currentPage > visiblePages.length / 2 + 2 && visiblePagesCount < totalPages
           "
           class="lew-pagination-page-btn"
           @click="changePage(2)"

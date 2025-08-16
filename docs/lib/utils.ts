@@ -32,6 +32,53 @@ export function convertProps(json: any) {
   return props
 }
 
+export function convertEmits(emits: Record<string, (...args: any[]) => any>) {
+  const emitsList = []
+  for (const key in emits) {
+    if (Object.prototype.hasOwnProperty.call(emits, key)) {
+      const emitFn = emits[key]
+      const fnString = emitFn.toString()
+
+      // 提取函数参数，包括类型信息
+      // 匹配整个函数签名，例如: (item: LewMenuOption) => item
+      const arrowIndex = fnString.indexOf('=>')
+      let argument = '-'
+
+      if (arrowIndex > 0) {
+        const beforeArrow = fnString.substring(0, arrowIndex)
+        const parenMatch = beforeArrow.match(/\(([^)]*)\)/)
+
+        if (parenMatch && parenMatch[1].trim()) {
+          const paramsString = parenMatch[1].trim()
+          // 分割参数，但保持类型信息
+          const params = paramsString.split(',').map(p => p.trim()).filter(p => p)
+
+          if (params.length > 0) {
+            argument = params.map((param) => {
+              // 处理参数类型，例如: item: LewMenuOption
+              const colonIndex = param.indexOf(':')
+              if (colonIndex > 0) {
+                const paramName = param.substring(0, colonIndex).trim()
+                const paramType = param.substring(colonIndex + 1).trim()
+                return `${paramName}: ${paramType}`
+              }
+              return param
+            }).join(', ')
+          }
+        }
+      }
+
+      const emitItem = {
+        name: key,
+        argument,
+        description: '', // 描述会通过国际化文件获取
+      }
+      emitsList.push(emitItem)
+    }
+  }
+  return emitsList
+}
+
 /**
  * 将对象转成文件并下载
  * @param {object} data - 要转成文件的对象数据

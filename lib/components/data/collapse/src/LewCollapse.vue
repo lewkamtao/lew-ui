@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import type { LewCollapseModelValue } from 'lew-ui/types'
 import { any2px } from 'lew-ui/utils'
-import { computed, provide, watch } from 'vue'
+import { computed, provide, toRaw, watch } from 'vue'
+import { collapseEmits } from './emits'
 import { collapseProps } from './props'
 
 const props = defineProps(collapseProps)
 
-const emit = defineEmits<{
-  change: [value: LewCollapseModelValue]
-}>()
+const emit = defineEmits(collapseEmits)
 
 const modelValue = defineModel<LewCollapseModelValue>()
 
@@ -25,7 +24,7 @@ watch(
   modelValue,
   (newValue) => {
     if (newValue !== undefined) {
-      emit('change', newValue)
+      emit('change', toRaw(newValue))
     }
   },
   { deep: true },

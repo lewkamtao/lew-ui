@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { LewContextMenu, LewPopover } from 'lew-ui'
-import { ref } from 'vue'
 import { dropdownProps } from './props'
 
-// Props & Emit
 defineProps(dropdownProps)
 
 const lewPopoverRef = ref<InstanceType<typeof LewPopover>>()
 
-// Methods
 function show() {
   lewPopoverRef.value?.show()
 }

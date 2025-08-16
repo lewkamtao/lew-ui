@@ -2,28 +2,26 @@
 import type { LewMenuTreeOption } from 'lew-ui/types'
 import { any2px } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
-import { computed, h, onMounted, provide, resolveDirective, withDirectives } from 'vue'
+import {
+  computed,
+  h,
+  onMounted,
+  provide,
+  resolveDirective,
+  toRaw,
+  withDirectives,
+} from 'vue'
+import { menuTreeEmits } from './emits'
 import LewMenuTreeItem from './LewMenuTreeItem.vue'
 import { menuTreeProps } from './props'
 
-// Types
-interface MenuTreeEmits {
-  change: [item: LewMenuTreeOption]
-  select: [value: string | number, item: LewMenuTreeOption]
-  expand: [expandKeys: (string | number)[]]
-  collapse: [expandKeys: (string | number)[]]
-}
-
-// Props & Emits
 const props = defineProps(menuTreeProps)
-const emit = defineEmits<MenuTreeEmits>()
+const emit = defineEmits(menuTreeEmits)
 
-// Models
 const modelValue = defineModel<string>({ default: '' })
 const expandKeys = defineModel<string[]>('expandKeys', { default: () => [] })
 const collapsed = defineModel<boolean>('collapsed', { default: false })
 
-// Computed
 const getModelValueKeyPath = computed(() => {
   function findKeyPath(
     items: LewMenuTreeOption[],
@@ -52,7 +50,6 @@ const menuTreeStyle = computed(() => ({
   width: collapsed.value ? any2px(44) : any2px(props.width),
 }))
 
-// Provide data for child components
 provide('lew-menu-tree', {
   modelValue,
   expandKeys,
@@ -60,39 +57,34 @@ provide('lew-menu-tree', {
   modelValueKeyPath: getModelValueKeyPath,
 })
 
-// Directives
 const hoverMenu = resolveDirective('hover-menu')
 
-// Methods
 function handleMenuSelect(item: LewMenuTreeOption): void {
   if (item.disabled) {
     return
   }
 
   if (item.children?.length) {
-    // Handle expand/collapse
     const index = expandKeys.value.indexOf(item.value as never)
     const wasExpanded = index > -1
 
     if (wasExpanded) {
       expandKeys.value.splice(index, 1)
-      emit('collapse', [...expandKeys.value])
+      emit('collapse', [...toRaw(expandKeys.value)])
     }
     else {
       expandKeys.value.push(item.value as never)
-      emit('expand', [...expandKeys.value])
+      emit('expand', [...toRaw(expandKeys.value)])
     }
   }
   else {
-    // Handle selection
     const newValue = modelValue.value !== item.value ? item.value : ''
     modelValue.value = newValue
-    emit('select', newValue, item)
+    emit('select', newValue, toRaw(item))
   }
 
-  // Clone to trigger reactivity
   expandKeys.value = cloneDeep(expandKeys.value)
-  emit('change', item)
+  emit('change', toRaw(item))
 }
 function transformTree(tree: LewMenuTreeOption[] = []): LewMenuTreeOption[] {
   return tree.map(item => ({
@@ -140,7 +132,7 @@ function renderMenuTreeItem(item: LewMenuTreeOption, level: number = 1): any {
         disabled,
         icon,
         tagProps,
-        onChange: () => emit('change', item),
+        onChange: () => emit('change', toRaw(item)),
       },
       () =>
         item.children?.length
@@ -151,7 +143,6 @@ function renderMenuTreeItem(item: LewMenuTreeOption, level: number = 1): any {
   )
 }
 
-// Lifecycle
 onMounted(() => {
   expandKeys.value = cloneDeep(expandKeys.value)
   modelValue.value = cloneDeep(modelValue.value)

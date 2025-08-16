@@ -6,10 +6,6 @@ import { badgeProps } from './props'
 
 const props = defineProps(badgeProps)
 
-const emit = defineEmits<{
-  click: [event: MouseEvent]
-}>()
-
 // Computed properties
 const getStyle = computed<CSSProperties>(() => {
   const { color, offset, text } = props
@@ -49,15 +45,10 @@ const displayValue = computed(() => {
   }
   return value
 })
-
-// Methods
-function handleClick(event: MouseEvent) {
-  emit('click', event)
-}
 </script>
 
 <template>
-  <div class="lew-badge" :style="getBadgeStyle" @click="handleClick">
+  <div class="lew-badge" :style="getBadgeStyle">
     <span v-if="value" class="lew-badge-value" :style="getStyle">
       {{ displayValue }}
     </span>

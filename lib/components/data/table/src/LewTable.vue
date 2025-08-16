@@ -17,12 +17,13 @@ import {
   sumBy,
   throttle,
 } from 'lodash-es'
-import { markRaw } from 'vue'
+import { markRaw, toRaw } from 'vue'
+import { tableEmits } from './emits'
 import { tableProps } from './props'
 import SortIcon from './SortIcon.vue'
 
 const props = defineProps(tableProps)
-const emit = defineEmits(['sortChange', 'selectChange', 'dragSort'])
+const emit = defineEmits(tableEmits)
 const selectedKeys = defineModel('selectedKeys')
 const sortValue: any = defineModel('sortValue', { default: {} })
 const tableRef = ref()
@@ -363,7 +364,7 @@ function toggleRowSelection(row: any) {
     state.selectedRowsMap = { [row[_rowKey]]: !isChecked }
     selectedKeys.value = isChecked ? undefined : row[_rowKey]
   }
-  emit('selectChange', cloneDeep(selectedKeys.value))
+  emit('selectChange', toRaw(cloneDeep(selectedKeys.value)))
   updateAllCheckedState()
 }
 
@@ -503,7 +504,7 @@ function sort(column: any) {
       [column.field]: value,
     }
 
-    emit('sortChange', cloneDeep(sortValue.value))
+    emit('sortChange', toRaw(cloneDeep(sortValue.value)))
   }
 }
 
@@ -783,7 +784,7 @@ function dragEnd() {
         const [movedItem] = newDataSource.splice(dragIndex, 1)
         newDataSource.splice(actualTargetPosition, 0, movedItem)
         state.dataSource = newDataSource
-        emit('dragSort', newDataSource)
+        emit('dragSort', toRaw(newDataSource))
       }
     }
   }

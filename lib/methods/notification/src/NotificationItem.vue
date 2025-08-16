@@ -22,7 +22,8 @@ function onClose() {
 
 <template>
   <div
-    class="lew-notification" :class="[`lew-notification-${type}`]"
+    class="lew-notification"
+    :class="[`lew-notification-${type}`]"
     :style="{ width: any2px(width) }"
   >
     <div class="lew-notification-box">
@@ -145,6 +146,7 @@ function onClose() {
   from {
     transform: scaleX(1);
   }
+
   to {
     transform: scaleX(0);
   }

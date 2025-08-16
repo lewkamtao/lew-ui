@@ -148,6 +148,7 @@ if (props.closeByEsc) {
     border-radius: var(--lew-border-radius-large);
     background-color: var(--lew-modal-body-bgcolor);
     font-size: 0;
+
     .lew-dialog-box-left {
       width: 28px;
       margin-left: -2.5px;

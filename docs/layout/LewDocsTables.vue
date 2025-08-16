@@ -48,7 +48,7 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
     },
     {
       title: 'Description',
-      width: ['events', 'methods'].includes(columnsKey) ? 400 : 200,
+      width: ['emits', 'methods'].includes(columnsKey) ? 400 : 200,
       field: 'description',
       customRender: ({ row }: any) => {
         const { name } = row
@@ -60,7 +60,22 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
     },
   ]
 
-  if (!['events', 'methods', 'slots'].includes(columnsKey)) {
+  if (columnsKey === 'emits') {
+    columns = [
+      ...columns,
+      {
+        title: 'Argument',
+        width: 200,
+        field: 'argument',
+        customRender: ({ row }: any) => {
+          const { argument } = row
+          return argument
+        },
+      },
+    ]
+  }
+
+  if (!['emits', 'methods', 'slots'].includes(columnsKey)) {
     columns = [
       ...columns,
       {
