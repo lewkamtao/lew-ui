@@ -21,10 +21,11 @@ import {
 } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
+import { selectMultipleEmits } from './emits'
 import { selectMultipleProps } from './props'
 
 const props = defineProps(selectMultipleProps)
-const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur'])
+const emit = defineEmits(selectMultipleEmits)
 const selectValue: any = defineModel()
 
 const lewSelectRef = ref()

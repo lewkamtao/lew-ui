@@ -2,10 +2,11 @@
 import { LewFlex, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
+import { inputNumberEmits } from './emits'
 import { inputNumberProps } from './props'
 
 const props = defineProps(inputNumberProps)
-const emit = defineEmits(['blur', 'focus', 'change', 'input'])
+const emit = defineEmits(inputNumberEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {

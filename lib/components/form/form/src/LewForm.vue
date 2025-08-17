@@ -10,10 +10,11 @@ import { cloneDeep } from 'lodash-es'
 import * as Yup from 'yup'
 import LewFormItem from './LewFormItem.vue'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
+import { formEmits } from './emits'
 import { formProps } from './props'
 
 const props = defineProps(formProps)
-const emit = defineEmits(['change', 'mounted'])
+const emit = defineEmits(formEmits)
 const formMap = ref<Record<string, any>>({})
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)

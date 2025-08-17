@@ -2,23 +2,15 @@
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { checkboxEmits } from './emits'
 import { checkboxProps } from './props'
 
 const props = defineProps(checkboxProps)
+const emit = defineEmits(checkboxEmits)
 
-const emit = defineEmits(['change'])
 const modelValue: Ref<boolean | undefined> = defineModel({
   default: false,
 })
-
-function setChecked() {
-  if (props.disabled || props.readonly)
-    return
-
-  const newValue = !modelValue.value
-  modelValue.value = newValue
-  emit('change', cloneDeep(newValue))
-}
 
 const getIconSize = computed(() => {
   const { size, block } = props
@@ -50,11 +42,28 @@ const getCheckboxClassName = computed(() => {
     readonly,
   })
 })
+
+const shouldShowIconBox = computed(() => {
+  return props.iconable || (!props.iconable && !props.block)
+})
+
+function setChecked() {
+  if (props.disabled || props.readonly)
+    return
+
+  const newValue = !modelValue.value
+  modelValue.value = newValue
+  emit('change', cloneDeep(newValue))
+}
 </script>
 
 <template>
-  <div class="lew-checkbox" :class="getCheckboxClassName" @click.stop="setChecked">
-    <div v-if="iconable || (!iconable && !block)" class="lew-checkbox-icon-box">
+  <div
+    class="lew-checkbox"
+    :class="getCheckboxClassName"
+    @click.stop="setChecked"
+  >
+    <div v-if="shouldShowIconBox" class="lew-checkbox-icon-box">
       <i v-show="certain" class="lew-checkbox-icon-certain" />
       <CommonIcon
         :stroke-width="4"

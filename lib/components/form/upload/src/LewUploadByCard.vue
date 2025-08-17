@@ -4,10 +4,11 @@ import type { LewUploadFileItem } from 'lew-ui/types'
 import { LewFlex, LewImage, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
+import { uploadByCardEmits } from './emits'
 import { uploadByCardProps } from './props'
 
 defineProps(uploadByCardProps)
-const emit = defineEmits(['reUpload', 'deleteFile'])
+const emit = defineEmits(uploadByCardEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {

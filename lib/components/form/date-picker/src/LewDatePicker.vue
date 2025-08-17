@@ -1,52 +1,26 @@
+额我ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 <script lang="ts" setup>
 import dayjs from 'dayjs'
 import { LewDate, LewPopover, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { datePickerEmits } from './emits'
 import { datePickerProps } from './props'
 
 const props = defineProps(datePickerProps)
-const emit = defineEmits(['change', 'clear'])
-// 获取app
+const emit = defineEmits(datePickerEmits)
+
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
+
 const modelValue: Ref<string | undefined> = defineModel()
 
 const visible = ref(false)
-
 const lewPopoverRef = ref()
-
 const lewDateRef = ref()
-
-function show() {
-  lewPopoverRef.value.show()
-}
-
-function hide() {
-  lewPopoverRef.value.hide()
-}
-
-function change(date: string | undefined) {
-  emit('change', { date, value: cloneDeep(modelValue.value) })
-  hide()
-}
-
-function selectPresets(item: { label: string, value: string }) {
-  modelValue.value = dayjs(item.value).format(props.valueFormat)
-  lewDateRef.value && lewDateRef.value.init(item.value)
-  setTimeout(() => {
-    nextTick(() => {
-      change(modelValue.value)
-    })
-  }, 100)
-}
-
-if (props.valueFormat && modelValue.value) {
-  modelValue.value = dayjs(modelValue.value).format(props.valueFormat)
-}
 
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
@@ -73,6 +47,44 @@ const getDatePickerInputStyle = computed(() => {
   }
 })
 
+const getDisplayPlaceholder = computed(() => {
+  return props.placeholder
+    ? props.placeholder
+    : locale.t('datePicker.placeholder')
+})
+
+const shouldShowPlaceholder = computed(() => !modelValue.value)
+const shouldShowDateValue = computed(() => !!modelValue.value)
+const shouldShowClearIcon = computed(
+  () => modelValue.value && props.clearable && !props.readonly,
+)
+const shouldShowCalendarIcon = computed(
+  () => !(modelValue.value && props.clearable),
+)
+
+function show() {
+  lewPopoverRef.value.show()
+}
+
+function hide() {
+  lewPopoverRef.value.hide()
+}
+
+function change(date: string | undefined) {
+  emit('change', { date, value: cloneDeep(modelValue.value) })
+  hide()
+}
+
+function selectPresets(item: { label: string, value: string }) {
+  modelValue.value = dayjs(item.value).format(props.valueFormat)
+  lewDateRef.value && lewDateRef.value.init(item.value)
+  setTimeout(() => {
+    nextTick(() => {
+      change(modelValue.value)
+    })
+  }, 100)
+}
+
 function clearHandle() {
   modelValue.value = undefined
   change(modelValue.value)
@@ -83,8 +95,13 @@ function showHandle() {
   visible.value = true
   lewDateRef.value && lewDateRef.value.init(modelValue.value)
 }
+
 function hideHandle() {
   visible.value = false
+}
+
+if (props.valueFormat && modelValue.value) {
+  modelValue.value = dayjs(modelValue.value).format(props.valueFormat)
 }
 
 defineExpose({ show, hide })
@@ -116,10 +133,13 @@ defineExpose({ show, hide })
               opacity: visible ? 0.6 : 1,
             }"
           >
-            <div v-show="!modelValue" class="lew-date-picker-placeholder">
-              {{ placeholder ? placeholder : locale.t("datePicker.placeholder") }}
+            <div
+              v-show="shouldShowPlaceholder"
+              class="lew-date-picker-placeholder"
+            >
+              {{ getDisplayPlaceholder }}
             </div>
-            <div v-show="modelValue" class="lew-date-picker-dateValue">
+            <div v-show="shouldShowDateValue" class="lew-date-picker-dateValue">
               {{ modelValue }}
             </div>
           </lew-flex>
@@ -127,13 +147,13 @@ defineExpose({ show, hide })
             class="lew-date-picker-icon-calendar"
             :size="getIconSize"
             :class="{
-              'lew-date-picker-icon-calendar-hide': modelValue && clearable,
+              'lew-date-picker-icon-calendar-hide': !shouldShowCalendarIcon,
             }"
             type="calendar"
           />
           <transition name="lew-form-icon-ani">
             <CommonIcon
-              v-if="modelValue && clearable && !readonly"
+              v-if="shouldShowClearIcon"
               :size="getIconSize"
               type="close"
               class="lew-form-icon-close lew-date-picker-icon-close"

@@ -3,10 +3,11 @@ import { useMagicKeys } from '@vueuse/core'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
+import { inputEmits } from './emits'
 import { inputProps } from './props'
 
 const props = defineProps(inputProps)
-const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
+const emit = defineEmits(inputEmits)
 const { enter } = useMagicKeys()
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -63,6 +64,16 @@ function blur() {
   isFocus.value = false
 }
 
+function handleInput(event: Event) {
+  const target = event.target as HTMLInputElement
+  emit('input', target.value)
+}
+
+function handleChange(event: Event) {
+  const target = event.target as HTMLInputElement
+  emit('change', target.value)
+}
+
 const getIconSize = computed(
   () =>
     ({
@@ -76,11 +87,15 @@ const getInputStyle = computed(() => {
   const { clearable, showCount } = props
   const countWidth = lewInputCountRef.value?.offsetWidth || 0
   return {
-    width: `calc(100% - ${clearable ? 20 + countWidth + (showCount ? 12 : 0) : 0}px)`,
+    width: `calc(100% - ${
+      clearable ? 20 + countWidth + (showCount ? 12 : 0) : 0
+    }px)`,
   }
 })
 
-const getType = computed(() => (props.type === 'password' ? _type.value : props.type))
+const getType = computed(() =>
+  props.type === 'password' ? _type.value : props.type,
+)
 
 const getInputClassNames = computed(() => {
   const { size, readonly, disabled, align, autoWidth } = props
@@ -102,11 +117,16 @@ function suffixChange(item: { value: string }) {
 }
 
 const getPrefixesLabel = computed(() => {
-  return props.prefixesOptions.find(e => e.value === prefixValue.value)?.label || ''
+  return (
+    props.prefixesOptions.find(e => e.value === prefixValue.value)?.label
+    || ''
+  )
 })
 
 const getSuffixLabel = computed(() => {
-  return props.suffixOptions.find(e => e.value === suffixValue.value)?.label || ''
+  return (
+    props.suffixOptions.find(e => e.value === suffixValue.value)?.label || ''
+  )
 })
 
 function copy() {
@@ -205,13 +225,18 @@ defineExpose({ toFocus, toBlur })
             x="start"
             class="lew-input-prefixes-dropdown"
             :class="{
-              'lew-input-prefixes-dropdown-open': state.prefixesDropdown === 'show',
+              'lew-input-prefixes-dropdown-open':
+                state.prefixesDropdown === 'show',
             }"
           >
             <div>
               {{ getPrefixesLabel }}
             </div>
-            <CommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <CommonIcon
+              :size="getIconSize"
+              type="chevron-down"
+              class="icon-select"
+            />
           </LewFlex>
         </LewDropdown>
       </div>
@@ -244,8 +269,8 @@ defineExpose({ toFocus, toBlur })
         :type="getType"
         :readonly="readonly"
         :maxlength="maxLength"
-        @input="emit('input', modelValue)"
-        @change="emit('change', modelValue)"
+        @input="handleInput"
+        @change="handleChange"
         @blur="blur"
         @focus="focus"
       >
@@ -253,7 +278,10 @@ defineExpose({ toFocus, toBlur })
         {{ modelValue }}
       </label>
       <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear" />
-      <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
+      <div
+        v-if="showPassword || clearable || showCount"
+        class="lew-input-controls"
+      >
         <div
           v-if="modelValue && showCount"
           ref="lewInputCountRef"
@@ -271,8 +299,16 @@ defineExpose({ toFocus, toBlur })
           @mousedown.prevent=""
           @click="showPasswordFn"
         >
-          <CommonIcon v-show="_type === 'text'" :size="getIconSize" type="eye" />
-          <CommonIcon v-show="_type === 'password'" :size="getIconSize" type="eye_off" />
+          <CommonIcon
+            v-show="_type === 'text'"
+            :size="getIconSize"
+            type="eye"
+          />
+          <CommonIcon
+            v-show="_type === 'password'"
+            :size="getIconSize"
+            type="eye_off"
+          />
         </div>
         <transition name="lew-form-icon-ani">
           <CommonIcon
@@ -321,7 +357,11 @@ defineExpose({ toFocus, toBlur })
             }"
           >
             <div>{{ getSuffixLabel }}</div>
-            <CommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <CommonIcon
+              :size="getIconSize"
+              type="chevron-down"
+              class="icon-select"
+            />
           </LewFlex>
         </LewDropdown>
       </div>

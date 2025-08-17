@@ -1,13 +1,22 @@
 <script setup lang="ts">
 import { locale } from 'lew-ui'
 import { any2px, object2class } from 'lew-ui/utils'
+import { colorPickerEmits } from './emits'
 import { colorPickerProps } from './props'
 
 const props = defineProps(colorPickerProps)
+const emit = defineEmits(colorPickerEmits)
 
-const emit = defineEmits(['change'])
 const modelValue = defineModel()
+
 const isFocus = ref(false)
+const pickerValueInputRef = ref()
+
+const getDisplayPlaceholder = computed(() => {
+  return props.placeholder
+    ? props.placeholder
+    : locale.t('colorPicker.placeholder')
+})
 
 const getPickerClassName = computed(() => {
   const { disabled, readonly } = props
@@ -54,37 +63,34 @@ const getPickerValueInputStyle = computed(() => {
     fontSize: `var(--lew-form-font-size-${size})`,
   }
 })
-const pickerValueInputRef = ref()
+
 function focus() {
   isFocus.value = true
-  // 全选选中值
   pickerValueInputRef.value.select()
 }
 
 function blur() {
   isFocus.value = false
-  // 转化成有效的色值
   modelValue.value = convertToHex(modelValue.value as string)
-  emit('change', modelValue.value)
+  emit('change', modelValue.value as string)
 }
 
-// 将任意格式的颜色值转换为标准的hex格式
+function change() {
+  emit('change', modelValue.value as string)
+}
+
 function convertToHex(color: string): string {
-  // 去除空格
   color = color.trim()
 
-  // 如果已经是6位hex格式,直接返回(添加#号)
   if (/^#?[0-9a-f]{6}$/i.test(color)) {
     return color.startsWith('#') ? color : `#${color}`
   }
 
-  // 处理3位hex缩写,例如#f93
   if (/^#?[0-9a-f]{3}$/i.test(color)) {
     const hex = color.replace('#', '')
     return `#${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`
   }
 
-  // 处理rgb/rgba格式
   const rgbMatch = color.match(
     /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*\d+(?:\.\d+)?)?\)$/,
   )
@@ -95,18 +101,17 @@ function convertToHex(color: string): string {
     return `#${r}${g}${b}`
   }
 
-  // 无效的颜色值返回黑色
   return ''
-}
-
-function change() {
-  emit('change', modelValue.value)
 }
 </script>
 
 <template>
   <div class="lew-color-picker-view" :style="getPickerViewStyle">
-    <div class="lew-color-picker" :style="getPickerStyle" :class="getPickerClassName">
+    <div
+      class="lew-color-picker"
+      :style="getPickerStyle"
+      :class="getPickerClassName"
+    >
       <input
         v-model="modelValue"
         class="lew-color-picker-input"
@@ -120,7 +125,7 @@ function change() {
         :style="getPickerValueInputStyle"
         class="lew-color-value-input"
         type="text"
-        :placeholder="placeholder ? placeholder : locale.t('colorPicker.placeholder')"
+        :placeholder="getDisplayPlaceholder"
         @focus="focus"
         @blur="blur"
       >

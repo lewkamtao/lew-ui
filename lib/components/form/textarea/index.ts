@@ -1,2 +1,3 @@
+export * from './src/emits'
 export { default as LewTextarea } from './src/LewTextarea.vue'
 export * from './src/props'

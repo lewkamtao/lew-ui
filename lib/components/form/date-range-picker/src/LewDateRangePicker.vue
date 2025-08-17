@@ -3,10 +3,11 @@ import type { LewSize } from 'lew-ui'
 import { LewDateRange, LewPopover, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
+import { dateRangePickerEmits } from './emits'
 import { dateRangePickerProps } from './props'
 
 const props = defineProps(dateRangePickerProps)
-const emit = defineEmits(['change', 'clear'])
+const emit = defineEmits(dateRangePickerEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {

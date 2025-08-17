@@ -35,10 +35,11 @@ import {
   requiredIconSizeMap,
   tipsIconSizeMap,
 } from './props'
+import { formItemEmits } from './emits'
 import RequiredIcon from './RequiredIcon.vue'
 
 const props = defineProps(formItemProps)
-const emit = defineEmits(['change'])
+const emit = defineEmits(formItemEmits)
 const asMap: Record<LewFormItemAs, Component> = {
   'input': LewInput,
   'textarea': LewTextarea,

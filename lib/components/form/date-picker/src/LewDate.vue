@@ -5,15 +5,15 @@ import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
 import { getMonthDate } from './date'
+import { dateEmits } from './emits'
 import { dateProps } from './props'
 
 const props = defineProps(dateProps)
-const emit = defineEmits(['change'])
+const emit = defineEmits(dateEmits)
+
 const modelValue: Ref<string | undefined> = defineModel()
 
-// 获取当前年份
 const _year = dayjs().year()
-// 获取当前月份
 const _month = dayjs().month() + 1
 
 const dateData: Ref<RetType> = ref(getMonthDate())
@@ -21,6 +21,33 @@ const dateData: Ref<RetType> = ref(getMonthDate())
 const dateState = reactive({
   year: _year,
   month: _month,
+})
+
+const headDate = computed(() => {
+  return [
+    locale.t('datePicker.Mon'),
+    locale.t('datePicker.Tue'),
+    locale.t('datePicker.Wed'),
+    locale.t('datePicker.Thu'),
+    locale.t('datePicker.Fri'),
+    locale.t('datePicker.Sat'),
+    locale.t('datePicker.Sun'),
+  ]
+})
+
+const checkToday = computed(() => (item: RetItemType) => {
+  const today = dayjs()
+  return today.isSame(dayjs(`${item.year}-${item.month}-${item.date}`), 'day')
+})
+
+const lewDateItemClassNames = computed(() => (item: RetItemType) => {
+  const e = item.date === item.showDate
+  let selected = false
+  if (item.date > 0 && item.date <= item.showDate) {
+    const v = `${dateState.year}-${dateState.month}-${item.showDate}`
+    selected = dayjs(v).isSame(dayjs(modelValue.value))
+  }
+  return object2class('lew-date-item', { e, selected })
 })
 
 function setMonthDate() {
@@ -32,10 +59,6 @@ function init(date: string | undefined = '') {
   dateState.month = dayjs(date || undefined).month() + 1
   setMonthDate()
 }
-
-init(modelValue.value)
-
-defineExpose({ init })
 
 function prveMonth() {
   if (dateState.month > 1) {
@@ -76,32 +99,9 @@ function selectDateFn(item: RetItemType) {
   emit('change', _v)
 }
 
-const checkToday = computed(() => (item: RetItemType) => {
-  const today = dayjs()
-  return today.isSame(dayjs(`${item.year}-${item.month}-${item.date}`), 'day')
-})
+init(modelValue.value)
 
-const lewDateItemClassNames = computed(() => (item: RetItemType) => {
-  const e = item.date === item.showDate
-  let selected = false
-  if (item.date > 0 && item.date <= item.showDate) {
-    const v = `${dateState.year}-${dateState.month}-${item.showDate}`
-    selected = dayjs(v).isSame(dayjs(modelValue.value))
-  }
-  return object2class('lew-date-item', { e, selected })
-})
-
-const headDate = computed(() => {
-  return [
-    locale.t('datePicker.Mon'),
-    locale.t('datePicker.Tue'),
-    locale.t('datePicker.Wed'),
-    locale.t('datePicker.Thu'),
-    locale.t('datePicker.Fri'),
-    locale.t('datePicker.Sat'),
-    locale.t('datePicker.Sun'),
-  ]
-})
+defineExpose({ init })
 </script>
 
 <template>

@@ -4,10 +4,11 @@ import { LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { throttle } from 'lodash-es'
+import { textareaEmits } from './emits'
 import { textareaProps } from './props'
 
 const props = defineProps(textareaProps)
-const emit = defineEmits(['clear', 'blur', 'input', 'focus', 'change', 'ok'])
+const emit = defineEmits(textareaEmits)
 const { shift, enter } = useMagicKeys()
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -72,6 +73,16 @@ function focus(e: any) {
 function blur() {
   emit('blur', modelValue.value)
   state.isFocus = false
+}
+
+function handleInput(event: Event) {
+  const target = event.target as HTMLTextAreaElement
+  emit('input', target.value)
+}
+
+function handleChange(event: Event) {
+  const target = event.target as HTMLTextAreaElement
+  emit('change', target.value)
 }
 
 const getIconSize = computed(() => {
@@ -153,8 +164,8 @@ defineExpose({ toFocus })
       :readonly="readonly"
       @focus="focus"
       @blur="blur"
-      @input="emit('input', modelValue)"
-      @change="emit('change', modelValue)"
+      @input="handleInput"
+      @change="handleChange"
     />
 
     <div v-if="modelValue && showCount" class="lew-textarea-count">

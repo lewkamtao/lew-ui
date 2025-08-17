@@ -10,11 +10,12 @@ import {
   getFileIcon,
   getUniqueId,
 } from 'lew-ui/utils'
+import { uploadByListEmits } from './emits'
 import { uploadByListProps } from './props'
 
 defineProps(uploadByListProps)
 
-const emit = defineEmits(['reUpload', 'deleteFile'])
+const emit = defineEmits(uploadByListEmits)
 
 const statusColorMap = {
   success: 'green',

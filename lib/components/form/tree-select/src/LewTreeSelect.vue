@@ -4,10 +4,11 @@ import { LewPopover, LewTooltip, LewTree, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, findNodeByKey, object2class } from 'lew-ui/utils'
 import { cloneDeep, isFunction } from 'lodash-es'
+import { treeSelectEmits } from './emits'
 import { treeSelectProps } from './props'
 
 const props = defineProps(treeSelectProps)
-const emit = defineEmits(['change', 'blur', 'clear'])
+const emit = defineEmits(treeSelectEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {

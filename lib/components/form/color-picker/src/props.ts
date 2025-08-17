@@ -3,12 +3,6 @@ import type { LewSize } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 
-export const colorPickerModel = {
-  modelValue: {
-    type: String,
-  },
-}
-
 export const colorPickerProps = {
   size: {
     type: String as PropType<LewSize>,

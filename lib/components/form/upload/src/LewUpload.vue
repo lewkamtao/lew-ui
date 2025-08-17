@@ -7,11 +7,12 @@ import { any2px, formatBytes, getUniqueId, object2class } from 'lew-ui/utils'
 import { cloneDeep, isFunction } from 'lodash-es'
 import LewUploadByCard from './LewUploadByCard.vue'
 import LewUploadByList from './LewUploadByList.vue'
+import { uploadEmits } from './emits'
 import { uploadProps } from './props'
 
 const props = defineProps(uploadProps)
 
-const emit = defineEmits(['change', 'delete'])
+const emit = defineEmits(uploadEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {

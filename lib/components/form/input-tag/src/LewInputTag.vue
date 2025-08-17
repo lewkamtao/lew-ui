@@ -3,10 +3,11 @@ import { LewInput, LewMessage, LewTag, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { inputTagEmits } from './emits'
 import { inputTagProps } from './props'
 
 const props = defineProps(inputTagProps)
-const emit = defineEmits(['remove', 'change', 'clear', 'add'])
+const emit = defineEmits(inputTagEmits)
 
 const modelValue = defineModel<string[] | undefined>()
 const inputValue = ref<string>('')

@@ -3,12 +3,6 @@ import type { LewCascaderOption, LewSize, LewTrigger } from 'lew-ui'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
-export const cascaderModel = {
-  modelValue: {
-    type: String,
-  },
-}
-
 export const cascaderProps = {
   options: {
     type: Array as PropType<LewCascaderOption[]>,

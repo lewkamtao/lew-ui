@@ -1,58 +1,61 @@
 <script setup lang="ts">
-import type { LewTabsOption } from 'lew-ui/types'
-import { any2px, object2class } from 'lew-ui/utils'
-import { tabsProps } from './props'
+import type { LewTabsOption } from "lew-ui/types";
+import { any2px, object2class } from "lew-ui/utils";
+import { tabsEmits } from "./emits";
+import { tabsProps } from "./props";
 
-const props = defineProps(tabsProps)
-const emit = defineEmits(['change'])
-const tabsValue: Ref<string | number | undefined> = defineModel({
+const props = defineProps(tabsProps);
+const emit = defineEmits(tabsEmits);
+const tabsValue: Ref<string> = defineModel({
   required: true,
-})
+});
 
-const tabsRef = ref()
-const itemRef = ref([] as any)
+const tabsRef = ref();
+const itemRef = ref([] as any);
 
 const state = reactive({
   activeItemStyle: {} as any,
   curIndex: (props.options || []).findIndex(
-    (e: LewTabsOption) => tabsValue.value === e.value,
+    (e: LewTabsOption) => tabsValue.value === e.value
   ),
-  hidLine: 'all',
+  hidLine: "all",
   isInit: false,
-})
+});
 
 watch(
   () => tabsValue.value,
   (v: string | number | undefined) => {
     nextTick(() => {
-      selectItem(v, 'watch')
-      init()
-    })
+      selectItem(v, "watch");
+      init();
+    });
   },
-  { deep: true },
-)
+  { deep: true }
+);
 
 function initActiveItemStyle(index: number) {
-  const activeRef = itemRef.value[index]
+  const activeRef = itemRef.value[index];
 
   // 确保 tabsRef 存在，避免访问 null 的属性
   if (!tabsRef.value || !activeRef) {
-    return
+    return;
   }
 
   if (
-    tabsRef.value.scrollWidth > tabsRef.value.clientWidth
-    && activeRef?.offsetLeft >= 0
+    tabsRef.value.scrollWidth > tabsRef.value.clientWidth &&
+    activeRef?.offsetLeft >= 0
   ) {
-    tabsRef.value.scrollLeft
-      = activeRef?.offsetLeft - tabsRef.value.clientWidth / 2 + activeRef?.offsetWidth / 2
+    tabsRef.value.scrollLeft =
+      activeRef?.offsetLeft -
+      tabsRef.value.clientWidth / 2 +
+      activeRef?.offsetWidth / 2;
   }
 
   state.activeItemStyle = {
     width: `${activeRef?.offsetWidth}px`,
-    height: props.type === 'line' ? '' : `${activeRef?.offsetHeight}px`,
+    height: props.type === "line" ? "" : `${activeRef?.offsetHeight}px`,
     transform: `translate(${activeRef?.offsetLeft}px,-50%)`,
-  }
+  };
 }
 
 watch(
@@ -60,129 +63,136 @@ watch(
   () => {
     nextTick(() => {
       setTimeout(() => {
-        const index = props.options.findIndex(e => tabsValue.value === e.value)
-        initActiveItemStyle(index)
-      }, 250)
-    })
-  },
-)
+        const index = props.options.findIndex(
+          (e) => tabsValue.value === e.value
+        );
+        initActiveItemStyle(index);
+      }, 250);
+    });
+  }
+);
 
 function init() {
-  const index = props.options.findIndex(e => e.value === tabsValue.value)
+  const index = props.options.findIndex((e) => e.value === tabsValue.value);
   if (index >= 0) {
-    initActiveItemStyle(index)
+    initActiveItemStyle(index);
   }
-  tabsScroll()
+  tabsScroll();
   setTimeout(() => {
-    state.isInit = true
-  }, 100)
+    state.isInit = true;
+  }, 100);
 }
 
 function selectItem(value: string | number | undefined, type?: string) {
-  const index = props.options.findIndex(e => value === e.value)
+  const index = props.options.findIndex((e) => value === e.value);
   if (index >= 0) {
-    const _item = props.options[index]
+    const _item = props.options[index];
     if (tabsValue.value !== _item.value) {
-      tabsValue.value = _item.value
+      tabsValue.value = _item.value;
     }
-    initActiveItemStyle(index)
-    if (type !== 'watch' && value !== tabsValue.value) {
-      emit('change', {
+    initActiveItemStyle(index);
+    if (type !== "watch" && value !== tabsValue.value) {
+      emit("change", {
         label: _item.label,
         value: _item.value,
-      })
+      });
     }
-    state.curIndex = index
+    state.curIndex = index;
   }
 }
 
-let timer: ReturnType<typeof setTimeout> | undefined
+let timer: ReturnType<typeof setTimeout> | undefined;
 
 function debounce() {
-  clearTimeout(timer)
+  clearTimeout(timer);
   timer = setTimeout(() => {
-    init()
-  }, 250)
+    init();
+  }, 250);
 }
 
 const getTabsWrapperClassName = computed(() => {
-  const { type, round, disabled, readonly } = props
-  return object2class('lew-tabs-wrapper', {
+  const { type, round, disabled, readonly } = props;
+  return object2class("lew-tabs-wrapper", {
     type,
     round,
     hidLine: state.hidLine || !state.isInit,
     disabled,
     readonly,
-  })
-})
+  });
+});
 
 const getTabsClassName = computed(() => {
-  const { type, round, size } = props
-  return object2class('lew-tabs', {
+  const { type, round, size } = props;
+  return object2class("lew-tabs", {
     type,
     round,
     size,
-  })
-})
+  });
+});
 
 function tabsScroll() {
   // 确保 tabsRef 存在，避免访问 null 的属性
   if (!tabsRef.value) {
-    return
+    return;
   }
 
   if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
     if (tabsRef.value.scrollLeft > 5) {
       if (
-        tabsRef.value.scrollLeft
-        >= tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5
+        tabsRef.value.scrollLeft >=
+        tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5
       ) {
-        state.hidLine = 'right'
+        state.hidLine = "right";
+      } else {
+        state.hidLine = "";
       }
-      else {
-        state.hidLine = ''
-      }
+    } else {
+      state.hidLine = "left";
     }
-    else {
-      state.hidLine = 'left'
-    }
-  }
-  else {
-    state.hidLine = 'all'
+  } else {
+    state.hidLine = "all";
   }
 }
 
 onMounted(() => {
   nextTick(() => {
-    init()
-  })
-  window.addEventListener('resize', debounce, false)
-})
+    init();
+  });
+  window.addEventListener("resize", debounce, false);
+});
 
 const getItemStyle = computed(() => {
-  const width = any2px(props.itemWidth)
-  if (props.itemWidth === 'auto') {
-    return 'flex:1'
+  const width = any2px(props.itemWidth);
+  if (props.itemWidth === "auto") {
+    return "flex:1";
   }
-  return `width:${width}`
-})
+  return `width:${width}`;
+});
 
 const getTabsStyle = computed(() => {
-  const width = any2px(props.width)
-  return `width:${width}`
-})
+  const width = any2px(props.width);
+  return `width:${width}`;
+});
 
 onUnmounted(() => {
-  window.removeEventListener('resize', debounce)
-})
+  window.removeEventListener("resize", debounce);
+});
 </script>
 
 <template>
-  <div :style="getTabsStyle" class="lew-tabs-wrapper" :class="getTabsWrapperClassName">
+  <div
+    :style="getTabsStyle"
+    class="lew-tabs-wrapper"
+    :class="getTabsWrapperClassName"
+  >
     <div :style="getTabsStyle" class="lew-tabs" :class="getTabsClassName">
-      <div ref="tabsRef" class="lew-tabs-main hidden-scrollbar" @scroll="tabsScroll">
+      <div
+        ref="tabsRef"
+        class="lew-tabs-main hidden-scrollbar"
+        @scroll="tabsScroll"
+      >
         <div
-          v-if="tabsValue || tabsValue === 0"
+          v-if="tabsValue"
           :style="state.activeItemStyle"
           class="lew-tabs-item-animation-active"
           :class="{ 'lew-tabs-item-isInit': state.isInit }"
@@ -228,7 +238,7 @@ onUnmounted(() => {
   height: 100%;
   width: 10px;
   z-index: 9;
-  content: '';
+  content: "";
   opacity: 1;
   transition: opacity 0.2s;
   background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
@@ -240,7 +250,7 @@ onUnmounted(() => {
   top: 0px;
   height: 100%;
   width: 12px;
-  content: '';
+  content: "";
   z-index: 9;
   opacity: 1;
   transition: opacity 0.2s;
@@ -415,7 +425,7 @@ onUnmounted(() => {
 
 .lew-tabs-type-line:after {
   position: absolute;
-  content: '';
+  content: "";
   bottom: 0px;
   left: 3px;
   height: 2px;

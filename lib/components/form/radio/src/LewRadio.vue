@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
+import { radioEmits } from './emits'
 import { radioProps } from './props'
 
 const props = defineProps(radioProps)
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(radioEmits)
 
 function setChecked() {
   emit('change')

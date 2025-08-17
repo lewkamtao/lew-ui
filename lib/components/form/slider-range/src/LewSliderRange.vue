@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { dragmove } from 'lew-ui/utils'
 import { throttle } from 'lodash-es'
+import { sliderRangeEmits } from './emits'
 import { sliderRangeProps } from './props'
 
 const props = defineProps(sliderRangeProps)
-const emit = defineEmits(['change'])
+const emit = defineEmits(sliderRangeEmits)
 
 // 获取滑块轨道的最大值
 const getTrackMax = computed(() => {

@@ -3,10 +3,11 @@ import type { LewRadioOption } from 'lew-ui/types'
 import { LewFlex } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import LewRadio from './LewRadio.vue'
+import { radioGroupEmits } from './emits'
 import { radioGroupProps } from './props'
 
 const props = defineProps(radioGroupProps)
-const emit = defineEmits(['change'])
+const emit = defineEmits(radioGroupEmits)
 const modelValue: Ref<string | number | undefined> = defineModel()
 
 function change({ item }: { item: LewRadioOption }) {

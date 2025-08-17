@@ -1,7 +1,7 @@
 import type { Component, VNode } from 'vue'
 import type { LewComponentSource } from '../types'
 import { getUniqueId } from 'lew-ui/utils'
-import { defineAsyncComponent, defineComponent, isVNode } from 'vue'
+import { defineComponent, isVNode } from 'vue'
 
 /**
  * 组件类型枚举
@@ -9,7 +9,6 @@ import { defineAsyncComponent, defineComponent, isVNode } from 'vue'
 enum ComponentType {
   VNode = 'vnode',
   FunctionalComponent = 'functional',
-  AsyncComponent = 'async',
   ComponentOptions = 'options',
   ComponentInstance = 'instance',
   Text = 'text',
@@ -63,9 +62,9 @@ function detectFunctionComponentType(func: any): ComponentType {
     return ComponentType.ComponentOptions
   }
 
-  // 异步组件检查 - 无参数的匿名函数可能是异步组件工厂
-  if (func.length === 0 && !func.name && !func.prototype?.constructor) {
-    return ComponentType.AsyncComponent
+  // 无参数的函数视为函数式组件
+  if (func.length === 0 && !func.prototype?.constructor) {
+    return ComponentType.FunctionalComponent
   }
 
   // 其他函数视为函数式组件
@@ -92,9 +91,9 @@ function detectObjectComponentType(obj: any): ComponentType {
     return ComponentType.ComponentOptions
   }
 
-  // Promise检查 - 异步组件
+  // Promise检查 - 不支持的异步组件
   if (obj.then && typeof obj.then === 'function') {
-    return ComponentType.AsyncComponent
+    return ComponentType.Unknown
   }
 
   // 带有component属性的包装对象
@@ -136,51 +135,7 @@ function createFunctionalComponent(component: any): Component {
   })
 }
 
-/**
- * 创建异步组件包装器
- * @param component 异步组件
- * @returns Vue组件
- */
-function createAsyncComponent(component: any): Component {
-  try {
-    if (typeof component === 'function') {
-      // 异步组件工厂函数
-      return defineAsyncComponent({
-        loader: component,
-        loadingComponent: createTextComponent('Loading...'),
-        errorComponent: createTextComponent('Failed to load component'),
-        delay: 200,
-        timeout: 5000,
-      })
-    }
-    else if (component && typeof component.then === 'function') {
-      // Promise形式的异步组件
-      return defineAsyncComponent({
-        loader: () => component,
-        loadingComponent: createTextComponent('Loading...'),
-        errorComponent: createTextComponent('Failed to load component'),
-        delay: 200,
-        timeout: 5000,
-      })
-    }
-    else if (component && typeof component === 'object') {
-      // 异步组件选项对象
-      return defineAsyncComponent({
-        loadingComponent: createTextComponent('Loading...'),
-        errorComponent: createTextComponent('Failed to load component'),
-        delay: 200,
-        timeout: 5000,
-        ...component,
-      })
-    }
-  }
-  catch (error) {
-    console.error('[createAsyncComponent] 创建异步组件失败:', error)
-  }
 
-  // 降级处理：返回错误组件
-  return createTextComponent('Invalid async component')
-}
 
 /**
  * 创建组件选项包装器
@@ -257,9 +212,6 @@ export function formatComponent(componentSource: LewComponentSource): Component 
 
       case ComponentType.FunctionalComponent:
         return createFunctionalComponent(componentSource as (...args: any[]) => any)
-
-      case ComponentType.AsyncComponent:
-        return createAsyncComponent(componentSource)
 
       case ComponentType.ComponentOptions:
       case ComponentType.ComponentInstance:

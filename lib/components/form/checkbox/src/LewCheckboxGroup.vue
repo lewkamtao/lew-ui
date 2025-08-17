@@ -3,28 +3,39 @@ import type { LewCheckboxOption } from 'lew-ui'
 import { LewCheckbox, LewFlex } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { checkboxGroupEmits } from './emits'
 import { checkboxGroupProps } from './props'
 
 const props = defineProps(checkboxGroupProps)
-const emit = defineEmits(['change'])
-const modelValue: Ref<string[] | number[] | undefined> = defineModel({
+const emit = defineEmits(checkboxGroupEmits)
+
+const modelValue: Ref<string[]> = defineModel({
   default: () => [],
   required: true,
 })
 
 const checkList = ref([] as boolean[])
 
-watch(
-  () => modelValue.value,
-  () => {
-    initCheckbox()
-  },
-  {
-    deep: true, // 开启深度监听
-  },
-)
+const getCheckboxGroupClassName = computed(() => {
+  const { size, readonly, disabled } = props as any
+  return object2class('lew-checkbox-group', {
+    size,
+    readonly,
+    disabled,
+  })
+})
 
-function change({ item, checked }: { item: LewCheckboxOption, checked: boolean }) {
+function getItemDisabled(item: LewCheckboxOption) {
+  return item.disabled || props.disabled
+}
+
+function change({
+  item,
+  checked,
+}: {
+  item: LewCheckboxOption
+  checked: boolean
+}) {
   const _value = modelValue.value || []
   if (checked) {
     _value.push(item.value as string & number)
@@ -46,21 +57,25 @@ function initCheckbox() {
   if (!props.options)
     return
   checkList.value = props.options.map((item: LewCheckboxOption) => {
-    if (modelValue.value && modelValue.value.includes(item.value as string & number)) {
+    if (
+      modelValue.value
+      && modelValue.value.includes(item.value as string & number)
+    ) {
       return true
     }
     return false
   })
 }
 
-const getCheckboxGroupClassName = computed(() => {
-  const { size, readonly, disabled } = props as any
-  return object2class('lew-checkbox-group', {
-    size,
-    readonly,
-    disabled,
-  })
-})
+watch(
+  () => modelValue.value,
+  () => {
+    initCheckbox()
+  },
+  {
+    deep: true,
+  },
+)
 
 initCheckbox()
 </script>
@@ -83,7 +98,7 @@ initCheckbox()
       :round="round"
       :size="size"
       :label="item.label"
-      :disabled="item.disabled || disabled"
+      :disabled="getItemDisabled(item)"
       @change="change({ item, checked: $event })"
     />
   </LewFlex>

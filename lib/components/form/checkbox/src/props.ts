@@ -2,21 +2,6 @@ import type { LewCheckboxOption, LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList } from 'lew-ui/validators'
 
-export const checkboxModel = {
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
-}
-
-export const checkboxGroupModel = {
-  modelValue: {
-    type: Array,
-    default: () => [],
-    required: true,
-  },
-}
-
 export const checkboxProps = {
   label: {
     type: String,

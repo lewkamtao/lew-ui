@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { object2class } from 'lew-ui/utils'
+import { switchEmits } from './emits'
 import { switchProps } from './props'
 
 const props = defineProps(switchProps)
-const emit = defineEmits(['click', 'change'])
+const emit = defineEmits(switchEmits)
 
 const _loading = ref(false)
 
 const modelValue: Ref<boolean | undefined> = defineModel()
-async function handleClick(e: any) {
+async function handleClick() {
   if (props.disabled || _loading.value || props.loading)
     return
-  emit('click', e)
   if (typeof props.request === 'function') {
     if (_loading.value) {
       return
@@ -19,15 +19,17 @@ async function handleClick(e: any) {
     _loading.value = true
     const isSuccess = await props.request()
     if (isSuccess) {
-      modelValue.value = !modelValue.value
-      _loading.value = false
+      const newValue = !modelValue.value
+      modelValue.value = newValue
+      emit('change', newValue)
     }
     _loading.value = false
   }
   else {
-    modelValue.value = !modelValue.value
+    const newValue = !modelValue.value
+    modelValue.value = newValue
+    emit('change', newValue)
   }
-  emit('change', modelValue.value)
 }
 
 const getSwitchClassName = computed(() => {
@@ -98,7 +100,12 @@ const getSwitchStyle = computed(() => {
     :style="getSwitchStyle"
     @click="handleClick"
   >
-    <input v-show="false" v-model="modelValue" type="checkbox" :disabled="disabled">
+    <input
+      v-show="false"
+      v-model="modelValue"
+      type="checkbox"
+      :disabled="disabled"
+    >
     <div class="lew-switch-dot" />
   </div>
 </template>
