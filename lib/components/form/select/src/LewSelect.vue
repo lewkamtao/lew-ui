@@ -130,8 +130,7 @@ watch(
       state.sourceOptions = newOptions
       state.options = flattenSelectOptions(newOptions)
       state.keyword
-        = newOptions?.find((e: any) => e.value === selectValue.value)?.label
-          || ''
+        = newOptions?.find((e: any) => e.value === selectValue.value)?.label || ''
       if (props.enableSearchCache) {
         state.searchCache.clear()
       }
@@ -254,7 +253,9 @@ function selectHandle(item: LewSelectOption) {
   state.keyword = item.label
   selectValue.value = item.value
   emit('change', item.value)
-  hide()
+  setTimeout(() => {
+    hide()
+  }, 100)
 }
 
 const getChecked = computed(() => (value: string | number) => {
@@ -343,9 +344,7 @@ async function showHandle() {
   if (props.searchable) {
     await search({ target: { value: '' } })
   }
-  const index = state.options.findIndex(
-    (e: any) => e.value === selectValue.value,
-  )
+  const index = state.options.findIndex((e: any) => e.value === selectValue.value)
   poll({
     callback: () => {
       const i = index > -1 ? index : 0
@@ -434,11 +433,7 @@ defineExpose({
         :class="getSelectClassName"
       >
         <div v-if="shouldShowLoading" class="lew-icon-loading-box">
-          <CommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
         <CommonIcon

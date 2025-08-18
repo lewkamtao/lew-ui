@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { dragmove } from 'lew-ui/utils'
 import { throttle } from 'lodash-es'
+import { sliderEmits } from './emits'
+
 import { sliderProps } from './props'
 
 const props = defineProps(sliderProps)
-const emit = defineEmits<{
-  change: [value: number]
-}>()
+const emit = defineEmits(sliderEmits)
 
 // 安全的数值转换函数
 function safeNumber(value: unknown, defaultValue: number = 0): number {

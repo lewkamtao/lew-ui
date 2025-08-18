@@ -6,5 +6,3 @@ export const menuTreeEmits = {
   expand: (expandKeys: string[]) => expandKeys,
   collapse: (expandKeys: string[]) => expandKeys,
 } as const
-
-export type LewMenuTreeEmits = typeof menuTreeEmits

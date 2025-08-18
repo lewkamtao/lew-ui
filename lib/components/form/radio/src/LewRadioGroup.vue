@@ -2,8 +2,8 @@
 import type { LewRadioOption } from 'lew-ui/types'
 import { LewFlex } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
-import LewRadio from './LewRadio.vue'
 import { radioGroupEmits } from './emits'
+import LewRadio from './LewRadio.vue'
 import { radioGroupProps } from './props'
 
 const props = defineProps(radioGroupProps)

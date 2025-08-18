@@ -15,4 +15,7 @@ export default antfu({
     html: true,
     markdown: 'prettier',
   },
+  ignores: [
+    '**/*.md',
+  ],
 })

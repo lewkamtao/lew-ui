@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 
+import { collapseTransitionEmits } from './collapseTransitionEmits'
+
 type DimensionType = 'height' | 'width'
 type CachedStyles = Record<string, string> | null
 
@@ -18,20 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
   easing: 'ease-in-out',
 })
 
-const emit = defineEmits<{
-  beforeAppear: [el: Element]
-  appear: [el: Element]
-  afterAppear: [el: Element]
-  appearCancelled: [el: Element]
-  beforeEnter: [el: Element]
-  enter: [el: Element, done: () => void]
-  afterEnter: [el: Element]
-  enterCancelled: [el: Element]
-  beforeLeave: [el: Element]
-  leave: [el: Element, done: () => void]
-  afterLeave: [el: Element]
-  leaveCancelled: [el: Element]
-}>()
+const emit = defineEmits(collapseTransitionEmits)
 
 // Data
 const cachedStyles = ref<CachedStyles>(null)

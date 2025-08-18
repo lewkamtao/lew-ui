@@ -6,10 +6,6 @@ import { buttonProps } from './props'
 
 const props = defineProps(buttonProps)
 
-const emit = defineEmits<{
-  click: [event: MouseEvent]
-}>()
-
 const buttonRef = ref<HTMLButtonElement>()
 const _loading = ref(false)
 
@@ -21,12 +17,10 @@ function blur() {
   buttonRef.value?.blur()
 }
 
-async function handleClick(event: MouseEvent) {
+async function handleClick() {
   if (props.disabled || _loading.value || props.loading) {
     return
   }
-
-  emit('click', event)
 
   if (typeof props.request === 'function') {
     if (_loading.value) {

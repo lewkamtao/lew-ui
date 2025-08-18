@@ -6,16 +6,13 @@ import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId } from 'lew-ui/utils'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import { modalProps } from './props'
+import { modalEmits } from './emits'
 
-// Types
-interface ModalEmits {
-  close: []
-}
+import { modalProps } from './props'
 
 // Props & Emits
 const props = defineProps(modalProps)
-const emit = defineEmits<ModalEmits>()
+const emit = defineEmits(modalEmits)
 
 // Composables
 const { Escape } = useMagicKeys()

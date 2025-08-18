@@ -7,11 +7,12 @@ import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
 import { initLewContextMenu } from '../index'
+import { contextMenuEmits } from './emits'
+
 import { contextMenuProps } from './props'
 
 const props = defineProps(contextMenuProps)
-
-const emit = defineEmits(['select'])
+const emit = defineEmits(contextMenuEmits)
 
 function clickItem(item: LewContextMenusOption) {
   if (isFunction(item.onClick)) {
@@ -37,7 +38,7 @@ function clickItem(item: LewContextMenusOption) {
     }
   }
 
-  emit('select', item)
+  emit('change', item)
 }
 
 const uniqueId = getUniqueId()
@@ -61,7 +62,7 @@ function initTippy() {
         return h(LewContextMenuComponent, {
           options: props.options[index].children,
           onSelect: (item: any) => {
-            emit('select', item)
+            emit('change', item)
           },
         })
       },

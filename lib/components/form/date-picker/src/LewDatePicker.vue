@@ -48,9 +48,7 @@ const getDatePickerInputStyle = computed(() => {
 })
 
 const getDisplayPlaceholder = computed(() => {
-  return props.placeholder
-    ? props.placeholder
-    : locale.t('datePicker.placeholder')
+  return props.placeholder ? props.placeholder : locale.t('datePicker.placeholder')
 })
 
 const shouldShowPlaceholder = computed(() => !modelValue.value)
@@ -58,9 +56,7 @@ const shouldShowDateValue = computed(() => !!modelValue.value)
 const shouldShowClearIcon = computed(
   () => modelValue.value && props.clearable && !props.readonly,
 )
-const shouldShowCalendarIcon = computed(
-  () => !(modelValue.value && props.clearable),
-)
+const shouldShowCalendarIcon = computed(() => !(modelValue.value && props.clearable))
 
 function show() {
   lewPopoverRef.value.show()
@@ -72,7 +68,9 @@ function hide() {
 
 function change(date: string | undefined) {
   emit('change', { date, value: cloneDeep(modelValue.value) })
-  hide()
+  setTimeout(() => {
+    hide()
+  }, 100)
 }
 
 function selectPresets(item: { label: string, value: string }) {
@@ -133,10 +131,7 @@ defineExpose({ show, hide })
               opacity: visible ? 0.6 : 1,
             }"
           >
-            <div
-              v-show="shouldShowPlaceholder"
-              class="lew-date-picker-placeholder"
-            >
+            <div v-show="shouldShowPlaceholder" class="lew-date-picker-placeholder">
               {{ getDisplayPlaceholder }}
             </div>
             <div v-show="shouldShowDateValue" class="lew-date-picker-dateValue">

@@ -1,10 +1,7 @@
 export const radioEmits = {
-  'change': () => true,
+  change: () => true,
 } as const
 
 export const radioGroupEmits = {
-  'change': (data: { value: string | number, item: any }) => data,
+  change: (data: { value: string | number, item: any }) => data,
 } as const
-
-export type LewRadioEmits = typeof radioEmits
-export type LewRadioGroupEmits = typeof radioGroupEmits

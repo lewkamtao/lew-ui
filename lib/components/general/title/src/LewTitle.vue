@@ -2,16 +2,11 @@
 import type { CSSProperties } from 'vue'
 import { any2px } from 'lew-ui/utils'
 import { computed } from 'vue'
+import { titleEmits } from './emits'
 import { titleProps } from './props'
 
-// Types
-interface TitleEmits {
-  click: [event: MouseEvent]
-}
-
-// Props & Emits
 const props = defineProps(titleProps)
-const emit = defineEmits<TitleEmits>()
+const emit = defineEmits(titleEmits)
 
 // Computed
 const titleStyle = computed((): CSSProperties | string => {

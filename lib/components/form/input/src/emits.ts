@@ -6,5 +6,3 @@ export const inputEmits = {
   input: (value: any) => value,
   ok: (value: any) => value,
 } as const
-
-export type LewInputEmits = typeof inputEmits

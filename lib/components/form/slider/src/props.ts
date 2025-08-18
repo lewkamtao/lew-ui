@@ -87,4 +87,4 @@ export const sliderProps = {
   },
 }
 
-export type SliderProps = ExtractPublicPropTypes<typeof sliderProps>
+export type LewSliderProps = ExtractPublicPropTypes<typeof sliderProps>

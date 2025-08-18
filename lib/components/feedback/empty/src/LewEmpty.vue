@@ -2,16 +2,11 @@
 import { locale } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
 import { computed } from 'vue'
+import { emptyEmits } from './emits'
 import { emptyProps } from './props'
 
-// Types
-interface EmptyEmits {
-  click: [event: MouseEvent]
-}
-
-// Props & Emits
 const props = defineProps(emptyProps)
-const emit = defineEmits<EmptyEmits>()
+const emit = defineEmits(emptyEmits)
 
 // Computed
 const iconSrc = computed(() => {

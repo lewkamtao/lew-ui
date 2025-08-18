@@ -3,12 +3,13 @@ import type { LewTreeDataSource } from 'lew-ui/types'
 import { LewFlex, LewMessage, locale } from 'lew-ui'
 import { any2px, numFormat } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { treeEmits } from './emits'
 import LewTreeItem from './LewTreeItem.vue'
 import { treeProps } from './props'
 import transformTree from './transformTree'
 
 const props = defineProps(treeProps)
-const emit = defineEmits(['change', 'expand', 'loadStart', 'loadEnd'])
+const emit = defineEmits(treeEmits)
 const modelValue = defineModel()
 const expandKeys = defineModel('expandKeys', { required: false, default: [] })
 const _dataSource: any = ref<LewTreeDataSource[]>([])

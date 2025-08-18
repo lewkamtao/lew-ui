@@ -3,5 +3,3 @@ export const tableEmits = {
   selectChange: (selectedKeys: any) => selectedKeys,
   dragSort: (dataSource: any[]) => dataSource,
 } as const
-
-export type LewTableEmits = typeof tableEmits

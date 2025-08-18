@@ -7,11 +7,6 @@ import { flexProps } from './props'
 
 const props = defineProps(flexProps)
 
-const emit = defineEmits<{
-  resize: [size: { width: number, height: number }]
-  click: [event: MouseEvent]
-}>()
-
 const alignmentMap: Record<LewXAlignment | LewYAlignment, string> = {
   start: 'flex-start',
   left: 'flex-start',
@@ -33,10 +28,6 @@ function getJustifyContent(): string {
 function getAlignItems(): string {
   const crossAxis = props.direction === 'x' ? props.y : props.x
   return alignmentMap[crossAxis] || 'center'
-}
-
-function handleClick(event: MouseEvent) {
-  emit('click', event)
 }
 
 // Computed
@@ -61,7 +52,7 @@ const styleObject = computed(
 </script>
 
 <template>
-  <div class="lew-flex" :style="styleObject" @click="handleClick">
+  <div class="lew-flex" :style="styleObject">
     <slot />
   </div>
 </template>

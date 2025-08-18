@@ -47,7 +47,9 @@ const getIconSize = computed(() => {
 
 function change(e?: any) {
   emit('change', { e, show, hide })
-  hide()
+  setTimeout(() => {
+    hide()
+  }, 100)
 }
 
 function showHandle() {

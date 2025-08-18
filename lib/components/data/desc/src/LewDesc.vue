@@ -4,14 +4,12 @@ import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.v
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { descEmits } from './emits'
 import LewDescItem from './LewDescItem.vue'
 import { descProps, lewDescSizePaddingMap } from './props'
 
 const props = defineProps(descProps)
-
-const emit = defineEmits<{
-  ready: []
-}>()
+const emit = defineEmits(descEmits)
 
 // Refs
 const descLabelRef = ref<InstanceType<typeof LewGetLabelWidth>>()

@@ -83,7 +83,7 @@ function clearHandle() {
   state.keyword = ''
   state.keywordBackup = ''
   emit('clear')
-  emit('change')
+  emit('change', treeSelectValue.value)
 }
 
 const getValueStyle = computed(() => {

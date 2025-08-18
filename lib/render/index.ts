@@ -135,8 +135,6 @@ function createFunctionalComponent(component: any): Component {
   })
 }
 
-
-
 /**
  * 创建组件选项包装器
  * @param component 组件选项或实例

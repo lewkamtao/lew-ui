@@ -7,16 +7,13 @@ import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import { drawerProps } from './props'
+import { drawerEmits } from './emits'
 
-// Types
-interface DrawerEmits {
-  close: []
-}
+import { drawerProps } from './props'
 
 // Props & Emits
 const props = defineProps(drawerProps)
-const emit = defineEmits<DrawerEmits>()
+const emit = defineEmits(drawerEmits)
 
 // Composables
 const { Escape } = useMagicKeys()

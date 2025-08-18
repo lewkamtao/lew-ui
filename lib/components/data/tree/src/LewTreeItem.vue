@@ -15,9 +15,10 @@ import { cloneDeep } from 'lodash-es'
 import { treeItemProps } from './props'
 import transformTree, { formatTree } from './transformTree'
 
-const props = defineProps(treeItemProps)
+import { treeItemEmits } from './treeItemEmits'
 
-const emit = defineEmits(['change', 'expand'])
+const props = defineProps(treeItemProps)
+const emit = defineEmits(treeItemEmits)
 
 const {
   modelValue,

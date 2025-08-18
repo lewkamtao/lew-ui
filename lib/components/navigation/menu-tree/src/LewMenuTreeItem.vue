@@ -3,6 +3,8 @@ import { LewCollapseTransition, LewFlex } from 'lew-ui'
 import { CommonIcon, isValidComponent, RenderComponent } from 'lew-ui/render'
 import { cloneDeep } from 'lodash-es'
 import { inject } from 'vue'
+import { menuTreeItemEmits } from './menuTreeItemEmits'
+
 import { menuTreeItemProps } from './props'
 
 interface MenuTreeContext {
@@ -13,7 +15,7 @@ interface MenuTreeContext {
 }
 
 const props = defineProps(menuTreeItemProps)
-const emit = defineEmits<{ change: [] }>()
+const emit = defineEmits(menuTreeItemEmits)
 
 const menuTreeContext = inject<MenuTreeContext>('lew-menu-tree')
 if (!menuTreeContext) {

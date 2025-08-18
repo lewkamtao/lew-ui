@@ -8,9 +8,9 @@ import {
 } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import * as Yup from 'yup'
+import { formEmits } from './emits'
 import LewFormItem from './LewFormItem.vue'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
-import { formEmits } from './emits'
 import { formProps } from './props'
 
 const props = defineProps(formProps)

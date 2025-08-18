@@ -2,16 +2,11 @@
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
 import { computed } from 'vue'
+import { alertEmits } from './emits'
 import { alertProps } from './props'
 
-// Types
-interface AlertEmits {
-  close: []
-}
-
-// Props & Emits
 const props = defineProps(alertProps)
-const emit = defineEmits<AlertEmits>()
+const emit = defineEmits(alertEmits)
 
 // Computed
 const alertClassName = computed(() => {

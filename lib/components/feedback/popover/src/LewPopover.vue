@@ -3,11 +3,11 @@ import { watchDebounced } from '@vueuse/core'
 import { LewLoading } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
 import tippy from 'tippy.js'
+import { popoverEmits } from './emits'
 import { popoverProps } from './props'
 
 const props = defineProps(popoverProps)
-
-const emit = defineEmits(['show', 'hide'])
+const emit = defineEmits(popoverEmits)
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app

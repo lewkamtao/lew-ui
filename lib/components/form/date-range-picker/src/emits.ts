@@ -6,6 +6,3 @@ export const dateRangePickerEmits = {
 export const dateRangeEmits = {
   change: (value?: any | undefined) => value,
 } as const
-
-export type LewDateRangePickerEmits = typeof dateRangePickerEmits
-export type LewDateRangeEmits = typeof dateRangeEmits

@@ -1,6 +1,6 @@
 import type { Property } from 'csstype'
 import type { LewSelectMultipleOption, LewSelectMultipleValueLayout, LewSelectSearchMultipleMethodParams, LewSize, LewTrigger } from 'lew-ui'
-import type { PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSelectMultipleValueLayout, validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const selectMultipleModel = {
@@ -191,3 +191,5 @@ export const selectMultipleProps = {
     }),
   },
 }
+
+export type LewSelectMultipleProps = ExtractPublicPropTypes<typeof selectMultipleProps>

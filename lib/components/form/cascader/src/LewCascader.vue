@@ -358,18 +358,13 @@ function hideHandle() {
 
 // 数据相关的计算属性
 const getLabel = computed(() => {
-  const item = findObjectByValue(
-    state.optionsTree,
-    cascaderValue.value as string,
-  )
+  const item = findObjectByValue(state.optionsTree, cascaderValue.value as string)
   return item?.labelPaths || []
 })
 
 const getDisplayText = computed(() => {
   if (!getLabel.value || getLabel.value.length === 0) {
-    return props.placeholder
-      ? props.placeholder
-      : locale.t('cascader.placeholder')
+    return props.placeholder ? props.placeholder : locale.t('cascader.placeholder')
   }
 
   if (props.showAllLevels) {
@@ -381,18 +376,12 @@ const getDisplayText = computed(() => {
 })
 
 // 显示控制的计算属性
-const shouldShowValue = computed(
-  () => getLabel.value && getLabel.value.length > 0,
-)
+const shouldShowValue = computed(() => getLabel.value && getLabel.value.length > 0)
 const shouldShowPlaceholder = computed(
   () => !getLabel.value || (getLabel.value && getLabel.value.length === 0),
 )
 const shouldShowClearIcon = computed(
-  () =>
-    props.clearable
-    && getLabel.value
-    && getLabel.value.length > 0
-    && !props.readonly,
+  () => props.clearable && getLabel.value && getLabel.value.length > 0 && !props.readonly,
 )
 const shouldShowSelectIcon = computed(
   () => !(props.clearable && getLabel.value && getLabel.value.length > 0),
@@ -400,8 +389,7 @@ const shouldShowSelectIcon = computed(
 
 // 样式相关的计算属性
 const getCascaderWidth = computed(() => {
-  const _hasChildOptions = state.optionsGroup.filter(e => e && e.length > 0)
-    .length
+  const _hasChildOptions = state.optionsGroup.filter(e => e && e.length > 0).length
   if (_hasChildOptions > 1) {
     return _hasChildOptions * 200
   }
@@ -486,9 +474,7 @@ function getItemWrapperStyle(oIndex: number, oItem: any) {
   return {
     zIndex: 20 - oIndex,
     borderRadius: `0 ${
-      oIndex === state.optionsGroup.length - 1
-        ? 'var(--lew-border-radius-small)'
-        : '0'
+      oIndex === state.optionsGroup.length - 1 ? 'var(--lew-border-radius-small)' : '0'
     } 0 0`,
     transform: oItem.length > 0 ? `translateX(${200 * oIndex}px)` : '',
   }
@@ -498,8 +484,9 @@ function ok() {
   const item = findObjectByValue(state.optionsTree, state.tobeItem.value)
   cascaderValue.value = state.tobeItem.value
   emit('change', cloneDeep(item))
-
-  hide()
+  setTimeout(() => {
+    hide()
+  }, 100)
 }
 
 function close() {
@@ -530,11 +517,7 @@ defineExpose({ show, hide })
         :style="getCascaderStyle"
       >
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <CommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
         <transition v-else name="lew-form-icon-ani">
@@ -559,11 +542,7 @@ defineExpose({ show, hide })
           />
         </transition>
 
-        <div
-          v-show="shouldShowValue"
-          class="lew-cascader-value"
-          :style="getValueStyle"
-        >
+        <div v-show="shouldShowValue" class="lew-cascader-value" :style="getValueStyle">
           <LewTextTrim :text="getDisplayText" />
         </div>
         <div
@@ -588,10 +567,7 @@ defineExpose({ show, hide })
             class="lew-cascader-options-box"
             :style="getOptionsBoxStyle"
           >
-            <template
-              v-for="(oItem, oIndex) in state.optionsGroup"
-              :key="oIndex"
-            >
+            <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
               <div
                 class="lew-cascader-item-wrapper"
                 :style="getItemWrapperStyle(oIndex, oItem)"
@@ -608,10 +584,7 @@ defineExpose({ show, hide })
                   :style="getVirtListStyle"
                 >
                   <template #default="{ itemData: templateProps }">
-                    <div
-                      class="lew-cascader-item-padding"
-                      :style="getItemPaddingStyle"
-                    >
+                    <div class="lew-cascader-item-padding" :style="getItemPaddingStyle">
                       <div
                         class="lew-cascader-item"
                         :class="getItemClass(templateProps)"
@@ -620,9 +593,7 @@ defineExpose({ show, hide })
                         <LewCheckbox
                           v-if="free"
                           class="lew-cascader-checkbox"
-                          :checked="
-                            state.tobeLabels.includes(templateProps.label)
-                          "
+                          :checked="state.tobeLabels.includes(templateProps.label)"
                         />
                         <LewTextTrim
                           class="lew-cascader-label"

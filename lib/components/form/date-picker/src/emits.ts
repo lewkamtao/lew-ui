@@ -6,6 +6,3 @@ export const datePickerEmits = {
 export const dateEmits = {
   change: (value?: string | undefined) => value,
 } as const
-
-export type LewDatePickerEmits = typeof datePickerEmits
-export type LewDateEmits = typeof dateEmits

@@ -24,7 +24,8 @@ export * from './src/emits'
 // 导出主组件
 export { default as LewSelect } from './src/LewSelect.vue'
 // 导出所有属性定义
-export * from './src/props'
+export * from './src/props';
+export * from './src/emits'
 ```
 
 ## Emits 定义规范

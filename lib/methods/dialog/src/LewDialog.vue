@@ -5,10 +5,11 @@ import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
+import { dialogEmits } from './emits'
 import { dialogProps } from './props'
 
 const props = defineProps(dialogProps)
-const emit = defineEmits(['close'])
+const emit = defineEmits(dialogEmits)
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
 

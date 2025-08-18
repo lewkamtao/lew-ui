@@ -1,8 +1,6 @@
 export const selectEmits = {
-  'change': (value?: string | number | undefined) => value,
-  'blur': () => true,
-  'clear': () => true,
-  'focus': () => true,
+  change: (value?: string | number | undefined) => value,
+  blur: () => true,
+  clear: () => true,
+  focus: () => true,
 } as const
-
-export type LewSelectEmits = typeof selectEmits

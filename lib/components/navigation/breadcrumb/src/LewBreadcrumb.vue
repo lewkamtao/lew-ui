@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import type { LewBreadcrumbOption } from 'lew-ui/types'
+import { breadcrumbEmits } from './emits'
 import { breadcrumbProps } from './props'
 
-interface BreadcrumbEmits {
-  change: [item: LewBreadcrumbOption, index: number]
-}
-
 const props = defineProps(breadcrumbProps)
-const emit = defineEmits<BreadcrumbEmits>()
+const emit = defineEmits(breadcrumbEmits)
 
 function handleItemClick(item: LewBreadcrumbOption, index: number): void {
   if (item.value !== undefined) {

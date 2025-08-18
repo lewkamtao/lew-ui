@@ -3,14 +3,11 @@ import { useImage } from '@vueuse/core'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, parseDimension } from 'lew-ui/utils'
 import { computed } from 'vue'
+import { avatarEmits } from './emits'
 import { avatarProps } from './props'
 
 const props = defineProps(avatarProps)
-
-const emit = defineEmits<{
-  load: []
-  error: []
-}>()
+const emit = defineEmits(avatarEmits)
 
 // Constants
 const BORDER_RADIUS_MAP: Record<string, string> = {

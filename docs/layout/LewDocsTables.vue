@@ -189,12 +189,14 @@ const sortValue = computed(() => {
   return props.options
     .map((e: any) => {
       return {
-        orderNum: e.orderNum || 99999,
+        orderNum: e.orderNum || 9,
         ...e,
       }
     })
     .sort((a: any, b: any) => a.orderNum - b.orderNum)
 })
+
+console.log(sortValue.value)
 
 function getTag(title: string) {
   // 获取用括号包裹的内容

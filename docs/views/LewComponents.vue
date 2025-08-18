@@ -78,6 +78,10 @@ const options = computed(() => {
           label: 'Mark',
           value: '/Mark',
         },
+        {
+          label: 'Icon',
+          value: '/Icon',
+        },
       ],
     },
     {

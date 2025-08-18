@@ -29,13 +29,13 @@ import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep, debounce, isString, merge } from 'lodash-es'
 import * as Yup from 'yup'
+import { formItemEmits } from './emits'
 import {
   formItemProps,
   formTypeAsMap,
   requiredIconSizeMap,
   tipsIconSizeMap,
 } from './props'
-import { formItemEmits } from './emits'
 import RequiredIcon from './RequiredIcon.vue'
 
 const props = defineProps(formItemProps)

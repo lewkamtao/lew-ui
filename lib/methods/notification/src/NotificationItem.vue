@@ -2,6 +2,8 @@
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px } from 'lew-ui/utils'
 
+import { notificationEmits } from './emits'
+
 defineProps<{
   type: string
   title: string
@@ -11,9 +13,7 @@ defineProps<{
   width: number | string
 }>()
 
-const emit = defineEmits<{
-  (e: 'close'): void
-}>()
+const emit = defineEmits(notificationEmits)
 
 function onClose() {
   emit('close')
