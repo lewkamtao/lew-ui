@@ -38,6 +38,8 @@ export type LewSelectMultipleValueLayout = 'tag' | 'text'
 
 export type LewStepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
 
+export type LewTagClose = () => Promise<boolean>
+
 export type LewEmptyType = '404' | 'address' | 'article' | 'goods' | 'likes' | 'car' | 'comment' | 'network' | 'order' | 'search'
 
 export type LewPopokType = 'error' | 'warning' | 'success' | 'info' | 'normal'
@@ -145,6 +147,28 @@ export interface LewDescOption {
   labelX?: Property.TextAlign
   valueX?: Property.TextAlign
   customRender?: (params: { field: string, label: string, dataSource: Record<string, any> }) => any
+}
+
+export interface LewFormOption {
+  label?: string
+  field: string
+  required?: boolean
+  as?: LewFormItemAs | ''
+  size?: LewSize
+  width?: Property.Width
+  labelWidth?: Property.Width
+  direction?: LewDirection
+  disabled?: boolean
+  readonly?: boolean
+  tips?: string
+  errMessage?: string
+  rule?: any | string
+  props?: Record<string, any>
+  between?: boolean
+  gridArea?: string
+  id?: string
+  outputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
+  inputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
 }
 
 export interface LewSelectOption {
@@ -266,27 +290,3 @@ export interface LewSelectSearchMultipleMethodParams {
   options?: LewSelectMultipleOption[]
   keyword?: string
 }
-
-export interface LewFormOption {
-  label?: string
-  field: string
-  required?: boolean
-  as?: LewFormItemAs | ''
-  size?: LewSize
-  width?: Property.Width
-  labelWidth?: Property.Width
-  direction?: LewDirection
-  disabled?: boolean
-  readonly?: boolean
-  tips?: string
-  errMessage?: string
-  rule?: any | string
-  props?: Record<string, any>
-  between?: boolean
-  gridArea?: string
-  id?: string
-  outputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
-  inputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
-}
-
-export type LewTagClose = () => Promise<boolean>
