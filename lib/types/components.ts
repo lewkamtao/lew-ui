@@ -146,7 +146,7 @@ export interface LewDescOption {
   gridArea?: string
   labelX?: Property.TextAlign
   valueX?: Property.TextAlign
-  customRender?: (params: { field: string, label: string, dataSource: Record<string, any> }) => any
+  customRender?: LewComponentSource
 }
 
 export interface LewFormOption {

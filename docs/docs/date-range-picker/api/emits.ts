@@ -1,9 +1,9 @@
 import { convertEmits } from 'docs/lib/utils'
-import { backTopEmits } from 'lew-ui'
+import { dateRangePickerEmits } from 'lew-ui'
 
 export default {
   title: 'Emits',
   columnsKey: 'emits',
   orderNum: 99,
-  data: convertEmits(backTopEmits),
+  data: convertEmits(dateRangePickerEmits),
 }

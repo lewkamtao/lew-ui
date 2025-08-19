@@ -2,11 +2,9 @@
 import { locale } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
 import { computed } from 'vue'
-import { emptyEmits } from './emits'
 import { emptyProps } from './props'
 
 const props = defineProps(emptyProps)
-const emit = defineEmits(emptyEmits)
 
 // Computed
 const iconSrc = computed(() => {
@@ -25,19 +23,10 @@ const emptyStyleObject = computed(() => {
 const titleStyle = computed(() => ({
   fontSize: any2px(props.fontSize),
 }))
-
-// Methods
-function handleClick(event: MouseEvent): void {
-  emit('click', event)
-}
 </script>
 
 <template>
-  <div
-    class="lew-empty-container"
-    :style="emptyStyleObject"
-    @click="handleClick"
-  >
+  <div class="lew-empty-container" :style="emptyStyleObject">
     <img :src="iconSrc" :alt="title" class="lew-empty-icon">
     <div v-if="title" :style="titleStyle" class="lew-empty-title">
       {{ title ? title : locale.t("empty.title") }}

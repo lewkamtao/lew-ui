@@ -1,9 +1,9 @@
 import { convertEmits } from 'docs/lib/utils'
-import { emptyEmits } from 'lew-ui'
+import { textareaEmits } from 'lew-ui'
 
 export default {
   title: 'Emits',
   columnsKey: 'emits',
   orderNum: 99,
-  data: convertEmits(emptyEmits),
+  data: convertEmits(textareaEmits),
 }
