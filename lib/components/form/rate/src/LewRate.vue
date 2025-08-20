@@ -2,15 +2,18 @@
 import { LewTooltip } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
+import { rateEmits } from './emits'
 import { rateProps } from './props'
 
 const props = defineProps(rateProps)
+const emit = defineEmits(rateEmits)
+
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const modelValue: Ref<number | undefined> = defineModel()
+const modelValue: Ref<number | undefined> = defineModel({ required: true })
 const tobeValue = ref(modelValue.value)
 const iconRef: any = ref<Element[]>([])
 
@@ -31,6 +34,7 @@ async function handleClick(index: number) {
     return
 
   modelValue.value = index
+  emit('change', index)
 
   // 创建动画效果
   const selectedIcons = iconRef.value.slice(0, index)
@@ -142,26 +146,31 @@ const getTips = computed(() => (index: number) => {
   position: relative;
   transition: all var(--lew-form-transition-ease);
   cursor: pointer;
+
   .lew-rate-star {
     position: absolute;
     transition: all var(--lew-form-transition-ease);
   }
 }
+
 .lew-rate-star:hover {
   transform: scale(1.1);
 }
 
 .lew-rate-disabled {
   opacity: var(--lew-disabled-opacity);
+
   .lew-rate-icon {
     cursor: default;
   }
 }
+
 .lew-rate-readonly {
   .lew-rate-icon {
     cursor: default;
   }
 }
+
 .lew-rate-readonly,
 .lew-rate-disabled {
   .lew-rate-star:hover {

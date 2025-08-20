@@ -242,7 +242,7 @@ function clearHandle() {
   state.keywordBackup = undefined
   state.keyword = ''
   emit('clear')
-  emit('change')
+  emit('change', undefined)
 }
 
 function selectHandle(item: LewSelectOption) {

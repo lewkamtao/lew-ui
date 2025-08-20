@@ -46,9 +46,7 @@ function initActiveItemStyle(index: number) {
     && activeRef?.offsetLeft >= 0
   ) {
     tabsRef.value.scrollLeft
-      = activeRef?.offsetLeft
-        - tabsRef.value.clientWidth / 2
-        + activeRef?.offsetWidth / 2
+      = activeRef?.offsetLeft - tabsRef.value.clientWidth / 2 + activeRef?.offsetWidth / 2
   }
 
   state.activeItemStyle = {
@@ -63,9 +61,7 @@ watch(
   () => {
     nextTick(() => {
       setTimeout(() => {
-        const index = props.options.findIndex(
-          e => tabsValue.value === e.value,
-        )
+        const index = props.options.findIndex(e => tabsValue.value === e.value)
         initActiveItemStyle(index)
       }, 250)
     })
@@ -92,10 +88,7 @@ function selectItem(value: string | number | undefined, type?: string) {
     }
     initActiveItemStyle(index)
     if (type !== 'watch' && value !== tabsValue.value) {
-      emit('change', {
-        label: _item.label,
-        value: _item.value,
-      })
+      emit('change', _item.value, _item)
     }
     state.curIndex = index
   }
@@ -183,17 +176,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    :style="getTabsStyle"
-    class="lew-tabs-wrapper"
-    :class="getTabsWrapperClassName"
-  >
+  <div :style="getTabsStyle" class="lew-tabs-wrapper" :class="getTabsWrapperClassName">
     <div :style="getTabsStyle" class="lew-tabs" :class="getTabsClassName">
-      <div
-        ref="tabsRef"
-        class="lew-tabs-main hidden-scrollbar"
-        @scroll="tabsScroll"
-      >
+      <div ref="tabsRef" class="lew-tabs-main hidden-scrollbar" @scroll="tabsScroll">
         <div
           v-if="tabsValue"
           :style="state.activeItemStyle"

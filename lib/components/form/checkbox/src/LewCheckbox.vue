@@ -8,7 +8,7 @@ import { checkboxProps } from './props'
 const props = defineProps(checkboxProps)
 const emit = defineEmits(checkboxEmits)
 
-const modelValue: Ref<boolean | undefined> = defineModel({
+const modelValue: Ref<boolean> = defineModel({
   default: false,
 })
 
@@ -50,19 +50,14 @@ const shouldShowIconBox = computed(() => {
 function setChecked() {
   if (props.disabled || props.readonly)
     return
-
-  const newValue = !modelValue.value
-  modelValue.value = newValue
-  emit('change', cloneDeep(newValue))
+  const _value = cloneDeep(!modelValue.value)
+  modelValue.value = _value
+  emit('change', _value)
 }
 </script>
 
 <template>
-  <div
-    class="lew-checkbox"
-    :class="getCheckboxClassName"
-    @click.stop="setChecked"
-  >
+  <div class="lew-checkbox" :class="getCheckboxClassName" @click.stop="setChecked">
     <div v-if="shouldShowIconBox" class="lew-checkbox-icon-box">
       <i v-show="certain" class="lew-checkbox-icon-certain" />
       <CommonIcon

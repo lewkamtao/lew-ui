@@ -119,7 +119,7 @@ defineExpose({ init })
       </div>
       <!-- 日期 -->
       <div class="cur-date">
-        {{ dayjs(`${dateState.year}-${dateState.month}`).format('YYYY-MM') }}
+        {{ dayjs(`${dateState.year}-${dateState.month}`).format("YYYY-MM") }}
       </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
@@ -142,8 +142,11 @@ defineExpose({ init })
 
       <!-- 表格 -->
       <div
-        v-for="(item, index) in dateData" :key="`d${index}`" class="lew-date-item"
-        :class="lewDateItemClassNames(item)" @click="selectDateFn(item)"
+        v-for="(item, index) in dateData"
+        :key="`d${index}`"
+        class="lew-date-item"
+        :class="lewDateItemClassNames(item)"
+        @click="selectDateFn(item)"
       >
         <div class="lew-date-label">
           <i v-if="checkToday(item)" class="lew-date-item-today" />

@@ -1,3 +1,3 @@
 export const colorPickerEmits = {
-  change: (value?: string | undefined) => value,
+  change: (value?: string) => value,
 } as const

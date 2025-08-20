@@ -5,8 +5,8 @@ import validators, { validSizeList } from 'lew-ui/validators'
 
 export const dateRangePickerModel = {
   modelValue: {
-    type: Object as () => Record<string, Date | undefined>,
-    default: () => ({}),
+    type: Object as () => { start?: string, end?: string } | undefined,
+    default: () => undefined,
   },
 }
 

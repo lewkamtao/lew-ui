@@ -29,14 +29,8 @@ function getItemDisabled(item: LewCheckboxOption) {
   return item.disabled || props.disabled
 }
 
-function change({
-  item,
-  checked,
-}: {
-  item: LewCheckboxOption
-  checked: boolean
-}) {
-  const _value = modelValue.value || []
+function change({ item, checked }: { item: LewCheckboxOption, checked: boolean }) {
+  const _value = cloneDeep(modelValue.value) || []
   if (checked) {
     _value.push(item.value as string & number)
   }
@@ -46,21 +40,15 @@ function change({
       _value.splice(index, 1)
     }
   }
-  emit('change', {
-    value: cloneDeep(_value),
-    item,
-  })
-  modelValue.value = cloneDeep(_value)
+  modelValue.value = _value
+  emit('change', _value, item)
 }
 
 function initCheckbox() {
   if (!props.options)
     return
   checkList.value = props.options.map((item: LewCheckboxOption) => {
-    if (
-      modelValue.value
-      && modelValue.value.includes(item.value as string & number)
-    ) {
+    if (modelValue.value && modelValue.value.includes(item.value as string & number)) {
       return true
     }
     return false
@@ -127,6 +115,7 @@ initCheckbox()
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;
 }
+
 .lew-checkbox-group-readonly {
   pointer-events: none;
 }

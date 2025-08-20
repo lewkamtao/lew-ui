@@ -27,9 +27,7 @@ function safeFunction(
   value: unknown,
   defaultValue: (val: number) => string,
 ): (val: number) => string {
-  return typeof value === 'function'
-    ? (value as (val: number) => string)
-    : defaultValue
+  return typeof value === 'function' ? (value as (val: number) => string) : defaultValue
 }
 
 // 获取滑块轨道的最大值
@@ -130,10 +128,7 @@ function setDot(e: MouseEvent): void {
 
   try {
     const trackRect = trackRef.value.getBoundingClientRect()
-    const clickX = Math.max(
-      0,
-      Math.min(e.clientX - trackRect.left, trackRect.width),
-    )
+    const clickX = Math.max(0, Math.min(e.clientX - trackRect.left, trackRect.width))
 
     const step = safeNumber(props.step, 1)
     if (step <= 0)
@@ -154,10 +149,7 @@ function setDot(e: MouseEvent): void {
 
     // 更新值
     const newValue = calculateValue(nearestStep)
-    const clampedValue = Math.max(
-      getMin.value,
-      Math.min(getMax.value, newValue),
-    )
+    const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
 
     if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
       throttledUpdateModelValue(clampedValue)
@@ -188,10 +180,7 @@ function setDotByClick(value: number): void {
     return
 
   const safeValue = safeNumber(value, getMin.value)
-  const clampedValue = Math.max(
-    getMin.value,
-    Math.min(getMax.value, safeValue),
-  )
+  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, safeValue))
 
   if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
     throttledUpdateModelValue(clampedValue)
@@ -205,10 +194,7 @@ function setDotByValue(value: number): void {
 
   try {
     const safeValue = safeNumber(value, getMin.value)
-    const clampedValue = Math.max(
-      getMin.value,
-      Math.min(getMax.value, safeValue),
-    )
+    const clampedValue = Math.max(getMin.value, Math.min(getMax.value, safeValue))
     const nearestStep = calculateNearestStep(clampedValue)
     const clampedStep = Math.max(0, Math.min(100, nearestStep))
 
@@ -240,10 +226,7 @@ function init(): void {
         callback: (e: any) => {
           try {
             const newValue = calculateValue(e.x)
-            const clampedValue = Math.max(
-              getMin.value,
-              Math.min(getMax.value, newValue),
-            )
+            const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
             throttledUpdateModelValue(clampedValue)
             setDotByValue(clampedValue)
           }
@@ -356,8 +339,7 @@ const getStyle = computed(() => {
 // 安全的格式化工具提示函数
 function safeFormatTooltip(value: number): string {
   try {
-    const formatFn = safeFunction(props.formatTooltip, (val: number) =>
-      val.toString())
+    const formatFn = safeFunction(props.formatTooltip, (val: number) => val.toString())
     return formatFn(value)
   }
   catch (error) {
@@ -415,10 +397,7 @@ const trackRangeStyles = computed(() => {
     }
   }
 
-  const width = Math.max(
-    0,
-    Math.min(100, ((getMax.value - getMin.value) / range) * 100),
-  )
+  const width = Math.max(0, Math.min(100, ((getMax.value - getMin.value) / range) * 100))
   const left = getMarkPosition(getMin.value)
 
   return {
@@ -440,8 +419,7 @@ const selectedTrackStyles = computed(() => {
 // 计算滑块点的样式
 const dotStyles = computed(() => {
   const currentValue = modelValue.value
-  const opacity
-    = currentValue !== undefined && currentValue !== null ? '1' : '0'
+  const opacity = currentValue !== undefined && currentValue !== null ? '1' : '0'
 
   return {
     opacity,
@@ -526,10 +504,7 @@ const optionLabelStyles = computed(() => {
 
       <div class="lew-slider-track-line">
         <div class="lew-slider-track-line-range" :style="trackRangeStyles" />
-        <div
-          class="lew-slider-track-line-selected"
-          :style="selectedTrackStyles"
-        />
+        <div class="lew-slider-track-line-selected" :style="selectedTrackStyles" />
 
         <div
           v-for="markStyle in optionMarkStyles"

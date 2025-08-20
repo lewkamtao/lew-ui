@@ -1,6 +1,4 @@
 export const inputNumberEmits = {
-  blur: (value: number | undefined) => value,
-  focus: () => true,
-  change: (value: number | undefined) => value,
-  input: (value: number | undefined, event: any) => ({ value, event }),
+  change: (value?: string) => value,
+  input: (value?: string) => value,
 } as const

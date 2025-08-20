@@ -1,4 +1,4 @@
 export const cascaderEmits = {
-  change: (value?: string | number | undefined) => value,
+  change: (value?: string) => value,
   clear: () => true,
 } as const

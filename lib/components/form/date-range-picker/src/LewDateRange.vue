@@ -149,10 +149,7 @@ function nextMonth1() {
   if (dateState.year1 > dateState.year2) {
     dateState.year2 = dateState.year1
   }
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month1 >= dateState.month2
-  ) {
+  if (dateState.year1 === dateState.year2 && dateState.month1 >= dateState.month2) {
     if (dateState.month1 === 12) {
       dateState.month2 = 1
       dateState.year2 += 1
@@ -176,10 +173,7 @@ function prveMonth2() {
   if (dateState.year2 < dateState.year1) {
     dateState.year1 = dateState.year2
   }
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month2 <= dateState.month1
-  ) {
+  if (dateState.year1 === dateState.year2 && dateState.month2 <= dateState.month1) {
     if (dateState.month2 === 1) {
       dateState.month1 = 12
       dateState.year1 -= 1
@@ -213,10 +207,7 @@ function nextYear1() {
   if (dateState.year1 > dateState.year2) {
     dateState.year2 = dateState.year1
   }
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month1 >= dateState.month2
-  ) {
+  if (dateState.year1 === dateState.year2 && dateState.month1 >= dateState.month2) {
     if (dateState.month1 === 12) {
       dateState.month2 = 1
       dateState.year2 += 1
@@ -235,10 +226,7 @@ function prveYear2() {
   if (dateState.year2 < dateState.year1) {
     dateState.year1 = dateState.year2
   }
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month2 <= dateState.month1
-  ) {
+  if (dateState.year1 === dateState.year2 && dateState.month2 <= dateState.month1) {
     if (dateState.month2 === 1) {
       dateState.month1 = 12
       dateState.year1 -= 1
@@ -312,19 +300,12 @@ function init() {
   // 年
   dateState.year1 = _value[startKey] ? dayjs(_value[startKey]).year() : curYear
   // 月
-  dateState.month1 = _value[startKey]
-    ? dayjs(_value[startKey]).month() + 1
-    : curMonth
+  dateState.month1 = _value[startKey] ? dayjs(_value[startKey]).month() + 1 : curMonth
   // 年
   dateState.year2 = _value[endKey] ? dayjs(_value[endKey]).year() : curYear
   // 月
-  dateState.month2 = _value[endKey]
-    ? dayjs(_value[endKey]).month() + 1
-    : curMonth + 1
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month1 === dateState.month2
-  ) {
+  dateState.month2 = _value[endKey] ? dayjs(_value[endKey]).month() + 1 : curMonth + 1
+  if (dateState.year1 === dateState.year2 && dateState.month1 === dateState.month2) {
     dateState.month2 += 1
   }
   if (dateState.month2 > 12) {
@@ -380,9 +361,7 @@ const headDate = computed(() => {
         </div>
         <!-- 日期 -->
         <div class="cur-date">
-          {{
-            dayjs(`${dateState.year1}-${dateState.month1}`).format('YYYY-MM')
-          }}
+          {{ dayjs(`${dateState.year1}-${dateState.month1}`).format("YYYY-MM") }}
         </div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
@@ -408,11 +387,7 @@ const headDate = computed(() => {
       </LewFlex>
       <div class="lew-date-box">
         <!-- 表头 周 -->
-        <div
-          v-for="(item, index) in headDate"
-          :key="`h${index}`"
-          class="lew-date-item"
-        >
+        <div v-for="(item, index) in headDate" :key="`h${index}`" class="lew-date-item">
           <div class="lew-date-num">
             {{ item }}
           </div>
@@ -427,14 +402,8 @@ const headDate = computed(() => {
           @click="setValue(item)"
           @mouseenter="hoverValueFn(item)"
         >
-          <div
-            class="lew-date-label"
-            :class="object2class('rangeSelected', item)"
-          >
-            <div
-              v-if="object2class('today', item)"
-              class="lew-date-item-today"
-            />
+          <div class="lew-date-label" :class="object2class('rangeSelected', item)">
+            <div v-if="object2class('today', item)" class="lew-date-item-today" />
             <div class="lew-date-value" :class="object2class('selected', item)">
               {{ item.showDate }}
             </div>
@@ -465,9 +434,7 @@ const headDate = computed(() => {
           </LewButton>
         </div>
         <div class="cur-date">
-          {{
-            dayjs(`${dateState.year2}-${dateState.month2}`).format('YYYY-MM')
-          }}
+          {{ dayjs(`${dateState.year2}-${dateState.month2}`).format("YYYY-MM") }}
         </div>
         <div class="lew-date-control-right">
           <LewButton
@@ -492,11 +459,7 @@ const headDate = computed(() => {
         </div>
       </LewFlex>
       <div class="lew-date-box">
-        <div
-          v-for="(item, index) in headDate"
-          :key="`h${index}`"
-          class="lew-date-item"
-        >
+        <div v-for="(item, index) in headDate" :key="`h${index}`" class="lew-date-item">
           <div class="lew-date-num">
             {{ item }}
           </div>
@@ -509,14 +472,8 @@ const headDate = computed(() => {
           @click="setValue(item)"
           @mouseenter="hoverValueFn(item)"
         >
-          <div
-            class="lew-date-label"
-            :class="object2class('rangeSelected', item)"
-          >
-            <div
-              v-if="object2class('today', item)"
-              class="lew-date-item-today"
-            />
+          <div class="lew-date-label" :class="object2class('rangeSelected', item)">
+            <div v-if="object2class('today', item)" class="lew-date-item-today" />
             <div class="lew-date-value" :class="object2class('selected', item)">
               {{ item.showDate }}
             </div>

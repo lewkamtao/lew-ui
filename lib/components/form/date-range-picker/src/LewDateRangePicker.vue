@@ -8,24 +8,49 @@ import { dateRangePickerProps } from './props'
 
 const props = defineProps(dateRangePickerProps)
 const emit = defineEmits(dateRangePickerEmits)
+
+const modelValue = defineModel<DateRange | undefined>({ required: true })
+
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
-type DateRangePickerModel
-  = | {
-    [key in typeof startKey | typeof endKey]: string;
-  }
-  | undefined
+// 定义日期范围对象类型
+interface DateRange {
+  start?: string
+  end?: string
+}
 
-const modelValue = defineModel<DateRangePickerModel>()
 const visible = ref(false)
 const lewPopoverRef = ref()
 const { startKey, endKey } = props
 
 const lewDateRangePanelRef = ref()
+
+// 将对象格式转换为内部使用的动态键名格式
+const internalModelValue = computed({
+  get: () => {
+    if (!modelValue.value)
+      return undefined
+    return {
+      [startKey]: modelValue.value.start || '',
+      [endKey]: modelValue.value.end || '',
+    }
+  },
+  set: (value) => {
+    if (!value) {
+      modelValue.value = undefined
+    }
+    else {
+      modelValue.value = {
+        start: value[startKey] || undefined,
+        end: value[endKey] || undefined,
+      }
+    }
+  },
+})
 
 function show() {
   lewPopoverRef.value.show()
@@ -45,8 +70,18 @@ const getIconSize = computed(() => {
   return size[_propsSize]
 })
 
-function change(e?: any) {
-  emit('change', { e, show, hide })
+function change(e: { [key: string]: string } | undefined) {
+  if (!e) {
+    emit('change', undefined)
+  }
+  else {
+    // 将内部格式转换为对象格式
+    const dateRange: DateRange = {
+      start: e[startKey] || undefined,
+      end: e[endKey] || undefined,
+    }
+    emit('change', dateRange)
+  }
   setTimeout(() => {
     hide()
   }, 100)
@@ -56,13 +91,14 @@ function showHandle() {
   visible.value = true
   lewDateRangePanelRef.value && lewDateRangePanelRef.value.init()
 }
+
 function hideHandle() {
   visible.value = false
 }
 
 function clearHandle() {
   modelValue.value = undefined
-  change(modelValue.value)
+  emit('change', undefined)
   emit('clear')
 }
 
@@ -88,11 +124,7 @@ const getDateRangePickerInputStyle = computed(() => {
 })
 
 const checkClear = computed(() => {
-  return (
-    ((modelValue.value && modelValue.value[startKey])
-      || (modelValue.value && modelValue.value[endKey]))
-    && props.clearable
-  )
+  return (modelValue.value?.start || modelValue.value?.end) && props.clearable
 })
 
 defineExpose({ show, hide })
@@ -124,10 +156,7 @@ defineExpose({ show, hide })
               opacity: visible ? 0.6 : 1,
             }"
           >
-            <div
-              v-if="!modelValue || !modelValue[startKey]"
-              class="lew-date-range-picker-placeholder"
-            >
+            <div v-if="!modelValue?.start" class="lew-date-range-picker-placeholder">
               {{
                 placeholderStart
                   ? placeholderStart
@@ -138,15 +167,12 @@ defineExpose({ show, hide })
               v-else
               class="lew-date-range-picker-dateValue lew-date-range-picker-start"
             >
-              {{ modelValue[startKey] }}
+              {{ modelValue.start }}
             </div>
             <div class="lew-date-range-picker-mid">
               <CommonIcon :size="14" type="minus" />
             </div>
-            <div
-              v-if="!modelValue || !modelValue[endKey]"
-              class="lew-date-range-picker-placeholder"
-            >
+            <div v-if="!modelValue?.end" class="lew-date-range-picker-placeholder">
               {{
                 placeholderEnd
                   ? placeholderEnd
@@ -154,7 +180,7 @@ defineExpose({ show, hide })
               }}
             </div>
             <div v-else class="lew-date-range-picker-dateValue lew-date-range-picker-end">
-              {{ modelValue[endKey] }}
+              {{ modelValue.end }}
             </div>
             <CommonIcon
               class="lew-date-range-picker-icon-calendar"
@@ -184,7 +210,7 @@ defineExpose({ show, hide })
       <LewDateRange
         ref="lewDateRangePanelRef"
         v-bind="props"
-        v-model="modelValue"
+        v-model="internalModelValue"
         @change="change"
       />
     </template>
@@ -217,6 +243,7 @@ defineExpose({ show, hide })
     user-select: none;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     box-shadow: var(--lew-form-box-shadow);
+
     .lew-date-range-picker-mid {
       display: flex;
       align-items: center;
@@ -250,6 +277,7 @@ defineExpose({ show, hide })
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   }
+
   .lew-date-range-picker-focus:hover {
     background-color: var(--lew-form-bgcolor-focus);
   }
@@ -258,6 +286,7 @@ defineExpose({ show, hide })
 .lew-date-range-picker-readonly {
   pointer-events: none;
 }
+
 .lew-date-range-picker-disabled {
   pointer-events: none;
   opacity: var(--lew-disabled-opacity);

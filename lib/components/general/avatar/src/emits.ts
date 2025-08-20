@@ -1,4 +1,4 @@
 export const avatarEmits = {
-  load: () => true,
-  error: () => true,
+  load: () => { },
+  error: () => { },
 } as const

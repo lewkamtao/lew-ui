@@ -20,9 +20,7 @@ const props = defineProps(cascaderProps)
 
 const emit = defineEmits(cascaderEmits)
 
-const cascaderValue: Ref<string | number | undefined> = defineModel({
-  default: undefined,
-})
+const cascaderValue: Ref<string | undefined> = defineModel({ required: true })
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -326,7 +324,7 @@ function clearHandle() {
   hide()
   init()
   emit('clear')
-  emit('change', '')
+  emit('change', undefined)
 }
 
 const getValueStyle = computed(() => {

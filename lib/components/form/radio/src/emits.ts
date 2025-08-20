@@ -3,5 +3,5 @@ export const radioEmits = {
 } as const
 
 export const radioGroupEmits = {
-  change: (data: { value: string | number, item: any }) => data,
+  change: (value?: string) => value,
 } as const

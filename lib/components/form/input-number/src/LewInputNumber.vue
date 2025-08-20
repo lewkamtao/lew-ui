@@ -2,6 +2,7 @@
 import { LewFlex, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
 import { inputNumberEmits } from './emits'
 import { inputNumberProps } from './props'
 
@@ -22,20 +23,16 @@ function toFocus() {
   lewInputRef.value?.focus()
 }
 
-function focus(e: any) {
+function focusFn(e: any) {
   if (props.selectByFocus) {
     e?.currentTarget?.select()
   }
-  emit('focus')
-}
-
-function blur() {
-  emit('blur', modelValue.value)
 }
 
 function inputFn(e: any) {
+  const target = e.target as HTMLInputElement
+  emit('input', target.value)
   validationMessage.value = lewInputRef.value.validationMessage
-  emit('input', modelValue.value, e)
 }
 
 const getInputClassNames = computed(() => {
@@ -50,7 +47,7 @@ const getInputClassNames = computed(() => {
 })
 
 function changeFn() {
-  emit('change', modelValue.value)
+  emit('change', cloneDeep(modelValue.value))
 }
 
 const getInputNumberStyle: any = computed(() => {
@@ -101,11 +98,8 @@ function plus() {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepUp()
       modelValue.value = lewInputRef.value.value
-      emit('change', modelValue.value)
-      if (
-        props.max !== undefined
-        && lewInputRef.value.value >= Number(props.max || 0)
-      ) {
+      emit('change', cloneDeep(modelValue.value))
+      if (props.max !== undefined && lewInputRef.value.value >= Number(props.max || 0)) {
         clearTimer()
       }
     }, 80)
@@ -118,11 +112,8 @@ function minus() {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepDown()
       modelValue.value = lewInputRef.value.value
-      emit('change', modelValue.value)
-      if (
-        props.min !== undefined
-        && lewInputRef.value.value <= Number(props.min || 0)
-      ) {
+      emit('change', cloneDeep(modelValue.value))
+      if (props.min !== undefined && lewInputRef.value.value <= Number(props.min || 0)) {
         clearTimer()
       }
     }, 80)
@@ -130,16 +121,12 @@ function minus() {
 }
 
 function checkValidationMessage() {
-  validationMessage.value
-    = lewInputRef.value && lewInputRef.value.validationMessage
+  validationMessage.value = lewInputRef.value && lewInputRef.value.validationMessage
   return (validationMessage.value || '').length === 0
 }
 
 function validCheck() {
-  return (
-    ((lewInputRef.value && lewInputRef.value.validationMessage) || '')
-      .length === 0
-  )
+  return ((lewInputRef.value && lewInputRef.value.validationMessage) || '').length === 0
 }
 
 defineExpose({ toFocus, validCheck })
@@ -164,17 +151,14 @@ defineExpose({ toFocus, validCheck })
       title=""
       type="number"
       class="lew-input-number"
-      :placeholder="
-        placeholder ? placeholder : locale.t('inputNumber.placeholder')
-      "
+      :placeholder="placeholder ? placeholder : locale.t('inputNumber.placeholder')"
       :min="min"
       :max="max"
       :step="step"
       :style="getInputNumberStyle"
       @input="inputFn"
       @change="changeFn"
-      @blur="blur"
-      @focus="focus"
+      @focus="focusFn"
     >
     <LewFlex
       :style="getControlStyle"

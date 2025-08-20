@@ -1,8 +1,6 @@
 export const textareaEmits = {
-  clear: () => true,
-  blur: (value: any) => value,
-  focus: () => true,
-  change: (value: any) => value,
-  input: (value: any) => value,
-  ok: (value: any) => value,
+  change: (value?: string) => value,
+  input: (value?: string) => value,
+  ok: (value?: string) => value,
+  clear: () => { },
 } as const

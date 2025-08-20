@@ -1,8 +1,8 @@
 export const datePickerEmits = {
-  change: (data?: { date: string | undefined, value: string | undefined } | undefined) => data,
-  clear: () => true,
+  change: (value?: string) => value,
+  clear: () => { },
 } as const
 
 export const dateEmits = {
-  change: (value?: string | undefined) => value,
+  change: (value?: string) => value,
 } as const

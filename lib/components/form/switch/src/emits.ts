@@ -1,3 +1,3 @@
 export const switchEmits = {
-  change: (value: boolean) => value,
+  change: (value?: boolean) => value,
 } as const

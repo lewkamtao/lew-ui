@@ -1,3 +1,7 @@
+import type { LewTabsOption } from 'lew-ui'
+
 export const tabsEmits = {
-  change: (data: { label: string, value: string | number | undefined }) => data,
+  change: (value?: string, item?: LewTabsOption) => {
+    return { value, item }
+  },
 } as const

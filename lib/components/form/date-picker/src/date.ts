@@ -22,11 +22,11 @@ export function getMonthDate(year?: number, month?: number): RetType {
     firstDayWeekDay = 7
   year = firstDay.getFullYear()
   month = firstDay.getMonth() + 1
-  const lastDayofLastMonth: Date = new Date(year, month - 1, 0)
-  const lastDateofLastMonth: number = lastDayofLastMonth.getDate()
+  const lastDayOfLastMonth: Date = new Date(year, month - 1, 0)
+  const lastDateOfLastMonth: number = lastDayOfLastMonth.getDate()
   const preMonthDayCount: number = firstDayWeekDay - 1
   const lastDay: Date = new Date(year, month, 0)
-  const lastData: number = lastDay.getDate()
+  const lastDate: number = lastDay.getDate()
 
   for (let i = 0; i < 6 * 7; i++) {
     const date: number = i + 1 - preMonthDayCount
@@ -35,11 +35,11 @@ export function getMonthDate(year?: number, month?: number): RetType {
 
     if (date <= 0) {
       thisMonth = month - 1
-      showDate = lastDateofLastMonth + date
+      showDate = lastDateOfLastMonth + date
     }
-    else if (date > lastData) {
+    else if (date > lastDate) {
       thisMonth = month + 1
-      showDate -= lastData
+      showDate -= lastDate
     }
 
     if (thisMonth === 13)

@@ -1,4 +1,3 @@
 export const inputTableEmits = {
-  addSuccess: (data: { row: any }) => data,
-  editSuccess: (data: { row: any }) => data,
+  change: (value?: any) => value,
 } as const

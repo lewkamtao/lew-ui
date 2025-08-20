@@ -1,8 +1,8 @@
 export const dateRangePickerEmits = {
-  change: (data?: { e: any, show: () => void, hide: () => void } | undefined) => data,
+  change: (value?: { start?: string, end?: string }) => value,
   clear: () => true,
 } as const
 
 export const dateRangeEmits = {
-  change: (value?: any | undefined) => value,
+  change: (value?: { [key: string]: string }) => value,
 } as const

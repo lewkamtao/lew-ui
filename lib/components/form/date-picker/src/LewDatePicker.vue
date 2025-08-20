@@ -4,19 +4,18 @@ import dayjs from 'dayjs'
 import { LewDate, LewPopover, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
-import { cloneDeep } from 'lodash-es'
 import { datePickerEmits } from './emits'
 import { datePickerProps } from './props'
 
 const props = defineProps(datePickerProps)
 const emit = defineEmits(datePickerEmits)
 
+const modelValue: Ref<string | undefined> = defineModel({ required: true })
+
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-
-const modelValue: Ref<string | undefined> = defineModel()
 
 const visible = ref(false)
 const lewPopoverRef = ref()
@@ -66,8 +65,8 @@ function hide() {
   lewPopoverRef.value.hide()
 }
 
-function change(date: string | undefined) {
-  emit('change', { date, value: cloneDeep(modelValue.value) })
+function change(value?: string) {
+  emit('change', value)
   setTimeout(() => {
     hide()
   }, 100)
@@ -85,8 +84,8 @@ function selectPresets(item: { label: string, value: string }) {
 
 function clearHandle() {
   modelValue.value = undefined
-  change(modelValue.value)
   emit('clear')
+  emit('change', undefined)
 }
 
 function showHandle() {

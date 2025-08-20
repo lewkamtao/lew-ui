@@ -1,5 +1,4 @@
 export const treeSelectEmits = {
-  change: (data: any) => data,
-  blur: () => true,
-  clear: () => true,
+  change: (value?: string) => value,
+  clear: () => { },
 } as const

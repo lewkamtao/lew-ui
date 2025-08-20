@@ -156,33 +156,33 @@ function validate() {
   }
 }
 
+// 防抖验证函数
 const validateField = debounce(() => {
   validate()
 }, 120)
+
+// 防抖的 watch 回调函数
+const debouncedWatchCallback = debounce(() => {
+  if (!ignoreValidate.value) {
+    validateField()
+  }
+  else {
+    ignoreValidate.value = false
+  }
+}, 100)
 
 function setError(message: any) {
   errMsg.value = message
 }
 
-function change() {
+function change(value: any) {
   const { field, label } = props
-  emit('change', cloneDeep({ value: modelValue.value, field, label }))
+  emit('change', { value, field, label })
 }
 
-watch(
-  () => modelValue.value,
-  () => {
-    if (!ignoreValidate.value) {
-      validateField()
-    }
-    else {
-      ignoreValidate.value = false
-    }
-  },
-  {
-    deep: true,
-  },
-)
+watch(() => modelValue.value, debouncedWatchCallback, {
+  deep: true,
+})
 
 const getFormItemMainStyle = computed(() => {
   if (!formItemRef.value)

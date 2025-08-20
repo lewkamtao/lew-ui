@@ -3,5 +3,5 @@ export const checkboxEmits = {
 } as const
 
 export const checkboxGroupEmits = {
-  change: (data: { value: string[], item: any }) => data,
+  change: (value: string[], item: any) => ({ value, item }),
 } as const

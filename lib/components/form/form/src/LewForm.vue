@@ -37,14 +37,22 @@ const getDynamicGridStyle = computed(() => {
 
 // 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
 function getForm() {
-  const formData: Record<string, any> = formatFormByMap(cloneDeep(formMap.value))
+  let formData: Record<string, any> = formatFormByMap(toRaw(formMap.value))
   // 应用 outputFormat
   componentOptions.forEach((item) => {
     if (item.outputFormat && item.field && formData[item.field]) {
-      formData[item.field] = item.outputFormat({
+      const _value = item.outputFormat({
         item,
         value: formData[item.field],
       })
+      // 如果是对象
+      if (typeof _value === 'object' && !Array.isArray(_value)) {
+        delete formData[item.field]
+        formData = { ...formData, ..._value }
+      }
+      else {
+        formData[item.field] = _value
+      }
     }
   })
   return formData

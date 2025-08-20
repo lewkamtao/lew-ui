@@ -2,12 +2,11 @@
 import type { LewSize } from 'lew-ui'
 import { LewForm, LewMessage, LewModal, locale } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
-import { inputTableEmits } from './emits'
 import { formModalProps } from './props'
 
 const props = defineProps(formModalProps)
 
-const emit = defineEmits(inputTableEmits)
+const emit = defineEmits(['addSuccess', 'editSuccess'])
 const visible = ref(false)
 const formRef = ref()
 const form = ref({})

@@ -31,9 +31,7 @@ function openInput() {
       && Array.isArray(modelValue.value)
       && modelValue.value.length >= props.maxLength
     ) {
-      LewMessage.warning(
-        locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
-      )
+      LewMessage.warning(locale.t('inputTag.maxLength', { maxLength: props.maxLength }))
       return
     }
 
@@ -42,10 +40,7 @@ function openInput() {
 
     // 在下一个渲染周期聚焦输入框
     nextTick(() => {
-      if (
-        lewInputRef.value
-        && typeof lewInputRef.value.toFocus === 'function'
-      ) {
+      if (lewInputRef.value && typeof lewInputRef.value.toFocus === 'function') {
         lewInputRef.value.toFocus()
       }
     })
@@ -120,10 +115,7 @@ function openInput() {
 
           if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
             // 当输入框为空且按下回车键时，失焦
-            if (
-              lewInputRef.value
-              && typeof lewInputRef.value.toBlur === 'function'
-            ) {
+            if (lewInputRef.value && typeof lewInputRef.value.toBlur === 'function') {
               lewInputRef.value.toBlur()
             }
           }
@@ -165,9 +157,7 @@ function addTag() {
     if (props.maxLength > 0 && _value.length >= props.maxLength) {
       inputValue.value = ''
       isInputActive.value = false
-      LewMessage.warning(
-        locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
-      )
+      LewMessage.warning(locale.t('inputTag.maxLength', { maxLength: props.maxLength }))
       return
     }
 
@@ -206,7 +196,7 @@ function delTag(index: number) {
     }
 
     emit('change', cloneDeep(newValue))
-    emit('remove', removedTag)
+    emit('remove', removedTag, index)
   }
   catch (error) {
     console.error('删除标签时出错:', error)
@@ -245,15 +235,10 @@ const getIconSize = computed(() => {
 })
 
 function clear() {
-  try {
-    modelValue.value = []
-    inputValue.value = ''
-    emit('change', [])
-    emit('clear')
-  }
-  catch (error) {
-    console.error('清空标签时出错:', error)
-  }
+  modelValue.value = []
+  inputValue.value = ''
+  emit('clear')
+  emit('change', undefined)
 }
 
 function onBlur() {
@@ -307,9 +292,7 @@ function onBlur() {
           :size="size"
           :readonly="!isInputActive"
           :placeholder="
-            (modelValue || []).length === 0
-              ? locale.t('inputTag.placeholder')
-              : ' '
+            (modelValue || []).length === 0 ? locale.t('inputTag.placeholder') : ' '
           "
           @input="isTagMarkedForDeletion = false"
           @blur="onBlur"
@@ -318,9 +301,7 @@ function onBlur() {
 
       <transition name="lew-form-icon-ani">
         <CommonIcon
-          v-if="
-            clearable && (modelValue || []).length > 0 && !readonly && !disabled
-          "
+          v-if="clearable && (modelValue || []).length > 0 && !readonly && !disabled"
           class="lew-form-icon-close"
           :class="{
             'lew-form-icon-close-focus': isInputActive,
@@ -349,6 +330,7 @@ function onBlur() {
   overflow: hidden;
   width: 100%;
   cursor: text;
+
   :deep() {
     .lew-tag {
       background-color: var(--lew-bgcolor-0);
@@ -363,12 +345,14 @@ function onBlur() {
     box-sizing: border-box;
     transition: all var(--lew-form-transition-bezier);
     width: 100%;
+
     :deep() {
       .lew-input-view {
         border-radius: 0px !important;
       }
     }
   }
+
   .lew-input-tag {
     flex-shrink: 1;
     border: none !important;
@@ -377,20 +361,24 @@ function onBlur() {
     box-shadow: none !important;
     overflow: hidden;
     width: auto;
+
     :deep() {
       .lew-input-view {
         border-radius: 0px !important;
       }
+
       .lew-input-box {
         padding: 0px !important;
         height: 100%;
       }
+
       input {
         height: 26px;
         left: 0px !important;
       }
     }
   }
+
   :deep(.lew-input) {
     padding: 0 !important;
   }
@@ -399,6 +387,7 @@ function onBlur() {
 .lew-input-tag-view:hover {
   background-color: var(--lew-form-bgcolor-hover);
 }
+
 .lew-input-tag-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
 
@@ -428,12 +417,14 @@ function onBlur() {
 .lew-input-tag-view-size-small {
   min-height: var(--lew-form-item-height-small);
   line-height: var(--lew-form-input-line-height-small);
+
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
     padding-top: 0px;
     padding-bottom: 0px;
   }
+
   .lew-input-tag {
     height: 20px;
   }
@@ -442,12 +433,14 @@ function onBlur() {
 .lew-input-tag-view-size-medium {
   line-height: var(--lew-form-input-line-height-medium);
   min-height: var(--lew-form-item-height-medium);
+
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
     padding-top: 0px;
     padding-bottom: 0px;
   }
+
   .lew-input-tag {
     height: 24px;
   }
@@ -456,12 +449,14 @@ function onBlur() {
 .lew-input-tag-view-size-large {
   line-height: var(--lew-form-input-line-height-large);
   min-height: var(--lew-form-item-height-large);
+
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
     padding-top: 0px;
     padding-bottom: 0px;
   }
+
   .lew-input-tag {
     height: 28px;
   }
@@ -471,6 +466,7 @@ function onBlur() {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;
 }
+
 .lew-input-tag-view-readonly {
   pointer-events: none;
 }

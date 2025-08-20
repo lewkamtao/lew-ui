@@ -1,3 +1,3 @@
 export const sliderEmits = {
-  change: (value: number) => value,
+  change: (value?: number) => value,
 } as const

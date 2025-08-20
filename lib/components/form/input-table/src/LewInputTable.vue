@@ -12,7 +12,7 @@ import {
 
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, getUniqueId } from 'lew-ui/utils'
-import { cloneDeep } from 'lodash-es'
+import { inputTableEmits } from './emits'
 import FormModal from './FormModal.vue'
 import { inputTableProps } from './props'
 
@@ -24,6 +24,7 @@ declare module 'vue' {
 }
 
 const props = defineProps(inputTableProps)
+const emit = defineEmits(inputTableEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -160,13 +161,15 @@ function add() {
 }
 
 function addSuccess({ row }: { row: any }) {
+  let _value = [...modelValue.value]
   if (!Array.isArray(modelValue.value)) {
-    modelValue.value = [row]
+    _value = [row]
   }
   else {
-    modelValue.value.push(row)
-    modelValue.value = cloneDeep(modelValue.value)
+    _value.push(row)
   }
+  modelValue.value = _value
+  emit('change', _value)
 }
 
 // 修复编辑成功逻辑：通过rowKey找到正确的行进行更新

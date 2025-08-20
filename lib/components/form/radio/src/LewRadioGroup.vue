@@ -12,10 +12,7 @@ const modelValue: Ref<string | number | undefined> = defineModel()
 
 function change({ item }: { item: LewRadioOption }) {
   modelValue.value = item.value
-  emit('change', {
-    value: item.value,
-    item: toRaw(item),
-  })
+  emit('change', item.value)
 }
 
 const getRadioGroupClassName = computed(() => {

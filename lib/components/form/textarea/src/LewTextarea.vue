@@ -25,8 +25,7 @@ const resizeObj = ref({
 
 const handleResize = throttle(() => {
   if (props.resize !== 'none') {
-    const { width, height }
-          = lewTextareaViewRef.value.getBoundingClientRect()
+    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
     resizeObj.value = {
       width,
       height,
@@ -47,6 +46,7 @@ const state = reactive({
 function clear(): void {
   modelValue.value = undefined
   emit('clear')
+  emit('change', undefined)
 }
 
 function toFocus() {
@@ -67,11 +67,9 @@ function focus(e: any) {
     e?.currentTarget?.select()
   }
   state.isFocus = true
-  emit('focus')
 }
 
 function blur() {
-  emit('blur', modelValue.value)
   state.isFocus = false
 }
 
@@ -95,16 +93,7 @@ const getIconSize = computed(() => {
 })
 
 const getTextareaStyle: any = computed(() => {
-  const {
-    width,
-    height,
-    size,
-    resize,
-    maxHeight,
-    minHeight,
-    maxWidth,
-    minWidth,
-  } = props
+  const { width, height, size, resize, maxHeight, minHeight, maxWidth, minWidth } = props
   const heightMap: Record<string, number> = {
     small: 60,
     medium: 75,
@@ -156,9 +145,7 @@ defineExpose({ toFocus })
       ref="lewTextareaRef"
       v-model="modelValue"
       class="lew-textarea lew-scrollbar"
-      :placeholder="
-        placeholder ? placeholder : locale.t('textarea.placeholder')
-      "
+      :placeholder="placeholder ? placeholder : locale.t('textarea.placeholder')"
       :maxlength="maxLength"
       :disabled="disabled"
       :readonly="readonly"

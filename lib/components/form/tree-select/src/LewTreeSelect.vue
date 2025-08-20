@@ -83,7 +83,7 @@ function clearHandle() {
   state.keyword = ''
   state.keywordBackup = ''
   emit('clear')
-  emit('change', treeSelectValue.value)
+  emit('change', undefined)
 }
 
 const getValueStyle = computed(() => {
@@ -162,9 +162,7 @@ function hideHandle() {
     state.keyword = ''
     state.keywordBackup = ''
   }
-  inputRef.value.blur()
   lewTreeRef.value.reset()
-  emit('blur')
 }
 
 watch(treeSelectValue, (newVal) => {
@@ -399,6 +397,7 @@ defineExpose({ show, hide })
       user-select: text;
     }
   }
+
   .lew-select-searchable {
     .lew-select {
       .lew-value {
@@ -406,10 +405,12 @@ defineExpose({ show, hide })
       }
     }
   }
+
   .lew-select-disabled:hover {
     background-color: var(--lew-form-bgcolor);
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   }
+
   .lew-select-init-loading {
     pointer-events: none;
     cursor: wait;
@@ -418,9 +419,11 @@ defineExpose({ show, hide })
       cursor: wait;
     }
   }
+
   .lew-select-size-small {
     height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
+
     .lew-value {
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
@@ -430,6 +433,7 @@ defineExpose({ show, hide })
   .lew-select-size-medium {
     height: var(--lew-form-item-height-medium);
     line-height: var(--lew-form-input-line-height-medium);
+
     .lew-value {
       padding: var(--lew-form-input-padding-medium);
 
@@ -440,6 +444,7 @@ defineExpose({ show, hide })
   .lew-select-size-large {
     height: var(--lew-form-item-height-large);
     line-height: var(--lew-form-input-line-height-large);
+
     .lew-value {
       padding: var(--lew-form-input-padding-large);
 
@@ -453,14 +458,17 @@ defineExpose({ show, hide })
 .lew-select-popover-body {
   padding: 6px;
 }
+
 .lew-select-body {
   width: 100%;
   box-sizing: border-box;
+
   .tree-select-wrapper {
     padding: 5px 0px;
     max-height: 280px;
     overflow: auto;
   }
+
   .result-count {
     padding-left: 8px;
     margin: 5px 0px;

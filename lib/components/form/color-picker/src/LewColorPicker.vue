@@ -7,15 +7,13 @@ import { colorPickerProps } from './props'
 const props = defineProps(colorPickerProps)
 const emit = defineEmits(colorPickerEmits)
 
-const modelValue = defineModel()
+const modelValue = defineModel<string | undefined>({ required: true })
 
 const isFocus = ref(false)
 const pickerValueInputRef = ref()
 
 const getDisplayPlaceholder = computed(() => {
-  return props.placeholder
-    ? props.placeholder
-    : locale.t('colorPicker.placeholder')
+  return props.placeholder ? props.placeholder : locale.t('colorPicker.placeholder')
 })
 
 const getPickerClassName = computed(() => {
@@ -71,15 +69,15 @@ function focus() {
 
 function blur() {
   isFocus.value = false
-  modelValue.value = convertToHex(modelValue.value as string)
-  emit('change', modelValue.value as string)
+  modelValue.value = convertToHex(modelValue.value!)
+  emit('change', modelValue.value)
 }
 
 function change() {
-  emit('change', modelValue.value as string)
+  emit('change', modelValue.value)
 }
 
-function convertToHex(color: string): string {
+function convertToHex(color: string = ''): string {
   color = color.trim()
 
   if (/^#?[0-9a-f]{6}$/i.test(color)) {
@@ -107,11 +105,7 @@ function convertToHex(color: string): string {
 
 <template>
   <div class="lew-color-picker-view" :style="getPickerViewStyle">
-    <div
-      class="lew-color-picker"
-      :style="getPickerStyle"
-      :class="getPickerClassName"
-    >
+    <div class="lew-color-picker" :style="getPickerStyle" :class="getPickerClassName">
       <input
         v-model="modelValue"
         class="lew-color-picker-input"
@@ -202,6 +196,7 @@ function convertToHex(color: string): string {
       color: var(--lew-text-color);
     }
   }
+
   .lew-color-picker:hover {
     background-color: var(--lew-form-bgcolor-hover);
   }

@@ -353,6 +353,41 @@ const options = ref([
     rule: Yup.array().min(1, '至少选择一个').required('不能为空'),
   },
   {
+    field: 'date_range',
+    label: '日期范围选择器',
+    as: 'date-range-picker',
+    rule: Yup.object()
+      .shape({
+        start: Yup.string().required('开始日期必填'),
+        end: Yup.string().required('结束日期必填'),
+      })
+      .required('日期范围必填'),
+    outputFormat: ({ value }: { value: { start?: string, end?: string } }) => {
+      if (!value || typeof value !== 'object' || value === null)
+        return ''
+      const start = typeof value.start === 'string' ? value.start : ''
+      const end = typeof value.end === 'string' ? value.end : ''
+      return {
+        dateStart: start,
+        dateEnd: end,
+      }
+    },
+    inputFormat: ({ value }: { value: string }) => {
+      if (typeof value !== 'string') {
+        return { start: '', end: '' }
+      }
+      const arr = value.split(' - ')
+      return {
+        start: arr[0] ?? '',
+        end: arr[1] ?? '',
+      }
+    },
+    props: {
+      clearable: true,
+      placeholder: '请选择日期范围',
+    },
+  },
+  {
     as: 'button',
     props: {
       text: '提交',
@@ -419,12 +454,14 @@ onMounted(() => {
   width: 450px;
   flex-shrink: 0;
 }
+
 pre {
   width: 350px;
   background-color: var(--lew-bgcolor-2);
   padding: 30px;
   flex-shrink: 0;
 }
+
 @media (max-width: 767px) {
   .form-box {
     width: 100%;
