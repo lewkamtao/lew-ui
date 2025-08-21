@@ -1,3 +1,4 @@
+import type { Property } from 'csstype'
 import type { LewSize, LewSliderRangeOption } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
@@ -18,6 +19,14 @@ export const sliderRangeProps = {
       componentName: 'LewSliderRange',
       propName: 'size',
       values: validSizeList,
+    }),
+  },
+  width: {
+    type: String as PropType<Property.Width>,
+    default: '100%',
+    validator: validators.widthHeight({
+      componentName: 'LewDatePicker',
+      propName: 'width',
     }),
   },
   min: {

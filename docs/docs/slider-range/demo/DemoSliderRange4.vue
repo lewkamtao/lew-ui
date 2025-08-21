@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const v = ref([25, 50])
+const v = ref([25, 50]);
 </script>
 
 <template>
   <lew-slider-range
     v-model="v"
-    style="width: 500px"
+    width="500px"
     readonly
     range
     :options="[

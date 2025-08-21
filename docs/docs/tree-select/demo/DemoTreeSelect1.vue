@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { cityTree } from 'docs/lib/data'
+import { cityTree } from "docs/lib/data";
 
-const v = ref<string>('')
+const v = ref<string>("");
 function change(e: any) {
-  console.log(e)
+  console.log(e);
 }
 </script>
 
@@ -11,6 +11,7 @@ function change(e: any) {
   <lew-tree-select
     v-model="v"
     key-field="value"
+    width="300px"
     size="medium"
     searchable
     label-field="label"

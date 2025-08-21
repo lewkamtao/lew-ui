@@ -44,7 +44,7 @@ export const inputTableProps = {
   },
   width: {
     type: String as PropType<Property.Width>,
-    default: '',
+    default: '100%',
     validator: validators.widthHeight({
       componentName: 'LewInputTable',
       propName: 'width',

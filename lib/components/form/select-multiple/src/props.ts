@@ -31,7 +31,7 @@ export const selectMultipleProps = {
   },
   width: {
     type: String as PropType<Property.Width>,
-    default: '300px',
+    default: '100%',
     validator: validators.widthHeight({
       componentName: 'LewSelectMultiple',
       propName: 'width',
