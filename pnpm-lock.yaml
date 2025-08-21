@@ -32,9 +32,6 @@ importers:
       rollup-plugin-scss:
         specifier: ^4.0.1
         version: 4.0.1
-      shiki:
-        specifier: ^3.9.2
-        version: 3.9.2
       shiki-code-block-vue:
         specifier: 0.0.6-beta.1
         version: 0.0.6-beta.1(@vue/tsconfig@0.7.0(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3)))(shiki@3.9.2)(vue-tsc@3.0.1(typescript@5.8.3))(vue@3.5.17(typescript@5.8.3))

@@ -2,6 +2,7 @@
 import type { LewSize } from 'lew-ui'
 import { LewTextTrim, LewTooltip } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { tipsIconSizeMap } from 'lew-ui/components/form/form/src/props'
 import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
 import { isString } from 'lodash-es'
@@ -113,9 +114,10 @@ function showTextAndEmpty(): string {
       </div>
     </div>
     <div class="lew-desc-item-main" :style="getDescItemMainStyle">
-      <template v-if="customRender">
-        <component :is="customRender({ field: field!, label: label!, dataSource })" />
-      </template>
+      <RenderComponent
+        v-if="customRender"
+        :render-fn="customRender({ field: field!, label: label!, dataSource })"
+      />
       <template v-else-if="type === 'text-trim'">
         <LewTextTrim :x="valueX" style="width: 100%" :text="showTextAndEmpty()" />
       </template>

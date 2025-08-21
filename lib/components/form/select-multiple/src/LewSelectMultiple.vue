@@ -19,7 +19,7 @@ import {
   object2class,
   poll,
 } from 'lew-ui/utils'
-import { isFunction } from 'lodash-es'
+import { cloneDeep, isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
 import { selectMultipleEmits } from './emits'
 import { selectMultipleProps } from './props'
@@ -134,7 +134,7 @@ function deleteTag({ value }: { value: any }) {
   if (valueIndex > -1) {
     const item = selectValue.value[valueIndex]
     selectValue.value.splice(valueIndex, 1)
-    emit('delete', { item, value: selectValue.value })
+    emit('delete', cloneDeep(selectValue.value), item)
 
     if (selectValue.value.length === 0) {
       lewPopoverValueRef.value && lewPopoverValueRef.value.hide()
@@ -163,7 +163,7 @@ function selectHandle(item: LewSelectMultipleOption) {
   }
 
   selectValue.value = _value
-  emit('select', item)
+  emit('select', _value)
   setTimeout(() => {
     lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)

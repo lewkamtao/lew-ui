@@ -708,7 +708,7 @@ defineExpose({
   }
 
   .lew-select-focus:hover {
-    background-color: var(--lew-form-bgcolor-focus-hover);
+    background-color: var(--lew-form-bgcolor-focus);
   }
 }
 </style>
