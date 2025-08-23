@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import LewComponentInfo from 'docs/layout/LewComponentInfo.vue'
-import LewDemoBox from '../../layout/LewDemoBox.vue'
 </script>
 
 <template>

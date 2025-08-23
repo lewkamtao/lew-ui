@@ -7,5 +7,5 @@ function change(e: any) {
 </script>
 
 <template>
-  <lew-date-picker v-model="value" @change="change" />
+  <lew-date-picker v-model="value" width="300px" @change="change" />
 </template>

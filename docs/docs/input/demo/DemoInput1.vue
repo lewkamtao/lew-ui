@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const modelValue = ref("");
+const modelValue = ref('')
 </script>
 
 <template>

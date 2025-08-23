@@ -2,7 +2,6 @@ import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import docs from '../docs'
-
 import guide from '../guide'
 import LewMain from '../layout/LewMain.vue'
 import LewComponents from '../views/LewComponents.vue'

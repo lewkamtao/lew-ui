@@ -91,13 +91,9 @@ const columns = [
   },
 ]
 
-const sortValue = ref<any>({
-  founded: 'desc',
-})
-
-function sortChange() {
-  if (sortValue.value.founded) {
-    data.value = orderBy(data.value, 'founded', sortValue.value.founded)
+function sortChange(e: any) {
+  if (e.founded) {
+    data.value = orderBy(data.value, 'founded', e.founded)
   }
   else {
     data.value = orderBy(data.value, 'id', 'asc')
@@ -108,7 +104,6 @@ function sortChange() {
 <template>
   <lew-flex style="width: 100%" direction="y" x="start">
     <lew-table
-      v-model:sort-value="sortValue"
       :data-source="data"
       :columns="columns"
       multiple

@@ -24,7 +24,13 @@ function getComponentName() {
     .replace(/^[A-Z]/, letter => letter.toLowerCase())
 }
 
-function getColumns({ columnsKey, title }: { columnsKey: string, title: string }) {
+function getColumns({
+  columnsKey,
+  title,
+}: {
+  columnsKey: string
+  title: string
+}) {
   let columns: any = [
     {
       title: 'Name',
@@ -41,7 +47,10 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
             },
           },
           row.required
-            ? [h(RequiredIcon, { size: 7, style: { marginRight: '2px' } }), name]
+            ? [
+                h(RequiredIcon, { size: 7, style: { marginRight: '2px' } }),
+                name,
+              ]
             : name,
         )
       },
@@ -52,9 +61,20 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
       field: 'description',
       customRender: ({ row }: any) => {
         const { name } = row
-        return docsLocale.t(
-          `components.${getComponentName()}.${title.replace(/^[A-Z]/, match =>
-            match.toLowerCase())}.${name}`,
+        return h(
+          'div',
+          {
+            style: {
+              fontFamily:
+                'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+            },
+          },
+          docsLocale.t(
+            `components.${getComponentName()}.${title.replace(
+              /^[A-Z]/,
+              match => match.toLowerCase(),
+            )}.${name}`,
+          ),
         )
       },
     },
@@ -141,7 +161,9 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
           }
           else {
             const _types
-              = (typeValues || []).length > 0 ? typeValues : (type || '').split('|')
+              = (typeValues || []).length > 0
+                ? typeValues
+                : (type || '').split('|')
             const tags = (_types || []).map((text: any) => {
               return h(
                 LewTag,
@@ -176,7 +198,9 @@ function getColumns({ columnsKey, title }: { columnsKey: string, title: string }
         field: 'default',
         customRender: ({ text, row }: any) => {
           const { name, defaultLocale } = row
-          return defaultLocale ? locale.t(`${getComponentName()}.${name}`) : text || '-'
+          return defaultLocale
+            ? locale.t(`${getComponentName()}.${name}`)
+            : text || '-'
         },
       },
     ]
@@ -212,7 +236,12 @@ function getTitle(title: string) {
 
 <template>
   <LewFlex direction="y" gap="70px" class="docs-wrapper">
-    <LewFlex v-for="(item, index) in sortValue" :key="index" direction="y" x="start">
+    <LewFlex
+      v-for="(item, index) in sortValue"
+      :key="index"
+      direction="y"
+      x="start"
+    >
       <lew-title :id="item.title" size="18px" class="demo-docs-title">
         {{ getTitle(item.title) }}
         <LewTag

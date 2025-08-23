@@ -2,7 +2,10 @@
 import type { LewSelectOption } from "lew-ui";
 
 const options = ref<LewSelectOption[]>([
-  { label: "Standard Delivery", value: "standard" },
+  {
+    label: "StandardStandardStandardStandardStandard Delivery",
+    value: "standard",
+  },
   { label: "Express Delivery", value: "express" },
   { label: "Next Day Delivery", value: "nextDay" },
   { label: "Same Day Delivery", value: "sameDay" },

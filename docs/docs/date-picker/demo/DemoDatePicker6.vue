@@ -11,6 +11,7 @@ function change(e: any) {
     v-model="value"
     placeholder="禁用"
     disabled
+    width="300px"
     value-format="YYYY 年 MM 月 DD 日"
     clearable
     @change="change"

@@ -2,6 +2,7 @@
 import { renderDescription } from 'docs/lib/utils'
 import docsLocale from 'docs/locals'
 import { LewCollapseTransition } from 'lew-ui'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { Check, ChevronDown, ChevronUp, Copy } from 'lucide-vue-next'
 import LewCodeHighlighter from './LewCodeHighlighter.vue'
 
@@ -92,11 +93,12 @@ async function copyCode(code: string) {
       :title="tipsTitle"
       :content="tipsContent"
     />
-    <div
-      v-if="checkHasContent(description)"
-      class="desc"
-      v-html="renderDescription(description)"
-    />
+    <div class="desc">
+      <RenderComponent
+        v-if="checkHasContent(description)"
+        :render-fn="renderDescription(description)"
+      />
+    </div>
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
         <slot />
@@ -129,7 +131,7 @@ async function copyCode(code: string) {
 
 <style lang="scss" scoped>
 .demo-box {
-  margin: 50px 0px 50px 0px;
+  margin: 20px 0px;
 
   .desc {
     margin: 20px 0px;

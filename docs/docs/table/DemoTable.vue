@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import LewComponentInfo from 'docs/layout/LewComponentInfo.vue'
-import LewDemoBox from 'docs/layout/LewDemoBox.vue'
+import LewDemoBoxLayout from 'docs/layout/LewDemoBoxLayout.vue'
 import LewDocsTables from 'docs/layout/LewDocsTables.vue'
 import { useRoute } from 'vue-router'
 import * as API from './api'
@@ -22,22 +22,13 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <LewComponentInfo />
-    <LewDemoBox
-      v-for="(item, index) in demoGroup"
-      :key="index"
-      :title="$t(`components.${componentName}.demo${index + 1}.title`)"
-      :code="codeGroup[index]"
-      :description="
-        $t(`components.${componentName}.demo${index + 1}.description`)
-      "
-      :tips-type="$t(`components.${componentName}.demo${index + 1}.tipsType`)"
-      :tips-title="$t(`components.${componentName}.demo${index + 1}.tipsTitle`)"
-      :tips-content="
-        $t(`components.${componentName}.demo${index + 1}.tipsContent`)
-      "
-    >
-      <component :is="item" />
-    </LewDemoBox>
+    <LewDemoBoxLayout
+      :demo-group="demoGroup"
+      :code-group="codeGroup"
+      :component-name="componentName"
+      :columns="2"
+      gap="20px"
+    />
     <LewDocsTables :options="options" />
   </div>
 </template>

@@ -23,7 +23,10 @@ const presets = [
 </script>
 
 <template>
-  <lew-flex style="width: 275px" direction="y" x="start">
-    <lew-date-picker v-model="value" :presets="presets" @change="change" />
-  </lew-flex>
+  <lew-date-picker
+    v-model="value"
+    width="300px"
+    :presets="presets"
+    @change="change"
+  />
 </template>

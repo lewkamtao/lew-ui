@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { renderDescription } from 'docs/lib/utils'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 
 function getComponentName() {
   const { path } = useRoute()
@@ -13,11 +14,12 @@ function getComponentName() {
 <template>
   <div>
     <lew-title>{{ $t(`components.${getComponentName()}.name`) }}</lew-title>
-    <p
-      class="sub-title"
-      v-html="
-        renderDescription($t(`components.${getComponentName()}.description`))
-      "
-    />
+    <div class="sub-title">
+      <RenderComponent
+        :render-fn="
+          renderDescription($t(`components.${getComponentName()}.description`))
+        "
+      />
+    </div>
   </div>
 </template>

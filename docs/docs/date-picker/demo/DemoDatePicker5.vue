@@ -11,6 +11,7 @@ function change(e: any) {
     v-model="value"
     placeholder="只读"
     readonly
+    width="300px"
     clearable
     @change="change"
   />

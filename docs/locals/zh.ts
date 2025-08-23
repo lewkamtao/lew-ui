@@ -76,7 +76,7 @@ export default {
       demo4: {
         title: '形状',
         description:
-          '通过 shape 控制头像的形状, 可选值为 `circle` `square` `sharp`。',
+          '通过 shape 控制头像的形状, 可选值为 ```circle``` ```square``` ```sharp```。',
       },
       props: {
         size: '尺寸',
@@ -937,6 +937,11 @@ export default {
       },
       demo10: {
         title: '启用搜索缓存',
+      },
+      demo11: {
+        title: '自适应宽度',
+        description:
+          '使用 ```autoWidth``` 属性，自动计算下拉框的宽度，```popoverWidth``` 属性设置弹窗宽度',
       },
       model: {
         modelValue: '绑定值',

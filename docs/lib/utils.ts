@@ -1,3 +1,6 @@
+import { LewTag } from 'lew-ui'
+import { h } from 'vue'
+
 export function convertProps(json: any) {
   const props = []
   for (const key in json) {
@@ -121,5 +124,37 @@ export function getComponentIcon(name: string) {
 }
 
 export function renderDescription(text: string) {
-  return text.replace(/`(\w+)`/g, '<span class="lew-docs-tag">$1</span>')
+  // 使用正则表达式匹配 ``` 包裹的文本
+  const regex = /```([^`]+)```/g
+  const parts = []
+  let lastIndex = 0
+  let match
+
+  while (true) {
+    match = regex.exec(text)
+    if (match === null)
+      break
+    // 添加匹配前的文本
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index))
+    }
+
+    // 添加匹配的文本作为 LewTag 组件
+    parts.push(h(LewTag, { color: 'info' }, match[1]))
+
+    lastIndex = match.index + match[0].length
+  }
+
+  // 添加剩余的文本
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex))
+  }
+
+  // 如果没有匹配到任何内容，直接返回文本
+  if (parts.length === 0) {
+    return text
+  }
+
+  // 将数组转换为 VNode，使用 span 作为容器
+  return h('span', {}, parts)
 }
