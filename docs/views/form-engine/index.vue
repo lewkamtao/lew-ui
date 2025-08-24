@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { LewSize } from 'lew-ui/types'
 import { useDark } from '@vueuse/core'
+
 import dayjs from 'dayjs'
 import { downloadObjectAsFile, getComponentIcon } from 'docs/lib/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -176,7 +177,8 @@ function getModel() {
 
   _options.forEach((item: any) => {
     ensureSpanMap(item)
-    const rowStart = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
+    const rowStart
+      = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
     const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
     delete item.spanMap
@@ -307,13 +309,20 @@ onMounted(() => {
             class="lew-form-component-box"
             @click="addComponent(element)"
           >
-            <img :src="getComponentIcon(element.as || 'blank')" alt="" srcset="">
+            <img
+              :src="getComponentIcon(element.as || 'blank')"
+              alt=""
+              srcset=""
+            >
             {{ element.label }}
           </lew-flex>
         </template>
       </draggable>
     </div>
-    <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activeId = '')">
+    <div
+      class="lew-form-wrapper"
+      @click="(settingTab = 'options'), (activeId = '')"
+    >
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
           v-model="formGlobal.columns"
@@ -360,10 +369,13 @@ onMounted(() => {
               :ref="(el: any) => (itemRefMap[element.id] = el)"
               class="lew-form-wrapper-draggable-item"
               :class="{
-                'lew-form-wrapper-draggable-item-active': activeId === element.id,
+                'lew-form-wrapper-draggable-item-active':
+                  activeId === element.id,
               }"
               :style="{
-                'grid-column-end': `span ${element.spanMap?.[formGlobal.columns] || 1}`,
+                'grid-column-end': `span ${
+                  element.spanMap?.[formGlobal.columns] || 1
+                }`,
               }"
               @click.stop="
                 activeId === element.id || element.as === ''
@@ -383,7 +395,8 @@ onMounted(() => {
                   />
                   <CommonIcon
                     v-if="
-                      (element.spanMap?.[formGlobal.columns] || 1) < formGlobal.columns
+                      (element.spanMap?.[formGlobal.columns] || 1)
+                        < formGlobal.columns
                     "
                     class="handle-icon handle-resize"
                     :size="14"
@@ -408,7 +421,12 @@ onMounted(() => {
                 :size="14"
                 type="error"
               />
-              <lew-flex v-if="element.as === ''" x="center" y="center" class="blank-box">
+              <lew-flex
+                v-if="element.as === ''"
+                x="center"
+                y="center"
+                class="blank-box"
+              >
                 占位盒子
               </lew-flex>
               <lew-form-item

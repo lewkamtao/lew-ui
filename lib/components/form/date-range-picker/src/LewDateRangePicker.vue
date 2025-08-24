@@ -156,7 +156,10 @@ defineExpose({ show, hide })
               opacity: visible ? 0.6 : 1,
             }"
           >
-            <div v-if="!modelValue?.start" class="lew-date-range-picker-placeholder">
+            <div
+              v-if="!modelValue?.start"
+              class="lew-date-range-picker-placeholder"
+            >
               {{
                 placeholderStart
                   ? placeholderStart
@@ -172,14 +175,20 @@ defineExpose({ show, hide })
             <div class="lew-date-range-picker-mid">
               <CommonIcon :size="14" type="minus" />
             </div>
-            <div v-if="!modelValue?.end" class="lew-date-range-picker-placeholder">
+            <div
+              v-if="!modelValue?.end"
+              class="lew-date-range-picker-placeholder"
+            >
               {{
                 placeholderEnd
                   ? placeholderEnd
                   : locale.t("dateRangePicker.placeholderEnd")
               }}
             </div>
-            <div v-else class="lew-date-range-picker-dateValue lew-date-range-picker-end">
+            <div
+              v-else
+              class="lew-date-range-picker-dateValue lew-date-range-picker-end"
+            >
               {{ modelValue.end }}
             </div>
             <CommonIcon

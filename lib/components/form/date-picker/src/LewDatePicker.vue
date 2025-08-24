@@ -1,13 +1,14 @@
-额我ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 <script lang="ts" setup>
 import dayjs from 'dayjs'
 import { LewDate, LewPopover, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { datePickerEmits } from './emits'
+import { formatDate, isValidDate } from './formatters'
 import { datePickerProps } from './props'
 
 const props = defineProps(datePickerProps)
+
 const emit = defineEmits(datePickerEmits)
 
 const modelValue: Ref<string | undefined> = defineModel({ required: true })
@@ -20,6 +21,11 @@ if (app && !app.directive('tooltip')) {
 const visible = ref(false)
 const lewPopoverRef = ref()
 const lewDateRef = ref()
+const inputRef = ref()
+let cacheValue: string | undefined
+
+const isInputFocused = ref(false)
+const valueBeforeFocus = ref<string | undefined>('')
 
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
@@ -31,9 +37,14 @@ const getIconSize = computed(() => {
 })
 
 const lewDatePickerClassNames = computed(() => {
-  const focus = visible.value
+  const focus = visible.value || isInputFocused.value
   const { size, readonly, disabled } = props
-  return object2class('lew-date-picker', { focus, size, readonly, disabled })
+  return object2class('lew-date-picker', {
+    focus,
+    size,
+    readonly,
+    disabled,
+  })
 })
 
 const getDatePickerInputStyle = computed(() => {
@@ -52,8 +63,6 @@ const getDisplayPlaceholder = computed(() => {
     : locale.t('datePicker.placeholder')
 })
 
-const shouldShowPlaceholder = computed(() => !modelValue.value)
-const shouldShowDateValue = computed(() => !!modelValue.value)
 const shouldShowClearIcon = computed(
   () => modelValue.value && props.clearable && !props.readonly,
 )
@@ -77,8 +86,8 @@ function change(value?: string) {
 }
 
 function selectPresets(item: { label: string, value: string }) {
-  modelValue.value = dayjs(item.value).format(props.valueFormat)
-  lewDateRef.value && lewDateRef.value.init(item.value)
+  modelValue.value = formatDate(item.value, props.valueFormat)! || cacheValue
+  lewDateRef.value && lewDateRef.value.init(modelValue.value)
   setTimeout(() => {
     nextTick(() => {
       change(modelValue.value)
@@ -94,6 +103,7 @@ function clearHandle() {
 
 function showHandle() {
   visible.value = true
+  inputRef.value?.focus()
   lewDateRef.value && lewDateRef.value.init(modelValue.value)
 }
 
@@ -101,18 +111,61 @@ function hideHandle() {
   visible.value = false
 }
 
-if (props.valueFormat && modelValue.value) {
-  const parsedDate = dayjs(modelValue.value, props.valueFormat)
-  if (parsedDate.isValid()) {
-    // 如果能够按照 valueFormat 解析，说明格式正确，不需要重新格式化
+function handleInputFocus() {
+  if (props.readonly || props.disabled)
+    return
+  valueBeforeFocus.value = modelValue.value
+  isInputFocused.value = true
+  cacheValue = modelValue.value
+}
+
+function handleInputBlur(e: FocusEvent) {
+  const target = e.target as HTMLInputElement
+  const value = target.value
+
+  isInputFocused.value = false
+  modelValue.value = formatDate(value!, props.valueFormat)! || cacheValue
+  emit('change', modelValue.value)
+  lewDateRef.value && lewDateRef.value.init(modelValue.value)
+}
+
+function handlePaste(event: ClipboardEvent) {
+  event.preventDefault()
+  const pastedText = event.clipboardData?.getData('text') || ''
+  modelValue.value
+    = formatDate(
+      dayjs(pastedText).format(props.valueFormat),
+      props.valueFormat,
+    )! || cacheValue
+  emit('change', modelValue.value)
+  lewDateRef.value && lewDateRef.value.init(modelValue.value)
+}
+
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Enter') {
+    event.preventDefault()
+    inputRef.value?.blur()
   }
-  else {
-    const fallbackDate = dayjs(modelValue.value)
-    if (fallbackDate.isValid()) {
-      modelValue.value = fallbackDate.format(props.valueFormat)
+  else if (event.key === 'Escape') {
+    event.preventDefault()
+    if (valueBeforeFocus.value !== undefined) {
+      modelValue.value = valueBeforeFocus.value
+      emit('change', valueBeforeFocus.value)
     }
+    inputRef.value?.blur()
   }
 }
+
+onMounted(() => {
+  if (modelValue.value) {
+    if (isValidDate(modelValue.value, props.valueFormat)) {
+      //
+    }
+    else {
+      throw new Error('[LewDatePicker] modelValue Invalid date')
+    }
+  }
+})
 
 defineExpose({ show, hide })
 </script>
@@ -136,23 +189,19 @@ defineExpose({ show, hide })
           :class="lewDatePickerClassNames"
           :style="getDatePickerInputStyle"
         >
-          <lew-flex
-            x="start"
-            y="center"
-            :style="{
-              opacity: visible ? 0.6 : 1,
-            }"
+          <input
+            ref="inputRef"
+            v-model="modelValue"
+            type="text"
+            class="lew-date-picker-input"
+            :placeholder="getDisplayPlaceholder"
+            :readonly="readonly"
+            :disabled="disabled"
+            @focus="handleInputFocus"
+            @blur="handleInputBlur"
+            @paste="handlePaste"
+            @keydown="handleKeydown"
           >
-            <div
-              v-show="shouldShowPlaceholder"
-              class="lew-date-picker-placeholder"
-            >
-              {{ getDisplayPlaceholder }}
-            </div>
-            <div v-show="shouldShowDateValue" class="lew-date-picker-dateValue">
-              {{ modelValue }}
-            </div>
-          </lew-flex>
           <CommonIcon
             class="lew-date-picker-icon-calendar"
             :size="getIconSize"
@@ -250,6 +299,22 @@ defineExpose({ show, hide })
     .lew-date-picker-icon-calendar-hide {
       opacity: 0;
       transform: translateY(-50%) translateX(100%);
+    }
+
+    .lew-date-picker-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+      padding: 0;
+      margin: 0;
+    }
+
+    .lew-date-picker-input::placeholder {
+      color: rgb(165, 165, 165);
     }
 
     .lew-date-picker-placeholder {

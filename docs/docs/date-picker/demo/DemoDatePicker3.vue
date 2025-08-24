@@ -1,12 +1,43 @@
 <script setup lang="ts">
-const value = ref('')
+const yearValue = ref('')
+const monthValue = ref('')
+const dateValue = ref('')
+const quarterValue = ref('')
+const datetimeValue = ref('')
 </script>
 
 <template>
-  <lew-date-picker
-    v-model="value"
-    width="300px"
-    value-format="YYYY 年 MM 月 DD 日"
-    clearable
-  />
+  <lew-flex width="300px" direction="y" gap="10px">
+    <lew-date-picker
+      v-model="yearValue"
+      width="300px"
+      value-format="YYYY"
+      placeholder="Select year"
+      clearable
+    />
+    <lew-date-picker
+      v-model="monthValue"
+      value-format="YYYY-MM"
+      placeholder="Select year-month"
+      clearable
+    />
+    <lew-date-picker
+      v-model="dateValue"
+      value-format="YYYY-MM-DD"
+      placeholder="Select date"
+      clearable
+    />
+    <lew-date-picker
+      v-model="quarterValue"
+      value-format="YYYY-[Q]Q"
+      placeholder="Select quarter"
+      clearable
+    />
+    <lew-date-picker
+      v-model="datetimeValue"
+      value-format="YYYY-MM-DD HH:mm:ss"
+      placeholder="Select datetime"
+      clearable
+    />
+  </lew-flex>
 </template>

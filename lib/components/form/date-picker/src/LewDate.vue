@@ -6,6 +6,7 @@ import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
 import { getMonthDate } from './date'
 import { dateEmits } from './emits'
+import { formatDate } from './formatters'
 import { dateProps } from './props'
 
 const props = defineProps(dateProps)
@@ -41,7 +42,7 @@ const checkToday = computed(() => (item: RetItemType) => {
 })
 
 const lewDateItemClassNames = computed(() => (item: RetItemType) => {
-  const e = item.date === item.showDate
+  const unselect = item.date !== item.showDate
   let selected = false
   if (item.date > 0 && item.date <= item.showDate) {
     const v = `${dateState.year}-${dateState.month}-${item.showDate}`
@@ -52,7 +53,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
       selected = currentDate.isSame(selectedDate, 'day')
     }
   }
-  return object2class('lew-date-item', { e, selected })
+  return object2class('lew-date-item', { unselect, selected })
 })
 
 function setMonthDate() {
@@ -60,7 +61,6 @@ function setMonthDate() {
 }
 
 function init(date: string | undefined = '') {
-  console.log(date)
   if (date) {
     const parsedDate = dayjs(date, props.valueFormat)
     if (parsedDate.isValid()) {
@@ -116,11 +116,14 @@ function nextYear() {
 }
 
 function selectDateFn(item: RetItemType) {
-  const _v = dayjs(`${item.year}-${item.month}-${item.showDate}`).format(
-    props.valueFormat,
+  const { valueFormat } = props
+  modelValue.value = formatDate(
+    dayjs(`${item.year}-${item.month}-${item.showDate}`).format(
+      valueFormat.includes('Q') ? 'YYYY-MM-DD' : valueFormat,
+    ),
+    valueFormat,
   )
-  modelValue.value = _v
-  emit('change', _v)
+  emit('change', modelValue.value)
 }
 
 init(modelValue.value)
@@ -185,7 +188,7 @@ defineExpose({ init })
       <div
         v-for="(item, index) in headDate"
         :key="`h${index}`"
-        class="lew-date-item"
+        class="lew-date-item lew-date-item-unselect"
       >
         <div class="lew-date-num">
           {{ item }}
@@ -269,6 +272,8 @@ defineExpose({ init })
       width: calc(100% / 7);
       height: 36px;
       line-height: 36px;
+      cursor: pointer;
+      color: var(--lew-text-color-1);
 
       .lew-date-label {
         display: inline-flex;
@@ -287,7 +292,6 @@ defineExpose({ init })
           width: 24px;
           height: 24px;
           line-height: 24px;
-          color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
           border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -299,14 +303,9 @@ defineExpose({ init })
       }
     }
 
-    .lew-date-item-e {
-      cursor: pointer;
-
-      .lew-date-label {
-        .lew-date-value {
-          color: var(--lew-text-color-1);
-        }
-      }
+    .lew-date-item-unselect {
+      pointer-events: none;
+      color: var(--lew-text-color-7);
     }
 
     .lew-date-item-today {
@@ -321,7 +320,7 @@ defineExpose({ init })
       box-shadow: 0px 0px 12px #0e7346;
     }
 
-    .lew-date-item-e:hover {
+    .lew-date-item:hover {
       .lew-date-label {
         .lew-date-value {
           background-color: var(--lew-color-primary-light);
@@ -331,7 +330,7 @@ defineExpose({ init })
       }
     }
 
-    .lew-date-item-e:active {
+    .lew-date-item:active {
       .lew-date-label {
         .lew-date-value {
           transform: scale(0.9);

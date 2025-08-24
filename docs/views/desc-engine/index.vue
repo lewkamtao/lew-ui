@@ -6,7 +6,12 @@ import { downloadObjectAsFile } from 'docs/lib/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { lewDescSizePaddingMap } from 'lew-ui/components/data/desc/src/props'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
-import { any2px, flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
+import {
+  any2px,
+  flattenNestedObject,
+  formatFormByMap,
+  getUniqueId,
+} from 'lew-ui/utils'
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
@@ -87,7 +92,8 @@ const refreshForm = debounce(() => {
       autoLabelWidth.value
         = formLabelRef.value.$el.offsetWidth
           + (bordered
-            ? lewDescSizePaddingMap[size as keyof typeof lewDescSizePaddingMap] * 2
+            ? lewDescSizePaddingMap[size as keyof typeof lewDescSizePaddingMap]
+            * 2
             : 0)
     }
   })
@@ -198,7 +204,8 @@ function getModel() {
   const _options = cloneDeep(options.value)
   _options.forEach((item: any) => {
     ensureSpanMap(item)
-    const rowStart = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
+    const rowStart
+      = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
     const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
     delete item.spanMap
@@ -290,14 +297,16 @@ function importField() {
 }
 
 function importFieldOptions(_options: any) {
-  options.value = Object.keys(flattenNestedObject(_options)).map((key: string) => {
-    return {
-      id: `desc_${dayjs().format('YYYYMMDD')}_${key}`,
-      label: _options[key],
-      spanMap: createInitialSpanMap(),
-      field: key,
-    }
-  })
+  options.value = Object.keys(flattenNestedObject(_options)).map(
+    (key: string) => {
+      return {
+        id: `desc_${dayjs().format('YYYYMMDD')}_${key}`,
+        label: _options[key],
+        spanMap: createInitialSpanMap(),
+        field: key,
+      }
+    },
+  )
 }
 
 onMounted(() => {
@@ -314,7 +323,10 @@ onMounted(() => {
       :size="formGlobal.size as LewSize"
       :options="options"
     />
-    <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activeId = '')">
+    <div
+      class="lew-form-wrapper"
+      @click="(settingTab = 'options'), (activeId = '')"
+    >
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-button class="add-btn" @click="addField">
           新增字段
@@ -367,10 +379,13 @@ onMounted(() => {
               :ref="(el: any) => (itemRefMap[element.id] = el)"
               class="lew-form-wrapper-draggable-item"
               :class="{
-                'lew-form-wrapper-draggable-item-active': activeId === element.id,
+                'lew-form-wrapper-draggable-item-active':
+                  activeId === element.id,
               }"
               :style="{
-                'grid-column-end': `span ${element.spanMap?.[formGlobal.columns] || 1}`,
+                'grid-column-end': `span ${
+                  element.spanMap?.[formGlobal.columns] || 1
+                }`,
                 'padding': formGlobal.bordered ? 0 : `15px 13px 15px 13px`,
               }"
               @click.stop="
@@ -391,7 +406,8 @@ onMounted(() => {
                   />
                   <CommonIcon
                     v-if="
-                      (element.spanMap?.[formGlobal.columns] || 1) < formGlobal.columns
+                      (element.spanMap?.[formGlobal.columns] || 1)
+                        < formGlobal.columns
                     "
                     class="handle-icon handle-resize"
                     :size="14"
