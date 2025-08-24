@@ -47,7 +47,9 @@ const getDatePickerInputStyle = computed(() => {
 })
 
 const getDisplayPlaceholder = computed(() => {
-  return props.placeholder ? props.placeholder : locale.t('datePicker.placeholder')
+  return props.placeholder
+    ? props.placeholder
+    : locale.t('datePicker.placeholder')
 })
 
 const shouldShowPlaceholder = computed(() => !modelValue.value)
@@ -55,7 +57,9 @@ const shouldShowDateValue = computed(() => !!modelValue.value)
 const shouldShowClearIcon = computed(
   () => modelValue.value && props.clearable && !props.readonly,
 )
-const shouldShowCalendarIcon = computed(() => !(modelValue.value && props.clearable))
+const shouldShowCalendarIcon = computed(
+  () => !(modelValue.value && props.clearable),
+)
 
 function show() {
   lewPopoverRef.value.show()
@@ -98,7 +102,16 @@ function hideHandle() {
 }
 
 if (props.valueFormat && modelValue.value) {
-  modelValue.value = dayjs(modelValue.value).format(props.valueFormat)
+  const parsedDate = dayjs(modelValue.value, props.valueFormat)
+  if (parsedDate.isValid()) {
+    // 如果能够按照 valueFormat 解析，说明格式正确，不需要重新格式化
+  }
+  else {
+    const fallbackDate = dayjs(modelValue.value)
+    if (fallbackDate.isValid()) {
+      modelValue.value = fallbackDate.format(props.valueFormat)
+    }
+  }
 }
 
 defineExpose({ show, hide })
@@ -130,7 +143,10 @@ defineExpose({ show, hide })
               opacity: visible ? 0.6 : 1,
             }"
           >
-            <div v-show="shouldShowPlaceholder" class="lew-date-picker-placeholder">
+            <div
+              v-show="shouldShowPlaceholder"
+              class="lew-date-picker-placeholder"
+            >
               {{ getDisplayPlaceholder }}
             </div>
             <div v-show="shouldShowDateValue" class="lew-date-picker-dateValue">
@@ -173,11 +189,7 @@ defineExpose({ show, hide })
           <div
             v-for="(item, index) in presets"
             :key="index"
-            v-tooltip="{
-              content: dayjs(item.value).format(valueFormat),
-              placement: 'right',
-              delay: [500, 80],
-            }"
+            :title="dayjs(item.value).format(valueFormat)"
             class="lew-date-picker-presets-item"
             :class="[
               dayjs(modelValue).isSame(item.value, 'day')

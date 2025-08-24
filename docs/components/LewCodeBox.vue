@@ -79,9 +79,10 @@ async function copyCode(code: string) {
 
   .code-header {
     padding: 16px;
+    background-color: var(--lew-table-header-bgcolor);
+    border-bottom: var(--lew-table-border);
 
     .code-title {
-      margin: 0 0 8px 0;
       font-size: 14px;
       font-weight: 600;
       line-height: 1.25;

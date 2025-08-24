@@ -99,7 +99,7 @@ export interface LewContextMenusOption {
   isDividerLine?: boolean
   level?: number
   children?: LewContextMenusOption[]
-  onClick?: (item: LewContextMenusOption) => void
+  onClick?: (item: LewContextMenusOption, options: LewContextMenusOption[], instance: any) => void
   [key: string]: any
 }
 

@@ -8,42 +8,45 @@ import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
 import { initLewContextMenu } from '../index'
 import { contextMenuEmits } from './emits'
-
 import { contextMenuProps } from './props'
 
 const props = defineProps(contextMenuProps)
 const emit = defineEmits(contextMenuEmits)
+const _options = ref<LewContextMenusOption[]>(props.options)
 
 function clickItem(item: LewContextMenusOption) {
+  const instance
+    = props.dropdownInstance
+      || window.LewContextMenu.instance
+      || window.LewHoverMenu.instance
+      || null
   if (isFunction(item.onClick)) {
     // 创建一个item的代理
-    const proxy = new Proxy(item, {
+    const proxyItem = new Proxy(item, {
       get(target, prop, receiver) {
         return Reflect.get(target, prop, receiver)
       },
     })
-    item.onClick?.(proxy)
-  }
-  if (window.LewContextMenu) {
-    const { instance } = window.LewContextMenu
-    if (instance) {
-      instance.hide()
-    }
-  }
 
-  if (window.LewHoverMenu) {
-    const { instance } = window.LewHoverMenu
-    if (instance) {
-      instance.hide()
-    }
-  }
+    const proxyOptions = new Proxy(_options.value, {
+      get(target, prop, receiver) {
+        return Reflect.get(target, prop, receiver)
+      },
+    })
 
+    item.onClick?.(proxyItem, proxyOptions, instance)
+  }
+  else {
+    instance?.hide()
+  }
   emit('change', item)
 }
 
 const uniqueId = getUniqueId()
 
-const itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
+const itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>(
+  [],
+)
 function initTippy() {
   itemRefs.value.forEach((el: any, index: number) => {
     if (
@@ -61,7 +64,7 @@ function initTippy() {
       render() {
         return h(LewContextMenuComponent, {
           options: props.options[index].children,
-          onSelect: (item: any) => {
+          onChange: (item: any) => {
             emit('change', item)
           },
         })
@@ -88,10 +91,9 @@ function initTippy() {
       content: menuDom,
     })
 
-    window.LewContextMenu.menuInstance[uniqueId].popper.children[0].setAttribute(
-      'data-lew',
-      'popover',
-    )
+    window.LewContextMenu.menuInstance[
+      uniqueId
+    ].popper.children[0].setAttribute('data-lew', 'popover')
   })
 }
 
@@ -109,9 +111,9 @@ onUnmounted(() => {
 
 <template>
   <LewFlex direction="y" gap="0" class="lew-context-menu">
-    <template v-if="(options || []).length > 0">
+    <template v-if="(_options || []).length > 0">
       <div
-        v-for="(item, index) in options"
+        v-for="(item, index) in _options"
         :key="index"
         class="lew-context-menu-box"
         :class="{
@@ -129,10 +131,15 @@ onUnmounted(() => {
           @click="clickItem(item)"
         >
           <div
-            v-if="options.filter((e: any) => e.checkable).length > 0"
+            v-if="_options.filter((e: any) => e.checkable).length > 0"
             class="lew-context-menu-checkable"
           >
-            <CommonIcon v-if="item.checked" :size="12" :stroke-width="2.5" type="check" />
+            <CommonIcon
+              v-if="item.checked"
+              :size="12"
+              :stroke-width="2.5"
+              type="check"
+            />
           </div>
           <div class="lew-context-menu-label">
             <RenderComponent :render-fn="item.icon" />
@@ -142,7 +149,7 @@ onUnmounted(() => {
             />
           </div>
           <CommonIcon
-            v-if="options.filter((e: any) => e.children).length > 0"
+            v-if="_options.filter((e: any) => e.children).length > 0"
             class="lew-context-menu-item-chevron"
             :style="{
               opacity: (item.children || []).length > 0 ? 1 : 0,

@@ -36,7 +36,12 @@ defineExpose({
       <slot />
     </template>
     <template #popover-body>
-      <LewContextMenu :checkable="checkable" :options="options" @change="hide" />
+      <LewContextMenu
+        :dropdown-instance="lewPopoverRef"
+        :checkable="checkable"
+        :options="options"
+        @change="hide"
+      />
     </template>
   </LewPopover>
 </template>

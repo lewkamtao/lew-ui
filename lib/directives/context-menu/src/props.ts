@@ -21,4 +21,9 @@ export const contextMenuProps = {
       propName: 'disabled',
     }),
   },
+  dropdownInstance: {
+    type: null,
+    hidden: true,
+    default: null,
+  },
 }

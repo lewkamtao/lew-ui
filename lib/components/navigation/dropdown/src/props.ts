@@ -47,6 +47,7 @@ export const dropdownProps = {
       propName: 'checkable',
     }),
   },
+
 }
 
 export type LewDropdownProps = ExtractPublicPropTypes<typeof dropdownProps>

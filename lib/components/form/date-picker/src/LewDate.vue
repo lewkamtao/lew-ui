@@ -45,7 +45,12 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
   let selected = false
   if (item.date > 0 && item.date <= item.showDate) {
     const v = `${dateState.year}-${dateState.month}-${item.showDate}`
-    selected = dayjs(v).isSame(dayjs(modelValue.value))
+    // 根据 valueFormat 解析 modelValue 进行比较
+    if (modelValue.value) {
+      const currentDate = dayjs(v)
+      const selectedDate = dayjs(modelValue.value, props.valueFormat)
+      selected = currentDate.isSame(selectedDate, 'day')
+    }
   }
   return object2class('lew-date-item', { e, selected })
 })
@@ -55,8 +60,26 @@ function setMonthDate() {
 }
 
 function init(date: string | undefined = '') {
-  dateState.year = dayjs(date || undefined).year()
-  dateState.month = dayjs(date || undefined).month() + 1
+  console.log(date)
+  if (date) {
+    const parsedDate = dayjs(date, props.valueFormat)
+    if (parsedDate.isValid()) {
+      dateState.year = parsedDate.year()
+      dateState.month = parsedDate.month() + 1
+    }
+    else {
+      const fallbackDate = dayjs(date)
+      if (fallbackDate.isValid()) {
+        dateState.year = fallbackDate.year()
+        dateState.month = fallbackDate.month() + 1
+      }
+    }
+  }
+  else {
+    const now = dayjs()
+    dateState.year = now.year()
+    dateState.month = now.month() + 1
+  }
   setMonthDate()
 }
 
@@ -93,8 +116,9 @@ function nextYear() {
 }
 
 function selectDateFn(item: RetItemType) {
-  const v = `${item.year}-${item.month}-${item.showDate}`
-  const _v = dayjs(v).format(props.valueFormat)
+  const _v = dayjs(`${item.year}-${item.month}-${item.showDate}`).format(
+    props.valueFormat,
+  )
   modelValue.value = _v
   emit('change', _v)
 }
@@ -109,11 +133,23 @@ defineExpose({ init })
     <LewFlex x="start" mode="between" class="lew-date-control">
       <div class="lew-date-control-left">
         <!-- 上一年 -->
-        <LewButton type="light" color="gray" size="small" single-icon @click="prveYear">
+        <LewButton
+          type="light"
+          color="gray"
+          size="small"
+          single-icon
+          @click="prveYear"
+        >
           <CommonIcon type="chevrons-left" />
         </LewButton>
         <!-- 上一月 -->
-        <LewButton type="light" color="gray" size="small" single-icon @click="prveMonth">
+        <LewButton
+          type="light"
+          color="gray"
+          size="small"
+          single-icon
+          @click="prveMonth"
+        >
           <CommonIcon type="chevron-left" />
         </LewButton>
       </div>
@@ -123,18 +159,34 @@ defineExpose({ init })
       </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
-        <LewButton type="light" color="gray" size="small" single-icon @click="nextMonth">
+        <LewButton
+          type="light"
+          color="gray"
+          size="small"
+          single-icon
+          @click="nextMonth"
+        >
           <CommonIcon type="chevron-right" />
         </LewButton>
         <!-- 下一年 -->
-        <LewButton type="light" color="gray" size="small" single-icon @click="nextYear">
+        <LewButton
+          type="light"
+          color="gray"
+          size="small"
+          single-icon
+          @click="nextYear"
+        >
           <CommonIcon type="chevrons-right" />
         </LewButton>
       </div>
     </LewFlex>
     <div class="lew-date-box">
       <!-- 表头 周 -->
-      <div v-for="(item, index) in headDate" :key="`h${index}`" class="lew-date-item">
+      <div
+        v-for="(item, index) in headDate"
+        :key="`h${index}`"
+        class="lew-date-item"
+      >
         <div class="lew-date-num">
           {{ item }}
         </div>
@@ -274,6 +326,7 @@ defineExpose({ init })
         .lew-date-value {
           background-color: var(--lew-color-primary-light);
           color: var(--lew-color-primary-dark);
+          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
         }
       }
     }
