@@ -1,267 +1,265 @@
 <script lang="ts" setup>
-import dayjs from 'dayjs'
-import { LewButton } from 'lew-ui'
-import { object2class } from 'lew-ui/utils'
+import dayjs from "dayjs";
+import { LewButton } from "lew-ui";
 
 const props = defineProps({
   valueFormat: {
     type: String,
-    default: 'HH:mm:ss',
+    default: "HH:mm:ss",
   },
-})
-const emit = defineEmits(['change', 'confirm', 'cancel'])
+  showActions: {
+    type: Boolean,
+    default: true,
+  },
+  visibleCount: {
+    type: Number,
+    default: 7,
+    validator: (value: number) => value >= 3 && value % 2 === 1, // 必须是奇数且至少为3
+  },
+});
+const emit = defineEmits(["change", "cancel"]);
 
-const timeValue = ref()
-const hourRef = ref()
-const minuteRef = ref()
-const secondRef = ref()
+// 时间选择器配置常量
+const ITEM_HEIGHT = 28; // 每项的高度
+const visibleCount = computed(() => props.visibleCount);
+const containerHeight = computed(() => visibleCount.value * ITEM_HEIGHT);
+const paddingHeight = computed(() => (containerHeight.value - ITEM_HEIGHT) / 2);
+
+const timeValue = ref();
+const hourRef = ref();
+const minuteRef = ref();
+const secondRef = ref();
+const _timeValue = ref(""); // 预选时间
 
 const timeState = reactive({
   hour: dayjs().hour(),
   minute: dayjs().minute(),
   second: dayjs().second(),
-})
-
-const tempTimeState = reactive({
-  hour: dayjs().hour(),
-  minute: dayjs().minute(),
-  second: dayjs().second(),
-})
+});
 
 // 生成小时列表 (00-23)
 const hourList = computed(() => {
-  const hours = []
+  const hours = [];
   for (let i = 0; i < 24; i++) {
     hours.push({
       value: i,
-      label: i.toString().padStart(2, '0'),
-    })
+      label: i.toString().padStart(2, "0"),
+    });
   }
-  return hours
-})
+  return hours;
+});
 
 // 生成分钟列表 (00-59)
 const minuteList = computed(() => {
-  const minutes = []
+  const minutes = [];
   for (let i = 0; i < 60; i++) {
     minutes.push({
       value: i,
-      label: i.toString().padStart(2, '0'),
-    })
+      label: i.toString().padStart(2, "0"),
+    });
   }
-  return minutes
-})
+  return minutes;
+});
 
 // 生成秒钟列表 (00-59)
 const secondList = computed(() => {
-  const seconds = []
+  const seconds = [];
   for (let i = 0; i < 60; i++) {
     seconds.push({
       value: i,
-      label: i.toString().padStart(2, '0'),
-    })
+      label: i.toString().padStart(2, "0"),
+    });
   }
-  return seconds
-})
+  return seconds;
+});
 
 // 检查是否显示秒钟
 const showSeconds = computed(() => {
-  return props.valueFormat.includes('s')
-})
+  return props.valueFormat.includes("s");
+});
 
-const lewTimeItemClassNames = computed(() => (type: string, value: number) => {
-  let selected = false
-  if (type === 'hour')
-    selected = tempTimeState.hour === value
-  if (type === 'minute')
-    selected = tempTimeState.minute === value
-  if (type === 'second')
-    selected = tempTimeState.second === value
-  return object2class('lew-time-item', { selected })
-})
+// 移除高亮样式计算属性，依靠遮罩显示选中状态
 
-function init(time: string | undefined = '') {
+function init(time: string | undefined = "") {
   if (time) {
-    const parsedTime = dayjs(time, props.valueFormat)
+    const parsedTime = dayjs(time, props.valueFormat);
     if (parsedTime.isValid()) {
-      timeState.hour = parsedTime.hour()
-      timeState.minute = parsedTime.minute()
-      timeState.second = parsedTime.second()
-      tempTimeState.hour = parsedTime.hour()
-      tempTimeState.minute = parsedTime.minute()
-      tempTimeState.second = parsedTime.second()
-    }
-    else {
-      const fallbackTime = dayjs(time)
+      timeState.hour = parsedTime.hour();
+      timeState.minute = parsedTime.minute();
+      timeState.second = parsedTime.second();
+    } else {
+      const fallbackTime = dayjs(time);
       if (fallbackTime.isValid()) {
-        timeState.hour = fallbackTime.hour()
-        timeState.minute = fallbackTime.minute()
-        timeState.second = fallbackTime.second()
-        tempTimeState.hour = fallbackTime.hour()
-        tempTimeState.minute = fallbackTime.minute()
-        tempTimeState.second = fallbackTime.second()
+        timeState.hour = fallbackTime.hour();
+        timeState.minute = fallbackTime.minute();
+        timeState.second = fallbackTime.second();
       }
     }
-  }
-  else {
-    const now = dayjs()
-    timeState.hour = now.hour()
-    timeState.minute = now.minute()
-    timeState.second = now.second()
-    tempTimeState.hour = now.hour()
-    tempTimeState.minute = now.minute()
-    tempTimeState.second = now.second()
+  } else {
+    const now = dayjs();
+    timeState.hour = now.hour();
+    timeState.minute = now.minute();
+    timeState.second = now.second();
   }
   nextTick(() => {
-    scrollToSelected(false) // 初始化时不使用滚动动画
-  })
-}
-
-function updateTimeValue() {
-  timeValue.value = dayjs()
-    .hour(timeState.hour)
-    .minute(timeState.minute)
-    .second(timeState.second)
-    .format(props.valueFormat)
-  emit('change', timeValue.value)
+    scrollToSelected(false); // 初始化时不使用滚动动画
+  });
 }
 
 function selectHour(hour: number) {
-  tempTimeState.hour = hour
-  scrollToValue('hour', hour)
+  timeState.hour = hour; // 同时更新确认状态
+  scrollToValue("hour", hour);
 }
 
 function selectMinute(minute: number) {
-  tempTimeState.minute = minute
-  scrollToValue('minute', minute)
+  timeState.minute = minute; // 同时更新确认状态
+  scrollToValue("minute", minute);
 }
 
 function selectSecond(second: number) {
-  tempTimeState.second = second
-  scrollToValue('second', second)
+  timeState.second = second; // 同时更新确认状态
+  scrollToValue("second", second);
 }
 
 function scrollToValue(type: string, value: number, smooth: boolean = true) {
   nextTick(() => {
-    const itemHeight = 32
-    const containerHeight = 208
-    // padding应该等于容器高度的一半减去半个项目高度，这样第一个和最后一个项目都能居中
-    const paddingHeight = containerHeight / 2 - itemHeight / 2
-    let ref = null
+    let ref = null;
 
-    if (type === 'hour')
-      ref = hourRef.value
-    else if (type === 'minute')
-      ref = minuteRef.value
-    else if (type === 'second')
-      ref = secondRef.value
+    if (type === "hour") ref = hourRef.value;
+    else if (type === "minute") ref = minuteRef.value;
+    else if (type === "second") ref = secondRef.value;
 
     if (ref) {
-      const centerOffset = containerHeight / 2
-      // 计算目标位置：padding + 目标项的位置 - 容器中心偏移 + 项目中心偏移
-      const targetScrollTop
-        = paddingHeight + value * itemHeight - centerOffset + itemHeight / 2
+      // 计算目标滚动位置：让指定的 value 项居中在遮罩中
+      // 目标项的顶部位置 = padding + value * ITEM_HEIGHT
+      // 要让目标项居中，需要滚动到：目标项顶部 - (容器高度/2 - ITEM_HEIGHT/2)
+      const itemTop = paddingHeight.value + value * ITEM_HEIGHT;
+      const containerCenter = containerHeight.value / 2;
+      const itemCenter = ITEM_HEIGHT / 2;
+      const targetScrollTop = itemTop - (containerCenter - itemCenter);
 
       ref.scrollTo({
         top: targetScrollTop,
-        behavior: smooth ? 'smooth' : 'auto',
-      })
+        behavior: smooth ? "smooth" : "auto",
+      });
     }
-  })
+  });
 }
 
 function getCurrentTime() {
-  const now = dayjs()
-  tempTimeState.hour = now.hour()
-  tempTimeState.minute = now.minute()
-  tempTimeState.second = now.second()
-  scrollToSelected()
+  const now = dayjs();
+  timeState.hour = now.hour();
+  timeState.minute = now.minute();
+  timeState.second = now.second();
+  scrollToSelected();
 }
 
 function confirmTime() {
-  timeState.hour = tempTimeState.hour
-  timeState.minute = tempTimeState.minute
-  timeState.second = tempTimeState.second
-  updateTimeValue()
-  emit('confirm', timeValue.value)
+  timeValue.value = dayjs()
+    .hour(timeState.hour)
+    .minute(timeState.minute)
+    .second(timeState.second)
+    .format(props.valueFormat);
+
+  emit("change", timeValue.value);
 }
 
 function cancelTime() {
-  // 恢复到之前的状态
-  tempTimeState.hour = timeState.hour
-  tempTimeState.minute = timeState.minute
-  tempTimeState.second = timeState.second
-  scrollToSelected()
-  emit('cancel')
+  emit("cancel");
 }
 
 function scrollToSelected(smooth: boolean = true) {
-  scrollToValue('hour', tempTimeState.hour, smooth)
-  scrollToValue('minute', tempTimeState.minute, smooth)
+  scrollToValue("hour", timeState.hour, smooth);
+  scrollToValue("minute", timeState.minute, smooth);
   if (showSeconds.value) {
-    scrollToValue('second', tempTimeState.second, smooth)
+    scrollToValue("second", timeState.second, smooth);
   }
 }
 
 function handleScrollEnd(type: string, event: Event) {
-  const target = event.target as HTMLElement
-  const scrollTop = target.scrollTop
-  const itemHeight = 32
-  const containerHeight = 208
-  const paddingHeight = containerHeight / 2 - itemHeight / 2
-  const centerOffset = containerHeight / 2
+  const target = event.target as HTMLElement;
+  const scrollTop = target.scrollTop;
 
-  // 计算最近的对齐位置，考虑padding
-  const centerIndex = Math.round(
-    (scrollTop - paddingHeight + centerOffset - itemHeight / 2) / itemHeight,
-  )
-  const alignedScrollTop
-    = paddingHeight + centerIndex * itemHeight - centerOffset + itemHeight / 2
+  // 计算当前滚动位置对应的索引（与 onScroll 保持一致）
+  const containerCenter = containerHeight.value / 2;
+  const itemCenter = ITEM_HEIGHT / 2;
+  const adjustedScrollTop = scrollTop + (containerCenter - itemCenter);
+  const currentIndex = Math.round(
+    (adjustedScrollTop - paddingHeight.value) / ITEM_HEIGHT
+  );
 
-  // 只在滚动结束时更新状态
-  if (type === 'hour') {
-    const value = Math.max(0, Math.min(23, centerIndex))
-    tempTimeState.hour = value
-  }
-  else if (type === 'minute') {
-    const value = Math.max(0, Math.min(59, centerIndex))
-    tempTimeState.minute = value
-  }
-  else if (type === 'second') {
-    const value = Math.max(0, Math.min(59, centerIndex))
-    tempTimeState.second = value
+  // 限制索引范围并获取有效索引
+  let validIndex = currentIndex;
+  if (type === "hour") {
+    validIndex = Math.max(0, Math.min(23, currentIndex));
+  } else if (type === "minute") {
+    validIndex = Math.max(0, Math.min(59, currentIndex));
+  } else if (type === "second") {
+    validIndex = Math.max(0, Math.min(59, currentIndex));
   }
 
-  target.scrollTo({
-    top: alignedScrollTop,
-    behavior: 'smooth',
-  })
+  // 计算对齐后的滚动位置（与 scrollToValue 保持一致）
+  const itemTop = paddingHeight.value + validIndex * ITEM_HEIGHT;
+  const alignedScrollTop = itemTop - (containerCenter - itemCenter);
+
+  // 如果当前位置与对齐位置不同，则滚动到对齐位置
+  if (Math.abs(scrollTop - alignedScrollTop) > 2) {
+    target.scrollTo({
+      top: alignedScrollTop,
+      behavior: "smooth",
+    });
+  }
+
+  _timeValue.value = dayjs()
+    .hour(timeState.hour)
+    .minute(timeState.minute)
+    .second(timeState.second)
+    .format(props.valueFormat);
 }
 
-let scrollTimer: any = null
+let scrollTimer: any = null;
 
 function onScroll(type: string, event: Event) {
-  // 防抖处理滚动结束，减少防抖时间以提高响应性
-  clearTimeout(scrollTimer)
+  // 实时更新时间显示（无防抖）
+  const target = event.target as HTMLElement;
+  const scrollTop = target.scrollTop;
+
+  // 计算当前滚动位置对应的索引
+  // 考虑到遮罩在容器中心，需要加上偏移量
+  const containerCenter = containerHeight.value / 2;
+  const itemCenter = ITEM_HEIGHT / 2;
+  const adjustedScrollTop = scrollTop + (containerCenter - itemCenter);
+  const currentIndex = Math.round(
+    (adjustedScrollTop - paddingHeight.value) / ITEM_HEIGHT
+  );
+
+  // 实时更新临时状态（用于显示）
+  if (type === "hour") {
+    const value = Math.max(0, Math.min(23, currentIndex));
+    timeState.hour = value;
+  } else if (type === "minute") {
+    const value = Math.max(0, Math.min(59, currentIndex));
+    timeState.minute = value;
+  } else if (type === "second") {
+    const value = Math.max(0, Math.min(59, currentIndex));
+    timeState.second = value;
+  }
+
+  // 防抖处理滚动结束对齐
+  clearTimeout(scrollTimer);
   scrollTimer = setTimeout(() => {
-    handleScrollEnd(type, event)
-  }, 250)
+    handleScrollEnd(type, event);
+  }, 150); // 减少防抖时间，提高响应性
 }
 
-defineExpose({ init })
+defineExpose({ init });
 </script>
 
 <template>
   <div class="lew-time">
     <div class="lew-time-control">
       <div class="cur-time">
-        {{
-          dayjs()
-            .hour(tempTimeState.hour)
-            .minute(tempTimeState.minute)
-            .second(tempTimeState.second)
-            .format(valueFormat)
-        }}
+        {{ _timeValue }}
       </div>
       <LewButton type="light" color="gray" size="mini" @click="getCurrentTime">
         现在
@@ -280,14 +278,17 @@ defineExpose({ init })
 
       <!-- 小时列表 -->
       <div class="lew-time-column">
-        <div ref="hourRef" class="lew-time-list" @scroll="onScroll('hour', $event)">
+        <div
+          ref="hourRef"
+          class="lew-time-list"
+          @scroll="onScroll('hour', $event)"
+        >
           <div class="lew-time-padding" />
           <div
             v-for="hour in hourList"
             :key="hour.value"
             :data-value="hour.value"
             class="lew-time-item"
-            :class="lewTimeItemClassNames('hour', hour.value)"
             @click="selectHour(hour.value)"
           >
             <div class="lew-time-value">
@@ -300,14 +301,17 @@ defineExpose({ init })
 
       <!-- 分钟列表 -->
       <div class="lew-time-column">
-        <div ref="minuteRef" class="lew-time-list" @scroll="onScroll('minute', $event)">
+        <div
+          ref="minuteRef"
+          class="lew-time-list"
+          @scroll="onScroll('minute', $event)"
+        >
           <div class="lew-time-padding" />
           <div
             v-for="minute in minuteList"
             :key="minute.value"
             :data-value="minute.value"
             class="lew-time-item"
-            :class="lewTimeItemClassNames('minute', minute.value)"
             @click="selectMinute(minute.value)"
           >
             <div class="lew-time-value">
@@ -320,14 +324,17 @@ defineExpose({ init })
 
       <!-- 秒钟列表 -->
       <div v-if="showSeconds" class="lew-time-column">
-        <div ref="secondRef" class="lew-time-list" @scroll="onScroll('second', $event)">
+        <div
+          ref="secondRef"
+          class="lew-time-list"
+          @scroll="onScroll('second', $event)"
+        >
           <div class="lew-time-padding" />
           <div
             v-for="second in secondList"
             :key="second.value"
             :data-value="second.value"
             class="lew-time-item"
-            :class="lewTimeItemClassNames('second', second.value)"
             @click="selectSecond(second.value)"
           >
             <div class="lew-time-value">
@@ -353,7 +360,6 @@ defineExpose({ init })
 <style lang="scss" scoped>
 .lew-time {
   width: 220px;
-  height: 312px;
   user-select: none;
   padding: 12px;
   box-sizing: border-box;
@@ -364,24 +370,23 @@ defineExpose({ init })
     justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
-    height: 28px;
-    margin-bottom: 12px;
+    padding: 5px;
+    margin-bottom: 5px;
 
     .cur-time {
       display: flex;
       align-items: center;
-      height: 100%;
-      font-weight: 600;
       font-size: 14px;
       white-space: nowrap;
       color: var(--lew-text-color-0);
+      letter-spacing: 1.7px;
     }
   }
 
   .lew-time-container {
     position: relative;
     display: flex;
-    height: 208px;
+    height: v-bind("`${containerHeight}px`"); // 动态计算高度
     background: var(--lew-bgcolor-1);
     overflow: hidden;
 
@@ -390,7 +395,7 @@ defineExpose({ init })
       top: 50%;
       left: 0;
       right: 0;
-      height: 32px;
+      height: v-bind("`${ITEM_HEIGHT}px`"); // 遮罩高度与项目高度一致
       transform: translateY(-50%);
       z-index: 2;
       pointer-events: none;
@@ -414,19 +419,27 @@ defineExpose({ init })
       position: absolute;
       left: 0;
       right: 0;
-      height: 24px;
+      height: 70px;
       z-index: 99;
       pointer-events: none;
     }
 
     .lew-time-gradient-top {
       top: 0;
-      background-image: linear-gradient(to top, transparent 0%, var(--lew-bgcolor-0));
+      background-image: linear-gradient(
+        to top,
+        transparent 0%,
+        var(--lew-bgcolor-0)
+      );
     }
 
     .lew-time-gradient-bottom {
       bottom: 0;
-      background-image: linear-gradient(to bottom, transparent 0%, var(--lew-bgcolor-0));
+      background-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--lew-bgcolor-0)
+      );
     }
 
     .lew-time-column {
@@ -441,8 +454,7 @@ defineExpose({ init })
         overflow-x: hidden;
 
         .lew-time-padding {
-          height: calc(208px / 2 - 32px / 2);
-          /* 104px - 16px = 88px，让第一个和最后一个项目都能居中 */
+          height: v-bind("`${paddingHeight}px`"); // 动态计算 padding 高度
           flex-shrink: 0;
         }
 
@@ -450,10 +462,10 @@ defineExpose({ init })
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 32px;
+          height: v-bind("`${ITEM_HEIGHT}px`"); // 使用动态高度
           cursor: pointer;
           color: var(--lew-text-color-2);
-          transition: all 0.2s ease;
+          transition: all 0.15s ease;
           flex-shrink: 0;
           scroll-snap-align: center;
           position: relative;
@@ -463,7 +475,7 @@ defineExpose({ init })
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: 32px;
+            height: v-bind("`${ITEM_HEIGHT}px`"); // 使用动态高度
             font-size: 14px;
             transition: all 0.2s ease;
             position: relative;
@@ -520,7 +532,7 @@ defineExpose({ init })
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    margin-top: 12px;
+    margin-top: 5px;
 
     .lew-button {
       min-width: 60px;

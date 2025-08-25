@@ -1,86 +1,84 @@
 <script lang="ts" setup>
-import dayjs from 'dayjs'
-import { LewButton, LewFlex } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { object2class } from 'lew-ui/utils'
+import dayjs from "dayjs";
+import { LewButton, LewFlex } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { object2class } from "lew-ui/utils";
 
 const props = defineProps({
   valueFormat: {
     type: String,
-    default: 'YYYY',
+    default: "YYYY",
   },
-})
-const emit = defineEmits(['change'])
+});
+const emit = defineEmits(["change"]);
 
-const yearValue = ref()
+const yearValue = ref();
 
-const _year = dayjs().year()
+const _year = dayjs().year();
 
 const yearState = reactive({
   startYear: Math.floor(_year / 10) * 10, // 当前年代的起始年份
-})
+});
 
 // 生成年份列表（显示12个年份，3行4列）
 const yearList = computed(() => {
-  const years = []
+  const years = [];
   for (let i = 0; i < 12; i++) {
-    years.push(yearState.startYear + i)
+    years.push(yearState.startYear + i);
   }
-  return years
-})
+  return years;
+});
 
 const checkCurrentYear = computed(() => (year: number) => {
-  const today = dayjs()
-  return today.year() === year
-})
+  const today = dayjs();
+  return today.year() === year;
+});
 
 const lewYearItemClassNames = computed(() => (year: number) => {
-  let selected = false
+  let selected = false;
   if (yearValue.value) {
-    const selectedDate = dayjs(yearValue.value, props.valueFormat)
-    selected = selectedDate.year() === year
+    const selectedDate = dayjs(yearValue.value, props.valueFormat);
+    selected = selectedDate.year() === year;
   }
-  return object2class('lew-year-item', { selected })
-})
+  return object2class("lew-year-item", { selected });
+});
 
-function init(date: string | undefined = '') {
+function init(date: string | undefined = "") {
   if (date) {
-    const parsedDate = dayjs(date, props.valueFormat)
+    const parsedDate = dayjs(date, props.valueFormat);
     if (parsedDate.isValid()) {
-      const year = parsedDate.year()
-      yearState.startYear = Math.floor(year / 10) * 10
-      yearValue.value = date
-    }
-    else {
-      const fallbackDate = dayjs(date)
+      const year = parsedDate.year();
+      yearState.startYear = Math.floor(year / 10) * 10;
+      yearValue.value = date;
+    } else {
+      const fallbackDate = dayjs(date);
       if (fallbackDate.isValid()) {
-        const year = fallbackDate.year()
-        yearState.startYear = Math.floor(year / 10) * 10
-        yearValue.value = fallbackDate.format(props.valueFormat)
+        const year = fallbackDate.year();
+        yearState.startYear = Math.floor(year / 10) * 10;
+        yearValue.value = fallbackDate.format(props.valueFormat);
       }
     }
-  }
-  else {
-    const now = dayjs()
-    const year = now.year()
-    yearState.startYear = Math.floor(year / 10) * 10
+  } else {
+    const now = dayjs();
+    const year = now.year();
+    yearState.startYear = Math.floor(year / 10) * 10;
   }
 }
 
 function prveDecade() {
-  yearState.startYear -= 10
+  yearState.startYear -= 10;
 }
 
 function nextDecade() {
-  yearState.startYear += 10
+  yearState.startYear += 10;
 }
 
 function selectYear(year: number) {
-  yearValue.value = dayjs().year(year).format(props.valueFormat)
-  emit('change', yearValue.value)
+  yearValue.value = dayjs().year(year).format(props.valueFormat);
+  emit("change", yearValue.value);
 }
 
-defineExpose({ init })
+defineExpose({ init });
 </script>
 
 <template>
@@ -88,7 +86,13 @@ defineExpose({ init })
     <LewFlex x="start" mode="between" class="lew-year-control">
       <div class="lew-year-control-left">
         <!-- 上一年代 -->
-        <LewButton type="light" color="gray" size="small" single-icon @click="prveDecade">
+        <LewButton
+          type="light"
+          color="gray"
+          size="small"
+          single-icon
+          @click="prveDecade"
+        >
           <CommonIcon type="chevron-left" />
         </LewButton>
       </div>
@@ -98,7 +102,13 @@ defineExpose({ init })
       </div>
       <div class="lew-year-control-right">
         <!-- 下一年代 -->
-        <LewButton type="light" color="gray" size="small" single-icon @click="nextDecade">
+        <LewButton
+          type="light"
+          color="gray"
+          size="small"
+          single-icon
+          @click="nextDecade"
+        >
           <CommonIcon type="chevron-right" />
         </LewButton>
       </div>
@@ -134,17 +144,14 @@ defineExpose({ init })
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0px 5px;
+    padding: 5px;
     box-sizing: border-box;
-    height: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 
     .cur-decade {
       display: flex;
       align-items: center;
-      height: 100%;
-      font-weight: bold;
-      font-size: 15px;
+      font-size: 14px;
       white-space: nowrap;
       color: var(--lew-text-color-0);
     }
@@ -181,8 +188,8 @@ defineExpose({ init })
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 32px;
-      line-height: 32px;
+      height: 30px;
+      line-height: 30px;
       cursor: pointer;
       color: var(--lew-text-color-1);
 
@@ -192,7 +199,7 @@ defineExpose({ init })
         justify-content: center;
         font-size: 14px;
         width: 100%;
-        height: 32px;
+        height: 100%;
         box-sizing: border-box;
         transition: all 0.1s ease;
 
@@ -201,11 +208,12 @@ defineExpose({ init })
           align-items: center;
           justify-content: center;
           width: 100%;
-          height: 32px;
-          line-height: 32px;
+          height: 100%;
+          line-height: 100%;
           border-radius: 6px;
           transition: all 0.1s ease;
-          border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color)
+            solid;
         }
 
         .lew-year-value:active {
@@ -222,7 +230,7 @@ defineExpose({ init })
       background: rgba($color: #19c175, $alpha: 0.8);
       left: 50%;
       transform: translateX(-50%);
-      bottom: 5px;
+      bottom: 2px;
       box-shadow: 0px 0px 12px #0e7346;
     }
 
@@ -231,7 +239,8 @@ defineExpose({ init })
         .lew-year-value {
           background-color: var(--lew-color-primary-light);
           color: var(--lew-color-primary-dark);
-          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+          border: var(--lew-form-border-width)
+            var(--lew-form-border-color-focus) solid;
         }
       }
     }
@@ -249,7 +258,8 @@ defineExpose({ init })
         .lew-year-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light)
+            solid;
         }
       }
     }
@@ -259,7 +269,8 @@ defineExpose({ init })
         .lew-year-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light)
+            solid;
         }
       }
     }
@@ -269,7 +280,8 @@ defineExpose({ init })
         .lew-year-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light)
+            solid;
         }
       }
     }
