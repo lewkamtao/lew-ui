@@ -4,6 +4,7 @@ const monthValue = ref('')
 const dateValue = ref('')
 const quarterValue = ref('')
 const datetimeValue = ref('')
+const timeValue = ref('')
 </script>
 
 <template>
@@ -37,6 +38,13 @@ const datetimeValue = ref('')
       v-model="datetimeValue"
       value-format="YYYY-MM-DD HH:mm:ss"
       placeholder="Select datetime"
+      clearable
+    />
+
+    <lew-date-picker
+      v-model="timeValue"
+      value-format="HH:mm:ss"
+      placeholder="Select time"
       clearable
     />
   </lew-flex>

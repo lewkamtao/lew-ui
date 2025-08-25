@@ -28,7 +28,7 @@ declare module './LewCollapseTransition.vue' {
   export default component
 }
 
-declare module 'dayjs'
+// dayjs types are handled by the package itself
 
 declare module '@vueuse/core'
 declare module 'lodash-es'

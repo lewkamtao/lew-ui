@@ -5,14 +5,20 @@ import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
 import { getMonthDate } from './date'
-import { dateEmits } from './emits'
-import { formatDate } from './formatters'
-import { dateProps } from './props'
 
-const props = defineProps(dateProps)
-const emit = defineEmits(dateEmits)
+const props = defineProps({
+  valueFormat: {
+    type: String,
+    default: 'YYYY-MM-DD',
+  },
+  isTime: {
+    type: Boolean,
+    default: false,
+  },
+})
+const emit = defineEmits(['change'])
 
-const modelValue: Ref<string | undefined> = defineModel()
+const dateValue = ref()
 
 const _year = dayjs().year()
 const _month = dayjs().month() + 1
@@ -46,10 +52,9 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
   let selected = false
   if (item.date > 0 && item.date <= item.showDate) {
     const v = `${dateState.year}-${dateState.month}-${item.showDate}`
-    // 根据 valueFormat 解析 modelValue 进行比较
-    if (modelValue.value) {
+    if (dateValue.value) {
       const currentDate = dayjs(v)
-      const selectedDate = dayjs(modelValue.value, props.valueFormat)
+      const selectedDate = dayjs(dateValue.value, props.valueFormat)
       selected = currentDate.isSame(selectedDate, 'day')
     }
   }
@@ -115,18 +120,12 @@ function nextYear() {
   setMonthDate()
 }
 
-function selectDateFn(item: RetItemType) {
-  const { valueFormat } = props
-  modelValue.value = formatDate(
-    dayjs(`${item.year}-${item.month}-${item.showDate}`).format(
-      valueFormat.includes('Q') ? 'YYYY-MM-DD' : valueFormat,
-    ),
-    valueFormat,
+function select(item: RetItemType) {
+  dateValue.value = dayjs(`${item.year}-${item.month}-${item.showDate}`).format(
+    'YYYY-MM-DD',
   )
-  emit('change', modelValue.value)
+  emit('change', dateValue.value)
 }
-
-init(modelValue.value)
 
 defineExpose({ init })
 </script>
@@ -136,23 +135,11 @@ defineExpose({ init })
     <LewFlex x="start" mode="between" class="lew-date-control">
       <div class="lew-date-control-left">
         <!-- 上一年 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="prveYear"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="prveYear">
           <CommonIcon type="chevrons-left" />
         </LewButton>
         <!-- 上一月 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="prveMonth"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="prveMonth">
           <CommonIcon type="chevron-left" />
         </LewButton>
       </div>
@@ -162,23 +149,11 @@ defineExpose({ init })
       </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="nextMonth"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="nextMonth">
           <CommonIcon type="chevron-right" />
         </LewButton>
         <!-- 下一年 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="nextYear"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="nextYear">
           <CommonIcon type="chevrons-right" />
         </LewButton>
       </div>
@@ -201,7 +176,7 @@ defineExpose({ init })
         :key="`d${index}`"
         class="lew-date-item"
         :class="lewDateItemClassNames(item)"
-        @click="selectDateFn(item)"
+        @click="select(item)"
       >
         <div class="lew-date-label">
           <i v-if="checkToday(item)" class="lew-date-item-today" />
@@ -225,7 +200,7 @@ defineExpose({ init })
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 10px 5px;
+    padding: 0px 5px;
     box-sizing: border-box;
     height: 30px;
     margin-bottom: 10px;

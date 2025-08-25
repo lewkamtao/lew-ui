@@ -10,7 +10,7 @@ export default {
   "LewXAlignment": `export type LewXAlignment = 'start' | 'center' | 'end' | 'left' | 'right'`,
   "LewYAlignment": `export type LewYAlignment = 'start' | 'center' | 'end' | 'top' | 'bottom'`,
   "LewStatus": `export type LewStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'`,
-  "LewTrigger": `export type LewTrigger = 'hover' | 'click' | 'mouseenter'`,
+  "LewTrigger": `export type LewTrigger = 'hover' | 'click' | 'mouseenter' | 'manual'`,
   "LewPlacement": `export type LewPlacement\n  = | 'top'\n    | 'top-start'\n    | 'top-end'\n    | 'bottom'\n    | 'bottom-start'\n    | 'bottom-end'\n    | 'left'\n    | 'left-start'\n    | 'left-end'\n    | 'right'\n    | 'right-start'\n    | 'right-end'`,
   "LewOffset": `export type LewOffset = [number, number]`,
   "LewButtonType": `export type LewButtonType = 'fill' | 'light' | 'ghost' | 'text'`,

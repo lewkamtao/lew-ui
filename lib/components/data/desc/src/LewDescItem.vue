@@ -114,8 +114,15 @@ function showTextAndEmpty(): string {
       </div>
     </div>
     <div class="lew-desc-item-main" :style="getDescItemMainStyle">
+      <slot
+        v-if="$slots.default"
+        :field="field"
+        :label="label"
+        :data-source="dataSource"
+        :value="showTextAndEmpty()"
+      />
       <RenderComponent
-        v-if="customRender"
+        v-else-if="customRender"
         :render-fn="customRender({ field: field!, label: label!, dataSource })"
       />
       <template v-else-if="type === 'text-trim'">

@@ -72,15 +72,4 @@ export const datePickerProps = {
   },
 }
 
-export const dateProps = {
-  valueFormat: {
-    type: String,
-    default: 'YYYY-MM-DD',
-    validator: validators.string({
-      componentName: 'LewDatePicker',
-      propName: 'valueFormat',
-    }),
-  },
-}
-
 export type LewDatePickerProps = ExtractPublicPropTypes<typeof datePickerProps>

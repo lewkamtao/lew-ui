@@ -130,8 +130,7 @@ watch(
       state.sourceOptions = newOptions
       state.options = flattenSelectOptions(newOptions)
       state.keyword
-        = newOptions?.find((e: any) => e.value === selectValue.value)?.label
-          || ''
+        = newOptions?.find((e: any) => e.value === selectValue.value)?.label || ''
       if (props.enableSearchCache) {
         state.searchCache.clear()
       }
@@ -345,9 +344,7 @@ async function showHandle() {
   if (props.searchable) {
     await search({ target: { value: '' } })
   }
-  const index = state.options.findIndex(
-    (e: any) => e.value === selectValue.value,
-  )
+  const index = state.options.findIndex((e: any) => e.value === selectValue.value)
   poll({
     callback: () => {
       const i = index > -1 ? index : 0
@@ -436,11 +433,7 @@ defineExpose({
         :class="getSelectClassName"
       >
         <div v-if="shouldShowLoading" class="lew-icon-loading-box">
-          <CommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
         <CommonIcon
@@ -576,8 +569,7 @@ defineExpose({
     .lew-icon-select {
       position: absolute;
       top: 50%;
-      right: 9px;
-      padding: 2px;
+      right: 12px;
       transform: translateY(-50%) rotate(0deg);
       transition: all var(--lew-form-transition-bezier);
     }
@@ -587,9 +579,7 @@ defineExpose({
       align-items: center;
       position: absolute;
       top: 50%;
-      right: 9px;
-      padding: 2px;
-      box-sizing: border-box;
+      right: 12px;
       transform: translateY(-50%);
     }
 

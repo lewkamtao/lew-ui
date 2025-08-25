@@ -111,7 +111,13 @@ function initTippy() {
     onHide() {
       emit('hide')
     },
+    onClickOutside() {
+      if (props.clickOutsideToHide) {
+        instance.hide()
+      }
+    },
   })
+
   instance?.popper.children[0].setAttribute('data-lew', 'popover')
   // 判断入参
   if (disabled && instance) {
@@ -188,7 +194,7 @@ defineExpose({ show, hide, refresh })
   font-size: 0;
 
   * {
-    font-size: inherit;
+    font-size: 14px;
   }
 }
 

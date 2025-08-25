@@ -16,7 +16,9 @@ const descLabelRef = ref<InstanceType<typeof LewGetLabelWidth>>()
 const autoLabelWidth = ref(0)
 
 // Computed
-const componentOptions = computed(() => cloneDeep(props.options) || [])
+const componentOptions: ComputedRef<LewDescOption[]> = computed(
+  () => cloneDeep(props.options) || [],
+)
 
 const getDescClassNames = computed(() => {
   const { bordered } = props
@@ -82,7 +84,11 @@ watch(
       :key="item.field"
       :data-source="dataSource"
       v-bind="getBind(item)"
-    />
+    >
+      <template v-if="$slots[item.field]" #default="slotProps">
+        <slot :name="item.field" v-bind="slotProps" />
+      </template>
+    </LewDescItem>
   </div>
 </template>
 

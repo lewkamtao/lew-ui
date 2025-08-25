@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
-import { LewDate, LewPopover, LewTooltip, locale } from 'lew-ui'
+import { LewPopover, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { datePickerEmits } from './emits'
 import { formatDate, isValidDate } from './formatters'
+import LewPanel from './LewPanel.vue'
 import { datePickerProps } from './props'
 
 const props = defineProps(datePickerProps)
@@ -20,7 +21,7 @@ if (app && !app.directive('tooltip')) {
 
 const visible = ref(false)
 const lewPopoverRef = ref()
-const lewDateRef = ref()
+const lewPanelRef = ref()
 const inputRef = ref()
 let cacheValue: string | undefined
 
@@ -58,17 +59,13 @@ const getDatePickerInputStyle = computed(() => {
 })
 
 const getDisplayPlaceholder = computed(() => {
-  return props.placeholder
-    ? props.placeholder
-    : locale.t('datePicker.placeholder')
+  return props.placeholder ? props.placeholder : locale.t('datePicker.placeholder')
 })
 
 const shouldShowClearIcon = computed(
   () => modelValue.value && props.clearable && !props.readonly,
 )
-const shouldShowCalendarIcon = computed(
-  () => !(modelValue.value && props.clearable),
-)
+const shouldShowCalendarIcon = computed(() => !(modelValue.value && props.clearable))
 
 function show() {
   lewPopoverRef.value.show()
@@ -78,7 +75,8 @@ function hide() {
   lewPopoverRef.value.hide()
 }
 
-function change(value?: string) {
+function panelChange(value?: string) {
+  modelValue.value = formatDate(value!, props.valueFormat)! || cacheValue
   emit('change', value)
   setTimeout(() => {
     hide()
@@ -87,10 +85,10 @@ function change(value?: string) {
 
 function selectPresets(item: { label: string, value: string }) {
   modelValue.value = formatDate(item.value, props.valueFormat)! || cacheValue
-  lewDateRef.value && lewDateRef.value.init(modelValue.value)
+  lewPanelRef.value && lewPanelRef.value.init(modelValue.value)
   setTimeout(() => {
     nextTick(() => {
-      change(modelValue.value)
+      panelChange(modelValue.value)
     })
   }, 100)
 }
@@ -104,7 +102,7 @@ function clearHandle() {
 function showHandle() {
   visible.value = true
   inputRef.value?.focus()
-  lewDateRef.value && lewDateRef.value.init(modelValue.value)
+  lewPanelRef.value && lewPanelRef.value.init(modelValue.value)
 }
 
 function hideHandle() {
@@ -126,19 +124,25 @@ function handleInputBlur(e: FocusEvent) {
   isInputFocused.value = false
   modelValue.value = formatDate(value!, props.valueFormat)! || cacheValue
   emit('change', modelValue.value)
-  lewDateRef.value && lewDateRef.value.init(modelValue.value)
 }
 
-function handlePaste(event: ClipboardEvent) {
-  event.preventDefault()
-  const pastedText = event.clipboardData?.getData('text') || ''
-  modelValue.value
-    = formatDate(
-      dayjs(pastedText).format(props.valueFormat),
-      props.valueFormat,
-    )! || cacheValue
-  emit('change', modelValue.value)
-  lewDateRef.value && lewDateRef.value.init(modelValue.value)
+function handleInput(e: Event) {
+  const target = e.target as HTMLInputElement
+  const value = target.value
+
+  // 检查输入值是否合法
+  if (value && isValidDate(value, props.valueFormat)) {
+    // 如果值合法，更新面板显示
+    lewPanelRef.value && lewPanelRef.value.init(value)
+  }
+  else if (value) {
+    // 如果输入的不是目标格式，但可能是其他有效日期格式，尝试解析并更新面板
+    const formattedValue = formatDate(value, props.valueFormat, false)
+    if (formattedValue) {
+      lewPanelRef.value
+      && lewPanelRef.value.init(formatDate(value, props.valueFormat, true))
+    }
+  }
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -155,6 +159,54 @@ function handleKeydown(event: KeyboardEvent) {
     inputRef.value?.blur()
   }
 }
+
+const getPanelType = computed(() => {
+  const format = props.valueFormat
+
+  // 判断是否包含时间部分（HH、mm、ss）
+  const hasTime = /[Hh]+|m+|s+/.test(format)
+
+  // 判断是否包含日期部分（DD、D）
+  const hasDay = /D+/.test(format)
+
+  // 判断是否包含月份部分（MM、M）
+  const hasMonth = /M+/.test(format)
+
+  // 判断是否包含季度部分（Q）
+  const hasQuarter = /Q+/.test(format)
+
+  // 判断是否只有年份（YYYY、YY）
+  const hasYear = /Y+/.test(format)
+
+  // 根据格式判断面板类型
+  if (hasTime && !hasDay && !hasMonth && !hasYear) {
+    // 只包含时间，使用time面板
+    return 'time'
+  }
+  else if (hasTime) {
+    // 如果包含时间和日期，暂时使用date面板（未来可能需要专门的datetime面板）
+    return 'date'
+  }
+  else if (hasDay && hasMonth) {
+    // 包含日期和月份，使用date面板
+    return 'date'
+  }
+  else if (hasQuarter) {
+    // 包含季度，使用quarter面板
+    return 'quarter'
+  }
+  else if (hasMonth && !hasDay) {
+    // 只包含月份，使用month面板
+    return 'month'
+  }
+  else if (hasYear && !hasMonth && !hasDay && !hasQuarter) {
+    // 只包含年份，使用year面板
+    return 'year'
+  }
+
+  // 默认返回date面板
+  return 'date'
+})
 
 onMounted(() => {
   if (modelValue.value) {
@@ -173,8 +225,8 @@ defineExpose({ show, hide })
 <template>
   <LewPopover
     ref="lewPopoverRef"
-    trigger="click"
     placement="bottom-start"
+    :hide-on-click="false"
     :trigger-width="width"
     :disabled="disabled || readonly"
     :offset="[0, 8]"
@@ -199,7 +251,7 @@ defineExpose({ show, hide })
             :disabled="disabled"
             @focus="handleInputFocus"
             @blur="handleInputBlur"
-            @paste="handlePaste"
+            @input="handleInput"
             @keydown="handleKeydown"
           >
           <CommonIcon
@@ -251,11 +303,11 @@ defineExpose({ show, hide })
           </div>
         </lew-flex>
         <lew-flex class="lew-date-picker-date-panel">
-          <LewDate
-            ref="lewDateRef"
-            v-model="modelValue"
+          <LewPanel
+            ref="lewPanelRef"
+            :type="getPanelType"
             v-bind="props"
-            @change="change"
+            @change="panelChange"
           />
         </lew-flex>
       </lew-flex>
@@ -290,7 +342,7 @@ defineExpose({ show, hide })
     .lew-date-picker-icon-calendar {
       position: absolute;
       top: 50%;
-      right: 9px;
+      right: 12px;
       transform: translateY(-50%);
       transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);

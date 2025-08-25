@@ -128,9 +128,7 @@ function clearHandle() {
 }
 
 function deleteTag({ value }: { value: any }) {
-  const valueIndex = selectValue.value.findIndex(
-    (_value: any) => value === _value,
-  )
+  const valueIndex = selectValue.value.findIndex((_value: any) => value === _value)
 
   if (valueIndex > -1) {
     const item = selectValue.value[valueIndex]
@@ -190,9 +188,7 @@ const getSelectedRows = computed(() => {
     const selectedRows
       = selectValue.value
         && selectValue.value.map((v: number | string) => {
-          return state.options.find(
-            (e: LewSelectMultipleOption) => v === e.value,
-          )
+          return state.options.find((e: LewSelectMultipleOption) => v === e.value)
         })
     if (!selectedRows || selectedRows.length === 0) {
       return _defaultValue
@@ -373,9 +369,7 @@ const showPlaceholder = computed(() => {
 const selectedItemsText = computed(() => {
   if (!hasSelectedItems.value)
     return ''
-  return getSelectedRows.value
-    .map((item: any) => item.label)
-    .join(props.valueTextSplit)
+  return getSelectedRows.value.map((item: any) => item.label).join(props.valueTextSplit)
 })
 
 // 新增计算属性：是否显示搜索结果计数
@@ -511,11 +505,7 @@ const showFooterSlot = computed(() => {
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <CommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
         <CommonIcon
           v-else
@@ -566,10 +556,7 @@ const showFooterSlot = computed(() => {
               style="width: 100%"
             >
               <template #trigger>
-                <div
-                  :style="textValueStyle"
-                  class="lew-select-multiple-text-value"
-                >
+                <div :style="textValueStyle" class="lew-select-multiple-text-value">
                   {{ selectedItemsText }}
                 </div>
               </template>
@@ -599,11 +586,7 @@ const showFooterSlot = computed(() => {
             </LewPopover>
           </template>
         </template>
-        <div
-          v-show="showPlaceholder"
-          :style="placeholderStyle"
-          class="lew-placeholder"
-        >
+        <div v-show="showPlaceholder" :style="placeholderStyle" class="lew-placeholder">
           {{ placeholderText }}
         </div>
       </div>
@@ -715,20 +698,17 @@ const showFooterSlot = computed(() => {
       align-items: center;
       position: absolute;
       top: 50%;
-      right: 9px;
-      padding: 2px;
-      box-sizing: border-box;
+      right: 12px;
       transform: translateY(-50%);
     }
 
     .lew-icon-select {
       position: absolute;
       top: 50%;
-      right: 9px;
+      right: 12px;
       transform: translateY(-50%) rotate(0deg);
       transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
-      padding: 2px;
 
       &-hide {
         opacity: 0;

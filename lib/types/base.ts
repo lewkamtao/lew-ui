@@ -48,7 +48,7 @@ export type LewYAlignment = 'start' | 'center' | 'end' | 'top' | 'bottom'
 
 export type LewStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
 
-export type LewTrigger = 'hover' | 'click' | 'mouseenter'
+export type LewTrigger = 'hover' | 'click' | 'mouseenter' | 'manual'
 
 export type LewPlacement
   = | 'top'

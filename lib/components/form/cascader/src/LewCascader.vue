@@ -660,10 +660,9 @@ defineExpose({ show, hide })
     .icon-select {
       position: absolute;
       top: 50%;
-      right: 9px;
+      right: 12px;
       transform: translateY(-50%) rotate(0deg);
       transition: all var(--lew-form-transition-bezier);
-      padding: 2px;
     }
 
     .lew-icon-loading-box {
@@ -671,9 +670,7 @@ defineExpose({ show, hide })
       align-items: center;
       position: absolute;
       top: 50%;
-      right: 9px;
-      padding: 2px;
-      box-sizing: border-box;
+      right: 12px;
       transform: translateY(-50%);
     }
 

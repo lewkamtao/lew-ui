@@ -45,6 +45,12 @@ const options = ref([
       value-x="end"
       :data-source="dataSource"
       :options="options"
-    />
+    >
+      <template #name="{ field, label, value }">
+        <lew-flex width="150px">
+          {{ `field: ${field}, label: ${label}, value: ${value}` }}
+        </lew-flex>
+      </template>
+    </lew-desc>
   </lew-flex>
 </template>

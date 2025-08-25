@@ -56,6 +56,14 @@ export const popoverProps = {
       propName: 'hideOnClick',
     }),
   },
+  clickOutsideToHide: {
+    type: Boolean,
+    default: true,
+    validator: validators.boolean({
+      componentName: 'LewPopover',
+      propName: 'clickOutsideToHide',
+    }),
+  },
   offset: {
     type: Array as unknown as PropType<LewOffset>,
     default: (): LewOffset => [0, 8],
