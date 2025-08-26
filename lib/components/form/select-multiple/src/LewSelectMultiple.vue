@@ -988,7 +988,7 @@ const showFooterSlot = computed(() => {
 
           &.is-group {
             padding-left: 12px;
-            color: var(--lew-text-color-7);
+            color: var(--lew-text-color-6);
             font-size: 12px;
             pointer-events: none;
             padding-top: 4px;

@@ -1,199 +1,89 @@
 <script lang="ts" setup>
-import dayjs from "dayjs";
-import { LewButton } from "lew-ui";
-import LewDate from "./LewDate.vue";
-import LewTime from "./LewTime.vue";
+import dayjs from 'dayjs'
+import { LewButton } from 'lew-ui'
+import LewDate from './LewDate.vue'
+import LewTime from './LewTime.vue'
 
 const props = defineProps({
   valueFormat: {
     type: String,
-    default: "YYYY-MM-DD HH:mm:ss",
+    default: 'YYYY-MM-DD HH:mm:ss',
   },
-});
+})
 
-const emit = defineEmits(["change", "confirm", "cancel"]);
+const emit = defineEmits(['change', 'cancel'])
 
-const dateTimeValue = ref();
-const dateRef = ref();
-const timeRef = ref();
+const dateRef = ref()
+const timeRef = ref()
 
-// 移除面板切换逻辑，改为同时显示
-
-// 临时存储的日期和时间值
-const tempDateTime = reactive({
-  date: "",
-  time: "",
-});
-
-// 检查格式是否包含时间
-const hasTime = computed(() => {
-  return (
-    props.valueFormat.includes("H") ||
-    props.valueFormat.includes("m") ||
-    props.valueFormat.includes("s")
-  );
-});
-
-// 检查格式是否包含日期
-const hasDate = computed(() => {
-  return (
-    props.valueFormat.includes("Y") ||
-    props.valueFormat.includes("M") ||
-    props.valueFormat.includes("D")
-  );
-});
+// DateTime 组件专门处理日期和时间都存在的情况
 
 // 获取日期格式
 const dateFormat = computed(() => {
-  return (
-    props.valueFormat.replace(/\s*H+:?m*:?s*\s*/g, "").trim() || "YYYY-MM-DD"
-  );
-});
+  return props.valueFormat.replace(/\s*H+:?m*:?s*\s*/g, '').trim() || 'YYYY-MM-DD'
+})
 
 // 获取时间格式
 const timeFormat = computed(() => {
-  const timeMatch = props.valueFormat.match(/H+:?m*:?s*/g);
-  return timeMatch ? timeMatch[0] : "HH:mm:ss";
-});
+  const timeMatch = props.valueFormat.match(/H+:?m*:?s*/g)
+  return timeMatch ? timeMatch[0] : 'HH:mm:ss'
+})
 
 // 移除显示值计算属性，不再需要顶部显示
 
-function init(value: string | undefined = "") {
+function init(value: string | undefined = '') {
   if (value) {
-    const parsedDateTime = dayjs(value, props.valueFormat);
+    const parsedDateTime = dayjs(value, props.valueFormat)
     if (parsedDateTime.isValid()) {
-      if (hasDate.value) {
-        tempDateTime.date = parsedDateTime.format(dateFormat.value);
-      }
-      if (hasTime.value) {
-        tempDateTime.time = parsedDateTime.format(timeFormat.value);
-      }
-    } else {
+      // 初始化子组件
+      nextTick(() => {
+        dateRef.value?.init(parsedDateTime.format(dateFormat.value))
+        timeRef.value?.init(parsedDateTime.format(timeFormat.value))
+      })
+    }
+    else {
       // 尝试使用默认解析
-      const fallbackDateTime = dayjs(value);
+      const fallbackDateTime = dayjs(value)
       if (fallbackDateTime.isValid()) {
-        if (hasDate.value) {
-          tempDateTime.date = fallbackDateTime.format(dateFormat.value);
-        }
-        if (hasTime.value) {
-          tempDateTime.time = fallbackDateTime.format(timeFormat.value);
-        }
+        nextTick(() => {
+          dateRef.value?.init(fallbackDateTime.format(dateFormat.value))
+          timeRef.value?.init(fallbackDateTime.format(timeFormat.value))
+        })
       }
     }
-  } else {
-    // 使用当前时间初始化
-    const now = dayjs();
-    if (hasDate.value) {
-      tempDateTime.date = now.format(dateFormat.value);
-    }
-    if (hasTime.value) {
-      tempDateTime.time = now.format(timeFormat.value);
-    }
   }
-
-  // 初始化子组件
-  nextTick(() => {
-    if (dateRef.value && hasDate.value) {
-      dateRef.value.init(tempDateTime.date);
-    }
-    if (timeRef.value && hasTime.value) {
-      timeRef.value.init(tempDateTime.time);
-    }
-  });
-}
-
-// 移除面板切换函数
-
-function onDateChange(date: string) {
-  tempDateTime.date = date;
-  updateDateTime();
-}
-
-function onTimeChange(time: string) {
-  tempDateTime.time = time;
-  updateDateTime();
-}
-
-// 移除时间组件的确认取消逻辑，统一由底部按钮处理
-
-function updateDateTime() {
-  if (hasDate.value && hasTime.value) {
-    // 日期时间模式
-    if (tempDateTime.date && tempDateTime.time) {
-      const combinedDateTime = dayjs(
-        `${tempDateTime.date} ${tempDateTime.time}`
-      );
-      dateTimeValue.value = combinedDateTime.format(props.valueFormat);
-    }
-  } else if (hasDate.value && !hasTime.value) {
-    // 仅日期模式
-    if (tempDateTime.date) {
-      dateTimeValue.value = dayjs(tempDateTime.date).format(props.valueFormat);
-    }
-  } else if (!hasDate.value && hasTime.value) {
-    // 仅时间模式
-    if (tempDateTime.time) {
-      dateTimeValue.value = dayjs(tempDateTime.time, timeFormat.value).format(
-        props.valueFormat
-      );
-    }
-  }
-
-  if (dateTimeValue.value) {
-    emit("change", dateTimeValue.value);
+  else {
+    const now = dayjs()
+    nextTick(() => {
+      dateRef.value?.init(now.format(dateFormat.value))
+      timeRef.value?.init(now.format(timeFormat.value))
+    })
   }
 }
 
 function confirmDateTime() {
-  // 同时获取日期和时间的最新值
-  if (hasDate.value && hasTime.value) {
-    // 确保获取到最新的日期和时间值
-    if (tempDateTime.date && tempDateTime.time) {
-      const combinedDateTime = dayjs(
-        `${tempDateTime.date} ${tempDateTime.time}`
-      );
-      dateTimeValue.value = combinedDateTime.format(props.valueFormat);
-    }
-  } else if (hasDate.value && !hasTime.value) {
-    // 仅日期模式
-    if (tempDateTime.date) {
-      dateTimeValue.value = dayjs(tempDateTime.date).format(props.valueFormat);
-    }
-  } else if (!hasDate.value && hasTime.value) {
-    // 仅时间模式
-    if (tempDateTime.time) {
-      dateTimeValue.value = dayjs(tempDateTime.time, timeFormat.value).format(
-        props.valueFormat
-      );
-    }
+  // 从 ref 获取最新值
+  const date = dateRef.value?.getValue() || ''
+  const time = timeRef.value?.getValue() || ''
+  if (date && time) {
+    emit('change', `${date} ${time}`)
   }
+}
 
-  emit("confirm", dateTimeValue.value);
+function initNow() {
+  // 使用当前时间初始化
+  const now = dayjs()
+  nextTick(() => {
+    dateRef.value?.init(now.format(dateFormat.value))
+    timeRef.value?.initCurrentTime()
+  })
 }
 
 function cancelDateTime() {
-  // 取消时重置到初始值
-  emit("cancel");
+  emit('cancel')
 }
 
-function getNow() {
-  const now = dayjs();
-  if (hasDate.value) {
-    tempDateTime.date = now.format(dateFormat.value);
-    if (dateRef.value) {
-      dateRef.value.init(tempDateTime.date);
-    }
-  }
-  if (hasTime.value) {
-    tempDateTime.time = now.format(timeFormat.value);
-    if (timeRef.value) {
-      timeRef.value.init(tempDateTime.time);
-    }
-  }
-  updateDateTime();
-}
-
-defineExpose({ init });
+defineExpose({ init })
 </script>
 
 <template>
@@ -201,42 +91,29 @@ defineExpose({ init });
     <!-- 内容面板 - 左右布局 -->
     <div class="lew-datetime-content">
       <!-- 日期面板 -->
-      <div v-if="hasDate" class="lew-datetime-panel lew-datetime-date-panel">
-        <LewDate
-          ref="dateRef"
-          :value-format="dateFormat"
-          @change="onDateChange"
-        />
+      <div class="lew-datetime-panel lew-datetime-date-panel">
+        <LewDate ref="dateRef" :value-format="dateFormat" />
       </div>
 
       <!-- 时间面板 -->
-      <div v-if="hasTime" class="lew-datetime-panel lew-datetime-time-panel">
-        <LewTime
-          ref="timeRef"
-          :visible-count="9"
-          :value-format="timeFormat"
-          @change="onTimeChange"
-        />
+      <div class="lew-datetime-panel lew-datetime-time-panel">
+        <LewTime ref="timeRef" :visible-count="9" :value-format="timeFormat" />
       </div>
     </div>
 
     <!-- 底部操作按钮 -->
     <div class="lew-datetime-actions">
       <div class="lew-datetime-actions-left">
-        <LewButton type="light" color="gray" size="mini" @click="getNow">
+        <LewButton type="light" color="gray" size="mini" @click="initNow">
           现在
         </LewButton>
       </div>
       <div class="lew-datetime-actions-right">
-        <LewButton
-          type="light"
-          color="gray"
-          size="mini"
-          @click="cancelDateTime"
-        >
+        <LewButton type="light" color="gray" size="mini" @click="cancelDateTime">
           取消
         </LewButton>
         <LewButton
+          :disabled="!dateRef?.getValue() || !timeRef?.getValue()"
           type="fill"
           color="primary"
           size="mini"
@@ -251,7 +128,6 @@ defineExpose({ init });
 
 <style lang="scss" scoped>
 .lew-datetime {
-  background: var(--lew-bgcolor-0);
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-box-shadow);
   user-select: none;
@@ -265,11 +141,9 @@ defineExpose({ init });
     position: relative;
     display: flex;
     gap: 1px;
-    background: var(--lew-form-border-color);
 
     .lew-datetime-panel {
       flex: 1;
-      background: var(--lew-bgcolor-0);
 
       &.lew-datetime-date-panel {
         :deep(.lew-date) {
@@ -285,13 +159,16 @@ defineExpose({ init });
           border-radius: 0;
           padding: 12px;
           height: auto;
+
           .lew-time-control {
             display: flex;
             justify-content: center;
+
             .lew-button {
               display: none;
             }
           }
+
           .lew-time-actions {
             display: none; // 隐藏时间组件自己的操作按钮，使用统一的底部按钮
           }

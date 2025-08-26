@@ -805,7 +805,7 @@ defineExpose({
     }
 
     .lew-select-item-is-group {
-      color: var(--lew-text-color-7);
+      color: var(--lew-text-color-6);
       background-color: var(--lew-pop-bgcolor);
       cursor: default;
       box-sizing: border-box;

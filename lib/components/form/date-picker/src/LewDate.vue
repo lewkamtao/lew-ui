@@ -1,129 +1,140 @@
 <script lang="ts" setup>
-import type { RetItemType, RetType } from "./date";
-import dayjs from "dayjs";
-import { LewButton, LewFlex, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { object2class } from "lew-ui/utils";
-import { getMonthDate } from "./date";
+import type { RetItemType, RetType } from './date'
+import dayjs from 'dayjs'
+import { LewButton, LewFlex, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { object2class } from 'lew-ui/utils'
+import { getMonthDate } from './date'
 
 const props = defineProps({
   valueFormat: {
     type: String,
-    default: "YYYY-MM-DD",
+    default: 'YYYY-MM-DD',
   },
   isTime: {
     type: Boolean,
     default: false,
   },
-});
-const emit = defineEmits(["change"]);
+})
+const emit = defineEmits(['change'])
 
-const dateValue = ref();
+const dateValue = ref()
 
-const _year = dayjs().year();
-const _month = dayjs().month() + 1;
+const _year = dayjs().year()
+const _month = dayjs().month() + 1
 
-const dateData: Ref<RetType> = ref(getMonthDate());
+const dateData: Ref<RetType> = ref(getMonthDate())
 
 const dateState = reactive({
   year: _year,
   month: _month,
-});
+})
 
 const headDate = computed(() => {
   return [
-    locale.t("datePicker.Mon"),
-    locale.t("datePicker.Tue"),
-    locale.t("datePicker.Wed"),
-    locale.t("datePicker.Thu"),
-    locale.t("datePicker.Fri"),
-    locale.t("datePicker.Sat"),
-    locale.t("datePicker.Sun"),
-  ];
-});
+    locale.t('datePicker.Mon'),
+    locale.t('datePicker.Tue'),
+    locale.t('datePicker.Wed'),
+    locale.t('datePicker.Thu'),
+    locale.t('datePicker.Fri'),
+    locale.t('datePicker.Sat'),
+    locale.t('datePicker.Sun'),
+  ]
+})
 
 const checkToday = computed(() => (item: RetItemType) => {
-  const today = dayjs();
-  return today.isSame(dayjs(`${item.year}-${item.month}-${item.date}`), "day");
-});
+  const today = dayjs()
+  return today.isSame(dayjs(`${item.year}-${item.month}-${item.date}`), 'day')
+})
 
 const lewDateItemClassNames = computed(() => (item: RetItemType) => {
-  const unselect = item.date !== item.showDate;
-  let selected = false;
+  const unselect = item.date !== item.showDate
+  let selected = false
   if (item.date > 0 && item.date <= item.showDate) {
-    const v = `${dateState.year}-${dateState.month}-${item.showDate}`;
+    const v = `${dateState.year}-${dateState.month}-${item.showDate}`
     if (dateValue.value) {
-      const currentDate = dayjs(v);
-      const selectedDate = dayjs(dateValue.value, props.valueFormat);
-      selected = currentDate.isSame(selectedDate, "day");
+      const currentDate = dayjs(v)
+      const selectedDate = dayjs(dateValue.value, props.valueFormat)
+      selected = currentDate.isSame(selectedDate, 'day')
     }
   }
-  return object2class("lew-date-item", { unselect, selected });
-});
+  return object2class('lew-date-item', { unselect, selected })
+})
 
 function setMonthDate() {
-  dateData.value = getMonthDate(dateState.year, dateState.month);
+  dateData.value = getMonthDate(dateState.year, dateState.month)
 }
 
-function init(date: string | undefined = "") {
+function init(date: string | undefined = '') {
   if (date) {
-    const parsedDate = dayjs(date, props.valueFormat);
+    const parsedDate = dayjs(date, props.valueFormat)
     if (parsedDate.isValid()) {
-      dateState.year = parsedDate.year();
-      dateState.month = parsedDate.month() + 1;
-    } else {
-      const fallbackDate = dayjs(date);
+      dateState.year = parsedDate.year()
+      dateState.month = parsedDate.month() + 1
+      dateValue.value = parsedDate.format(props.valueFormat)
+    }
+    else {
+      const fallbackDate = dayjs(date)
       if (fallbackDate.isValid()) {
-        dateState.year = fallbackDate.year();
-        dateState.month = fallbackDate.month() + 1;
+        dateState.year = fallbackDate.year()
+        dateState.month = fallbackDate.month() + 1
+        dateValue.value = fallbackDate.format(props.valueFormat)
       }
     }
-  } else {
-    const now = dayjs();
-    dateState.year = now.year();
-    dateState.month = now.month() + 1;
   }
-  setMonthDate();
+  else {
+    const now = dayjs()
+    dateState.year = now.year()
+    dateState.month = now.month() + 1
+  }
+  setMonthDate()
 }
 
 function prveMonth() {
   if (dateState.month > 1) {
-    dateState.month -= 1;
-  } else {
-    dateState.year -= 1;
-    dateState.month = 12;
+    dateState.month -= 1
   }
-  setMonthDate();
+  else {
+    dateState.year -= 1
+    dateState.month = 12
+  }
+  setMonthDate()
 }
 
 function nextMonth() {
   if (dateState.month < 12) {
-    dateState.month += 1;
-  } else {
-    dateState.year += 1;
-    dateState.month = 1;
+    dateState.month += 1
   }
-  setMonthDate();
+  else {
+    dateState.year += 1
+    dateState.month = 1
+  }
+  setMonthDate()
 }
 
 function prveYear() {
-  dateState.year -= 1;
-  setMonthDate();
+  dateState.year -= 1
+  setMonthDate()
 }
 
 function nextYear() {
-  dateState.year += 1;
-  setMonthDate();
+  dateState.year += 1
+  setMonthDate()
 }
 
 function select(item: RetItemType) {
   dateValue.value = dayjs(`${item.year}-${item.month}-${item.showDate}`).format(
-    "YYYY-MM-DD"
-  );
-  emit("change", dateValue.value);
+    'YYYY-MM-DD',
+  )
+  console.log(dateValue.value)
+  emit('change', dateValue.value)
 }
 
-defineExpose({ init });
+function getValue() {
+  return dateValue.value
+}
+
+defineExpose({ init, getValue })
 </script>
 
 <template>
@@ -131,23 +142,11 @@ defineExpose({ init });
     <LewFlex x="start" mode="between" class="lew-date-control">
       <div class="lew-date-control-left">
         <!-- 上一年 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="prveYear"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="prveYear">
           <CommonIcon type="chevrons-left" />
         </LewButton>
         <!-- 上一月 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="prveMonth"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="prveMonth">
           <CommonIcon type="chevron-left" />
         </LewButton>
       </div>
@@ -157,23 +156,11 @@ defineExpose({ init });
       </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="nextMonth"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="nextMonth">
           <CommonIcon type="chevron-right" />
         </LewButton>
         <!-- 下一年 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="nextYear"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="nextYear">
           <CommonIcon type="chevrons-right" />
         </LewButton>
       </div>
@@ -230,6 +217,7 @@ defineExpose({ init });
       font-size: 14px;
       white-space: nowrap;
       color: var(--lew-text-color-0);
+      letter-spacing: 1.7px;
     }
 
     .lew-date-control-left,
@@ -286,8 +274,7 @@ defineExpose({ init });
           line-height: 24px;
           border-radius: 50%;
           transition: all 0.1s ease;
-          border: var(--lew-form-border-width) var(--lew-form-border-color)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         }
 
         .lew-date-value:active {
@@ -298,7 +285,7 @@ defineExpose({ init });
 
     .lew-date-item-unselect {
       pointer-events: none;
-      color: var(--lew-text-color-7);
+      color: var(--lew-text-color-6);
     }
 
     .lew-date-item-today {
@@ -318,8 +305,7 @@ defineExpose({ init });
         .lew-date-value {
           background-color: var(--lew-color-primary-light);
           color: var(--lew-color-primary-dark);
-          border: var(--lew-form-border-width)
-            var(--lew-form-border-color-focus) solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
         }
       }
     }
@@ -337,8 +323,7 @@ defineExpose({ init });
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -348,8 +333,7 @@ defineExpose({ init });
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -359,8 +343,7 @@ defineExpose({ init });
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }

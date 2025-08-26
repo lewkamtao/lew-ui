@@ -820,7 +820,7 @@ onMounted(() => {
 
     .component-name {
       font-weight: normal;
-      color: var(--lew-text-color-7);
+      color: var(--lew-text-color-6);
     }
   }
 }

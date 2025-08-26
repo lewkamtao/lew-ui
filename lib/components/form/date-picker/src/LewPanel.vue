@@ -1,77 +1,56 @@
 <script lang="ts" setup>
-import LewDate from "./LewDate.vue";
-import LewDateTime from "./LewDateTime.vue";
-import LewMonth from "./LewMonth.vue";
-import LewQuarter from "./LewQuarter.vue";
-import LewTime from "./LewTime.vue";
-import LewYear from "./LewYear.vue";
+import type { Component } from 'vue'
+import LewDate from './LewDate.vue'
+import LewDateTime from './LewDateTime.vue'
+import LewMonth from './LewMonth.vue'
+import LewQuarter from './LewQuarter.vue'
+import LewTime from './LewTime.vue'
+import LewYear from './LewYear.vue'
 
-defineProps({
+const props = defineProps({
   type: {
     type: String as PropType<
-      "year" | "quarter" | "month" | "date" | "date-time" | "time"
+      'year' | 'quarter' | 'month' | 'date' | 'date-time' | 'time'
     >,
-    default: "date",
+    default: 'date',
   },
-});
+})
 
-const emit = defineEmits(["change", "confirm", "cancel"]);
+const emit = defineEmits(['change', 'cancel'])
 
-const lewYearRef = ref();
-const lewQuarterRef = ref();
-const lewMonthRef = ref();
-const lewDateRef = ref();
-const lewDateTimeRef = ref();
-const lewTimeRef = ref();
-
-function init(date: string | undefined = "") {
-  lewYearRef.value?.init(date);
-  lewQuarterRef.value?.init(date);
-  lewMonthRef.value?.init(date);
-  lewDateRef.value?.init(date);
-  lewDateTimeRef.value?.init(date);
-  lewTimeRef.value?.init(date);
+const COMPONENT_MAP: Record<string, Component> = {
+  'year': LewYear,
+  'quarter': LewQuarter,
+  'month': LewMonth,
+  'date': LewDate,
+  'date-time': LewDateTime,
+  'time': LewTime,
 }
 
-function handleChange(date: string | undefined) {
-  emit("change", date);
+const currentComponentRef = ref()
+
+const currentComponent = computed(() => COMPONENT_MAP[props.type])
+
+function init(date: string | undefined = '') {
+  currentComponentRef.value?.init(date)
 }
 
-function handleConfirm(date: string | undefined) {
-  emit("confirm", date);
+function handleChange(date: string | undefined = '') {
+  emit('change', date)
 }
 
 function handleCancel() {
-  emit("cancel");
+  emit('cancel')
 }
 
-defineExpose({ init });
+defineExpose({ init })
 </script>
 
 <template>
   <div class="lew-panel">
-    <LewYear v-if="type === 'year'" ref="lewYearRef" @change="handleChange" />
-    <LewQuarter
-      v-if="type === 'quarter'"
-      ref="lewQuarterRef"
-      @change="handleChange"
-    />
-    <LewMonth
-      v-if="type === 'month'"
-      ref="lewMonthRef"
-      @change="handleChange"
-    />
-    <LewDate v-if="type === 'date'" ref="lewDateRef" @change="handleChange" />
-    <LewDateTime
-      v-if="type === 'date-time'"
-      ref="lewDateTimeRef"
-      @change="handleChange"
-      @confirm="handleConfirm"
-      @cancel="handleCancel"
-    />
-    <LewTime
-      v-if="type === 'time'"
-      ref="lewTimeRef"
+    <component
+      :is="currentComponent"
+      ref="currentComponentRef"
       @change="handleChange"
       @cancel="handleCancel"
     />

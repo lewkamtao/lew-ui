@@ -1,89 +1,89 @@
 <script lang="ts" setup>
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import quarterOfYear from "dayjs/plugin/quarterOfYear";
-import { LewButton, LewFlex } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { object2class } from "lew-ui/utils";
-import { cloneDeep } from "lodash-es";
-import { formatDate } from "./formatters";
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import quarterOfYear from 'dayjs/plugin/quarterOfYear'
+import { LewButton, LewFlex } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { object2class } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
+import { formatDate } from './formatters'
 
 const props = defineProps({
   valueFormat: {
     type: String,
-    default: "YYYY-[Q]Q",
+    default: 'YYYY-[Q]Q',
   },
-});
+})
 
-const emit = defineEmits(["change"]);
+const emit = defineEmits(['change'])
 
-dayjs.extend(quarterOfYear);
-dayjs.extend(customParseFormat);
+dayjs.extend(quarterOfYear)
+dayjs.extend(customParseFormat)
 
-const quarterValue = ref();
-const yearValue = ref();
-const currentYear = ref(dayjs().year());
+const quarterValue = ref()
+const yearValue = ref()
+const currentYear = ref(dayjs().year())
 
 // 生成季度列表
 const quarterList = computed(() => {
   return [
-    { value: 1, label: "Q1", months: "Jan - Mar" },
-    { value: 2, label: "Q2", months: "Apr - Jun" },
-    { value: 3, label: "Q3", months: "Jul - Sep" },
-    { value: 4, label: "Q4", months: "Oct - Dec" },
-  ];
-});
+    { value: 1, label: 'Q1', months: 'Jan - Mar' },
+    { value: 2, label: 'Q2', months: 'Apr - Jun' },
+    { value: 3, label: 'Q3', months: 'Jul - Sep' },
+    { value: 4, label: 'Q4', months: 'Oct - Dec' },
+  ]
+})
 
 const checkCurrentQuarter = computed(() => (quarter: number) => {
-  const today = dayjs();
-  return today.year() === currentYear.value && today.quarter() === quarter;
-});
+  const today = dayjs()
+  return today.year() === currentYear.value && today.quarter() === quarter
+})
 
 const lewQuarterItemClassNames = computed(() => (item: { value: number }) => {
-  let selected = false;
+  let selected = false
   if (quarterValue.value) {
-    selected =
-      quarterValue.value === item.value &&
-      yearValue.value === currentYear.value;
+    selected = quarterValue.value === item.value && yearValue.value === currentYear.value
   }
-  return object2class("lew-quarter-item", { selected });
-});
+  return object2class('lew-quarter-item', { selected })
+})
 
-function init(date: string | undefined = "") {
+function init(date: string | undefined = '') {
   if (date) {
-    const parsedDate = formatDate(date, props.valueFormat, false);
-    currentYear.value = parsedDate?.year() || dayjs().year();
-    quarterValue.value = parsedDate?.quarter() || dayjs().quarter();
-  } else {
-    const now = dayjs();
-    currentYear.value = now.year();
+    const parsedDate = formatDate(date, props.valueFormat, false)
+    currentYear.value = parsedDate?.year() || dayjs().year()
+    quarterValue.value = parsedDate?.quarter() || dayjs().quarter()
+  }
+  else {
+    const now = dayjs()
+    currentYear.value = now.year()
   }
 }
 
 function prveYear() {
-  currentYear.value -= 1;
+  currentYear.value -= 1
 }
 
 function nextYear() {
-  currentYear.value += 1;
+  currentYear.value += 1
 }
 
 function selectQuarter(quarter: number) {
-  quarterValue.value = quarter;
-  yearValue.value = cloneDeep(currentYear.value);
+  quarterValue.value = quarter
+  yearValue.value = cloneDeep(currentYear.value)
 
   const quarterMap: Record<number, string> = {
-    1: "01-01",
-    2: "04-01",
-    3: "07-01",
-    4: "10-01",
-  };
-  const _value = `${currentYear.value}-${quarterMap[quarter]}`;
+    1: '01-01',
+    2: '04-01',
+    3: '07-01',
+    4: '10-01',
+  }
 
-  emit("change", _value);
+  const _value = `${currentYear.value}-${quarterMap[quarter]}`
+
+  emit('change', _value)
 }
 
-defineExpose({ init });
+defineExpose({ init })
 </script>
 
 <template>
@@ -91,13 +91,7 @@ defineExpose({ init });
     <LewFlex x="start" mode="between" class="lew-quarter-control">
       <div class="lew-quarter-control-left">
         <!-- 上一年 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="prveYear"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="prveYear">
           <CommonIcon type="chevron-left" />
         </LewButton>
       </div>
@@ -107,13 +101,7 @@ defineExpose({ init });
       </div>
       <div class="lew-quarter-control-right">
         <!-- 下一年 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="nextYear"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="nextYear">
           <CommonIcon type="chevron-right" />
         </LewButton>
       </div>
@@ -127,10 +115,7 @@ defineExpose({ init });
         @click="selectQuarter(item.value)"
       >
         <div class="lew-quarter-label">
-          <i
-            v-if="checkCurrentQuarter(item.value)"
-            class="lew-quarter-item-current"
-          />
+          <i v-if="checkCurrentQuarter(item.value)" class="lew-quarter-item-current" />
           <div class="lew-quarter-value">
             <div class="lew-quarter-main">
               {{ item.label }}
@@ -166,6 +151,7 @@ defineExpose({ init });
       font-size: 14px;
       white-space: nowrap;
       color: var(--lew-text-color-0);
+      letter-spacing: 1.7px;
     }
 
     .lew-quarter-control-left,
@@ -225,8 +211,7 @@ defineExpose({ init });
 
           border-radius: 6px;
           transition: all 0.1s ease;
-          border: var(--lew-form-border-width) var(--lew-form-border-color)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
           padding: 4px 6px;
           box-sizing: border-box;
 
@@ -267,8 +252,7 @@ defineExpose({ init });
         .lew-quarter-value {
           background-color: var(--lew-color-primary-light);
           color: var(--lew-color-primary-dark);
-          border: var(--lew-form-border-width)
-            var(--lew-form-border-color-focus) solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
         }
       }
     }
@@ -286,8 +270,7 @@ defineExpose({ init });
         .lew-quarter-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
 
           .lew-quarter-months {
             opacity: 0.9;
@@ -301,8 +284,7 @@ defineExpose({ init });
         .lew-quarter-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -312,8 +294,7 @@ defineExpose({ init });
         .lew-quarter-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light)
-            solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }
