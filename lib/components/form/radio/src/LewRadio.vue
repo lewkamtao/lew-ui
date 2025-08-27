@@ -76,7 +76,7 @@ const getRadioClassName = computed(() => {
     box-sizing: border-box;
     border-radius: 6px;
     transition: all var(--lew-form-transition-bezier);
-    background-color: var(--lew-bgcolor-1);
+    background-color: var(--lew-radio-bgcolor);
     overflow: hidden;
     box-shadow: var(--lew-form-box-shadow);
 
@@ -164,7 +164,7 @@ const getRadioClassName = computed(() => {
 .lew-radio:hover {
   .lew-icon-radio-box {
     border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
-    background: var(--lew-form-bgcolor);
+    background: var(--lew-radio-bgcolor-hover);
   }
 }
 

@@ -24,16 +24,24 @@ import SortIcon from './SortIcon.vue'
 
 const props = defineProps(tableProps)
 const emit = defineEmits(tableEmits)
+const MIN_DRAG_DISTANCE = 10
+const SCROLL_THRESHOLD = 10
+const THROTTLE_DELAY = 120
+const TOOLTIP_THROTTLE_DELAY = 16
+const DRAG_END_DELAY = 250
+
 const selectedKeys = defineModel('selectedKeys')
 const sortValue: any = defineModel('sortValue', { default: {} })
+
 const tableRef = ref()
 const fixedLeftRef = ref()
 const fixedRightRef = ref()
 const trRefMap = ref<Record<string, HTMLElement | null>>({})
+const fixedLeftTrRefMap = ref<Record<string, HTMLElement | null>>({})
+const fixedRightTrRefMap = ref<Record<string, HTMLElement | null>>({})
 const tableWrapperRef = ref()
 
 let tooltipAnimationFrame: number | null = null
-
 const _rowKey = props.rowKey || '_lew_table_tr_id'
 
 const state = reactive({
@@ -62,62 +70,10 @@ const state = reactive({
   targetRowId: '',
 })
 
-// 使用 shallowRef 来管理 tooltipComponent，避免深层响应式
 const tooltipComponent = shallowRef(null as any)
-
-// 使用 shallowRef 来避免深层响应式，提高性能
 const hoverRowIndex = shallowRef(-1)
-
-// 缓存 RenderComponent 的渲染函数结果
 const renderCache = new Map<string, any>()
-
-// 计算属性来优化行样式计算
-const getRowClass = computed(() => {
-  return (index: number, row: any) => ({
-    'lew-table-tr-hover': hoverRowIndex.value === index && !state.isDragging,
-    'lew-table-tr-dragging': state.dragIndex === index,
-    'lew-table-tr-selected': state.selectedRowsMap[row[_rowKey]],
-  })
-})
-
-// 优化行选择状态的计算
-const getRowSelectedState = computed(() => {
-  return (row: any) => state.selectedRowsMap[row[_rowKey]]
-})
-
-// 缓存 customRender 的结果
-function getCachedRenderResult(column: any, row: any) {
-  // 使用更稳定的缓存键，避免不必要的缓存失效
-  const cacheKey = `${column.field}_${row._lew_table_tr_id}`
-
-  if (!renderCache.has(cacheKey)) {
-    const renderResult = column.customRender({
-      row,
-      column,
-      text: row[column.field],
-    })
-    // 使用 markRaw 来避免深层响应式
-    renderCache.set(cacheKey, markRaw(renderResult))
-  }
-
-  return renderCache.get(cacheKey)
-}
-
-// 清理缓存函数
-function clearRenderCache() {
-  renderCache.clear()
-}
-
-// 智能缓存清理：只清理特定行的缓存
-// function clearRowRenderCache(rowId: string) {
-//   const keysToDelete: string[] = []
-//   for (const key of renderCache.keys()) {
-//     if (key.includes(rowId)) {
-//       keysToDelete.push(key)
-//     }
-//   }
-//   keysToDelete.forEach(key => renderCache.delete(key))
-// }
+const columnWidthCache = new Map()
 
 const getCheckableWidth = computed(() => {
   const sizeMap = {
@@ -199,8 +155,155 @@ const getEmptyProps: any = computed(() => {
   }
 })
 
-// 缓存列宽计算
-const columnWidthCache = new Map()
+const getRowClass = computed(() => {
+  return (index: number, row: any) => ({
+    'lew-table-tr-hover': hoverRowIndex.value === index && !state.isDragging,
+    'lew-table-tr-dragging': state.dragIndex === index,
+    'lew-table-tr-selected': state.selectedRowsMap[row[_rowKey]],
+  })
+})
+
+const getRowSelectedState = computed(() => {
+  return (row: any) => state.selectedRowsMap[row[_rowKey]]
+})
+
+const processedColumns = computed(() => {
+  return processColumnsWidth(props.columns)
+})
+
+const leafColumns = computed(() => {
+  return getLeafColumns(processedColumns.value)
+})
+
+const nonFixedColumns = computed(() => {
+  return leafColumns.value.filter(col => !col.fixed)
+})
+
+const fixedColumns = computed(() => ({
+  left: leafColumns.value.filter(col => col.fixed === 'left'),
+  right: leafColumns.value.filter(col => col.fixed === 'right'),
+}))
+
+const headerColumns = computed(() => ({
+  left: processedColumns.value.filter(col => col.fixed === 'left'),
+  right: processedColumns.value.filter(col => col.fixed === 'right'),
+  nonFixed: processedColumns.value.filter(col => !col.fixed),
+}))
+
+const totalColumnWidth = computed(() => {
+  let width = sumBy(processedColumns.value, 'width')
+  if (props.checkable)
+    width += getCheckableWidth.value
+  if (props.sortable)
+    width += getDragColumnWidth.value
+  return width
+})
+
+const fixedWidths = computed(() => {
+  const leftWidth = sumBy(fixedColumns.value.left, 'width')
+  const rightWidth = sumBy(fixedColumns.value.right, 'width')
+  return {
+    left: leftWidth + (props.checkable ? getCheckableWidth.value : 0),
+    right: rightWidth,
+  }
+})
+
+const getColumnStyle = computed(() => {
+  const sizeStyle = `padding: ${getPadding.value}; fontSize:${getFontSize.value}px;`
+
+  return (column: any, row?: any) => {
+    const width = column.width
+    const customStyle = row && row.tdStyle?.[column.field]
+
+    if (state.isScrollbarVisible || column.fixed) {
+      return `${sizeStyle};width: ${width}px;${customStyle}`
+    }
+
+    const tdWidth
+      = (width
+        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
+      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
+    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
+  }
+})
+
+const getHeaderColumnStyle = computed(() => {
+  const sizeStyle = `fontSize:${getFontSize.value}px;`
+
+  return (column: any, row?: any) => {
+    const width = column.width
+    const customStyle = row && row.tdStyle?.[column.field]
+
+    if (state.isScrollbarVisible || column.fixed) {
+      return `${sizeStyle};width: ${width}px;${customStyle}`
+    }
+
+    const tdWidth
+      = (width
+        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
+      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
+    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
+  }
+})
+
+const hasPartialSelection = computed(() => {
+  const selectedRowsMap = state.selectedRowsMap
+  return state.dataSource.some((row: any) => selectedRowsMap[row[_rowKey]])
+})
+
+const columnLevel = computed(() => {
+  const findMaxDepth = (columns: any[], currentDepth = 1): number => {
+    if (!columns || columns.length === 0)
+      return currentDepth
+
+    let maxDepth = currentDepth
+    for (const col of columns) {
+      if (col.children && col.children.length > 0) {
+        const childDepth = findMaxDepth(col.children, currentDepth + 1)
+        maxDepth = Math.max(maxDepth, childDepth)
+      }
+    }
+    return maxDepth
+  }
+  return findMaxDepth(props.columns)
+})
+
+const getFixedHeaderColumns = computed(() => (direction: string) => {
+  return headerColumns.value[direction as keyof typeof headerColumns.value] || []
+})
+
+const getFixedColumns = computed(() => (direction: string) => {
+  return fixedColumns.value[direction as keyof typeof fixedColumns.value] || []
+})
+
+const getScrollLineLeftClassName = computed(() => {
+  return !state.isScrollbarVisible
+    || !state.isInitialized
+    || ['all', 'left'].includes(state.hiddenScrollLine)
+    ? 'lew-hide-line-left'
+    : ''
+})
+
+const getScrollLineRightClassName = computed(() => {
+  return !state.isScrollbarVisible
+    || !state.isInitialized
+    || ['all', 'right'].includes(state.hiddenScrollLine)
+    ? 'lew-hide-line-right'
+    : ''
+})
+
+const getTableClass = computed(() => {
+  return {
+    'lew-table-bordered': props.bordered,
+    'lew-table-scroll': state.isScroll,
+    'lew-table-dragging': state.isDragging,
+    'lew-table-has-fixed-left':
+      getFixedColumns.value('left').length > 0 || props.checkable || props.sortable,
+    'lew-table-has-fixed-right': getFixedColumns.value('right').length > 0,
+  }
+})
+
+const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
 
 function calculateColumnWidth(column: any): number {
   const cacheKey = JSON.stringify(column)
@@ -230,94 +333,6 @@ function processColumnsWidth(columns: any[]) {
   })
 }
 
-// 缓存列处理结果
-const processedColumns = computed(() => {
-  return processColumnsWidth(props.columns)
-})
-
-// 缓存叶子节点列
-const leafColumns = computed(() => {
-  return getLeafColumns(processedColumns.value)
-})
-
-// 缓存非固定列
-const nonFixedColumns = computed(() => {
-  return leafColumns.value.filter(col => !col.fixed)
-})
-
-// 缓存固定列
-const fixedColumns = computed(() => ({
-  left: leafColumns.value.filter(col => col.fixed === 'left'),
-  right: leafColumns.value.filter(col => col.fixed === 'right'),
-}))
-
-// 缓存表头列
-const headerColumns = computed(() => ({
-  left: processedColumns.value.filter(col => col.fixed === 'left'),
-  right: processedColumns.value.filter(col => col.fixed === 'right'),
-  nonFixed: processedColumns.value.filter(col => !col.fixed),
-}))
-
-// 缓存总列宽
-const totalColumnWidth = computed(() => {
-  let width = sumBy(processedColumns.value, 'width')
-  if (props.checkable)
-    width += getCheckableWidth.value
-  if (props.sortable)
-    width += getDragColumnWidth.value
-  return width
-})
-
-// 缓存固定列宽度
-const fixedWidths = computed(() => {
-  const leftWidth = sumBy(fixedColumns.value.left, 'width')
-  const rightWidth = sumBy(fixedColumns.value.right, 'width')
-  return {
-    left: leftWidth + (props.checkable ? getCheckableWidth.value : 0),
-    right: rightWidth,
-  }
-})
-
-// 优化列样式计算
-const getColumnStyle = computed(() => {
-  const sizeStyle = `padding: ${getPadding.value}; fontSize:${getFontSize.value}px;`
-
-  return (column: any, row?: any) => {
-    const width = column.width
-    const customStyle = row && row.tdStyle?.[column.field]
-
-    if (state.isScrollbarVisible || column.fixed) {
-      return `${sizeStyle};width: ${width}px;${customStyle}`
-    }
-
-    const tdWidth
-      = (width
-        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
-      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
-    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
-  }
-})
-
-// 优化表头列样式计算
-const getHeaderColumnStyle = computed(() => {
-  const sizeStyle = `fontSize:${getFontSize.value}px;`
-
-  return (column: any, row?: any) => {
-    const width = column.width
-    const customStyle = row && row.tdStyle?.[column.field]
-
-    if (state.isScrollbarVisible || column.fixed) {
-      return `${sizeStyle};width: ${width}px;${customStyle}`
-    }
-
-    const tdWidth
-      = (width
-        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
-      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
-    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
-  }
-})
-
 function getLeafColumns(columns: any[]) {
   const result: any[] = []
   const traverse = (cols: any[]) => {
@@ -334,10 +349,24 @@ function getLeafColumns(columns: any[]) {
   return result
 }
 
-const hasPartialSelection = computed(() => {
-  const selectedRowsMap = state.selectedRowsMap
-  return state.dataSource.some((row: any) => selectedRowsMap[row[_rowKey]])
-})
+function getCachedRenderResult(column: any, row: any) {
+  const cacheKey = `${column.field}_${row._lew_table_tr_id}`
+
+  if (!renderCache.has(cacheKey)) {
+    const renderResult = column.customRender({
+      row,
+      column,
+      text: row[column.field],
+    })
+    renderCache.set(cacheKey, markRaw(renderResult))
+  }
+
+  return renderCache.get(cacheKey)
+}
+
+function clearRenderCache() {
+  renderCache.clear()
+}
 
 function updateAllCheckedState() {
   const checkedKeys = keys(pickBy(state.selectedRowsMap, Boolean))
@@ -388,6 +417,7 @@ function showTextAndEmpty(text: any) {
     return isString(text) ? text : String(text)
   }
 }
+
 function readerHeaderTd({ column }: any) {
   const tdClass = ['lew-table-td']
   if (column.sortable) {
@@ -482,7 +512,6 @@ function readerHeaderTd({ column }: any) {
   )
 }
 
-// ==================== Sort Methods ====================
 function sort(column: any) {
   if (column.sortable) {
     let value = sortValue.value?.[column.field]
@@ -513,17 +542,16 @@ function updateScrollState() {
     return
   const element = tableRef.value
   const { clientWidth, scrollWidth, scrollLeft } = element
-  const scrollThreshold = 10
 
   if (scrollWidth === clientWidth) {
     state.hiddenScrollLine = 'all'
     return
   }
-  if (scrollLeft < scrollThreshold) {
+  if (scrollLeft < SCROLL_THRESHOLD) {
     state.hiddenScrollLine = 'left'
     return
   }
-  if (scrollLeft + clientWidth > scrollWidth - scrollThreshold) {
+  if (scrollLeft + clientWidth > scrollWidth - SCROLL_THRESHOLD) {
     state.hiddenScrollLine = 'right'
     return
   }
@@ -531,32 +559,91 @@ function updateScrollState() {
   state.hiddenScrollLine = ''
 }
 
-// 优化行高计算
 function computeTableRowHeight() {
+  console.log('🚀 Starting height computation...')
+
   nextTick(() => {
     const newTrHeightMap: Record<string, number | undefined> = {}
     const newTrPositionsMap: Record<string, any> = {}
 
-    Object.entries(trRefMap.value).forEach(([rowId, element]) => {
-      if (element) {
-        const rect = element.getBoundingClientRect()
-        newTrHeightMap[rowId] = rect.height
-        newTrPositionsMap[rowId] = {
-          top: rect.top,
-          bottom: rect.bottom,
-          height: rect.height,
-          middle: rect.top + rect.height / 2,
+    const allRowIds = state.dataSource.map(row => row._lew_table_tr_id)
+    console.log(`Found ${allRowIds.length} rows to process`)
+
+    allRowIds.forEach((rowId) => {
+      let maxHeight = 0
+      let mainHeight = 0
+      let leftHeight = 0
+      let rightHeight = 0
+
+      const mainElement = trRefMap.value[rowId]
+      if (mainElement) {
+        const mainRect = mainElement.getBoundingClientRect()
+        mainHeight = mainRect.height
+        maxHeight = Math.max(maxHeight, mainHeight)
+      }
+
+      const leftElement = fixedLeftTrRefMap.value[rowId]
+      if (leftElement) {
+        const leftRect = leftElement.getBoundingClientRect()
+        leftHeight = leftRect.height
+        maxHeight = Math.max(maxHeight, leftHeight)
+      }
+
+      const rightElement = fixedRightTrRefMap.value[rowId]
+      if (rightElement) {
+        const rightRect = rightElement.getBoundingClientRect()
+        rightHeight = rightRect.height
+        maxHeight = Math.max(maxHeight, rightHeight)
+      }
+
+      console.log(
+        `Row ${rowId}: main=${mainHeight}, left=${leftHeight}, right=${rightHeight}, max=${maxHeight}`,
+      )
+      console.log(
+        `Elements found: main=${!!mainElement}, left=${!!leftElement}, right=${!!rightElement}`,
+      )
+
+      if (mainElement) {
+        console.log(
+          `Main element current style.height: ${
+            mainElement.style.height
+          }, computed height: ${getComputedStyle(mainElement).height}`,
+        )
+      }
+      if (rightElement) {
+        console.log(
+          `Right element current style.height: ${
+            rightElement.style.height
+          }, computed height: ${getComputedStyle(rightElement).height}`,
+        )
+      }
+
+      if (maxHeight > 0) {
+        newTrHeightMap[rowId] = maxHeight
+
+        const referenceElement = mainElement || leftElement || rightElement
+        if (referenceElement) {
+          const rect = referenceElement.getBoundingClientRect()
+          newTrPositionsMap[rowId] = {
+            top: rect.top,
+            bottom: rect.bottom,
+            height: maxHeight,
+            middle: rect.top + maxHeight / 2,
+          }
         }
       }
     })
 
-    // 批量更新状态
     state.trHeightMap = newTrHeightMap
     state.trPositionsMap = newTrPositionsMap
+    console.log('✅ Height computation completed, updated state:', newTrHeightMap)
+
+    nextTick(() => {
+      console.log('🔄 Forcing re-render after height update')
+    })
   })
 }
 
-// 优化表格大小变化处理
 const handleTableResize = throttle(() => {
   const table = tableRef.value
   if (!table)
@@ -565,7 +652,6 @@ const handleTableResize = throttle(() => {
   const newScrollClientWidth = table.clientWidth
   const newIsScroll = table.scrollWidth > table.clientWidth + 5
 
-  // 只在必要时更新状态
   if (state.scrollClientWidth !== newScrollClientWidth) {
     state.scrollClientWidth = newScrollClientWidth
   }
@@ -573,7 +659,6 @@ const handleTableResize = throttle(() => {
     state.isScroll = newIsScroll
   }
 
-  // 更新固定列宽度
   if (fixedLeftRef.value) {
     const newLeftWidth = fixedLeftRef.value.clientWidth || 0
     if (state.fixedLeftWidth !== newLeftWidth) {
@@ -587,7 +672,6 @@ const handleTableResize = throttle(() => {
     }
   }
 
-  // 计算是否显示滚动条
   const totalWidth = totalColumnWidth.value
   const newIsScrollbarVisible = totalWidth > state.scrollClientWidth
   if (state.isScrollbarVisible !== newIsScrollbarVisible) {
@@ -597,7 +681,7 @@ const handleTableResize = throttle(() => {
   state.isInitialized = true
   computeTableRowHeight()
   updateScrollState()
-}, 120)
+}, THROTTLE_DELAY)
 
 function init() {
   nextTick(() => {
@@ -613,85 +697,6 @@ function init() {
   })
 }
 
-onMounted(() => {
-  init()
-
-  // 只在客户端环境下使用 ResizeObserver
-  useResizeObserver(tableRef, () => {
-    state.isInitialized = false
-    handleTableResize()
-  })
-
-  if (props.checkable && !props.rowKey) {
-    throw new Error('LewTable error: rowKey is required when checkable is enabled!')
-  }
-  if (
-    props.columns.some(
-      (col: any) => !col.width && (!col.children || col.children.length === 0),
-    )
-  ) {
-    throw new Error('LewTable error: width must be set for every column')
-  }
-})
-
-onUnmounted(() => {
-  if (tooltipAnimationFrame) {
-    cancelAnimationFrame(tooltipAnimationFrame)
-    tooltipAnimationFrame = null
-  }
-})
-
-watch(
-  () => props.dataSource,
-  (newVal) => {
-    // 清理渲染缓存
-    clearRenderCache()
-    // 先计算新数据的高度
-    const newDataSource = addUniqueIdToDataSource(cloneDeep(newVal))
-    nextTick(() => {
-      state.dataSource = newDataSource
-      // 延迟执行其他操作，让过渡动画更平滑
-      updateScrollState()
-      handleTableResize()
-      state.selectedRowsMap = mapValues(keyBy(newVal, _rowKey), () => false)
-      updateAllCheckedState()
-      initDragState()
-      computeTableRowHeight()
-    })
-  },
-  { deep: true },
-)
-
-watch(selectedKeys, (newVal: any) => {
-  if (props.checkable) {
-    updateSelectedKeys(newVal)
-  }
-})
-
-watch(
-  () => trRefMap.value,
-  () => {
-    computeTableRowHeight()
-  },
-  {
-    deep: true,
-  },
-)
-
-watch(
-  () => props.size,
-  () => {
-    nextTick(() => {
-      updateScrollState()
-      handleTableResize()
-      computeTableRowHeight()
-      if (props.checkable) {
-        updateSelectedKeys(selectedKeys.value)
-      }
-    })
-  },
-)
-
 function initDragState() {
   state.dragIndex = -1
   state.targetIndex = -1
@@ -703,7 +708,7 @@ function initDragState() {
   state.isDragging = false
 }
 
-const throttledTooltipUpdate = throttle(updateTooltipPosition, 16)
+const throttledTooltipUpdate = throttle(updateTooltipPosition, TOOLTIP_THROTTLE_DELAY)
 
 function dragStart(event: DragEvent, row: any, index: number) {
   if (!props.sortable)
@@ -731,7 +736,6 @@ function dragStart(event: DragEvent, row: any, index: number) {
   state.showTooltip = true
   state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`
 
-  // 缓存 tooltip 组件
   const tooltipCacheKey = `tooltip_${row._lew_table_tr_id}`
   if (!renderCache.has(tooltipCacheKey)) {
     const tooltipComponent = props.sortTooltipCustomRender
@@ -757,13 +761,12 @@ function updateTooltipPosition(event: MouseEvent) {
 
 function dragEnd() {
   const dragDistance = Math.abs(state.initialDragY - state.lastMouseY)
-  const minDragDistance = 10
   document.body.style.cursor = 'default'
   if (
     state.dragRowId
     && state.targetRowId
     && state.dragRowId !== state.targetRowId
-    && dragDistance >= minDragDistance
+    && dragDistance >= MIN_DRAG_DISTANCE
   ) {
     const dragIndex = state.dataSource.findIndex(
       row => row._lew_table_tr_id === state.dragRowId,
@@ -806,14 +809,14 @@ function dragEnd() {
   state.showTooltip = false
   setTimeout(() => {
     state.isDragging = false
-  }, 250)
+  }, DRAG_END_DELAY)
 
   document.removeEventListener('mousemove', throttledTooltipUpdate)
   document.removeEventListener('mouseup', dragEnd)
 
   setTimeout(() => {
     computeTableRowHeight()
-  }, 250)
+  }, DRAG_END_DELAY)
 }
 
 function updateDragTarget(mouseY: number) {
@@ -908,12 +911,12 @@ function getIndicatorStyle() {
     opacity: 1;
   `
 }
+
 function addUniqueIdToDataSource(dataSource: any[]) {
   return dataSource.map((row) => {
     if (!row._lew_table_tr_id) {
       row._lew_table_tr_id = getUniqueId()
     }
-    // 使用 markRaw 来避免深层响应式，提高性能
     return markRaw(row)
   })
 }
@@ -921,7 +924,12 @@ function addUniqueIdToDataSource(dataSource: any[]) {
 function getRowHeight(row: any) {
   if (!row || !row._lew_table_tr_id)
     return 'auto'
-  return `${state.trHeightMap[row._lew_table_tr_id] || 0}px`
+  const height = state.trHeightMap[row._lew_table_tr_id]
+  const result = height ? `${height}px` : 'auto'
+  if (height) {
+    console.log(`getRowHeight for ${row._lew_table_tr_id}: ${result}`)
+  }
+  return result
 }
 
 function setTrRef(el: HTMLElement | null, row: any) {
@@ -930,63 +938,116 @@ function setTrRef(el: HTMLElement | null, row: any) {
   }
 }
 
-// 缓存列层级
-const columnLevel = computed(() => {
-  const findMaxDepth = (columns: any[], currentDepth = 1): number => {
-    if (!columns || columns.length === 0)
-      return currentDepth
+function setFixedLeftTrRef(el: HTMLElement | null, row: any) {
+  if (row && row._lew_table_tr_id) {
+    fixedLeftTrRefMap.value[row._lew_table_tr_id] = el
+  }
+}
 
-    let maxDepth = currentDepth
-    for (const col of columns) {
-      if (col.children && col.children.length > 0) {
-        const childDepth = findMaxDepth(col.children, currentDepth + 1)
-        maxDepth = Math.max(maxDepth, childDepth)
+function setFixedRightTrRef(el: HTMLElement | null, row: any) {
+  if (row && row._lew_table_tr_id) {
+    fixedRightTrRefMap.value[row._lew_table_tr_id] = el
+  }
+}
+
+onMounted(() => {
+  init()
+
+  useResizeObserver(tableRef, () => {
+    state.isInitialized = false
+    handleTableResize()
+  })
+
+  if (props.checkable && !props.rowKey) {
+    console.warn(
+      '[LewTable] Invalid rowKey: "undefined". Expected: string when checkable is enabled',
+    )
+  }
+  if (
+    props.columns.some(
+      (col: any) => !col.width && (!col.children || col.children.length === 0),
+    )
+  ) {
+    console.warn(
+      '[LewTable] Invalid column width: "undefined". Expected: number for every column',
+    )
+  }
+})
+
+onUnmounted(() => {
+  if (tooltipAnimationFrame) {
+    cancelAnimationFrame(tooltipAnimationFrame)
+    tooltipAnimationFrame = null
+  }
+})
+
+watch(
+  () => props.dataSource,
+  (newVal) => {
+    clearRenderCache()
+    const newDataSource = addUniqueIdToDataSource(cloneDeep(newVal))
+    nextTick(() => {
+      state.dataSource = newDataSource
+      updateScrollState()
+      handleTableResize()
+      state.selectedRowsMap = mapValues(keyBy(newVal, _rowKey), () => false)
+      updateAllCheckedState()
+      initDragState()
+      computeTableRowHeight()
+    })
+  },
+  { deep: true },
+)
+
+watch(selectedKeys, (newVal: any) => {
+  if (props.checkable) {
+    updateSelectedKeys(newVal)
+  }
+})
+
+watch(
+  () => trRefMap.value,
+  () => {
+    computeTableRowHeight()
+  },
+  {
+    deep: true,
+  },
+)
+
+watch(
+  () => fixedLeftTrRefMap.value,
+  () => {
+    computeTableRowHeight()
+  },
+  {
+    deep: true,
+  },
+)
+
+watch(
+  () => fixedRightTrRefMap.value,
+  () => {
+    computeTableRowHeight()
+  },
+  {
+    deep: true,
+  },
+)
+
+watch(
+  () => props.size,
+  () => {
+    nextTick(() => {
+      updateScrollState()
+      handleTableResize()
+      computeTableRowHeight()
+      if (props.checkable) {
+        updateSelectedKeys(selectedKeys.value)
       }
-    }
-    return maxDepth
-  }
-  return findMaxDepth(props.columns)
-})
-
-// 获取固定表头列
-const getFixedHeaderColumns = computed(() => (direction: string) => {
-  return headerColumns.value[direction as keyof typeof headerColumns.value] || []
-})
-
-// 获取固定列
-const getFixedColumns = computed(() => (direction: string) => {
-  return fixedColumns.value[direction as keyof typeof fixedColumns.value] || []
-})
-
-const getScrollLineLeftClassName = computed(() => {
-  return !state.isScrollbarVisible
-    || !state.isInitialized
-    || ['all', 'left'].includes(state.hiddenScrollLine)
-    ? 'lew-hide-line-left'
-    : ''
-})
-
-const getScrollLineRightClassName = computed(() => {
-  return !state.isScrollbarVisible
-    || !state.isInitialized
-    || ['all', 'right'].includes(state.hiddenScrollLine)
-    ? 'lew-hide-line-right'
-    : ''
-})
-
-const getTableClass = computed(() => {
-  return {
-    'lew-table-bordered': props.bordered,
-    'lew-table-scroll': state.isScroll,
-    'lew-table-dragging': state.isDragging,
-    'lew-table-has-fixed-left':
-      getFixedColumns.value('left').length > 0 || props.checkable || props.sortable,
-    'lew-table-has-fixed-right': getFixedColumns.value('right').length > 0,
-  }
-})
-
-// 获取非固定表头列
-const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
+    })
+  },
+)
 </script>
 
 <template>
@@ -1127,10 +1188,12 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
           <div
             v-for="(row, i) in state.dataSource"
             :key="row._lew_table_tr_id"
+            :ref="(e: any) => setFixedLeftTrRef(e, row)"
             class="lew-table-tr"
             :class="getRowClass(i, row)"
             :style="{
               height: getRowHeight(row),
+              minHeight: getRowHeight(row),
             }"
             @click="toggleRowSelection(row)"
             @mouseenter.stop="hoverRowIndex = i"
@@ -1196,6 +1259,10 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
             :ref="(e: any) => setTrRef(e, row)"
             class="lew-table-tr"
             :class="getRowClass(i, row)"
+            :style="{
+              height: getRowHeight(row),
+              minHeight: getRowHeight(row),
+            }"
             @click="toggleRowSelection(row)"
             @mouseenter.stop="hoverRowIndex = i"
           >
@@ -1232,9 +1299,11 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
           <div
             v-for="(row, i) in state.dataSource"
             :key="row._lew_table_tr_id"
+            :ref="(e: any) => setFixedRightTrRef(e, row)"
             class="lew-table-tr"
             :style="{
               height: getRowHeight(row),
+              minHeight: getRowHeight(row),
             }"
             :class="getRowClass(i, row)"
             @mouseenter.stop="hoverRowIndex = i"
@@ -1407,7 +1476,8 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
     overflow: hidden;
     width: 100%;
     box-sizing: border-box;
-    flex-grow: 1;
+    flex-grow: 0;
+    flex-shrink: 0;
     transition: background 0.08s;
     position: relative;
   }

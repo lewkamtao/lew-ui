@@ -755,6 +755,12 @@ const showFooterSlot = computed(() => {
       transition: all 0.2s;
       min-height: 100%;
       padding: 2px 0;
+      box-sizing: border-box;
+    }
+
+    .lew-select-multiple-text-value {
+      height: 30px;
+      line-height: 30px;
     }
 
     .lew-placeholder,

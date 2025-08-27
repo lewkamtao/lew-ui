@@ -1,61 +1,63 @@
 <script lang="ts" setup>
-import type { LewSize } from "lew-ui";
-import { LewDateRange, LewPopover, LewTooltip, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px, object2class } from "lew-ui/utils";
-import { dateRangePickerEmits } from "./emits";
-import { dateRangePickerProps } from "./props";
+import type { LewSize } from 'lew-ui'
+import { LewDateRange, LewPopover, LewTooltip, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
+import { dateRangePickerEmits } from './emits'
+import { dateRangePickerProps } from './props'
 
-const props = defineProps(dateRangePickerProps);
-const emit = defineEmits(dateRangePickerEmits);
+const props = defineProps(dateRangePickerProps)
+const emit = defineEmits(dateRangePickerEmits)
 
-const modelValue = defineModel<DateRange | undefined>({ required: true });
+const modelValue = defineModel<DateRange | undefined>({ required: true })
 
 // 获取app
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
 // 定义日期范围对象类型
 interface DateRange {
-  start?: string;
-  end?: string;
+  start?: string
+  end?: string
 }
 
-const visible = ref(false);
-const lewPopoverRef = ref();
-const { startKey, endKey } = props;
+const visible = ref(false)
+const lewPopoverRef = ref()
+const { startKey, endKey } = props
 
-const lewDateRangePanelRef = ref();
+const lewDateRangePanelRef = ref()
 
 // 将对象格式转换为内部使用的动态键名格式
 const internalModelValue = computed({
   get: () => {
-    if (!modelValue.value) return undefined;
+    if (!modelValue.value)
+      return undefined
     return {
-      [startKey]: modelValue.value.start || "",
-      [endKey]: modelValue.value.end || "",
-    };
+      [startKey]: modelValue.value.start || '',
+      [endKey]: modelValue.value.end || '',
+    }
   },
   set: (value) => {
     if (!value) {
-      modelValue.value = undefined;
-    } else {
+      modelValue.value = undefined
+    }
+    else {
       modelValue.value = {
         start: value[startKey] || undefined,
         end: value[endKey] || undefined,
-      };
+      }
     }
   },
-});
+})
 
 function show() {
-  lewPopoverRef.value.show();
+  lewPopoverRef.value.show()
 }
 
 function hide() {
-  lewPopoverRef.value.hide();
+  lewPopoverRef.value.hide()
 }
 
 const getIconSize = computed(() => {
@@ -63,68 +65,69 @@ const getIconSize = computed(() => {
     small: 13,
     medium: 14,
     large: 15,
-  };
-  const _propsSize: LewSize = props.size as LewSize;
-  return size[_propsSize];
-});
+  }
+  const _propsSize: LewSize = props.size as LewSize
+  return size[_propsSize]
+})
 
 function change(e: { [key: string]: string } | undefined) {
   if (!e) {
-    emit("change", undefined);
-  } else {
+    emit('change', undefined)
+  }
+  else {
     // 将内部格式转换为对象格式
     const dateRange: DateRange = {
       start: e[startKey] || undefined,
       end: e[endKey] || undefined,
-    };
-    emit("change", dateRange);
+    }
+    emit('change', dateRange)
   }
   setTimeout(() => {
-    hide();
-  }, 100);
+    hide()
+  }, 100)
 }
 
 function showHandle() {
-  visible.value = true;
-  lewDateRangePanelRef.value && lewDateRangePanelRef.value.init();
+  visible.value = true
+  lewDateRangePanelRef.value && lewDateRangePanelRef.value.init()
 }
 
 function hideHandle() {
-  visible.value = false;
+  visible.value = false
 }
 
 function clearHandle() {
-  modelValue.value = undefined;
-  emit("change", undefined);
-  emit("clear");
+  modelValue.value = undefined
+  emit('change', undefined)
+  emit('clear')
 }
 
 const lewDateRangeClassNames = computed(() => {
-  const focus = visible.value;
-  const { size, readonly, disabled } = props;
-  return object2class("lew-date-range-picker", {
+  const focus = visible.value
+  const { size, readonly, disabled } = props
+  return object2class('lew-date-range-picker', {
     focus,
     size,
     readonly,
     disabled,
-  });
-});
+  })
+})
 
 const getDateRangePickerInputStyle = computed(() => {
-  const { size } = props;
+  const { size } = props
   return {
     height: `var(--lew-form-item-height-${size})`,
     lineHeight: `var(--lew-form-input-line-height-${size})`,
     padding: `var(--lew-form-input-padding-${size})`,
     fontSize: `var(--lew-form-font-size-${size})`,
-  };
-});
+  }
+})
 
 const checkClear = computed(() => {
-  return (modelValue.value?.start || modelValue.value?.end) && props.clearable;
-});
+  return (modelValue.value?.start || modelValue.value?.end) && props.clearable
+})
 
-defineExpose({ show, hide });
+defineExpose({ show, hide })
 </script>
 
 <template>

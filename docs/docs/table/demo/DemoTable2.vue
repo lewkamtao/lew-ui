@@ -25,13 +25,7 @@ const dataSource: any = ref([
     memory: '24GB GDDR6',
     performance: 9,
     price: 8999,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '4K Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1',
-    ],
+    features: ['FSR 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
     releaseDate: '2022-12-13',
     powerConsumption: '355W',
     architecture: 'RDNA 3',
@@ -63,13 +57,7 @@ const dataSource: any = ref([
     memory: '20GB GDDR6',
     performance: 7.5,
     price: 7499,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '4K Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1',
-    ],
+    features: ['FSR 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
     releaseDate: '2022-12-13',
     powerConsumption: '315W',
     architecture: 'RDNA 3',
@@ -117,13 +105,7 @@ const dataSource: any = ref([
     memory: '16GB GDDR6',
     performance: 6,
     price: 4499,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '1440p Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1',
-    ],
+    features: ['FSR 3', 'Ray Tracing', '1440p Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
     releaseDate: '2023-09-06',
     powerConsumption: '263W',
     architecture: 'RDNA 3',
@@ -139,13 +121,7 @@ const dataSource: any = ref([
     memory: '12GB GDDR6',
     performance: 5.5,
     price: 3999,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '1440p Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1',
-    ],
+    features: ['FSR 3', 'Ray Tracing', '1440p Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
     releaseDate: '2023-09-06',
     powerConsumption: '245W',
     architecture: 'RDNA 3',
@@ -340,7 +316,9 @@ function update() {
         </lew-flex>
       </template>
       <template #price="{ row }">
-        ¥{{ row.price }}
+        <lew-flex style="height: 100px">
+          ¥{{ row.price }}
+        </lew-flex>
       </template>
       <template #tdp="{ row }">
         {{ row.tdp }}W

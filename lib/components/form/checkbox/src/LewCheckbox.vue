@@ -95,7 +95,7 @@ function setChecked() {
     box-sizing: border-box;
     border-radius: 6px;
     transition: all var(--lew-form-transition-bezier);
-    background-color: var(--lew-bgcolor-1);
+    background-color: var(--lew-checkbox-bgcolor);
     overflow: hidden;
     box-shadow: var(--lew-form-box-shadow);
 
@@ -183,7 +183,7 @@ function setChecked() {
 .lew-checkbox:hover {
   .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-    background: var(--lew-form-bgcolor);
+    background: var(--lew-checkbox-bgcolor-hover);
   }
 }
 
