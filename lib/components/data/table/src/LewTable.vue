@@ -560,14 +560,11 @@ function updateScrollState() {
 }
 
 function computeTableRowHeight() {
-  console.log('🚀 Starting height computation...')
-
   nextTick(() => {
     const newTrHeightMap: Record<string, number | undefined> = {}
     const newTrPositionsMap: Record<string, any> = {}
 
     const allRowIds = state.dataSource.map(row => row._lew_table_tr_id)
-    console.log(`Found ${allRowIds.length} rows to process`)
 
     allRowIds.forEach((rowId) => {
       let maxHeight = 0
@@ -596,28 +593,6 @@ function computeTableRowHeight() {
         maxHeight = Math.max(maxHeight, rightHeight)
       }
 
-      console.log(
-        `Row ${rowId}: main=${mainHeight}, left=${leftHeight}, right=${rightHeight}, max=${maxHeight}`,
-      )
-      console.log(
-        `Elements found: main=${!!mainElement}, left=${!!leftElement}, right=${!!rightElement}`,
-      )
-
-      if (mainElement) {
-        console.log(
-          `Main element current style.height: ${
-            mainElement.style.height
-          }, computed height: ${getComputedStyle(mainElement).height}`,
-        )
-      }
-      if (rightElement) {
-        console.log(
-          `Right element current style.height: ${
-            rightElement.style.height
-          }, computed height: ${getComputedStyle(rightElement).height}`,
-        )
-      }
-
       if (maxHeight > 0) {
         newTrHeightMap[rowId] = maxHeight
 
@@ -636,11 +611,6 @@ function computeTableRowHeight() {
 
     state.trHeightMap = newTrHeightMap
     state.trPositionsMap = newTrPositionsMap
-    console.log('✅ Height computation completed, updated state:', newTrHeightMap)
-
-    nextTick(() => {
-      console.log('🔄 Forcing re-render after height update')
-    })
   })
 }
 
@@ -926,9 +896,7 @@ function getRowHeight(row: any) {
     return 'auto'
   const height = state.trHeightMap[row._lew_table_tr_id]
   const result = height ? `${height}px` : 'auto'
-  if (height) {
-    console.log(`getRowHeight for ${row._lew_table_tr_id}: ${result}`)
-  }
+
   return result
 }
 
@@ -957,21 +925,6 @@ onMounted(() => {
     state.isInitialized = false
     handleTableResize()
   })
-
-  if (props.checkable && !props.rowKey) {
-    console.warn(
-      '[LewTable] Invalid rowKey: "undefined". Expected: string when checkable is enabled',
-    )
-  }
-  if (
-    props.columns.some(
-      (col: any) => !col.width && (!col.children || col.children.length === 0),
-    )
-  ) {
-    console.warn(
-      '[LewTable] Invalid column width: "undefined". Expected: number for every column',
-    )
-  }
 })
 
 onUnmounted(() => {

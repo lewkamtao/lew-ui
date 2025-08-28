@@ -27,7 +27,7 @@ import { selectMultipleProps } from './props'
 
 const props = defineProps(selectMultipleProps)
 const emit = defineEmits(selectMultipleEmits)
-const selectValue: any = defineModel()
+const modelValue: any = defineModel()
 const slots = useSlots()
 
 const lewSelectRef = ref()
@@ -117,31 +117,31 @@ async function search(e?: any) {
 }
 
 function clearHandle() {
-  selectValue.value = []
+  modelValue.value = []
   emit('clear')
   setTimeout(() => {
     lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)
-  emit('change', selectValue.value)
+  emit('change', modelValue.value)
   state.visible = false
   emit('blur')
 }
 
 function deleteTag({ value }: { value: any }) {
-  const valueIndex = selectValue.value.findIndex((_value: any) => value === _value)
+  const valueIndex = modelValue.value.findIndex((_value: any) => value === _value)
 
   if (valueIndex > -1) {
-    const item = selectValue.value[valueIndex]
-    selectValue.value.splice(valueIndex, 1)
-    emit('delete', cloneDeep(selectValue.value), item)
+    const item = modelValue.value[valueIndex]
+    modelValue.value.splice(valueIndex, 1)
+    emit('delete', cloneDeep(modelValue.value), item)
 
-    if (selectValue.value.length === 0) {
+    if (modelValue.value.length === 0) {
       lewPopoverValueRef.value && lewPopoverValueRef.value.hide()
     }
     setTimeout(() => {
       lewPopoverRef.value && lewPopoverRef.value.refresh()
     }, 100)
-    emit('change', selectValue.value)
+    emit('change', modelValue.value)
   }
 }
 
@@ -150,7 +150,7 @@ function selectHandle(item: LewSelectMultipleOption) {
     return
   }
 
-  const _value = selectValue.value || []
+  const _value = modelValue.value || []
 
   const index = _value.findIndex((e: string | number) => e === item.value)
 
@@ -161,18 +161,18 @@ function selectHandle(item: LewSelectMultipleOption) {
     _value.push(item.value)
   }
 
-  selectValue.value = _value
+  modelValue.value = _value
   emit('select', _value)
   setTimeout(() => {
     lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)
-  emit('change', selectValue.value)
+  emit('change', modelValue.value)
   getSelectWidth()
 }
 
 const getChecked = computed(() => (value: string | number) => {
-  if (selectValue.value) {
-    return JSON.parse(JSON.stringify(selectValue.value.includes(value)))
+  if (modelValue.value) {
+    return JSON.parse(JSON.stringify(modelValue.value.includes(value)))
   }
   return false
 })
@@ -186,8 +186,8 @@ const getSelectedRows = computed(() => {
   })
   if (state.options.length > 0) {
     const selectedRows
-      = selectValue.value
-        && selectValue.value.map((v: number | string) => {
+      = modelValue.value
+        && modelValue.value.map((v: number | string) => {
           return state.options.find((e: LewSelectMultipleOption) => v === e.value)
         })
     if (!selectedRows || selectedRows.length === 0) {
@@ -205,7 +205,7 @@ const getBodyClassName = computed(() => {
 
 const getSelectClassName = computed(() => {
   let { clearable, size, disabled, readonly } = props
-  clearable = clearable ? !!selectValue.value : false
+  clearable = clearable ? !!modelValue.value : false
   const focus = state.visible
   return object2class('lew-select', {
     clearable,
@@ -253,7 +253,7 @@ function showHandle() {
     search({ target: { value: '' } })
   }
 
-  const indexes = (selectValue.value || [])
+  const indexes = (modelValue.value || [])
     .map((value: any) => state.options.findIndex((e: any) => e.value === value))
     .filter((index: number) => index > -1)
 
@@ -331,6 +331,16 @@ watch(
         state.searchCache.clear()
       }
     }
+  },
+  {
+    deep: true,
+  },
+)
+
+watch(
+  () => modelValue.value,
+  () => {
+    getSelectWidth()
   },
   {
     deep: true,

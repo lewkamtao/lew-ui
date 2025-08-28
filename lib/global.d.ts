@@ -8,7 +8,6 @@ declare module 'vue' {
     vLoading: LewDirectiveBindings['loading']
     vBacktop: LewDirectiveBindings['backtop']
     vContextMenu: LewDirectiveBindings['context-menu']
-    vHoverMenu: LewDirectiveBindings['hover-menu']
   }
 }
 

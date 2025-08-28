@@ -41,13 +41,25 @@ const modelValue = defineModel<number[]>('modelValue', {
   },
 })
 
+// 内部视图状态，用于快速响应用户交互
+const internalViewValue = ref<number[]>([0, 0])
+
 // 修改为数组以支持范围
 const dotRef1 = ref<HTMLElement | null>(null) // 左侧滑块
 const dotRef2 = ref<HTMLElement | null>(null) // 右侧滑块
 const trackRef = ref<HTMLElement | null>(null)
 const dotX = ref(0)
 
-// 创建节流函数，用于更新modelValue
+// 视图更新节流：50ms 更新频率，用于流畅的视觉反馈
+const throttledUpdateView = throttle(
+  (leftValue: number, rightValue: number) => {
+    internalViewValue.value = [leftValue, rightValue]
+    updateDotsByModelValue([leftValue, rightValue])
+  },
+  50,
+)
+
+// 数据更新节流：250ms 更新频率，用于减少外部状态更新频率
 const throttledUpdateModelValue = throttle(
   (leftValue: number, rightValue: number) => {
     if (!modelValue.value) {
@@ -57,8 +69,8 @@ const throttledUpdateModelValue = throttle(
     modelValue.value = [leftValue, rightValue]
     emit('change', modelValue.value)
   },
-  16,
-) // 约60fps的更新频率
+  250,
+)
 
 // 获取 mark 位置
 function getMarkPosition(value: number | string) {
@@ -142,13 +154,14 @@ function init() {
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
         const newValue = [
-          modelValue.value?.[0] || getMin.value,
-          modelValue.value?.[1] || getMax.value,
+          internalViewValue.value?.[0] || getMin.value,
+          internalViewValue.value?.[1] || getMax.value,
         ]
         newValue[0] = calculateValue(e.x)
+        // 立即更新视图状态
+        throttledUpdateView(newValue[0], newValue[1])
+        // 延迟更新数据绑定
         throttledUpdateModelValue(newValue[0], newValue[1])
-        // 实时更新点的位置，不进行节流
-        updateDotsByModelValue([newValue[0], newValue[1]])
       },
     })
     _dragmove = dragmove({
@@ -162,17 +175,20 @@ function init() {
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
         const newValue = [
-          modelValue.value?.[0] || getMin.value,
-          modelValue.value?.[1] || getMax.value,
+          internalViewValue.value?.[0] || getMin.value,
+          internalViewValue.value?.[1] || getMax.value,
         ]
         newValue[1] = calculateValue(e.x)
+        // 立即更新视图状态
+        throttledUpdateView(newValue[0], newValue[1])
+        // 延迟更新数据绑定
         throttledUpdateModelValue(newValue[0], newValue[1])
-        // 实时更新点的位置，不进行节流
-        updateDotsByModelValue([newValue[0], newValue[1]])
       },
     })
   }
-  updateDotsByModelValue(modelValue.value || [getMin.value, getMax.value])
+  const initialValue = modelValue.value || [getMin.value, getMax.value]
+  internalViewValue.value = initialValue
+  updateDotsByModelValue(initialValue)
 }
 
 // 监听 max、min、step、readonly、disabled 的变化，重新初始化
@@ -196,14 +212,17 @@ onMounted(() => {
 onUnmounted(() => {
   _dragmove()
   // 取消节流函数
+  throttledUpdateView.cancel()
   throttledUpdateModelValue.cancel()
 })
 
-// 监听 modelValue 的变化，实时更新 dot 的位置
+// 监听 modelValue 的变化，同步内部视图状态和实时更新 dot 的位置
 watch(
   modelValue,
   (newValue) => {
-    updateDotsByModelValue(newValue || [getMin.value, getMax.value])
+    const safeValue = newValue || [getMin.value, getMax.value]
+    internalViewValue.value = safeValue
+    updateDotsByModelValue(safeValue)
   },
   {
     deep: true,
@@ -284,8 +303,8 @@ const rangeLineStyle = computed(() => {
 
 // 计算选中区域的样式
 const selectedLineStyle = computed(() => {
-  const currentMin = modelValue.value?.[0] ?? getMin.value
-  const currentMax = modelValue.value?.[1] ?? getMax.value
+  const currentMin = internalViewValue.value?.[0] ?? getMin.value
+  const currentMax = internalViewValue.value?.[1] ?? getMax.value
   const width = Math.max(
     0,
     Math.min(
@@ -307,8 +326,8 @@ const optionStyles = computed(() => {
   return (
     props.options?.map((item, index) => {
       const itemValue = Number(item.value)
-      const currentMin = modelValue.value?.[0] ?? getMin.value
-      const currentMax = modelValue.value?.[1] ?? getMax.value
+      const currentMin = internalViewValue.value?.[0] ?? getMin.value
+      const currentMax = internalViewValue.value?.[1] ?? getMax.value
       const isSelected
         = itemValue >= Math.min(currentMin, currentMax)
           && itemValue <= Math.max(currentMin, currentMax)
@@ -344,10 +363,10 @@ const optionStyles = computed(() => {
 const dotStyles = computed(() => {
   return {
     dot1: {
-      opacity: modelValue.value?.[0] !== undefined ? '1' : '0',
+      opacity: internalViewValue.value?.[0] !== undefined ? '1' : '0',
     },
     dot2: {
-      opacity: modelValue.value?.[1] !== undefined ? '1' : '0',
+      opacity: internalViewValue.value?.[1] !== undefined ? '1' : '0',
     },
   }
 })
@@ -355,8 +374,8 @@ const dotStyles = computed(() => {
 // 计算tooltip内容
 const tooltipContent = computed(() => {
   return {
-    dot1: props.formatTooltip(modelValue.value?.[0] ?? getMin.value),
-    dot2: props.formatTooltip(modelValue.value?.[1] ?? getMax.value),
+    dot1: props.formatTooltip(internalViewValue.value?.[0] ?? getMin.value),
+    dot2: props.formatTooltip(internalViewValue.value?.[1] ?? getMax.value),
   }
 })
 </script>

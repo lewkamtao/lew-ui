@@ -1,4 +1,4 @@
-import type { LewContextMenusOption } from 'lew-ui/types'
+import type { LewContextMenusOption, LewMenuTrigger } from 'lew-ui/types'
 import type { PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
@@ -25,5 +25,13 @@ export const contextMenuProps = {
     type: null,
     hidden: true,
     default: null,
+  },
+  trigger: {
+    type: String as PropType<LewMenuTrigger>,
+    default: 'right-click',
+    validator: validators.string({
+      componentName: 'LewContextMenu',
+      propName: 'trigger',
+    }),
   },
 }

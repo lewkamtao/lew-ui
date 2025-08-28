@@ -60,7 +60,6 @@ watchDebounced(
 watchDebounced(
   () => props.triggerTarget,
   (value: Element | string) => {
-    console.log(value)
     instance?.setProps({
       triggerTarget: value,
     })
@@ -113,7 +112,7 @@ function initTippy() {
     },
     onClickOutside() {
       if (props.clickOutsideToHide) {
-        instance.hide()
+        instance?.hide()
       }
     },
   })
@@ -121,7 +120,7 @@ function initTippy() {
   instance?.popper.children[0].setAttribute('data-lew', 'popover')
   // 判断入参
   if (disabled && instance) {
-    instance.disable()
+    instance?.disable()
   }
 }
 

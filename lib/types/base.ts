@@ -50,6 +50,8 @@ export type LewStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
 
 export type LewTrigger = 'hover' | 'click' | 'mouseenter' | 'manual'
 
+export type LewMenuTrigger = 'left-click' | 'right-click' | 'hover'
+
 export type LewPlacement
   = | 'top'
     | 'top-start'

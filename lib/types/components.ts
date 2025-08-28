@@ -103,19 +103,6 @@ export interface LewContextMenusOption {
   [key: string]: any
 }
 
-export interface LewHoverMenusOption {
-  label?: LewComponentSource
-  value?: string
-  type?: string
-  icon?: LewComponentSource
-  disabled?: boolean
-  isDividerLine?: boolean
-  level?: number
-  children?: LewHoverMenusOption[]
-  onClick?: (item: LewHoverMenusOption) => void
-  [key: string]: any
-}
-
 export interface LewInputTableColumn {
   title: string
   width?: number

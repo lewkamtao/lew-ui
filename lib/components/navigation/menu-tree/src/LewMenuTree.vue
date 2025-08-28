@@ -57,9 +57,9 @@ provide('lew-menu-tree', {
   modelValueKeyPath: getModelValueKeyPath,
 })
 
-const hoverMenu = resolveDirective('hover-menu')
+const hoverMenu = resolveDirective('context-menu')
 
-function handleMenuSelect(item: LewMenuTreeOption): void {
+function handleMenuSelect(item: LewMenuTreeOption, _options: any, instance: any): void {
   if (item.disabled) {
     return
   }
@@ -80,10 +80,10 @@ function handleMenuSelect(item: LewMenuTreeOption): void {
   else {
     const newValue = modelValue.value !== item.value ? item.value : ''
     modelValue.value = newValue
-    emit('select', newValue, toRaw(item))
   }
 
   expandKeys.value = cloneDeep(expandKeys.value)
+  instance?.hide()
   emit('change', toRaw(item))
 }
 function transformTree(tree: LewMenuTreeOption[] = []): LewMenuTreeOption[] {
@@ -112,6 +112,7 @@ function renderMenuTreeItem(item: LewMenuTreeOption, level: number = 1): any {
           [
             hoverMenu,
             {
+              trigger: 'hover',
               options: buildHoverMenuOptions(item),
               disabled: !collapsed.value,
             },

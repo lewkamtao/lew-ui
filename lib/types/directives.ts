@@ -1,5 +1,5 @@
-import type { LewPlacement, LewTrigger } from './base'
-import type { LewContextMenusOption, LewHoverMenusOption } from './components'
+import type { LewMenuTrigger, LewPlacement, LewTrigger } from './base'
+import type { LewContextMenusOption } from './components'
 
 export interface LewTooltipDirectiveBinding {
   trigger?: LewTrigger
@@ -22,11 +22,7 @@ export interface LewBackTopDirectiveBinding {
 export interface LewContextMenuDirectiveBinding {
   options?: LewContextMenusOption[]
   disabled?: boolean
-}
-
-export interface LewHoverMenuDirectiveBinding {
-  options?: LewHoverMenusOption[]
-  disabled?: boolean
+  trigger?: LewMenuTrigger
 }
 
 export interface LewDirectiveBindings {
@@ -34,5 +30,4 @@ export interface LewDirectiveBindings {
   'loading': LewLoadingDirectiveBinding
   'backtop': LewBackTopDirectiveBinding
   'context-menu': LewContextMenuDirectiveBinding
-  'hover-menu': LewHoverMenuDirectiveBinding
 }

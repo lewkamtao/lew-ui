@@ -26,20 +26,16 @@ const options = ref<LewContextMenusOption[]>([
         type: 'radio',
         checked: true,
         checkable: true,
-        onClick: (
-          item: LewContextMenusOption,
-          options: LewContextMenusOption[],
-        ) => setTheme(item, options),
+        onClick: (item: LewContextMenusOption, options: LewContextMenusOption[]) =>
+          setTheme(item, options),
       },
       {
         label: 'Dark',
         type: 'radio',
         value: 'dark',
         checkable: true,
-        onClick: (
-          item: LewContextMenusOption,
-          options: LewContextMenusOption[],
-        ) => setTheme(item, options),
+        onClick: (item: LewContextMenusOption, options: LewContextMenusOption[]) =>
+          setTheme(item, options),
       },
     ],
   },
@@ -71,14 +67,10 @@ const options = ref<LewContextMenusOption[]>([
   },
 ])
 
-function setTheme(
-  item: LewContextMenusOption,
-  _options: LewContextMenusOption[] = [],
-) {
+function setTheme(item: LewContextMenusOption, _options: LewContextMenusOption[] = []) {
   _options.forEach((_item: LewContextMenusOption) => {
     _item.checked = _item.label === item.label
   })
-  console.log(_options, 'lew')
 }
 
 function setUpdate(

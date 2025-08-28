@@ -8,7 +8,6 @@ import { sliderProps } from './props'
 const props = defineProps(sliderProps)
 const emit = defineEmits(sliderEmits)
 
-// 安全的数值转换函数
 function safeNumber(value: unknown, defaultValue: number = 0): number {
   if (value === null || value === undefined || value === '') {
     return defaultValue
@@ -17,22 +16,17 @@ function safeNumber(value: unknown, defaultValue: number = 0): number {
   return Number.isNaN(num) ? defaultValue : num
 }
 
-// 安全的数组检查函数
 function safeArray<T>(value: unknown, defaultValue: T[] = []): T[] {
   return Array.isArray(value) ? value : defaultValue
 }
 
-// 安全的函数检查
 function safeFunction(
   value: unknown,
   defaultValue: (val: number) => string,
 ): (val: number) => string {
-  return typeof value === 'function'
-    ? (value as (val: number) => string)
-    : defaultValue
+  return typeof value === 'function' ? (value as (val: number) => string) : defaultValue
 }
 
-// 获取滑块轨道的最大值
 const getTrackMax = computed(() => {
   const options = safeArray(props.options)
   if (options.length > 0) {
@@ -42,7 +36,6 @@ const getTrackMax = computed(() => {
   return safeNumber(props.max, 100)
 })
 
-// 获取滑块轨道的最小值
 const getTrackMin = computed(() => {
   const options = safeArray(props.options)
   if (options.length > 0) {
@@ -73,18 +66,26 @@ const modelValue = defineModel<number>('modelValue', {
   },
 })
 
+// 内部视图状态，用于快速响应用户交互
+const internalViewValue = ref<number>(0)
 const dotRef = ref<HTMLElement | null>(null)
 const trackRef = ref<HTMLElement | null>(null)
 const dotX = ref(0)
 
-// 创建节流函数，用于更新modelValue
+// 视图更新节流：50ms 更新频率，用于流畅的视觉反馈
+const throttledUpdateView = throttle((newValue: number) => {
+  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
+  internalViewValue.value = clampedValue
+  setDotByValue(clampedValue)
+}, 50)
+
+// 数据更新节流：250ms 更新频率，用于减少外部状态更新频率
 const throttledUpdateModelValue = throttle((newValue: number) => {
   const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
   modelValue.value = clampedValue
   emit('change', clampedValue)
-}, 16) // 约60fps的更新频率
+}, 250)
 
-// 获取 mark 位置，确保在 0-100 范围内
 function getMarkPosition(value: number | string): number {
   const trackMax = getTrackMax.value
   const trackMin = getTrackMin.value
@@ -130,16 +131,12 @@ function setDot(e: MouseEvent): void {
 
   try {
     const trackRect = trackRef.value.getBoundingClientRect()
-    const clickX = Math.max(
-      0,
-      Math.min(e.clientX - trackRect.left, trackRect.width),
-    )
+    const clickX = Math.max(0, Math.min(e.clientX - trackRect.left, trackRect.width))
 
     const step = safeNumber(props.step, 1)
     if (step <= 0)
       return
 
-    // 计算刻度大小
     const trackMax = getTrackMax.value
     const trackMin = getTrackMin.value
     const range = trackMax - trackMin
@@ -149,19 +146,16 @@ function setDot(e: MouseEvent): void {
 
     const stepSize = trackRect.width / (range / step)
 
-    // 计算最近的刻度位置
     const nearestStep = Math.round(clickX / stepSize) * stepSize
 
-    // 更新值
     const newValue = calculateValue(nearestStep)
-    const clampedValue = Math.max(
-      getMin.value,
-      Math.min(getMax.value, newValue),
-    )
+    const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
 
     if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
+      // 立即更新视图状态
+      throttledUpdateView(clampedValue)
+      // 延迟更新数据绑定
       throttledUpdateModelValue(clampedValue)
-      setDotByValue(clampedValue)
     }
   }
   catch (error) {
@@ -169,7 +163,6 @@ function setDot(e: MouseEvent): void {
   }
 }
 
-// 根据当前值计算最近的刻度位置的百分比
 function calculateNearestStep(value: number): number {
   const trackMax = getTrackMax.value
   const trackMin = getTrackMin.value
@@ -188,14 +181,13 @@ function setDotByClick(value: number): void {
     return
 
   const safeValue = safeNumber(value, getMin.value)
-  const clampedValue = Math.max(
-    getMin.value,
-    Math.min(getMax.value, safeValue),
-  )
+  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, safeValue))
 
   if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
+    // 立即更新视图状态
+    throttledUpdateView(clampedValue)
+    // 延迟更新数据绑定
     throttledUpdateModelValue(clampedValue)
-    setDotByValue(clampedValue)
   }
 }
 
@@ -205,10 +197,7 @@ function setDotByValue(value: number): void {
 
   try {
     const safeValue = safeNumber(value, getMin.value)
-    const clampedValue = Math.max(
-      getMin.value,
-      Math.min(getMax.value, safeValue),
-    )
+    const clampedValue = Math.max(getMin.value, Math.min(getMax.value, safeValue))
     const nearestStep = calculateNearestStep(clampedValue)
     const clampedStep = Math.max(0, Math.min(100, nearestStep))
 
@@ -240,12 +229,11 @@ function init(): void {
         callback: (e: any) => {
           try {
             const newValue = calculateValue(e.x)
-            const clampedValue = Math.max(
-              getMin.value,
-              Math.min(getMax.value, newValue),
-            )
+            const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
+            // 立即更新视图状态
+            throttledUpdateView(clampedValue)
+            // 延迟更新数据绑定
             throttledUpdateModelValue(clampedValue)
-            setDotByValue(clampedValue)
           }
           catch (error) {
             console.warn('[LewSlider] drag callback error:', error)
@@ -255,6 +243,7 @@ function init(): void {
     }
 
     const currentValue = modelValue.value || getMin.value
+    internalViewValue.value = currentValue
     setDotByValue(currentValue)
   }
   catch (error) {
@@ -262,7 +251,6 @@ function init(): void {
   }
 }
 
-// 监听 props 的变化，重新初始化
 watch(
   [
     () => props.max,
@@ -289,6 +277,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     _dragmove()
+    throttledUpdateView.cancel()
     throttledUpdateModelValue.cancel()
   }
   catch (error) {
@@ -296,11 +285,11 @@ onUnmounted(() => {
   }
 })
 
-// 监听 modelValue 的变化，实时更新 dot 的位置
 watch(
   modelValue,
   (newValue) => {
     const safeValue = safeNumber(newValue, getMin.value)
+    internalViewValue.value = safeValue
     setDotByValue(safeValue)
   },
   { immediate: true },
@@ -354,11 +343,9 @@ const getStyle = computed(() => {
   }
 })
 
-// 安全的格式化工具提示函数
 function safeFormatTooltip(value: number): string {
   try {
-    const formatFn = safeFunction(props.formatTooltip, (val: number) =>
-      val.toString())
+    const formatFn = safeFunction(props.formatTooltip, (val: number) => val.toString())
     return formatFn(value)
   }
   catch (error) {
@@ -367,7 +354,6 @@ function safeFormatTooltip(value: number): string {
   }
 }
 
-// 检查选项是否有效
 function isValidOption(option: any): boolean {
   return (
     option
@@ -379,7 +365,6 @@ function isValidOption(option: any): boolean {
   )
 }
 
-// 获取有效的选项
 const validOptions = computed(() => {
   const options = safeArray(props.options)
   return options.filter(isValidOption) as Array<{
@@ -388,7 +373,6 @@ const validOptions = computed(() => {
   }>
 })
 
-// 计算禁用区域的样式
 const disabledAreaStyles = computed(() => {
   const leftWidth = getMarkPosition(getMin.value)
   const rightWidth = 100 - getMarkPosition(getMax.value)
@@ -403,7 +387,6 @@ const disabledAreaStyles = computed(() => {
   }
 })
 
-// 计算轨道范围的样式
 const trackRangeStyles = computed(() => {
   const trackMax = getTrackMax.value
   const trackMin = getTrackMin.value
@@ -416,10 +399,7 @@ const trackRangeStyles = computed(() => {
     }
   }
 
-  const width = Math.max(
-    0,
-    Math.min(100, ((getMax.value - getMin.value) / range) * 100),
-  )
+  const width = Math.max(0, Math.min(100, ((getMax.value - getMin.value) / range) * 100))
   const left = getMarkPosition(getMin.value)
 
   return {
@@ -428,9 +408,8 @@ const trackRangeStyles = computed(() => {
   }
 })
 
-// 计算选中轨道的样式
 const selectedTrackStyles = computed(() => {
-  const currentValue = modelValue.value || getMin.value
+  const currentValue = internalViewValue.value || getMin.value
   const width = getMarkPosition(currentValue)
 
   return {
@@ -438,20 +417,17 @@ const selectedTrackStyles = computed(() => {
   }
 })
 
-// 计算滑块点的样式
 const dotStyles = computed(() => {
-  const currentValue = modelValue.value
-  const opacity
-    = currentValue !== undefined && currentValue !== null ? '1' : '0'
+  const currentValue = internalViewValue.value
+  const opacity = currentValue !== undefined && currentValue !== null ? '1' : '0'
 
   return {
     opacity,
   }
 })
 
-// 计算工具提示的配置
 const tooltipConfig = computed(() => {
-  const currentValue = safeNumber(modelValue.value)
+  const currentValue = safeNumber(internalViewValue.value)
 
   return {
     content: safeFormatTooltip(currentValue),
@@ -462,11 +438,10 @@ const tooltipConfig = computed(() => {
   }
 })
 
-// 计算选项标记的样式和类名
 const optionMarkStyles = computed(() => {
   return validOptions.value.map((item) => {
     const value = safeNumber(item.value)
-    const currentValue = safeNumber(modelValue.value)
+    const currentValue = safeNumber(internalViewValue.value)
     const isSelected = value <= currentValue
 
     return {
@@ -481,7 +456,6 @@ const optionMarkStyles = computed(() => {
   })
 })
 
-// 计算选项标签的样式和类名
 const optionLabelStyles = computed(() => {
   return validOptions.value.map((item) => {
     const value = safeNumber(item.value)
@@ -527,10 +501,7 @@ const optionLabelStyles = computed(() => {
 
       <div class="lew-slider-track-line">
         <div class="lew-slider-track-line-range" :style="trackRangeStyles" />
-        <div
-          class="lew-slider-track-line-selected"
-          :style="selectedTrackStyles"
-        />
+        <div class="lew-slider-track-line-selected" :style="selectedTrackStyles" />
 
         <div
           v-for="markStyle in optionMarkStyles"

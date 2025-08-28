@@ -126,7 +126,6 @@ function select(item: RetItemType) {
   dateValue.value = dayjs(`${item.year}-${item.month}-${item.showDate}`).format(
     'YYYY-MM-DD',
   )
-  console.log(dateValue.value)
   emit('change', dateValue.value)
 }
 
