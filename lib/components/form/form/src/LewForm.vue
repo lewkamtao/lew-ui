@@ -200,7 +200,5 @@ defineExpose({ getForm, setForm, resetError, validate })
   width: 100%;
   display: grid;
   flex-shrink: 0;
-  padding-bottom: 30px;
-  // 移除固定的grid-template-columns样式类，改为动态样式
 }
 </style>
