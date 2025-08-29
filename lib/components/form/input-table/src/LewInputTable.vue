@@ -33,9 +33,12 @@ if (app && !app.directive('tooltip')) {
 const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
 function setUseId() {
+  if (!props.autoUniqueId) {
+    return
+  }
   (modelValue.value || []).forEach((e: any) => {
-    if (!e.id) {
-      e.id = getUniqueId()
+    if (!e[props.rowKey]) {
+      e[props.rowKey] = getUniqueId()
     }
   })
 }
@@ -51,19 +54,20 @@ watch(
 
 // 缓存列配置，避免重复计算
 const inputTableColumns: ComputedRef<LewInputTableColumn[]> = computed(() => {
-  const actionColumn
-    = props.deletable || props.addable
-      ? [
-          {
-            title: '操作',
-            width: 90,
-            field: 'action',
-            x: 'center',
-            fixed: 'right',
-            as: 'action',
-          },
-        ]
-      : []
+  // 如果有数据，就应该显示操作列（用于编辑和删除）
+  const hasData = (modelValue.value || []).length > 0
+  const actionColumn = hasData
+    ? [
+        {
+          title: '操作',
+          width: 90,
+          field: 'action',
+          x: 'center',
+          fixed: 'right',
+          as: 'action',
+        },
+      ]
+    : []
 
   return [...props.columns, ...actionColumn]
 })
@@ -121,7 +125,7 @@ const formModalRef = ref()
 
 // 修复排序后编辑问题：使用rowKey而不是index来标识行
 function edit({ row }: { row: any, index: number }) {
-  formModalRef.value.open({ row })
+  formModalRef.value.open({ row, isEditing: true })
 }
 
 function del({ row }: { row: any, index: number }) {
@@ -157,16 +161,23 @@ function add() {
     return
   }
 
-  formModalRef.value.open({})
+  formModalRef.value.open({ row: props.defaultForm, isEditing: false })
 }
 
 function addSuccess({ row }: { row: any }) {
   let _value = [...modelValue.value]
+  const newRow = { ...row }
+
+  // 在autoUniqueId开启时，确保新行有唯一的rowKey
+  if (props.autoUniqueId && !newRow[props.rowKey]) {
+    newRow[props.rowKey] = getUniqueId()
+  }
+
   if (!Array.isArray(modelValue.value)) {
-    _value = [row]
+    _value = [newRow]
   }
   else {
-    _value.push(row)
+    _value.push(newRow)
   }
   modelValue.value = _value
   emit('change', _value)
@@ -175,9 +186,17 @@ function addSuccess({ row }: { row: any }) {
 // 修复编辑成功逻辑：通过rowKey找到正确的行进行更新
 function editSuccess({ row }: { row: any }) {
   const rowId = row[props.rowKey]
-  const actualIndex = modelValue.value.findIndex(item => item[props.rowKey] === rowId)
+  const actualIndex = modelValue.value.findIndex(
+    item => item[props.rowKey] === rowId,
+  )
   if (actualIndex !== -1) {
-    modelValue.value.splice(actualIndex, 1, row)
+    // 确保在autoUniqueId开启时保持原有的rowKey
+    const updatedRow = { ...row }
+    if (props.autoUniqueId && !updatedRow[props.rowKey]) {
+      updatedRow[props.rowKey] = rowId
+    }
+    modelValue.value.splice(actualIndex, 1, updatedRow)
+    emit('change', modelValue.value)
   }
 }
 
@@ -195,18 +214,21 @@ function dragSort(sortedDataSource: any[]) {
   modelValue.value = cleanedData
 }
 
-function checkUniqueFieldFn(form: any) {
+function checkUniqueFieldFn(form: any, isEditing = false, originalRowId = '') {
   if (!props.uniqueField) {
     return true
   }
 
   const fieldValue = form[props.uniqueField]
-  const currentRowId = form[props.rowKey]
 
-  // 编辑时需要排除当前行
+  // 编辑时需要排除当前行，使用传入的originalRowId
+  const currentRowId = isEditing ? originalRowId : form[props.rowKey]
+
+  // 检查是否有重复
   const isDuplicate = modelValue.value.some(
     item =>
-      item[props.uniqueField] === fieldValue && item[props.rowKey] !== currentRowId,
+      item[props.uniqueField] === fieldValue
+      && item[props.rowKey] !== currentRowId,
   )
 
   if (isDuplicate) {
@@ -220,7 +242,9 @@ function checkUniqueFieldFn(form: any) {
   return true
 }
 
-const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props.maxRows)
+const isMaxRowsReached = computed(
+  () => (modelValue.value || []).length >= props.maxRows,
+)
 </script>
 
 <template>
@@ -263,9 +287,12 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
         </LewFlex>
       </template>
       <template #action="{ row, index }">
-        <LewFlex gap="5px" x="center">
+        <LewFlex
+          gap="5px"
+          x="center"
+          :style="{ height: any2px(styleConfig.iconSize) }"
+        >
           <LewButton
-            v-if="addable"
             type="text"
             color="gray"
             :style="styleConfig.iconStyle"
@@ -295,6 +322,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
       ref="formModalRef"
       :options="formOptions"
       :size="size"
+      :row-key="rowKey"
       :check-unique-field-fn="checkUniqueFieldFn"
       :ok-text="locale.t('inputTable.save')"
       @add-success="addSuccess"

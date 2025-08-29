@@ -13,11 +13,17 @@ const form = ref({})
 const isEditing = ref(false)
 const originalRowId = ref('')
 
-function open({ row = {} }: { row: any }) {
+function open({
+  row = {},
+  isEditing: isEditingParam,
+}: {
+  row: any
+  isEditing?: boolean
+}) {
   visible.value = true
-  // 通过是否有id来判断是编辑还是新增
-  isEditing.value = !!row.id
-  originalRowId.value = row.id || ''
+  // 通过传入的isEditing参数来判断是编辑还是新增
+  isEditing.value = isEditingParam || false
+  originalRowId.value = row[props.rowKey] || ''
   form.value = cloneDeep(row)
 }
 
@@ -25,19 +31,27 @@ function ok() {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
       const formData = formRef.value.getForm()
+      // 无论是编辑还是新增，都需要检查唯一性
+      if (
+        !props.checkUniqueFieldFn(
+          formData,
+          isEditing.value,
+          originalRowId.value,
+        )
+      ) {
+        return
+      }
+
       if (isEditing.value) {
-        // 编辑模式：保持原有的id
+        // 编辑模式：保持原有的rowKey
         emit('editSuccess', {
-          row: { ...formData, id: originalRowId.value },
+          row: { ...formData, [props.rowKey]: originalRowId.value },
         })
       }
       else {
-        // 新增模式：检查唯一性
-        if (!props.checkUniqueFieldFn(formData)) {
-          return
-        }
+        // 新增模式：不设置id，让setUseId函数自动生成
         emit('addSuccess', {
-          row: { ...formData, id: originalRowId.value },
+          row: formData,
         })
       }
       visible.value = false
@@ -69,7 +83,9 @@ defineExpose({ open })
     } as any
     "
     :title="`${
-      isEditing ? locale.t('inputTable.editTitle') : locale.t('inputTable.modelTitle')
+      isEditing
+        ? locale.t('inputTable.editTitle')
+        : locale.t('inputTable.modelTitle')
     }`"
   >
     <div class="lew-form-modal lew-scrollbar">

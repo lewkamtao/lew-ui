@@ -182,6 +182,7 @@ const columns = [
     width: 120,
     field: 'price',
     x: 'center',
+    fixed: 'right',
   },
 ]
 
@@ -194,6 +195,7 @@ function getSortTooltipComponent(row: any) {
   <lew-table
     :data-source="dataSource"
     :sortable="true"
+    width="500px"
     :columns="columns"
     :sort-tooltip-custom-render="getSortTooltipComponent"
   >

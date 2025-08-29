@@ -162,8 +162,13 @@ export const formModalProps = {
       values: validSizeList,
     }),
   },
+  rowKey: {
+    type: String,
+    default: 'id',
+    description: '行数据的唯一标识字段名',
+  },
   checkUniqueFieldFn: {
-    type: Function as PropType<(formData: Record<string, any>) => boolean>,
+    type: Function as PropType<(formData: Record<string, any>, isEditing?: boolean, originalRowId?: string) => boolean>,
     default: () => true,
   },
 }
