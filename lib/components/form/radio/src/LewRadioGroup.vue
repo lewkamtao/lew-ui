@@ -29,6 +29,7 @@ const getRadioGroupClassName = computed(() => {
   <LewFlex
     x="start"
     gap="10"
+    wrap
     class="lew-radio-group"
     :direction
     :class="getRadioGroupClassName"
