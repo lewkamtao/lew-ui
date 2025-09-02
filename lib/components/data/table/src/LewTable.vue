@@ -211,65 +211,41 @@ const fixedWidths = computed(() => {
   }
 })
 
-const styleCache = new Map<string, string>()
-
 const getColumnStyle = computed(() => {
   const sizeStyle = `padding: ${getPadding.value}; fontSize:${getFontSize.value}px;`
+
   return (column: any, row?: any) => {
     const width = column.width
     const customStyle = row && row.tdStyle?.[column.field]
-    const cacheKey = `${column.field}_${width}_${state.isScrollbarVisible}_${column.fixed}_${state.scrollClientWidth}_${totalColumnWidth.value}_${fixedWidths.value.left}_${fixedWidths.value.right}_${props.size}`
-    if (styleCache.has(cacheKey)) {
-      const cachedStyle = styleCache.get(cacheKey)
-      return customStyle ? `${cachedStyle};${customStyle}` : cachedStyle
-    }
-    let computedStyle: string
+
     if (state.isScrollbarVisible || column.fixed) {
-      computedStyle = `${sizeStyle};width: ${width}px`
+      return `${sizeStyle};width: ${width}px;${customStyle}`
     }
-    else {
-      const tdWidth
-        = (width
-          / (totalColumnWidth.value
-            - fixedWidths.value.left
-            - fixedWidths.value.right))
-          * (state.scrollClientWidth
-            - fixedWidths.value.left
-            - fixedWidths.value.right)
-      computedStyle = `${sizeStyle};width: ${tdWidth}px`
-    }
-    styleCache.set(cacheKey, computedStyle)
-    return customStyle ? `${computedStyle};${customStyle}` : computedStyle
+
+    const tdWidth
+      = (width
+        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
+      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
+    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
   }
 })
 
 const getHeaderColumnStyle = computed(() => {
   const sizeStyle = `fontSize:${getFontSize.value}px;`
+
   return (column: any, row?: any) => {
     const width = column.width
     const customStyle = row && row.tdStyle?.[column.field]
-    const cacheKey = `header_${column.field}_${width}_${state.isScrollbarVisible}_${column.fixed}_${state.scrollClientWidth}_${totalColumnWidth.value}_${fixedWidths.value.left}_${fixedWidths.value.right}_${props.size}`
-    if (styleCache.has(cacheKey)) {
-      const cachedStyle = styleCache.get(cacheKey)
-      return customStyle ? `${cachedStyle};${customStyle}` : cachedStyle
-    }
-    let computedStyle: string
+
     if (state.isScrollbarVisible || column.fixed) {
-      computedStyle = `${sizeStyle};width: ${width}px`
+      return `${sizeStyle};width: ${width}px;${customStyle}`
     }
-    else {
-      const tdWidth
-        = (width
-          / (totalColumnWidth.value
-            - fixedWidths.value.left
-            - fixedWidths.value.right))
-          * (state.scrollClientWidth
-            - fixedWidths.value.left
-            - fixedWidths.value.right)
-      computedStyle = `${sizeStyle};width: ${tdWidth}px`
-    }
-    styleCache.set(cacheKey, computedStyle)
-    return customStyle ? `${computedStyle};${customStyle}` : computedStyle
+
+    const tdWidth
+      = (width
+        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
+      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
+    return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
   }
 })
 
@@ -282,6 +258,7 @@ const columnLevel = computed(() => {
   const findMaxDepth = (columns: any[], currentDepth = 1): number => {
     if (!columns || columns.length === 0)
       return currentDepth
+
     let maxDepth = currentDepth
     for (const col of columns) {
       if (col.children && col.children.length > 0) {
@@ -295,9 +272,7 @@ const columnLevel = computed(() => {
 })
 
 const getFixedHeaderColumns = computed(() => (direction: string) => {
-  return (
-    headerColumns.value[direction as keyof typeof headerColumns.value] || []
-  )
+  return headerColumns.value[direction as keyof typeof headerColumns.value] || []
 })
 
 const getFixedColumns = computed(() => (direction: string) => {
@@ -326,9 +301,7 @@ const getTableClass = computed(() => {
     'lew-table-scroll': state.isScroll,
     'lew-table-dragging': state.isDragging,
     'lew-table-has-fixed-left':
-      getFixedColumns.value('left').length > 0
-      || props.checkable
-      || props.sortable,
+      getFixedColumns.value('left').length > 0 || props.checkable || props.sortable,
     'lew-table-has-fixed-right': getFixedColumns.value('right').length > 0,
   }
 })
@@ -340,6 +313,7 @@ function calculateColumnWidth(column: any): number {
   if (columnWidthCache.has(cacheKey)) {
     return columnWidthCache.get(cacheKey)
   }
+
   let width
   if (column.children && column.children.length > 0) {
     width = column.children.reduce((sum: number, child: any) => {
@@ -349,6 +323,7 @@ function calculateColumnWidth(column: any): number {
   else {
     width = column.width || 100
   }
+
   columnWidthCache.set(cacheKey, width)
   return width
 }
@@ -378,7 +353,8 @@ function getLeafColumns(columns: any[]) {
 }
 
 function getCachedRenderResult(column: any, row: any) {
-  const cacheKey = `${column.field}_${row._lew_table_tr_id}_${props.size}`
+  const cacheKey = `${column.field}_${row._lew_table_tr_id}`
+
   if (!renderCache.has(cacheKey)) {
     const renderResult = column.customRender({
       row,
@@ -387,13 +363,12 @@ function getCachedRenderResult(column: any, row: any) {
     })
     renderCache.set(cacheKey, markRaw(renderResult))
   }
+
   return renderCache.get(cacheKey)
 }
 
 function clearRenderCache() {
   renderCache.clear()
-  styleCache.clear()
-  columnWidthCache.clear()
 }
 
 function updateAllCheckedState() {
@@ -401,17 +376,11 @@ function updateAllCheckedState() {
   const allDataKeys = state.dataSource.map((row: any) => String(row[_rowKey]))
   const uncheckedKeys = difference(allDataKeys, checkedKeys)
   state.isAllChecked
-    = isEmpty(uncheckedKeys)
-      && props.multiple
-      && props.checkable
-      && checkedKeys.length > 0
+    = isEmpty(uncheckedKeys) && props.multiple && props.checkable && checkedKeys.length > 0
 }
 
 function setAllRowsChecked(checked: boolean) {
-  state.selectedRowsMap = mapValues(
-    keyBy(state.dataSource, _rowKey),
-    () => checked,
-  )
+  state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => checked)
   if (props.multiple) {
     selectedKeys.value = checked ? keys(state.selectedRowsMap) : []
   }
@@ -433,10 +402,7 @@ function toggleRowSelection(row: any) {
 
 function updateSelectedKeys(keys: any) {
   if (props.multiple) {
-    state.selectedRowsMap = mapValues(
-      keyBy(state.dataSource, _rowKey),
-      () => false,
-    )
+    state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => false)
     keys.forEach((key: string) => {
       state.selectedRowsMap[key] = true
     })
@@ -460,6 +426,7 @@ function readerHeaderTd({ column }: any) {
   if (column.sortable) {
     tdClass.push('lew-table-td-sortable')
   }
+
   const xMap: Record<string, string> = {
     start: 'start',
     left: 'start',
@@ -467,6 +434,7 @@ function readerHeaderTd({ column }: any) {
     right: 'end',
     end: 'end',
   }
+
   const tdStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -474,6 +442,7 @@ function readerHeaderTd({ column }: any) {
     justifyContent: 'center',
     alignItems: xMap[column.x] || 'start',
   }
+
   const titleSpanStyle = {
     padding: getPadding.value,
     display: 'flex',
@@ -483,9 +452,11 @@ function readerHeaderTd({ column }: any) {
     height: '100%',
     boxSizing: 'border-box',
   }
+
   const tdGroupStyle = {
     display: 'flex',
   }
+
   return h(
     'div',
     {
@@ -535,9 +506,7 @@ function readerHeaderTd({ column }: any) {
               },
               {
                 default: () =>
-                  column.children.map((child: any) =>
-                    readerHeaderTd({ column: child }),
-                  ),
+                  column.children.map((child: any) => readerHeaderTd({ column: child })),
               },
             )
           : null,
@@ -549,6 +518,7 @@ function readerHeaderTd({ column }: any) {
 function sort(column: any) {
   if (column.sortable) {
     let value = sortValue.value?.[column.field]
+
     switch (value) {
       case 'desc':
         value = 'asc'
@@ -560,10 +530,12 @@ function sort(column: any) {
         value = 'desc'
         break
     }
+
     sortValue.value = {
       ...(sortValue.value || {}),
       [column.field]: value,
     }
+
     emit('sortChange', cloneDeep(sortValue.value))
   }
 }
@@ -573,6 +545,7 @@ function updateScrollState() {
     return
   const element = tableRef.value
   const { clientWidth, scrollWidth, scrollLeft } = element
+
   if (scrollWidth === clientWidth) {
     state.hiddenScrollLine = 'all'
     return
@@ -585,6 +558,7 @@ function updateScrollState() {
     state.hiddenScrollLine = 'right'
     return
   }
+
   state.hiddenScrollLine = ''
 }
 
@@ -592,65 +566,60 @@ function computeTableRowHeight() {
   nextTick(() => {
     const newTrHeightMap: Record<string, number | undefined> = {}
     const newTrPositionsMap: Record<string, any> = {}
+
     const allRowIds = state.dataSource.map(row => row._lew_table_tr_id)
-    requestAnimationFrame(() => {
-      const elementRects = new Map<
-        string,
-        {
-          main?: DOMRect
-          left?: DOMRect
-          right?: DOMRect
-        }
-      >()
-      allRowIds.forEach((rowId) => {
-        const rects: any = {}
-        const mainElement = trRefMap.value[rowId]
-        if (mainElement) {
-          rects.main = mainElement.getBoundingClientRect()
-        }
-        const leftElement = fixedLeftTrRefMap.value[rowId]
-        if (leftElement) {
-          rects.left = leftElement.getBoundingClientRect()
-        }
-        const rightElement = fixedRightTrRefMap.value[rowId]
-        if (rightElement) {
-          rects.right = rightElement.getBoundingClientRect()
-        }
-        elementRects.set(rowId, rects)
-      })
-      allRowIds.forEach((rowId) => {
-        const rects = elementRects.get(rowId)
-        if (!rects)
-          return
-        let maxHeight = 0
-        let referenceRect: DOMRect | null = null
-        if (rects.main) {
-          maxHeight = Math.max(maxHeight, rects.main.height)
-          referenceRect = rects.main
-        }
-        if (rects.left) {
-          maxHeight = Math.max(maxHeight, rects.left.height)
-          referenceRect = referenceRect || rects.left
-        }
-        if (rects.right) {
-          maxHeight = Math.max(maxHeight, rects.right.height)
-          referenceRect = referenceRect || rects.right
-        }
-        if (maxHeight > 0) {
-          newTrHeightMap[rowId] = maxHeight
-          if (referenceRect) {
-            newTrPositionsMap[rowId] = {
-              top: referenceRect.top,
-              bottom: referenceRect.bottom,
-              height: maxHeight,
-              middle: referenceRect.top + maxHeight / 2,
-            }
+
+    allRowIds.forEach((rowId) => {
+      let maxHeight = 0
+      let mainHeight = 0
+      let leftHeight = 0
+      let rightHeight = 0
+
+      const mainElement = trRefMap.value[rowId]
+      if (mainElement) {
+        // 强制重新计算样式
+        mainElement.style.height = 'auto'
+        const mainRect = mainElement.getBoundingClientRect()
+        mainHeight = mainRect.height
+        maxHeight = Math.max(maxHeight, mainHeight)
+      }
+
+      const leftElement = fixedLeftTrRefMap.value[rowId]
+      if (leftElement) {
+        // 强制重新计算样式
+        leftElement.style.height = 'auto'
+        const leftRect = leftElement.getBoundingClientRect()
+        leftHeight = leftRect.height
+        maxHeight = Math.max(maxHeight, leftHeight)
+      }
+
+      const rightElement = fixedRightTrRefMap.value[rowId]
+      if (rightElement) {
+        // 强制重新计算样式
+        rightElement.style.height = 'auto'
+        const rightRect = rightElement.getBoundingClientRect()
+        rightHeight = rightRect.height
+        maxHeight = Math.max(maxHeight, rightHeight)
+      }
+
+      if (maxHeight > 0) {
+        newTrHeightMap[rowId] = maxHeight
+
+        const referenceElement = mainElement || leftElement || rightElement
+        if (referenceElement) {
+          const rect = referenceElement.getBoundingClientRect()
+          newTrPositionsMap[rowId] = {
+            top: rect.top,
+            bottom: rect.bottom,
+            height: maxHeight,
+            middle: rect.top + maxHeight / 2,
           }
         }
-      })
-      state.trHeightMap = newTrHeightMap
-      state.trPositionsMap = newTrPositionsMap
+      }
     })
+
+    state.trHeightMap = newTrHeightMap
+    state.trPositionsMap = newTrPositionsMap
   })
 }
 
@@ -658,43 +627,46 @@ const handleTableResize = throttle(() => {
   const table = tableRef.value
   if (!table)
     return
-  requestAnimationFrame(() => {
-    const newScrollClientWidth = table.clientWidth
-    const newIsScroll = table.scrollWidth > table.clientWidth + 5
-    if (state.scrollClientWidth !== newScrollClientWidth) {
-      state.scrollClientWidth = newScrollClientWidth
-      styleCache.clear()
+
+  const newScrollClientWidth = table.clientWidth
+  const newIsScroll = table.scrollWidth > table.clientWidth + 5
+
+  if (state.scrollClientWidth !== newScrollClientWidth) {
+    state.scrollClientWidth = newScrollClientWidth
+  }
+  if (state.isScroll !== newIsScroll) {
+    state.isScroll = newIsScroll
+  }
+
+  if (fixedLeftRef.value) {
+    const newLeftWidth = fixedLeftRef.value.clientWidth || 0
+    if (state.fixedLeftWidth !== newLeftWidth) {
+      state.fixedLeftWidth = newLeftWidth
     }
-    if (state.isScroll !== newIsScroll) {
-      state.isScroll = newIsScroll
+  }
+  if (fixedRightRef.value) {
+    const newRightWidth = fixedRightRef.value.clientWidth || 0
+    if (state.fixedRightWidth !== newRightWidth) {
+      state.fixedRightWidth = newRightWidth
     }
-    if (fixedLeftRef.value) {
-      const newLeftWidth = fixedLeftRef.value.clientWidth || 0
-      if (state.fixedLeftWidth !== newLeftWidth) {
-        state.fixedLeftWidth = newLeftWidth
-      }
-    }
-    if (fixedRightRef.value) {
-      const newRightWidth = fixedRightRef.value.clientWidth || 0
-      if (state.fixedRightWidth !== newRightWidth) {
-        state.fixedRightWidth = newRightWidth
-      }
-    }
-    const totalWidth = totalColumnWidth.value
-    const newIsScrollbarVisible = totalWidth > state.scrollClientWidth
-    if (state.isScrollbarVisible !== newIsScrollbarVisible) {
-      state.isScrollbarVisible = newIsScrollbarVisible
-    }
-    state.isInitialized = true
-    computeTableRowHeight()
-    updateScrollState()
-  })
+  }
+
+  const totalWidth = totalColumnWidth.value
+  const newIsScrollbarVisible = totalWidth > state.scrollClientWidth
+  if (state.isScrollbarVisible !== newIsScrollbarVisible) {
+    state.isScrollbarVisible = newIsScrollbarVisible
+  }
+
+  state.isInitialized = true
+  computeTableRowHeight()
+  updateScrollState()
 }, THROTTLE_DELAY)
 
 function init() {
   nextTick(() => {
     updateScrollState()
     handleTableResize()
+
     if (props.checkable) {
       updateSelectedKeys(selectedKeys.value)
     }
@@ -715,10 +687,7 @@ function initDragState() {
   state.isDragging = false
 }
 
-const throttledTooltipUpdate = throttle(
-  updateTooltipPosition,
-  TOOLTIP_THROTTLE_DELAY,
-)
+const throttledTooltipUpdate = throttle(updateTooltipPosition, TOOLTIP_THROTTLE_DELAY)
 
 function dragStart(event: DragEvent, row: any, index: number) {
   if (!props.sortable)
@@ -729,17 +698,23 @@ function dragStart(event: DragEvent, row: any, index: number) {
   state.dragRowId = row._lew_table_tr_id
   state.isDragging = true
   document.body.style.cursor = 'grabbing'
+
   state.initialDragY = event.clientY
   state.lastMouseY = event.clientY
+
   if (event.dataTransfer) {
     event.dataTransfer.effectAllowed = 'move'
+
     const canvas = document.createElement('canvas')
     event.dataTransfer.setDragImage(canvas, 0, 0)
   }
+
   document.body.style.userSelect = 'none'
   document.body.style.webkitUserSelect = 'none'
+
   state.showTooltip = true
   state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`
+
   const tooltipCacheKey = `tooltip_${row._lew_table_tr_id}`
   if (!renderCache.has(tooltipCacheKey)) {
     const tooltipComponent = props.sortTooltipCustomRender
@@ -756,6 +731,7 @@ function updateTooltipPosition(event: MouseEvent) {
   if (tooltipAnimationFrame) {
     cancelAnimationFrame(tooltipAnimationFrame)
   }
+
   tooltipAnimationFrame = requestAnimationFrame(() => {
     state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`
     updateDragTarget(event.clientY)
@@ -778,13 +754,13 @@ function dragEnd() {
       row => row._lew_table_tr_id === state.targetRowId,
     )
     if (dragIndex !== -1 && targetIndex !== -1 && dragIndex !== targetIndex) {
-      const targetPosition = state.isAboveTarget
-        ? targetIndex
-        : targetIndex + 1
+      const targetPosition = state.isAboveTarget ? targetIndex : targetIndex + 1
+
       let actualTargetPosition = targetPosition
       if (dragIndex < targetPosition) {
         actualTargetPosition--
       }
+
       if (actualTargetPosition !== dragIndex) {
         const newDataSource = [...state.dataSource]
         const [movedItem] = newDataSource.splice(dragIndex, 1)
@@ -794,12 +770,15 @@ function dragEnd() {
       }
     }
   }
+
   if (tooltipAnimationFrame) {
     cancelAnimationFrame(tooltipAnimationFrame)
     tooltipAnimationFrame = null
   }
+
   document.body.style.userSelect = ''
   document.body.style.webkitUserSelect = ''
+
   state.dragIndex = -1
   state.targetIndex = -1
   state.dragRowId = ''
@@ -810,8 +789,10 @@ function dragEnd() {
   setTimeout(() => {
     state.isDragging = false
   }, DRAG_END_DELAY)
+
   document.removeEventListener('mousemove', throttledTooltipUpdate)
   document.removeEventListener('mouseup', dragEnd)
+
   setTimeout(() => {
     computeTableRowHeight()
   }, DRAG_END_DELAY)
@@ -819,46 +800,49 @@ function dragEnd() {
 
 function updateDragTarget(mouseY: number) {
   state.lastMouseY = mouseY
+
   if (!state.dragRowId || Object.keys(state.trPositionsMap).length === 0)
     return
+
   const dragDistance = Math.abs(state.initialDragY - mouseY)
   const minDragDistance = 5
+
   if (dragDistance < minDragDistance) {
     return
   }
+
   let targetRowId = ''
   let isAbove = false
-  const positionEntries = Object.entries(state.trPositionsMap).map(
-    ([id, pos]) => ({
-      id,
-      ...pos,
-    }),
-  )
+  const positionEntries = Object.entries(state.trPositionsMap).map(([id, pos]) => ({
+    id,
+    ...pos,
+  }))
+
   positionEntries.sort((a, b) => a.top - b.top)
+
   for (const entry of positionEntries) {
     if (entry.id === state.dragRowId)
       continue
+
     const position = entry
+
     if (mouseY >= position.top && mouseY <= position.bottom) {
       targetRowId = position.id
+
       isAbove = mouseY < position.top + position.height / 2
       break
     }
   }
+
   if (!targetRowId) {
     for (let i = 0; i < positionEntries.length - 1; i++) {
       if (positionEntries[i].id === state.dragRowId)
         continue
       if (positionEntries[i + 1].id === state.dragRowId)
         continue
-      if (
-        mouseY > positionEntries[i].bottom
-        && mouseY < positionEntries[i + 1].top
-      ) {
-        if (
-          mouseY - positionEntries[i].bottom
-          < positionEntries[i + 1].top - mouseY
-        ) {
+
+      if (mouseY > positionEntries[i].bottom && mouseY < positionEntries[i + 1].top) {
+        if (mouseY - positionEntries[i].bottom < positionEntries[i + 1].top - mouseY) {
           targetRowId = positionEntries[i].id
           isAbove = false
         }
@@ -866,6 +850,7 @@ function updateDragTarget(mouseY: number) {
       }
     }
   }
+
   if (!targetRowId && positionEntries.length > 0) {
     if (mouseY < positionEntries[0].top) {
       targetRowId = positionEntries[0].id
@@ -876,6 +861,7 @@ function updateDragTarget(mouseY: number) {
       isAbove = false
     }
   }
+
   if (targetRowId) {
     state.targetRowId = targetRowId
     state.targetIndex = state.dataSource.findIndex(
@@ -886,11 +872,7 @@ function updateDragTarget(mouseY: number) {
 }
 
 function getIndicatorStyle() {
-  if (
-    !state.isDragging
-    || !state.targetRowId
-    || state.dragRowId === state.targetRowId
-  ) {
+  if (!state.isDragging || !state.targetRowId || state.dragRowId === state.targetRowId) {
     return `
       display: none;
       transform: translateY(0);
@@ -922,8 +904,18 @@ function getRowHeight(row: any) {
   if (!row || !row._lew_table_tr_id)
     return 'auto'
   const height = state.trHeightMap[row._lew_table_tr_id]
-  const result = height ? `${height}px` : 'auto'
-  return result
+
+  // 如果没有缓存的高度，使用基于 size 的最小高度
+  if (!height) {
+    const minHeightMap = {
+      small: 32,
+      medium: 36,
+      large: 42,
+    }
+    return `${minHeightMap[props.size]}px`
+  }
+
+  return `${height}px`
 }
 
 function setTrRef(el: HTMLElement | null, row: any) {
@@ -944,29 +936,13 @@ function setFixedRightTrRef(el: HTMLElement | null, row: any) {
   }
 }
 
-const handleScroll = throttle((_event: Event) => {
-  updateScrollState()
-}, 16)
-
 onMounted(() => {
   init()
+
   useResizeObserver(tableRef, () => {
     state.isInitialized = false
     handleTableResize()
   })
-  if (tableRef.value) {
-    tableRef.value.addEventListener('scroll', handleScroll, { passive: true })
-  }
-})
-
-onUnmounted(() => {
-  if (tooltipAnimationFrame) {
-    cancelAnimationFrame(tooltipAnimationFrame)
-    tooltipAnimationFrame = null
-  }
-  if (tableRef.value) {
-    tableRef.value.removeEventListener('scroll', handleScroll)
-  }
 })
 
 onUnmounted(() => {
@@ -980,6 +956,10 @@ watch(
   () => props.dataSource,
   (newVal) => {
     clearRenderCache()
+    // 清除高度缓存
+    state.trHeightMap = {}
+    state.trPositionsMap = {}
+
     const newDataSource = addUniqueIdToDataSource(cloneDeep(newVal))
     nextTick(() => {
       state.dataSource = newDataSource
@@ -1033,13 +1013,17 @@ watch(
 watch(
   () => props.size,
   () => {
-    clearRenderCache()
+    // 清除缓存的高度值，强制重新计算
     state.trHeightMap = {}
     state.trPositionsMap = {}
+
     nextTick(() => {
       updateScrollState()
       handleTableResize()
-      computeTableRowHeight()
+      // 延迟执行以确保 DOM 完全更新
+      setTimeout(() => {
+        computeTableRowHeight()
+      }, 50)
       if (props.checkable) {
         updateSelectedKeys(selectedKeys.value)
       }
@@ -1082,9 +1066,7 @@ watch(
         @mouseenter.stop="hoverRowIndex = -1"
       >
         <div
-          v-if="
-            getFixedHeaderColumns('left').length > 0 || checkable || sortable
-          "
+          v-if="getFixedHeaderColumns('left').length > 0 || checkable || sortable"
           ref="fixedLeftRef"
           class="lew-table-fixed-left"
         >
@@ -1117,11 +1099,7 @@ watch(
                 :certain="hasPartialSelection && !state.isAllChecked"
                 @change="setAllRowsChecked($event)"
               />
-              <CommonIcon
-                v-else
-                :size="getIconSize"
-                type="square-mouse-pointer"
-              />
+              <CommonIcon v-else :size="getIconSize" type="square-mouse-pointer" />
             </LewFlex>
             <readerHeaderTd
               v-for="(column, index) in getFixedHeaderColumns('left')"
@@ -1236,12 +1214,7 @@ watch(
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot
-                  :name="column.field"
-                  :row="row"
-                  :column="column"
-                  :index="i"
-                />
+                <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
                 <LewFlex
@@ -1252,9 +1225,7 @@ watch(
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent
-                    :render-fn="getCachedRenderResult(column, row)"
-                  />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1286,12 +1257,7 @@ watch(
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot
-                  :name="column.field"
-                  :row="row"
-                  :column="column"
-                  :index="i"
-                />
+                <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
                 <LewFlex
@@ -1302,9 +1268,7 @@ watch(
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent
-                    :render-fn="getCachedRenderResult(column, row)"
-                  />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1313,10 +1277,7 @@ watch(
             </LewFlex>
           </div>
         </div>
-        <div
-          v-if="getFixedColumns('right').length > 0"
-          class="lew-table-fixed-right"
-        >
+        <div v-if="getFixedColumns('right').length > 0" class="lew-table-fixed-right">
           <div
             v-for="(row, i) in state.dataSource"
             :key="row._lew_table_tr_id"
@@ -1338,12 +1299,7 @@ watch(
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot
-                  :name="column.field"
-                  :row="row"
-                  :column="column"
-                  :index="i"
-                />
+                <slot :name="column.field" :row="row" :column="column" :index="i" />
               </template>
               <template v-else>
                 <LewFlex
@@ -1354,9 +1310,7 @@ watch(
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent
-                    :render-fn="getCachedRenderResult(column, row)"
-                  />
+                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1435,6 +1389,7 @@ watch(
     opacity: 0;
   }
 
+  // 拖拽提示气泡
   .lew-table-drag-tooltip {
     position: fixed;
     z-index: 9999;
@@ -1579,6 +1534,7 @@ watch(
     cursor: pointer;
   }
 
+  // 拖拽相关样式
   .lew-table-drag-handle {
     position: relative;
     cursor: grab;
@@ -1733,6 +1689,7 @@ watch(
   height: 100%;
 }
 
+// 修改边框控制规则
 .lew-table {
   box-sizing: border-box;
 

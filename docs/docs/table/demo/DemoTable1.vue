@@ -109,20 +109,7 @@ const tableSizeOptions = [
     :options="tableSizeOptions"
   />
 
-  <lew-table :data-source="data" :columns="columns" :size="tableSize">
-    <template #rating="{ row }">
-      <lew-flex x="center" y="center">
-        <lew-badge v-if="row.rating >= 90" round color="green" />
-        <lew-badge v-else-if="row.rating >= 80" round color="blue" />
-        <lew-badge v-else round color="orange" />
-        <span>
-          {{
-            row.rating >= 90 ? 'Excellent' : row.rating >= 80 ? 'Good' : 'Fair'
-          }}
-        </span>
-      </lew-flex>
-    </template>
-  </lew-table>
+  <lew-table :data-source="data" :columns="columns" :size="tableSize" />
 </template>
 
 <style lang="scss" scoped>

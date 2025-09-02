@@ -90,10 +90,10 @@ const formOptions = computed(() => {
 const styleConfig = computed(() => {
   const { size } = props
 
-  const paddingMap = {
-    small: '8px',
-    medium: '10px',
-    large: '12px',
+  const heightMap = {
+    small: '34px',
+    medium: '38px',
+    large: '44px',
   }
 
   const fontSizeMap = {
@@ -110,7 +110,7 @@ const styleConfig = computed(() => {
 
   return {
     addButtonStyle: {
-      padding: paddingMap[size],
+      height: heightMap[size],
       fontSize: `${fontSizeMap[size]}px`,
     },
     iconStyle: {
@@ -186,9 +186,7 @@ function addSuccess({ row }: { row: any }) {
 // 修复编辑成功逻辑：通过rowKey找到正确的行进行更新
 function editSuccess({ row }: { row: any }) {
   const rowId = row[props.rowKey]
-  const actualIndex = modelValue.value.findIndex(
-    item => item[props.rowKey] === rowId,
-  )
+  const actualIndex = modelValue.value.findIndex(item => item[props.rowKey] === rowId)
   if (actualIndex !== -1) {
     // 确保在autoUniqueId开启时保持原有的rowKey
     const updatedRow = { ...row }
@@ -227,8 +225,7 @@ function checkUniqueFieldFn(form: any, isEditing = false, originalRowId = '') {
   // 检查是否有重复
   const isDuplicate = modelValue.value.some(
     item =>
-      item[props.uniqueField] === fieldValue
-      && item[props.rowKey] !== currentRowId,
+      item[props.uniqueField] === fieldValue && item[props.rowKey] !== currentRowId,
   )
 
   if (isDuplicate) {
@@ -242,9 +239,7 @@ function checkUniqueFieldFn(form: any, isEditing = false, originalRowId = '') {
   return true
 }
 
-const isMaxRowsReached = computed(
-  () => (modelValue.value || []).length >= props.maxRows,
-)
+const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props.maxRows)
 </script>
 
 <template>
@@ -287,11 +282,7 @@ const isMaxRowsReached = computed(
         </LewFlex>
       </template>
       <template #action="{ row, index }">
-        <LewFlex
-          gap="5px"
-          x="center"
-          :style="{ height: any2px(styleConfig.iconSize) }"
-        >
+        <LewFlex gap="5px" x="center" :style="{ height: any2px(styleConfig.iconSize) }">
           <LewButton
             type="text"
             color="gray"
@@ -339,12 +330,14 @@ const isMaxRowsReached = computed(
 }
 
 .add-btn {
-  padding: 10px 0px;
   width: 100%;
   cursor: pointer;
   transition: all var(--lew-form-transition-ease);
   background-color: var(--lew-table-header-bgcolor);
   border-top: var(--lew-table-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-btn:hover {
