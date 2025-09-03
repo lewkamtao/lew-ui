@@ -36,8 +36,8 @@ const statusOptions = ref([
   {
     label: 'Success',
     value: 'success',
-    onClick: () => {
-      status.value = 'Success'
+    onClick: (_: any, __: any, instance: any) => {
+      setStatus(_, instance)
     },
     icon: h(LewBadge, {
       color: 'green',
@@ -49,8 +49,8 @@ const statusOptions = ref([
   {
     label: 'Failed',
     value: 'failed',
-    onClick: () => {
-      status.value = 'Failed'
+    onClick: (_: any, __: any, instance: any) => {
+      setStatus(_, instance)
     },
     icon: h(LewBadge, {
       color: 'red',
@@ -62,8 +62,8 @@ const statusOptions = ref([
   {
     label: 'Pending',
     value: 'pending',
-    onClick: () => {
-      status.value = 'Pending'
+    onClick: (_: any, __: any, instance: any) => {
+      setStatus(_, instance)
     },
     icon: h(LewBadge, {
       color: 'yellow',
@@ -75,8 +75,8 @@ const statusOptions = ref([
   {
     label: 'Processing',
     value: 'processing',
-    onClick: () => {
-      status.value = 'Processing'
+    onClick: (_: any, __: any, instance: any) => {
+      setStatus(_, instance)
     },
     icon: h(LewBadge, {
       color: 'blue',
@@ -88,11 +88,16 @@ const statusOptions = ref([
   },
 ])
 
+function setStatus(item: any, instance: any) {
+  instance?.hide()
+  status.value = item.value
+}
+
 const colorMap: Record<string, string> = {
-  Success: 'green',
-  Failed: 'red',
-  Pending: 'yellow',
-  Processing: 'blue',
+  success: 'green',
+  failed: 'red',
+  pending: 'yellow',
+  processing: 'blue',
 }
 
 function handleChange(e: LewContextMenusOption) {

@@ -26,7 +26,7 @@ const options = ref(
       :demo-group="demoGroup"
       :code-group="codeGroup"
       :component-name="componentName"
-      :columns="2"
+      :columns="1"
       gap="20px"
     />
     <LewDocsTables :options="options" />

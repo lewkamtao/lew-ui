@@ -353,7 +353,12 @@ defineExpose({ init, initCurrentTime, getValue })
 </script>
 
 <template>
-  <div class="lew-time">
+  <div
+    class="lew-time"
+    :style="{
+      width: showSeconds ? '220px' : '160px',
+    }"
+  >
     <div class="lew-time-control">
       <div class="cur-time">
         {{ _timeValue || "00:00:00" }}
@@ -460,7 +465,6 @@ defineExpose({ init, initCurrentTime, getValue })
 
 <style lang="scss" scoped>
 .lew-time {
-  width: 220px;
   user-select: none;
   padding: 12px;
   box-sizing: border-box;

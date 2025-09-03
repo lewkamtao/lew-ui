@@ -107,8 +107,8 @@ const curRule = computed(() => {
   const { rule, required, as } = props
   let _rule
   try {
-    // eslint-disable-next-line no-eval
-    _rule = isString(rule) ? eval(rule) : rule
+    // 直接使用规则对象，避免字符串解析的安全风险
+    _rule = isString(rule) ? null : rule
   }
   catch {
     _rule = null
@@ -128,8 +128,8 @@ const curRequired = computed(() => {
   const { rule, required } = props
   let _rule
   try {
-    // eslint-disable-next-line no-eval
-    _rule = isString(rule) ? eval(rule) : rule
+    // 直接使用规则对象，避免字符串解析的安全风险
+    _rule = isString(rule) ? null : rule
   }
   catch {
     _rule = null
@@ -169,7 +169,7 @@ const debouncedWatchCallback = debounce(() => {
   else {
     ignoreValidate.value = false
   }
-}, 100)
+}, 120)
 
 function setError(message: any) {
   errMsg.value = message

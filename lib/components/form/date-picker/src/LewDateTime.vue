@@ -25,8 +25,17 @@ const dateFormat = computed(() => {
 
 // 获取时间格式
 const timeFormat = computed(() => {
+  // 更精确的时间格式匹配
   const timeMatch = props.valueFormat.match(/H+:?m*:?s*/g)
-  return timeMatch ? timeMatch[0] : 'HH:mm:ss'
+  if (timeMatch) {
+    const matched = timeMatch[0]
+    // 如果匹配到的是 HH:mm 格式，确保返回 HH:mm
+    if (matched.includes('H') && matched.includes('m') && !matched.includes('s')) {
+      return 'HH:mm'
+    }
+    return matched
+  }
+  return 'HH:mm:ss'
 })
 
 // 移除显示值计算属性，不再需要顶部显示
@@ -97,7 +106,12 @@ defineExpose({ init })
 
       <!-- 时间面板 -->
       <div class="lew-datetime-panel lew-datetime-time-panel">
-        <LewTime ref="timeRef" :visible-count="9" :value-format="timeFormat" />
+        <LewTime
+          ref="timeRef"
+          :visible-count="9"
+          :value-format="timeFormat"
+          :show-actions="false"
+        />
       </div>
     </div>
 

@@ -14,6 +14,10 @@ const props = defineProps({
     >,
     default: 'date',
   },
+  valueFormat: {
+    type: String,
+    default: 'YYYY-MM-DD',
+  },
 })
 
 const emit = defineEmits(['change', 'cancel'])
@@ -51,6 +55,7 @@ defineExpose({ init })
     <component
       :is="currentComponent"
       ref="currentComponentRef"
+      :value-format="props.valueFormat"
       @change="handleChange"
       @cancel="handleCancel"
     />

@@ -5,6 +5,8 @@ const dateValue = ref('')
 const quarterValue = ref('')
 const datetimeValue = ref('')
 const timeValue = ref('')
+const timeHourMinuteValue = ref('')
+const datetimeHourMinuteValue = ref('')
 </script>
 
 <template>
@@ -13,38 +15,52 @@ const timeValue = ref('')
       v-model="yearValue"
       width="300px"
       value-format="YYYY"
-      placeholder="Select year"
+      placeholder="YYYY"
       clearable
     />
     <lew-date-picker
       v-model="monthValue"
       value-format="YYYY-MM"
-      placeholder="Select year-month"
+      placeholder="YYYY-MM"
       clearable
     />
     <lew-date-picker
       v-model="dateValue"
       value-format="YYYY-MM-DD"
-      placeholder="Select date"
+      placeholder="YYYY-MM-DD"
       clearable
     />
     <lew-date-picker
       v-model="quarterValue"
       value-format="YYYY-[Q]Q"
-      placeholder="Select quarter"
+      placeholder="YYYY-[Q]Q"
       clearable
     />
     <lew-date-picker
       v-model="datetimeValue"
-      value-format="YYYY-MM-DD HH:mm:ss"
-      placeholder="Select datetime"
+      value-format="MM/DD/YYYY HH:mm:ss"
+      placeholder="MM/DD/YYYY HH:mm:ss"
       clearable
     />
 
     <lew-date-picker
       v-model="timeValue"
       value-format="HH:mm:ss"
-      placeholder="Select time"
+      placeholder="HH:mm:ss"
+      clearable
+    />
+
+    <lew-date-picker
+      v-model="timeHourMinuteValue"
+      value-format="HH:mm"
+      placeholder="HH:mm"
+      clearable
+    />
+
+    <lew-date-picker
+      v-model="datetimeHourMinuteValue"
+      value-format="YYYY-MM-DD HH:mm"
+      placeholder="YYYY-MM-DD HH:mm"
       clearable
     />
   </lew-flex>

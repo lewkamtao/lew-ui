@@ -83,34 +83,16 @@ const options = ref<any[]>([
   },
 ])
 
-function setTheme(label: string) {
-  // 找到label Theme 的item的索引
-  const themeIndex = options.value.findIndex(item => item.label === 'Theme')
-  if (themeIndex !== -1 && options.value[themeIndex].children) {
-    // 创建新的children数组以保持响应式
-    const newChildren = options.value[themeIndex].children!.map(
-      (child: any) => {
-        if (child.checkable) {
-          return {
-            ...child,
-            checked: child.label === label,
-          }
-        }
-        return child
-      },
-    )
-
-    // 更新整个options数组以触发响应式更新
-    const newOptions = options.value.map((item, index) => {
-      if (index === themeIndex) {
-        return {
-          ...item,
-          children: newChildren,
-        }
+function setTheme(label: string, _options: any[] = options.value) {
+  // 找到 Theme 选项
+  const themeItem = _options.find(item => item.label === 'Theme')
+  if (themeItem?.children) {
+    // 直接遍历并设置 checked 状态，参考 DemoContextMenu4.vue 的简洁写法
+    themeItem.children.forEach((child: any) => {
+      if (child.checkable) {
+        child.checked = child.label === label
       }
-      return item
     })
-    options.value = newOptions
   }
 }
 </script>

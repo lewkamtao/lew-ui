@@ -5,7 +5,6 @@ import { getUniqueId } from 'lew-ui/utils'
 import tippy from 'tippy.js'
 import { createApp, defineAsyncComponent, h } from 'vue'
 
-export { default as LewContextMenu } from './src/LewContextMenu.vue'
 export { contextMenuProps } from './src/props'
 
 const MENU_SHOW_DELAY = 120

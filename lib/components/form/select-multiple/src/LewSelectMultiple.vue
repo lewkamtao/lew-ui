@@ -71,10 +71,16 @@ const _initMethod = computed(() => {
   return false
 })
 
-function getSelectWidth() {
-  state.selectWidth = lewSelectRef.value?.clientWidth
-  state.popoverWidth = state.selectWidth - 12
+// 监听 select 元素宽度变化
+function updateWidths() {
+  if (lewSelectRef.value) {
+    state.selectWidth = lewSelectRef.value.clientWidth
+    state.popoverWidth = state.selectWidth - 12
+  }
 }
+
+// 使用 ResizeObserver 监听宽度变化
+let resizeObserver: ResizeObserver | null = null
 
 function show() {
   lewPopoverRef.value && lewPopoverRef.value.show()
@@ -167,7 +173,7 @@ function selectHandle(item: LewSelectMultipleOption) {
     lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)
   emit('change', modelValue.value)
-  getSelectWidth()
+  updateWidths()
 }
 
 const getChecked = computed(() => (value: string | number) => {
@@ -246,7 +252,7 @@ const focusSearchInput = useDebounceFn(() => {
 function showHandle() {
   state.visible = true
 
-  getSelectWidth()
+  updateWidths()
   focusSearchInput()
 
   if (state.options && state.options.length === 0 && props.searchable) {
@@ -306,9 +312,25 @@ async function init() {
 }
 
 onMounted(() => {
-  getSelectWidth()
+  updateWidths()
   focusSearchInput()
   init()
+
+  // 设置 ResizeObserver 监听宽度变化
+  if (lewSelectRef.value) {
+    resizeObserver = new ResizeObserver(() => {
+      updateWidths()
+    })
+    resizeObserver.observe(lewSelectRef.value)
+  }
+})
+
+onUnmounted(() => {
+  // 清理 ResizeObserver
+  if (resizeObserver) {
+    resizeObserver.disconnect()
+    resizeObserver = null
+  }
 })
 
 defineExpose({
@@ -340,7 +362,7 @@ watch(
 watch(
   () => modelValue.value,
   () => {
-    getSelectWidth()
+    updateWidths()
   },
   {
     deep: true,
@@ -470,12 +492,12 @@ const showTagLayout = computed(() => {
 })
 
 // 新增计算属性：是否显示自定义空状态插槽
-const showCustomEmptySlot = computed(() => {
+const showCustomEmptySlot = computed((): boolean => {
   return !!slots.empty
 })
 
 // 新增计算属性：是否显示自定义项插槽
-const showCustomItemSlot = computed(() => {
+const showCustomItemSlot = computed((): boolean => {
   return !!slots.item
 })
 
@@ -488,12 +510,12 @@ const itemSlotProps = computed(() => {
 })
 
 // 新增计算属性：是否显示头部插槽
-const showHeaderSlot = computed(() => {
+const showHeaderSlot = computed((): boolean => {
   return !!slots.header
 })
 
 // 新增计算属性：是否显示底部插槽
-const showFooterSlot = computed(() => {
+const showFooterSlot = computed((): boolean => {
   return !!slots.footer
 })
 </script>
@@ -564,6 +586,7 @@ const showFooterSlot = computed(() => {
               popover-body-class-name="lew-select-multiple-popover-tag"
               placement="top-start"
               style="width: 100%"
+              :trigger-width="width"
             >
               <template #trigger>
                 <div :style="textValueStyle" class="lew-select-multiple-text-value">
