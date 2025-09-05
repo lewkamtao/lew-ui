@@ -153,7 +153,7 @@ export default {
         type: '样式类型',
         size: '尺寸',
         color: '颜色主题',
-        closable: '是否可关闭',
+        closeable: '是否可关闭',
         disabled: '是否禁用',
         round: '是否圆角',
         oversize: '更宽松的尺寸',

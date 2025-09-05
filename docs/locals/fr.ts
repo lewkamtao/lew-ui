@@ -157,7 +157,7 @@ export default {
         type: 'Type de style',
         size: 'Taille',
         color: 'Thème de couleur',
-        closable: 'Peut être fermé',
+        closeable: 'Peut être fermé',
         disabled: 'Désactivé',
         round: 'Coins arrondis',
         oversize: 'Taille plus relâchée',

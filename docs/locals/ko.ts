@@ -155,7 +155,7 @@ export default {
         type: '스타일 유형',
         size: '크기',
         color: '색상 테마',
-        closable: '닫기 가능 여부',
+        closeable: '닫기 가능 여부',
         disabled: '비활성화 여부',
         round: '둥근 모서리 여부',
         oversize: '더 여유로운 크기',

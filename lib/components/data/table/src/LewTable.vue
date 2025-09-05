@@ -3,7 +3,7 @@ import type { LewXAlignment, LewYAlignment } from 'lew-ui/types'
 import { useResizeObserver } from '@vueuse/core'
 import { LewCheckbox, LewEmpty, LewFlex, LewTextTrim } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/render/components/RenderComponent.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { any2px, getUniqueId } from 'lew-ui/utils'
 import {
   cloneDeep,

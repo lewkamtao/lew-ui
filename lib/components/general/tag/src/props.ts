@@ -66,6 +66,14 @@ export const tagProps = {
       propName: 'disabled',
     }),
   },
+  closeable: {  
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'closeable',
+    }),
+  },
   close: {
     type: Function as PropType<() => Promise<boolean>>,
     default: undefined,

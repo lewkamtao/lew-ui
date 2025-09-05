@@ -572,7 +572,7 @@ const showFooterSlot = computed((): boolean => {
                 :key="item.value"
                 type="light"
                 :size="size"
-                :closable="!disabled && !readonly"
+                :closeable="!disabled && !readonly"
                 @close="deleteTag(item)"
               >
                 {{ item.label }}
@@ -609,7 +609,7 @@ const showFooterSlot = computed((): boolean => {
                     :key="item.value"
                     type="light"
                     :size="size"
-                    :closable="!disabled && !readonly"
+                    :closeable="!disabled && !readonly"
                     @close="deleteTag(item)"
                   >
                     {{ item.label }}

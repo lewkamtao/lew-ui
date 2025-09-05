@@ -155,7 +155,7 @@ export default {
         type: 'スタイルタイプ',
         size: 'サイズ',
         color: 'カラーテーマ',
-        closable: '閉じることができるか',
+        closeable: '閉じることができるか',
         disabled: '無効状態',
         round: '角丸',
         oversize: 'よりゆったりとしたサイズ',

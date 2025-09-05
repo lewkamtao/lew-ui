@@ -156,7 +156,7 @@ export default {
         type: 'Style Type',
         size: 'Size',
         color: 'Color Theme',
-        closable: 'Closable',
+        closeable: 'Closable',
         disabled: 'Disabled',
         round: 'Round',
         oversize: 'More Relaxed Size',

@@ -158,7 +158,7 @@ export default {
         type: 'Stiltyp',
         size: 'Größe',
         color: 'Farbthema',
-        closable: 'Schließbar',
+        closeable: 'Schließbar',
         disabled: 'Deaktiviert',
         round: 'Abgerundet',
         oversize: 'Großzügigere Größe',

@@ -156,7 +156,7 @@ export default {
         type: 'Tipo di stile',
         size: 'Dimensione',
         color: 'Tema colore',
-        closable: 'Chiudibile',
+        closeable: 'Chiudibile',
         disabled: 'Disabilitato',
         round: 'Bordi arrotondati',
         oversize: 'Dimensione più ampia',

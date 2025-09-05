@@ -1,51 +1,52 @@
 <script setup lang="ts">
-import type { LewActionBoxOption, LewContextMenusOption } from 'lew-ui/types'
-import { LewDropdown, LewFlex } from 'lew-ui'
-import { isValidComponent, RenderComponent } from 'lew-ui/render'
-import { parseDimension } from 'lew-ui/utils'
-import { computed } from 'vue'
-import { actionBoxProps } from './props'
+import type { LewActionBoxOption, LewContextMenusOption } from "lew-ui/types";
+import { LewDropdown, LewFlex } from "lew-ui";
+import { isValidComponent } from "lew-ui/utils/render";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+
+import { parseDimension } from "lew-ui/utils";
+import { computed } from "vue";
+import { actionBoxProps } from "./props";
 // Props & Emits
-const props = defineProps(actionBoxProps)
+const props = defineProps(actionBoxProps);
 
 // Computed
-const threshold = computed((): number => parseDimension(props.dropdownThreshold || 0))
+const threshold = computed((): number => parseDimension(props.dropdownThreshold || 0));
 
 const visibleOptions = computed((): LewActionBoxOption[] => {
-  if (!props.options)
-    return []
+  if (!props.options) return [];
   if (threshold.value <= 0) {
-    return props.options
+    return props.options;
   }
-  return props.options.slice(0, threshold.value)
-})
+  return props.options.slice(0, threshold.value);
+});
 
 // Methods
 function convertToContextMenus(options: LewActionBoxOption[]): LewContextMenusOption[] {
-  return options.map(option => ({
+  return options.map((option) => ({
     label: option.label,
     icon: option.icon,
     onClick: (item: LewContextMenusOption) => {
       // Find original option for proper callback
       const originalOption = options.find(
-        opt => (typeof opt.label === 'string' ? opt.label : '') === item.label,
-      )
+        (opt) => (typeof opt.label === "string" ? opt.label : "") === item.label
+      );
       if (originalOption?.onClick) {
-        originalOption.onClick()
+        originalOption.onClick();
       }
     },
-  }))
+  }));
 }
 
 const dropdownOptions = computed((): LewContextMenusOption[] => {
   if (!props.options || threshold.value <= 0) {
-    return []
+    return [];
   }
-  return convertToContextMenus(props.options.slice(threshold.value))
-})
+  return convertToContextMenus(props.options.slice(threshold.value));
+});
 
 function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void {
-  option.onClick?.(event)
+  option.onClick?.(event);
 }
 </script>
 
@@ -76,10 +77,10 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
       </div>
       <i
         v-if="
-          divider
-            && (dropdownOptions.length > 0
-              || (visibleOptions.length === (props.options?.length || 0)
-                && index !== (props.options?.length || 0) - 1))
+          divider &&
+          (dropdownOptions.length > 0 ||
+            (visibleOptions.length === (props.options?.length || 0) &&
+              index !== (props.options?.length || 0) - 1))
         "
         class="lew-action-box-divider"
       />

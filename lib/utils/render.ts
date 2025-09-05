@@ -226,4 +226,3 @@ export function formatComponent(componentSource: LewComponentSource): Component 
   }
 }
 
-export * from './components'
