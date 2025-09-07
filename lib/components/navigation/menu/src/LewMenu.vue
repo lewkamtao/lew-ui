@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import type { LewMenuOption } from "lew-ui";
-import { LewTag } from "lew-ui";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
-import { toRaw } from "vue";
-import { menuEmits } from "./emits";
-import { menuProps } from "./props";
+import type { LewMenuOption } from 'lew-ui'
+import { LewTag } from 'lew-ui'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { toRaw } from 'vue'
+import { menuEmits } from './emits'
+import { menuProps } from './props'
 
-defineProps(menuProps);
+defineProps(menuProps)
 
-const emit = defineEmits(menuEmits);
+const emit = defineEmits(menuEmits)
 
-const modelValue = defineModel();
+const modelValue = defineModel()
 
 function select(item: LewMenuOption) {
-  modelValue.value = item.value;
-  emit("change", toRaw(item));
+  modelValue.value = item.value
+  emit('change', toRaw(item))
 }
 </script>
 
@@ -102,7 +102,9 @@ function select(item: LewMenuOption) {
     line-height: 36px;
     cursor: pointer;
     border-radius: var(--lew-border-radius-small);
-    transition: background-color 0.25s, color 0.25s;
+    transition:
+      background-color 0.25s,
+      color 0.25s;
   }
 
   :deep(.lew-menu-icon) {

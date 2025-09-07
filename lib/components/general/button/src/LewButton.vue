@@ -1,70 +1,72 @@
 <script setup lang="ts">
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { object2class } from "lew-ui/utils";
-import { computed, getCurrentInstance, ref } from "vue";
-import { buttonProps } from "./props";
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { object2class } from 'lew-ui/utils'
+import { computed, getCurrentInstance, ref } from 'vue'
+import { buttonProps } from './props'
 
-const props = defineProps(buttonProps);
+const props = defineProps(buttonProps)
 
-const buttonRef = ref<HTMLButtonElement>();
-const _loading = ref(false);
+const buttonRef = ref<HTMLButtonElement>()
+const _loading = ref(false)
 
 async function handleClick() {
   if (props.disabled || _loading.value || props.loading) {
-    return;
+    return
   }
 
-  if (typeof props.request === "function") {
+  if (typeof props.request === 'function') {
     if (_loading.value) {
-      return;
+      return
     }
-    _loading.value = true;
+    _loading.value = true
     try {
-      await props.request();
-    } catch (error) {
-      console.error("[LewButton] Request failed:", error);
-    } finally {
-      _loading.value = false;
+      await props.request()
+    }
+    catch (error) {
+      console.error('[LewButton] Request failed:', error)
+    }
+    finally {
+      _loading.value = false
     }
   }
 }
 // Slot detection
-const instance = getCurrentInstance();
-const hasDefaultSlot = ref(false);
+const instance = getCurrentInstance()
+const hasDefaultSlot = ref(false)
 
 if (instance?.slots.default) {
-  hasDefaultSlot.value = true;
+  hasDefaultSlot.value = true
 }
 
 // Computed
 const getButtonClass = computed(() => {
-  const { size, type, color, singleIcon, round } = props;
-  const loading = _loading.value || props.loading;
-  return object2class("lew-button", {
+  const { size, type, color, singleIcon, round } = props
+  const loading = _loading.value || props.loading
+  return object2class('lew-button', {
     size,
     type,
     loading,
     singleIcon,
     color,
     round,
-  });
-});
+  })
+})
 
 const getIconSize = computed(() => {
-  const { size } = props;
+  const { size } = props
   switch (size) {
-    case "mini":
-      return 12;
-    case "small":
-      return 14;
-    case "medium":
-      return 16;
-    case "large":
-      return 18;
+    case 'mini':
+      return 12
+    case 'small':
+      return 14
+    case 'medium':
+      return 16
+    case 'large':
+      return 18
     default:
-      return 16;
+      return 16
   }
-});
+})
 </script>
 
 <template>
@@ -330,8 +332,7 @@ const getIconSize = computed(() => {
   }
   .lew-button-type-ghost.lew-button-color-#{$name} {
     --lew-button-bg: transparent;
-    --lew-button-border: var(--lew-form-border-width) solid
-      var(--lew-color-#{$name}-dark);
+    --lew-button-border: var(--lew-form-border-width) solid var(--lew-color-#{$name}-dark);
     --lew-button-color: var(--lew-color-#{$name}-dark);
     --lew-button-hover-bg: var(--lew-bgcolor-2);
     --lew-button-active-bg: var(--lew-bgcolor-4);
@@ -348,25 +349,25 @@ const getIconSize = computed(() => {
 }
 
 /* 生成主题色 */
-@include button-variant("blue");
-@include button-variant("gray");
-@include button-variant("red");
-@include button-variant("green");
-@include button-variant("yellow");
-@include button-variant("indigo");
-@include button-variant("purple");
-@include button-variant("pink");
-@include button-variant("orange");
-@include button-variant("cyan");
-@include button-variant("teal");
-@include button-variant("mint");
-@include button-variant("brown");
-@include button-variant("black");
-@include button-variant("error");
-@include button-variant("success");
-@include button-variant("warning");
-@include button-variant("info");
-@include button-variant("normal");
-@include button-variant("primary");
-@include button-variant("danger");
+@include button-variant('blue');
+@include button-variant('gray');
+@include button-variant('red');
+@include button-variant('green');
+@include button-variant('yellow');
+@include button-variant('indigo');
+@include button-variant('purple');
+@include button-variant('pink');
+@include button-variant('orange');
+@include button-variant('cyan');
+@include button-variant('teal');
+@include button-variant('mint');
+@include button-variant('brown');
+@include button-variant('black');
+@include button-variant('error');
+@include button-variant('success');
+@include button-variant('warning');
+@include button-variant('info');
+@include button-variant('normal');
+@include button-variant('primary');
+@include button-variant('danger');
 </style>

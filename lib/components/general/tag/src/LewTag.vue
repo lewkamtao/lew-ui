@@ -1,123 +1,127 @@
 <script lang="ts" setup>
-import type { LewSize } from "lew-ui";
-import type { LewTagType } from "lew-ui/types";
-import type { CSSProperties } from "vue";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { getColorType } from "lew-ui/utils";
-import { computed, ref } from "vue";
-import { tagEmits } from "./emits";
-import { tagProps } from "./props";
+import type { LewSize } from 'lew-ui'
+import type { LewTagType } from 'lew-ui/types'
+import type { CSSProperties } from 'vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { getColorType } from 'lew-ui/utils'
+import { computed, ref } from 'vue'
+import { tagEmits } from './emits'
+import { tagProps } from './props'
 
 interface SizeConfig {
-  minHeight: string;
-  minWidth: string;
-  lineHeight: string;
-  fontSize: string;
-  borderRadius: string;
-  padding: string;
-  oversizePadding: string;
-  gap: string;
-  closeIconSize: number;
+  minHeight: string
+  minWidth: string
+  lineHeight: string
+  fontSize: string
+  borderRadius: string
+  padding: string
+  oversizePadding: string
+  gap: string
+  closeIconSize: number
 }
 
 interface TagStyle extends CSSProperties {
-  closeIconSize?: number;
+  closeIconSize?: number
 }
 
 interface TagStyleFunction {
-  (color: string): CSSProperties;
+  (color: string): CSSProperties
 }
 
-const props = defineProps(tagProps);
-const emit = defineEmits(tagEmits);
-const isClosing = ref(false);
+const props = defineProps(tagProps)
+const emit = defineEmits(tagEmits)
+const isClosing = ref(false)
 
 const SIZE_CONFIG: Record<LewSize, SizeConfig> = {
   small: {
-    minHeight: "20px",
-    minWidth: "20px",
-    lineHeight: "16px",
-    fontSize: "13px",
-    borderRadius: "5px",
-    padding: "0px 4px",
-    oversizePadding: "4px 10px",
-    gap: "2px",
+    minHeight: '20px',
+    minWidth: '20px',
+    lineHeight: '16px',
+    fontSize: '13px',
+    borderRadius: '5px',
+    padding: '0px 4px',
+    oversizePadding: '4px 10px',
+    gap: '2px',
     closeIconSize: 12,
   },
   medium: {
-    minHeight: "24px",
-    minWidth: "24px",
-    lineHeight: "18px",
-    fontSize: "14px",
-    borderRadius: "6px",
-    padding: "0px 6px",
-    oversizePadding: "5px 12px",
+    minHeight: '24px',
+    minWidth: '24px',
+    lineHeight: '18px',
+    fontSize: '14px',
+    borderRadius: '6px',
+    padding: '0px 6px',
+    oversizePadding: '5px 12px',
     closeIconSize: 14,
-    gap: "3px",
+    gap: '3px',
   },
   large: {
-    minHeight: "28px",
-    minWidth: "28px",
-    lineHeight: "20px",
-    fontSize: "15px",
-    borderRadius: "7px",
-    padding: "0px 8px",
-    oversizePadding: "6px 14px",
+    minHeight: '28px',
+    minWidth: '28px',
+    lineHeight: '20px',
+    fontSize: '15px',
+    borderRadius: '7px',
+    padding: '0px 8px',
+    oversizePadding: '6px 14px',
     closeIconSize: 16,
-    gap: "4px",
+    gap: '4px',
   },
-} as const;
+} as const
 
 const TYPE_STYLES: Record<LewTagType, TagStyleFunction> = {
   fill: (color: string): CSSProperties => ({
     backgroundColor: `var(--lew-color-${color})`,
-    color: "var(--lew-color-white)",
+    color: 'var(--lew-color-white)',
   }),
   light: (color: string): CSSProperties => ({
     backgroundColor: `var(--lew-color-${color}-light)`,
     color: `var(--lew-color-${color}-dark)`,
   }),
   ghost: (color: string): CSSProperties => ({
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     border: `var(--lew-form-border-width) solid var(--lew-color-${color}-dark)`,
     color: `var(--lew-color-${color}-dark)`,
-    boxShadow: "none",
+    boxShadow: 'none',
   }),
-} as const;
+} as const
 
 const tagStyle = computed(
   (): TagStyle => {
-    const { round, type, color, size, disabled, oversize } = props;
-    const resolvedColor = getColorType(color) || "primary";
-    const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium;
-    const styleFunction = TYPE_STYLES[type] || TYPE_STYLES.fill;
+    const { round, type, color, size, disabled, oversize } = props
+    const resolvedColor = getColorType(color) || 'primary'
+    const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium
+    const styleFunction = TYPE_STYLES[type] || TYPE_STYLES.fill
 
     return {
       ...styleFunction(resolvedColor),
       ...sizeConfig,
       padding: oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
-      borderRadius: round ? "20px" : sizeConfig.borderRadius,
-      opacity: disabled ? "var(--lew-disabled-opacity)" : undefined,
-      pointerEvents: disabled ? "none" : undefined,
-    };
-  }
-);
+      borderRadius: round ? '20px' : sizeConfig.borderRadius,
+      opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
+      pointerEvents: disabled ? 'none' : undefined,
+    }
+  },
+)
 
 async function handleClose(): Promise<void> {
-  if (props.disabled || isClosing.value) return;
+  if (props.disabled || isClosing.value)
+    return
 
   if (props.close) {
     try {
-      isClosing.value = true;
-      await props.close();
-    } catch (error) {
-      console.error("[LewTag] Error in close function:", error);
-    } finally {
-      emit("close");
-      isClosing.value = false;
+      isClosing.value = true
+      await props.close()
     }
-  } else {
-    emit("close");
+    catch (error) {
+      console.error('[LewTag] Error in close function:', error)
+    }
+    finally {
+      emit('close')
+      isClosing.value = false
+    }
+  }
+  else {
+    emit('close')
   }
 }
 </script>

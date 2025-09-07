@@ -225,4 +225,3 @@ export function formatComponent(componentSource: LewComponentSource): Component 
     return undefined
   }
 }
-
