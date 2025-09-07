@@ -66,7 +66,7 @@ export const tagProps = {
       propName: 'disabled',
     }),
   },
-  closeable: {  
+  closeable: {
     type: Boolean,
     default: false,
     validator: validators.boolean({

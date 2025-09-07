@@ -31,12 +31,12 @@ import {
   RotateCw,
   SquareMousePointer,
   Star,
+  Tags,
   Trash,
   TriangleAlert,
   UploadCloud,
   UserRound,
   X,
-  Tags,
 } from "lucide-vue-next";
 import { getColorType, iconColorType } from "../utils";
 
@@ -119,6 +119,16 @@ const iconMap: any = {
   "grip-vertical": GripVertical,
   tags: Tags,
 };
+
+const iconStyle = computed(() => {
+  const { speed, type, color, dark } = props;
+  return {
+    "animation-duration": `${speed}s`,
+    color: iconColorType[type]
+      ? `var(--lew-color-${color || getColorType(type)}${dark ? "-dark" : ""})`
+      : "",
+  };
+});
 </script>
 
 <template>
@@ -128,12 +138,7 @@ const iconMap: any = {
     :class="{
       'lew-icon-loading': loading,
     }"
-    :style="{
-      'animation-duration': `${speed}s`,
-      color: iconColorType[type]
-        ? `var(--lew-color-${color ? color : getColorType(type)}${dark ? '-dark' : ''})`
-        : '',
-    }"
+    :style="iconStyle"
     :stroke-width
     :size
     :fill

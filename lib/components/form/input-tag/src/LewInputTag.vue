@@ -30,7 +30,9 @@ function openInput() {
       Array.isArray(modelValue.value) &&
       modelValue.value.length >= props.maxLength
     ) {
-      LewMessage.warning(locale.t("inputTag.maxLength", { maxLength: props.maxLength }));
+      LewMessage.warning(
+        locale.t("inputTag.maxLength", { maxLength: props.maxLength })
+      );
       return;
     }
 
@@ -39,7 +41,10 @@ function openInput() {
 
     // 在下一个渲染周期聚焦输入框
     nextTick(() => {
-      if (lewInputRef.value && typeof lewInputRef.value.toFocus === "function") {
+      if (
+        lewInputRef.value &&
+        typeof lewInputRef.value.toFocus === "function"
+      ) {
         lewInputRef.value.toFocus();
       }
     });
@@ -109,7 +114,10 @@ function openInput() {
 
           if (keyCode === "Enter" || keyCode === "NumpadEnter") {
             // 当输入框为空且按下回车键时，失焦
-            if (lewInputRef.value && typeof lewInputRef.value.toBlur === "function") {
+            if (
+              lewInputRef.value &&
+              typeof lewInputRef.value.toBlur === "function"
+            ) {
               lewInputRef.value.toBlur();
             }
           }
@@ -148,7 +156,9 @@ function addTag() {
     if (props.maxLength > 0 && _value.length >= props.maxLength) {
       inputValue.value = "";
       isInputActive.value = false;
-      LewMessage.warning(locale.t("inputTag.maxLength", { maxLength: props.maxLength }));
+      LewMessage.warning(
+        locale.t("inputTag.maxLength", { maxLength: props.maxLength })
+      );
       return;
     }
 
@@ -239,18 +249,23 @@ const shouldShowIcon = computed(
   () => !((modelValue.value || []).length > 0 && props.clearable)
 );
 const shouldShowClearIcon = computed(
-  () => (modelValue.value || []).length > 0 && props.clearable && !props.readonly
+  () =>
+    (modelValue.value || []).length > 0 && props.clearable && !props.readonly
 );
 
 const getTagStyle = computed(() => (index: number) => {
   return {
     maxWidth: "100%",
     backgroundColor:
-      isTagMarkedForDeletion.value && index === (modelValue.value || []).length - 1
+      isInputActive.value &&
+      isTagMarkedForDeletion.value &&
+      index === (modelValue.value || []).length - 1
         ? "var(--lew-color-red-light)"
         : "",
     color:
-      isTagMarkedForDeletion.value && index === (modelValue.value || []).length - 1
+      isInputActive.value &&
+      isTagMarkedForDeletion.value &&
+      index === (modelValue.value || []).length - 1
         ? "var(--lew-color-red-dark)"
         : "var(--lew-color-primary-dark)",
   };
@@ -290,7 +305,9 @@ const getTagStyle = computed(() => (index: number) => {
           :size="size"
           :readonly="!isInputActive"
           :placeholder="
-            (modelValue || []).length === 0 ? locale.t('inputTag.placeholder') : ' '
+            (modelValue || []).length === 0
+              ? locale.t('inputTag.placeholder')
+              : ' '
           "
           @input="isTagMarkedForDeletion = false"
           @blur="onBlur"
@@ -335,13 +352,18 @@ const getTagStyle = computed(() => (index: number) => {
   overflow: hidden;
   width: 100%;
   cursor: text;
-
   :deep() {
     .lew-tag {
       background-color: var(--lew-bgcolor-0);
+      user-select: none;
+    }
+    .lew-tag-close:hover {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+    .lew-tag-close:active {
+      background-color: rgba(0, 0, 0, 0.25);
     }
   }
-
   .lew-input-tag-icon {
     position: absolute;
     top: 50%;
@@ -400,6 +422,22 @@ const getTagStyle = computed(() => (index: number) => {
 
   :deep(.lew-input) {
     padding: 0 !important;
+  }
+}
+
+.lew-dark {
+  .lew-input-tag-view {
+    :deep() {
+      .lew-tag {
+        background-color: var(--lew-bgcolor-0);
+      }
+      .lew-tag-close:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+      .lew-tag-close:active {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
   }
 }
 

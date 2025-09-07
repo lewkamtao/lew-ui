@@ -5,8 +5,8 @@ import type { CSSProperties } from "vue";
 import CommonIcon from "lew-ui/_components/CommonIcon.vue";
 import { getColorType } from "lew-ui/utils";
 import { computed, ref } from "vue";
-import { tagProps } from "./props";
 import { tagEmits } from "./emits";
+import { tagProps } from "./props";
 
 interface SizeConfig {
   minHeight: string;
@@ -176,13 +176,14 @@ async function handleClose(): Promise<void> {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: all var(--lew-form-transition-ease);
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.15);
     }
 
     &:active {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.3);
     }
 
     .lew-tag-loading {
@@ -206,6 +207,18 @@ async function handleClose(): Promise<void> {
   }
 }
 
+.lew-dark {
+  .lew-tag-close {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.45);
+    }
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  }
+}
+
 .lew-tag-to {
   cursor: pointer;
 }
@@ -218,11 +231,5 @@ async function handleClose(): Promise<void> {
   to {
     transform: rotate(360deg);
   }
-}
-</style>
-
-<style lang="scss">
-.lew-dark .lew-tag-color-black.lew-tag-type-fill {
-  color: #000 !important;
 }
 </style>

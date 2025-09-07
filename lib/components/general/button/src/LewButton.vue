@@ -1,133 +1,70 @@
 <script setup lang="ts">
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, getColorType, object2class } from 'lew-ui/utils'
-import { computed, getCurrentInstance, ref } from 'vue'
-import { buttonProps } from './props'
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { object2class } from "lew-ui/utils";
+import { computed, getCurrentInstance, ref } from "vue";
+import { buttonProps } from "./props";
 
-const props = defineProps(buttonProps)
+const props = defineProps(buttonProps);
 
-const buttonRef = ref<HTMLButtonElement>()
-const _loading = ref(false)
-
-function focus() {
-  buttonRef.value?.focus()
-}
-
-function blur() {
-  buttonRef.value?.blur()
-}
+const buttonRef = ref<HTMLButtonElement>();
+const _loading = ref(false);
 
 async function handleClick() {
   if (props.disabled || _loading.value || props.loading) {
-    return
+    return;
   }
 
-  if (typeof props.request === 'function') {
+  if (typeof props.request === "function") {
     if (_loading.value) {
-      return
+      return;
     }
-    _loading.value = true
+    _loading.value = true;
     try {
-      await props.request()
-    }
-    catch (error) {
-      console.error('[LewButton] Request failed:', error)
-    }
-    finally {
-      _loading.value = false
+      await props.request();
+    } catch (error) {
+      console.error("[LewButton] Request failed:", error);
+    } finally {
+      _loading.value = false;
     }
   }
 }
 // Slot detection
-const instance = getCurrentInstance()
-const hasDefaultSlot = ref(false)
+const instance = getCurrentInstance();
+const hasDefaultSlot = ref(false);
 
 if (instance?.slots.default) {
-  hasDefaultSlot.value = true
+  hasDefaultSlot.value = true;
 }
 
 // Computed
 const getButtonClass = computed(() => {
-  const { size, type, color, singleIcon } = props
-  const loading = _loading.value || props.loading
-  return object2class('lew-button', {
+  const { size, type, color, singleIcon, round } = props;
+  const loading = _loading.value || props.loading;
+  return object2class("lew-button", {
     size,
     type,
     loading,
     singleIcon,
     color,
-  })
-})
+    round,
+  });
+});
 
 const getIconSize = computed(() => {
-  const { size } = props
+  const { size } = props;
   switch (size) {
-    case 'mini':
-      return 12
-    case 'small':
-      return 14
-    case 'medium':
-      return 16
-    case 'large':
-      return 18
+    case "mini":
+      return 12;
+    case "small":
+      return 14;
+    case "medium":
+      return 16;
+    case "large":
+      return 18;
     default:
-      return 16
+      return 16;
   }
-})
-
-const getStyle = computed(() => {
-  const { round, type, color, dashed, width } = props
-  const styleObj: Record<string, string> = {}
-  const _color = getColorType(color) || 'primary'
-
-  // 基础样式
-  const baseStyle = {
-    fill: {
-      backgroundColor: `var(--lew-color-${_color})`,
-      color: 'var(--lew-color-white)',
-    },
-    light: {
-      backgroundColor: `var(--lew-color-${_color}-light)`,
-      color: `var(--lew-color-${_color}-dark)`,
-    },
-    ghost: {
-      backgroundColor: 'transparent',
-      border: `var(--lew-form-border-width) ${
-        dashed ? 'dashed' : 'solid'
-      } var(--lew-color-${_color}-dark)`,
-      color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: 'none',
-    },
-    text: {
-      backgroundColor: 'transparent',
-      color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: 'none',
-    },
-  }
-
-  // 合并样式
-  Object.assign(
-    styleObj,
-    baseStyle[type as keyof typeof baseStyle] || {
-      backgroundColor: `var(--lew-color-${_color})`,
-    },
-  )
-
-  // 圆角样式
-  styleObj.borderRadius = round ? '50px' : 'none'
-
-  if (width) {
-    styleObj.width = any2px(width)
-  }
-
-  return styleObj
-})
-
-// Expose methods
-defineExpose({
-  focus,
-  blur,
-})
+});
 </script>
 
 <template>
@@ -136,7 +73,6 @@ defineExpose({
     class="lew-button"
     :class="getButtonClass"
     :disabled="disabled"
-    :style="getStyle"
     @click="handleClick"
   >
     <div
@@ -162,6 +98,12 @@ defineExpose({
 
 <style lang="scss" scoped>
 .lew-button {
+  --lew-button-bg: transparent;
+  --lew-button-color: var(--lew-color-primary-dark);
+  --lew-button-border: none;
+  --lew-button-hover-bg: var(--lew-color-primary-light);
+  --lew-button-active-bg: var(--lew-color-primary-dark);
+
   position: relative;
   display: inline-flex;
   justify-content: center;
@@ -181,6 +123,25 @@ defineExpose({
   overflow: hidden;
   box-shadow: var(--lew-form-box-shadow);
   outline: none;
+
+  background: var(--lew-button-bg);
+  color: var(--lew-button-color);
+  border: var(--lew-button-border);
+
+  &:hover {
+    background: var(--lew-button-hover-bg);
+  }
+  &:active {
+    background: var(--lew-button-active-bg);
+  }
+  &[disabled] {
+    pointer-events: none;
+    opacity: var(--lew-disabled-opacity);
+  }
+
+  &.lew-button-round {
+    border-radius: 20px;
+  }
 
   .lew-button-loading-icon {
     position: absolute;
@@ -212,58 +173,6 @@ defineExpose({
   align-items: center;
   justify-content: center;
   gap: 5px;
-}
-
-.lew-button::after {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba($color: #000, $alpha: 0.2);
-  transition: all var(--lew-form-transition-ease);
-  opacity: 0;
-  content: '';
-}
-
-.lew-button-color-black::after {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba($color: #fff, $alpha: 0.2);
-  transition: 0.1s all;
-  opacity: 0;
-  content: '';
-}
-
-.lew-button-type-text.lew-button-color-black::after {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba($color: #000, $alpha: 0.2);
-  transition: 0.1s all;
-  opacity: 0;
-  content: '';
-}
-
-.lew-button-type-ghost::after {
-  display: none;
-}
-
-.lew-button:hover:after {
-  opacity: 0.4;
-}
-
-.lew-button:active {
-  opacity: 1;
-}
-
-.lew-button:active::after {
-  opacity: 1;
 }
 
 .lew-button-size-mini {
@@ -404,26 +313,60 @@ defineExpose({
   padding-left: 34px;
 }
 
-.lew-button[disabled] {
-  pointer-events: none; //鼠标点击不可修改
-  opacity: var(--lew-disabled-opacity);
+/* ================== 类型 & 颜色展开 ================== */
+/* Mixin 用来减少重复 */
+@mixin button-variant($name) {
+  .lew-button-type-fill.lew-button-color-#{$name} {
+    --lew-button-bg: var(--lew-color-#{$name});
+    --lew-button-color: #fff;
+    --lew-button-hover-bg: var(--lew-color-#{$name}-hover);
+    --lew-button-active-bg: var(--lew-color-#{$name}-active);
+  }
+  .lew-button-type-light.lew-button-color-#{$name} {
+    --lew-button-bg: var(--lew-color-#{$name}-light);
+    --lew-button-color: var(--lew-color-#{$name}-dark);
+    --lew-button-hover-bg: var(--lew-color-#{$name}-light-hover);
+    --lew-button-active-bg: var(--lew-color-#{$name}-light-active);
+  }
+  .lew-button-type-ghost.lew-button-color-#{$name} {
+    --lew-button-bg: transparent;
+    --lew-button-border: var(--lew-form-border-width) solid
+      var(--lew-color-#{$name}-dark);
+    --lew-button-color: var(--lew-color-#{$name}-dark);
+    --lew-button-hover-bg: var(--lew-bgcolor-2);
+    --lew-button-active-bg: var(--lew-bgcolor-4);
+    box-shadow: none;
+  }
+  .lew-button-type-text.lew-button-color-#{$name} {
+    --lew-button-bg: transparent;
+    --lew-button-color: var(--lew-color-#{$name}-dark);
+    --lew-button-hover-bg: var(--lew-bgcolor-2);
+    --lew-button-active-bg: var(--lew-bgcolor-4);
+    box-shadow: none;
+    border: none;
+  }
 }
 
-.lew-button-type-text:hover {
-  background-color: var(--lew-bgcolor-2) !important;
-}
-
-.lew-button-type-ghost:hover {
-  background-color: var(--lew-bgcolor-2) !important;
-}
-
-.lew-button-type-ghost:active {
-  background-color: var(--lew-bgcolor-3) !important;
-}
-</style>
-
-<style lang="scss">
-.lew-dark .lew-button-color-black.lew-button-type-fill {
-  color: #000 !important;
-}
+/* 生成主题色 */
+@include button-variant("blue");
+@include button-variant("gray");
+@include button-variant("red");
+@include button-variant("green");
+@include button-variant("yellow");
+@include button-variant("indigo");
+@include button-variant("purple");
+@include button-variant("pink");
+@include button-variant("orange");
+@include button-variant("cyan");
+@include button-variant("teal");
+@include button-variant("mint");
+@include button-variant("brown");
+@include button-variant("black");
+@include button-variant("error");
+@include button-variant("success");
+@include button-variant("warning");
+@include button-variant("info");
+@include button-variant("normal");
+@include button-variant("primary");
+@include button-variant("danger");
 </style>
