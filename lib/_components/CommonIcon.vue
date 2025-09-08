@@ -37,13 +37,13 @@ import {
   UploadCloud,
   UserRound,
   X,
-} from 'lucide-vue-next'
-import { getColorType, iconColorType } from '../utils'
+} from "lucide-vue-next";
+import { getColorType, iconColorType } from "../utils";
 
 const props = defineProps({
   type: {
     type: String,
-    default: 'info',
+    default: "info",
   },
   dark: {
     type: Boolean,
@@ -51,7 +51,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: '',
+    default: "",
   },
   strokeWidth: {
     type: Number,
@@ -71,64 +71,64 @@ const props = defineProps({
   },
   fill: {
     type: String,
-    default: 'transparent',
+    default: "transparent",
   },
-})
+});
 
 const iconMap: any = {
-  'arrow-down': ArrowDown,
-  'chevron-down': ChevronDown,
-  'chevron-left': ChevronLeft,
-  'chevron-right': ChevronRight,
-  'chevron-up': ChevronUp,
-  'chevrons-left': ChevronsLeft,
-  'chevrons-right': ChevronsRight,
-  'chevrons-up-down': ChevronsUpDown,
-  'edit-2': Edit2,
-  'maximize-2': Maximize2,
-  'minimize-2': Minimize2,
-  'more-horizontal': MoreHorizontal,
-  'rotate-cw': RotateCw,
-  'upload-cloud': UploadCloud,
-  'calendar': Calendar,
-  'check': Check,
-  'close': X,
-  'complete': FileCheck,
-  'copy': Copy,
-  'error': CircleAlert,
-  'image': Image,
-  'info': BellRing,
-  'loader': Loader,
-  'loading': Loader,
-  'minus': Minus,
-  'normal': Info,
-  'pending': ClockArrowUp,
-  'plus': Plus,
-  'success': CircleCheck,
-  'tips': Info,
-  'trash': Trash,
-  'uploading': Loader,
-  'warning': TriangleAlert,
-  'wrong_size': CircleAlert,
-  'wrong_type': CircleAlert,
-  'user': UserRound,
-  'eye': Eye,
-  'eye_off': EyeOff,
-  'star': Star,
-  'square-mouse-pointer': SquareMousePointer,
-  'grip-vertical': GripVertical,
-  'tags': Tags,
-}
+  "arrow-down": ArrowDown,
+  "chevron-down": ChevronDown,
+  "chevron-left": ChevronLeft,
+  "chevron-right": ChevronRight,
+  "chevron-up": ChevronUp,
+  "chevrons-left": ChevronsLeft,
+  "chevrons-right": ChevronsRight,
+  "chevrons-up-down": ChevronsUpDown,
+  "edit-2": Edit2,
+  "maximize-2": Maximize2,
+  "minimize-2": Minimize2,
+  "more-horizontal": MoreHorizontal,
+  "rotate-cw": RotateCw,
+  "upload-cloud": UploadCloud,
+  calendar: Calendar,
+  check: Check,
+  close: X,
+  complete: FileCheck,
+  copy: Copy,
+  error: CircleAlert,
+  image: Image,
+  info: BellRing,
+  loader: Loader,
+  loading: Loader,
+  minus: Minus,
+  normal: Info,
+  pending: ClockArrowUp,
+  plus: Plus,
+  success: CircleCheck,
+  tips: Info,
+  trash: Trash,
+  uploading: Loader,
+  warning: TriangleAlert,
+  wrong_size: CircleAlert,
+  wrong_type: CircleAlert,
+  user: UserRound,
+  eye: Eye,
+  eye_off: EyeOff,
+  star: Star,
+  "square-mouse-pointer": SquareMousePointer,
+  "grip-vertical": GripVertical,
+  tags: Tags,
+};
 
 const iconStyle = computed(() => {
-  const { speed, type, color, dark } = props
+  const { speed, type, color, dark } = props;
   return {
-    'animation-duration': `${speed}s`,
-    'color': iconColorType[type]
-      ? `var(--lew-color-${color || getColorType(type)}${dark ? '-dark' : ''})`
-      : '',
-  }
-})
+    "animation-duration": `${speed}s`,
+    color: iconColorType[type]
+      ? `var(--lew-color-${color || getColorType(type)}${dark ? "-dark" : ""})`
+      : "",
+  };
+});
 </script>
 
 <template>

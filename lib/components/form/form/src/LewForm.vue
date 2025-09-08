@@ -6,7 +6,7 @@ import {
   object2class,
   retrieveNestedFieldValue,
 } from "lew-ui/utils";
-import { cloneDeep, isString } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import * as Yup from "yup";
 import { formEmits } from "./emits";
 import LewFormItem from "./LewFormItem.vue";
@@ -24,12 +24,19 @@ const formItemRefMap = ref<Record<string, any>>({});
 const formUpdateKey = ref(0); // 用于触发联动更新
 
 const formSchema = computed(() => {
-  const schemaMap = componentOptions.reduce<Record<string, any>>((acc, item) => {
-    if (item.field && item.rule && !isString(item.rule)) {
-      acc[item.field] = item.rule;
-    }
-    return acc;
-  }, {});
+  const schemaMap = componentOptions.reduce<Record<string, any>>(
+    (acc, item) => {
+      if (item.field && item.rule) {
+        acc[item.field] =
+          typeof item.rule === "string"
+            ? new Function("Yup", `return ${item.rule}`)(Yup)
+            : item.rule;
+      }
+      return acc;
+    },
+    {}
+  );
+
   return Yup.object().shape(schemaMap);
 });
 
@@ -80,7 +87,9 @@ function resetFieldError(field: string, ignore = false) {
 
 function validate() {
   return new Promise<boolean>((resolve) => {
-    Object.keys(formItemRefMap.value).forEach((key) => resetFieldError(key, false));
+    Object.keys(formItemRefMap.value).forEach((key) =>
+      resetFieldError(key, false)
+    );
 
     formSchema.value
       .validate(formMap.value, { abortEarly: false })
@@ -141,7 +150,16 @@ const getLabelWidth = computed(() =>
 );
 
 function getRequired(item: LewFormOption) {
-  return typeof item.rule === "object" && item.rule?.spec?.optional === false;
+  const _rule =
+    typeof item.rule === "string"
+      ? new Function("Yup", `return ${item.rule}`)(Yup)
+      : item.rule;
+
+  if (typeof _rule === "object") {
+    return _rule?.spec?.optional === false;
+  }
+
+  return false;
 }
 
 function setItemRef(field: string, el: any) {
@@ -153,7 +171,11 @@ defineExpose({ getForm, setForm, resetError, validate });
 
 <template>
   <div class="lew-form" :style="getFormStyle" :class="getFormClassNames">
-    <LewGetLabelWidth ref="formLabelRef" :size="size" :options="componentOptions" />
+    <LewGetLabelWidth
+      ref="formLabelRef"
+      :size="size"
+      :options="componentOptions"
+    />
     <LewFormItem
       v-for="item in componentOptions"
       :ref="(el: any) => setItemRef(item.field, el)"

@@ -10,11 +10,6 @@ export const baseSchema = [
     field: 'label',
   },
   {
-    label: '是否必填',
-    as: 'switch',
-    field: 'required',
-  },
-  {
     label: '是否只读',
     as: 'switch',
     field: 'readonly',

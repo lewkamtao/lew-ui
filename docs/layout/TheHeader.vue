@@ -221,30 +221,36 @@ getInitialLocale().then((locale) => {
 <template>
   <lew-flex mode="between" class="Header">
     <lew-flex id="logo" class="logo" x="start" @click="goHome">
-      <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30">
+      <img
+        src="../assets/images/logo.png"
+        alt="logo"
+        srcset=""
+        width="30"
+        height="30"
+      >
       <span style="margin-left: 10px"> Lew UI</span>
       <lew-tag type="light" size="small" style="margin-left: 10px">
         Beta {{ version }}
       </lew-tag>
     </lew-flex>
-    <lew-flex gap="15px" class="menu">
+    <lew-flex gap="15px" x="center" class="menu">
       <div class="menu-item" @click="goToPage('/')">
-        {{ docsLocale.t('home.home') }}
+        {{ docsLocale.t("home.home") }}
       </div>
       <div class="menu-item" @click="goToPage('/Install')">
-        {{ docsLocale.t('home.install') }}
+        {{ docsLocale.t("home.install") }}
       </div>
       <div class="menu-item" @click="goToPage('/Image')">
-        {{ docsLocale.t('home.components') }}
+        {{ docsLocale.t("home.components") }}
       </div>
       <div class="menu-item" @click="goToPage('/form-engine', true)">
         <lew-flex gap="5px">
-          {{ docsLocale.t('home.formEngine') }}
+          {{ docsLocale.t("home.formEngine") }}
         </lew-flex>
       </div>
       <div class="menu-item" @click="goToPage('/desc-engine', true)">
         <lew-flex gap="5px">
-          {{ docsLocale.t('home.descEngine') }}
+          {{ docsLocale.t("home.descEngine") }}
         </lew-flex>
       </div>
     </lew-flex>

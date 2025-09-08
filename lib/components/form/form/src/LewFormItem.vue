@@ -68,7 +68,10 @@ const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive("tooltip")) app.use(LewTooltip);
 
 const getFormItemClassNames = computed(() =>
-  object2class("lew-form-item", { direction: props.direction, size: props.size })
+  object2class("lew-form-item", {
+    direction: props.direction,
+    size: props.size,
+  })
 );
 
 const formItemRef = ref();
@@ -191,7 +194,10 @@ defineExpose({ validate, setError, setIgnoreValidate });
       class="lew-label-box-wrapper"
     >
       <div v-if="as" class="lew-label-box">
-        <RequiredIcon v-if="required && label" :size="requiredIconSizeMap[size]" />
+        <RequiredIcon
+          v-if="required && label"
+          :size="requiredIconSizeMap[size]"
+        />
         {{ label }}
         <CommonIcon
           v-if="tips"
@@ -201,7 +207,6 @@ defineExpose({ validate, setError, setIgnoreValidate });
           style="margin-top: 1px"
           :size="tipsIconSizeMap[size]"
           type="normal"
-          color="black"
         />
       </div>
     </div>

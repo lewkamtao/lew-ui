@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
-import { LewFlex } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px } from 'lew-ui/utils'
-import { requiredIconSizeMap, tipsIconSizeMap } from './props'
-import RequiredIcon from './RequiredIcon.vue'
+import type { LewSize } from "lew-ui";
+import { LewFlex } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { any2px } from "lew-ui/utils";
+import { requiredIconSizeMap, tipsIconSizeMap } from "./props";
+import RequiredIcon from "./RequiredIcon.vue";
 
 defineProps({
   size: {
     type: String as PropType<LewSize>,
-    default: 'medium',
+    default: "medium",
   },
   padding: {
     type: Number,
@@ -18,17 +18,17 @@ defineProps({
   options: {
     type: Array as PropType<any>,
   },
-})
+});
 
-const formLabelRef = ref<HTMLDivElement>()
+const formLabelRef = ref<HTMLDivElement>();
 
 function getWidth() {
-  return formLabelRef.value?.offsetWidth
+  return formLabelRef.value?.offsetWidth;
 }
 
 defineExpose({
   getWidth,
-})
+});
 </script>
 
 <template>

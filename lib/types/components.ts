@@ -155,9 +155,7 @@ export interface LewFormOption {
   id?: string
   outputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
   inputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
-  // 联动控制相关属性
   visible?: boolean | ((formData: Record<string, any>) => boolean)
-  // 联动依赖的字段
   dependencies?: string[]
 }
 
