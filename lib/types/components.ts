@@ -139,23 +139,26 @@ export interface LewDescOption {
 export interface LewFormOption {
   label?: string
   field: string
-  required?: boolean
   as?: LewFormItemAs | ''
   size?: LewSize
   width?: Property.Width
   labelWidth?: Property.Width
   direction?: LewDirection
-  disabled?: boolean
-  readonly?: boolean
+  disabled?: boolean | ((formData: Record<string, any>) => boolean)
+  readonly?: boolean | ((formData: Record<string, any>) => boolean)
   tips?: string
   errMessage?: string
   rule?: any | string
-  props?: Record<string, any>
+  props?: Record<string, any> | ((formData: Record<string, any>) => Record<string, any>)
   between?: boolean
   gridArea?: string
   id?: string
   outputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
   inputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
+  // 联动控制相关属性
+  visible?: boolean | ((formData: Record<string, any>) => boolean)
+  // 联动依赖的字段
+  dependencies?: string[]
 }
 
 export interface LewSelectOption {

@@ -4,6 +4,7 @@ import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validFormItemAsList, validSizeList } from 'lew-ui/validators'
 
 export const formProps = {
+
   options: {
     type: Array as PropType<LewFormOption[]>,
     required: true,
@@ -14,6 +15,7 @@ export const formProps = {
       propName: 'options',
     }),
   },
+
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
@@ -64,6 +66,7 @@ export const formProps = {
       propName: 'readonly',
     }),
   },
+
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
@@ -108,6 +111,14 @@ export const formItemProps = {
     validator: validators.string({
       componentName: 'LewFormItem',
       propName: 'field',
+    }),
+  },
+  visible: {
+    type: [Boolean, Function] as PropType<boolean | ((formData: Record<string, any>) => boolean)>,
+    default: true,
+    validator: validators.boolean({
+      componentName: 'LewForm',
+      propName: 'visible',
     }),
   },
   required: {
@@ -165,7 +176,7 @@ export const formItemProps = {
     }),
   },
   disabled: {
-    type: Boolean,
+    type: [Boolean, Function] as PropType<boolean | ((formData: Record<string, any>) => boolean)>,
     default: false,
     validator: validators.boolean({
       componentName: 'LewFormItem',
@@ -173,7 +184,7 @@ export const formItemProps = {
     }),
   },
   readonly: {
-    type: Boolean,
+    type: [Boolean, Function] as PropType<boolean | ((formData: Record<string, any>) => boolean)>,
     default: false,
     validator: validators.boolean({
       componentName: 'LewFormItem',
@@ -196,15 +207,8 @@ export const formItemProps = {
       propName: 'errMessage',
     }),
   },
-  rule: {
-    type: [Object, String] as PropType<any | string>,
-    validator: validators.object({
-      componentName: 'LewFormItem',
-      propName: 'rule',
-    }),
-  },
   props: {
-    type: Object as PropType<Record<string, any>>,
+    type: [Object, Function] as PropType<Record<string, any> | ((formData: Record<string, any>) => Record<string, any>)>,
     default: () => ({}),
     validator: validators.object({
       componentName: 'LewFormItem',
@@ -250,6 +254,14 @@ export const formItemProps = {
     validator: validators.function({
       componentName: 'LewFormItem',
       propName: 'inputFormat',
+    }),
+  },
+  dependencies: {
+    type: Array as PropType<string[]>,
+    default: () => [],
+    validator: validators.array({
+      componentName: 'LewFormItem',
+      propName: 'dependencies',
     }),
   },
 }

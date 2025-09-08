@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LewFormItemAs } from 'lew-ui/types'
+import type { LewFormItemAs } from "lew-ui/types";
 import {
   LewButton,
   LewCascader,
@@ -24,185 +24,161 @@ import {
   LewTooltip,
   LewTreeSelect,
   LewUpload,
-} from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, object2class } from 'lew-ui/utils'
-import { cloneDeep, debounce, isString, merge } from 'lodash-es'
-import * as Yup from 'yup'
-import { formItemEmits } from './emits'
-import {
-  formItemProps,
-  formTypeAsMap,
-  requiredIconSizeMap,
-  tipsIconSizeMap,
-} from './props'
-import RequiredIcon from './RequiredIcon.vue'
+} from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { any2px, object2class } from "lew-ui/utils";
+import { debounce } from "lodash-es";
+import { formItemEmits } from "./emits";
+import { formItemProps, requiredIconSizeMap, tipsIconSizeMap } from "./props";
+import RequiredIcon from "./RequiredIcon.vue";
 
-const props = defineProps(formItemProps)
-const emit = defineEmits(formItemEmits)
+const props = defineProps(formItemProps);
+const emit = defineEmits(formItemEmits);
+
+const formSchema = inject<any>("formSchema", ref(null));
+const formData = inject<Ref<Record<string, any>>>("formData", ref({}));
+const formUpdateKey = inject<Ref<number>>("formUpdateKey", ref(0));
+
 const asMap: Record<LewFormItemAs, Component> = {
-  'input': LewInput,
-  'textarea': LewTextarea,
-  'input-tag': LewInputTag,
-  'checkbox-group': LewCheckboxGroup,
-  'radio-group': LewRadioGroup,
-  'checkbox': LewCheckbox,
-  'select': LewSelect,
-  'select-multiple': LewSelectMultiple,
-  'date-picker': LewDatePicker,
-  'date-range-picker': LewDateRangePicker,
-  'tabs': LewTabs,
-  'cascader': LewCascader,
-  'switch': LewSwitch,
-  'button': LewButton,
-  'upload': LewUpload,
-  'input-number': LewInputNumber,
-  'slider': LewSlider,
-  'slider-range': LewSliderRange,
-  'color-picker': LewColorPicker,
-  'rate': LewRate,
-  'tree-select': LewTreeSelect,
-}
-// 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
-}
+  input: LewInput,
+  textarea: LewTextarea,
+  "input-tag": LewInputTag,
+  "checkbox-group": LewCheckboxGroup,
+  "radio-group": LewRadioGroup,
+  checkbox: LewCheckbox,
+  select: LewSelect,
+  "select-multiple": LewSelectMultiple,
+  "date-picker": LewDatePicker,
+  "date-range-picker": LewDateRangePicker,
+  tabs: LewTabs,
+  cascader: LewCascader,
+  switch: LewSwitch,
+  button: LewButton,
+  upload: LewUpload,
+  "input-number": LewInputNumber,
+  slider: LewSlider,
+  "slider-range": LewSliderRange,
+  "color-picker": LewColorPicker,
+  rate: LewRate,
+  "tree-select": LewTreeSelect,
+};
 
-const getFormItemClassNames = computed(() => {
-  const { direction, size } = cloneDeep(props)
-  return object2class('lew-form-item', { direction, size })
-})
+// 自动注册 tooltip 指令
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive("tooltip")) app.use(LewTooltip);
 
-const formItemRef = ref()
+const getFormItemClassNames = computed(() =>
+  object2class("lew-form-item", { direction: props.direction, size: props.size })
+);
 
-const modelValue: Ref<any> = defineModel({
-  default: undefined,
-})
+const formItemRef = ref();
+const modelValue: Ref<any> = defineModel({ default: undefined });
+const ignoreValidate = ref(false);
+const errMsg = ref("");
 
-const ignoreValidate = ref(false)
-const errMsg = ref('')
-
-function setIgnoreValidate(value: boolean) {
-  ignoreValidate.value = value
+// 设置是否忽略校验
+function setIgnoreValidate(val: boolean) {
+  ignoreValidate.value = val;
 }
 
-function getRequiredRuleByMap(as: LewFormItemAs) {
-  const type = formTypeAsMap[as]
-  switch (type) {
-    case 'string':
-      return Yup.string().required('此项必填')
-    case 'array':
-      return Yup.array().min(1, '至少选择一个').required('此项必填')
-    case 'number':
-      return Yup.number().required('此项必填')
-    case 'boolean':
-      return Yup.boolean().oneOf([true], '此项必填').required('此项必填')
-    default:
-      return Yup.mixed().required('此项必填')
-  }
-}
-
-const curRule = computed(() => {
-  const { rule, required, as } = props
-  let _rule
-  try {
-    // 直接使用规则对象，避免字符串解析的安全风险
-    _rule = isString(rule) ? null : rule
-  }
-  catch {
-    _rule = null
-  }
-  if (required && as) {
-    if (!_rule) {
-      return getRequiredRuleByMap(as)
-    }
-    else if (_rule?.spec?.optional === true) {
-      return merge(_rule, getRequiredRuleByMap(as))
-    }
-  }
-  return _rule
-})
-
-const curRequired = computed(() => {
-  const { rule, required } = props
-  let _rule
-  try {
-    // 直接使用规则对象，避免字符串解析的安全风险
-    _rule = isString(rule) ? null : rule
-  }
-  catch {
-    _rule = null
-  }
-  if (!required)
-    return _rule?.spec?.optional === false
-  return required
-})
-
+// 简化校验逻辑
 function validate() {
-  if (!curRequired.value && !modelValue.value) {
-    errMsg.value = ''
-    return
+  if (!props.required && !modelValue.value) {
+    errMsg.value = "";
+    return;
   }
-  if (curRule.value) {
-    curRule.value
-      .validate(modelValue.value)
-      .then(() => {
-        errMsg.value = ''
-      })
-      .catch((error: any) => {
-        errMsg.value = error.message
-      })
+  if (formSchema.value?.validateAt && props.field) {
+    formSchema.value
+      .validateAt(props.field, formData.value)
+      .then(() => (errMsg.value = ""))
+      .catch((e: any) => (errMsg.value = e.message));
   }
 }
 
-// 防抖验证函数
-const validateField = debounce(() => {
-  validate()
-}, 120)
+// 防抖校验
+const validateField = debounce(validate, 120);
 
-// 防抖的 watch 回调函数
+// 防抖watch
 const debouncedWatchCallback = debounce(() => {
   if (!ignoreValidate.value) {
-    validateField()
+    validateField();
+  } else {
+    ignoreValidate.value = false;
   }
-  else {
-    ignoreValidate.value = false
-  }
-}, 120)
+}, 120);
 
-function setError(message: any) {
-  errMsg.value = message
+function setError(msg: any) {
+  errMsg.value = msg;
 }
 
-function change(value: any) {
-  const { field, label } = props
-  emit('change', { value, field, label })
+function change(val: any) {
+  if (formData.value && props.field) {
+    formData.value[props.field] = val;
+  }
+  if (!ignoreValidate.value) validateField();
+  emit("change", { value: val, field: props.field, label: props.label });
 }
 
-watch(() => modelValue.value, debouncedWatchCallback, {
-  deep: true,
-})
+watch(() => modelValue.value, debouncedWatchCallback, { deep: true });
 
 const getFormItemMainStyle = computed(() => {
-  if (!formItemRef.value)
-    return {}
-  const { direction, labelWidth, between } = props
-  const { offsetWidth } = formItemRef.value
+  if (!formItemRef.value) return {};
+  const { direction, labelWidth, between } = props;
+  const { offsetWidth } = formItemRef.value;
   return {
     width:
-      direction === 'x'
+      direction === "x"
         ? `calc(${offsetWidth}px - ${any2px(labelWidth)} - 10px)`
-        : '100%',
-    justifyContent: direction === 'x' && between ? 'flex-end' : 'flex-start',
-  }
-})
+        : "100%",
+    justifyContent: direction === "x" && between ? "flex-end" : "flex-start",
+  };
+});
 
-defineExpose({ validate, setError, curRule, setIgnoreValidate })
+// 联动控制逻辑
+const getVisible = computed(() => {
+  if (typeof props.visible === "function") {
+    return props.visible(formData.value);
+  }
+  return props.visible;
+});
+
+const getDisabled = computed(() => {
+  if (typeof props.disabled === "function") {
+    return props.disabled(formData.value);
+  }
+  return props.disabled;
+});
+
+const getReadonly = computed(() => {
+  if (typeof props.readonly === "function") {
+    return props.readonly(formData.value);
+  }
+  return props.readonly;
+});
+
+const getDynamicProps = computed(() => {
+  if (typeof props.props === "function") {
+    return props.props(formData.value);
+  }
+  return props.props;
+});
+
+// 监听表单数据变化，触发联动更新
+watchEffect(() => {
+  // 当 formUpdateKey 或 formData 变化时，重新计算联动属性
+  const _updateKey = formUpdateKey.value;
+  const _formData = formData.value;
+  // 这些变量用于触发响应式更新，不需要实际使用
+  void _updateKey;
+  void _formData;
+});
+
+defineExpose({ validate, setError, setIgnoreValidate });
 </script>
 
 <template>
   <div
+    v-if="getVisible"
     ref="formItemRef"
     class="lew-form-item"
     :class="getFormItemClassNames"
@@ -215,7 +191,7 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
       class="lew-label-box-wrapper"
     >
       <div v-if="as" class="lew-label-box">
-        <RequiredIcon v-if="curRequired && label" :size="requiredIconSizeMap[size]" />
+        <RequiredIcon v-if="required && label" :size="requiredIconSizeMap[size]" />
         {{ label }}
         <CommonIcon
           v-if="tips"
@@ -239,12 +215,12 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate })
         v-model="modelValue"
         v-bind="{
           size,
-          readonly,
-          disabled,
-          ...props.props,
+          readonly: getReadonly,
+          disabled: getDisabled,
+          ...getDynamicProps,
           width:
             as && ['input-number', 'tabs', 'button'].includes(as)
-              ? props.props.width
+              ? getDynamicProps.width
               : '100%',
           popoverWidth: as && ['select'].includes(as) ? '100%' : undefined,
         }"

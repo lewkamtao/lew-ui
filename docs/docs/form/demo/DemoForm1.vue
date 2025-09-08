@@ -200,13 +200,7 @@ const options = ref([
     field: 'password',
     label: 'Password',
     as: 'input',
-    rule: Yup.string()
-      .min(8, 'Minimum 8 characters')
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-        'Must contain uppercase, lowercase, and number',
-      )
-      .required('Password is required'),
+    rule: Yup.string().required('Password is required'),
     props: {
       type: 'password',
       placeholder: 'Create a strong password',
@@ -221,6 +215,7 @@ const options = ref([
     rule: Yup.string()
       .oneOf([Yup.ref('password')], 'Passwords must match')
       .required('Please confirm your password'),
+
     props: {
       type: 'password',
       placeholder: 'Confirm your password',
