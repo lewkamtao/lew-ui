@@ -1,8 +1,23 @@
+import type { LewFormOption } from 'lew-ui/types'
 import { cloneDeep, toNumber } from 'lodash-es'
+import * as Yup from 'yup'
 import CommonIcon from '../_components/CommonIcon.vue'
 
 export * from './dragmove'
 export * from './select'
+
+export function getFormItemRequired(item: LewFormOption) {
+  const _rule
+    = typeof item.rule === 'string'
+      ? new Function('Yup', `return ${item.rule}`)(Yup)
+      : item.rule
+
+  if (typeof _rule === 'object') {
+    return _rule?.spec?.optional === false
+  }
+
+  return false
+}
 
 export const iconColorType: Record<string, string> = {
   normal: 'gray',

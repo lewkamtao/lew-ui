@@ -90,21 +90,56 @@ function validate() {
     errMsg.value = "";
     return;
   }
-  if (formSchema.value?.validateAt && props.field) {
-    formSchema.value
-      .validateAt(props.field, formData.value)
-      .then(() => (errMsg.value = ""))
-      .catch((e: any) => (errMsg.value = e.message));
+
+  // 检查是否有有效的 schema 和 field
+  if (!formSchema.value || !props.field) {
+    errMsg.value = "";
+    return;
+  }
+
+  // 检查 schema 是否有 validateAt 方法
+  if (typeof formSchema.value.validateAt !== "function") {
+    errMsg.value = "";
+    return;
+  }
+
+  // 检查 field 是否存在于 schema 中
+  try {
+    // 尝试获取 schema 中的字段定义来检查是否存在
+    const fieldExists = formSchema.value.fields && formSchema.value.fields[props.field];
+    if (!fieldExists && !formSchema.value.fields) {
+      // 如果没有 fields 属性，尝试直接验证，如果失败则忽略
+      formSchema.value
+        .validateAt(props.field, formData.value)
+        .then(() => (errMsg.value = ""))
+        .catch((e: any) => {
+          // 如果是路径不存在的错误，忽略验证
+          if (e.message && e.message.includes("does not contain the path")) {
+            errMsg.value = "";
+          } else {
+            errMsg.value = e.message;
+          }
+        });
+    } else if (fieldExists) {
+      // 字段存在，正常验证
+      formSchema.value
+        .validateAt(props.field, formData.value)
+        .then(() => (errMsg.value = ""))
+        .catch((e: any) => (errMsg.value = e.message));
+    } else {
+      // 字段不存在，清除错误信息
+      errMsg.value = "";
+    }
+  } catch {
+    // 如果验证过程中出现任何错误，清除错误信息
+    errMsg.value = "";
   }
 }
 
-// 防抖校验
-const validateField = debounce(validate, 120);
-
-// 防抖watch
-const debouncedWatchCallback = debounce(() => {
+// 防抖校验 - 统一使用一个防抖函数
+const debouncedValidate = debounce(() => {
   if (!ignoreValidate.value) {
-    validateField();
+    validate();
   } else {
     ignoreValidate.value = false;
   }
@@ -115,14 +150,11 @@ function setError(msg: any) {
 }
 
 function change(val: any) {
-  if (formData.value && props.field) {
-    formData.value[props.field] = val;
-  }
-  if (!ignoreValidate.value) validateField();
+  debouncedValidate();
   emit("change", { value: val, field: props.field, label: props.label });
 }
 
-watch(() => modelValue.value, debouncedWatchCallback, { deep: true });
+watch(() => modelValue.value, debouncedValidate, { deep: true });
 
 const getFormItemMainStyle = computed(() => {
   if (!formItemRef.value) return {};
@@ -194,10 +226,7 @@ defineExpose({ validate, setError, setIgnoreValidate });
       class="lew-label-box-wrapper"
     >
       <div v-if="as" class="lew-label-box">
-        <RequiredIcon
-          v-if="required && label"
-          :size="requiredIconSizeMap[size]"
-        />
+        <RequiredIcon v-if="required && label" :size="requiredIconSizeMap[size]" />
         {{ label }}
         <CommonIcon
           v-if="tips"

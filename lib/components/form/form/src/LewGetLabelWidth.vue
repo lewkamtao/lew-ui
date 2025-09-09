@@ -2,7 +2,7 @@
 import type { LewSize } from "lew-ui";
 import { LewFlex } from "lew-ui";
 import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px } from "lew-ui/utils";
+import { any2px, getFormItemRequired } from "lew-ui/utils";
 import { requiredIconSizeMap, tipsIconSizeMap } from "./props";
 import RequiredIcon from "./RequiredIcon.vue";
 
@@ -46,7 +46,7 @@ defineExpose({
       }"
     >
       <RequiredIcon
-        v-if="item.required && item.label"
+        v-if="getFormItemRequired(item) && item.label"
         :size="requiredIconSizeMap[size]"
       />
       {{ item.label }}

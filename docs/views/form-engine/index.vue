@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import type { LewFormOption } from 'lew-ui'
 import type { LewSize } from 'lew-ui/types'
-import { useDark } from '@vueuse/core'
 
+import { useDark } from '@vueuse/core'
 import dayjs from 'dayjs'
 import LewCodeBox from 'docs/components/LewCodeBox.vue'
 import { downloadObjectAsFile, getComponentIcon } from 'docs/lib/utils'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
-import { any2px, formatFormByMap, getUniqueId } from 'lew-ui/utils'
+import { any2px, formatFormByMap, getFormItemRequired, getUniqueId } from 'lew-ui/utils'
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
+import * as Yup from 'yup'
 import PreviewModal from './components/PreviewModal.vue'
 import SetForm from './components/SetForm.vue'
 import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
@@ -420,6 +422,7 @@ onMounted(() => {
                   direction: formGlobal.direction,
                   labelWidth: autoLabelWidth,
                   ...element,
+                  required: getFormItemRequired(element),
                 }"
                 readonly
               />
