@@ -1,117 +1,132 @@
-import type { LewSize } from 'lew-ui'
-import type { PropType } from 'vue'
-
-export interface CascaderOptions {
-  label: string
-  value: string
-  labelPaths?: string[]
-  valuePaths?: string[]
-  level: number
-  isLeaf?: boolean
-  loading?: boolean
-  disabled?: boolean
-  parentLabelPaths?: string[]
-  parentValuePaths?: string[]
-  children?: CascaderOptions[]
-}
-
-export type CascaderTriggerType = 'click' | 'hover'
-
-export const cascaderModel = {
-  modelValue: {
-    type: [String, Number],
-    default: '',
-    description: '当前选中的值',
-  },
-}
+import type { Property } from 'csstype'
+import type { LewCascaderOption, LewSize, LewTrigger } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const cascaderProps = {
   options: {
-    type: Array as PropType<CascaderOptions[]>,
-    default: () => [],
-    description: '可选项数据源',
-    validator: (value: CascaderOptions[]) => {
-      if (!Array.isArray(value)) {
-        console.warn('[LewCascader] options 必须是一个数组')
-        return false
-      }
-      return true
-    },
+    type: Array as PropType<LewCascaderOption[]>,
+    typePopKey: ['LewCascaderOption'],
+    validator: validators.array({
+      componentName: 'LewCascader',
+      propName: 'options',
+    }),
   },
   width: {
-    type: String,
-    default: '300px',
-    description: '宽度',
+    type: String as PropType<Property.Width>,
+    default: '100%',
+    validator: validators.widthHeight({
+      componentName: 'LewCascader',
+      propName: 'width',
+    }),
   },
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '输入框占位文本',
+    validator: validators.string({
+      componentName: 'LewCascader',
+      propName: 'placeholder',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'disabled',
+    }),
   },
   clearable: {
     type: Boolean,
     default: true,
-    description: '是否可清空',
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'clearable',
+    }),
   },
   showAllLevels: {
     type: Boolean,
     default: true,
-    description: '是否显示完整的选中值路径',
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'showAllLevels',
+    }),
   },
   multiple: {
     type: Boolean,
     default: false,
-    description: '是否多选',
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'multiple',
+    }),
   },
   free: {
     type: Boolean,
     default: false,
-    description: '是否启用自由选择模式',
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'free',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '尺寸',
-    validator: (value: string) => {
-      return ['small', 'medium', 'large'].includes(value)
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewCascader',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   trigger: {
-    type: String as PropType<CascaderTriggerType>,
+    type: String as PropType<LewTrigger>,
     default: 'click',
-    description: '次级菜单的展开方式',
-    validator: (value: string) => {
-      return ['click', 'hover'].includes(value)
-    },
+    typeValues: validTriggerList,
+    validator: validators.enum({
+      componentName: 'LewCascader',
+      propName: 'trigger',
+      values: validTriggerList,
+    }),
   },
   loadMethod: {
-    type: Function,
-    description: '动态加载子节点数据的函数',
+    type: Function as PropType<() => Promise<LewCascaderOption[]>>,
+    default: null,
+    validator: validators.function({
+      componentName: 'LewCascader',
+      propName: 'loadMethod',
+    }),
   },
   loadMethodId: {
     type: String,
-    default: '',
     hidden: true,
-    description: '动态加载子节点数据函数的标识',
+    validator: validators.string({
+      componentName: 'LewCascader',
+      propName: 'loadMethodId',
+    }),
   },
   initMethod: {
-    type: Function,
-    description: '初始化选项数据的函数',
+    type: Function as PropType<() => Promise<LewCascaderOption[]>>,
+    default: null,
+    validator: validators.function({
+      componentName: 'LewCascader',
+      propName: 'initMethod',
+    }),
   },
   initMethodId: {
     type: String,
-    default: '',
-    hidden: true,
-    description: '初始化选项数据函数的标识',
+    validator: validators.string({
+      componentName: 'LewCascader',
+      propName: 'initMethodId',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'readonly',
+    }),
   },
 }
+
+export type LewCascaderProps = ExtractPublicPropTypes<typeof cascaderProps>

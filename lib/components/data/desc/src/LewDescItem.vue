@@ -1,102 +1,85 @@
 <script setup lang="ts">
-import type { TextTrimAlignment } from 'lew-ui'
+import type { LewSize } from 'lew-ui'
 import { LewTextTrim, LewTooltip } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { tipsIconSizeMap } from 'lew-ui/components/form/form/src/props'
 import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { isString } from 'lodash-es'
+import { computed, getCurrentInstance, ref } from 'vue'
 import { descItemProps, lewDescSizePaddingMap } from './props'
 
 const props = defineProps(descItemProps)
-// 获取app实例并注册tooltip指令
+
+// Register tooltip directive
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
-const descItemRef = ref()
+// Refs
+const descItemRef = ref<HTMLElement>()
 
-// 计算class名称
+// Constants
+const GAP_X_MAP: Record<LewSize, number> = {
+  small: 10,
+  medium: 14,
+  large: 16,
+}
+
+const GAP_Y_MAP: Record<LewSize, number> = {
+  small: 8,
+  medium: 10,
+  large: 12,
+}
+
+// Computed
 const getDescItemClassNames = computed(() => {
   const { direction, size, bordered } = props
   return object2class('lew-desc-item', { direction, size, bordered })
 })
 
-// 处理显示文本和空值
-function showTextAndEmpty() {
-  const text = retrieveNestedFieldValue(props.dataSource, props.field)
-  if (text === null || text === undefined || text === '') {
-    return '-'
-  }
-  return isString(text) ? text : JSON.stringify(text)
-}
-
-// 渲染内容
-function renderItem() {
-  if (props.customRender) {
-    const { field, label } = props
-    return props.customRender({
-      field,
-      label,
-      dataSource: props.dataSource,
-    })
-  }
-  return props.type === 'text-trim'
-    ? h(LewTextTrim, {
-        x: props.valueX as TextTrimAlignment,
-        style: 'width: 100%',
-        text: showTextAndEmpty(),
-      })
-    : showTextAndEmpty()
-}
-
 const getGap = computed(() => {
   const { size, direction } = props
-  const gapXMap = {
-    small: 10,
-    medium: 14,
-    large: 16,
-  }
-  const gapYMap = {
-    small: 8,
-    medium: 10,
-    large: 12,
-  }
-  return direction === 'x' ? gapXMap[size] : gapYMap[size]
+  return direction === 'x' ? GAP_X_MAP[size] : GAP_Y_MAP[size]
 })
 
 const getPadding = computed(() => {
   const { bordered, size } = props
   return bordered
-    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(lewDescSizePaddingMap[size])}`
+    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(
+      lewDescSizePaddingMap[size],
+    )}`
     : 0
 })
 
 const getDescItemStyle = computed(() => {
   const { bordered, gridArea } = props
   return {
-    'gap': bordered ? 0 : any2px(getGap.value),
-    'grid-area': gridArea || '',
+    gap: bordered ? 0 : any2px(getGap.value),
+    gridArea: gridArea || undefined,
   }
 })
 
 const getLabelBoxStyle = computed(() => {
   const { labelX } = props
   return {
-    'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`,
-    'padding': getPadding.value,
+    justifyContent: labelX === 'center' ? labelX : `flex-${labelX}`,
+    padding: getPadding.value,
   }
 })
 
 const getDescItemMainStyle = computed(() => {
   const { direction, labelWidth, valueX } = props
   return {
-    'width':
+    width:
       direction === 'x'
-        ? `calc(${descItemRef.value?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
+        ? `calc(${descItemRef.value?.offsetWidth || 0}px - ${any2px(
+          labelWidth,
+        )} - 10px)`
         : '100%',
-    'justify-content': valueX === 'center' ? valueX : `flex-${valueX}`,
-    'padding': getPadding.value,
+    justifyContent: valueX === 'center' ? valueX : `flex-${valueX}`,
+    padding: getPadding.value,
   }
 })
 
@@ -104,6 +87,15 @@ const getLabelBoxWidth = computed(() => {
   const { direction, labelWidth } = props
   return direction === 'x' ? any2px(labelWidth) : '100%'
 })
+
+// Methods
+function showTextAndEmpty(): string {
+  const text = retrieveNestedFieldValue(props.dataSource, props.field!)
+  if (text === null || text === undefined || text === '') {
+    return '-'
+  }
+  return isString(text) ? text : JSON.stringify(text)
+}
 </script>
 
 <template>
@@ -113,14 +105,12 @@ const getLabelBoxWidth = computed(() => {
     :class="getDescItemClassNames"
     :style="getDescItemStyle"
   >
-    <div :style="`width:${getLabelBoxWidth}`" class="lew-label-box-wrapper">
+    <div :style="{ width: getLabelBoxWidth }" class="lew-label-box-wrapper">
       <div class="lew-label-box" :style="getLabelBoxStyle">
         {{ label }}
-        <LewCommonIcon
+        <CommonIcon
           v-if="tips"
-          v-tooltip="{
-            content: tips,
-          }"
+          v-tooltip="{ content: tips }"
           class="lew-label-tips-icon"
           :size="tipsIconSizeMap[size]"
           type="normal"
@@ -128,7 +118,27 @@ const getLabelBoxWidth = computed(() => {
       </div>
     </div>
     <div class="lew-desc-item-main" :style="getDescItemMainStyle">
-      <renderItem />
+      <slot
+        v-if="$slots.default"
+        :field="field"
+        :label="label"
+        :data-source="dataSource"
+        :value="showTextAndEmpty()"
+      />
+      <RenderComponent
+        v-else-if="customRender"
+        :render-fn="customRender({ field: field!, label: label!, dataSource })"
+      />
+      <template v-else-if="type === 'text-trim'">
+        <LewTextTrim
+          :x="valueX"
+          style="width: 100%"
+          :text="showTextAndEmpty()"
+        />
+      </template>
+      <template v-else>
+        {{ showTextAndEmpty() }}
+      </template>
     </div>
   </div>
 </template>
@@ -147,6 +157,7 @@ const getLabelBoxWidth = computed(() => {
     .lew-label-box {
       display: inline-flex;
       white-space: nowrap;
+      align-items: center;
       gap: 5px;
       color: var(--lew-text-color-6);
       width: 100%;
@@ -155,8 +166,8 @@ const getLabelBoxWidth = computed(() => {
 
       .lew-label-tips-icon {
         cursor: pointer;
-        margin-top: 4px;
         flex-shrink: 0;
+        margin-top: 1px;
       }
     }
   }
@@ -235,19 +246,6 @@ const getLabelBoxWidth = computed(() => {
   }
 }
 
-// 错误状态样式
-.lew-desc-item-error {
-  --lew-desc-border-color-focus: var(--lew-color-error-dark);
-  --lew-radio-border-color-hover: var(--lew-color-error);
-  --lew-checkbox-border-color-hover: var(--lew-color-error);
-  --lew-checkbox-color: var(--lew-color-error);
-  --lew-checkbox-color: var(--lew-color-error-dark);
-  --lew-checkbox-color-light: var(--lew-color-error-light);
-  --lew-radio-color: var(--lew-color-error);
-  --lew-radio-color: var(--lew-color-error-dark);
-  --lew-radio-color-light: var(--lew-color-error-light);
-}
-
 // 动画相关样式
 .lew-slide-fade-leave-active,
 .lew-slide-fade-enter-active {
@@ -277,19 +275,24 @@ const getLabelBoxWidth = computed(() => {
     box-sizing: border-box;
     outline: var(--lew-desc-border);
   }
+
   .lew-label-box-wrapper {
     background-color: var(--lew-desc-label-bgcolor);
+
     .lew-label-box {
       color: var(--lew-text-color-2);
+
       .lew-label-tips-icon {
         color: var(--lew-text-color-4);
       }
     }
   }
+
   .lew-desc-item-main {
     background: var(--lew-bgcolor-0);
   }
 }
+
 .lew-desc-item-bordered:last-child {
   border-bottom: none;
 }

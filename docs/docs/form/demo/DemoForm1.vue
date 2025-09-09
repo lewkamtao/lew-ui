@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import uploadHelper from 'docs/docs/upload/uploadHelper'
-import { schools } from 'docs/lib/data'
 import * as Yup from 'yup'
-
-const schoolsOptions = schools.map((e, i) => {
-  return { label: e, value: i + 1 }
-})
 
 const form = ref({} as any)
 const formRef = ref()
 
 function submit() {
-  LewMessage.request({ loadingMessage: '处理中···' }, () => {
+  LewMessage.request({ loadingMessage: 'Processing...' }, () => {
     return new Promise<any>((resolve, reject) => {
       formRef.value
         .validate()
@@ -19,14 +14,14 @@ function submit() {
           if (vail) {
             form.value = formRef.value.getForm()
             resolve({
-              content: '加载成功！',
+              content: 'Account created successfully!',
               duration: 1000,
               type: 'success',
             })
           }
           else {
             resolve({
-              content: '请完善表单',
+              content: 'Please complete all required fields',
               duration: 1000,
               type: 'warning',
             })
@@ -38,347 +33,285 @@ function submit() {
     })
   })
 }
+
 const options = ref([
   {
-    label: '表单大小',
+    label: 'Account Type',
     as: 'tabs',
-    field: 'size',
+    field: 'accountType',
     props: {
       itemWidth: 'auto',
       width: '100%',
       options: [
         {
-          label: 'small',
-          value: 'small',
+          label: 'Personal',
+          value: 'personal',
         },
         {
-          label: 'medium',
-          value: 'medium',
+          label: 'Business',
+          value: 'business',
         },
         {
-          label: 'large',
-          value: 'large',
+          label: 'Enterprise',
+          value: 'enterprise',
         },
       ],
     },
   },
   {
-    field: 'upload',
-    label: '上传',
+    field: 'profilePhoto',
+    label: 'Profile Photo',
     as: 'upload',
     rule: Yup.array()
       .of(
         Yup.object({
-          status: Yup.string().oneOf(['success'], '请等待上传完成'),
+          status: Yup.string().oneOf(['success'], 'Please wait for upload to complete'),
         }),
       )
-      .min(3, '至少包含3个元素')
-      .required('此项必填'),
+      .max(1, 'Maximum 1 photo allowed')
+      .required('Profile photo is required'),
     props: {
       uploadHelperId: 'uploadHelper',
-      multiple: true,
+      multiple: false,
       viewMode: 'card',
-      limit: 3,
+      limit: 1,
       accept: 'image/jpeg,image/png',
-      tips: '只能上传jpg/png文件，且不超过500kb，最多上传3个文件',
+      tips: 'Upload a clear photo (JPG/PNG, max 2MB)',
     },
   },
   {
-    field: 'input',
-    label: '文本框',
+    field: 'firstName',
+    label: 'First Name',
     as: 'input',
-    rule: Yup.string().required('此项必填'),
+    rule: Yup.string()
+      .min(2, 'Minimum 2 characters')
+      .max(30, 'Maximum 30 characters')
+      .required('First name is required'),
     props: {
       showCount: true,
       maxLength: 30,
+      placeholder: 'Enter your first name',
     },
   },
   {
-    field: 'input-number',
-    label: '数字输入框',
-    as: 'input-number',
-    rule: Yup.number()
-      .min(0)
-      .max(100)
-      .typeError('请输入数字')
-      .required('此项必填'),
-    props: {},
-  },
-  {
-    field: 'textarea',
-    label: '多行文本框',
-    as: 'textarea',
-    rule: Yup.string().required('不能为空'),
+    field: 'lastName',
+    label: 'Last Name',
+    as: 'input',
+    rule: Yup.string()
+      .min(2, 'Minimum 2 characters')
+      .max(30, 'Maximum 30 characters')
+      .required('Last name is required'),
     props: {
-      clearable: true,
       showCount: true,
-      maxLength: 300,
+      maxLength: 30,
+      placeholder: 'Enter your last name',
     },
   },
   {
-    field: 'select',
-    label: '单选选择器',
+    field: 'email',
+    label: 'Email Address',
+    as: 'input',
+    rule: Yup.string().email('Please enter a valid email').required('Email is required'),
+    props: {
+      placeholder: 'Enter your email address',
+      clearable: true,
+    },
+  },
+  {
+    field: 'phone',
+    label: 'Phone Number',
+    as: 'input',
+    rule: Yup.string()
+      .matches(/^\+?[\d\s\-()]+$/, 'Please enter a valid phone number')
+      .required('Phone number is required'),
+    props: {
+      placeholder: '+1 (555) 123-4567',
+      clearable: true,
+    },
+  },
+  {
+    field: 'dateOfBirth',
+    label: 'Date of Birth',
+    as: 'date-picker',
+    rule: Yup.string().required('Date of birth is required'),
+    props: {
+      clearable: true,
+      placeholder: 'Select your date of birth',
+    },
+  },
+  {
+    field: 'country',
+    label: 'Country',
     as: 'select',
-    rule: Yup.string().required('此项必填'),
+    rule: Yup.string().required('Country is required'),
     props: {
       clearable: true,
+      placeholder: 'Select your country',
       options: [
-        {
-          label: '广东',
-          value: '1',
-        },
-        {
-          label: '深圳',
-          value: '2',
-        },
-        {
-          label: '杭州',
-          value: '3',
-        },
-        {
-          label: '上海',
-          value: '4',
-        },
-        {
-          label: '北京',
-          value: '5',
-        },
+        { label: 'United States', value: 'US' },
+        { label: 'Canada', value: 'CA' },
+        { label: 'United Kingdom', value: 'UK' },
+        { label: 'Germany', value: 'DE' },
+        { label: 'France', value: 'FR' },
+        { label: 'Japan', value: 'JP' },
+        { label: 'Australia', value: 'AU' },
+        { label: 'China', value: 'CN' },
+        { label: 'India', value: 'IN' },
+        { label: 'Brazil', value: 'BR' },
       ],
     },
   },
   {
-    field: 'select_multiple',
-    label: '多选选择器',
-    as: 'select-multiple',
-    rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
+    field: 'city',
+    label: 'City',
+    as: 'input',
+    rule: Yup.string().required('City is required'),
     props: {
+      placeholder: 'Enter your city',
       clearable: true,
-      options: schoolsOptions,
     },
   },
   {
-    field: 'radio_group',
-    label: '单选框',
-    as: 'radio-group',
+    field: 'zipCode',
+    label: 'ZIP/Postal Code',
+    as: 'input',
+    rule: Yup.string().required('ZIP/Postal code is required'),
+    props: {
+      placeholder: 'Enter ZIP/postal code',
+      clearable: true,
+    },
+  },
+  {
+    field: 'username',
+    label: 'Username',
+    as: 'input',
+    rule: Yup.string()
+      .min(4, 'Minimum 4 characters')
+      .max(20, 'Maximum 20 characters')
+      .matches(/^\w+$/, 'Only letters, numbers, and underscores allowed')
+      .required('Username is required'),
+    props: {
+      showCount: true,
+      maxLength: 20,
+      placeholder: 'Choose a unique username',
+    },
+  },
+  {
+    field: 'password',
+    label: 'Password',
+    as: 'input',
+    rule: Yup.string().required('Password is required'),
+    props: {
+      type: 'password',
+      placeholder: 'Create a strong password',
+      showCount: true,
+      maxLength: 50,
+    },
+  },
+  {
+    field: 'confirmPassword',
+    label: 'Confirm Password',
+    as: 'input',
+    rule: Yup.string()
+      .oneOf([Yup.ref('password')], 'Passwords must match')
+      .required('Please confirm your password'),
 
-    rule: Yup.string().required('此项必填'),
     props: {
+      type: 'password',
+      placeholder: 'Confirm your password',
+    },
+  },
+  {
+    field: 'interests',
+    label: 'Interests & Hobbies',
+    as: 'select-multiple',
+    rule: Yup.array()
+      .min(1, 'Select at least one interest')
+      .max(5, 'Maximum 5 interests allowed')
+      .required('Please select your interests'),
+    props: {
+      clearable: true,
+      placeholder: 'Select your interests',
       options: [
-        {
-          label: '男',
-          value: '1',
-        },
-        {
-          label: '女',
-          value: '2',
-        },
-        {
-          label: '不公开',
-          value: '3',
-        },
+        { label: 'Technology', value: 'tech' },
+        { label: 'Sports', value: 'sports' },
+        { label: 'Music', value: 'music' },
+        { label: 'Travel', value: 'travel' },
+        { label: 'Cooking', value: 'cooking' },
+        { label: 'Reading', value: 'reading' },
+        { label: 'Gaming', value: 'gaming' },
+        { label: 'Photography', value: 'photography' },
+        { label: 'Art', value: 'art' },
+        { label: 'Fitness', value: 'fitness' },
       ],
     },
   },
   {
-    field: 'checkbox_group',
-    label: '多选框',
-    as: 'checkbox-group',
-    rule: Yup.array().min(1, '至少选择一个').required('此项必填'),
+    field: 'gender',
+    label: 'Gender',
+    as: 'radio-group',
+    rule: Yup.string().required('Please select your gender'),
     props: {
-      round: true,
-      block: true,
       options: [
-        {
-          label: '唱歌',
-          value: '1',
-        },
-        {
-          label: '跳舞',
-          value: '2',
-        },
-        {
-          label: 'Rap',
-          value: '3',
-        },
-        {
-          label: '上海',
-          value: '4',
-        },
+        { label: 'Male', value: 'male' },
+        { label: 'Female', value: 'female' },
+        { label: 'Non-binary', value: 'non-binary' },
+        { label: 'Prefer not to say', value: 'prefer-not-to-say' },
       ],
     },
   },
   {
-    field: 'rate',
-    label: '评分',
-    as: 'rate',
-    rule: Yup.number().required('此项必填'),
+    field: 'newsletter',
+    label: 'Newsletter Subscription',
+    as: 'checkbox',
+    rule: Yup.boolean(),
     props: {
-      max: 10,
+      label: 'Subscribe to our newsletter for updates and offers',
     },
   },
   {
-    field: 'tabs',
-    label: '选项卡',
-    as: 'tabs',
-    rule: Yup.string().required('此项必填'),
+    field: 'marketing',
+    label: 'Marketing Communications',
+    as: 'checkbox',
+    rule: Yup.boolean(),
     props: {
-      options: [
-        {
-          label: 'Beijing',
-          value: '1',
-        },
-        {
-          label: 'Shanghai',
-          value: '2',
-        },
-        {
-          label: 'Guangzhou',
-          value: '3',
-        },
-        {
-          label: 'Shenzhen',
-          value: '4',
-        },
-      ],
+      label: 'Receive marketing communications from our partners',
     },
   },
   {
-    field: 'user.address',
-    label: '地址',
-    as: 'cascader',
-    rule: Yup.string().required('地址必填'),
-    props: {
-      label: '是否同意',
-      free: true,
-      options: [
-        {
-          value: 1,
-          label: 'Asia',
-          children: [
-            {
-              value: 2,
-              label: 'China',
-              children: [
-                { value: 3, label: 'Beijing' },
-                { value: 4, label: 'Shanghai' },
-                { value: 5, label: 'Hangzhou' },
-              ],
-            },
-            {
-              value: 6,
-              label: 'Japan',
-              children: [
-                { value: 7, label: 'Tokyo' },
-                { value: 8, label: 'Osaka' },
-                { value: 9, label: 'Kyoto' },
-              ],
-            },
-            {
-              value: 10,
-              label: 'Korea',
-              children: [
-                { value: 11, label: 'Seoul' },
-                { value: 12, label: 'Busan' },
-                { value: 13, label: 'Taegu' },
-              ],
-            },
-          ],
-        },
-        {
-          value: 14,
-          label: 'Europe',
-          children: [
-            {
-              value: 15,
-              label: 'France',
-              children: [
-                { value: 16, label: 'Paris' },
-                { value: 17, label: 'Marseille' },
-                { value: 18, label: 'Lyon' },
-              ],
-            },
-            {
-              value: 19,
-              label: 'UK',
-              children: [
-                { value: 20, label: 'London' },
-                { value: 21, label: 'Birmingham' },
-                { value: 22, label: 'Manchester' },
-              ],
-            },
-          ],
-        },
-        {
-          value: 23,
-          label: 'North America',
-          children: [
-            {
-              value: 24,
-              label: 'US',
-              children: [
-                { value: 25, label: 'New York' },
-                { value: 26, label: 'Los Angeles' },
-                { value: 27, label: 'Washington' },
-              ],
-            },
-            {
-              value: 28,
-              label: 'Canada',
-              children: [
-                { value: 29, label: 'Toronto' },
-                { value: 30, label: 'Montreal' },
-                { value: 31, label: 'Ottawa' },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    field: 'user.addd',
+    field: 'terms',
     label: '',
     as: 'checkbox',
-    rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
+    rule: Yup.boolean()
+      .oneOf([true], 'You must agree to the terms')
+      .required('You must agree to the terms'),
     props: {
-      label: '是否同意',
+      label: 'I agree to the Terms of Service and Privacy Policy',
     },
-  },
-  {
-    field: 'info.a.b.c.slider',
-    label: '滑块',
-    as: 'slider',
-    rule: Yup.number().required('不能为空'),
-  },
-  {
-    field: 'info.a.b.c.input_tag',
-    label: '标签输入框',
-    as: 'input-tag',
-    rule: Yup.array().min(1, '至少选择一个').required('不能为空'),
   },
   {
     as: 'button',
     props: {
-      text: '提交',
+      text: 'Create Account',
       request: submit,
     },
   },
 ])
 
 function setForm() {
-  // 设置表单
+  // Set form
   formRef.value.setForm({
-    size: 'medium',
+    accountType: 'personal',
   })
 }
 
 function resetForm() {
-  // 重置表单
-  formRef.value.setForm({ size: 'medium' })
+  // Reset form
+  formRef.value.setForm({ accountType: 'personal' })
 }
 
 function change() {
-  // 获取表单
+  // Get form
   form.value = formRef.value.getForm()
 }
 
@@ -388,29 +321,28 @@ onMounted(() => {
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
+  <lew-flex x="start" y="start" gap="50px">
     <lew-form
       ref="formRef"
-      :size="form.size"
       :form-methods="{
         uploadHelper,
       }"
       class="form-box"
       :options="options"
-      :width="450"
+      width="550px"
       @mounted="setForm"
       @change="change"
     />
     <lew-flex direction="y" x="start">
       <lew-flex x="start">
         <lew-button type="light" round @click="submit">
-          submit
+          Submit
         </lew-button>
         <lew-button type="light" round @click="setForm">
-          setForm
+          Set Form
         </lew-button>
         <lew-button type="light" round @click="resetForm">
-          reset
+          Reset
         </lew-button>
       </lew-flex>
       <pre>{{ form }}</pre>
@@ -423,12 +355,14 @@ onMounted(() => {
   width: 450px;
   flex-shrink: 0;
 }
+
 pre {
   width: 350px;
   background-color: var(--lew-bgcolor-2);
   padding: 30px;
   flex-shrink: 0;
 }
+
 @media (max-width: 767px) {
   .form-box {
     width: 100%;

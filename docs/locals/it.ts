@@ -26,7 +26,7 @@ export default {
   },
   base: {
     base: 'Base',
-    navigator: 'Navigazione',
+    navigation: 'Navigazione',
     form: 'Form',
     data: 'Dati',
     feedback: 'Feedback',
@@ -156,7 +156,7 @@ export default {
         type: 'Tipo di stile',
         size: 'Dimensione',
         color: 'Tema colore',
-        closable: 'Chiudibile',
+        closeable: 'Chiudibile',
         disabled: 'Disabilitato',
         round: 'Bordi arrotondati',
         oversize: 'Dimensione più ampia',
@@ -404,7 +404,7 @@ export default {
         placement: 'Posizione menu',
         checkable: 'Selezionabile',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Callback apertura menu',
         hide: 'Callback chiusura menu',
@@ -455,7 +455,7 @@ export default {
         options: 'Configurazione menu',
         disabled: 'Menu disabilitato',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'Form',

@@ -1,8 +1,23 @@
-import { cloneDeep } from 'lodash-es'
+import type { LewFormOption } from 'lew-ui/types'
+import { cloneDeep, toNumber } from 'lodash-es'
+import * as Yup from 'yup'
+import CommonIcon from '../_components/CommonIcon.vue'
 
-import Icon from './LewCommonIcon.vue'
+export * from './dragmove'
+export * from './select'
 
-export * from './render'
+export function getFormItemRequired(item: LewFormOption) {
+  const _rule
+    = typeof item.rule === 'string'
+      ? new Function('Yup', `return ${item.rule}`)(Yup)
+      : item.rule
+
+  if (typeof _rule === 'object') {
+    return _rule?.spec?.optional === false
+  }
+
+  return false
+}
 
 export const iconColorType: Record<string, string> = {
   normal: 'gray',
@@ -11,7 +26,7 @@ export const iconColorType: Record<string, string> = {
   error: 'red',
   danger: 'red',
   info: 'blue',
-  primary: 'blue',
+  primary: 'primary',
   tips: 'blue',
 }
 
@@ -82,38 +97,6 @@ export function any2px(value: number | string | undefined): string {
   }
 
   return ''
-}
-
-export function isValidCssValue({
-  name,
-  field,
-  value,
-}: {
-  name: string
-  field: string
-  value: number | string | undefined
-}): boolean {
-  if (!value) {
-    return false
-  }
-  const autoRegex = /^auto$/i
-  const calcRegex = /^calc\((.+)\)$/
-  const percentRegex = /^-?\d+(\.\d+)?%$/
-  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
-  const numericRegex = /^-?\d+(\.\d+)?$/
-
-  const _value = String(value)
-  if (
-    autoRegex.test(_value)
-    || calcRegex.test(_value)
-    || percentRegex.test(_value)
-    || pixelRegex.test(_value)
-    || numericRegex.test(_value)
-  ) {
-    return true
-  }
-  console.warn(`[${name}] ${field} 属性的值 ${_value} 不是有效的 CSS 值。`)
-  return false
 }
 
 export function getUniqueId() {
@@ -271,7 +254,7 @@ export function getIconInnerHTML(e: any = {}) {
   const el: Element = document.createElement('div')
   const icon = createApp({
     render() {
-      return h(Icon, { ...e })
+      return h(CommonIcon, { ...e })
     },
   })
   icon.mount(el)
@@ -282,115 +265,6 @@ export function checkUrlIsImage(url: string = ''): boolean {
   // 移除正则中的捕获分组，避免未使用的分组警告
   const imageRegex = /\.(?:jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
   return imageRegex.test(url)
-}
-
-export function dragmove({
-  el,
-  parentEl,
-  direction = 'both',
-  callback,
-  max,
-  min,
-  step = () => 1,
-  trackMax,
-  trackMin,
-}: {
-  el: HTMLElement
-  parentEl: HTMLElement
-  direction?: 'horizontal' | 'vertical' | 'both'
-  callback?: (position: {
-    x: number
-    y: number
-    percentX: number
-    percentY: number
-  }) => void
-  max: () => number
-  min: () => number
-  step?: () => number
-  trackMax: () => number
-  trackMin: () => number
-}) {
-  let isDragging = false
-  let startX: number, startY: number
-  let parentRect: DOMRect
-
-  const getClampedValues = () => {
-    const clampedMinValue = Math.max(min(), trackMin())
-    const clampedMaxValue = Math.min(max(), trackMax())
-    return { clampedMinValue, clampedMaxValue }
-  }
-
-  const snapToGrid = (value: number, gridSize: number) => {
-    return Math.round(value / gridSize) * gridSize
-  }
-
-  const onMouseMove = (e: MouseEvent) => {
-    if (!isDragging)
-      return
-
-    let newX = e.clientX - startX
-    let newY = e.clientY - startY
-    const { clampedMinValue, clampedMaxValue } = getClampedValues()
-
-    if (direction === 'horizontal' || direction === 'both') {
-      const trackWidth = parentRect.width
-      const minX
-        = ((clampedMinValue - trackMin()) / (trackMax() - trackMin()))
-          * trackWidth
-      const maxX
-        = ((clampedMaxValue - trackMin()) / (trackMax() - trackMin()))
-          * trackWidth
-      newX = Math.max(minX, Math.min(newX, maxX))
-      const stepSize = trackWidth / ((trackMax() - trackMin()) / step())
-      newX = snapToGrid(newX, stepSize)
-      el.style.left = `${newX}px`
-    }
-
-    if (direction === 'vertical' || direction === 'both') {
-      const trackHeight = parentRect.height
-      const minY
-        = ((clampedMinValue - trackMin()) / (trackMax() - trackMin()))
-          * trackHeight
-      const maxY
-        = ((clampedMaxValue - trackMin()) / (trackMax() - trackMin()))
-          * trackHeight
-      newY = Math.max(minY, Math.min(newY, maxY))
-      const stepSize = trackHeight / ((trackMax() - trackMin()) / step())
-      newY = snapToGrid(newY, stepSize)
-      el.style.top = `${newY}px`
-    }
-
-    if (callback) {
-      callback({
-        x: Number(newX.toFixed(2)),
-        y: Number(newY.toFixed(2)),
-        percentX: Number((newX / parentRect.width).toFixed(2)),
-        percentY: Number((newY / parentRect.height).toFixed(2)),
-      })
-    }
-  }
-
-  const onMouseUp = () => {
-    isDragging = false
-    document.body.style.userSelect = 'auto'
-    document.removeEventListener('mousemove', onMouseMove)
-    document.removeEventListener('mouseup', onMouseUp)
-  }
-  const onMouseDown = (e: MouseEvent) => {
-    isDragging = true
-    startX = e.clientX - el.offsetLeft
-    startY = e.clientY - el.offsetTop
-
-    parentRect = parentEl.getBoundingClientRect()
-    document.body.style.userSelect = 'none'
-    document.addEventListener('mousemove', onMouseMove)
-    document.addEventListener('mouseup', onMouseUp)
-  }
-  el.addEventListener('mousedown', onMouseDown)
-
-  return () => {
-    el.removeEventListener('mousedown', onMouseDown)
-  }
 }
 
 export function parseToStandardJSON(str: string) {
@@ -476,4 +350,12 @@ export function findNodeByKey(key: string | number, tree: any) {
   }
 
   return null
+}
+
+export function parseDimension(value: string | number) {
+  if (typeof value === 'string') {
+    // 提取数值部分后转换
+    return toNumber(value.replace(/[^\d.-]/g, ''))
+  }
+  return toNumber(value) // 处理非字符串情况
 }

@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import type { InputTableColumn } from './props'
-import { LewButton, LewDialog, LewFlex, LewMessage, LewTable, locale } from 'lew-ui'
+import type { LewInputTableColumn } from 'lew-ui/types'
+import {
+  LewButton,
+  LewDialog,
+  LewFlex,
+  LewMessage,
+  LewTable,
+  LewTooltip,
+  locale,
+} from 'lew-ui'
 
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import { cloneDeep } from 'lodash-es'
+import { inputTableEmits } from './emits'
 import FormModal from './FormModal.vue'
 import { inputTableProps } from './props'
 
@@ -16,17 +24,21 @@ declare module 'vue' {
 }
 
 const props = defineProps(inputTableProps)
+const emit = defineEmits(inputTableEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
-  app.use(LewMessage)
+  app.use(LewTooltip)
 }
 const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
 function setUseId() {
+  if (!props.autoUniqueId) {
+    return
+  }
   (modelValue.value || []).forEach((e: any) => {
-    if (!e.id) {
-      e.id = getUniqueId()
+    if (!e[props.rowKey]) {
+      e[props.rowKey] = getUniqueId()
     }
   })
 }
@@ -41,19 +53,21 @@ watch(
 )
 
 // 缓存列配置，避免重复计算
-const inputTableColumns = computed(() => {
-  const actionColumn
-    = props.deletable || props.addable
-      ? [
-          {
-            title: '操作',
-            width: 90,
-            field: 'action',
-            x: 'center',
-            fixed: 'right',
-          },
-        ]
-      : []
+const inputTableColumns: ComputedRef<LewInputTableColumn[]> = computed(() => {
+  // 如果有数据，就应该显示操作列（用于编辑和删除）
+  const hasData = (modelValue.value || []).length > 0
+  const actionColumn = hasData
+    ? [
+        {
+          title: '操作',
+          width: 90,
+          field: 'action',
+          x: 'center',
+          fixed: 'right',
+          as: 'action',
+        },
+      ]
+    : []
 
   return [...props.columns, ...actionColumn]
 })
@@ -76,10 +90,10 @@ const formOptions = computed(() => {
 const styleConfig = computed(() => {
   const { size } = props
 
-  const paddingMap = {
-    small: '8px',
-    medium: '10px',
-    large: '12px',
+  const heightMap = {
+    small: '34px',
+    medium: '38px',
+    large: '44px',
   }
 
   const fontSizeMap = {
@@ -96,7 +110,7 @@ const styleConfig = computed(() => {
 
   return {
     addButtonStyle: {
-      padding: paddingMap[size],
+      height: heightMap[size],
       fontSize: `${fontSizeMap[size]}px`,
     },
     iconStyle: {
@@ -111,7 +125,7 @@ const formModalRef = ref()
 
 // 修复排序后编辑问题：使用rowKey而不是index来标识行
 function edit({ row }: { row: any, index: number }) {
-  formModalRef.value.open({ row })
+  formModalRef.value.open({ row, isEditing: true })
 }
 
 function del({ row }: { row: any, index: number }) {
@@ -136,7 +150,7 @@ function del({ row }: { row: any, index: number }) {
       if (actualIndex !== -1) {
         modelValue.value.splice(actualIndex, 1)
       }
-      return true
+      return Promise.resolve(true)
     },
   })
 }
@@ -147,17 +161,26 @@ function add() {
     return
   }
 
-  formModalRef.value.open({})
+  formModalRef.value.open({ row: props.defaultForm, isEditing: false })
 }
 
 function addSuccess({ row }: { row: any }) {
+  let _value = [...modelValue.value]
+  const newRow = { ...row }
+
+  // 在autoUniqueId开启时，确保新行有唯一的rowKey
+  if (props.autoUniqueId && !newRow[props.rowKey]) {
+    newRow[props.rowKey] = getUniqueId()
+  }
+
   if (!Array.isArray(modelValue.value)) {
-    modelValue.value = [row]
+    _value = [newRow]
   }
   else {
-    modelValue.value.push(row)
-    modelValue.value = cloneDeep(modelValue.value)
+    _value.push(newRow)
   }
+  modelValue.value = _value
+  emit('change', _value)
 }
 
 // 修复编辑成功逻辑：通过rowKey找到正确的行进行更新
@@ -165,7 +188,13 @@ function editSuccess({ row }: { row: any }) {
   const rowId = row[props.rowKey]
   const actualIndex = modelValue.value.findIndex(item => item[props.rowKey] === rowId)
   if (actualIndex !== -1) {
-    modelValue.value.splice(actualIndex, 1, row)
+    // 确保在autoUniqueId开启时保持原有的rowKey
+    const updatedRow = { ...row }
+    if (props.autoUniqueId && !updatedRow[props.rowKey]) {
+      updatedRow[props.rowKey] = rowId
+    }
+    modelValue.value.splice(actualIndex, 1, updatedRow)
+    emit('change', modelValue.value)
   }
 }
 
@@ -183,15 +212,17 @@ function dragSort(sortedDataSource: any[]) {
   modelValue.value = cleanedData
 }
 
-function checkUniqueFieldFn(form: any) {
+function checkUniqueFieldFn(form: any, isEditing = false, originalRowId = '') {
   if (!props.uniqueField) {
     return true
   }
 
   const fieldValue = form[props.uniqueField]
-  const currentRowId = form[props.rowKey]
 
-  // 编辑时需要排除当前行
+  // 编辑时需要排除当前行，使用传入的originalRowId
+  const currentRowId = isEditing ? originalRowId : form[props.rowKey]
+
+  // 检查是否有重复
   const isDuplicate = modelValue.value.some(
     item =>
       item[props.uniqueField] === fieldValue && item[props.rowKey] !== currentRowId,
@@ -227,7 +258,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
       :row-key="rowKey"
       :sort-tooltip-custom-render="sortTooltipCustomRender"
       multiple
-      :columns="inputTableColumns as InputTableColumn[]"
+      :columns="inputTableColumns"
       :data-source="modelValue"
       @drag-sort="dragSort"
     >
@@ -245,15 +276,14 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
             :style="styleConfig.addButtonStyle"
             @click="add"
           >
-            <LewCommonIcon :size="styleConfig.iconSize" type="plus" />
+            <CommonIcon :size="styleConfig.iconSize" type="plus" />
             {{ locale.t("inputTable.addText") }}
           </LewFlex>
         </LewFlex>
       </template>
       <template #action="{ row, index }">
-        <LewFlex gap="5" x="center">
+        <LewFlex gap="5px" x="center" :style="{ height: any2px(styleConfig.iconSize) }">
           <LewButton
-            v-if="addable"
             type="text"
             color="gray"
             :style="styleConfig.iconStyle"
@@ -262,7 +292,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
             round
             @click="edit({ row, index })"
           >
-            <LewCommonIcon :size="styleConfig.iconSize" type="edit-2" />
+            <CommonIcon :size="styleConfig.iconSize" type="edit-2" />
           </LewButton>
           <LewButton
             v-if="deletable"
@@ -274,7 +304,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
             single-icon
             @click="del({ row, index })"
           >
-            <LewCommonIcon :size="styleConfig.iconSize" type="trash" />
+            <CommonIcon :size="styleConfig.iconSize" type="trash" />
           </LewButton>
         </LewFlex>
       </template>
@@ -283,6 +313,7 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
       ref="formModalRef"
       :options="formOptions"
       :size="size"
+      :row-key="rowKey"
       :check-unique-field-fn="checkUniqueFieldFn"
       :ok-text="locale.t('inputTable.save')"
       @add-success="addSuccess"
@@ -297,24 +328,31 @@ const isMaxRowsReached = computed(() => (modelValue.value || []).length >= props
   border-bottom: 1px var(--lew-bgcolor-3) solid;
   background-color: var(--lew-table-header-bgcolor);
 }
+
 .add-btn {
-  padding: 10px 0px;
   width: 100%;
   cursor: pointer;
   transition: all var(--lew-form-transition-ease);
   background-color: var(--lew-table-header-bgcolor);
   border-top: var(--lew-table-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .add-btn:hover {
   background-color: var(--lew-table-header-bgcolor-hover);
 }
+
 .add-btn:active {
   background-color: var(--lew-table-header-bgcolor-active);
 }
+
 .add-btn.disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
 .add-btn.disabled:hover,
 .add-btn.disabled:active {
   background-color: var(--lew-bgcolor-2);

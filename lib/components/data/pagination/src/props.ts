@@ -1,45 +1,32 @@
-import type { LewSize, SelectOptions } from 'lew-ui'
-import { validSizes } from 'lew-ui/constants'
-
-export type PaginationOptions = SelectOptions
+import type { LewSelectOption, LewSize } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const paginationModel = {
   total: {
     type: Number,
     default: 100,
-    description: '数据总条数',
-    validator: (value: number) => {
-      if (value < 0) {
-        console.warn('[LewPagination] total 必须是非负数')
-        return false
-      }
-      return true
-    },
+    validator: validators.nonNegativeInteger({
+      componentName: 'LewPagination',
+      propName: 'total',
+    }),
   },
   currentPage: {
     type: Number,
     default: 1,
-    description: '当前页码',
-    validator: (value: number) => {
-      if (value < 1) {
-        console.warn('[LewPagination] currentPage 必须大于等于 1')
-        return false
-      }
-      return true
-    },
+    validator: validators.positiveInteger({
+      componentName: 'LewPagination',
+      propName: 'currentPage',
+    }),
   },
   pageSize: {
     type: Number,
     required: true,
     default: 10,
-    description: '每页显示的条目数',
-    validator: (value: number) => {
-      if (value < 1) {
-        console.warn('[LewPagination] pageSize 必须大于等于 1')
-        return false
-      }
-      return true
-    },
+    validator: validators.positiveInteger({
+      componentName: 'LewPagination',
+      propName: 'pageSize',
+    }),
   },
 }
 
@@ -47,39 +34,32 @@ export const paginationProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '分页组件的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewPagination] size 必须是 ${validSizes.join(', ')} 之一`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewPagination',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   pageSizeOptions: {
-    type: Array as PropType<number[] | SelectOptions[]>,
+    type: Array as PropType<number[] | LewSelectOption[]>,
+    typePopKeys: ['LewSelectOption'],
     default: () => [10, 20, 30, 50, 100],
-    description: '每页显示条目数的选项列表',
-    validator: (value: number[] | SelectOptions[]) => {
-      if (!Array.isArray(value) || value.length === 0) {
-        console.warn('[LewPagination] pageSizeOptions 必须是非空数组')
-        return false
-      }
-      return true
-    },
+    validator: validators.array({
+      componentName: 'LewPagination',
+      propName: 'pageSizeOptions',
+    }),
   },
   visiblePagesCount: {
     type: Number,
     default: 5,
-    description: '可见页码按钮的数量',
-    validator: (value: number) => {
-      if (value < 1 || value > 21) {
-        console.warn('[LewPagination] visiblePagesCount 必须在 1 到 21 之间')
-        return false
-      }
-      return true
-    },
+    validator: validators.range({
+      componentName: 'LewPagination',
+      propName: 'visiblePagesCount',
+      min: 1,
+      max: 21,
+    }),
   },
 }
+
+export type LewPaginationProps = ExtractPublicPropTypes<typeof paginationProps>

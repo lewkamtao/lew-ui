@@ -1,10 +1,10 @@
 {
   "direction": "x",
   "columns": 2,
-  "labelX": "start  ",
+  "labelX": "start",
   "valueX": "start",
   "size": "medium",
-  "width": 640,
+  "width": "640px",
   "id": "desc_20241128_380ff83",
   "options": [
     {

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { dragmove } from 'lew-ui/utils'
+import { any2px, dragmove } from 'lew-ui/utils'
 import { throttle } from 'lodash-es'
+import { sliderRangeEmits } from './emits'
 import { sliderRangeProps } from './props'
 
 const props = defineProps(sliderRangeProps)
-const emit = defineEmits(['change'])
+const emit = defineEmits(sliderRangeEmits)
 
 // 获取滑块轨道的最大值
 const getTrackMax = computed(() => {
@@ -39,13 +40,26 @@ const modelValue = defineModel<number[]>('modelValue', {
     return [getMin.value, getMax.value] // 初始值设置为可选范围内的最小值和最大值
   },
 })
+
+// 内部视图状态，用于快速响应用户交互
+const internalViewValue = ref<number[]>([0, 0])
+
 // 修改为数组以支持范围
 const dotRef1 = ref<HTMLElement | null>(null) // 左侧滑块
 const dotRef2 = ref<HTMLElement | null>(null) // 右侧滑块
 const trackRef = ref<HTMLElement | null>(null)
 const dotX = ref(0)
 
-// 创建节流函数，用于更新modelValue
+// 视图更新节流：50ms 更新频率，用于流畅的视觉反馈
+const throttledUpdateView = throttle(
+  (leftValue: number, rightValue: number) => {
+    internalViewValue.value = [leftValue, rightValue]
+    updateDotsByModelValue([leftValue, rightValue])
+  },
+  50,
+)
+
+// 数据更新节流：250ms 更新频率，用于减少外部状态更新频率
 const throttledUpdateModelValue = throttle(
   (leftValue: number, rightValue: number) => {
     if (!modelValue.value) {
@@ -55,8 +69,8 @@ const throttledUpdateModelValue = throttle(
     modelValue.value = [leftValue, rightValue]
     emit('change', modelValue.value)
   },
-  16,
-) // 约60fps的更新频率
+  250,
+)
 
 // 获取 mark 位置
 function getMarkPosition(value: number | string) {
@@ -140,13 +154,14 @@ function init() {
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
         const newValue = [
-          modelValue.value?.[0] || getMin.value,
-          modelValue.value?.[1] || getMax.value,
+          internalViewValue.value?.[0] || getMin.value,
+          internalViewValue.value?.[1] || getMax.value,
         ]
         newValue[0] = calculateValue(e.x)
+        // 立即更新视图状态
+        throttledUpdateView(newValue[0], newValue[1])
+        // 延迟更新数据绑定
         throttledUpdateModelValue(newValue[0], newValue[1])
-        // 实时更新点的位置，不进行节流
-        updateDotsByModelValue([newValue[0], newValue[1]])
       },
     })
     _dragmove = dragmove({
@@ -160,17 +175,20 @@ function init() {
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
         const newValue = [
-          modelValue.value?.[0] || getMin.value,
-          modelValue.value?.[1] || getMax.value,
+          internalViewValue.value?.[0] || getMin.value,
+          internalViewValue.value?.[1] || getMax.value,
         ]
         newValue[1] = calculateValue(e.x)
+        // 立即更新视图状态
+        throttledUpdateView(newValue[0], newValue[1])
+        // 延迟更新数据绑定
         throttledUpdateModelValue(newValue[0], newValue[1])
-        // 实时更新点的位置，不进行节流
-        updateDotsByModelValue([newValue[0], newValue[1]])
       },
     })
   }
-  updateDotsByModelValue(modelValue.value || [getMin.value, getMax.value])
+  const initialValue = modelValue.value || [getMin.value, getMax.value]
+  internalViewValue.value = initialValue
+  updateDotsByModelValue(initialValue)
 }
 
 // 监听 max、min、step、readonly、disabled 的变化，重新初始化
@@ -194,14 +212,17 @@ onMounted(() => {
 onUnmounted(() => {
   _dragmove()
   // 取消节流函数
+  throttledUpdateView.cancel()
   throttledUpdateModelValue.cancel()
 })
 
-// 监听 modelValue 的变化，实时更新 dot 的位置
+// 监听 modelValue 的变化，同步内部视图状态和实时更新 dot 的位置
 watch(
   modelValue,
   (newValue) => {
-    updateDotsByModelValue(newValue || [getMin.value, getMax.value])
+    const safeValue = newValue || [getMin.value, getMax.value]
+    internalViewValue.value = safeValue
+    updateDotsByModelValue(safeValue)
   },
   {
     deep: true,
@@ -209,7 +230,7 @@ watch(
 )
 
 const getStyle = computed(() => {
-  const { size } = props
+  const { size, width } = props
   let objStyle = {}
   switch (size) {
     case 'small':
@@ -246,7 +267,115 @@ const getStyle = computed(() => {
   }
   return {
     ...objStyle,
+    'width': any2px(width),
     '--lew-slider-height': `var(--lew-form-item-height-${size})`,
+  }
+})
+
+// 计算禁用区域的样式
+const disabledAreaStyles = computed(() => {
+  return {
+    left: {
+      width: `${getMarkPosition(getMin.value)}%`,
+    },
+    right: {
+      width: `${100 - getMarkPosition(getMax.value)}%`,
+    },
+  }
+})
+
+// 计算范围线的样式
+const rangeLineStyle = computed(() => {
+  const width = Math.max(
+    0,
+    Math.min(
+      100,
+      ((getMax.value - getMin.value)
+        / (getTrackMax.value - getTrackMin.value))
+      * 100,
+    ),
+  )
+  return {
+    width: `${width}%`,
+    left: `${getMarkPosition(getMin.value)}%`,
+  }
+})
+
+// 计算选中区域的样式
+const selectedLineStyle = computed(() => {
+  const currentMin = internalViewValue.value?.[0] ?? getMin.value
+  const currentMax = internalViewValue.value?.[1] ?? getMax.value
+  const width = Math.max(
+    0,
+    Math.min(
+      100,
+      (Math.abs(currentMax - currentMin)
+        / (getTrackMax.value - getTrackMin.value))
+      * 100,
+    ),
+  )
+  const left = getMarkPosition(Math.min(currentMin, currentMax))
+  return {
+    width: `${width}%`,
+    left: `${left}%`,
+  }
+})
+
+// 计算选项的样式和状态
+const optionStyles = computed(() => {
+  return (
+    props.options?.map((item, index) => {
+      const itemValue = Number(item.value)
+      const currentMin = internalViewValue.value?.[0] ?? getMin.value
+      const currentMax = internalViewValue.value?.[1] ?? getMax.value
+      const isSelected
+        = itemValue >= Math.min(currentMin, currentMax)
+          && itemValue <= Math.max(currentMin, currentMax)
+      const isDisabled
+        = itemValue < Number(getMin.value) || itemValue > Number(getMax.value)
+
+      return {
+        mark: {
+          style: {
+            left: `${getMarkPosition(item.value)}%`,
+          },
+          class: {
+            'lew-slider-track-step-mark-selected': isSelected,
+          },
+        },
+        label: {
+          style: {
+            left: `${getMarkPosition(item.value)}%`,
+            top: `calc(var(--lew-slider-height) - 20px)`,
+          },
+          class: {
+            'lew-slider-track-step-label-text-disabled': isDisabled,
+          },
+        },
+        item,
+        index,
+      }
+    }) || []
+  )
+})
+
+// 计算滑块的样式
+const dotStyles = computed(() => {
+  return {
+    dot1: {
+      opacity: internalViewValue.value?.[0] !== undefined ? '1' : '0',
+    },
+    dot2: {
+      opacity: internalViewValue.value?.[1] !== undefined ? '1' : '0',
+    },
+  }
+})
+
+// 计算tooltip内容
+const tooltipContent = computed(() => {
+  return {
+    dot1: props.formatTooltip(internalViewValue.value?.[0] ?? getMin.value),
+    dot2: props.formatTooltip(internalViewValue.value?.[1] ?? getMax.value),
   }
 })
 </script>
@@ -262,110 +391,66 @@ const getStyle = computed(() => {
   >
     <div ref="trackRef" class="lew-slider-track">
       <div
-        :style="{
-          width: `${getMarkPosition(getMin)}%`,
-        }"
+        :style="disabledAreaStyles.left"
         class="lew-slider-track-disabled-area lew-slider-track-disabled-area-left"
         @click.stop
       />
       <div
-        :style="{
-          width: `${100 - getMarkPosition(getMax)}%`,
-        }"
+        :style="disabledAreaStyles.right"
         class="lew-slider-track-disabled-area lew-slider-track-disabled-area-right"
         @click.stop
       />
 
       <div class="lew-slider-track-line">
-        <div
-          class="lew-slider-track-line-range"
-          :style="{
-            width: `${Math.max(
-              0,
-              Math.min(
-                100,
-                ((getMax - getMin) / (getTrackMax - getTrackMin)) * 100,
-              ),
-            )}%`,
-            left: `${getMarkPosition(getMin)}%`,
-          }"
-        />
+        <div class="lew-slider-track-line-range" :style="rangeLineStyle" />
         <div
           class="lew-slider-track-line-selected"
-          :style="{
-            width: `${Math.max(
-              0,
-              Math.min(
-                100,
-                Math.abs((modelValue?.[1] ?? getMax) - (modelValue?.[0] ?? getMin))
-                  / (getTrackMax - getTrackMin)
-                  * 100,
-              ),
-            )}%`,
-            left: `${getMarkPosition(Math.min(modelValue?.[0] ?? getMin, modelValue?.[1] ?? getMax))}%`,
-          }"
+          :style="selectedLineStyle"
         />
 
         <div
-          v-for="(item, index) in options"
-          :key="index"
+          v-for="option in optionStyles"
+          :key="option.index"
           class="lew-slider-track-step-mark"
-          :class="{
-            'lew-slider-track-step-mark-selected':
-              Number(item.value) >= Math.min(Number(modelValue?.[0] ?? getMin), Number(modelValue?.[1] ?? getMax))
-              && Number(item.value) <= Math.max(Number(modelValue?.[0] ?? getMin), Number(modelValue?.[1] ?? getMax)),
-          }"
-          :style="{
-            left: `${getMarkPosition(item.value)}%`,
-          }"
+          :class="option.mark.class"
+          :style="option.mark.style"
         />
         <div
-          v-for="(item, index) in options"
-          :key="index"
+          v-for="option in optionStyles"
+          :key="option.index"
           class="lew-slider-track-step-label"
-          :style="{
-            left: `${getMarkPosition(item.value)}%`,
-            top: `calc(var(--lew-slider-height) - 20px)`,
-          }"
+          :style="option.label.style"
         >
           <div
             class="lew-slider-track-step-label-text"
-            :class="{
-              'lew-slider-track-step-label-text-disabled':
-                Number(item.value) < Number(getMin)
-                || Number(item.value) > Number(getMax),
-            }"
+            :class="option.label.class"
           >
-            {{ item.label }}
+            {{ option.item.label }}
           </div>
         </div>
       </div>
       <div
         ref="dotRef1"
         v-tooltip="{
-          content: formatTooltip(modelValue?.[0] ?? getMin),
+          content: tooltipContent.dot1,
           placement: 'top',
           trigger: 'mouseenter',
           delay: [0, 1000],
           key: dotX,
         }"
-        :style="{
-          opacity: modelValue?.[0] !== undefined ? '1' : '0',
-        }"
+        :style="dotStyles.dot1"
         class="lew-slider-track-dot"
       />
       <div
         ref="dotRef2"
         v-tooltip="{
-          content: formatTooltip(modelValue?.[1] ?? getMax),
+          content: tooltipContent.dot2,
           placement: 'top',
           trigger: 'mouseenter',
           delay: [0, 1000],
           key: dotX,
         }"
-        :style="{
-          opacity: modelValue?.[1] !== undefined ? '1' : '0',
-        }"
+        :style="dotStyles.dot2"
         class="lew-slider-track-dot"
       />
     </div>
@@ -424,7 +509,7 @@ const getStyle = computed(() => {
       height: 100%;
       top: 0;
       left: 0;
-      background-color: var(--lew-color-blue);
+      background-color: var(--lew-color-primary);
     }
     .lew-slider-track-step-mark {
       position: absolute;
@@ -439,7 +524,7 @@ const getStyle = computed(() => {
       box-sizing: border-box;
     }
     .lew-slider-track-step-mark-selected {
-      background-color: var(--lew-color-blue);
+      background-color: var(--lew-color-primary);
     }
 
     .lew-slider-track-step-label {
@@ -468,7 +553,7 @@ const getStyle = computed(() => {
     width: var(--lew-slider-track-dot-size);
     height: var(--lew-slider-track-dot-size);
     border-radius: 50%;
-    border: var(--lew-color-blue) solid 2px;
+    border: var(--lew-color-primary) solid 2px;
     background: var(--lew-bgcolor-0);
     transition:
       transform var(--lew-form-transition-ease),

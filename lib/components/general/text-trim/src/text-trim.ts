@@ -1,17 +1,39 @@
-// 缓存计算结果
+// Types
+interface DisplayTextResult {
+  text: string
+  isEllipsis: boolean
+}
+
+interface GetDisplayTextParams {
+  text: string
+  reserveEnd: number
+  target: HTMLElement
+}
+
+// Constants
+const TOLERANCE_RATIO = 0.98
+const MIN_WIDTH_DIFFERENCE = 2
+const ELLIPSIS = '.....'
+const MIN_VISIBLE_CHARS = 1
+const WIDTH_SAFETY_MARGIN = 12
+const MAX_CACHE_SIZE = 1000
+
+// Cache for measurement results
 const measureCache = new Map<string, number>()
 
-// 创建一个共享的测量用 span 元素
+// Shared measurement span element
 let sharedMeasureSpan: HTMLSpanElement | null = null
 
-// 测量文本宽度的工具函数
+// Utility function to measure text width
 function measureText(text: string, style: CSSStyleDeclaration): number {
-  // 使用缓存
+  // Use cache for performance
   const cacheKey = `${text}-${style.fontSize || ''}-${style.fontFamily || ''}`
-  if (measureCache.has(cacheKey)) {
-    return measureCache.get(cacheKey)!
+  const cachedWidth = measureCache.get(cacheKey)
+  if (cachedWidth !== undefined) {
+    return cachedWidth
   }
-  // 懒加载创建共享的测量 span
+
+  // Lazy initialization of shared measurement span
   if (!sharedMeasureSpan) {
     sharedMeasureSpan = document.createElement('span')
     sharedMeasureSpan.style.position = 'fixed'
@@ -20,7 +42,7 @@ function measureText(text: string, style: CSSStyleDeclaration): number {
     document.body.appendChild(sharedMeasureSpan)
   }
 
-  // 设置样式和文本
+  // Apply styles and set text content
   sharedMeasureSpan.style.cssText = style.cssText
   sharedMeasureSpan.style.position = 'fixed'
   sharedMeasureSpan.style.visibility = 'hidden'
@@ -29,62 +51,57 @@ function measureText(text: string, style: CSSStyleDeclaration): number {
 
   const width = sharedMeasureSpan.offsetWidth
 
-  // 缓存结果（限制缓存大小）
-  if (measureCache.size > 1000) {
-    const firstKey: any = measureCache.keys().next().value
-    measureCache.delete(firstKey)
+  // Cache result with size limit
+  if (measureCache.size > MAX_CACHE_SIZE) {
+    const firstKey = measureCache.keys().next().value
+    if (firstKey) {
+      measureCache.delete(firstKey)
+    }
   }
   measureCache.set(cacheKey, width)
   return width
 }
 
-// 配置参数
-const TOLERANCE_RATIO = 0.98 // 容忍度
-const MIN_WIDTH_DIFFERENCE = 2 // 最小宽度差
-const ELLIPSIS = '.....' // 省略号
-const MIN_VISIBLE_CHARS = 1 // 最小可见字符数
-const WIDTH_SAFETY_MARGIN = 12 // 宽度安全边距
-
-export function getDisplayText({
-  text,
-  reserveEnd = 0,
-  target,
-}: {
-  text: string
-  reserveEnd: number
-  target: HTMLElement
-}) {
-  // 快速返回条件
-  if (!text || !target)
+/**
+ * Calculate display text with ellipsis based on container width
+ * @param params - Parameters for text calculation
+ * @returns Object containing processed text and ellipsis state
+ */
+export function getDisplayText(params: GetDisplayTextParams): DisplayTextResult {
+  const { text, reserveEnd = 0, target } = params
+  // Early return conditions
+  if (!text || !target) {
     return { text, isEllipsis: false }
-  if (reserveEnd >= text.length)
+  }
+  if (reserveEnd >= text.length) {
     return { text, isEllipsis: false }
-  if (reserveEnd < 0)
-    reserveEnd = 0
+  }
 
-  // 获取目标元素的样式
+  const normalizedReserveEnd = Math.max(0, reserveEnd)
+
+  // Get target element styles and dimensions
   const style = window.getComputedStyle(target)
   const targetWidth = target.offsetWidth
   const toleratedWidth = targetWidth / TOLERANCE_RATIO
 
-  // 测量完整文本宽度
+  // Measure full text width
   const fullWidth = measureText(text, style)
 
-  // 检查是否需要截断
-  const isEllipsis = fullWidth - targetWidth > MIN_WIDTH_DIFFERENCE
-  if (!isEllipsis || reserveEnd === 0) {
+  // Check if truncation is needed
+  const needsTruncation = fullWidth - targetWidth > MIN_WIDTH_DIFFERENCE
+  if (!needsTruncation || normalizedReserveEnd === 0) {
     return { text, isEllipsis: false }
   }
 
-  // 获取末尾文本
-  const endText = text.slice(-reserveEnd)
+  // Get end text
+  const endText = text.slice(-normalizedReserveEnd)
   const ellipsisWithEndWidth = measureText(ELLIPSIS + endText, style)
 
-  // 如果末尾文本加省略号已经超出容器宽度
+  // If end text with ellipsis exceeds container width
   if (ellipsisWithEndWidth - targetWidth > MIN_WIDTH_DIFFERENCE) {
-    // 二分查找合适的末尾文本长度
+    // Binary search for appropriate end text length
     let left = MIN_VISIBLE_CHARS
-    let right = reserveEnd
+    let right = normalizedReserveEnd
     let finalEndText = ''
 
     while (left <= right) {
@@ -107,9 +124,9 @@ export function getDisplayText({
     }
   }
 
-  // 二分查找前缀文本的合适长度
+  // Binary search for appropriate prefix text length
   let left = 0
-  let right = text.length - reserveEnd
+  let right = text.length - normalizedReserveEnd
   let startText = ''
 
   while (left <= right) {
@@ -126,7 +143,7 @@ export function getDisplayText({
     }
   }
 
-  // 确保至少显示最小字符数
+  // Ensure minimum visible characters
   if (startText.length < MIN_VISIBLE_CHARS) {
     startText = text.slice(0, MIN_VISIBLE_CHARS)
   }
@@ -137,11 +154,13 @@ export function getDisplayText({
   }
 }
 
-// 清理缓存的工具函数
-export function clearMeasureCache() {
+/**
+ * Clear measurement cache and cleanup resources
+ */
+export function clearMeasureCache(): void {
   measureCache.clear()
-  if (sharedMeasureSpan) {
-    document.body.removeChild(sharedMeasureSpan)
+  if (sharedMeasureSpan && sharedMeasureSpan.parentNode) {
+    sharedMeasureSpan.parentNode.removeChild(sharedMeasureSpan)
     sharedMeasureSpan = null
   }
 }

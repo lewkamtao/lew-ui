@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { ContextMenus } from 'lew-ui/directives'
+import type { LewContextMenusOption } from 'lew-ui/types'
 import dayjs from 'dayjs'
 
-const options = ref<ContextMenus[]>([
+const options = ref<LewContextMenusOption[]>([
   {
     label: 'New File',
     value: 'new-file',

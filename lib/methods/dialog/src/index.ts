@@ -1,30 +1,15 @@
-import type { LewColor } from 'lew-ui'
+import type { LewDialogInstance, LewDialogOptions, LewDialogType } from 'lew-ui/types'
 import { useMouse } from '@vueuse/core'
-import { locale } from 'lew-ui'
+import { createApp, h } from 'vue'
 import _LewDialog from './LewDialog.vue'
 
 const { x, y } = useMouse()
 
-interface Options {
-  title: string
-  content: string
-  ok?: () => boolean | Promise<boolean>
-  cancel?: () => boolean | Promise<boolean>
-  layout?: string
-  okText?: string
-  cancelText?: string
-  closeOnClickOverlay?: boolean
-  closeByEsc?: boolean
+function createDialog(type: LewDialogType) {
+  return (options: LewDialogOptions) => dialog(type, options)
 }
 
-type DialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'
-
-function createDialog(type: DialogType) {
-  return (options: Options) =>
-    dialog(type as LewColor, options)
-}
-
-const dialogTypes: Record<DialogType, (options: Options) => void> = {
+const dialogTypes: Record<LewDialogType, (options: LewDialogOptions) => void> = {
   warning: createDialog('warning'),
   error: createDialog('error'),
   info: createDialog('info'),
@@ -32,17 +17,18 @@ const dialogTypes: Record<DialogType, (options: Options) => void> = {
   success: createDialog('success'),
 }
 
-function dialog(type: LewColor, options: Options) {
+function dialog(type: LewDialogType, options: LewDialogOptions) {
   const {
     title,
     content,
-    ok = () => true,
-    cancel = () => true,
+    icon,
+    hideIcon,
+    ok = () => Promise.resolve(true),
+    cancel = () => Promise.resolve(true),
     okText,
     cancelText,
-    layout,
-    closeOnClickOverlay,
-    closeByEsc,
+    closeOnClickOverlay = false,
+    closeByEsc = false,
   } = options
 
   const div = document.createElement('div')
@@ -57,10 +43,13 @@ function dialog(type: LewColor, options: Options) {
           closeOnClickOverlay,
           closeByEsc,
           type,
-          layout,
+          hideIcon,
           okText,
           cancelText,
           transformOrigin,
+          icon,
+          title,
+          content,
           ok,
           onClose: () => {
             app.unmount()
@@ -69,8 +58,7 @@ function dialog(type: LewColor, options: Options) {
           cancel,
         },
         {
-          title: () => title || locale.t('dialog.title'),
-          content: () => content,
+          default: () => [],
         },
       )
     },
@@ -79,13 +67,9 @@ function dialog(type: LewColor, options: Options) {
   app.mount(div)
 }
 
-export const LewDialog = {
+export const LewDialog: LewDialogInstance = {
   name: 'LewDialog',
   ...dialogTypes,
 }
-
-export type LewDialogType = {
-  name: string
-} & Record<DialogType, (options: Options) => void>
 
 export * from './props'

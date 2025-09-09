@@ -11,6 +11,7 @@ function change(e: any) {
   <lew-tree-select
     v-model="v"
     key-field="value"
+    width="300px"
     size="medium"
     searchable
     label-field="label"

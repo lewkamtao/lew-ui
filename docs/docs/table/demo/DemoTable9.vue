@@ -105,7 +105,7 @@ const selectedKeys = ref('35503077')
       <span>{{ row.has_linewatch ? 'Yes' : 'No' }}</span>
     </template>
     <template #actors="{ row }">
-      <lew-flex x="start" gap="5" wrap>
+      <lew-flex x="start" gap="5px" wrap>
         <lew-tag
           v-for="(actor, index) in row.actors"
           :key="index"

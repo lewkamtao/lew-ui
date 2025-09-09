@@ -1,7 +1,0 @@
-<template>
-  <div>
-    <lew-space>
-      <lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-button>123131</lew-button><lew-title>测试<lew-button>测3试</lew-button></lew-title><lew-button>测试</lew-button><lew-badge>测23131试<lew-button>测3试</lew-button></lew-badge><lew-button>测试</lew-button><lew-button>测试</lew-button><lew-button>测试</lew-button><lew-button>123131</lew-button>
-    </lew-space>
-  </div>
-</template>

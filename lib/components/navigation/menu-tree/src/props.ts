@@ -1,107 +1,88 @@
-import type { TagProps } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import { isValidCssValue } from 'lew-ui/utils'
-
-export interface MenuTreeItem {
-  label: string | (() => any)
-  value: string | number
-  active?: boolean
-  disabled?: boolean
-  children?: MenuTreeItem[]
-  icon?: () => any
-  tagProps?: TagProps
-}
+import type { Property } from 'csstype'
+import type { LewTagProps } from 'lew-ui'
+import type { LewMenuTreeOption } from 'lew-ui/types'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators from 'lew-ui/validators'
 
 export const menuTreeModel = {
   modelValue: {
     type: String,
-    default: '',
-    description: '双向绑定值',
-    validator(value: string): boolean {
-      if (typeof value !== 'string') {
-        console.warn('[LewMenuTree] modelValue 必须是字符串类型。')
-        return false
-      }
-      return true
-    },
   },
   expandKeys: {
-    type: Array as PropType<(string | number)[]>,
+    type: Array as PropType<string[]>,
     default: () => [],
-    description: '菜单树的当前展开项，用于双向绑定。',
   },
   collapsed: {
     type: Boolean,
     default: false,
-    description: '菜单树是否折叠。',
   },
 }
 
 export const menuTreeProps = {
   options: {
-    type: Array as PropType<MenuTreeItem[]>,
-    default: [],
-    description: '菜单树的数据源，支持嵌套结构。',
+    type: Array as PropType<LewMenuTreeOption[]>,
+    required: true,
+    typePopKeys: ['LewMenuTreeOption'],
+    validator: validators.array({
+      componentName: 'LewMenuTree',
+      propName: 'options',
+    }),
   },
   width: {
-    type: [String, Number],
-    default: '240px',
-    description: '菜单树的宽度，支持 CSS 宽度值。',
-    validator(value: string | number): boolean {
-      return isValidCssValue({
-        name: 'LewMenuTree',
-        field: 'width',
-        value,
-      })
-    },
+    type: String as PropType<Property.Width>,
+    default: '300px',
+    validator: validators.widthHeight({
+      componentName: 'LewMenuTree',
+      propName: 'width',
+    }),
   },
 }
 
 export const menuTreeItemProps = {
   label: {
-    type: [String, Function],
-    default: '',
-    description:
-      '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。',
-  },
-  value: {
-    type: [String, Number],
-    required: true,
-    description: '菜单树项的唯一标识符。',
-    validator(value: string | number): boolean {
-      if (value === '') {
-        console.warn('[LewMenuTreeItem] value 不能为空。')
-        return false
-      }
-      return true
-    },
+    type: null,
   },
   icon: {
-    type: [String, Function],
-    default: undefined,
-    description: '菜单树项的图标。',
+    type: null,
   },
-  disabled: {
-    type: Boolean,
-    default: false,
-    description: '菜单树项是否禁用。',
+  value: {
+    type: String,
+    required: true,
+    validator: validators.string({
+      componentName: 'LewMenuTreeItem',
+      propName: 'value',
+    }),
+  },
+  tagProps: {
+    type: Object as PropType<LewTagProps>,
+    validator: validators.object({
+      componentName: 'LewMenuTreeItem',
+      propName: 'tagProps',
+    }),
   },
   level: {
     type: Number,
     default: 1,
-    description: '菜单树项的层级，从 1 开始。',
+    validator: validators.positiveInteger({
+      componentName: 'LewMenuTreeItem',
+      propName: 'level',
+    }),
+  },
+  disabled: {
+    type: Boolean,
+    validator: validators.boolean({
+      componentName: 'LewMenuTreeItem',
+      propName: 'disabled',
+    }),
   },
   isLeaf: {
     type: Boolean,
-    default: false,
-    description: '是否为叶子节点。',
-  },
-  tagProps: {
-    type: Object as PropType<TagProps>,
-    default: () => ({}),
-    description: '菜单树项的标签属性。',
+    validator: validators.boolean({
+      componentName: 'LewMenuTreeItem',
+      propName: 'isLeaf',
+    }),
   },
 }
 
-export type MenuTreeProps = ExtractPropTypes<typeof menuTreeProps>
-export type MenuTreeItemProps = ExtractPropTypes<typeof menuTreeItemProps>
+export type LewMenuTreeProps = ExtractPublicPropTypes<typeof menuTreeProps>
+export type LewMenuTreeItemProps = ExtractPublicPropTypes<typeof menuTreeItemProps>

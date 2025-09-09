@@ -1,14 +1,38 @@
 <script lang="ts" setup>
+import type { LewSize } from 'lew-ui'
+import type { LewTagType } from 'lew-ui/types'
+import type { CSSProperties } from 'vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { getColorType } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { computed, ref } from 'vue'
+import { tagEmits } from './emits'
 import { tagProps } from './props'
 
-// Props & Emits
-const props = defineProps(tagProps)
-const emit = defineEmits(['close'])
+interface SizeConfig {
+  minHeight: string
+  minWidth: string
+  lineHeight: string
+  fontSize: string
+  borderRadius: string
+  padding: string
+  oversizePadding: string
+  gap: string
+  closeIconSize: number
+}
 
-// Constants
-const SIZE_CONFIG = {
+interface TagStyle extends CSSProperties {
+  closeIconSize?: number
+}
+
+interface TagStyleFunction {
+  (color: string): CSSProperties
+}
+
+const props = defineProps(tagProps)
+const emit = defineEmits(tagEmits)
+const isClosing = ref(false)
+
+const SIZE_CONFIG: Record<LewSize, SizeConfig> = {
   small: {
     minHeight: '20px',
     minWidth: '20px',
@@ -42,51 +66,64 @@ const SIZE_CONFIG = {
     closeIconSize: 16,
     gap: '4px',
   },
-}
+} as const
 
-const TYPE_STYLES = {
-  fill: (color: string) => ({
+const TYPE_STYLES: Record<LewTagType, TagStyleFunction> = {
+  fill: (color: string): CSSProperties => ({
     backgroundColor: `var(--lew-color-${color})`,
     color: 'var(--lew-color-white)',
   }),
-  light: (color: string) => ({
+  light: (color: string): CSSProperties => ({
     backgroundColor: `var(--lew-color-${color}-light)`,
     color: `var(--lew-color-${color}-dark)`,
   }),
-  ghost: (color: string) => ({
+  ghost: (color: string): CSSProperties => ({
     backgroundColor: 'transparent',
     border: `var(--lew-form-border-width) solid var(--lew-color-${color}-dark)`,
     color: `var(--lew-color-${color}-dark)`,
     boxShadow: 'none',
   }),
-  default: (color: string) => ({
-    backgroundColor: `var(--lew-color-${color})`,
-    color: 'var(--lew-color-white)',
-  }),
-}
+} as const
 
-// Methods
-function close() {
-  if (props.disabled)
+const tagStyle = computed(
+  (): TagStyle => {
+    const { round, type, color, size, disabled, oversize } = props
+    const resolvedColor = getColorType(color) || 'primary'
+    const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium
+    const styleFunction = TYPE_STYLES[type] || TYPE_STYLES.fill
+
+    return {
+      ...styleFunction(resolvedColor),
+      ...sizeConfig,
+      padding: oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
+      borderRadius: round ? '20px' : sizeConfig.borderRadius,
+      opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
+      pointerEvents: disabled ? 'none' : undefined,
+    }
+  },
+)
+
+async function handleClose(): Promise<void> {
+  if (props.disabled || isClosing.value)
     return
-  emit('close')
-}
 
-// Computed
-const tagStyle: any = computed(() => {
-  const { round, type, color, size, disabled } = props
-  const _color = getColorType(color) || 'primary'
-  const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium
-
-  return {
-    ...(TYPE_STYLES[type] || TYPE_STYLES.default)(_color),
-    ...sizeConfig,
-    padding: props.oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
-    borderRadius: round ? '20px' : sizeConfig.borderRadius,
-    opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
-    pointerEvents: disabled ? 'none' : undefined,
+  if (props.close) {
+    try {
+      isClosing.value = true
+      await props.close()
+    }
+    catch (error) {
+      console.error('[LewTag] Error in close function:', error)
+    }
+    finally {
+      emit('close')
+      isClosing.value = false
+    }
   }
-})
+  else {
+    emit('close')
+  }
+}
 </script>
 
 <template>
@@ -106,65 +143,62 @@ const tagStyle: any = computed(() => {
       <slot name="right" />
     </div>
 
-    <div v-if="closable" class="lew-tag-close" @click.stop="close">
-      <LewCommonIcon :size="tagStyle.closeIconSize" type="close" />
+    <div v-if="closeable" class="lew-tag-close" @click.stop="handleClose">
+      <CommonIcon
+        v-if="isClosing"
+        :size="tagStyle.closeIconSize"
+        type="loading"
+        class="lew-tag-loading"
+      />
+      <CommonIcon v-else :size="tagStyle.closeIconSize" type="close" />
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .lew-tag {
-  // Positioning
   position: relative;
-
-  // Display & Box Model
   display: inline-flex;
   box-sizing: border-box;
   overflow: hidden;
   flex-shrink: 0;
   padding: 0;
-
-  // Other
   align-items: center;
   justify-content: center;
-
   transition: all var(--lew-form-transition-ease);
 
   .lew-tag-value {
-    // Display & Box Model
     box-sizing: border-box;
-    // Text
     font-weight: normal;
     white-space: nowrap;
   }
 
   .lew-tag-close {
-    // Display & Box Model
     display: inline-flex;
     padding: 2px;
     border-radius: var(--lew-border-radius-small);
-
-    // Other
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: all var(--lew-form-transition-ease);
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.15);
     }
 
     &:active {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .lew-tag-loading {
+      animation: spin 1s linear infinite;
     }
   }
 
   .lew-tag-left,
   .lew-tag-right {
-    // Display & Box Model
     display: inline-flex;
     box-sizing: border-box;
-
-    // Other
     align-items: center;
   }
 
@@ -177,13 +211,29 @@ const tagStyle: any = computed(() => {
   }
 }
 
+.lew-dark {
+  .lew-tag-close {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.45);
+    }
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  }
+}
+
 .lew-tag-to {
   cursor: pointer;
 }
-</style>
 
-<style lang="scss">
-.lew-dark .lew-tag-color-black.lew-tag-type-fill {
-  color: #000 !important;
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

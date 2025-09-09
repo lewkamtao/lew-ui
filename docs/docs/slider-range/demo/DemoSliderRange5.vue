@@ -5,7 +5,7 @@ const v = ref([30, 60])
 <template>
   <lew-slider-range
     v-model="v"
-    style="width: 500px"
+    width="500px"
     disabled
     range
     :options="[

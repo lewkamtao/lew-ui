@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
 import { LewTooltip, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { throttle } from 'lodash-es'
+import { textareaEmits } from './emits'
 import { textareaProps } from './props'
 
 const props = defineProps(textareaProps)
-const emit = defineEmits(['clear', 'blur', 'input', 'focus', 'change', 'ok'])
+const emit = defineEmits(textareaEmits)
 const { shift, enter } = useMagicKeys()
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -21,16 +23,19 @@ const resizeObj = ref({
   width: 0,
 })
 
-// 只在客户端环境下使用 ResizeObserver
-useResizeObserver(lewTextareaViewRef, (entries: any) => {
+const handleResize = throttle(() => {
   if (props.resize !== 'none') {
-    const entry = entries[0]
-    const { width, height } = entry.contentRect
+    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
     resizeObj.value = {
       width,
       height,
     }
   }
+}, 250)
+
+onMounted(() => {
+  // 只在客户端环境下使用 ResizeObserver
+  useResizeObserver(lewTextareaViewRef, handleResize)
 })
 
 const modelValue: Ref<string | undefined> = defineModel()
@@ -41,6 +46,7 @@ const state = reactive({
 function clear(): void {
   modelValue.value = undefined
   emit('clear')
+  emit('change', undefined)
 }
 
 function toFocus() {
@@ -61,12 +67,20 @@ function focus(e: any) {
     e?.currentTarget?.select()
   }
   state.isFocus = true
-  emit('focus')
 }
 
 function blur() {
-  emit('blur', modelValue.value)
   state.isFocus = false
+}
+
+function handleInput(event: Event) {
+  const target = event.target as HTMLTextAreaElement
+  emit('input', target.value)
+}
+
+function handleChange(event: Event) {
+  const target = event.target as HTMLTextAreaElement
+  emit('change', target.value)
 }
 
 const getIconSize = computed(() => {
@@ -96,8 +110,8 @@ const getTextareaStyle: any = computed(() => {
   }
   const obj = {
     resize: resize as string,
-    minWidth: any2px(minWidth || width),
-    minHeight: any2px(minHeight || height || heightMap[size]),
+    minWidth: width ? any2px(width) : any2px(minWidth),
+    minHeight: height ? any2px(height || heightMap[size]) : any2px(minHeight),
     maxWidth: any2px(maxWidth),
     maxHeight: any2px(maxHeight),
     width: any2px(width),
@@ -148,15 +162,15 @@ defineExpose({ toFocus })
       :readonly="readonly"
       @focus="focus"
       @blur="blur"
-      @input="emit('input', modelValue)"
-      @change="emit('change', modelValue)"
+      @input="handleInput"
+      @change="handleChange"
     />
 
     <div v-if="modelValue && showCount" class="lew-textarea-count">
       {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : "" }}
     </div>
     <transition name="lew-form-icon-ani">
-      <LewCommonIcon
+      <CommonIcon
         v-if="clearable && modelValue && !readonly"
         :size="getIconSize"
         type="close"

@@ -1,16 +1,24 @@
 <script setup lang="ts">
-import type { SelectOptions } from './props'
+import type { LewSelectOption } from 'lew-ui/types'
 import { useDebounceFn } from '@vueuse/core'
 import { LewEmpty, LewFlex, LewPopover, LewTextTrim, locale } from 'lew-ui'
-import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import {
+  any2px,
+  filterSelectOptionsByKeyword,
+  flattenSelectOptions,
+  numFormat,
+  object2class,
+  parseDimension,
+  poll,
+} from 'lew-ui/utils'
 import { cloneDeep, isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
+import { selectEmits } from './emits'
 import { selectProps } from './props'
-import { defaultSearchMethod, flattenOptions } from './util'
 
 const props = defineProps(selectProps)
-const emit = defineEmits(['change', 'blur', 'clear', 'focus'])
+const emit = defineEmits(selectEmits)
 const selectValue: Ref<string | number | undefined> = defineModel()
 
 const lewSelectRef = ref()
@@ -19,18 +27,17 @@ const lewPopoverRef = ref()
 const formMethods: any = inject('formMethods', {})
 const virtListRef = ref()
 
-// 需要提前定义 state，以便在其他函数和计算属性中使用
 const state = reactive({
   visible: false,
   loading: false,
   initLoading: true,
   sourceOptions: props.options,
-  options: flattenOptions(props.options),
-  hideBySelect: false, // 记录是否通过选择隐藏
+  options: flattenSelectOptions(props.options),
+  hideBySelect: false,
   keyword: props.defaultValue || (selectValue.value as any),
   keywordBackup: props.defaultValue as any,
-  autoWidth: 0, // 新增自动宽度
-  searchCache: new Map<string, SelectOptions[]>(), // 新增搜索结果缓存
+  autoWidth: 0,
+  searchCache: new Map<string, LewSelectOption[]>(),
 })
 
 const _searchMethod = computed(() => {
@@ -41,7 +48,7 @@ const _searchMethod = computed(() => {
     return formMethods[props.searchMethodId]
   }
   else {
-    return defaultSearchMethod
+    return filterSelectOptionsByKeyword
   }
 })
 
@@ -55,13 +62,49 @@ const _initMethod = computed(() => {
   return false
 })
 
+const shouldShowClearButton = computed(() => {
+  return props.clearable && state.keyword && !props.readonly
+})
+
+const shouldShowLoading = computed(() => {
+  return state.initLoading
+})
+
+const shouldHideDropdownIcon = computed(() => {
+  return props.clearable && state.keyword
+})
+
+const shouldShowEmptyState = computed(() => {
+  return state.options && state.options.length === 0
+})
+
+const shouldShowResultCount = computed(() => {
+  return props.searchable && !shouldShowEmptyState.value
+})
+
+const inputPlaceholder = computed(() => {
+  if (state.keywordBackup || props.placeholder) {
+    return props.placeholder
+  }
+  return locale.t('select.placeholder')
+})
+
+const getOptionText = computed(() => {
+  return (templateProps: any) => {
+    if (templateProps.isGroup) {
+      return `${templateProps.label} (${templateProps.total})`
+    }
+    return templateProps.label
+  }
+})
+
 async function init() {
   if (_initMethod.value) {
     try {
       const newOptions = await _initMethod.value()
       state.sourceOptions = newOptions
-      state.options = flattenOptions(newOptions)
-      findKeyword() // Update keyword based on new options and modelValue
+      state.options = flattenSelectOptions(newOptions)
+      findKeyword()
     }
     catch (error) {
       console.error('[LewSelect] initMethod failed', error)
@@ -84,12 +127,10 @@ watch(
   () => props.options,
   (newOptions) => {
     if (!_initMethod.value) {
-      // 只有在没有使用 initMethod 时才响应 options 的变化
       state.sourceOptions = newOptions
-      state.options = flattenOptions(newOptions)
+      state.options = flattenSelectOptions(newOptions)
       state.keyword
-        = newOptions.find((e: any) => e.value === selectValue.value)?.label || ''
-      // 如果启用搜索缓存，清除搜索缓存，因为数据源已经更新
+        = newOptions?.find((e: any) => e.value === selectValue.value)?.label || ''
       if (props.enableSearchCache) {
         state.searchCache.clear()
       }
@@ -100,17 +141,13 @@ watch(
   },
 )
 
-// 计算选择框的宽度
 const computedWidth = computed(() => {
   if (props.autoWidth && state.autoWidth > 0) {
-    // 确保最小宽度不小于300px
-
-    return Number(state.autoWidth)
+    return state.autoWidth
   }
-  return Number(props.width)
+  return props.width
 })
 
-// 在组件挂载后初始化自动宽度
 onMounted(() => {
   if (props.autoWidth) {
     calculateAutoWidth()
@@ -118,10 +155,8 @@ onMounted(() => {
   init()
 })
 
-// 选择器宽容度宽度
-const SELECT_WIDTH_TOLERANCE = 26
+const SELECT_WIDTH_TOLERANCE = 30
 
-// 计算自动宽度
 function calculateAutoWidth() {
   if (!props.autoWidth)
     return
@@ -131,7 +166,6 @@ function calculateAutoWidth() {
   tempDiv.style.visibility = 'hidden'
   tempDiv.style.whiteSpace = 'nowrap'
   tempDiv.style.fontSize = getComputedStyle(document.body).fontSize
-  // 如果inputRef已经挂载，使用实际样式
   if (inputRef.value) {
     tempDiv.style.fontSize = getComputedStyle(inputRef.value).fontSize
     tempDiv.style.padding = getComputedStyle(inputRef.value).padding
@@ -139,7 +173,6 @@ function calculateAutoWidth() {
     tempDiv.style.fontFamily = getComputedStyle(inputRef.value).fontFamily
     tempDiv.style.fontWeight = getComputedStyle(inputRef.value).fontWeight
   }
-  // 如果没有关键词，则使用placeholder的文本
   let textContent = state.keyword
   if (!textContent || textContent.trim() === '') {
     textContent = props.placeholder || locale.t('select.placeholder')
@@ -147,14 +180,12 @@ function calculateAutoWidth() {
   tempDiv.textContent = textContent
   document.body.appendChild(tempDiv)
 
-  // 文本宽度加上边距和图标空间
   const textWidth = tempDiv.clientWidth
   state.autoWidth = textWidth + SELECT_WIDTH_TOLERANCE
 
   document.body.removeChild(tempDiv)
 }
 
-// 监听keyword变化以更新自动宽度
 watch(
   () => state.keyword,
   () => {
@@ -180,15 +211,13 @@ async function search(e: any) {
   state.loading = true
   const keyword = e.target.value
   if (props.searchable) {
-    let result: SelectOptions[] = []
+    let result: LewSelectOption[] = []
 
-    // 检查是否启用搜索缓存，以及缓存中是否已有该关键词的搜索结果
     if (props.enableSearchCache && state.searchCache.has(keyword)) {
       result = state.searchCache.get(keyword)!
     }
     else {
-      // 如果没输入关键词
-      const optionsToSearch = flattenOptions(state.sourceOptions)
+      const optionsToSearch = flattenSelectOptions(state.sourceOptions)
       if (!keyword && optionsToSearch.length > 0) {
         result = optionsToSearch
       }
@@ -198,7 +227,6 @@ async function search(e: any) {
           keyword,
         })
       }
-      // 如果启用搜索缓存，将搜索结果缓存起来
       if (props.enableSearchCache) {
         state.searchCache.set(keyword, result)
       }
@@ -214,10 +242,10 @@ function clearHandle() {
   state.keywordBackup = undefined
   state.keyword = ''
   emit('clear')
-  emit('change')
+  emit('change', undefined)
 }
 
-function selectHandle(item: SelectOptions) {
+function selectHandle(item: LewSelectOption) {
   if (item.disabled || item.isGroup) {
     return
   }
@@ -225,7 +253,9 @@ function selectHandle(item: SelectOptions) {
   state.keyword = item.label
   selectValue.value = item.value
   emit('change', item.value)
-  hide()
+  setTimeout(() => {
+    hide()
+  }, 100)
 }
 
 const getChecked = computed(() => (value: string | number) => {
@@ -310,13 +340,11 @@ async function showHandle() {
   if (props.searchable) {
     state.keyword = ''
   }
-  state.hideBySelect = false // 重置
+  state.hideBySelect = false
   if (props.searchable) {
     await search({ target: { value: '' } })
   }
-  const index = state.options.findIndex(
-    (e: any) => e.value === selectValue.value,
-  )
+  const index = state.options.findIndex((e: any) => e.value === selectValue.value)
   poll({
     callback: () => {
       const i = index > -1 ? index : 0
@@ -342,9 +370,17 @@ function hideHandle() {
   emit('blur')
 }
 
-// 判断是否出现滚动条
 const isShowScrollBar = computed(() => {
   return getVirtualHeight.value >= 280
+})
+
+const getPopoverBodyWidth = computed(() => {
+  const { popoverWidth } = props
+  if (!lewSelectRef.value)
+    return popoverWidth
+  return popoverWidth && popoverWidth !== '100%'
+    ? parseDimension(popoverWidth) - 14
+    : lewSelectRef.value.offsetWidth - 14
 })
 
 watch(
@@ -382,6 +418,7 @@ defineExpose({
     class="lew-select-view"
     :style="{ width: autoWidth ? 'auto' : any2px(width) }"
     :trigger="trigger"
+    :trigger-width="any2px(computedWidth)"
     :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :loading="state.loading"
@@ -395,26 +432,22 @@ defineExpose({
         :style="{ width: any2px(computedWidth) }"
         :class="getSelectClassName"
       >
-        <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <LewCommonIcon
-            :size="getIconSize"
-            :loading="state.initLoading"
-            type="loading"
-          />
+        <div v-if="shouldShowLoading" class="lew-icon-loading-box">
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
-        <LewCommonIcon
+        <CommonIcon
           v-else
           :size="getIconSize"
           type="chevron-down"
           class="lew-icon-select"
           :class="{
-            'lew-icon-select-hide': clearable && state.keyword,
+            'lew-icon-select-hide': shouldHideDropdownIcon,
           }"
         />
         <transition name="lew-form-icon-ani">
-          <LewCommonIcon
-            v-if="clearable && state.keyword && !readonly"
+          <CommonIcon
+            v-if="shouldShowClearButton"
             :size="getIconSize"
             type="close"
             class="lew-form-icon-close"
@@ -427,14 +460,11 @@ defineExpose({
         <input
           ref="inputRef"
           v-model="state.keyword"
+          :title="state.keyword"
           class="lew-value"
           :style="getValueStyle"
           :readonly="!searchable"
-          :placeholder="
-            state.keywordBackup || placeholder
-              ? placeholder
-              : locale.t('select.placeholder')
-          "
+          :placeholder="inputPlaceholder"
           @input="searchDebounce"
         >
       </div>
@@ -443,19 +473,19 @@ defineExpose({
       <div
         class="lew-select-body"
         :class="getBodyClassName"
-        :style="{ width: `calc(${any2px(popoverWidth)} - 14px)` }"
+        :style="{ width: any2px(getPopoverBodyWidth) }"
       >
         <slot name="header" />
 
         <div class="lew-select-options-box">
-          <template v-if="state.options && state.options.length === 0">
+          <template v-if="shouldShowEmptyState">
             <slot v-if="$slots.empty" name="empty" />
             <LewFlex v-else direction="y" x="center" class="lew-not-found">
               <LewEmpty :title="locale.t('select.noResult')" />
             </LewFlex>
           </template>
           <template v-else>
-            <div v-if="searchable" class="lew-result-count">
+            <div v-if="shouldShowResultCount" class="lew-result-count">
               {{ getResultText }}
             </div>
             <VirtList
@@ -489,15 +519,11 @@ defineExpose({
                     :class="getSelectItemClassName(templateProps)"
                   >
                     <LewTextTrim
-                      :text="
-                        templateProps.isGroup
-                          ? `${templateProps.label} (${templateProps.total})`
-                          : templateProps.label
-                      "
+                      :text="getOptionText(templateProps)"
                       :delay="[500, 0]"
                       class="lew-select-label"
                     />
-                    <LewCommonIcon
+                    <CommonIcon
                       v-if="getChecked(templateProps.value) && showCheckIcon"
                       class="lew-icon-check"
                       :size="16"
@@ -543,8 +569,7 @@ defineExpose({
     .lew-icon-select {
       position: absolute;
       top: 50%;
-      right: 9px;
-      padding: 2px;
+      right: 12px;
       transform: translateY(-50%) rotate(0deg);
       transition: all var(--lew-form-transition-bezier);
     }
@@ -554,9 +579,7 @@ defineExpose({
       align-items: center;
       position: absolute;
       top: 50%;
-      right: 9px;
-      padding: 2px;
-      box-sizing: border-box;
+      right: 12px;
       transform: translateY(-50%);
     }
 
@@ -581,6 +604,8 @@ defineExpose({
       color: var(--lew-text-color-1);
       cursor: pointer;
       transition: all 0.2s;
+      overflow: hidden;
+      text-overflow: ellipsis;
       height: 100%;
     }
 
@@ -596,6 +621,7 @@ defineExpose({
   .lew-select-size-small {
     height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
+
     .lew-value {
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
@@ -605,6 +631,7 @@ defineExpose({
   .lew-select-size-medium {
     height: var(--lew-form-item-height-medium);
     line-height: var(--lew-form-input-line-height-medium);
+
     .lew-value {
       padding: var(--lew-form-input-padding-medium);
       font-size: var(--lew-form-font-size-medium);
@@ -614,6 +641,7 @@ defineExpose({
   .lew-select-size-large {
     height: var(--lew-form-item-height-large);
     line-height: var(--lew-form-input-line-height-large);
+
     .lew-value {
       padding: var(--lew-form-input-padding-large);
       font-size: var(--lew-form-font-size-large);
@@ -647,6 +675,7 @@ defineExpose({
       cursor: text;
     }
   }
+
   .lew-select:hover {
     background-color: var(--lew-form-bgcolor-hover);
   }
@@ -663,6 +692,7 @@ defineExpose({
   .lew-select-focus {
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
     background-color: var(--lew-form-bgcolor-focus);
+
     .lew-icon-select {
       color: var(--lew-text-color-1);
       transform: translateY(-50%) rotate(180deg);
@@ -673,8 +703,9 @@ defineExpose({
       transform: translate(100%, -50%) rotate(180deg);
     }
   }
+
   .lew-select-focus:hover {
-    background-color: var(--lew-form-bgcolor-focus-hover);
+    background-color: var(--lew-form-bgcolor-focus);
   }
 }
 </style>
@@ -774,12 +805,13 @@ defineExpose({
     }
 
     .lew-select-item-is-group {
-      color: var(--lew-text-color-7);
+      color: var(--lew-text-color-6);
       background-color: var(--lew-pop-bgcolor);
       cursor: default;
       box-sizing: border-box;
       cursor: no-drop;
       pointer-events: none;
+
       .lew-select-label {
         font-size: 12px;
         box-sizing: border-box;

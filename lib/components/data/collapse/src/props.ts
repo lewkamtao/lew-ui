@@ -1,11 +1,10 @@
 import type { Property } from 'csstype'
-import type { ExtractPropTypes, PropType } from 'vue'
-import { isValidCssValue } from 'lew-ui/utils'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators from 'lew-ui/validators'
 
-// Model definitions (使用 type 定义联合类型场景)
 export const collapseModel = {
   modelValue: {
-    type: [Array, String, Number] as PropType<string[] | string | number | null>,
+    type: [Array, String] as PropType<string[] | string>,
   },
 }
 
@@ -16,57 +15,43 @@ export const collapseItemModel = {
   },
 }
 
-// Props definitions
 export const collapseProps = {
   width: {
     type: String as PropType<Property.Width>,
     default: '100%',
+    validator: validators.widthHeight({
+      componentName: 'LewCollapse',
+      propName: 'width',
+    }),
   },
 }
 
 export const collapseItemProps = {
   collapseKey: {
-    type: [String, Number] as PropType<string | number>,
+    type: String,
     required: true,
-    validator(value: string | number): boolean {
-      if (value === '' || value === null || value === undefined) {
-        console.warn('[LewCollapseItem] collapseKey is required and cannot be empty.')
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewCollapseItem',
+      propName: 'collapseKey',
+      allowEmpty: false,
+    }),
   },
   title: {
     type: String,
+    validator: validators.string({
+      componentName: 'LewCollapseItem',
+      propName: 'title',
+    }),
   },
   radius: {
-    type: [String, Number] as PropType<Property.BorderRadius>,
-    default: '0px' as Property.BorderRadius,
-    validator(value: Property.BorderRadius): boolean {
-      return isValidCssValue({
-        name: 'LewCollapseItem',
-        field: 'radius',
-        value,
-      })
-    },
+    type: String as PropType<Property.BorderRadius>,
+    default: '0px',
+    validator: validators.widthHeight({
+      componentName: 'LewCollapseItem',
+      propName: 'radius',
+    }),
   },
 }
 
-// Type definitions (使用 type 定义基础类型别名)
-export type CollapseModelValue = (string | number)[] | string | number | null
-export type CollapseItemModelValue = boolean
-
-// Interface definitions (使用 interface 定义对象形状，便于扩展)
-export interface CollapseProps {
-  width?: Property.Width
-}
-
-export interface CollapseItemProps {
-  collapseKey: string | number
-  title?: string
-  radius?: Property.BorderRadius
-}
-
-// Extract prop types (使用 type 定义提取的类型)
-export type CollapsePropsType = ExtractPropTypes<typeof collapseProps>
-export type CollapseItemPropsType = ExtractPropTypes<typeof collapseItemProps>
+export type LewCollapseProps = ExtractPublicPropTypes<typeof collapseProps>
+export type LewCollapseItemProps = ExtractPublicPropTypes<typeof collapseItemProps>

@@ -1,37 +1,51 @@
+import type { Property } from 'csstype'
 import type { LewSize } from 'lew-ui/types'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
-export const colorPickerModel = {
-  modelValue: {
-    type: String,
-    description: '颜色值',
-  },
-}
-
-export type ColorPickerTrigger = 'click' | 'hover'
 export const colorPickerProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '颜色选择器尺寸',
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewColorPicker',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   width: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: 'auto',
-    description: '颜色选择器宽度',
+    validator: validators.widthHeight({
+      componentName: 'LewColorPicker',
+      propName: 'width',
+    }),
   },
   placeholder: {
     type: String,
-    default: '请选择',
-    description: '颜色选择器占位文本',
+    defaultLocale: true,
+    validator: validators.string({
+      componentName: 'LewColorPicker',
+      propName: 'placeholder',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewColorPicker',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewColorPicker',
+      propName: 'readonly',
+    }),
   },
 }
+
+export type LewColorPickerProps = ExtractPublicPropTypes<typeof colorPickerProps>

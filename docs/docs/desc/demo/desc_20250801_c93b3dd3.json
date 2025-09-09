@@ -1,0 +1,138 @@
+{
+  "direction": "x",
+  "columns": 3,
+  "labelX": "start",
+  "valueX": "start",
+  "size": "medium",
+  "bordered": true,
+  "width": "960px",
+  "id": "desc_20250801_c93b3dd3",
+  "options": [
+    {
+      "id": "desc_20250801_companyName",
+      "label": "公司名称",
+      "field": "companyName",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20250801_establishedYear",
+      "label": "成立年份",
+      "field": "establishedYear",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20250801_industry",
+      "label": "所属行业",
+      "field": "industry",
+      "gridArea": "auto  / 3 / auto  / 4"
+    },
+    {
+      "id": "desc_20250801_headquarters",
+      "label": "总部所在地",
+      "field": "headquarters",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20250801_numberOfEmployees",
+      "label": "员工数量",
+      "field": "numberOfEmployees",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20250801_revenue",
+      "label": "年收入",
+      "field": "revenue",
+      "gridArea": "auto  / 3 / auto  / 4"
+    },
+    {
+      "id": "desc_20250801_ceo",
+      "label": "首席执行官",
+      "field": "ceo",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20250801_products",
+      "label": "主要产品",
+      "field": "products",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20250801_majorCompetitors",
+      "label": "主要竞争对手",
+      "field": "majorCompetitors",
+      "gridArea": "auto  / 3 / auto  / 4"
+    },
+    {
+      "id": "desc_20250801_corporateCulture",
+      "label": "企业文化",
+      "field": "corporateCulture",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20250801_sustainabilityInitiatives",
+      "label": "可持续发展计划",
+      "field": "sustainabilityInitiatives",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20250801_customerSatisfaction",
+      "label": "客户满意度",
+      "field": "customerSatisfaction",
+      "gridArea": "auto  / 3 / auto  / 4"
+    },
+    {
+      "id": "desc_20250801_marketShare",
+      "label": "市场份额",
+      "field": "marketShare",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20250801_batteryTechnology",
+      "label": "电池技术",
+      "field": "batteryTechnology",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20250801_autopilotFeatures",
+      "label": "自动驾驶功能",
+      "field": "autopilotFeatures",
+      "gridArea": "auto  / 3 / auto  / 4"
+    },
+    {
+      "id": "desc_20250801_superchargerNetwork",
+      "label": "超级充电网络",
+      "field": "superchargerNetwork",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20250801_safetyRatings",
+      "label": "安全评级",
+      "field": "safetyRatings",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20250801_deliveryTime",
+      "label": "交付时间",
+      "field": "deliveryTime",
+      "gridArea": "auto  / 3 / auto  / 4"
+    },
+    {
+      "id": "desc_20250801_electricRange",
+      "label": "电动续航里程",
+      "field": "electricRange",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20250801_userInterface",
+      "label": "用户界面",
+      "field": "userInterface",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20250801_afterSalesService",
+      "label": "售后服务",
+      "field": "afterSalesService",
+      "gridArea": "auto  / 3 / auto  / 4"
+    }
+  ]
+}

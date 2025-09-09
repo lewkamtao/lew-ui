@@ -26,7 +26,7 @@ export default {
   },
   base: {
     base: 'Base',
-    navigator: 'Navigator',
+    navigation: 'Navigator',
     form: 'Form',
     data: 'Data Components',
     feedback: 'Feedback',
@@ -156,7 +156,7 @@ export default {
         type: 'Style Type',
         size: 'Size',
         color: 'Color Theme',
-        closable: 'Closable',
+        closeable: 'Closable',
         disabled: 'Disabled',
         round: 'Round',
         oversize: 'More Relaxed Size',
@@ -418,7 +418,7 @@ export default {
         placement: 'Menu pop-up position',
         checkable: 'Selectable',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Menu show event callback',
         hide: 'Menu hide event callback',
@@ -469,7 +469,7 @@ export default {
         options: 'Right-click menu configuration',
         disabled: 'Disable right-click menu',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'Form',

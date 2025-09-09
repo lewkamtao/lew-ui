@@ -7,7 +7,7 @@ function close() {
 <template>
   <lew-flex direction="y" gap="10px">
     <lew-flex x="start" wrap>
-      <lew-tag size="small" closable type="light" @close="close">
+      <lew-tag size="small" closeable type="light" @close="close">
         <template #left>
           🦄
         </template>
@@ -30,7 +30,7 @@ function close() {
       </lew-tag>
     </lew-flex>
     <lew-flex x="start" wrap>
-      <lew-tag closable type="light" @close="close">
+      <lew-tag closeable type="light" @close="close">
         <template #left>
           🦄
         </template>
@@ -53,7 +53,7 @@ function close() {
       </lew-tag>
     </lew-flex>
     <lew-flex x="start" wrap>
-      <lew-tag size="large" closable type="light" @close="close">
+      <lew-tag size="large" closeable type="light" @close="close">
         <template #left>
           🦄
         </template>

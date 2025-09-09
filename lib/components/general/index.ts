@@ -1,7 +1,6 @@
 export * from './avatar'
 export * from './badge'
 export * from './button'
-export * from './dropdown'
 export * from './flex'
 export * from './image'
 export * from './mark'

@@ -1,64 +1,95 @@
-import type { LewColor } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
+import type { LewDialogType } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validDialogTypeList } from 'lew-ui/validators'
 
 export const dialogProps = {
+  icon: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
+  title: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
+  content: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
   type: {
-    type: String,
-    default: 'error',
-    description: '对话框类型',
-    validator: (value: string) => {
-      const validTypes: LewColor[] = [
-        'primary',
-        'success',
-        'warning',
-        'error',
-        'info',
-      ]
-      if (!validTypes.includes(value as LewColor)) {
-        console.warn(
-          `[LewDialog] 无效的类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
+    type: String as PropType<LewDialogType>,
+    default: 'normal',
+    typeValues: validDialogTypeList,
+    validator: validators.enum({
+      componentName: 'LewDialog',
+      propName: 'type',
+      values: validDialogTypeList,
+    }),
+  },
+  hideIcon: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewDialog',
+      propName: 'hideIcon',
+    }),
   },
   okText: {
     type: String,
     defaultLocale: true,
-    description: '确认按钮文本',
+    validator: validators.string({
+      componentName: 'LewDialog',
+      propName: 'okText',
+    }),
   },
   cancelText: {
     type: String,
     defaultLocale: true,
-    description: '取消按钮文本',
+    validator: validators.string({
+      componentName: 'LewDialog',
+      propName: 'cancelText',
+    }),
   },
   ok: {
-    type: Function,
-    default: () => true,
-    description: '点击确认按钮时的回调函数',
+    type: Function as PropType<() => Promise<boolean>>,
+    default: () => Promise.resolve(true),
+    validator: validators.function({
+      componentName: 'LewDialog',
+      propName: 'ok',
+    }),
   },
   cancel: {
-    type: Function,
-    default: () => true,
-    description: '点击取消按钮时的回调函数',
+    type: Function as PropType<() => Promise<boolean>>,
+    default: () => Promise.resolve(true),
+    validator: validators.function({
+      componentName: 'LewDialog',
+      propName: 'cancel',
+    }),
   },
   closeOnClickOverlay: {
     type: Boolean,
     default: false,
-    description: '是否在点击遮罩层时关闭对话框',
+    validator: validators.boolean({
+      componentName: 'LewDialog',
+      propName: 'closeOnClickOverlay',
+    }),
   },
   closeByEsc: {
     type: Boolean,
     default: false,
-    description: '是否允许通过按下 ESC 键关闭对话框',
+    validator: validators.boolean({
+      componentName: 'LewDialog',
+      propName: 'closeByEsc',
+    }),
   },
   transformOrigin: {
     type: String,
     default: '0 0',
     hidden: true,
-    description: '对话框变换原点（内部使用，无需手动设置）',
+    validator: validators.string({
+      componentName: 'LewDialog',
+      propName: 'transformOrigin',
+    }),
   },
 }
 
-export type DialogProps = ExtractPropTypes<typeof dialogProps>
+export type LewDialogProps = ExtractPublicPropTypes<typeof dialogProps>

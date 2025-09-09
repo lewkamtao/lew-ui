@@ -233,28 +233,28 @@ getInitialLocale().then((locale) => {
         Beta {{ version }}
       </lew-tag>
     </lew-flex>
-    <lew-flex gap="15" class="menu">
+    <lew-flex gap="15px" x="center" class="menu">
       <div class="menu-item" @click="goToPage('/')">
-        {{ docsLocale.t('home.home') }}
+        {{ docsLocale.t("home.home") }}
       </div>
       <div class="menu-item" @click="goToPage('/Install')">
-        {{ docsLocale.t('home.install') }}
+        {{ docsLocale.t("home.install") }}
       </div>
       <div class="menu-item" @click="goToPage('/Image')">
-        {{ docsLocale.t('home.components') }}
+        {{ docsLocale.t("home.components") }}
       </div>
       <div class="menu-item" @click="goToPage('/form-engine', true)">
-        <lew-flex gap="5">
-          {{ docsLocale.t('home.formEngine') }}
+        <lew-flex gap="5px">
+          {{ docsLocale.t("home.formEngine") }}
         </lew-flex>
       </div>
       <div class="menu-item" @click="goToPage('/desc-engine', true)">
-        <lew-flex gap="5">
-          {{ docsLocale.t('home.descEngine') }}
+        <lew-flex gap="5px">
+          {{ docsLocale.t("home.descEngine") }}
         </lew-flex>
       </div>
     </lew-flex>
-    <lew-flex gap="15" x="end" class="menu">
+    <lew-flex gap="15px" x="end" class="menu">
       <div v-if="isDev" class="menu-item menu-item-icon" @click="goToSettings">
         <Settings :size="18" />
       </div>
@@ -287,6 +287,7 @@ getInitialLocale().then((locale) => {
   box-sizing: border-box;
   user-select: none;
   white-space: nowrap;
+
   .logo {
     display: flex;
     align-items: center;
@@ -315,14 +316,17 @@ getInitialLocale().then((locale) => {
       height: 30px;
       border-radius: var(--lew-border-radius-small);
       font-weight: bold;
+
       svg {
         cursor: pointer;
       }
     }
+
     .menu-item-icon {
       width: 30px;
       padding: 0px;
     }
+
     .menu-item:nth-child(5) {
       margin-right: 50px;
     }

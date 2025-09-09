@@ -5,7 +5,7 @@ const v = ref(40)
 <template>
   <lew-slider
     v-model="v"
-    style="width: 500px"
+    width="700px"
     disabled
     :options="[
       {

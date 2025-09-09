@@ -4,15 +4,12 @@ const animalOptions = ref([
   { label: 'Tiger', value: 'tiger' },
   { label: 'Elephant', value: 'elephant' },
   { label: 'Giraffe', value: 'giraffe', disabled: true },
+  { label: 'Zebra', value: 'zebra' },
 ])
 
 const selectedAnimal = ref('tiger')
 </script>
 
 <template>
-  <lew-radio-group
-    v-model="selectedAnimal"
-    direction="y"
-    :options="animalOptions"
-  />
+  <lew-radio-group v-model="selectedAnimal" direction="y" :options="animalOptions" />
 </template>

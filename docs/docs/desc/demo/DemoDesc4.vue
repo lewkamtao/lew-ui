@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import options from './desc_20241128_380ff83.json'
+import options from './desc_20250801_c93b3dd3.json'
 // 定义数据源
 // Start of Selection
 const dataSource = ref({
@@ -28,7 +28,7 @@ const dataSource = ref({
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
-    <lew-desc bordered v-bind="options" :data-source="dataSource" />
+  <lew-flex x="start" y="start" gap="50px">
+    <lew-desc v-bind="options" :data-source="dataSource" />
   </lew-flex>
 </template>

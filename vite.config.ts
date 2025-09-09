@@ -56,9 +56,13 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
     },
     rollupOptions: {
       external: ['vue'],
-      output: { globals: { vue: 'Vue' } },
+      output: {
+        globals: { vue: 'Vue' },
+        exports: 'named' as const,
+      },
     },
     copyPublicDir: false, // lib模式下不复制public文件夹
+    outDir: 'dist',
   }
 
   const docsBuildOptions = {

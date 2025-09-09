@@ -1,5 +1,5 @@
 <template>
-  <lew-flex wrap x="start" gap="20">
+  <lew-flex wrap x="start" gap="20px">
     <lew-avatar
       src=" https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_4_7cwenb_.jpeg"
       status="online"

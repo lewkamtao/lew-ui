@@ -17,7 +17,7 @@ function openWithoutDelay() {
 </script>
 
 <template>
-  <lew-flex wrap x="start" gap="20">
+  <lew-flex wrap x="start" gap="20px">
     <lew-button text="Auto" type="ghost" color="blue" @click="openWithDelay" />
     <lew-button
       text="Manual"

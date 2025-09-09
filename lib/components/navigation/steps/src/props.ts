@@ -1,72 +1,42 @@
-import type { ExtractPropTypes } from 'vue'
-
-export interface StepsOptions {
-  title: string
-  description: string
-}
-
-export type StepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
+import type { Property } from 'csstype'
+import type { LewStepsOption, LewStepsStatus } from 'lew-ui/types'
+import type { ExtractPublicPropTypes } from 'vue'
+import validators, { validStepsStatusList } from 'lew-ui/validators'
 
 export const stepsModel = {
   modelValue: {
-    type: [String, Number],
-    default: '',
-    description: '当前激活步骤的索引值',
-    validator: (value: string | number) => {
-      if (typeof value !== 'string' && typeof value !== 'number') {
-        console.warn('[LewSteps] modelValue 必须是字符串或数字')
-        return false
-      }
-      return true
-    },
+    type: Number,
   },
 }
 
 export const stepsProps = {
   options: {
-    type: Array as PropType<StepsOptions[]>,
-    default: () => [],
-    description: '步骤配置项数组',
-    validator: (value: StepsOptions[]) => {
-      if (!Array.isArray(value)) {
-        console.warn('[LewSteps] options 必须是数组')
-        return false
-      }
-      if (
-        value.some(
-          item =>
-            typeof item.title !== 'string'
-            || typeof item.description !== 'string',
-        )
-      ) {
-        console.warn(
-          '[LewSteps] options 数组中的每个项目必须包含 title 和 description 字符串属性',
-        )
-        return false
-      }
-      return true
-    },
+    type: Array as PropType<LewStepsOption[]>,
+    typePopKeys: ['LewStepsOption'],
+    required: true,
+    validator: validators.array({
+      componentName: 'LewSteps',
+      propName: 'options',
+    }),
   },
   status: {
-    type: String as PropType<StepsStatus>,
+    type: String as PropType<LewStepsStatus>,
     default: 'pending',
-    description: '步骤条的当前状态',
-    validator: (value: StepsStatus) => {
-      const validStatus = ['pending', 'loading', 'done', 'error', 'warning']
-      if (!validStatus.includes(value)) {
-        console.warn(
-          `[LewSteps] status 必须是 ${validStatus.join(', ')} 中的一个`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validStepsStatusList,
+    validator: validators.enum({
+      componentName: 'LewSteps',
+      propName: 'status',
+      values: validStepsStatusList,
+    }),
   },
   minWidth: {
-    type: String as PropType<string>,
+    type: String as PropType<Property.Width>,
     default: '300px',
-    description: '步骤条的最小宽度',
+    validator: validators.widthHeight({
+      componentName: 'LewSteps',
+      propName: 'minWidth',
+    }),
   },
 }
 
-export type StepsProps = ExtractPropTypes<typeof stepsProps>
+export type LewStepsProps = ExtractPublicPropTypes<typeof stepsProps>

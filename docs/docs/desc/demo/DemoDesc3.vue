@@ -367,7 +367,7 @@ const options = ref([
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
+  <lew-flex x="start" y="start" gap="50px">
     <lew-desc
       width="1200"
       direction="x"

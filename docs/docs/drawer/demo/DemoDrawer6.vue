@@ -4,7 +4,7 @@ const nestedVisible = ref(false)
 </script>
 
 <template>
-  <lew-flex gap="20" x="start">
+  <lew-flex gap="20px" x="start">
     <lew-drawer
       v-model:visible="visible"
       title="Nested Drawer Demo"
@@ -13,7 +13,7 @@ const nestedVisible = ref(false)
       position="right"
       width="400px"
     >
-      <lew-flex direction="column" gap="16">
+      <lew-flex direction="y" gap="16">
         <div class="content main-content">
           <div class="content-header">
             <h3>Main Drawer Content</h3>
@@ -57,7 +57,7 @@ const nestedVisible = ref(false)
       position="right"
       width="300px"
     >
-      <lew-flex direction="column" gap="16">
+      <lew-flex direction="y" gap="16">
         <div class="content nested-content">
           <div class="content-header">
             <h4>Nested Content</h4>

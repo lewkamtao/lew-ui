@@ -1,103 +1,103 @@
-import type { LewColor, LewSize } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import { validColors, validSizes } from 'lew-ui/constants'
+import type { Property } from 'csstype'
+import type { LewButtonSize, LewButtonType, LewColor } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validColorList } from 'lew-ui/validators'
 
-export type ButtonSize = 'mini' | LewSize
-export type ButtonType = 'fill' | 'light' | 'ghost' | 'text'
-export type IconPosition = 'left' | 'right'
+const typeValues = ['fill', 'light', 'ghost', 'text']
+const sizeValues = ['mini', 'small', 'medium', 'large']
 
 export const buttonProps = {
   text: {
     type: String,
-    default: '',
-    description: '按钮文本内容',
-    validator(value: string): boolean {
-      if (value.length > 20) {
-        console.warn('[LewButton] 按钮文本长度不应超过20个字符')
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewButton',
+      propName: 'text',
+    }),
   },
   width: {
-    type: [String, Number],
-    default: undefined,
-    description: '按钮宽度，支持数字（单位：像素）或带单位的字符串',
+    type: String as PropType<Property.Width>,
+    validator: validators.widthHeight({
+      componentName: 'LewButton',
+      propName: 'width',
+    }),
   },
   type: {
-    type: String as PropType<ButtonType>,
+    type: String as PropType<LewButtonType>,
+    typeValues,
     default: 'fill',
-    description: '按钮类型',
-    validator(value: ButtonType): boolean {
-      const validTypes: ButtonType[] = ['fill', 'light', 'ghost', 'text']
-      if (!validTypes.includes(value)) {
-        console.warn(
-          `[LewButton] 无效的按钮类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewButton',
+      propName: 'type',
+      values: typeValues,
+    }),
   },
   size: {
-    type: String as PropType<ButtonSize>,
+    type: String as PropType<LewButtonSize>,
+    typeValues: sizeValues,
     default: 'medium',
-    description: '按钮尺寸',
-    validator(value: ButtonSize): boolean {
-      const buttonSizes: ButtonSize[] = ['mini', ...validSizes]
-      if (!buttonSizes.includes(value)) {
-        console.warn(
-          `[LewButton] 无效的按钮尺寸: ${value}。请使用 ${buttonSizes.join(', ')} 中的一个`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewButton',
+      propName: 'size',
+      values: sizeValues,
+    }),
   },
   singleIcon: {
     type: Boolean,
     default: false,
-    description: '是否为单图标模式',
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'singleIcon',
+    }),
   },
   color: {
     type: String as PropType<LewColor>,
-    default: 'blue',
-    description: '按钮颜色',
-    validator(value: LewColor): boolean {
-      if (!validColors.includes(value)) {
-        console.warn(
-          `[LewButton] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个`,
-        )
-        return false
-      }
-      return true
-    },
+    default: 'primary',
+    typeValues: validColorList,
+    validator: validators.enum({
+      componentName: 'LewButton',
+      propName: 'color',
+      values: validColorList,
+    }),
   },
   round: {
     type: Boolean,
     default: false,
-    description: '是否为圆角按钮',
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'round',
+    }),
   },
   dashed: {
     type: Boolean,
     default: false,
-    description: '是否为虚线按钮',
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'dashed',
+    }),
   },
   loading: {
     type: Boolean,
     default: false,
-    description: '是否显示加载状态',
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'loading',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用按钮',
+    validator: validators.boolean({
+      componentName: 'LewButton',
+      propName: 'disabled',
+    }),
   },
   request: {
-    type: Function,
-    default: null,
-    description: '点击按钮时触发的异步请求函数',
+    type: Function as PropType<() => Promise<void>>,
+    validator: validators.function({
+      componentName: 'LewButton',
+      propName: 'request',
+    }),
   },
 }
 
-export type ButtonProps = ExtractPropTypes<typeof buttonProps>
+export type LewButtonProps = ExtractPublicPropTypes<typeof buttonProps>

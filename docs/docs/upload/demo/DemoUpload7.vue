@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { UploadFileItem } from 'lew-ui'
+import type { LewUploadFileItem } from 'lew-ui'
 
-const fileList = ref<UploadFileItem[]>([
+const fileList = ref<LewUploadFileItem[]>([
   {
     key: '50357524',
     size: 71808,

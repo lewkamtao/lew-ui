@@ -1,17 +1,17 @@
 <template>
-  <lew-title size="16" color="blue">
+  <lew-title size="16px" color="blue">
     Exploring New Horizons
   </lew-title>
-  <lew-title size="24" color="green">
+  <lew-title size="24px" color="green">
     Exploring New Horizons
   </lew-title>
-  <lew-title size="30" color="red">
+  <lew-title size="30px" color="red">
     Exploring New Horizons
   </lew-title>
-  <lew-title size="36" color="warning">
+  <lew-title size="36px" color="warning">
     Exploring New Horizons
   </lew-title>
-  <lew-title size="48" color="normal">
+  <lew-title size="48px" color="normal">
     Exploring New Horizons
   </lew-title>
 </template>

@@ -2,20 +2,21 @@
 import type { LewColor } from 'lew-ui'
 import { useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { dialogEmits } from './emits'
 import { dialogProps } from './props'
 
 const props = defineProps(dialogProps)
-const emit = defineEmits(['close'])
+const emit = defineEmits(dialogEmits)
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
 
 const visible = ref(false)
 const okLoading = ref(false)
 const cancelLoading = ref(false)
-const okRef1 = ref()
-const okRef2 = ref()
+const okRef = ref()
 
 function maskClick() {
   if (props.closeOnClickOverlay) {
@@ -26,10 +27,8 @@ function maskClick() {
 onMounted(() => {
   visible.value = true
   nextTick(() => {
-    if (okRef1.value)
-      okRef1.value.focus()
-    if (okRef2.value)
-      okRef2.value.focus()
+    if (okRef.value)
+      okRef.value.focus()
   })
 })
 
@@ -78,26 +77,22 @@ if (props.closeByEsc) {
       </transition>
       <transition name="lew-dialog">
         <div v-if="visible" class="lew-dialog" @click="maskClick">
-          <LewFlex
-            direction="y"
-            gap="20"
-            class="lew-dialog-box lew-dialog-box-normal"
-            @click.stop
-          >
+          <LewFlex direction="y" gap="20px" class="lew-dialog-box" @click.stop>
             <LewFlex y="start">
-              <div class="left">
-                <LewCommonIcon :type :size="24" />
+              <div v-if="!hideIcon" class="lew-dialog-box-left">
+                <CommonIcon v-if="!icon" :type :size="24" />
+                <RenderComponent v-else :render-fn="icon" />
               </div>
-              <div class="right">
-                <header>
-                  <slot name="title" />
-                </header>
-                <main>
-                  <slot name="content" />
-                </main>
+              <div class="lew-dialog-box-right">
+                <div class="lew-dialog-box-right-header">
+                  <RenderComponent :render-fn="title" />
+                </div>
+                <div class="lew-dialog-box-right-main">
+                  <RenderComponent :render-fn="content" />
+                </div>
               </div>
             </LewFlex>
-            <footer>
+            <div class="lew-dialog-box-footer">
               <LewButton
                 :text="cancelText || locale.t('dialog.cancelText')"
                 color="gray"
@@ -107,7 +102,7 @@ if (props.closeByEsc) {
                 @click.stop="cancel"
               />
               <LewButton
-                ref="okRef1"
+                ref="okRef"
                 :text="okText || locale.t('dialog.okText')"
                 type="fill"
                 size="small"
@@ -115,7 +110,7 @@ if (props.closeByEsc) {
                 :loading="okLoading"
                 @click.stop="ok"
               />
-            </footer>
+            </div>
           </LewFlex>
         </div>
       </transition>
@@ -155,40 +150,37 @@ if (props.closeByEsc) {
     background-color: var(--lew-modal-body-bgcolor);
     font-size: 0;
 
-    header {
-      width: 100%;
-      font-size: 16px;
-      font-weight: 600;
+    .lew-dialog-box-left {
+      width: 28px;
+      margin-left: -2.5px;
     }
 
-    main {
-      height: auto;
-      font-size: 14px;
-      color: var(--lew-text-color-5);
+    .lew-dialog-box-right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      width: calc(450px - 15px - 30px);
+
+      .lew-dialog-box-right-header {
+        width: 100%;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 600;
+      }
+
+      .lew-dialog-box-right-main {
+        height: auto;
+        font-size: 14px;
+        color: var(--lew-text-color-5);
+      }
     }
 
-    footer {
+    .lew-dialog-box-footer {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
       width: 100%;
-    }
-  }
-
-  .lew-dialog-box-normal {
-    .left {
-      width: 28px;
-      margin-left: -2px;
-    }
-
-    .right {
-      position: relative;
-      top: 1px;
-      width: calc(450px - 15px - 30px);
-    }
-
-    main {
-      margin-top: 10px;
     }
   }
 }

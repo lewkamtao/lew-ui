@@ -6,14 +6,14 @@ export default {
       name: 'content',
       description: '内容',
       type: 'null',
-      typeDesc: 'vnode|string',
+      typePopKeys: ['LewComponentSource'],
       default: '-',
     },
     {
       name: 'placement',
       description: '位置',
       type: 'string',
-      default: '-',
+      default: 'top',
     },
     {
       name: 'trigger',
@@ -25,7 +25,7 @@ export default {
       name: 'delay',
       description: '延迟显示',
       type: 'Array<number>',
-      default: '[80,80]',
+      default: '[120,120]',
     },
   ],
 }

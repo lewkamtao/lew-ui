@@ -1,18 +1,20 @@
 <script lang="ts" setup>
-import type { MenuOptions } from './props'
-import { LewTag, LewTextTrim } from 'lew-ui'
-import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
+import type { LewMenuOption } from 'lew-ui'
+import { LewTag } from 'lew-ui'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { toRaw } from 'vue'
+import { menuEmits } from './emits'
 import { menuProps } from './props'
 
 defineProps(menuProps)
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(menuEmits)
 
 const modelValue = defineModel()
 
-function select(item: MenuOptions) {
+function select(item: LewMenuOption) {
   modelValue.value = item.value
-  emit('change', item)
+  emit('change', toRaw(item))
 }
 </script>
 
@@ -20,7 +22,14 @@ function select(item: MenuOptions) {
   <div class="lew-menu">
     <template v-for="item in options" :key="item.label">
       <div class="lew-menu-item">
-        <LewTextTrim :text="item.label" />
+        <RenderComponent
+          :render-fn="item.label"
+          type="text-trim"
+          :component-props="{
+            placement: 'right',
+            delay: [250, 250],
+          }"
+        />
         <LewTag
           v-if="item.tagProps?.text"
           v-bind="{
@@ -33,16 +42,12 @@ function select(item: MenuOptions) {
         <div
           class="lew-menu-item lew-menu-item-child"
           :class="{
-            'lew-menu-item-last':
-              item.children && index === item.children.length - 1,
+            'lew-menu-item-last': item.children && index === item.children.length - 1,
             'lew-menu-item-active': cItem.value === modelValue,
           }"
           @click="select(cItem)"
         >
-          <RenderComponent
-            :render-fn="cItem.icon"
-            class="lew-menu-icon"
-          />
+          <RenderComponent :render-fn="cItem.icon" class="lew-menu-icon" />
           <RenderComponent
             :render-fn="cItem.label"
             type="text-trim"
@@ -89,6 +94,7 @@ function select(item: MenuOptions) {
     padding: 0px 15px;
     box-sizing: border-box;
   }
+
   .lew-menu-item-child {
     color: var(--lew-text-color-1);
     font-size: 14px;
@@ -100,22 +106,27 @@ function select(item: MenuOptions) {
       background-color 0.25s,
       color 0.25s;
   }
+
   :deep(.lew-menu-icon) {
     flex-shrink: 0;
   }
+
   .lew-menu-item-child:hover {
     background-color: var(--lew-form-bgcolor-hover);
     color: var(--lew-text-color-1);
   }
+
   .lew-menu-item-active {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
     font-weight: bold;
   }
+
   .lew-menu-item-active:hover {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
   }
+
   .lew-menu-item-last {
     margin-bottom: 20px;
   }

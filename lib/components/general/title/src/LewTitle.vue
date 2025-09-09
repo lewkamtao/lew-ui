@@ -1,25 +1,37 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
 import { any2px } from 'lew-ui/utils'
+import { computed } from 'vue'
+import { titleEmits } from './emits'
 import { titleProps } from './props'
 
 const props = defineProps(titleProps)
+const emit = defineEmits(titleEmits)
 
-const titleStyle = computed(() => {
-  const { bold, color } = props
-  const size = any2px(props.size)
-  const colorStyle = color
-    ? `
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
-    color: transparent;background-image: linear-gradient(-252deg, var(--lew-color-${color}-dark),var(--lew-color-${color}))`
-    : ''
-  return `font-weight:${bold};font-size:${size};${colorStyle}`
+// Computed
+const titleStyle = computed((): CSSProperties | string => {
+  const { bold, color, size } = props
+  const fontSize = any2px(size)
+
+  if (color) {
+    // Use string style for gradient background
+    return `font-weight: ${bold}; font-size: ${fontSize}; -webkit-background-clip: text; -moz-background-clip: text; background-clip: text; color: transparent; background-image: linear-gradient(-252deg, var(--lew-color-${color}-dark), var(--lew-color-${color}));`
+  }
+
+  return {
+    fontWeight: bold,
+    fontSize,
+  }
 })
+
+// Methods
+function handleClick(event: MouseEvent): void {
+  emit('click', event)
+}
 </script>
 
 <template>
-  <div class="lew-title" :style="titleStyle">
+  <div class="lew-title" :style="titleStyle" @click="handleClick">
     <template v-if="text">
       {{ text }}
     </template>

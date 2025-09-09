@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import type { LewDialogType, LewMessageType, LewNotificationType } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { random } from 'lodash-es'
 import { useRouter } from 'vue-router'
 import * as Yup from 'yup'
@@ -29,9 +30,7 @@ const options = ref([
     field: 'componentDescription',
     label: 'Description',
     as: 'textarea',
-    rule: Yup.string().required(
-      'Please describe the key features and advantages',
-    ),
+    rule: Yup.string().required('Please describe the key features and advantages'),
     props: {
       clearable: true,
       showCount: true,
@@ -183,9 +182,7 @@ const options = ref([
     field: 'info.isOpenSource',
     label: 'Open Source',
     as: 'switch',
-    rule: Yup.boolean().required(
-      'Please specify if the library is open source',
-    ),
+    rule: Yup.boolean().required('Please specify if the library is open source'),
     props: {},
   },
 ])
@@ -205,6 +202,7 @@ onMounted(() => {
     usageFramework: 'vue',
     targetUsers: ['1', '2'],
     developmentFocus: '3',
+    devFocus: '3',
     info: {
       releaseDate: '2022-05-24',
       availabilityPeriod: {
@@ -267,7 +265,7 @@ function submit() {
   LewMessage.error(v.value || 'Password cannot be empty')
   lewPopoverRef.value.hide()
 }
-function open(type: string) {
+function open(type: LewDialogType) {
   LewDialog[type]({
     title: 'Confirm Action',
     content: 'This action cannot be undone. Are you sure you want to continue?',
@@ -337,19 +335,17 @@ const dropdown_options = ref([
   },
 ])
 
-function message(type: string) {
+function message(type: LewMessageType) {
   const messages = {
     info: 'New Feature: Explore iOS 17 with enhanced iPhone intelligence.',
     success: 'Update Complete: Your device has been successfully updated.',
     warning: 'Apple ID Alert: Please verify your Apple ID email.',
     error: 'Security Alert: Unusual login activity detected on your account.',
   }
-  LewMessage[type](
-    messages[type as keyof typeof messages] || 'Notification from Apple',
-  )
+  LewMessage[type](messages[type as keyof typeof messages] || 'Notification from Apple')
 }
 
-function notification(type: string) {
+function notification(type: LewNotificationType) {
   const notifications = {
     info: {
       title: 'iOS Update Available',
@@ -409,19 +405,15 @@ onUnmounted(() => {
       </div>
       <p>{{ $t("home.slogan") }}</p>
       <lew-flex x="start">
-        <lew-button
-          round
-          style="margin-top: 20px"
-          @click="router.push('/Image')"
-        >
+        <lew-button round style="margin-top: 20px" @click="router.push('/Image')">
           {{ $t("home.getStarted") }}
-          <LewCommonIcon type="chevron-right" />
+          <CommonIcon type="chevron-right" />
         </lew-button>
       </lew-flex>
     </div>
     <div class="home">
       <lew-flex direction="x" gap="40">
-        <lew-flex class="item" direction="y" x="end" gap="40">
+        <lew-flex class="item" width="350px" direction="y" x="end" gap="40">
           <lew-flex direction="y" x="end" gap="0px">
             <lew-title :size="16" :bold="200">
               Lew Design 16px
@@ -436,7 +428,7 @@ onUnmounted(() => {
               Lew Design 40px
             </lew-title>
           </lew-flex>
-          <lew-flex style="width: 500px" x="end" gap="20">
+          <lew-flex style="width: 500px" x="end" gap="20px">
             <lew-avatar size="40" shape="circle" />
             <lew-avatar alt="Larry Page" size="40" shape="circle" />
             <lew-avatar alt="Tim Cook" size="40" shape="circle" />
@@ -486,7 +478,7 @@ onUnmounted(() => {
             </lew-tag>
           </lew-flex>
 
-          <lew-flex x="end" gap="20">
+          <lew-flex x="end" gap="20px">
             <lew-button round text="Explore" color="red" type="light" />
             <lew-button round text="Shop" color="yellow" type="light" />
             <lew-button text="Learn" color="orange" type="light" />
@@ -502,16 +494,16 @@ onUnmounted(() => {
             <lew-tabs v-model="tabValue" :options="tab_options" />
           </lew-flex>
 
-          <lew-flex gap="20" x="end">
+          <lew-flex gap="20px" x="end">
             <lew-dropdown :options="dropdown_options">
               <lew-button text="Hover" type="light" color="normal" />
             </lew-dropdown>
           </lew-flex>
         </lew-flex>
-        <lew-flex style="width: 450px; margin-top: 0px" class="item">
+        <lew-flex style="margin-top: 0px" width="500px" class="item">
           <lew-form ref="formRef" row-gap="30" :options="options" />
         </lew-flex>
-        <lew-flex class="item" direction="y" gap="20">
+        <lew-flex class="item" width="400px" direction="y" gap="20px">
           <lew-alert type="warning" title="Please confirm deletion" />
           <lew-alert type="info">
             <template #title>
@@ -597,12 +589,7 @@ onUnmounted(() => {
             />
           </lew-flex>
           <lew-flex wrap x="start" gap="10">
-            <lew-button
-              text="Delete"
-              type="light"
-              color="error"
-              @click="open('error')"
-            />
+            <lew-button text="Delete" type="light" color="error" @click="open('error')" />
             <lew-button
               text="Cancel"
               type="light"
@@ -615,29 +602,16 @@ onUnmounted(() => {
               color="success"
               @click="open('success')"
             />
-            <lew-button
-              text="View"
-              type="light"
-              color="info"
-              @click="open('info')"
-            />
+            <lew-button text="View" type="light" color="info" @click="open('info')" />
           </lew-flex>
           <lew-flex x="start" gap="10">
-            <lew-popover
-              ref="lewPopoverRef"
-              trigger="click"
-              placement="bottom-start"
-            >
+            <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start">
               <template #trigger>
                 <lew-button text="Change Password" />
               </template>
               <template #popover-body>
                 <div class="popover-body" style="width: 240px">
-                  <lew-input
-                    v-model="v"
-                    width="100%"
-                    placeholder="Enter password"
-                  />
+                  <lew-input v-model="v" width="100%" placeholder="Enter password" />
                   <lew-flex x="end" style="margin-top: 15px">
                     <lew-button
                       text="Cancel"
@@ -681,10 +655,12 @@ onUnmounted(() => {
       font-weight: 900;
     }
   }
+
   .home-start-button {
     position: relative;
     z-index: 9999;
   }
+
   .home {
     position: relative;
     min-height: 100vh;
@@ -692,12 +668,13 @@ onUnmounted(() => {
     animation: demo 4s ease;
     animation-fill-mode: forwards;
     opacity: 0;
-    margin-top: -50px;
-    margin-left: 30px;
     z-index: 99;
+    width: 1440px;
+    margin: 0 auto;
+    margin-top: -50px;
+
     .item {
       flex-shrink: 0;
-      width: 350px;
       height: calc(100vh - 70px);
     }
   }

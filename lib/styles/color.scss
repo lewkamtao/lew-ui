@@ -1,0 +1,409 @@
+:root {
+  /* Red */
+  --lew-color-red: #ff3b30;
+  --lew-color-red-hover: #e83329;
+  --lew-color-red-active: #c6221a;
+
+  --lew-color-red-light: #feeae9;
+  --lew-color-red-light-hover: #ffdcda;
+  --lew-color-red-light-active: #e4b0ad;
+
+  --lew-color-red-dark: rgb(218, 34, 34);
+
+  /* Orange */
+  --lew-color-orange: #ff9500;
+  --lew-color-orange-hover: #e98903;
+  --lew-color-orange-active: #ca7600;
+
+  --lew-color-orange-light: #fff2e6;
+  --lew-color-orange-light-hover: #fae3c6;
+  --lew-color-orange-light-active: #e0c8ac;
+
+  --lew-color-orange-dark: #9f6103;
+
+  /* Yellow */
+  --lew-color-yellow: #ffcc00;
+  --lew-color-yellow-hover: #edbe04;
+  --lew-color-yellow-active: #c9a104;
+
+  --lew-color-yellow-light: #fffae9;
+  --lew-color-yellow-light-hover: #ebe4ca;
+  --lew-color-yellow-light-active: #d6ceaf;
+
+  --lew-color-yellow-dark: #9e8400;
+
+  /* Green */
+  --lew-color-green: #34c759;
+  --lew-color-green-hover: #2cb34d;
+  --lew-color-green-active: #1f9d3f;
+
+  --lew-color-green-light: #ecfcf0;
+  --lew-color-green-light-hover: #d5efdb;
+  --lew-color-green-light-active: #aadab6;
+
+  --lew-color-green-dark: #067221;
+
+  /* Mint */
+  --lew-color-mint: #00c7be;
+  --lew-color-mint-hover: #09bbb2;
+  --lew-color-mint-active: #139a94;
+
+  --lew-color-mint-light: #dbfffd;
+  --lew-color-mint-light-hover: #d7f6f4;
+  --lew-color-mint-light-active: #add7d5;
+
+  --lew-color-mint-dark: #068682;
+
+  /* Teal */
+  --lew-color-teal: #30b0c7;
+  --lew-color-teal-hover: #269eb3;
+  --lew-color-teal-active: #1a8294;
+
+  --lew-color-teal-light: #e4fcff;
+  --lew-color-teal-light-hover: #d0ecf0;
+  --lew-color-teal-light-active: #aed1d7;
+
+  --lew-color-teal-dark: #1c9cb3;
+
+  /* Cyan */
+  --lew-color-cyan: #32ade6;
+  --lew-color-cyan-hover: #269ed6;
+  --lew-color-cyan-active: #1487bc;
+
+  --lew-color-cyan-light: #e3f4fb;
+  --lew-color-cyan-light-hover: #c1dce8;
+  --lew-color-cyan-light-active: #aac8d7;
+
+  --lew-color-cyan-dark: #116799;
+
+  /* Blue */
+  --lew-color-blue: #007aff;
+  --lew-color-blue-hover: #0271e7;
+  --lew-color-blue-active: #015ec2;
+
+  --lew-color-blue-light: #eaf4ff;
+  --lew-color-blue-light-hover: #cedded;
+  --lew-color-blue-light-active: #a1b5cb;
+
+  --lew-color-blue-dark: #085fd0;
+
+  /* Indigo */
+  --lew-color-indigo: #5856d6;
+  --lew-color-indigo-hover: #5856d6;
+  --lew-color-indigo-active: #5856d6;
+
+  --lew-color-indigo-light: #e9e9ff;
+  --lew-color-indigo-light-hover: #d6d6ef;
+  --lew-color-indigo-light-active: #b7b7db;
+
+  --lew-color-indigo-dark: #4442c2;
+
+  /* Purple */
+  --lew-color-purple: #af52de;
+  --lew-color-purple-hover: #a03ed1;
+  --lew-color-purple-active: #7e25aa;
+
+  --lew-color-purple-light: #f8ebff;
+  --lew-color-purple-light-hover: #e0cde9;
+  --lew-color-purple-light-active: #c9b3d4;
+
+  --lew-color-purple-dark: #711c9b;
+
+  /* Pink */
+  --lew-color-pink: #ff2d55;
+  --lew-color-pink-hover: #e42447;
+  --lew-color-pink-active: #bd1836;
+
+  --lew-color-pink-light: #ffe8ec;
+  --lew-color-pink-light-hover: #f0d1d7;
+  --lew-color-pink-light-active: #d8bac0;
+
+  --lew-color-pink-dark: #b30929;
+
+  /* Brown */
+  --lew-color-brown: #a2845e;
+  --lew-color-brown-hover: #927248;
+  --lew-color-brown-active: #72542e;
+
+  --lew-color-brown-light: #fff5e8;
+  --lew-color-brown-light-hover: #f1e7da;
+  --lew-color-brown-light-active: #e1d5c5;
+
+  --lew-color-brown-dark: #8e704a;
+
+  /* Gray */
+  --lew-color-gray: #8e8e93;
+  --lew-color-gray-hover: #7b7b81;
+  --lew-color-gray-active: #6e6e71;
+
+  --lew-color-gray-light: #f0f0f0;
+  --lew-color-gray-light-hover: #dfdfe0;
+  --lew-color-gray-light-active: #ceced5;
+
+  --lew-color-gray-dark: #414144;
+
+  /* Black */
+  --lew-color-black: #000000;
+  --lew-color-black-hover: rgba(0, 0, 0, 0.8);
+  --lew-color-black-active: rgba(0, 0, 0, 0.6);
+
+  --lew-color-black-light: rgba(65, 62, 62, 0.05);
+  --lew-color-black-light-hover: rgba(0, 0, 0, 0.08);
+  --lew-color-black-light-active: rgba(0, 0, 0, 0.16);
+
+  --lew-color-black-dark: rgb(0 0 0 / 80%);
+
+  /* White */
+  --lew-color-white: rgb(255 255 255);
+  --lew-color-white-hover: rgba(255, 255, 255, 0.7);
+  --lew-color-white-active: rgba(255, 255, 255, 0.9);
+
+  --lew-color-white-light: rgb(255 255 255 / 50%);
+  --lew-color-white-light-hover: rgba(255, 255, 255, 0.35);
+  --lew-color-white-light-active: rgba(255, 255, 255, 0.5);
+
+  --lew-color-white-dark: rgb(230 230 230);
+}
+
+/* ========== Dark Mode ========== */
+.lew-dark {
+  /* Red */
+  --lew-color-red: #ff453a;
+  --lew-color-red-hover: #c6231b;
+  --lew-color-red-active: #881610;
+
+  --lew-color-red-light: #461d1c;
+  --lew-color-red-light-hover: #3f1917;
+  --lew-color-red-light-active: #2e1312;
+
+  --lew-color-red-dark: #fd4238;
+
+  /* Orange */
+  --lew-color-orange: #ff9f0a;
+  --lew-color-orange-hover: #cb7e0b;
+  --lew-color-orange-active: #8c5707;
+
+  --lew-color-orange-light: #3b2c17;
+  --lew-color-orange-light-hover: #342814;
+  --lew-color-orange-light-active: #251c0e;
+
+  --lew-color-orange-dark: #ffb340;
+
+  /* Yellow */
+  --lew-color-yellow: #ffd60a;
+  --lew-color-yellow-hover: #c6a708;
+  --lew-color-yellow-active: #967e06;
+
+  --lew-color-yellow-light: #3f3817;
+  --lew-color-yellow-light-hover: #373114;
+  --lew-color-yellow-light-active: #221e0d;
+
+  --lew-color-yellow-dark: #ffe040;
+
+  /* Green */
+  --lew-color-green: #27b54a;
+  --lew-color-green-hover: #1c983b;
+  --lew-color-green-active: #0f6825;
+
+  --lew-color-green-light: #253d29;
+  --lew-color-green-light-hover: #243827;
+  --lew-color-green-light-active: #18261b;
+
+  --lew-color-green-dark: #56e576;
+
+  /* Mint */
+  --lew-color-mint: #66d4cf;
+  --lew-color-mint-hover: #3fada7;
+  --lew-color-mint-active: #2f8783;
+
+  --lew-color-mint-light: #2a3e3b;
+  --lew-color-mint-light-hover: #21302d;
+  --lew-color-mint-light-active: #17201f;
+
+  --lew-color-mint-dark: #7de3df;
+
+  /* Teal */
+  --lew-color-teal: #5eb3c7;
+  --lew-color-teal-hover: #479cae;
+  --lew-color-teal-active: #2f7f8e;
+
+  --lew-color-teal-light: #273f43;
+  --lew-color-teal-light-hover: #24383c;
+  --lew-color-teal-light-active: #1b292c;
+
+  --lew-color-teal-dark: rgb(93 217 237);
+
+  /* Cyan */
+  --lew-color-cyan: #5ac8f5;
+  --lew-color-cyan-hover: #3aa3d4;
+  --lew-color-cyan-active: #297ca6;
+
+  --lew-color-cyan-light: #283a40;
+  --lew-color-cyan-light-hover: #1e2b2f;
+  --lew-color-cyan-light-active: #161f22;
+
+  --lew-color-cyan-dark: rgb(112 215 255);
+
+  /* Blue */
+  --lew-color-blue: #0a84ff;
+  --lew-color-blue-hover: #0869d3;
+  --lew-color-blue-active: #064fae;
+
+  --lew-color-blue-light: #213035;
+  --lew-color-blue-light-hover: #192528;
+  --lew-color-blue-light-active: #141c1f;
+
+  --lew-color-blue-dark: rgb(64 156 255);
+
+  /* Indigo */
+  --lew-color-indigo: #5e5cd6;
+  --lew-color-indigo-hover: #4a47b2;
+  --lew-color-indigo-active: #373483;
+
+  --lew-color-indigo-light: #26253e;
+  --lew-color-indigo-light-hover: #212036;
+  --lew-color-indigo-light-active: #161522;
+
+  --lew-color-indigo-dark: rgb(125 122 255);
+
+  /* Purple */
+  --lew-color-purple: #bf5af2;
+  --lew-color-purple-hover: #9e41c3;
+  --lew-color-purple-active: #7d2e94;
+
+  --lew-color-purple-light: #272640;
+  --lew-color-purple-light-hover: #212036;
+  --lew-color-purple-light-active: #161522;
+
+  --lew-color-purple-dark: rgb(218 143 255);
+
+  /* Pink */
+  --lew-color-pink: #ff375f;
+  --lew-color-pink-hover: #e42447;
+  --lew-color-pink-active: #bd1836;
+
+  --lew-color-pink-light: #381b21;
+  --lew-color-pink-light-hover: #31181d;
+  --lew-color-pink-light-active: #281418;
+
+  --lew-color-pink-dark: rgb(255 100 130);
+
+  /* Brown */
+  --lew-color-brown: #a2845e;
+  --lew-color-brown-hover: #927248;
+  --lew-color-brown-active: #72542e;
+
+  --lew-color-brown-light: #312a24;
+  --lew-color-brown-light-hover: #29241f;
+  --lew-color-brown-light-active: #1e1a17;
+
+  --lew-color-brown-dark: rgb(192 164 128);
+
+  /* Gray */
+  --lew-color-gray: #8e8e93;
+  --lew-color-gray-hover: #7b7b81;
+  --lew-color-gray-active: #6e6e71;
+
+  --lew-color-gray-light: #454546;
+  --lew-color-gray-light-hover: #3a3a3b;
+  --lew-color-gray-light-active: #303031;
+
+  --lew-color-gray-dark: rgb(174 174 178);
+
+  /* Black */
+  --lew-color-black: rgb(0 0 0);
+  --lew-color-black-hover: rgb(23, 23, 23);
+  --lew-color-black-active: rgb(40, 39, 39);
+
+  --lew-color-black-light: #454546;
+  --lew-color-black-light-hover: #3a3a3b;
+  --lew-color-black-light-active: #303031;
+
+  --lew-color-black-dark: rgb(174 174 178);
+
+  /* White */
+  --lew-color-white: rgb(255 255 255);
+  --lew-color-white-hover: rgba(255, 255, 255, 0.6);
+  --lew-color-white-active: rgba(255, 255, 255, 0.8);
+
+  --lew-color-white-light: rgb(255 255 255 / 30%);
+  --lew-color-white-light-hover: rgba(255, 255, 255, 0.18);
+  --lew-color-white-light-active: rgba(255, 255, 255, 0.3);
+
+  --lew-color-white-dark: rgb(200 200 200);
+}
+
+html {
+  /* ========== 主题 & 功能色 ========== */
+  /* 主题色 */
+  --lew-color-primary: var(--lew-color-blue);
+  --lew-color-primary-hover: var(--lew-color-blue-hover);
+  --lew-color-primary-active: var(--lew-color-blue-active);
+
+  --lew-color-primary-light: var(--lew-color-blue-light);
+  --lew-color-primary-light-hover: var(--lew-color-blue-light-hover);
+  --lew-color-primary-light-active: var(--lew-color-blue-light-active);
+
+  --lew-color-primary-dark: var(--lew-color-blue-dark);
+
+  /* 功能色 */
+  --lew-color-success: var(--lew-color-green);
+  --lew-color-success-hover: var(--lew-color-green-hover);
+  --lew-color-success-active: var(--lew-color-green-active);
+
+  --lew-color-success-light: var(--lew-color-green-light);
+  --lew-color-success-light-hover: var(--lew-color-green-light-hover);
+  --lew-color-success-light-active: var(--lew-color-green-light-active);
+
+  --lew-color-success-dark: var(--lew-color-green-dark);
+
+  --lew-color-normal: var(--lew-color-gray);
+  --lew-color-normal-hover: var(--lew-color-gray-hover);
+  --lew-color-normal-active: var(--lew-color-gray-active);
+
+  --lew-color-normal-light: var(--lew-color-gray-light);
+  --lew-color-normal-light-hover: var(--lew-color-gray-light-hover);
+  --lew-color-normal-light-active: var(--lew-color-gray-light-active);
+
+  --lew-color-normal-dark: var(--lew-color-gray-dark);
+
+  --lew-color-danger: var(--lew-color-red);
+  --lew-color-danger-hover: var(--lew-color-red-hover);
+  --lew-color-danger-active: var(--lew-color-red-active);
+
+  --lew-color-danger-light: var(--lew-color-red-light);
+  --lew-color-danger-light-hover: var(--lew-color-red-light-hover);
+  --lew-color-danger-light-active: var(--lew-color-red-light-active);
+
+  --lew-color-danger-dark: var(--lew-color-red-dark);
+
+  --lew-color-error: var(--lew-color-red);
+  --lew-color-error-hover: var(--lew-color-red-hover);
+  --lew-color-error-active: var(--lew-color-red-active);
+
+  --lew-color-error-light: var(--lew-color-red-light);
+  --lew-color-error-light-hover: var(--lew-color-red-light-hover);
+  --lew-color-error-light-active: var(--lew-color-red-light-active);
+
+  --lew-color-error-dark: var(--lew-color-red-dark);
+
+  --lew-color-warning: var(--lew-color-orange);
+  --lew-color-warning-hover: var(--lew-color-orange-hover);
+  --lew-color-warning-active: var(--lew-color-orange-active);
+
+  --lew-color-warning-light: var(--lew-color-orange-light);
+  --lew-color-warning-light-hover: var(--lew-color-orange-light-hover);
+  --lew-color-warning-light-active: var(--lew-color-orange-light-active);
+
+  --lew-color-warning-dark: var(--lew-color-orange-dark);
+
+  --lew-color-info: var(--lew-color-blue);
+  --lew-color-info-hover: var(--lew-color-blue-hover);
+  --lew-color-info-active: var(--lew-color-blue-active);
+
+  --lew-color-info-light: var(--lew-color-blue-light);
+  --lew-color-info-light-hover: var(--lew-color-blue-light-hover);
+  --lew-color-info-light-active: var(--lew-color-blue-light-active);
+
+  --lew-color-info-dark: var(--lew-color-blue-dark);
+}

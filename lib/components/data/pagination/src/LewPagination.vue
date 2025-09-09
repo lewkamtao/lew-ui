@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-import type { PaginationOptions } from './props'
+import type { LewSelectOption } from 'lew-ui/types'
 import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { toRaw } from 'vue'
+import { paginationEmits } from './emits'
 import { paginationProps } from './props'
 
 const props = defineProps(paginationProps)
-const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize'])
+const emit = defineEmits(paginationEmits)
 
 const total: Ref<number> = defineModel('total', { default: 0 })
 const currentPage: Ref<number> = defineModel('currentPage', { default: 1 })
@@ -78,10 +80,13 @@ function changePage(page: number) {
 
   currentPage.value = page
   pageSize.value = state.pageSize
-  emit('change', {
-    currentPage: currentPage.value,
-    pageSize: state.pageSize,
-  })
+  emit(
+    'change',
+    toRaw({
+      currentPage: currentPage.value,
+      pageSize: state.pageSize,
+    }),
+  )
 }
 
 // 是否显示省略号
@@ -95,6 +100,22 @@ const showOne = computed(() => visiblePages.value[0] > 1)
 const showMax = computed(
   () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value,
 )
+
+// 是否显示第二页
+const showSecondPage = computed(() => {
+  return (
+    currentPage.value > visiblePages.value.length / 2 + 2
+    && state.visiblePagesCount < totalPages.value
+  )
+})
+
+// 是否显示倒数第二页
+const showSecondLastPage = computed(() => {
+  return (
+    currentPage.value < totalPages.value - visiblePages.value.length / 2 - 1
+    && state.visiblePagesCount < totalPages.value
+  )
+})
 
 function checkPageSize(value: any) {
   state.pageSize = value
@@ -137,16 +158,20 @@ const getIconSize = computed(() => {
   <div class="lew-pagination" :class="getPaginationClassName">
     <LewFlex class="lew-pagination-control" gap="10">
       <slot name="left" />
-      <LewFlex class="lew-pagination-page-box" gap="5">
+      <LewFlex class="lew-pagination-page-box" gap="5px">
         <LewButton
           type="text"
           single-icon
           :size="size"
           @click="changePage(currentPage - 1)"
         >
-          <LewCommonIcon type="chevron-left" :size="getIconSize" />
+          <CommonIcon type="chevron-left" :size="getIconSize" />
         </LewButton>
-        <div v-if="showOne" class="lew-pagination-page-btn" @click="changePage(1)">
+        <div
+          v-if="showOne"
+          class="lew-pagination-page-btn"
+          @click="changePage(1)"
+        >
           1
         </div>
         <div
@@ -154,12 +179,10 @@ const getIconSize = computed(() => {
           class="lew-pagination-page-btn"
           @click="changePage(visiblePages[0] - 1)"
         >
-          <LewCommonIcon :size="getIconSize" type="more-horizontal" />
+          <CommonIcon :size="getIconSize" type="more-horizontal" />
         </div>
         <div
-          v-else-if="
-            currentPage > visiblePages.length / 2 + 2 && visiblePagesCount < totalPages
-          "
+          v-else-if="showSecondPage"
           class="lew-pagination-page-btn"
           @click="changePage(2)"
         >
@@ -181,15 +204,12 @@ const getIconSize = computed(() => {
           class="lew-pagination-page-btn"
           @click="changePage(visiblePages[visiblePages.length - 1] + 1)"
         >
-          <LewCommonIcon :size="getIconSize" type="more-horizontal" />
+          <CommonIcon :size="getIconSize" type="more-horizontal" />
         </div>
         <div
-          v-else-if="
-            currentPage < totalPages - visiblePages.length / 2 - 1
-              && visiblePagesCount < totalPages
-          "
+          v-else-if="showSecondLastPage"
           class="lew-pagination-page-btn"
-          @click="changePage(2)"
+          @click="changePage(totalPages - 1)"
         >
           {{ totalPages - 1 }}
         </div>
@@ -206,16 +226,16 @@ const getIconSize = computed(() => {
           :size="size"
           @click="changePage(currentPage + 1)"
         >
-          <LewCommonIcon type="chevron-right" :size="getIconSize" />
+          <CommonIcon type="chevron-right" :size="getIconSize" />
         </LewButton>
       </LewFlex>
       <LewSelect
         v-model="state.pageSize"
         auto-width
-        :popover-width="150"
+        popover-width="150px"
         :size="size"
         :show-check-icon="false"
-        :options="getPageSizeOptions as PaginationOptions[]"
+        :options="getPageSizeOptions as LewSelectOption[]"
         @change="checkPageSize"
       />
       <LewInput
@@ -260,23 +280,16 @@ const getIconSize = computed(() => {
 
   .lew-pagination-page-btn:hover {
     background-color: var(--lew-color-primary-light);
-    color: var(--lew-color-primary-dark);
   }
 
   .lew-pagination-page-box {
     width: auto;
     position: relative;
     height: 100%;
-    color: var(--lew-text-color-1);
 
     .active {
       background-color: var(--lew-color-primary);
-      color: var(--lew-color-white-text);
-    }
-
-    .active:hover {
-      background-color: var(--lew-color-primary);
-      color: var(--lew-color-white-text);
+      color: var(--lew-color-primary-text);
     }
   }
 

@@ -1,8 +1,7 @@
-import type { LewSize } from 'lew-ui/types'
-import type { ExtractPropTypes } from 'vue'
-import { validSizes } from 'lew-ui/constants'
-
-export type InputNumberAlign = 'left' | 'center' | 'right'
+import type { Property } from 'csstype'
+import type { LewSize, LewXAlignment } from 'lew-ui/types'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const inputNumberModel = {
   modelValue: {
@@ -14,106 +13,87 @@ export const inputNumberModel = {
 
 export const inputNumberProps = {
   min: {
-    type: [Number, String],
-    default: '',
-    description: '最小值',
-    validator(value: number | string) {
-      if (value && typeof value === 'string' && Number.isNaN(Number(value))) {
-        console.warn('[LewInputNumber] min 必须是有效的数字')
-        return false
-      }
-      return true
-    },
+    type: Number,
+    validator: validators.number({
+      componentName: 'LewInputNumber',
+      propName: 'min',
+    }),
   },
   max: {
-    type: [Number, String],
-    default: '',
-    description: '最大值',
-    validator(value: number | string) {
-      if (value && typeof value === 'string' && Number.isNaN(Number(value))) {
-        console.warn('[LewInputNumber] max 必须是有效的数字')
-        return false
-      }
-      return true
-    },
+    type: Number,
+    validator: validators.number({
+      componentName: 'LewInputNumber',
+      propName: 'max',
+    }),
   },
   step: {
-    type: [Number, String],
+    type: Number,
     default: 1,
-    description: '步长',
-    validator(value: number | string) {
-      const numValue = Number(value)
-      if (Number.isNaN(numValue) || numValue <= 0) {
-        console.warn('[LewInputNumber] step 必须是大于 0 的数字')
-        return false
-      }
-      return true
-    },
+    validator: validators.number({
+      componentName: 'LewInputNumber',
+      propName: 'step',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewInputNumber',
+      propName: 'disabled',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
-    typeDesc: 'small | medium | large',
     default: 'medium',
-    description: '尺寸',
-    validator(value: LewSize) {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewInputNumber] size 必须是 ${validSizes.join('、')} 之一`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewInputNumber',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '占位文本',
+    validator: validators.string({
+      componentName: 'LewInputNumber',
+      propName: 'placeholder',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewInputNumber',
+      propName: 'readonly',
+    }),
   },
   width: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: '150px',
-    description: '宽度',
-    validator(value: number | string) {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewInputNumber] width 必须大于 0')
-        return false
-      }
-      if (typeof value === 'string' && !/^\d+(%|px|em|rem)?$/.test(value)) {
-        console.warn('[LewInputNumber] width 必须是有效的 CSS 宽度值')
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewInputNumber',
+      propName: 'width',
+    }),
   },
   align: {
-    type: String as PropType<InputNumberAlign>,
-    typeDesc: 'left | center | right',
+    type: String as PropType<LewXAlignment>,
+    typeValues: validXAlignmentList,
     default: 'left',
-    description: '对齐方式',
-    validator(value: InputNumberAlign) {
-      if (!['left', 'center', 'right'].includes(value)) {
-        console.warn('[LewInputNumber] align 必须是 left、center 或 right')
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewInputNumber',
+      propName: 'align',
+      values: validXAlignmentList,
+    }),
   },
   selectByFocus: {
     type: Boolean,
     default: true,
-    description: '聚焦时是否选中内容',
+    validator: validators.boolean({
+      componentName: 'LewInputNumber',
+      propName: 'selectByFocus',
+    }),
   },
 }
 
-export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>
+export type InputNumberProps = ExtractPublicPropTypes<typeof inputNumberProps>

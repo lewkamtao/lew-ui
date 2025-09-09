@@ -3,5 +3,5 @@ const modelValue = ref('')
 </script>
 
 <template>
-  <lew-input v-model="modelValue" clearable />
+  <lew-input v-model="modelValue" width="300px" clearable />
 </template>

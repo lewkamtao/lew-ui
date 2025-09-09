@@ -17,6 +17,7 @@ const value = ref(['novel', 'poetry', 'biography'])
 <template>
   <lew-select-multiple
     v-model="value"
+    width="300px"
     :options="options"
     placeholder="View Selected Genres"
     disabled

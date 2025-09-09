@@ -26,7 +26,7 @@ export default {
   },
   base: {
     base: '基本',
-    navigator: 'ナビゲーション',
+    navigation: 'ナビゲーション',
     form: 'フォーム',
     data: 'データコンポーネント',
     feedback: 'フィードバック',
@@ -155,7 +155,7 @@ export default {
         type: 'スタイルタイプ',
         size: 'サイズ',
         color: 'カラーテーマ',
-        closable: '閉じることができるか',
+        closeable: '閉じることができるか',
         disabled: '無効状態',
         round: '角丸',
         oversize: 'よりゆったりとしたサイズ',
@@ -408,7 +408,7 @@ export default {
         placement: 'メニューの表示位置',
         checkable: '選択可能',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'メニュー表示イベントコールバック',
         hide: 'メニュー非表示イベントコールバック',
@@ -459,7 +459,7 @@ export default {
         options: '右クリックメニューの設定',
         disabled: '右クリックメニューを無効化するかどうか',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'フォーム Form',

@@ -1,116 +1,85 @@
-import type { ExtractPropTypes, PropType } from 'vue'
-
-export type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
+import type { Property } from 'csstype'
+import type { LewImageObjectFit, LewImageObjectPosition } from 'lew-ui/types'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validObjectFitList, validObjectPositionList } from 'lew-ui/validators'
 
 export const imageProps = {
   src: {
     type: String,
-    validator: (value: string) => {
-      if (!value) {
-        console.warn('[LewImage] src 不能为空')
-        return false
-      }
-      return true
-    },
+    default: '',
+    validator: validators.string({
+      componentName: 'LewImage',
+      propName: 'src',
+    }),
   },
   alt: {
     type: String,
-    validator: (value: string) => {
-      if (value.length > 100) {
-        console.warn('[LewImage] alt 文本不应超过100个字符')
-        return false
-      }
-      return true
-    },
+    default: '',
+    validator: validators.string({
+      componentName: 'LewImage',
+      propName: 'alt',
+    }),
   },
   width: {
-    type: [Number, String],
+    type: String as PropType<Property.Width>,
     default: 200,
-    validator: (value: number | string) => {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewImage] width 必须大于0')
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewImage',
+      propName: 'width',
+    }),
   },
   height: {
-    type: [Number, String],
+    type: String as PropType<Property.Height>,
     default: 200,
-    validator: (value: number | string) => {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewImage] height 必须大于0')
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewImage',
+      propName: 'height',
+    }),
   },
   objectFit: {
-    type: String as PropType<ObjectFit>,
+    type: String as PropType<LewImageObjectFit>,
     default: 'cover',
-    typeDesc: `fill | contain | cover | none | scale-down`,
-    validator: (value: ObjectFit) => {
-      const validValues: ObjectFit[] = [
-        'fill',
-        'contain',
-        'cover',
-        'none',
-        'scale-down',
-      ]
-      if (!validValues.includes(value)) {
-        console.warn(
-          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validObjectFitList,
+    validator: validators.enum({
+      componentName: 'LewImage',
+      propName: 'objectFit',
+      values: validObjectFitList,
+    }),
   },
   objectPosition: {
-    type: String,
+    type: String as PropType<LewImageObjectPosition>,
     default: 'center',
-    typeDesc: `center | top | bottom | left | right | top left | top right | bottom left | bottom right`,
-    validator: (value: string) => {
-      const validPositions = [
-        'center',
-        'top',
-        'bottom',
-        'left',
-        'right',
-        'top left',
-        'top right',
-        'bottom left',
-        'bottom right',
-      ]
-      if (
-        !validPositions.includes(value)
-        && !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
-      ) {
-        console.warn('[LewImage] objectPosition 格式不正确')
-        return false
-      }
-      return true
-    },
+    typeValues: validObjectPositionList,
+    validator: validators.enum({
+      componentName: 'LewImage',
+      propName: 'objectPosition',
+      values: validObjectPositionList,
+    }),
   },
   lazy: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewImage',
+      propName: 'lazy',
+    }),
   },
   loading: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewImage',
+      propName: 'loading',
+    }),
   },
   title: {
     type: String,
     default: '',
-    validator: (value: string) => {
-      if (value.length > 50) {
-        console.warn('[LewImage] title 不应超过50个字符')
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewImage',
+      propName: 'title',
+    }),
   },
 }
 
-export type ImageProps = ExtractPropTypes<typeof imageProps>
+export type LewImageProps = ExtractPublicPropTypes<typeof imageProps>

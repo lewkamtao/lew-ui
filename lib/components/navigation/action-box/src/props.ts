@@ -1,52 +1,58 @@
-import type { FlexXAlignment } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
-
-export interface ActionBoxOption {
-  label: string | (() => any)
-  icon?: string | (() => any)
-  customRender?: () => any
-  onClick?: () => void
-}
+import type { LewXAlignment } from 'lew-ui'
+import type { LewActionBoxOption } from 'lew-ui/types'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validXAlignmentList } from 'lew-ui/validators'
 
 export const actionBoxProps = {
   options: {
-    type: Array as PropType<ActionBoxOption[]>,
-    default: () => [],
+    type: Array as PropType<LewActionBoxOption[]>,
+    typePopKeys: ['LewActionBoxOption'],
+    required: true,
+    validator: validators.array({
+      componentName: 'LewActionBox',
+      propName: 'options',
+    }),
   },
   x: {
-    type: String as PropType<FlexXAlignment>,
+    type: String as PropType<LewXAlignment>,
     default: 'start',
-    typeDesc: 'start | center | end',
-    validator(value: FlexXAlignment): boolean {
-      if (!['start', 'center', 'end', 'left', 'right'].includes(value)) {
-        console.warn(
-          `[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center'、'end'、'left' 或 'right'。`,
-        )
-        return false
-      }
-      return true
-    },
-  },
-  dropdownThreshold: {
-    type: [Number, String],
-    default: 0,
-  },
-  dropdownLabel: {
-    type: [String, Function, Object] as PropType<string | (() => any) | any>,
-    default: 'More',
-  },
-  dropdownIcon: {
-    type: [Function, Object] as PropType<(() => any) | any>,
-    default: undefined,
+    typeValues: validXAlignmentList,
+    validator: validators.enum({
+      componentName: 'LewActionBox',
+      propName: 'x',
+      values: validXAlignmentList,
+    }),
   },
   divider: {
     type: Boolean,
     default: true,
+    validator: validators.boolean({
+      componentName: 'LewActionBox',
+      propName: 'divider',
+    }),
+  },
+  dropdownThreshold: {
+    type: [Number, String] as PropType<number | string>,
+    validator: validators.nonNegativeInteger({
+      componentName: 'LewActionBox',
+      propName: 'dropdownThreshold',
+    }),
+  },
+  dropdownLabel: {
+    type: null,
+    default: 'More',
+  },
+  dropdownIcon: {
+    type: null,
   },
   iconOnly: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewActionBox',
+      propName: 'iconOnly',
+    }),
   },
 }
 
-export type ActionBoxProps = ExtractPropTypes<typeof actionBoxProps>
+export type LewActionBoxProps = ExtractPublicPropTypes<typeof actionBoxProps>

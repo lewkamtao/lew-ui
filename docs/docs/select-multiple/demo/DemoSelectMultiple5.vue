@@ -17,6 +17,7 @@ const value = ref(['chanel', 'gucci', 'louis_vuitton'])
 <template>
   <lew-select-multiple
     v-model="value"
+    width="300px"
     :options="options"
     placeholder="Select Luxury Brands"
     value-layout="tag"

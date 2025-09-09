@@ -1,22 +1,13 @@
 <script setup lang="ts">
 import { LewInput, LewMessage, LewTag, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { cloneDeep } from 'lodash-es'
+import { inputTagEmits } from './emits'
 import { inputTagProps } from './props'
 
 const props = defineProps(inputTagProps)
-const emit = defineEmits(['remove', 'change', 'clear', 'add'])
-// 获取app实例
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  try {
-    app.use(LewMessage)
-  }
-  catch (error) {
-    console.error('注册LewMessage失败:', error)
-  }
-}
+const emit = defineEmits(inputTagEmits)
 
 const modelValue = defineModel<string[] | undefined>()
 const inputValue = ref<string>('')
@@ -215,7 +206,7 @@ function delTag(index: number) {
     }
 
     emit('change', cloneDeep(newValue))
-    emit('remove', removedTag)
+    emit('remove', removedTag, index)
   }
   catch (error) {
     console.error('删除标签时出错:', error)
@@ -254,15 +245,10 @@ const getIconSize = computed(() => {
 })
 
 function clear() {
-  try {
-    modelValue.value = []
-    inputValue.value = ''
-    emit('change', [])
-    emit('clear')
-  }
-  catch (error) {
-    console.error('清空标签时出错:', error)
-  }
+  modelValue.value = []
+  inputValue.value = ''
+  emit('clear')
+  emit('change', undefined)
 }
 
 function onBlur() {
@@ -271,6 +257,32 @@ function onBlur() {
     addTag()
   }
 }
+
+const shouldShowIcon = computed(
+  () => !((modelValue.value || []).length > 0 && props.clearable),
+)
+const shouldShowClearIcon = computed(
+  () =>
+    (modelValue.value || []).length > 0 && props.clearable && !props.readonly,
+)
+
+const getTagStyle = computed(() => (index: number) => {
+  return {
+    maxWidth: '100%',
+    backgroundColor:
+      isInputActive.value
+      && isTagMarkedForDeletion.value
+      && index === (modelValue.value || []).length - 1
+        ? 'var(--lew-color-red-light)'
+        : '',
+    color:
+      isInputActive.value
+      && isTagMarkedForDeletion.value
+      && index === (modelValue.value || []).length - 1
+        ? 'var(--lew-color-red-dark)'
+        : 'var(--lew-color-primary-dark)',
+  }
+})
 </script>
 
 <template>
@@ -289,19 +301,9 @@ function onBlur() {
           v-for="(item, index) in modelValue"
           :key="index"
           type="light"
-          :style="{
-            maxWidth: '100%',
-            backgroundColor:
-              isTagMarkedForDeletion && index === (modelValue || []).length - 1
-                ? 'var(--lew-color-red-light)'
-                : '',
-            color:
-              isTagMarkedForDeletion && index === (modelValue || []).length - 1
-                ? 'var(--lew-color-red-dark)'
-                : 'var(--lew-color-blue-dark)',
-          }"
+          :style="getTagStyle(index)"
           :size="size"
-          :closable="!readonly && !disabled"
+          :closeable="!readonly && !disabled"
           :readonly="readonly || disabled"
           @close="delTag(index)"
         >
@@ -324,12 +326,17 @@ function onBlur() {
           @blur="onBlur"
         />
       </transition-group>
-
+      <CommonIcon
+        class="lew-input-tag-icon"
+        :size="getIconSize"
+        :class="{
+          'lew-input-tag-icon-hide': !shouldShowIcon,
+        }"
+        type="tags"
+      />
       <transition name="lew-form-icon-ani">
-        <LewCommonIcon
-          v-if="
-            clearable && (modelValue || []).length > 0 && !readonly && !disabled
-          "
+        <CommonIcon
+          v-if="shouldShowClearIcon"
           class="lew-form-icon-close"
           :class="{
             'lew-form-icon-close-focus': isInputActive,
@@ -361,7 +368,27 @@ function onBlur() {
   :deep() {
     .lew-tag {
       background-color: var(--lew-bgcolor-0);
+      user-select: none;
     }
+    .lew-tag-close:hover {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+    .lew-tag-close:active {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+  }
+  .lew-input-tag-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    transition: all var(--lew-form-transition-bezier);
+    opacity: var(--lew-form-icon-opacity);
+  }
+
+  .lew-input-tag-icon-hide {
+    opacity: 0;
+    transform: translateY(-50%) translateX(100%);
   }
 
   .lew-input-tag-box {
@@ -372,12 +399,14 @@ function onBlur() {
     box-sizing: border-box;
     transition: all var(--lew-form-transition-bezier);
     width: 100%;
+
     :deep() {
       .lew-input-view {
         border-radius: 0px !important;
       }
     }
   }
+
   .lew-input-tag {
     flex-shrink: 1;
     border: none !important;
@@ -386,28 +415,49 @@ function onBlur() {
     box-shadow: none !important;
     overflow: hidden;
     width: auto;
+
     :deep() {
       .lew-input-view {
         border-radius: 0px !important;
       }
+
       .lew-input-box {
         padding: 0px !important;
         height: 100%;
       }
+
       input {
         height: 26px;
         left: 0px !important;
       }
     }
   }
+
   :deep(.lew-input) {
     padding: 0 !important;
+  }
+}
+
+.lew-dark {
+  .lew-input-tag-view {
+    :deep() {
+      .lew-tag {
+        background-color: var(--lew-bgcolor-0);
+      }
+      .lew-tag-close:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+      .lew-tag-close:active {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
   }
 }
 
 .lew-input-tag-view:hover {
   background-color: var(--lew-form-bgcolor-hover);
 }
+
 .lew-input-tag-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
 
@@ -437,12 +487,14 @@ function onBlur() {
 .lew-input-tag-view-size-small {
   min-height: var(--lew-form-item-height-small);
   line-height: var(--lew-form-input-line-height-small);
+
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
     padding-top: 0px;
     padding-bottom: 0px;
   }
+
   .lew-input-tag {
     height: 20px;
   }
@@ -451,12 +503,14 @@ function onBlur() {
 .lew-input-tag-view-size-medium {
   line-height: var(--lew-form-input-line-height-medium);
   min-height: var(--lew-form-item-height-medium);
+
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
     padding-top: 0px;
     padding-bottom: 0px;
   }
+
   .lew-input-tag {
     height: 24px;
   }
@@ -465,12 +519,14 @@ function onBlur() {
 .lew-input-tag-view-size-large {
   line-height: var(--lew-form-input-line-height-large);
   min-height: var(--lew-form-item-height-large);
+
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
     padding-top: 0px;
     padding-bottom: 0px;
   }
+
   .lew-input-tag {
     height: 28px;
   }
@@ -480,6 +536,7 @@ function onBlur() {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;
 }
+
 .lew-input-tag-view-readonly {
   pointer-events: none;
 }

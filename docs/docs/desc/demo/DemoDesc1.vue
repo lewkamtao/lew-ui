@@ -36,7 +36,7 @@ const options = ref([
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
+  <lew-flex x="start" y="start" gap="50px">
     <lew-desc
       width="250"
       :columns="1"
@@ -45,6 +45,12 @@ const options = ref([
       value-x="end"
       :data-source="dataSource"
       :options="options"
-    />
+    >
+      <template #name="{ field, label, value }">
+        <lew-flex width="150px">
+          {{ `field: ${field}, label: ${label}, value: ${value}` }}
+        </lew-flex>
+      </template>
+    </lew-desc>
   </lew-flex>
 </template>

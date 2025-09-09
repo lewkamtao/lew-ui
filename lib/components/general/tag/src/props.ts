@@ -1,72 +1,87 @@
-import type { LewColor, LewSize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
-import { validColors, validSizes } from 'lew-ui/constants'
-
-export type TagType = 'fill' | 'light' | 'ghost'
+import type { LewSize } from 'lew-ui'
+import type { LewTagType } from 'lew-ui/types'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validColorList, validSizeList, validTagTypeList } from 'lew-ui/validators'
 
 export const tagProps = {
   text: {
     type: String,
-    default: '',
+    validator: validators.string({
+      componentName: 'LewTag',
+      propName: 'text',
+    }),
+  },
+  type: {
+    type: String as PropType<LewTagType>,
+    typeValues: validTagTypeList,
+    default: 'light',
+    validator: validators.enum({
+      componentName: 'LewTag',
+      propName: 'type',
+      values: validTagTypeList,
+    }),
+  },
+  color: {
+    type: String,
+    typeValues: validColorList,
+    default: 'primary',
+    validator: validators.enum({
+      componentName: 'LewTag',
+      propName: 'color',
+      values: validColorList,
+    }),
+  },
+  size: {
+    type: String as PropType<LewSize>,
+    typeValues: validSizeList,
+    default: 'medium',
+    validator: validators.enum({
+      componentName: 'LewTag',
+      propName: 'size',
+      values: validSizeList,
+    }),
+  },
+  round: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'round',
+    }),
   },
   oversize: {
     type: Boolean,
     default: false,
-  },
-  type: {
-    type: String as PropType<TagType>,
-    default: 'light',
-    typeDesc: `fill | light | ghost`,
-    validator(value: TagType): boolean {
-      const validTypes: TagType[] = ['fill', 'light', 'ghost']
-      if (!validTypes.includes(value)) {
-        console.warn(
-          `[LewTag] 无效的标签类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
-  },
-  color: {
-    type: String as PropType<LewColor>,
-    default: 'primary',
-    validator(value: LewColor): boolean {
-      if (!validColors.includes(value)) {
-        console.warn(
-          `[LewTag] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
-  },
-  size: {
-    type: String as PropType<LewSize>,
-    default: 'medium',
-    validator(value: LewSize): boolean {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewTag] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'oversize',
+    }),
   },
 
-  round: {
-    type: Boolean,
-    default: false,
-  },
-  closable: {
-    type: Boolean,
-    default: false,
-  },
   disabled: {
     type: Boolean,
     default: false,
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'disabled',
+    }),
+  },
+  closeable: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'closeable',
+    }),
+  },
+  close: {
+    type: Function as PropType<() => Promise<boolean>>,
+    default: undefined,
+    validator: validators.function({
+      componentName: 'LewTag',
+      propName: 'close',
+    }),
   },
 }
 
-export type TagProps = ExtractPropTypes<typeof tagProps>
+export type LewTagProps = ExtractPublicPropTypes<typeof tagProps>

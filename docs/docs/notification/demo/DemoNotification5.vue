@@ -19,7 +19,7 @@ function close(id: string) {
 </script>
 
 <template>
-  <lew-flex wrap x="start" gap="20">
+  <lew-flex wrap x="start" gap="20px">
     <lew-button text="Open" color="blue" @click="open" />
     <lew-flex>
       <lew-button

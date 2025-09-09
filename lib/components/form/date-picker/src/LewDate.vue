@@ -2,18 +2,25 @@
 import type { RetItemType, RetType } from './date'
 import dayjs from 'dayjs'
 import { LewButton, LewFlex, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { getMonthDate } from './date'
-import { dateProps } from './props'
 
-const props = defineProps(dateProps)
+const props = defineProps({
+  valueFormat: {
+    type: String,
+    default: 'YYYY-MM-DD',
+  },
+  isTime: {
+    type: Boolean,
+    default: false,
+  },
+})
 const emit = defineEmits(['change'])
-const modelValue: Ref<string | undefined> = defineModel()
 
-// 获取当前年份
+const dateValue = ref()
+
 const _year = dayjs().year()
-// 获取当前月份
 const _month = dayjs().month() + 1
 
 const dateData: Ref<RetType> = ref(getMonthDate())
@@ -23,19 +30,65 @@ const dateState = reactive({
   month: _month,
 })
 
+const headDate = computed(() => {
+  return [
+    locale.t('datePicker.Mon'),
+    locale.t('datePicker.Tue'),
+    locale.t('datePicker.Wed'),
+    locale.t('datePicker.Thu'),
+    locale.t('datePicker.Fri'),
+    locale.t('datePicker.Sat'),
+    locale.t('datePicker.Sun'),
+  ]
+})
+
+const checkToday = computed(() => (item: RetItemType) => {
+  const today = dayjs()
+  return today.isSame(dayjs(`${item.year}-${item.month}-${item.date}`), 'day')
+})
+
+const lewDateItemClassNames = computed(() => (item: RetItemType) => {
+  const unselect = item.date !== item.showDate
+  let selected = false
+  if (item.date > 0 && item.date <= item.showDate) {
+    const v = `${dateState.year}-${dateState.month}-${item.showDate}`
+    if (dateValue.value) {
+      const currentDate = dayjs(v)
+      const selectedDate = dayjs(dateValue.value, props.valueFormat)
+      selected = currentDate.isSame(selectedDate, 'day')
+    }
+  }
+  return object2class('lew-date-item', { unselect, selected })
+})
+
 function setMonthDate() {
   dateData.value = getMonthDate(dateState.year, dateState.month)
 }
 
 function init(date: string | undefined = '') {
-  dateState.year = dayjs(date || undefined).year()
-  dateState.month = dayjs(date || undefined).month() + 1
+  if (date) {
+    const parsedDate = dayjs(date, props.valueFormat)
+    if (parsedDate.isValid()) {
+      dateState.year = parsedDate.year()
+      dateState.month = parsedDate.month() + 1
+      dateValue.value = parsedDate.format(props.valueFormat)
+    }
+    else {
+      const fallbackDate = dayjs(date)
+      if (fallbackDate.isValid()) {
+        dateState.year = fallbackDate.year()
+        dateState.month = fallbackDate.month() + 1
+        dateValue.value = fallbackDate.format(props.valueFormat)
+      }
+    }
+  }
+  else {
+    const now = dayjs()
+    dateState.year = now.year()
+    dateState.month = now.month() + 1
+  }
   setMonthDate()
 }
-
-init(modelValue.value)
-
-defineExpose({ init })
 
 function prveMonth() {
   if (dateState.month > 1) {
@@ -69,39 +122,18 @@ function nextYear() {
   setMonthDate()
 }
 
-function selectDateFn(item: RetItemType) {
-  const v = `${item.year}-${item.month}-${item.showDate}`
-  const _v = dayjs(v).format(props.valueFormat)
-  modelValue.value = _v
-  emit('change', _v)
+function select(item: RetItemType) {
+  dateValue.value = dayjs(`${item.year}-${item.month}-${item.showDate}`).format(
+    'YYYY-MM-DD',
+  )
+  emit('change', dateValue.value)
 }
 
-const checkToday = computed(() => (item: RetItemType) => {
-  const today = dayjs()
-  return today.isSame(dayjs(`${item.year}-${item.month}-${item.date}`), 'day')
-})
+function getValue() {
+  return dateValue.value
+}
 
-const lewDateItemClassNames = computed(() => (item: RetItemType) => {
-  const e = item.date === item.showDate
-  let selected = false
-  if (item.date > 0 && item.date <= item.showDate) {
-    const v = `${dateState.year}-${dateState.month}-${item.showDate}`
-    selected = dayjs(v).isSame(dayjs(modelValue.value))
-  }
-  return object2class('lew-date-item', { e, selected })
-})
-
-const headDate = computed(() => {
-  return [
-    locale.t('datePicker.Mon'),
-    locale.t('datePicker.Tue'),
-    locale.t('datePicker.Wed'),
-    locale.t('datePicker.Thu'),
-    locale.t('datePicker.Fri'),
-    locale.t('datePicker.Sat'),
-    locale.t('datePicker.Sun'),
-  ]
-})
+defineExpose({ init, getValue })
 </script>
 
 <template>
@@ -110,31 +142,35 @@ const headDate = computed(() => {
       <div class="lew-date-control-left">
         <!-- 上一年 -->
         <LewButton type="light" color="gray" size="small" single-icon @click="prveYear">
-          <LewCommonIcon type="chevrons-left" />
+          <CommonIcon type="chevrons-left" />
         </LewButton>
         <!-- 上一月 -->
         <LewButton type="light" color="gray" size="small" single-icon @click="prveMonth">
-          <LewCommonIcon type="chevron-left" />
+          <CommonIcon type="chevron-left" />
         </LewButton>
       </div>
       <!-- 日期 -->
       <div class="cur-date">
-        {{ dayjs(`${dateState.year}-${dateState.month}`).format('YYYY-MM') }}
+        {{ dayjs(`${dateState.year}-${dateState.month}`).format("YYYY-MM") }}
       </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
         <LewButton type="light" color="gray" size="small" single-icon @click="nextMonth">
-          <LewCommonIcon type="chevron-right" />
+          <CommonIcon type="chevron-right" />
         </LewButton>
         <!-- 下一年 -->
         <LewButton type="light" color="gray" size="small" single-icon @click="nextYear">
-          <LewCommonIcon type="chevrons-right" />
+          <CommonIcon type="chevrons-right" />
         </LewButton>
       </div>
     </LewFlex>
     <div class="lew-date-box">
       <!-- 表头 周 -->
-      <div v-for="(item, index) in headDate" :key="`h${index}`" class="lew-date-item">
+      <div
+        v-for="(item, index) in headDate"
+        :key="`h${index}`"
+        class="lew-date-item lew-date-item-unselect"
+      >
         <div class="lew-date-num">
           {{ item }}
         </div>
@@ -142,8 +178,11 @@ const headDate = computed(() => {
 
       <!-- 表格 -->
       <div
-        v-for="(item, index) in dateData" :key="`d${index}`" class="lew-date-item"
-        :class="lewDateItemClassNames(item)" @click="selectDateFn(item)"
+        v-for="(item, index) in dateData"
+        :key="`d${index}`"
+        class="lew-date-item"
+        :class="lewDateItemClassNames(item)"
+        @click="select(item)"
       >
         <div class="lew-date-label">
           <i v-if="checkToday(item)" class="lew-date-item-today" />
@@ -167,19 +206,17 @@ const headDate = computed(() => {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 10px 5px;
+    padding: 5px;
     box-sizing: border-box;
-    height: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 
     .cur-date {
       display: flex;
       align-items: center;
-      height: 100%;
-      font-weight: bold;
-      font-size: 15px;
+      font-size: 14px;
       white-space: nowrap;
       color: var(--lew-text-color-0);
+      letter-spacing: 1.7px;
     }
 
     .lew-date-control-left,
@@ -214,6 +251,8 @@ const headDate = computed(() => {
       width: calc(100% / 7);
       height: 36px;
       line-height: 36px;
+      cursor: pointer;
+      color: var(--lew-text-color-1);
 
       .lew-date-label {
         display: inline-flex;
@@ -232,7 +271,6 @@ const headDate = computed(() => {
           width: 24px;
           height: 24px;
           line-height: 24px;
-          color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
           border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -244,14 +282,9 @@ const headDate = computed(() => {
       }
     }
 
-    .lew-date-item-e {
-      cursor: pointer;
-
-      .lew-date-label {
-        .lew-date-value {
-          color: var(--lew-text-color-1);
-        }
-      }
+    .lew-date-item-unselect {
+      pointer-events: none;
+      color: var(--lew-text-color-6);
     }
 
     .lew-date-item-today {
@@ -266,16 +299,17 @@ const headDate = computed(() => {
       box-shadow: 0px 0px 12px #0e7346;
     }
 
-    .lew-date-item-e:hover {
+    .lew-date-item:hover {
       .lew-date-label {
         .lew-date-value {
           background-color: var(--lew-color-primary-light);
           color: var(--lew-color-primary-dark);
+          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
         }
       }
     }
 
-    .lew-date-item-e:active {
+    .lew-date-item:active {
       .lew-date-label {
         .lew-date-value {
           transform: scale(0.9);
@@ -287,7 +321,7 @@ const headDate = computed(() => {
       .lew-date-label {
         .lew-date-value {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
@@ -297,7 +331,7 @@ const headDate = computed(() => {
       .lew-date-label {
         .lew-date-value {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
@@ -307,7 +341,7 @@ const headDate = computed(() => {
       .lew-date-label {
         .lew-date-value {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }

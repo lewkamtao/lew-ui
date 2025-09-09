@@ -54,6 +54,18 @@ export default {
     Fri: '五',
     Sat: '六',
     Sun: '日',
+    Jan: '一月',
+    Feb: '二月',
+    Mar: '三月',
+    Apr: '四月',
+    May: '五月',
+    Jun: '六月',
+    Jul: '七月',
+    Aug: '八月',
+    Sep: '九月',
+    Oct: '十月',
+    Nov: '十一月',
+    Dec: '十二月',
     placeholder: '选择日期',
   },
   dateRangePicker: {
@@ -89,6 +101,9 @@ export default {
     cancelText: '取消',
     okText: '确定',
   },
+  colorPicker: {
+    placeholder: '请输入',
+  },
   upload: {
     dropActive: '松开即可开始上传',
     click: '点击上传、',
@@ -108,5 +123,8 @@ export default {
   pagination: {
     pageSize: '{pageSize} 条/页',
     jumpTo: '跳转至',
+  },
+  empty: {
+    title: '暂无数据',
   },
 }

@@ -26,7 +26,7 @@ export default {
   },
   base: {
     base: 'Base',
-    navigator: 'Navegação',
+    navigation: 'Navegação',
     form: 'Formulário',
     data: 'Componentes de dados',
     feedback: 'Feedback',
@@ -156,7 +156,7 @@ export default {
         type: 'Tipo de estilo',
         size: 'Tamanho',
         color: 'Tema de cor',
-        closable: 'Fechável',
+        closeable: 'Fechável',
         disabled: 'Desativado',
         round: 'Arredondado',
         oversize: 'Tamanho mais solto',
@@ -406,7 +406,7 @@ export default {
         placement: 'Posição do menu',
         checkable: 'Permite seleção',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Callback ao mostrar menu',
         hide: 'Callback ao ocultar menu',
@@ -457,7 +457,7 @@ export default {
         options: 'Configuração do menu',
         disabled: 'Desabilita o menu',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     actionBox: {
       name: 'Caixa de ação',

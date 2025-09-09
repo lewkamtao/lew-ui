@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import type { MenuTreeItem } from 'lew-ui'
+import type { LewMenuTreeOption } from 'lew-ui/types'
 import { Headphones, Laptop, Smartphone, Tv, Watch } from 'lucide-vue-next'
 
 const selectKey = ref('1-1-1-1')
 const expandKeys = ref(['1', '1-1', '1-1-1'])
 const collapsed = ref(false)
-const options = [
+const options: LewMenuTreeOption[] = [
   {
     value: '1',
     label: 'iPhone',
@@ -196,7 +196,7 @@ const options = [
   },
 ]
 
-function change(item: MenuTreeItem) {
+function change(item: LewMenuTreeOption) {
   console.log(item)
 }
 </script>
@@ -204,7 +204,7 @@ function change(item: MenuTreeItem) {
 <template>
   <div class="wrapper">
     <lew-button style="margin-bottom: 10px" @click="collapsed = !collapsed">
-      {{ collapsed ? 'Expand' : 'Collapse' }}
+      {{ collapsed ? "Expand" : "Collapse" }}
     </lew-button>
     <lew-menu-tree
       v-model="selectKey"

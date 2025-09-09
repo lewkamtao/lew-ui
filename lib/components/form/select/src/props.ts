@@ -1,152 +1,186 @@
-import type { LewSize } from 'lew-ui'
-import type { PropType } from 'vue'
-import { validSizes } from 'lew-ui/constants'
-
-export interface SelectOptions {
-  label: string
-  value: string | number
-  disabled?: boolean
-  isGroup?: boolean
-  groupValue?: string | number
-  groupLabel?: string
-}
-
-export interface SelectOptionsGroup {
-  label: string
-  children: SelectOptions[]
-}
-
-export interface SelectSearchMethodParams {
-  options?: SelectOptions[]
-  keyword?: string
-}
-
-export type SelectTrigger = 'click' | 'hover'
+import type { Property } from 'csstype'
+import type { LewSelectOption, LewSelectSearchMethodParams, LewSize, LewTrigger } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const selectModel = {
   modelValue: {
     type: [String, Number, undefined] as PropType<string | number | undefined>,
     default: '',
-    description: '选择器的当前值，支持双向绑定',
   },
 }
 
 export const selectProps = {
   defaultValue: {
-    type: [String, Number] as PropType<string | number>,
+    type: String,
     default: '',
-    description: '选择器的默认值，用于异步加载选项时设置初始值',
+    validator: validators.string({
+      componentName: 'LewSelect',
+      propName: 'defaultValue',
+    }),
   },
   options: {
-    type: Array as PropType<SelectOptions[] | SelectOptionsGroup[]>,
-    default: () => [],
-    description: '选择器的选项列表',
+    type: Array as PropType<LewSelectOption[]>,
+    typePopKeys: ['LewSelectOption'],
+    validator: validators.array({
+      componentName: 'LewSelect',
+      propName: 'options',
+    }),
   },
   width: {
-    type: [String, Number],
-    default: '240px',
-    description: '选择器宽度，支持数字（单位：像素）或带单位的字符串',
+    type: String as PropType<Property.Width>,
+    default: '100%',
+    validator: validators.widthHeight({
+      componentName: 'LewSelect',
+      propName: 'width',
+    }),
   },
   popoverWidth: {
-    type: [String, Number],
-    default: '240px',
-    description: '下拉菜单宽度，支持数字（单位：像素）或带单位的字符串',
+    type: String as PropType<Property.Width>,
+    default: '100%',
+    validator: validators.widthHeight({
+      componentName: 'LewSelect',
+      propName: 'popoverWidth',
+    }),
   },
   autoWidth: {
     type: Boolean,
     default: false,
-    description: '是否自动调整宽度',
+    validator: validators.boolean({
+      componentName: 'LewSelect',
+      propName: 'autoWidth',
+    }),
   },
   trigger: {
-    type: String as PropType<SelectTrigger>,
+    type: String as PropType<LewTrigger>,
     default: 'click',
-    description: '触发下拉菜单的方式，可选值为 "click" 或 "hover"',
+    typeValues: validTriggerList,
+    validator: validators.enum({
+      componentName: 'LewSelect',
+      propName: 'trigger',
+      values: validTriggerList,
+    }),
   },
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '选择器的占位文本',
+    validator: validators.string({
+      componentName: 'LewSelect',
+      propName: 'placeholder',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '尺寸',
-    validator(value: LewSize): boolean {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewSelect] 尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewSelect',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   itemHeight: {
     type: Number,
     default: 38,
-    description: '选项的高度（单位：像素），用于计算虚拟列表的高度',
+    validator: validators.number({
+      componentName: 'LewSelect',
+      propName: 'itemHeight',
+    }),
   },
   searchable: {
     type: Boolean,
     default: false,
-    description: '是否启用搜索功能',
+    validator: validators.boolean({
+      componentName: 'LewSelect',
+      propName: 'searchable',
+    }),
   },
   searchMethod: {
     type: Function as PropType<
-      (params: SelectSearchMethodParams) => SelectOptions[]
+      (params: LewSelectSearchMethodParams) => LewSelectOption[]
     >,
     default: undefined,
-    description: '自定义搜索方法，接收搜索参数并返回过滤后的选项列表',
+    validator: validators.function({
+      componentName: 'LewSelect',
+      propName: 'searchMethod',
+    }),
   },
   initMethod: {
     type: Function as PropType<
       () =>
-        | (SelectOptions[] | SelectOptionsGroup[])
-        | Promise<SelectOptions[] | SelectOptionsGroup[]>
+        | (LewSelectOption[] | LewSelectOption[])
+        | Promise<LewSelectOption[] | LewSelectOption[]>
     >,
     default: undefined,
-    description: '初始化选项的方法，用于异步加载选项',
+    validator: validators.function({
+      componentName: 'LewSelect',
+      propName: 'initMethod',
+    }),
   },
   initMethodId: {
     type: String,
-    default: '',
-    hidden: true,
-    description: '初始化选项方法函数的标识',
+    validator: validators.string({
+      componentName: 'LewSelect',
+      propName: 'initMethodId',
+    }),
   },
   searchMethodId: {
     type: String,
     default: '',
     hidden: true,
-    description: '上传函数的标识',
+    validator: validators.string({
+      componentName: 'LewSelect',
+      propName: 'searchMethodId',
+    }),
   },
   searchDelay: {
     type: Number,
     default: 250,
-    description: '搜索延迟时间（单位：毫秒），仅在 searchable 为 true 时生效',
+    validator: validators.number({
+      componentName: 'LewSelect',
+      propName: 'searchDelay',
+    }),
   },
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否显示清空按钮',
+    validator: validators.boolean({
+      componentName: 'LewSelect',
+      propName: 'clearable',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否将选择器设为只读状态',
+    validator: validators.boolean({
+      componentName: 'LewSelect',
+      propName: 'readonly',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用选择器',
+    validator: validators.boolean({
+      componentName: 'LewSelect',
+      propName: 'disabled',
+    }),
   },
   showCheckIcon: {
     type: Boolean,
     default: true,
-    description: '是否在选中项旁显示勾选图标',
+    validator: validators.boolean({
+      componentName: 'LewSelect',
+      propName: 'showCheckIcon',
+    }),
   },
   enableSearchCache: {
     type: Boolean,
     default: true,
-    description: '是否启用搜索缓存功能，开启后可避免重复搜索相同关键词',
+    validator: validators.boolean({
+      componentName: 'LewSelect',
+      propName: 'enableSearchCache',
+    }),
   },
 }
+
+export type LewSelectProps = ExtractPublicPropTypes<typeof selectProps>

@@ -66,7 +66,7 @@ defineExpose({ open })
 <template>
   <lew-modal
     v-model:visible="visible"
-    width="500"
+    width="500px"
     :close-button-props="{
       request: () => {
         visible = false;

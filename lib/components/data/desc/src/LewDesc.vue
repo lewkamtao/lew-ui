@@ -1,40 +1,29 @@
 <script setup lang="ts">
+import type { LewDescOption } from 'lew-ui/types'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { descEmits } from './emits'
 import LewDescItem from './LewDescItem.vue'
 import { descProps, lewDescSizePaddingMap } from './props'
 
 const props = defineProps(descProps)
-const emit = defineEmits(['change', 'mounted'])
-const descLabelRef = ref()
+const emit = defineEmits(descEmits)
+
+// Refs
+const descLabelRef = ref<InstanceType<typeof LewGetLabelWidth>>()
 const autoLabelWidth = ref(0)
 
-const componentOptions: any[] = cloneDeep(props.options) || []
+// Computed
+const componentOptions: ComputedRef<LewDescOption[]> = computed(
+  () => cloneDeep(props.options) || [],
+)
 
 const getDescClassNames = computed(() => {
   const { bordered } = props
   return object2class('lew-desc', { bordered })
 })
-
-onMounted(() => {
-  // 计算 label 的宽度
-  autoLabelWidth.value
-    = descLabelRef.value?.getWidth()
-      + (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
-  emit('mounted')
-})
-
-watch(
-  () => props.size,
-  () => {
-    nextTick(() => {
-      autoLabelWidth.value
-        = descLabelRef.value?.getWidth()
-          + (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
-    })
-  },
-)
 
 const getDescStyle = computed(() => {
   const { width, gap, bordered, columns } = props
@@ -48,7 +37,7 @@ const getDescStyle = computed(() => {
   }
 })
 
-const getBind = computed(() => (item: any) => {
+const getBind = computed(() => (item: LewDescOption) => {
   const { direction, size, labelX, valueX, bordered, labelWidth } = props
   return {
     direction,
@@ -56,10 +45,35 @@ const getBind = computed(() => (item: any) => {
     labelX,
     valueX,
     bordered,
-    labelWidth: labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth,
+    labelWidth: any2px(
+      labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth,
+    ),
     ...item,
   }
 })
+
+// Methods
+function calculateLabelWidth() {
+  autoLabelWidth.value
+    = (descLabelRef.value?.getWidth() || 0)
+      + (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
+}
+
+// Lifecycle
+onMounted(() => {
+  calculateLabelWidth()
+  emit('ready')
+})
+
+// Watchers
+watch(
+  () => props.size,
+  () => {
+    nextTick(() => {
+      calculateLabelWidth()
+    })
+  },
+)
 </script>
 
 <template>
@@ -68,10 +82,13 @@ const getBind = computed(() => (item: any) => {
     <LewDescItem
       v-for="item in componentOptions"
       :key="item.field"
-      :field="item.field"
       :data-source="dataSource"
       v-bind="getBind(item)"
-    />
+    >
+      <template v-if="$slots[item.field]" #default="slotProps">
+        <slot :name="item.field" v-bind="slotProps" />
+      </template>
+    </LewDescItem>
   </div>
 </template>
 

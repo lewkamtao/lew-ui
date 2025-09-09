@@ -291,7 +291,7 @@ async function submit() {
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
+  <lew-flex x="start" y="start" gap="50px">
     <lew-form
       ref="formRef"
       :size="form.size"

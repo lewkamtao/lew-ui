@@ -1,97 +1,39 @@
-import type { ExtractPropTypes, PropType } from 'vue'
-
-type MarkColor
-  = | 'red'
-    | 'orange'
-    | 'yellow'
-    | 'green'
-    | 'mint'
-    | 'teal'
-    | 'cyan'
-    | 'blue'
-    | 'indigo'
-    | 'purple'
-    | 'pink'
-    | 'gray'
-    | 'brown'
-
-type CursorStyle = 'pointer' | 'default' | 'text' | 'move' | 'not-allowed'
-
-type BoldValue = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+import type { Property } from 'csstype'
+import type { LewColor } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators from 'lew-ui/validators'
 
 export const markProps = {
   color: {
-    type: String as PropType<MarkColor>,
+    type: String as PropType<LewColor>,
     default: 'blue',
-    validator: (value: MarkColor): boolean => {
-      const validColors: MarkColor[] = [
-        'red',
-        'orange',
-        'yellow',
-        'green',
-        'mint',
-        'teal',
-        'cyan',
-        'blue',
-        'indigo',
-        'purple',
-        'pink',
-        'gray',
-        'brown',
-      ]
-      if (!validColors.includes(value)) {
-        console.warn(
-          `[LewMark] 无效的颜色值: ${value}。请使用以下有效颜色之一: ${validColors.join(', ')}`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewMark',
+      propName: 'color',
+    }),
   },
   bold: {
-    type: [Number, String] as PropType<BoldValue | string>,
+    type: Number as PropType<Property.FontWeight>,
     default: 400,
-    validator: (value: BoldValue | string): boolean => {
-      const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
-      if (
-        Number.isNaN(numValue)
-        || numValue < 100
-        || numValue > 900
-        || numValue % 100 !== 0
-      ) {
-        console.warn(
-          `[LewMark] 无效的加粗值: ${value}。请使用 100 到 900 之间的 100 的倍数`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.number({
+      componentName: 'LewMark',
+      propName: 'bold',
+    }),
+  },
+  cursor: {
+    type: String as PropType<Property.Cursor>,
+    validator: validators.string({
+      componentName: 'LewMark',
+      propName: 'cursor',
+    }),
   },
   round: {
     type: Boolean,
-    default: false,
-  },
-  cursor: {
-    type: String as PropType<CursorStyle>,
-    default: 'default',
-    validator: (value: CursorStyle): boolean => {
-      const validCursors: CursorStyle[] = [
-        'pointer',
-        'default',
-        'text',
-        'move',
-        'not-allowed',
-      ]
-      if (!validCursors.includes(value)) {
-        console.warn(
-          `[LewMark] 无效的鼠标样式: ${value}。请使用以下有效样式之一: ${validCursors.join(', ')}`,
-        )
-        return false
-      }
-      return true
-    },
-    typeDesc: `pointer | default | text | move | not-allowed`,
+    validator: validators.boolean({
+      componentName: 'LewMark',
+      propName: 'round',
+    }),
   },
 }
 
-export type MarkProps = ExtractPropTypes<typeof markProps>
+export type LewMarkProps = ExtractPublicPropTypes<typeof markProps>

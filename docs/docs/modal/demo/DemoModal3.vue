@@ -54,7 +54,7 @@ function close() {
     </div>
     <template #footer>
       <lew-flex x="end" y="center" class="lew-modal-footer">
-        <lew-flex x="start" gap="5" class="lew-modal-footer-tips">
+        <lew-flex x="start" gap="5px" class="lew-modal-footer-tips">
           Changes will be applied immediately
         </lew-flex>
         <lew-flex x="end" y="center" gap="8">

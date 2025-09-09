@@ -256,7 +256,7 @@ export const componentsMenusSchema = [
     as: 'switch',
     schema: _switch,
     props: {
-      round: 1,
+      round: true,
     },
   },
   {

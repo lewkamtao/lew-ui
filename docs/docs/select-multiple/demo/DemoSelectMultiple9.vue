@@ -25,6 +25,7 @@ function load() {
   <lew-select-multiple
     :key="updateKey"
     v-model="value"
+    width="300px"
     searchable
     :init-method="initMethod"
     placeholder="load options"

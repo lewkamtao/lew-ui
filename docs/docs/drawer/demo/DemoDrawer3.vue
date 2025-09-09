@@ -37,7 +37,7 @@ function close() {
     </div>
     <template #footer>
       <lew-flex x="end" y="center" class="lew-drawer-footer">
-        <lew-flex x="start" gap="5" class="lew-drawer-footer-tips">
+        <lew-flex x="start" gap="5px" class="lew-drawer-footer-tips">
           Takes effect immediately after submission
         </lew-flex>
         <lew-flex x="end" y="center">

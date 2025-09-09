@@ -27,7 +27,7 @@ export default {
   },
   base: {
     base: 'Base',
-    navigator: 'Navigation',
+    navigation: 'Navigation',
     form: 'Formulaire',
     data: 'Composants de données',
     feedback: 'Retour',
@@ -157,7 +157,7 @@ export default {
         type: 'Type de style',
         size: 'Taille',
         color: 'Thème de couleur',
-        closable: 'Peut être fermé',
+        closeable: 'Peut être fermé',
         disabled: 'Désactivé',
         round: 'Coins arrondis',
         oversize: 'Taille plus relâchée',
@@ -425,7 +425,7 @@ export default {
         placement: 'Position d\'apparition du menu',
         checkable: 'Permet la sélection',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Callback d\'affichage du menu',
         hide: 'Callback de masquage du menu',
@@ -478,7 +478,7 @@ export default {
         options: 'Configuration du menu contextuel',
         disabled: 'Désactiver le menu contextuel',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'Formulaire',

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
+
 const pre1 = ref(`import { LewTooltip } from 'lew-ui';
 
 app.use(LewTooltip);`)
@@ -30,22 +32,13 @@ const open = () => {
       tooltips 是一个自定义指令，你需要在
       <lew-mark>main.ts</lew-mark> 注册该指令
     </p>
-
-    <div class="hl-pre lew-scrollbar">
-      <div class="pre-box">
-        <highlightjs autodetect :code="pre1" />
-      </div>
-    </div>
+    <LewCodeHighlighter :code="pre1" lang="ts" />
     <br>
     <br>
     <lew-title :size="16">
       关于 Dialog 和 Message 的用法
     </lew-title>
     <p>如果你使用的方式不是全局引入，你需要引入它们才能使用</p>
-    <div class="hl-pre lew-scrollbar">
-      <div class="pre-box">
-        <highlightjs autodetect :code="pre2" />
-      </div>
-    </div>
+    <LewCodeHighlighter :code="pre2" lang="ts" />
   </div>
 </template>

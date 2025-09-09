@@ -1,146 +1,91 @@
-import type { ObjectFit } from 'lew-ui/components/general/image/src/props'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { LewAvatarPlacement, LewAvatarShape, LewAvatarStatus, LewImageObjectFit, LewImageObjectPosition } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validObjectFitList, validObjectPositionList } from 'lew-ui/validators'
 
-type AvatarPlacement
-  = | 'top-left'
-    | 'top-right'
-    | 'bottom-left'
-    | 'bottom-right'
-type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
-type AvatarShape = 'circle' | 'square' | 'sharp'
-type AvatarSize = number | string
+const statusValues = ['online', 'processing', 'away', 'offline', 'busy']
+const placementValues = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
+const shapeValues = ['circle', 'square', 'sharp']
 
 export const avatarProps = {
   size: {
-    type: [Number, String] as PropType<AvatarSize>,
-    default: 40,
-    description: '头像尺寸，可为数字（单位：像素）或字符串',
-    validator(value: AvatarSize): boolean {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewAvatar] size 必须大于 0')
-        return false
-      }
-      return true
-    },
+    type: String,
+    default: '40px',
+    validator: validators.widthHeight({
+      componentName: 'LewAvatar',
+      propName: 'size',
+    }),
   },
   loading: {
     type: Boolean,
     default: false,
-    description: '是否处于加载状态',
+    validator: validators.boolean({
+      componentName: 'LewAvatar',
+      propName: 'loading',
+    }),
   },
   shape: {
-    type: String as PropType<AvatarShape>,
+    type: String as PropType<LewAvatarShape>,
+    typeValues: shapeValues,
     default: 'square',
-    description: '头像形状',
-    validator(value: AvatarShape): boolean {
-      if (!['circle', 'square', 'sharp'].includes(value)) {
-        console.warn(`[LewAvatar] shape 必须是 'circle'、'square' 或 'sharp'`)
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewAvatar',
+      propName: 'shape',
+      values: shapeValues,
+    }),
   },
   src: {
     type: String,
-    default: '',
-    description: '头像图片的 URL',
+    validator: validators.string({
+      componentName: 'LewAvatar',
+      propName: 'src',
+    }),
   },
   alt: {
     type: String,
-    default: '',
-    description: '图片无法显示时的替代文本',
-    validator(value: string): boolean {
-      if (value.length > 100) {
-        console.warn('[LewAvatar] alt 文本不应超过 100 个字符')
-        return false
-      }
-      return true
-    },
+    validator: validators.string({
+      componentName: 'LewAvatar',
+      propName: 'alt',
+    }),
   },
   status: {
-    type: String as PropType<AvatarStatus | undefined>,
-    default: undefined,
-    description: '头像状态',
-    validator(value: AvatarStatus): boolean {
-      const validStatus = ['online', 'processing', 'away', 'offline', 'busy']
-      if (!validStatus.includes(value)) {
-        console.warn(
-          `[LewAvatar] status 必须是 ${validStatus.join(', ')} 之一`,
-        )
-        return false
-      }
-      return true
-    },
+    type: String as PropType<LewAvatarStatus>,
+    typeValues: statusValues,
+    validator: validators.enum({
+      componentName: 'LewAvatar',
+      propName: 'status',
+      values: statusValues,
+    }),
   },
   objectFit: {
-    type: String as PropType<ObjectFit>,
+    type: String as PropType<LewImageObjectFit>,
+    typeValues: validObjectFitList,
     default: 'cover',
-    description: '图片适应容器方式',
-    validator: (value: ObjectFit) => {
-      const validValues: ObjectFit[] = [
-        'fill',
-        'contain',
-        'cover',
-        'none',
-        'scale-down',
-      ]
-      if (!validValues.includes(value)) {
-        console.warn(
-          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewAvatar',
+      propName: 'objectFit',
+      values: validObjectFitList,
+    }),
   },
   objectPosition: {
-    type: String,
+    type: String as PropType<LewImageObjectPosition>,
+    typeValues: validObjectPositionList,
     default: 'center',
-    description: '图片在容器中的位置',
-    validator: (value: string) => {
-      const validPositions = [
-        'center',
-        'top',
-        'bottom',
-        'left',
-        'right',
-        'top left',
-        'top right',
-        'bottom left',
-        'bottom right',
-      ]
-      if (
-        !validPositions.includes(value)
-        && !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
-      ) {
-        console.warn('[LewImage] objectPosition 格式不正确')
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewAvatar',
+      propName: 'objectPosition',
+      values: validObjectPositionList,
+    }),
   },
   statusPlacement: {
-    type: String as PropType<AvatarPlacement>,
+    type: String as PropType<LewAvatarPlacement>,
+    typeValues: placementValues,
     default: 'top-right',
-    description: '状态标识的位置',
-    validator(value: AvatarPlacement): boolean {
-      const validPlacements = [
-        'top-left',
-        'top-right',
-        'bottom-left',
-        'bottom-right',
-      ]
-      if (!validPlacements.includes(value)) {
-        console.warn(
-          `[LewAvatar] statusPlacement 必须是 ${validPlacements.join(
-            ', ',
-          )} 之一`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewAvatar',
+      propName: 'statusPlacement',
+      values: placementValues,
+    }),
   },
 }
 
-export type AvatarProps = ExtractPropTypes<typeof avatarProps>
+export type LewAvatarProps = ExtractPublicPropTypes<typeof avatarProps>

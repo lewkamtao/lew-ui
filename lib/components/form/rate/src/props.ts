@@ -1,12 +1,11 @@
 import type { LewSize } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const rateModel = {
   modelValue: {
     type: Number,
     default: undefined,
-    description: '绑定值',
   },
 }
 
@@ -14,37 +13,45 @@ export const rateProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '复选框组中复选框的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          '[LewRadioGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewRate',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   count: {
     type: Number,
     default: 5,
-    description: '评分的总数',
+    validator: validators.number({
+      componentName: 'LewRate',
+      propName: 'count',
+    }),
   },
   tips: {
     type: [Array, String] as PropType<string[] | string>,
     default: () => [],
-    description: '评分的提示文字,使用逗号分隔每个等级的提示文字,或者使用数组',
+    validator: validators.array({
+      componentName: 'LewRate',
+      propName: 'tips',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读',
+    validator: validators.boolean({
+      componentName: 'LewRate',
+      propName: 'readonly',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用',
+    validator: validators.boolean({
+      componentName: 'LewRate',
+      propName: 'disabled',
+    }),
   },
 }
 
-export type RateProps = ExtractPropTypes<typeof rateProps>
+export type RateProps = ExtractPublicPropTypes<typeof rateProps>

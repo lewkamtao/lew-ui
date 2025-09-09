@@ -1,9 +1,5 @@
 <script setup lang="ts">
 const value = ref('2025-02-25')
-
-function change(e: any) {
-  LewMessage.info(e.date)
-}
 </script>
 
 <template>
@@ -11,8 +7,7 @@ function change(e: any) {
     v-model="value"
     placeholder="禁用"
     disabled
-    value-format="YYYY 年 MM 月 DD 日"
+    width="300px"
     clearable
-    @change="change"
   />
 </template>

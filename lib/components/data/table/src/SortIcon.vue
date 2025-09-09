@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 
 const props = defineProps({
   sortValue: {
@@ -27,7 +27,7 @@ const getSize = computed(() => {
 
 <template>
   <lew-flex direction="y" gap="0" class="lew-table-sort-icon-wrapper">
-    <LewCommonIcon
+    <CommonIcon
       class="lew-table-sort-icon"
       :style="{
         opacity: sortValue === 'asc' ? 1 : 0.2,
@@ -38,7 +38,7 @@ const getSize = computed(() => {
       :stroke-width="2.5"
       type="chevron-down"
     />
-    <LewCommonIcon
+    <CommonIcon
       class="lew-table-sort-icon"
       :style="{
         opacity: sortValue === 'desc' ? 1 : 0.2,

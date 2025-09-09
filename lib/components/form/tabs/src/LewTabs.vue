@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { TabsOptions } from './props'
+import type { LewTabsOption } from 'lew-ui/types'
 import { any2px, object2class } from 'lew-ui/utils'
+import { tabsEmits } from './emits'
 import { tabsProps } from './props'
 
 const props = defineProps(tabsProps)
-const emit = defineEmits(['change'])
-const tabsValue: Ref<string | number | undefined> = defineModel({
+const emit = defineEmits(tabsEmits)
+const tabsValue: Ref<string> = defineModel({
   required: true,
 })
 
@@ -15,7 +16,7 @@ const itemRef = ref([] as any)
 const state = reactive({
   activeItemStyle: {} as any,
   curIndex: (props.options || []).findIndex(
-    (e: TabsOptions) => tabsValue.value === e.value,
+    (e: LewTabsOption) => tabsValue.value === e.value,
   ),
   hidLine: 'all',
   isInit: false,
@@ -45,9 +46,7 @@ function initActiveItemStyle(index: number) {
     && activeRef?.offsetLeft >= 0
   ) {
     tabsRef.value.scrollLeft
-      = activeRef?.offsetLeft
-        - tabsRef.value.clientWidth / 2
-        + activeRef?.offsetWidth / 2
+      = activeRef?.offsetLeft - tabsRef.value.clientWidth / 2 + activeRef?.offsetWidth / 2
   }
 
   state.activeItemStyle = {
@@ -62,9 +61,7 @@ watch(
   () => {
     nextTick(() => {
       setTimeout(() => {
-        const index = props.options.findIndex(
-          e => tabsValue.value === e.value,
-        )
+        const index = props.options.findIndex(e => tabsValue.value === e.value)
         initActiveItemStyle(index)
       }, 250)
     })
@@ -91,10 +88,7 @@ function selectItem(value: string | number | undefined, type?: string) {
     }
     initActiveItemStyle(index)
     if (type !== 'watch' && value !== tabsValue.value) {
-      emit('change', {
-        label: _item.label,
-        value: _item.value,
-      })
+      emit('change', _item.value, _item)
     }
     state.curIndex = index
   }
@@ -182,19 +176,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    :style="getTabsStyle"
-    class="lew-tabs-wrapper"
-    :class="getTabsWrapperClassName"
-  >
+  <div :style="getTabsStyle" class="lew-tabs-wrapper" :class="getTabsWrapperClassName">
     <div :style="getTabsStyle" class="lew-tabs" :class="getTabsClassName">
-      <div
-        ref="tabsRef"
-        class="lew-tabs-main hidden-scrollbar"
-        @scroll="tabsScroll"
-      >
+      <div ref="tabsRef" class="lew-tabs-main hidden-scrollbar" @scroll="tabsScroll">
         <div
-          v-if="tabsValue || tabsValue === 0"
+          v-if="tabsValue"
           :style="state.activeItemStyle"
           class="lew-tabs-item-animation-active"
           :class="{ 'lew-tabs-item-isInit': state.isInit }"
@@ -202,11 +188,12 @@ onUnmounted(() => {
         <div
           v-for="item in props.options"
           :key="String(item.value)"
-          :ref="(el) => itemRef.push(el)"
+          :ref="(el: any) => itemRef.push(el)"
           class="lew-tabs-item"
           :style="getItemStyle"
           :class="{
             'lew-tabs-item-active': tabsValue === item.value,
+            'lew-tabs-item-disabled': item.disabled,
           }"
           @click="selectItem(item.value)"
         >
@@ -286,6 +273,7 @@ onUnmounted(() => {
   box-sizing: border-box;
   overflow-x: auto;
   overflow-y: hidden;
+
   .lew-tabs-main {
     position: relative;
     display: inline-flex;
@@ -298,6 +286,7 @@ onUnmounted(() => {
     scroll-behavior: smooth;
     padding: 0px 3px;
   }
+
   .lew-tabs-item {
     position: relative;
     display: inline-flex;
@@ -317,14 +306,22 @@ onUnmounted(() => {
   .lew-tabs-item:hover {
     background-color: var(--lew-form-bgcolor-hover);
   }
+
   .lew-tabs-item-active {
     background-color: rgba(0, 0, 0, 0);
   }
+
   .lew-tabs-item-active:hover {
     background-color: rgba(0, 0, 0, 0);
   }
+
   .lew-tabs-item-active:hover {
     opacity: 1;
+  }
+
+  .lew-tabs-item-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none;
   }
 
   .lew-tabs-item-animation-active {
@@ -353,6 +350,7 @@ onUnmounted(() => {
     font-size: var(--lew-form-font-size-small);
   }
 }
+
 .lew-tabs-size-medium {
   height: var(--lew-form-item-height-medium);
 
@@ -362,6 +360,7 @@ onUnmounted(() => {
     font-size: 14px;
   }
 }
+
 .lew-tabs-size-large {
   height: var(--lew-form-item-height-large);
 
@@ -374,14 +373,17 @@ onUnmounted(() => {
 
 .lew-tabs-wrapper-type-line {
   box-shadow: none;
+
   .lew-tabs-type-line {
     position: relative;
     background: none;
     border: none;
     border-radius: 0px;
+
     .lew-tabs-main {
       padding-bottom: 5px;
     }
+
     .lew-tabs-item:hover {
       background: var(--lew-bgcolor-2);
     }
@@ -408,15 +410,17 @@ onUnmounted(() => {
     }
   }
 }
+
 .lew-tabs-type-line:after {
   position: absolute;
   content: '';
   bottom: 0px;
   left: 3px;
   height: 2px;
-  background-color: var(--lew-form-bgcolor);
+  background-color: var(--lew-form-bgcolor-hover);
   width: calc(100% - 6px);
 }
+
 .lew-tabs-round {
   border-radius: 35px;
 

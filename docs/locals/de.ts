@@ -27,7 +27,7 @@ export default {
   },
   base: {
     base: 'Basis',
-    navigator: 'Navigation',
+    navigation: 'Navigation',
     form: 'Formular',
     data: 'Datenkomponenten',
     feedback: 'Rückmeldung',
@@ -158,7 +158,7 @@ export default {
         type: 'Stiltyp',
         size: 'Größe',
         color: 'Farbthema',
-        closable: 'Schließbar',
+        closeable: 'Schließbar',
         disabled: 'Deaktiviert',
         round: 'Abgerundet',
         oversize: 'Großzügigere Größe',
@@ -420,7 +420,7 @@ export default {
         placement: 'Position',
         checkable: 'Ist auswählbar',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: 'Callback beim Anzeigen des Menüs',
         hide: 'Callback beim Ausblenden des Menüs',
@@ -472,7 +472,7 @@ export default {
         options: 'Kontextmenü-Konfiguration',
         disabled: 'Kontextmenü deaktivieren',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     form: {
       name: 'Formular',

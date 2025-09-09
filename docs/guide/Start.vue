@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
+
 const pre1 = ref('import { LewButton } from \'lew-ui\'')
 
 const pre2 = ref('import "lew-ui/style";')
@@ -18,21 +20,13 @@ app.use(Lew);`)
       直接引入
     </lew-title>
     <p>你可以在页面中直接导入</p>
-    <div class="hl-pre lew-scrollbar">
-      <div class="pre-box">
-        <highlightjs autodetect :code="pre1" />
-      </div>
-    </div>
+    <LewCodeHighlighter :code="pre1" lang="ts" />
     <br>
     <p>
       但，你别忘了还要在
       <lew-mark>main.ts</lew-mark> 引入样式
     </p>
-    <div class="hl-pre lew-scrollbar">
-      <div class="pre-box">
-        <highlightjs autodetect :code="pre2" />
-      </div>
-    </div>
+    <LewCodeHighlighter :code="pre2" lang="ts" />
 
     <br>
     <br>
@@ -43,10 +37,6 @@ app.use(Lew);`)
       你需要在
       <lew-mark>main.ts</lew-mark>全局安装，这样你就可以在页面内使用全部组件。
     </p>
-    <div class="hl-pre lew-scrollbar">
-      <div class="pre-box">
-        <highlightjs autodetect :code="pre3" />
-      </div>
-    </div>
+    <LewCodeHighlighter :code="pre3" lang="ts" />
   </div>
 </template>

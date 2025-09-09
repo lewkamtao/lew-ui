@@ -69,10 +69,9 @@ const { isLoading, error } = useImage({
   .lew-image-fail-icon {
     width: 50%;
     height: auto;
+    opacity: 0.7;
   }
-  .lew-image-icon {
-    opacity: 0.4;
-  }
+
   .lew-image-box {
     width: 100%;
     height: 100%;

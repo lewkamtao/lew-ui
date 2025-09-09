@@ -1,26 +1,11 @@
+import type {
+  LewNotificationInstance,
+  LewNotificationMethod,
+  LewNotificationOptions,
+  LewNotificationResult,
+} from 'lew-ui/types'
 import { h, render } from 'vue'
-import NotificationContainer from './components/NotificationContainer.vue'
-
-export interface NotificationParamsTyped {
-  title: string
-  content: string
-  duration?: number
-  showProgress?: boolean
-  width?: number | string
-}
-
-export type NotificationFn = (options: NotificationParamsTyped) => {
-  close: () => void
-}
-
-export interface NotificationInstance {
-  name: string
-  warning: NotificationFn
-  info: NotificationFn
-  normal: NotificationFn
-  success: NotificationFn
-  error: NotificationFn
-}
+import NotificationContainer from './NotificationContainer.vue'
 
 let containerInstance: any = null
 
@@ -35,14 +20,14 @@ function createContainer() {
   return containerInstance
 }
 
-function createNotification(type: string) {
+function createNotification(type: string): LewNotificationMethod {
   return ({
     title,
     content,
     duration = 3000,
     showProgress = false,
     width = 320,
-  }: NotificationParamsTyped) => {
+  }: LewNotificationOptions): LewNotificationResult => {
     const container = createContainer()
     const id = container?.add(
       type,
@@ -60,20 +45,11 @@ function createNotification(type: string) {
   }
 }
 
-export const LewNotification = {
+export const LewNotification: LewNotificationInstance = {
   name: 'LewNotification',
   warning: createNotification('warning'),
   info: createNotification('info'),
   normal: createNotification('normal'),
   success: createNotification('success'),
   error: createNotification('error'),
-}
-
-export interface LewNotificationInterface {
-  name: string
-  warning: NotificationFn
-  info: NotificationFn
-  normal: NotificationFn
-  success: NotificationFn
-  error: NotificationFn
 }

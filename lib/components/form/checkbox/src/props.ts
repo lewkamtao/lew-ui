@@ -1,160 +1,151 @@
-import type { LewDirection, LewSize } from 'lew-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
-import { validDirection, validSizes } from 'lew-ui/constants'
-
-export type CheckboxGroupDirectionType = 'x' | 'y'
-export type CheckboxValue = string | number
-export interface CheckboxOptions {
-  label: string
-  value: CheckboxValue
-  disabled?: boolean
-}
-
-export const checkboxModel = {
-  modelValue: {
-    type: Boolean,
-    default: false,
-    description: '复选框的选中状态',
-  },
-}
-
-export const checkboxGroupModel = {
-  modelValue: {
-    type: Array,
-    default: () => [],
-    required: true,
-    description: '复选框组的选中值数组',
-  },
-}
+import type { LewCheckboxOption, LewDirection, LewSize } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validDirectionList, validSizeList } from 'lew-ui/validators'
 
 export const checkboxProps = {
   label: {
     type: String,
-    default: '',
-    description: '复选框的标签文本',
+    validator: validators.string({
+      componentName: 'LewCheckbox',
+      propName: 'label',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用复选框',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否将复选框设置为只读',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'readonly',
+    }),
   },
   checked: {
     type: Boolean,
     default: false,
-    description: '是否选中复选框',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'checked',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '复选框的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          '[LewCheckbox] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewCheckbox',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   block: {
     type: Boolean,
     default: false,
-    description: '是否将复选框显示为块级元素',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'block',
+    }),
   },
   round: {
     type: Boolean,
     default: false,
-    description: '是否将复选框显示为圆形',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'round',
+    }),
   },
   iconable: {
     type: Boolean,
     default: true,
-    description: '是否显示复选框的图标',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'iconable',
+    }),
   },
   certain: {
     type: Boolean,
     default: false,
-    description: '复选框是否处于确定状态',
+    validator: validators.boolean({
+      componentName: 'LewCheckbox',
+      propName: 'certain',
+    }),
   },
 }
 
 export const checkboxGroupProps = {
   options: {
-    type: Array as PropType<CheckboxOptions[]>,
-    default: () => [],
+    type: Array as PropType<LewCheckboxOption[]>,
     required: true,
-    description: '复选框组的选项配置数组',
-    validator: (value: CheckboxOptions[]) => {
-      if (
-        !Array.isArray(value)
-        || value.some(item => typeof item !== 'object')
-      ) {
-        console.warn('[LewCheckboxGroup] options 必须是一个对象数组')
-        return false
-      }
-      return true
-    },
+    typePopKeys: ['LewCheckboxOption'],
+    validator: validators.array({
+      componentName: 'LewCheckboxGroup',
+      propName: 'options',
+    }),
   },
   disabled: {
     type: Boolean,
-    default: false,
-    description: '是否禁用整个复选框组',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
-    default: false,
-    description: '是否将复选框组设置为只读',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'readonly',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '复选框组中复选框的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          '[LewCheckboxGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"',
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewCheckboxGroup',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   direction: {
     type: String as PropType<LewDirection>,
     default: 'x',
-    description: '复选框组的排列方向',
-    validator: (value: LewDirection) => {
-      if (!validDirection.includes(value)) {
-        console.warn(
-          '[LewCheckboxGroup] 无效的 direction 值，请使用 "x" 或 "y"',
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validDirectionList,
+    validator: validators.enum({
+      componentName: 'LewCheckboxGroup',
+      propName: 'direction',
+      values: validDirectionList,
+    }),
   },
   block: {
     type: Boolean,
-    default: false,
-    description: '是否将复选框组显示为块级元素',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'round',
+    }),
   },
   round: {
     type: Boolean,
     default: false,
-    description: '是否将复选框组中的复选框显示为圆形',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'round',
+    }),
   },
   iconable: {
     type: Boolean,
     default: true,
-    description: '是否显示复选框的图标（仅在块状模式下生效）',
+    validator: validators.boolean({
+      componentName: 'LewCheckboxGroup',
+      propName: 'iconable',
+    }),
   },
 }
 
-export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>
-export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>
+export type LewCheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
+export type LewCheckboxGroupProps = ExtractPublicPropTypes<typeof checkboxGroupProps>

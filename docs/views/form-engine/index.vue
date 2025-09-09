@@ -1,14 +1,18 @@
 <script setup lang="ts">
+import type { LewFormOption } from 'lew-ui'
 import type { LewSize } from 'lew-ui/types'
+
 import { useDark } from '@vueuse/core'
 import dayjs from 'dayjs'
+import LewCodeBox from 'docs/components/LewCodeBox.vue'
 import { downloadObjectAsFile, getComponentIcon } from 'docs/lib/utils'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
-import { formatFormByMap, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { any2px, formatFormByMap, getFormItemRequired, getUniqueId } from 'lew-ui/utils'
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
+import * as Yup from 'yup'
 import PreviewModal from './components/PreviewModal.vue'
 import SetForm from './components/SetForm.vue'
 import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
@@ -34,6 +38,7 @@ const autoLabelWidth = ref(0)
 const formGlobal = ref({
   direction: 'x',
   columns: 1,
+  bordered: 0,
   size: 'medium',
 })
 
@@ -171,8 +176,8 @@ function getModel() {
     return false
   }
   const width = formMainRef.value.offsetWidth / formGlobal.value.columns
-
   const _options = cloneDeep(options.value)
+
   _options.forEach((item: any) => {
     ensureSpanMap(item)
     const rowStart = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
@@ -185,10 +190,14 @@ function getModel() {
   const componentModel = {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
-    width: formWidth.value,
+    bordered: formGlobal.value.bordered === 1,
+    width: any2px(formWidth.value),
     id: `form_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     options: _options,
   }
+
+  console.log(componentModel)
+
   return componentModel
 }
 
@@ -217,7 +226,10 @@ function deleteItem(item: any) {
     content: '删除后无法恢复，请谨慎操作',
     cancelText: '手滑了',
     ok: () => {
-      options.value = options.value.filter((e: any) => e.id !== item.id)
+      return new Promise((resolve) => {
+        options.value = options.value.filter((e: any) => e.id !== item.id)
+        resolve(true)
+      })
     },
   })
 }
@@ -245,7 +257,10 @@ if (!isInfo) {
     cancelText: '',
     okText: '知道了',
     ok: () => {
-      localStorage.setItem('isAlertByFormEngine', '1')
+      return new Promise((resolve) => {
+        localStorage.setItem('isAlertByFormEngine', '1')
+        resolve(true)
+      })
     },
   })
 }
@@ -292,7 +307,7 @@ onMounted(() => {
           <lew-flex
             x="center"
             direction="y"
-            gap="5"
+            gap="5px"
             class="lew-form-component-box"
             @click="addComponent(element)"
           >
@@ -346,7 +361,7 @@ onMounted(() => {
         >
           <template #item="{ element }">
             <div
-              :ref="(el) => (itemRefMap[element.id] = el)"
+              :ref="(el: any) => (itemRefMap[element.id] = el)"
               class="lew-form-wrapper-draggable-item"
               :class="{
                 'lew-form-wrapper-draggable-item-active': activeId === element.id,
@@ -362,15 +377,15 @@ onMounted(() => {
               "
             >
               <lew-flex x="end" y="center" class="handle-box">
-                <lew-flex x="end" gap="5" y="center">
-                  <LewCommonIcon
+                <lew-flex x="end" gap="5px" y="center">
+                  <CommonIcon
                     v-if="(element.spanMap?.[formGlobal.columns] || 1) > 1"
                     class="handle-icon handle-resize"
                     :size="14"
                     type="minimize-2"
                     @click="minimize(element)"
                   />
-                  <LewCommonIcon
+                  <CommonIcon
                     v-if="
                       (element.spanMap?.[formGlobal.columns] || 1) < formGlobal.columns
                     "
@@ -379,7 +394,7 @@ onMounted(() => {
                     type="maximize-2"
                     @click="maximize(element)"
                   />
-                  <LewCommonIcon
+                  <CommonIcon
                     class="handle-icon"
                     :size="14"
                     type="trash"
@@ -387,7 +402,7 @@ onMounted(() => {
                   />
                 </lew-flex>
               </lew-flex>
-              <LewCommonIcon
+              <CommonIcon
                 v-if="!element.field"
                 v-tooltip="{
                   content: '未绑定字段',
@@ -407,6 +422,7 @@ onMounted(() => {
                   direction: formGlobal.direction,
                   labelWidth: autoLabelWidth,
                   ...element,
+                  required: getFormItemRequired(element),
                 }"
                 readonly
               />
@@ -429,7 +445,8 @@ onMounted(() => {
         </lew-button>
         <lew-flex x="end">
           <lew-button type="light" @click="exportFile">
-            导出配置 <Upload :size="16" />
+            导出配置
+            <Upload :size="16" />
           </lew-button>
         </lew-flex>
       </lew-flex>
@@ -458,8 +475,7 @@ onMounted(() => {
                 基础属性
               </div>
               <SetForm
-                v-model="
-                  options[options.findIndex((e: any) => e.id === activeId)]
+                v-model="options[options.findIndex((e: any) => e.id === activeId)]
                 "
                 :collapse-height="200"
                 :options="baseSchema"
@@ -487,13 +503,11 @@ onMounted(() => {
                   ).length > 0
                 "
                 :key="activeId"
-                v-model="
-                  options[options.findIndex((e: any) => e.id === activeId)]
-                    .props
+                v-model="options[options.findIndex((e: any) => e.id === activeId)]
+                  .props
                 "
-                :options="
-                  options[options.findIndex((e: any) => e.id === activeId)]
-                    .schema
+                :options="options[options.findIndex((e: any) => e.id === activeId)]
+                  .schema
                 "
               />
               <lew-flex v-else>
@@ -503,7 +517,7 @@ onMounted(() => {
           </lew-flex>
         </div>
         <div v-show="settingTab === 'model'" class="lew-form-model pre-box">
-          <highlightjs autodetect :code="JSON.stringify(formModel, null, 4)" />
+          <LewCodeBox :code="JSON.stringify(formModel, null, 4)" />
         </div>
       </div>
     </lew-flex>
@@ -708,7 +722,7 @@ onMounted(() => {
   }
 
   .lew-form-wrapper-draggable-item-active {
-    border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
+    border: var(--lew-form-border-width) dashed var(--lew-color-primary-dark) !important;
   }
 
   .blank-box {
@@ -769,7 +783,7 @@ onMounted(() => {
 }
 
 .chosen {
-  border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
+  border: var(--lew-form-border-width) dashed var(--lew-color-primary-dark) !important;
 }
 
 .lew-form-setting-tabs {
@@ -793,7 +807,7 @@ onMounted(() => {
 
     .component-name {
       font-weight: normal;
-      color: var(--lew-text-color-7);
+      color: var(--lew-text-color-6);
     }
   }
 }

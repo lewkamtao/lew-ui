@@ -1,12 +1,12 @@
-import type { UploadFileItem } from 'lew-ui'
+import type { LewUploadFileItem } from 'lew-ui'
 import axios from 'docs/axios/http'
 
 export default ({
   fileItem,
   setFileItem,
 }: {
-  fileItem: UploadFileItem
-  setFileItem: (item: UploadFileItem) => void
+  fileItem: LewUploadFileItem
+  setFileItem: (item: LewUploadFileItem) => void
 }) => {
   const { key, file } = fileItem
   const formData = new FormData()

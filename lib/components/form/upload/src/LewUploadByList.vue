@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
-import type { UploadFileItem } from './props'
+import type { LewUploadFileItem } from 'lew-ui/types'
 import { LewFlex, LewImage, LewTag, LewTextTrim, LewTooltip, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import {
   any2px,
   checkUrlIsImage,
@@ -9,12 +10,12 @@ import {
   getFileIcon,
   getUniqueId,
 } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { uploadByListEmits } from './emits'
 import { uploadByListProps } from './props'
 
 defineProps(uploadByListProps)
 
-const emit = defineEmits(['reUpload', 'deleteFile'])
+const emit = defineEmits(uploadByListEmits)
 
 const statusColorMap = {
   success: 'green',
@@ -75,9 +76,9 @@ const rightTopBorderRadiusMap: Record<string, number> = {
   large: 8.5,
 }
 
-const modelValue = defineModel<UploadFileItem[]>()
+const modelValue = defineModel<LewUploadFileItem[]>()
 
-const getFileName = computed(() => (item: UploadFileItem) => {
+const getFileName = computed(() => (item: LewUploadFileItem) => {
   return item.name || getLastValueAfterSlash(item.url)
 })
 
@@ -87,7 +88,7 @@ function getLastValueAfterSlash(url: string = '') {
   return urlParts[urlParts.length - 1]
 }
 
-const getStatusText = computed(() => (item: UploadFileItem) => {
+const getStatusText = computed(() => (item: LewUploadFileItem) => {
   return locale.t(`upload.${item.status || 'complete'}`)
 })
 </script>
@@ -151,7 +152,7 @@ const getStatusText = computed(() => (item: UploadFileItem) => {
             class="lew-upload-reupload-btn"
             @click.stop="emit('reUpload', item.key)"
           >
-            <LewCommonIcon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
+            <CommonIcon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
           </LewFlex>
 
           <LewFlex
@@ -165,10 +166,10 @@ const getStatusText = computed(() => (item: UploadFileItem) => {
             class="lew-upload-delete-btn"
             @click.stop="emit('deleteFile', item.key)"
           >
-            <LewCommonIcon :size="rightTopBtnIconSizeMap[size]" type="close" />
+            <CommonIcon :size="rightTopBtnIconSizeMap[size]" type="close" />
           </LewFlex>
-          <LewFlex mode="between" gap="5" y="center">
-            <LewFlex y="center" x="start" gap="5">
+          <LewFlex mode="between" gap="5px" y="center">
+            <LewFlex y="center" x="start" gap="5px">
               <LewTextTrim
                 :text="getFileName(item)"
                 :style="{
@@ -214,7 +215,7 @@ const getStatusText = computed(() => (item: UploadFileItem) => {
                 :color="statusColorMap[item.status || 'complete'] as LewColor"
               >
                 <template #left>
-                  <LewCommonIcon
+                  <CommonIcon
                     :size="12"
                     :type="item.status"
                     dark

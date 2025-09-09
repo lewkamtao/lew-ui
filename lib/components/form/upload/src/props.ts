@@ -1,28 +1,6 @@
-import type { LewSize } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import { validSizes } from 'lew-ui/constants'
-
-export type UploadStatus
-  = | 'success'
-    | 'fail'
-    | 'uploading'
-    | 'complete'
-    | 'wrong_type'
-    | 'wrong_size'
-    | 'pending'
-
-export interface UploadFileItem {
-  key: string
-  name?: string
-  url?: string
-  status?: UploadStatus
-  percent?: number
-  file?: File
-  size?: number
-  type?: string
-  lastModifiedDate?: string
-  lastModified?: number
-}
+import type { LewSize, LewUploadFileItem } from 'lew-ui/types'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validSizeList } from 'lew-ui/validators'
 
 export const uploadProps = {
   accept: {
@@ -77,14 +55,12 @@ export const uploadProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '上传组件的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewUpload] size 必须是 small、medium 或 large')
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewUpload',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   tips: {
     type: String,
@@ -99,7 +75,7 @@ export const uploadProps = {
     },
   },
   uploadHelper: {
-    type: Function,
+    type: Function as PropType<() => Promise<LewUploadFileItem[]>>,
     default: undefined,
     description: '自定义文件上传处理函数',
     validator: (value: any) => {
@@ -129,7 +105,7 @@ export const uploadProps = {
     },
   },
   beforeDelete: {
-    type: Function,
+    type: Function as PropType<(fileItem: LewUploadFileItem) => Promise<boolean>>,
     default: undefined,
     description: '删除文件前的回调函数，返回 Promise<boolean> 或 boolean，true 表示继续删除',
     validator: (value: any) => {
@@ -146,14 +122,12 @@ export const uploadByListProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '上传组件的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewUpload] size 必须是 small、medium 或 large')
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewUpload',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
 }
 
@@ -161,15 +135,13 @@ export const uploadByCardProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '上传组件的尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewUpload] size 必须是 small、medium 或 large')
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewUpload',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
 }
 
-export type UploadProps = ExtractPropTypes<typeof uploadProps>
+export type UploadProps = ExtractPublicPropTypes<typeof uploadProps>

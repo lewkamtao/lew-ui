@@ -15,6 +15,12 @@ html {
   background: var(--lew-bgcolor-4);
 }
 
+.docs-wrapper {
+  .lew-table-td {
+    font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace !important;
+  }
+}
+
 :root {
   --lew-siderbar-width: 220px;
   --lew-component-nav-width: 220px;
@@ -25,7 +31,7 @@ a {
 }
 
 .sub-title {
-  color: var(--lew-text-color-6);
+  color: var(--lew-text-color-4);
   font-weight: 400;
   font-size: 14px;
   line-height: 30px;
@@ -51,14 +57,6 @@ a {
       overflow: hidden;
       border-radius: var(--lew-border-radius-small);
     }
-  }
-}
-
-.demo-item {
-  pre {
-    font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
-    letter-spacing: 0.05em;
-    white-space: pre-wrap;
   }
 }
 

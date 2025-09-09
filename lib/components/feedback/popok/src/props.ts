@@ -1,113 +1,97 @@
-import type { LewColor } from 'lew-ui/types'
-import type { PopoverPlacement, PopoverTrigger } from '../../popover/index'
+import type { Property } from 'csstype'
+import type { LewPlacement, LewPopokType, LewTrigger } from 'lew-ui/types'
+import type { PropType } from 'vue'
+import validators, { validPlacementList, validPopokTypeList, validTriggerList } from 'lew-ui/validators'
 
 export const popokButtonProps = {
+  icon: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
+  title: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
+  content: {
+    type: null,
+    typePopKeys: ['LewComponentSource'],
+  },
+  hideIcon: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewPopok',
+      propName: 'hideIcon',
+    }),
+  },
   type: {
-    type: String,
+    type: String as PropType<LewPopokType>,
+    typeValues: validPopokTypeList,
     default: 'error',
-    description: '对话框类型',
-    validator: (value: string) => {
-      const validTypes: LewColor[] = [
-        'primary',
-        'success',
-        'warning',
-        'error',
-        'info',
-      ]
-      if (!validTypes.includes(value as LewColor)) {
-        console.warn(
-          `[LewPopok] 无效的类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewPopok',
+      propName: 'type',
+      values: validPopokTypeList,
+    }),
   },
   okText: {
     type: String,
     defaultLocale: true,
-    description: '确认按钮文本',
+    validator: validators.string({
+      componentName: 'LewPopok',
+      propName: 'okText',
+    }),
   },
   cancelText: {
     type: String,
     defaultLocale: true,
-    description: '取消按钮文本',
+    validator: validators.string({
+      componentName: 'LewPopok',
+      propName: 'cancelText',
+    }),
   },
   ok: {
-    type: Function,
+    type: Function as PropType<() => Promise<boolean>>,
     default: () => true,
-    description: '点击确认按钮时的回调函数',
+    validator: validators.function({
+      componentName: 'LewPopok',
+      propName: 'ok',
+    }),
   },
   cancel: {
-    type: Function,
+    type: Function as PropType<() => Promise<boolean>>,
     default: () => true,
-    description: '点击取消按钮时的回调函数',
+    validator: validators.function({
+      componentName: 'LewPopok',
+      propName: 'cancel',
+    }),
   },
   width: {
-    type: [String, Number],
+    type: String as PropType<Property.Width>,
     default: '280px',
-    description: '弹出框宽度',
-    validator: (value: string | number) => {
-      if (typeof value === 'string' && !/^\d+(%|px|em|rem|vw)$/.test(value)) {
-        console.warn(
-          `[LewPopok] 宽度 "${value}" 无效。请使用有效的 CSS 宽度值。`,
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.widthHeight({
+      componentName: 'LewPopok',
+      propName: 'width',
+    }),
   },
   trigger: {
-    type: String as PropType<PopoverTrigger>,
+    type: String as PropType<LewTrigger>,
     default: 'click',
-    description: '触发方式',
-    validator: (value: string) => {
-      const validTriggers = ['hover', 'click']
-      if (!validTriggers.includes(value)) {
-        console.warn(
-          `[LewPopok] 触发方式 "${value}" 无效。请使用 ${validTriggers.join(' 或 ')}。`,
-        )
-        return false
-      }
-      return true
-    },
-  },
-  title: {
-    type: String,
-    default: '',
-    description: '弹出框标题',
-  },
-  content: {
-    type: String,
-    default: '',
-    description: '弹出框内容',
+    typeValues: validTriggerList,
+    validator: validators.enum({
+      componentName: 'LewPopok',
+      propName: 'trigger',
+      values: validTriggerList,
+    }),
   },
   placement: {
-    type: String as PropType<PopoverPlacement>,
+    type: String as PropType<LewPlacement>,
     default: 'top',
-    description: '弹出框位置',
-    validator: (value: string) => {
-      const validPlacements = [
-        'top',
-        'bottom',
-        'left',
-        'right',
-        'top-start',
-        'top-end',
-        'bottom-start',
-        'bottom-end',
-        'left-start',
-        'left-end',
-        'right-start',
-        'right-end',
-      ]
-      if (!validPlacements.includes(value)) {
-        console.warn(
-          `[LewPopok] 位置 "${value}" 无效。请使用 ${validPlacements.join(', ')} 中的一个。`,
-        )
-        return false
-      }
-      return true
-    },
+    typeValues: validPlacementList,
+    validator: validators.enum({
+      componentName: 'LewPopok',
+      propName: 'placement',
+      values: validPlacementList,
+    }),
   },
 }

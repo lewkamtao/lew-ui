@@ -39,7 +39,7 @@ function openWarning() {
 </script>
 
 <template>
-  <lew-flex wrap x="start" gap="20">
+  <lew-flex wrap x="start" gap="20px">
     <lew-button text="Error" type="ghost" color="red" @click="openError" />
     <lew-button
       text="Success"

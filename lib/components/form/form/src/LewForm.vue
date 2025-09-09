@@ -1,185 +1,178 @@
 <script setup lang="ts">
+import type { LewFormOption } from 'lew-ui/types'
 import {
   any2px,
   formatFormByMap,
+  getFormItemRequired,
   object2class,
   retrieveNestedFieldValue,
 } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import * as Yup from 'yup'
+import { formEmits } from './emits'
 import LewFormItem from './LewFormItem.vue'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
 import { formProps } from './props'
 
 const props = defineProps(formProps)
-const emit = defineEmits(['change', 'mounted'])
+const emit = defineEmits(formEmits)
+
 const formMap = ref<Record<string, any>>({})
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
-
-const componentOptions: any[] = cloneDeep(props.options) || []
+const componentOptions: LewFormOption[] = cloneDeep(props.options) || []
 const formItemRefMap = ref<Record<string, any>>({})
+const formUpdateKey = ref(0) // 用于触发联动更新
 
-// 移除固定的columns class，改为动态样式
-const getFormClassNames = computed(() => {
-  return object2class('lew-form', {})
+const formSchema = computed(() => {
+  const schemaMap = componentOptions.reduce<Record<string, any>>((acc, item) => {
+    if (item.field && item.rule) {
+      acc[item.field]
+        = typeof item.rule === 'string'
+          ? new Function('Yup', `return ${item.rule}`)(Yup)
+          : item.rule
+    }
+    return acc
+  }, {})
+
+  return Yup.object().shape(schemaMap)
 })
 
-// 动态生成网格样式
-const getDynamicGridStyle = computed(() => {
-  const columns = Number(props.columns)
-  return {
-    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-  }
-})
+const getFormClassNames = computed(() => object2class('lew-form', {}))
 
-// 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
+const getDynamicGridStyle = computed(() => ({
+  gridTemplateColumns: `repeat(${Number(props.columns)}, minmax(0, 1fr))`,
+}))
+
 function getForm() {
-  const formData: Record<string, any> = formatFormByMap(
-    cloneDeep(formMap.value),
-  )
-  // 应用 outputFormat
+  let formData: Record<string, any> = formatFormByMap(toRaw(formMap.value))
   componentOptions.forEach((item) => {
     if (item.outputFormat && item.field && formData[item.field]) {
-      formData[item.field] = item.outputFormat({
-        item,
-        value: formData[item.field],
-      })
+      const _value = item.outputFormat({ item, value: formData[item.field] })
+      if (typeof _value === 'object' && !Array.isArray(_value)) {
+        delete formData[item.field]
+        formData = { ...formData, ..._value }
+      }
+      else {
+        formData[item.field] = _value
+      }
     }
   })
   return formData
 }
 
 function setForm(value: any = {}) {
-  // 把对象的值给 formMap
-  componentOptions.forEach((item: any) => {
+  componentOptions.forEach((item) => {
+    if (!item.field)
+      return
     let v = retrieveNestedFieldValue(value, item.field)
-    if (value !== undefined && item.field) {
-      // 应用 inputFormat
-      if (item.inputFormat) {
-        v = item.inputFormat({ item, value: v })
-      }
-      // 重置 ignoreValidate
-      formItemRefMap.value[item.field]?.setIgnoreValidate(true)
-      // 重置error
-      formItemRefMap.value[item.field]?.setError('')
-      // 如果有值，就把值给 formMap
-      formMap.value[item.field] = v
+    if (item.inputFormat) {
+      v = item.inputFormat({ item, value: v })
     }
+    resetFieldError(item.field, true)
+    formMap.value[item.field] = v
   })
 }
 
 function resetError() {
-  componentOptions.forEach((item: any) => {
-    // 重置error
-    if (item.field) {
-      // 重置 ignoreValidate
-      formItemRefMap.value[item.field]?.setIgnoreValidate(false)
-      // 重置error
-      formItemRefMap.value[item.field]?.setError('')
-    }
-  })
+  componentOptions.forEach(item => item.field && resetFieldError(item.field))
+}
+
+function resetFieldError(field: string, ignore = false) {
+  const ref = formItemRefMap.value[field]
+  if (!ref)
+    return
+  ref.setIgnoreValidate(ignore)
+  ref.setError('')
 }
 
 function validate() {
   return new Promise<boolean>((resolve) => {
-    // 定义校验规则
-    const schemaMap: Record<string, any> = {}
+    Object.keys(formItemRefMap.value).forEach(key => resetFieldError(key, false))
 
-    // 清除错误信息
-    Object.keys(formItemRefMap.value).forEach((key) => {
-      if (formItemRefMap.value[key].curRule) {
-        schemaMap[key] = formItemRefMap.value[key].curRule
-      }
-
-      // 重置 ignoreValidate
-      formItemRefMap.value[key]?.setIgnoreValidate(false)
-      // 重置error
-      formItemRefMap.value[key]?.setError('')
-    })
-
-    const schema = Yup.object().shape(schemaMap)
-
-    // 校验对象
-    schema
+    formSchema.value
       .validate(formMap.value, { abortEarly: false })
-      .then(() => {
-        resolve(true)
-      })
+      .then(() => resolve(true))
       .catch((error: any) => {
-        ;(error?.inner || []).forEach((item: any) => {
-          const path = item.path.replace(`["`, '').replace(`"]`, '')
-          const ref = formItemRefMap.value[path]
-          if (ref) {
-            ref.setError(item.message)
-          }
-        })
-        // 校验失败，将错误信息赋值给 formItemRef
+        for (const item of error?.inner || []) {
+          const path = item.path.replace(/^\["?|"?\]$/g, '')
+          formItemRefMap.value[path]?.setError(item.message)
+        }
         resolve(false)
       })
   })
 }
 
 onMounted(() => {
-  // 计算 label 的宽度
   autoLabelWidth.value = formLabelRef.value?.getWidth()
   emit('mounted')
 })
 
 provide('formMethods', props.formMethods)
+provide('formSchema', formSchema)
+provide('formData', formMap)
+provide('formUpdateKey', formUpdateKey)
 
 watch(
   () => props.size,
-  () => {
-    nextTick(() => {
-      autoLabelWidth.value = formLabelRef.value?.getWidth()
-    })
-  },
+  () => nextTick(() => (autoLabelWidth.value = formLabelRef.value?.getWidth())),
 )
 
-const getFormStyle = computed(() => {
-  const gapMap = {
-    small: '24px',
-    medium: '26px',
-    large: '28px',
-  }
-  return {
-    width: any2px(props.width),
-    minWidth: 320,
-    gap: gapMap[props.size],
-    ...getDynamicGridStyle.value,
-  }
-})
+// 监听表单数据变化，触发联动更新
+watch(
+  () => formMap.value,
+  () => {
+    formUpdateKey.value++
+  },
+  { deep: true },
+)
+
+const GAP_MAP = {
+  small: '24px',
+  medium: '26px',
+  large: '28px',
+}
+
+const getFormStyle = computed(() => ({
+  width: any2px(props.width),
+  minWidth: '320px',
+  gap: GAP_MAP[props.size],
+  ...getDynamicGridStyle.value,
+}))
+
+const getLabelWidth = computed(() =>
+  any2px(
+    props.labelWidth === 'auto'
+      ? autoLabelWidth.value || props.labelWidth
+      : props.labelWidth,
+  ),
+)
+
+function setItemRef(field: string, el: any) {
+  formItemRefMap.value[field] = el
+}
 
 defineExpose({ getForm, setForm, resetError, validate })
 </script>
 
 <template>
   <div class="lew-form" :style="getFormStyle" :class="getFormClassNames">
-    <LewGetLabelWidth
-      ref="formLabelRef"
-      :size="size"
-      :options="componentOptions"
-    />
+    <LewGetLabelWidth ref="formLabelRef" :size="size" :options="componentOptions" />
     <LewFormItem
       v-for="item in componentOptions"
-      :ref="(el) => (formItemRefMap[item.field] = el)"
+      :ref="(el: any) => setItemRef(item.field, el)"
       :key="item.field"
       v-model="formMap[item.field]"
       v-bind="{
         direction,
         size,
-        labelWidth:
-          labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
+        labelWidth: getLabelWidth,
         disabled,
         readonly,
         ...item,
+        required: getFormItemRequired(item),
       }"
-      @change="
-        () => {
-          emit('change', getForm())
-        }
-      "
+      @change="() => emit('change', getForm())"
     />
   </div>
 </template>
@@ -189,7 +182,5 @@ defineExpose({ getForm, setForm, resetError, validate })
   width: 100%;
   display: grid;
   flex-shrink: 0;
-  padding-bottom: 30px;
-  // 移除固定的grid-template-columns样式类，改为动态样式
 }
 </style>

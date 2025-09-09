@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
-import { LewFlex } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import { requiredIconSizeMap, tipsIconSizeMap } from './props'
-import RequiredIcon from './RequiredIcon.vue'
+import type { LewSize } from "lew-ui";
+import { LewFlex } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { any2px, getFormItemRequired } from "lew-ui/utils";
+import { requiredIconSizeMap, tipsIconSizeMap } from "./props";
+import RequiredIcon from "./RequiredIcon.vue";
 
 defineProps({
   size: {
     type: String as PropType<LewSize>,
-    default: 'medium',
+    default: "medium",
   },
   padding: {
     type: Number,
@@ -18,17 +18,17 @@ defineProps({
   options: {
     type: Array as PropType<any>,
   },
-})
+});
 
-const formLabelRef = ref<HTMLDivElement>()
+const formLabelRef = ref<HTMLDivElement>();
 
 function getWidth() {
-  return formLabelRef.value?.offsetWidth
+  return formLabelRef.value?.offsetWidth;
 }
 
 defineExpose({
   getWidth,
-})
+});
 </script>
 
 <template>
@@ -40,17 +40,22 @@ defineExpose({
     <LewFlex
       v-for="(item, index) in options"
       :key="index"
-      gap="5"
+      gap="5px"
       :style="{
         fontSize: `var(--lew-form-font-size-${size})`,
       }"
     >
       <RequiredIcon
-        v-if="item.required && item.label"
+        v-if="getFormItemRequired(item) && item.label"
         :size="requiredIconSizeMap[size]"
       />
       {{ item.label }}
-      <LewCommonIcon v-if="item.tips" :size="tipsIconSizeMap[size]" type="normal" color="black" />
+      <CommonIcon
+        v-if="item.tips"
+        :size="tipsIconSizeMap[size]"
+        type="normal"
+        color="black"
+      />
     </LewFlex>
   </div>
 </template>

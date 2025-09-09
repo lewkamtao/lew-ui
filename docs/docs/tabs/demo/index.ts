@@ -3,14 +3,22 @@ import DemoTabs1Code from './DemoTabs1.vue?raw'
 import DemoTabs2 from './DemoTabs2.vue'
 import DemoTabs2Code from './DemoTabs2.vue?raw'
 import DemoTabs3 from './DemoTabs3.vue'
-
 import DemoTabs3Code from './DemoTabs3.vue?raw'
 import DemoTabs4 from './DemoTabs4.vue'
 import DemoTabs4Code from './DemoTabs4.vue?raw'
 import DemoTabs5 from './DemoTabs5.vue'
 import DemoTabs5Code from './DemoTabs5.vue?raw'
+import DemoTabs6 from './DemoTabs6.vue'
+import DemoTabs6Code from './DemoTabs6.vue?raw'
 
-export const demoGroup = [DemoTabs1, DemoTabs2, DemoTabs3, DemoTabs4, DemoTabs5]
+export const demoGroup = [
+  DemoTabs1,
+  DemoTabs2,
+  DemoTabs3,
+  DemoTabs4,
+  DemoTabs5,
+  DemoTabs6,
+]
 
 export const codeGroup = [
   DemoTabs1Code,
@@ -18,4 +26,5 @@ export const codeGroup = [
   DemoTabs3Code,
   DemoTabs4Code,
   DemoTabs5Code,
+  DemoTabs6Code,
 ]

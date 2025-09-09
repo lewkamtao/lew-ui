@@ -1,16 +1,9 @@
 <script lang="ts" setup>
-import type { MenuTreeItem } from 'lew-ui'
-import {
-  BarChart2,
-  Home,
-  Settings,
-  ShoppingCart,
-  Target,
-  Users,
-} from 'lucide-vue-next'
+import type { LewMenuTreeOption } from 'lew-ui/types'
+import { BarChart2, Home, Settings, ShoppingCart, Target, Users } from 'lucide-vue-next'
 
-const value = ref(['1', '1-1', '1-1-1'])
-const options = [
+const value = ref('')
+const options: LewMenuTreeOption[] = [
   {
     value: '1',
     label: 'Pet Mgmt',
@@ -163,16 +156,11 @@ const options = [
   },
 ]
 
-function change(item: MenuTreeItem) {
+function change(item: LewMenuTreeOption) {
   console.log(item)
 }
 </script>
 
 <template>
-  <lew-menu-tree
-    v-model="value"
-    width="300"
-    :options="options"
-    @change="change"
-  />
+  <lew-menu-tree v-model="value" width="300" :options="options" @change="change" />
 </template>

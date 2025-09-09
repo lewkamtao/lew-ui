@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MenuOptions } from 'lew-ui'
+import type { LewMenuOption } from 'lew-ui/types'
 import { Menu } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 import TheSiderbar from '../layout/TheSiderbar.vue'
@@ -16,7 +16,7 @@ watch(route, () => {
   isShowSider.value = false
 })
 
-const options = ref<MenuOptions[]>([])
+const options = ref<LewMenuOption[]>([])
 options.value = [
   {
     label: '快速上手',

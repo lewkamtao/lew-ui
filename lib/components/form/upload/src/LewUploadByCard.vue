@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
-import type { UploadFileItem } from './props'
+import type { LewUploadFileItem } from 'lew-ui/types'
 import { LewFlex, LewImage, LewTooltip, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { uploadByCardEmits } from './emits'
 import { uploadByCardProps } from './props'
 
 defineProps(uploadByCardProps)
-const emit = defineEmits(['reUpload', 'deleteFile'])
+const emit = defineEmits(uploadByCardEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -45,7 +46,7 @@ const getCardSize: Record<string, number> = {
   large: 88,
 }
 
-const getStatusText = computed(() => (item: UploadFileItem) => {
+const getStatusText = computed(() => (item: LewUploadFileItem) => {
   return locale.t(`upload.${item.status || 'complete'}`)
 })
 
@@ -58,7 +59,7 @@ const statusColorMap = {
   wrong_size: 'red',
   pending: 'gray',
 }
-const modelValue = defineModel<UploadFileItem[]>()
+const modelValue = defineModel<LewUploadFileItem[]>()
 </script>
 
 <template>
@@ -92,7 +93,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           class="lew-upload-reupload-btn"
           @click.stop="emit('reUpload', item.key)"
         >
-          <LewCommonIcon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
+          <CommonIcon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
         </LewFlex>
 
         <LewFlex
@@ -115,7 +116,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           }"
           class="lew-upload-tips-tag"
         >
-          <LewCommonIcon
+          <CommonIcon
             :size="rightTopBtnIconSizeMap[size]"
             type="tips"
             :color="statusColorMap[item.status || 'complete'] as LewColor"
@@ -133,7 +134,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           class="lew-upload-delete-btn"
           @click.stop="emit('deleteFile', item.key)"
         >
-          <LewCommonIcon :size="rightTopBtnIconSizeMap[size]" type="close" />
+          <CommonIcon :size="rightTopBtnIconSizeMap[size]" type="close" />
         </LewFlex>
         <LewFlex class="lew-upload-icon-wrapper">
           <LewFlex
@@ -174,7 +175,7 @@ const modelValue = defineModel<UploadFileItem[]>()
               class="lew-upload-progress-line"
               :style="{
                 width: `${(item.percent || 0) > 100 ? 100 : item.percent}%`,
-                background: 'var(--lew-color-blue)',
+                background: 'var(--lew-color-primary)',
               }"
             />
             <LewFlex class="lew-upload-progress-line-bg" />
@@ -249,7 +250,7 @@ const modelValue = defineModel<UploadFileItem[]>()
     }
     .lew-upload-reupload-btn {
       right: 18px;
-      background-color: var(--lew-color-blue);
+      background-color: var(--lew-color-primary);
       color: var(--lew-color-white);
     }
     .lew-upload-delete-btn {

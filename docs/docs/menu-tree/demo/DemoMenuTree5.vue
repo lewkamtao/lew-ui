@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { MenuTreeItem } from 'lew-ui'
+import type { LewMenuTreeOption } from 'lew-ui/types'
 import { LewFlex, LewTag } from 'lew-ui'
 import {
   BarChart2,
@@ -18,7 +18,7 @@ const options = [
     value: '1',
     icon: () => h(FileText, { size: 14 }),
     label: () =>
-      h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+      h(LewFlex, { x: 'start', style: 'width: 100%' }, () => [
         h('span', 'Article Mgmt'),
         h(
           LewTag,
@@ -35,13 +35,9 @@ const options = [
       {
         value: '1-1',
         label: () =>
-          h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+          h(LewFlex, { x: 'start', style: 'width: 100%' }, () => [
             h('span', 'Article List'),
-            h(
-              LewTag,
-              { type: 'light', color: 'primary', size: 'small' },
-              () => 'New',
-            ),
+            h(LewTag, { type: 'light', color: 'primary', size: 'small' }, () => 'New'),
           ]),
         children: [
           { value: '1-1-1', label: 'Published' },
@@ -64,7 +60,7 @@ const options = [
     value: '2',
     icon: () => h(Users, { size: 14 }),
     label: () =>
-      h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+      h(LewFlex, { x: 'start', style: 'width: 100%' }, () => [
         h('span', 'User Mgmt'),
         h(
           LewTag,
@@ -81,13 +77,9 @@ const options = [
       {
         value: '2-1',
         label: () =>
-          h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+          h(LewFlex, { x: 'start', style: 'width: 100%' }, () => [
             h('span', 'User List'),
-            h(
-              LewTag,
-              { type: 'light', color: 'primary', size: 'small' },
-              () => 'New',
-            ),
+            h(LewTag, { type: 'light', color: 'primary', size: 'small' }, () => 'New'),
           ]),
         children: [
           { value: '2-1-1', label: 'Regular Users' },
@@ -208,7 +200,7 @@ const options = [
   },
 ]
 
-function change(item: MenuTreeItem) {
+function change(item: LewMenuTreeOption) {
   console.log(item)
 }
 </script>

@@ -1,11 +1,14 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPublicPropTypes } from 'vue'
+import validators from 'lew-ui/validators'
 
 export const expandProps = {
   collapseHeight: {
-    type: [Number, String],
-    default: '',
-    description: `组件收起状态时的高度，可以是数字（单位为像素）或字符串（如 '50px'、'3rem' 等）`,
+    type: String,
+    validator: validators.widthHeight({
+      componentName: 'LewExpand',
+      propName: 'collapseHeight',
+    }),
   },
 }
 
-export type ExpandProps = ExtractPropTypes<typeof expandProps>
+export type LewExpandProps = ExtractPublicPropTypes<typeof expandProps>

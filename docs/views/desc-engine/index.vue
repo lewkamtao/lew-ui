@@ -2,11 +2,12 @@
 import type { LewSize } from 'lew-ui/types'
 import { useDark } from '@vueuse/core'
 import dayjs from 'dayjs'
+import LewCodeBox from 'docs/components/LewCodeBox.vue'
 import { downloadObjectAsFile } from 'docs/lib/utils'
-import { lewDescSizePaddingMap } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { lewDescSizePaddingMap } from 'lew-ui/components/data/desc/src/props'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
-import { flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { any2px, flattenNestedObject, formatFormByMap, getUniqueId } from 'lew-ui/utils'
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
@@ -208,7 +209,8 @@ function getModel() {
   const componentModel = {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
-    width: formWidth.value,
+    bordered: formGlobal.value.bordered === 1,
+    width: any2px(formWidth.value),
     id: `desc_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     options: _options,
   }
@@ -241,7 +243,10 @@ function deleteItem(item: any) {
     content: '删除后无法恢复，请谨慎操作',
     cancelText: '手滑了',
     ok: () => {
-      options.value = options.value.filter((e: any) => e.id !== item.id)
+      return new Promise((resolve) => {
+        options.value = options.value.filter((e: any) => e.id !== item.id)
+        resolve(true)
+      })
     },
   })
 }
@@ -360,14 +365,14 @@ onMounted(() => {
         >
           <template #item="{ element }">
             <div
-              :ref="(el) => (itemRefMap[element.id] = el)"
+              :ref="(el: any) => (itemRefMap[element.id] = el)"
               class="lew-form-wrapper-draggable-item"
               :class="{
                 'lew-form-wrapper-draggable-item-active': activeId === element.id,
               }"
               :style="{
                 'grid-column-end': `span ${element.spanMap?.[formGlobal.columns] || 1}`,
-                'padding': formGlobal.bordered ? 0 : `15px 13px 15px 13px`,
+                'padding': formGlobal.bordered ? 0 : '15px 13px 15px 13px',
               }"
               @click.stop="
                 activeId === element.id || element.as === ''
@@ -377,15 +382,15 @@ onMounted(() => {
               "
             >
               <lew-flex x="end" y="center" class="handle-box">
-                <lew-flex x="end" gap="5" y="center">
-                  <LewCommonIcon
+                <lew-flex x="end" gap="5px" y="center">
+                  <CommonIcon
                     v-if="(element.spanMap?.[formGlobal.columns] || 1) > 1"
                     class="handle-icon handle-resize"
                     :size="14"
                     type="minimize-2"
                     @click="minimize(element)"
                   />
-                  <LewCommonIcon
+                  <CommonIcon
                     v-if="
                       (element.spanMap?.[formGlobal.columns] || 1) < formGlobal.columns
                     "
@@ -394,7 +399,7 @@ onMounted(() => {
                     type="maximize-2"
                     @click="maximize(element)"
                   />
-                  <LewCommonIcon
+                  <CommonIcon
                     class="handle-icon"
                     :size="14"
                     type="trash"
@@ -402,7 +407,7 @@ onMounted(() => {
                   />
                 </lew-flex>
               </lew-flex>
-              <LewCommonIcon
+              <CommonIcon
                 v-if="!element.field"
                 v-tooltip="{
                   content: '未绑定字段',
@@ -439,7 +444,8 @@ onMounted(() => {
         </lew-button>
         <lew-flex x="end">
           <lew-button type="light" @click="exportFile">
-            导出配置 <Upload :size="16" />
+            导出配置
+            <Upload :size="16" />
           </lew-button>
         </lew-flex>
       </lew-flex>
@@ -469,15 +475,14 @@ onMounted(() => {
               基础属性
             </div>
             <SetForm
-              v-model="
-                options[options.findIndex((e: any) => e.id === activeId)]
+              v-model="options[options.findIndex((e: any) => e.id === activeId)]
               "
               :options="baseSchema"
             />
           </lew-flex>
         </div>
         <div v-show="settingTab === 'model'" class="lew-form-model pre-box">
-          <highlightjs autodetect :code="JSON.stringify(formModel, null, 4)" />
+          <LewCodeBox :code="JSON.stringify(formModel, null, 4)" />
         </div>
       </div>
     </lew-flex>
@@ -570,18 +575,21 @@ onMounted(() => {
       background-color: var(--lew-bgcolor-0);
       flex-shrink: 0;
       border-bottom: 1px solid var(--lew-bgcolor-3);
+
       .add-btn {
         position: absolute;
         left: 12px;
         top: 50%;
         transform: translateY(-50%);
       }
+
       .import-btn {
         position: absolute;
         left: 110px;
         top: 50%;
         transform: translateY(-50%);
       }
+
       .dark-btn {
         position: absolute;
         right: 12px;
@@ -693,7 +701,7 @@ onMounted(() => {
   }
 
   .lew-form-wrapper-draggable-item-active {
-    border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
+    border: var(--lew-form-border-width) dashed var(--lew-color-primary-dark) !important;
   }
 
   .blank-box {
@@ -754,7 +762,7 @@ onMounted(() => {
 }
 
 .chosen {
-  border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
+  border: var(--lew-form-border-width) dashed var(--lew-color-primary-dark) !important;
 }
 
 .lew-form-setting-tabs {
@@ -778,7 +786,7 @@ onMounted(() => {
 
     .component-name {
       font-weight: normal;
-      color: var(--lew-text-color-7);
+      color: var(--lew-text-color-6);
     }
   }
 }

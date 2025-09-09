@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-const options = ref<any[]>([
+import type { LewContextMenusOption } from 'lew-ui/types'
+
+const options = ref<LewContextMenusOption[]>([
   {
     label: 'Language',
     value: 'language',
@@ -7,15 +9,10 @@ const options = ref<any[]>([
       {
         label: 'Chinese',
         value: 'chinese',
-        checked: true,
-        checkable: true,
-        onClick: (item: any) => setTheme(item, 'language'),
       },
       {
         label: 'English',
         value: 'english',
-        checkable: true,
-        onClick: (item: any) => setTheme(item, 'language'),
       },
     ],
   },
@@ -29,14 +26,16 @@ const options = ref<any[]>([
         type: 'radio',
         checked: true,
         checkable: true,
-        onClick: (item: any) => setTheme(item, 'theme'),
+        onClick: (item: LewContextMenusOption, options: LewContextMenusOption[]) =>
+          setTheme(item, options),
       },
       {
         label: 'Dark',
         type: 'radio',
         value: 'dark',
         checkable: true,
-        onClick: (item: any) => setTheme(item, 'theme'),
+        onClick: (item: LewContextMenusOption, options: LewContextMenusOption[]) =>
+          setTheme(item, options),
       },
     ],
   },
@@ -60,43 +59,27 @@ const options = ref<any[]>([
     checkable: true,
     checked: true,
     value: 'check-update',
-    onClick: (item: any) => setUpdate(item),
+    onClick: (
+      item: LewContextMenusOption,
+      options: LewContextMenusOption[],
+      instance: any,
+    ) => setUpdate(item, options, instance),
   },
 ])
 
-function setTheme(item: any, type = 'theme') {
-  // Find the index of the Theme item
-  const themeIndex = options.value.findIndex((item: any) => item.value === type)
-  if (themeIndex !== -1 && options.value[themeIndex].children) {
-    // Create new children array to maintain reactivity
-    const newChildren = options.value[themeIndex].children!.map(
-      (child: any) => {
-        if (child.checkable) {
-          return {
-            ...child,
-            checked: child.label === item.label,
-          }
-        }
-        return child
-      },
-    )
-
-    // Update the entire options array to trigger reactive update
-    const newOptions = options.value.map((item: any, index: number) => {
-      if (index === themeIndex) {
-        return {
-          ...item,
-          children: newChildren,
-        }
-      }
-      return item
-    })
-    options.value = newOptions
-  }
+function setTheme(item: LewContextMenusOption, _options: LewContextMenusOption[] = []) {
+  _options.forEach((_item: LewContextMenusOption) => {
+    _item.checked = _item.label === item.label
+  })
 }
 
-function setUpdate(item: any) {
+function setUpdate(
+  item: LewContextMenusOption,
+  _options: LewContextMenusOption[],
+  instance: any,
+) {
   item.checked = !item.checked
+  instance?.hide()
 }
 </script>
 

@@ -423,7 +423,7 @@ async function copyAllDifferences() {
 
           &.badge-success {
             background-color: var(--lew-color-success);
-            color: var(--lew-color-white-text);
+            color: var(--lew-color-white);
           }
         }
 
@@ -445,16 +445,16 @@ async function copyAllDifferences() {
 
         &.active {
           background-color: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
           box-shadow: 0 2px 8px var(--lew-color-primary-light);
 
           .badge {
             background-color: rgba(255, 255, 255, 0.25);
-            color: var(--lew-color-white-text);
+            color: var(--lew-color-white);
 
             &.badge-success {
               background-color: rgba(255, 255, 255, 0.5);
-              color: var(--lew-color-white-text);
+              color: var(--lew-color-white);
             }
           }
 
@@ -536,12 +536,12 @@ async function copyAllDifferences() {
 
         &.copied {
           background-color: var(--lew-color-success);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
           border-color: var(--lew-color-success);
 
           &:hover {
             background-color: var(--lew-color-success-dark);
-            color: var(--lew-color-white-text);
+            color: var(--lew-color-white);
           }
         }
       }

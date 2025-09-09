@@ -25,6 +25,7 @@ function load() {
   <lew-select
     :key="updateKey"
     v-model="value"
+    width="300px"
     searchable
     clearable
     :init-method="initMethod"

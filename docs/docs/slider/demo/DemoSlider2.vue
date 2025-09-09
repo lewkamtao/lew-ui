@@ -5,10 +5,8 @@ const v = ref(25)
 <template>
   <lew-slider
     v-model="v"
-    style="width: 500px"
-    step="5"
-    min="20"
-    max="50"
+    width="700px"
+    :step="0.1"
     :options="[
       {
         label: '低',

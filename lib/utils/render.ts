@@ -1,5 +1,7 @@
 import type { Component, VNode } from 'vue'
-import { defineAsyncComponent, defineComponent, isVNode } from 'vue'
+import type { LewComponentSource } from '../types'
+import { getUniqueId } from 'lew-ui/utils'
+import { defineComponent, isVNode } from 'vue'
 
 /**
  * 组件类型枚举
@@ -7,7 +9,6 @@ import { defineAsyncComponent, defineComponent, isVNode } from 'vue'
 enum ComponentType {
   VNode = 'vnode',
   FunctionalComponent = 'functional',
-  AsyncComponent = 'async',
   ComponentOptions = 'options',
   ComponentInstance = 'instance',
   Text = 'text',
@@ -16,33 +17,33 @@ enum ComponentType {
 
 /**
  * 检测组件类型
- * @param input 输入值
+ * @param componentSource 组件源输入
  * @returns 组件类型
  */
-function detectComponentType(input: any): ComponentType {
-  if (input === null || input === undefined || input === '') {
+function detectComponentType(componentSource: LewComponentSource): ComponentType {
+  if (componentSource === null || componentSource === undefined || componentSource === '') {
     return ComponentType.Unknown
   }
 
   // VNode 检查 - 最优先，因为isVNode是Vue内置的高效检查
-  if (isVNode(input)) {
+  if (isVNode(componentSource)) {
     return ComponentType.VNode
   }
 
   // 基础类型检查 - 快速路径
-  const inputType = typeof input
+  const inputType = typeof componentSource
   if (inputType === 'string' || inputType === 'number' || inputType === 'boolean') {
     return ComponentType.Text
   }
 
   // 函数类型检查
   if (inputType === 'function') {
-    return detectFunctionComponentType(input)
+    return detectFunctionComponentType(componentSource)
   }
 
   // 对象类型检查
   if (inputType === 'object') {
-    return detectObjectComponentType(input)
+    return detectObjectComponentType(componentSource)
   }
 
   return ComponentType.Unknown
@@ -61,9 +62,9 @@ function detectFunctionComponentType(func: any): ComponentType {
     return ComponentType.ComponentOptions
   }
 
-  // 异步组件检查 - 无参数的匿名函数可能是异步组件工厂
-  if (func.length === 0 && !func.name && !func.prototype?.constructor) {
-    return ComponentType.AsyncComponent
+  // 无参数的函数视为函数式组件
+  if (func.length === 0 && !func.prototype?.constructor) {
+    return ComponentType.FunctionalComponent
   }
 
   // 其他函数视为函数式组件
@@ -90,9 +91,9 @@ function detectObjectComponentType(obj: any): ComponentType {
     return ComponentType.ComponentOptions
   }
 
-  // Promise检查 - 异步组件
+  // Promise检查 - 不支持的异步组件
   if (obj.then && typeof obj.then === 'function') {
-    return ComponentType.AsyncComponent
+    return ComponentType.Unknown
   }
 
   // 带有component属性的包装对象
@@ -110,7 +111,7 @@ function detectObjectComponentType(obj: any): ComponentType {
  */
 function createFunctionalComponent(component: any): Component {
   return defineComponent({
-    name: component.name || 'FunctionalComponent',
+    name: getUniqueId(),
     setup(props, ctx) {
       return () => {
         try {
@@ -132,52 +133,6 @@ function createFunctionalComponent(component: any): Component {
       }
     },
   })
-}
-
-/**
- * 创建异步组件包装器
- * @param component 异步组件
- * @returns Vue组件
- */
-function createAsyncComponent(component: any): Component {
-  try {
-    if (typeof component === 'function') {
-      // 异步组件工厂函数
-      return defineAsyncComponent({
-        loader: component,
-        loadingComponent: createTextComponent('Loading...'),
-        errorComponent: createTextComponent('Failed to load component'),
-        delay: 200,
-        timeout: 5000,
-      })
-    }
-    else if (component && typeof component.then === 'function') {
-      // Promise形式的异步组件
-      return defineAsyncComponent({
-        loader: () => component,
-        loadingComponent: createTextComponent('Loading...'),
-        errorComponent: createTextComponent('Failed to load component'),
-        delay: 200,
-        timeout: 5000,
-      })
-    }
-    else if (component && typeof component === 'object') {
-      // 异步组件选项对象
-      return defineAsyncComponent({
-        loadingComponent: createTextComponent('Loading...'),
-        errorComponent: createTextComponent('Failed to load component'),
-        delay: 200,
-        timeout: 5000,
-        ...component,
-      })
-    }
-  }
-  catch (error) {
-    console.error('[createAsyncComponent] 创建异步组件失败:', error)
-  }
-
-  // 降级处理：返回错误组件
-  return createTextComponent('Invalid async component')
 }
 
 /**
@@ -230,39 +185,35 @@ function createVNodeComponent(vnode: VNode): Component {
 
 /**
  * 检查组件是否有效（可以被渲染）
- * @param component 组件
+ * @param componentSource 组件源
  * @returns 是否有效
  */
-export function isValidComponent(component: any): boolean {
-  const componentType = detectComponentType(component)
+export function isValidComponent(componentSource: LewComponentSource): boolean {
+  const componentType = detectComponentType(componentSource)
   return componentType !== ComponentType.Unknown
 }
 
 /**
  * 格式化输入为有效的 Vue 组件
- * @param input 可能是组件、组件名称、配置对象等
+ * @param componentSource 可能是组件、组件名称、配置对象等
  * @returns 有效的 Vue 组件
  */
-export function formatComponent(input: any): Component | undefined {
-  const componentType = detectComponentType(input)
-
+export function formatComponent(componentSource: LewComponentSource): Component | undefined {
+  const componentType = detectComponentType(componentSource)
   try {
     switch (componentType) {
       case ComponentType.VNode:
-        return createVNodeComponent(input)
+        return createVNodeComponent(componentSource as VNode)
 
       case ComponentType.Text:
-        return createTextComponent(String(input))
+        return createTextComponent(String(componentSource))
 
       case ComponentType.FunctionalComponent:
-        return createFunctionalComponent(input)
-
-      case ComponentType.AsyncComponent:
-        return createAsyncComponent(input)
+        return createFunctionalComponent(componentSource as (...args: any[]) => any)
 
       case ComponentType.ComponentOptions:
       case ComponentType.ComponentInstance:
-        return createOptionsComponent(input)
+        return createOptionsComponent(componentSource as Record<string, any>)
 
       case ComponentType.Unknown:
       default:
@@ -270,7 +221,7 @@ export function formatComponent(input: any): Component | undefined {
     }
   }
   catch (error) {
-    console.error('[formatComponent] 组件格式化失败:', error, input)
+    console.error('[formatComponent] 组件格式化失败:', error, componentSource)
     return undefined
   }
 }

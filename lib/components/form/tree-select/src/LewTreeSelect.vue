@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewTooltip, LewTree, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, findNodeByKey, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
 import { cloneDeep, isFunction } from 'lodash-es'
+import { treeSelectEmits } from './emits'
 import { treeSelectProps } from './props'
 
 const props = defineProps(treeSelectProps)
-const emit = defineEmits(['change', 'blur', 'clear'])
+const emit = defineEmits(treeSelectEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -82,7 +83,7 @@ function clearHandle() {
   state.keyword = ''
   state.keywordBackup = ''
   emit('clear')
-  emit('change')
+  emit('change', undefined)
 }
 
 const getValueStyle = computed(() => {
@@ -90,14 +91,13 @@ const getValueStyle = computed(() => {
 })
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, align, disabled, readonly, searchable } = props
+  let { clearable, size, disabled, readonly, searchable } = props
   clearable = clearable ? !!treeSelectValue.value : false
   const focus = state.visible
 
   return object2class('lew-select', {
     clearable,
     size,
-    align,
     disabled,
     readonly,
     searchable,
@@ -162,9 +162,7 @@ function hideHandle() {
     state.keyword = ''
     state.keywordBackup = ''
   }
-  inputRef.value.blur()
   lewTreeRef.value.reset()
-  emit('blur')
 }
 
 watch(treeSelectValue, (newVal) => {
@@ -185,6 +183,7 @@ defineExpose({ show, hide })
     class="lew-select-view"
     :style="{ width: any2px(width) }"
     :trigger="trigger"
+    :trigger-width="width"
     :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :loading="state.searchLoading"
@@ -194,10 +193,10 @@ defineExpose({ show, hide })
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
         <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <LewCommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
+          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
         </div>
 
-        <LewCommonIcon
+        <CommonIcon
           v-else
           :size="getIconSize"
           type="chevron-down"
@@ -207,7 +206,7 @@ defineExpose({ show, hide })
           }"
         />
         <transition name="lew-form-icon-ani">
-          <LewCommonIcon
+          <CommonIcon
             v-if="clearable && state.keyword && !readonly"
             :size="getIconSize"
             type="close"
@@ -222,6 +221,7 @@ defineExpose({ show, hide })
           ref="inputRef"
           v-model="state.keyword"
           class="lew-value"
+          :title="state.keyword"
           :style="getValueStyle"
           :readonly="!searchable"
           :placeholder="getPlaceholder"
@@ -310,19 +310,16 @@ defineExpose({ show, hide })
       align-items: center;
       position: absolute;
       top: 50%;
-      right: 9px;
-      padding: 2px;
-      box-sizing: border-box;
+      right: 12px;
       transform: translateY(-50%);
     }
 
     .lew-icon-select {
       position: absolute;
       top: 50%;
-      right: 9px;
+      right: 12px;
       transform: translateY(-50%) rotate(0deg);
       transition: all var(--lew-form-transition-bezier);
-      padding: 2px;
     }
 
     .lew-icon-select {
@@ -352,17 +349,6 @@ defineExpose({ show, hide })
     .lew-value::placeholder {
       color: rgb(165, 165, 165);
     }
-  }
-  .lew-select-align-left {
-    text-align: left;
-  }
-
-  .lew-select-align-center {
-    text-align: center;
-  }
-
-  .lew-select-align-right {
-    text-align: right;
   }
 
   .lew-select-placeholder {
@@ -408,6 +394,7 @@ defineExpose({ show, hide })
       user-select: text;
     }
   }
+
   .lew-select-searchable {
     .lew-select {
       .lew-value {
@@ -415,10 +402,12 @@ defineExpose({ show, hide })
       }
     }
   }
+
   .lew-select-disabled:hover {
     background-color: var(--lew-form-bgcolor);
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   }
+
   .lew-select-init-loading {
     pointer-events: none;
     cursor: wait;
@@ -427,9 +416,11 @@ defineExpose({ show, hide })
       cursor: wait;
     }
   }
+
   .lew-select-size-small {
     height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
+
     .lew-value {
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
@@ -439,6 +430,7 @@ defineExpose({ show, hide })
   .lew-select-size-medium {
     height: var(--lew-form-item-height-medium);
     line-height: var(--lew-form-input-line-height-medium);
+
     .lew-value {
       padding: var(--lew-form-input-padding-medium);
 
@@ -449,6 +441,7 @@ defineExpose({ show, hide })
   .lew-select-size-large {
     height: var(--lew-form-item-height-large);
     line-height: var(--lew-form-input-line-height-large);
+
     .lew-value {
       padding: var(--lew-form-input-padding-large);
 
@@ -462,14 +455,17 @@ defineExpose({ show, hide })
 .lew-select-popover-body {
   padding: 6px;
 }
+
 .lew-select-body {
   width: 100%;
   box-sizing: border-box;
+
   .tree-select-wrapper {
     padding: 5px 0px;
     max-height: 280px;
     overflow: auto;
   }
+
   .result-count {
     padding-left: 8px;
     margin: 5px 0px;

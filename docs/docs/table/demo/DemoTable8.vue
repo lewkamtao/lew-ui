@@ -247,7 +247,7 @@ const columns = [
     text-overflow: ellipsis;
     font-size: 12px;
     white-space: nowrap;
-    color: var(--lew-text-color-7);
+    color: var(--lew-text-color-6);
   }
 }
 </style>

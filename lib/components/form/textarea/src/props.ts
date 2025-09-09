@@ -1,12 +1,12 @@
-import type { LewSize } from 'lew-ui'
-import type { ExtractPropTypes } from 'vue'
-import { validSizes } from 'lew-ui/constants'
+import type { Property } from 'csstype'
+import type { LewSize, LewTextareaResize } from 'lew-ui'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import validators, { validResizeList, validSizeList } from 'lew-ui/validators'
 
 export const textareaModel = {
   modelValue: {
     type: String,
     default: undefined,
-    description: '文本域的值',
   },
 }
 
@@ -14,107 +14,134 @@ export const textareaProps = {
   placeholder: {
     type: String,
     defaultLocale: true,
-    description: '占位文本',
+    validator: validators.string({
+      componentName: 'LewTextarea',
+      propName: 'placeholder',
+    }),
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用文本域',
+    validator: validators.boolean({
+      componentName: 'LewTextarea',
+      propName: 'disabled',
+    }),
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否为只读状态',
+    validator: validators.boolean({
+      componentName: 'LewTextarea',
+      propName: 'readonly',
+    }),
   },
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否显示清空按钮',
+    validator: validators.boolean({
+      componentName: 'LewTextarea',
+      propName: 'clearable',
+    }),
   },
   showCount: {
     type: Boolean,
     default: false,
-    description: '是否显示字符计数',
+    validator: validators.boolean({
+      componentName: 'LewTextarea',
+      propName: 'showCount',
+    }),
   },
   maxLength: {
-    type: [Number, String],
-    default: '',
-    description: '最大输入字符数',
-    validator: (value: number | string) => {
-      if (typeof value === 'number' && value < 0) {
-        console.warn('[LewTextarea] maxLength 必须大于或等于 0')
-        return false
-      }
-      return true
-    },
+    type: Number,
+    default: undefined,
+    validator: validators.number({
+      componentName: 'LewTextarea',
+      propName: 'maxLength',
+    }),
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '文本域尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewTextarea] size 必须是 small、medium 或 large')
-        return false
-      }
-      return true
-    },
+    typeValues: validSizeList,
+    validator: validators.enum({
+      componentName: 'LewTextarea',
+      propName: 'size',
+      values: validSizeList,
+    }),
   },
   resize: {
-    type: String,
+    type: String as PropType<LewTextareaResize>,
     default: 'none',
-    description: '调整尺寸的方向',
-    validator: (value: string) => {
-      const validResizes = ['none', 'both', 'horizontal', 'vertical']
-      if (!validResizes.includes(value)) {
-        console.warn(
-          '[LewTextarea] resize 必须是 none、both、horizontal 或 vertical',
-        )
-        return false
-      }
-      return true
-    },
+    validator: validators.enum({
+      componentName: 'LewTextarea',
+      propName: 'resize',
+      values: validResizeList,
+    }),
   },
   width: {
-    type: [Number, String],
-    default: '',
-    description: '文本域宽度',
+    type: String as PropType<Property.Width>,
+    default: '100%',
+    validator: validators.widthHeight({
+      componentName: 'LewTextarea',
+      propName: 'width',
+    }),
   },
   height: {
-    type: [Number, String],
-    default: '',
-    description: '文本域高度',
+    type: String as PropType<Property.Height>,
+    default: '80px',
+    validator: validators.widthHeight({
+      componentName: 'LewTextarea',
+      propName: 'height',
+    }),
   },
   minWidth: {
-    type: [Number, String],
-    default: '',
-    description: '最小宽度',
+    type: String as PropType<Property.Width>,
+    default: '100%',
+    validator: validators.widthHeight({
+      componentName: 'LewTextarea',
+      propName: 'minWidth',
+    }),
   },
   minHeight: {
-    type: [Number, String],
-    default: '',
-    description: '最小高度',
+    type: String as PropType<Property.Height>,
+    default: '80px',
+    validator: validators.widthHeight({
+      componentName: 'LewTextarea',
+      propName: 'minHeight',
+    }),
   },
   maxWidth: {
-    type: [Number, String],
-    default: '',
-    description: '最大宽度',
+    type: String as PropType<Property.Width>,
+    default: 'auto',
+    validator: validators.widthHeight({
+      componentName: 'LewTextarea',
+      propName: 'maxWidth',
+    }),
   },
   maxHeight: {
-    type: [Number, String],
-    default: '',
-    description: '最大高度',
+    type: String as PropType<Property.Height>,
+    default: 'auto',
+    validator: validators.widthHeight({
+      componentName: 'LewTextarea',
+      propName: 'maxHeight',
+    }),
   },
   selectByFocus: {
     type: Boolean,
     default: false,
-    description: '聚焦时是否自动选中文本',
+    validator: validators.boolean({
+      componentName: 'LewTextarea',
+      propName: 'selectByFocus',
+    }),
   },
   okByEnter: {
     type: Boolean,
     default: false,
-    description: '是否启用回车键确认（启用后，Shift+Enter可换行）',
+    validator: validators.boolean({
+      componentName: 'LewTextarea',
+      propName: 'okByEnter',
+    }),
   },
 }
 
-export type TextareaProps = ExtractPropTypes<typeof textareaProps>
+export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>

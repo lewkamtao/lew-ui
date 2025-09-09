@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { SelectOptions } from 'lew-ui'
+import type { LewSelectOption } from 'lew-ui'
 
-const options = ref<SelectOptions[]>([
+const options = ref<LewSelectOption[]>([
   { label: 'BMW', value: 'bmw' },
   { label: 'Mercedes-Benz', value: 'mercedes' },
   { label: 'Audi', value: 'audi' },

@@ -84,6 +84,7 @@ function close() {
     padding-top: 16px;
     border-top: 1px solid var(--lew-border-color);
     margin-bottom: 16px;
+
     p {
       margin: 0;
       font-size: 14px;

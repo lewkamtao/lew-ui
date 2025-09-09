@@ -10,11 +10,6 @@ export const baseSchema = [
     field: 'label',
   },
   {
-    label: '是否必填',
-    as: 'switch',
-    field: 'required',
-  },
-  {
     label: '是否只读',
     as: 'switch',
     field: 'readonly',
@@ -28,7 +23,13 @@ export const baseSchema = [
     label: '校验规则',
     as: 'textarea',
     direction: 'y',
-    tips: '参考 Yup 官方文档',
+    tips: () => {
+      // 参考文档 a 点击
+      return h('span', [
+        '参考 ',
+        h('a', { href: 'https://github.com/jquense/yup', style: { textDecoration: 'underline' }, target: '_blank' }, 'Yup 速查表'),
+      ])
+    },
     field: 'rule',
   },
   {

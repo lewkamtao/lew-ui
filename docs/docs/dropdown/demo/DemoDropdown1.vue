@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { DropdownOptions } from 'lew-ui'
+import type { LewContextMenusOption } from 'lew-ui'
 
-const options = ref<DropdownOptions[]>([
+const options = ref<LewContextMenusOption[]>([
   {
     label: 'Edit Profile',
     onClick: () => {

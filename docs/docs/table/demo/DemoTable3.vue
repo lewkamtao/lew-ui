@@ -228,7 +228,7 @@ const dropdownIcon = h(MoreHorizontal, { size: 14 })
 <template>
   <lew-table :data-source="data" :columns="columns">
     <template #features="{ row }">
-      <lew-flex gap="5" x="start">
+      <lew-flex gap="5px" x="start">
         <lew-tag
           v-for="(item, index) in row.features"
           :key="index"
@@ -244,7 +244,7 @@ const dropdownIcon = h(MoreHorizontal, { size: 14 })
       <lew-action-box
         :key="row.id"
         :options="options(row)"
-        dropdown-threshold="2"
+        :dropdown-threshold="2"
         dropdown-label=""
         :dropdown-icon="dropdownIcon"
         icon-only

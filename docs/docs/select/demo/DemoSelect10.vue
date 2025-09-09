@@ -5,15 +5,19 @@ const selectValue = ref()
 
 // 模拟表单方法
 const formMethods = {
-  async loadUserOptions() {
-    // 模拟网络请求延迟
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
+  async loadOptions() {
+    await new Promise(resolve => setTimeout(resolve, 3000))
     return [
-      { label: '张三', value: 'zhangsan' },
-      { label: '李四', value: 'lisi' },
-      { label: '王五', value: 'wangwu' },
-      { label: '赵六', value: 'zhaoliu' },
+      { label: 'La Mer', value: 'la_mer' },
+      { label: 'La Prairie', value: 'la_prairie' },
+      { label: 'SK-II', value: 'sk_ii' },
+      { label: 'Estée Lauder', value: 'estee_lauder' },
+      { label: 'Lancôme', value: 'lancome' },
+      { label: 'Sisley', value: 'sisley' },
+      { label: 'Dior', value: 'dior' },
+      { label: 'Chanel', value: 'chanel' },
+      { label: 'Clé de Peau', value: 'cle_de_peau' },
+      { label: 'Guerlain', value: 'guerlain' },
     ]
   },
 }
@@ -26,8 +30,8 @@ provide('formMethods', formMethods)
   <div class="demo-select">
     <LewSelect
       v-model="selectValue"
-      init-method-id="loadUserOptions"
-      placeholder="请选择用户"
+      init-method-id="loadOptions"
+      placeholder="Select a brand"
       width="300px"
       searchable
     />

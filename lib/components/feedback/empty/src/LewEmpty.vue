@@ -1,56 +1,66 @@
 <script lang="ts" setup>
+import { locale } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
+import { computed } from 'vue'
 import { emptyProps } from './props'
 
 const props = defineProps(emptyProps)
 
-const src = new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href
+// Computed
+const iconSrc = computed(() => {
+  return new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href
+})
 
 const emptyStyleObject = computed(() => {
   const { width, height, padding } = props
   return {
     width: any2px(width),
     height: any2px(height),
-    padding,
+    padding: any2px(padding),
   }
 })
+
+const titleStyle = computed(() => ({
+  fontSize: any2px(props.fontSize),
+}))
 </script>
 
 <template>
   <div class="lew-empty-container" :style="emptyStyleObject">
-    <img :src="src" alt="" srcset="" class="lew-empty-icon">
-    <div
-      :style="{
-        fontSize: any2px(fontSize),
-      }"
-      class="lew-empty-title"
-    >
-      {{ title }}
+    <img :src="iconSrc" :alt="title" class="lew-empty-icon">
+    <div v-if="title" :style="titleStyle" class="lew-empty-title">
+      {{ title ? title : locale.t("empty.title") }}
     </div>
+    <slot />
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .lew-empty-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
   box-sizing: border-box;
+
   .lew-empty-icon {
     width: 100%;
     height: auto;
+    max-width: 200px;
+    transition: transform 0.2s ease;
   }
+
   .lew-empty-title {
+    margin-top: 16px;
     color: var(--lew-text-color-5);
+    text-align: center;
+    line-height: 1.5;
   }
 }
+
 .lew-dark {
-  .lew-empty-container {
-    .lew-empty-icon {
-      opacity: 0.6;
-    }
+  .lew-empty-container .lew-empty-icon {
+    opacity: 0.6;
   }
 }
 </style>

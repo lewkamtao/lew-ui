@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { LewFlex, LewTooltip, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { cloneDeep } from 'lodash-es'
+import { inputNumberEmits } from './emits'
 import { inputNumberProps } from './props'
 
 const props = defineProps(inputNumberProps)
-const emit = defineEmits(['blur', 'focus', 'change', 'input'])
+const emit = defineEmits(inputNumberEmits)
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -21,20 +23,16 @@ function toFocus() {
   lewInputRef.value?.focus()
 }
 
-function focus(e: any) {
+function focusFn(e: any) {
   if (props.selectByFocus) {
     e?.currentTarget?.select()
   }
-  emit('focus')
-}
-
-function blur() {
-  emit('blur', modelValue.value)
 }
 
 function inputFn(e: any) {
+  const target = e.target as HTMLInputElement
+  emit('input', target.value)
   validationMessage.value = lewInputRef.value.validationMessage
-  emit('input', modelValue.value, e)
 }
 
 const getInputClassNames = computed(() => {
@@ -49,7 +47,7 @@ const getInputClassNames = computed(() => {
 })
 
 function changeFn() {
-  emit('change', modelValue.value)
+  emit('change', cloneDeep(modelValue.value))
 }
 
 const getInputNumberStyle: any = computed(() => {
@@ -100,11 +98,8 @@ function plus() {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepUp()
       modelValue.value = lewInputRef.value.value
-      emit('change', modelValue.value)
-      if (
-        props.max !== ''
-        && lewInputRef.value.value >= Number(props.max || 0)
-      ) {
+      emit('change', cloneDeep(modelValue.value))
+      if (props.max !== undefined && lewInputRef.value.value >= Number(props.max || 0)) {
         clearTimer()
       }
     }, 80)
@@ -117,11 +112,8 @@ function minus() {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepDown()
       modelValue.value = lewInputRef.value.value
-      emit('change', modelValue.value)
-      if (
-        props.min !== ''
-        && lewInputRef.value.value <= Number(props.min || 0)
-      ) {
+      emit('change', cloneDeep(modelValue.value))
+      if (props.min !== undefined && lewInputRef.value.value <= Number(props.min || 0)) {
         clearTimer()
       }
     }, 80)
@@ -129,16 +121,12 @@ function minus() {
 }
 
 function checkValidationMessage() {
-  validationMessage.value
-    = lewInputRef.value && lewInputRef.value.validationMessage
+  validationMessage.value = lewInputRef.value && lewInputRef.value.validationMessage
   return (validationMessage.value || '').length === 0
 }
 
 function validCheck() {
-  return (
-    ((lewInputRef.value && lewInputRef.value.validationMessage) || '')
-      .length === 0
-  )
+  return ((lewInputRef.value && lewInputRef.value.validationMessage) || '').length === 0
 }
 
 defineExpose({ toFocus, validCheck })
@@ -163,17 +151,14 @@ defineExpose({ toFocus, validCheck })
       title=""
       type="number"
       class="lew-input-number"
-      :placeholder="
-        placeholder ? placeholder : locale.t('inputNumber.placeholder')
-      "
+      :placeholder="placeholder ? placeholder : locale.t('inputNumber.placeholder')"
       :min="min"
       :max="max"
       :step="step"
       :style="getInputNumberStyle"
       @input="inputFn"
       @change="changeFn"
-      @blur="blur"
-      @focus="focus"
+      @focus="focusFn"
     >
     <LewFlex
       :style="getControlStyle"
@@ -184,7 +169,7 @@ defineExpose({ toFocus, validCheck })
       @mouseenter="isFocus = true"
       @mouseleave="isFocus = false"
     >
-      <LewCommonIcon
+      <CommonIcon
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-up"
@@ -192,7 +177,7 @@ defineExpose({ toFocus, validCheck })
         @mouseup="clearTimer"
         @mouseleave="clearTimer"
       />
-      <LewCommonIcon
+      <CommonIcon
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-down"

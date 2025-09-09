@@ -1,25 +1,13 @@
 <script setup lang="ts">
+import type { LewXAlignment, LewYAlignment } from 'lew-ui/types'
 import type { CSSProperties } from 'vue'
 import { any2px } from 'lew-ui/utils'
+import { computed } from 'vue'
 import { flexProps } from './props'
 
 const props = defineProps(flexProps)
 
-const styleObject = computed((): CSSProperties => {
-  const gap = any2px(props.gap)
-  const width = any2px(props.width)
-  return {
-    display: 'flex',
-    flexDirection: props.direction === 'x' ? 'row' : 'column',
-    flexWrap: props.wrap ? 'wrap' : 'nowrap',
-    justifyContent: getJustifyContent(),
-    alignItems: getAlignItems(),
-    gap: `${gap}`,
-    width,
-    boxSizing: 'border-box',
-  }
-})
-const alignmentMap = {
+const alignmentMap: Record<LewXAlignment | LewYAlignment, string> = {
   start: 'flex-start',
   left: 'flex-start',
   end: 'flex-end',
@@ -29,17 +17,38 @@ const alignmentMap = {
   bottom: 'flex-end',
 }
 
-function getJustifyContent() {
-  if (props.mode)
+function getJustifyContent(): string {
+  if (props.mode) {
     return `space-${props.mode}`
+  }
   const mainAxis = props.direction === 'x' ? props.x : props.y
   return alignmentMap[mainAxis] || 'center'
 }
 
-function getAlignItems() {
+function getAlignItems(): string {
   const crossAxis = props.direction === 'x' ? props.y : props.x
   return alignmentMap[crossAxis] || 'center'
 }
+
+// Computed
+
+const styleObject = computed(
+  (): CSSProperties => {
+    const gap = any2px(props.gap)
+    const width = props.width ? any2px(props.width) : undefined
+
+    return {
+      display: 'flex',
+      flexDirection: props.direction === 'x' ? 'row' : 'column',
+      flexWrap: props.wrap ? 'wrap' : 'nowrap',
+      justifyContent: getJustifyContent(),
+      alignItems: getAlignItems(),
+      gap: `${gap}`,
+      width,
+      boxSizing: 'border-box',
+    }
+  },
+)
 </script>
 
 <template>
@@ -51,5 +60,6 @@ function getAlignItems() {
 <style lang="scss" scoped>
 .lew-flex {
   width: 100%;
+  box-sizing: border-box;
 }
 </style>

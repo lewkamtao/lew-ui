@@ -1,64 +1,20 @@
 <script lang="ts" setup>
-import type { CheckboxOptions } from './props'
+import type { LewCheckboxOption } from 'lew-ui'
 import { LewCheckbox, LewFlex } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { checkboxGroupEmits } from './emits'
 import { checkboxGroupProps } from './props'
 
 const props = defineProps(checkboxGroupProps)
-const emit = defineEmits(['change'])
-const modelValue: Ref<string[] | number[] | undefined> = defineModel({
+const emit = defineEmits(checkboxGroupEmits)
+
+const modelValue: Ref<string[]> = defineModel({
   default: () => [],
   required: true,
 })
 
 const checkList = ref([] as boolean[])
-
-watch(
-  () => modelValue.value,
-  () => {
-    initCheckbox()
-  },
-  {
-    deep: true, // 开启深度监听
-  },
-)
-
-function change({
-  item,
-  checked,
-}: {
-  item: CheckboxOptions
-  checked: boolean
-}) {
-  const _value = modelValue.value || []
-  if (checked) {
-    _value.push(item.value as string & number)
-  }
-  else {
-    const index = _value.findIndex((e: any) => e === item.value)
-    if (index >= 0) {
-      _value.splice(index, 1)
-    }
-  }
-  emit('change', {
-    value: cloneDeep(_value),
-    item,
-  })
-  modelValue.value = cloneDeep(_value)
-}
-
-function initCheckbox() {
-  checkList.value = props.options.map((item: CheckboxOptions) => {
-    if (
-      modelValue.value
-      && modelValue.value.includes(item.value as string & number)
-    ) {
-      return true
-    }
-    return false
-  })
-}
 
 const getCheckboxGroupClassName = computed(() => {
   const { size, readonly, disabled } = props as any
@@ -68,6 +24,46 @@ const getCheckboxGroupClassName = computed(() => {
     disabled,
   })
 })
+
+function getItemDisabled(item: LewCheckboxOption) {
+  return item.disabled || props.disabled
+}
+
+function change({ item, checked }: { item: LewCheckboxOption, checked: boolean }) {
+  const _value = cloneDeep(modelValue.value) || []
+  if (checked) {
+    _value.push(item.value as string & number)
+  }
+  else {
+    const index = _value.findIndex((e: any) => e === item.value)
+    if (index >= 0) {
+      _value.splice(index, 1)
+    }
+  }
+  modelValue.value = _value
+  emit('change', _value, item)
+}
+
+function initCheckbox() {
+  if (!props.options)
+    return
+  checkList.value = props.options.map((item: LewCheckboxOption) => {
+    if (modelValue.value && modelValue.value.includes(item.value as string & number)) {
+      return true
+    }
+    return false
+  })
+}
+
+watch(
+  () => modelValue.value,
+  () => {
+    initCheckbox()
+  },
+  {
+    deep: true,
+  },
+)
 
 initCheckbox()
 </script>
@@ -90,7 +86,7 @@ initCheckbox()
       :round="round"
       :size="size"
       :label="item.label"
-      :disabled="item.disabled || disabled"
+      :disabled="getItemDisabled(item)"
       @change="change({ item, checked: $event })"
     />
   </LewFlex>
@@ -119,6 +115,7 @@ initCheckbox()
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;
 }
+
 .lew-checkbox-group-readonly {
   pointer-events: none;
 }

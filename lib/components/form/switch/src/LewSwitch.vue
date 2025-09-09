@@ -1,33 +1,35 @@
 <script setup lang="ts">
 import { object2class } from 'lew-ui/utils'
+import { switchEmits } from './emits'
 import { switchProps } from './props'
 
 const props = defineProps(switchProps)
-const emit = defineEmits(['click', 'change'])
+const emit = defineEmits(switchEmits)
 
 const _loading = ref(false)
 
 const modelValue: Ref<boolean | undefined> = defineModel()
-async function handleClick(e: any) {
+async function handleClick() {
   if (props.disabled || _loading.value || props.loading)
     return
-  emit('click', e)
   if (typeof props.request === 'function') {
     if (_loading.value) {
       return
     }
     _loading.value = true
-    const isSuccess = await props.request(!modelValue.value)
+    const isSuccess = await props.request()
     if (isSuccess) {
-      modelValue.value = !modelValue.value
-      _loading.value = false
+      const newValue = !modelValue.value
+      modelValue.value = newValue
+      emit('change', newValue)
     }
     _loading.value = false
   }
   else {
-    modelValue.value = !modelValue.value
+    const newValue = !modelValue.value
+    modelValue.value = newValue
+    emit('change', newValue)
   }
-  emit('change', modelValue.value)
 }
 
 const getSwitchClassName = computed(() => {
@@ -115,7 +117,7 @@ const getSwitchStyle = computed(() => {
   cursor: pointer;
   width: var(--lew-switch-width);
   height: var(--lew-switch-height);
-  background: var(--lew-form-bgcolor-2);
+  background: var(--lew-switch-bgcolor);
   border-radius: var(--lew-border-radius-small);
   transition: all var(--lew-form-transition-ease);
   box-shadow: var(--lew-form-box-shadow);
@@ -184,13 +186,11 @@ const getSwitchStyle = computed(() => {
 }
 
 .lew-switch:hover {
-  background: var(--lew-bgcolor-4);
+  background: var(--lew-switch-bgcolor-hover);
   outline: var(--lew-form-outline);
 }
 
 .lew-switch:active {
-  background: var(--lew-bgcolor-5);
-
   .lew-switch-dot {
     width: var(--lew-switch-dot-width-active);
   }

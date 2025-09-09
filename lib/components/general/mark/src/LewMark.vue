@@ -1,26 +1,30 @@
 <script lang="ts" setup>
+import type { CSSProperties } from 'vue'
 import { getColorType } from 'lew-ui/utils'
+import { computed } from 'vue'
 import { markProps } from './props'
 
 const props = defineProps(markProps)
 
-const emit = defineEmits(['click'])
+// Computed
+const markStyle = computed(
+  (): CSSProperties => {
+    const { color, round, bold, cursor } = props
+    const resolvedColor = getColorType(color) || 'blue'
 
-const getStyle = computed(() => {
-  const { color, round, bold, cursor } = props
-  const _color = getColorType(color)
-  return {
-    borderRadius: round ? '20px' : 'var(--lew-border-radius-mini)',
-    fontWeight: bold || '',
-    color: `var(--lew-color-${_color}-dark)`,
-    backgroundColor: `var(--lew-color-${_color}-light)`,
-    cursor: cursor || '',
-  }
-})
+    return {
+      borderRadius: round ? '20px' : 'var(--lew-border-radius-mini)',
+      fontWeight: bold || 400,
+      color: `var(--lew-color-${resolvedColor}-dark)`,
+      backgroundColor: `var(--lew-color-${resolvedColor}-light)`,
+      cursor: cursor || 'default',
+    }
+  },
+)
 </script>
 
 <template>
-  <span class="lew-mark" :style="getStyle" @click="emit('click')">
+  <span class="lew-mark" :style="markStyle">
     <slot />
   </span>
 </template>

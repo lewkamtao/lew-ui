@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import {
-  LewCheckbox,
-  LewCollapseTransition,
-  LewMessage,
-} from 'lew-ui'
-import {
-  findAllChildrenKeys,
-  findNodeByKey,
-  insertChildByKey,
-} from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
-import RenderComponent from 'lew-ui/utils/RenderComponent.vue'
+import { LewCheckbox, LewCollapseTransition, LewMessage } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { findAllChildrenKeys, findNodeByKey, insertChildByKey } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { treeItemProps } from './props'
 import transformTree, { formatTree } from './transformTree'
 
-const props = defineProps(treeItemProps)
+import { treeItemEmits } from './treeItemEmits'
 
-const emit = defineEmits(['change', 'expand'])
+const props = defineProps(treeItemProps)
+const emit = defineEmits(treeItemEmits)
 
 const {
   modelValue,
@@ -66,11 +59,7 @@ function select() {
     else {
       if (index > -1) {
         newModelValue.splice(index, 1)
-        if (
-          props.extend
-          && props.extend.children
-          && props.extend.children.length > 0
-        ) {
+        if (props.extend && props.extend.children && props.extend.children.length > 0) {
           const childKeys = findAllChildrenKeys(props.extend)
           newModelValue = newModelValue.filter(
             (key: string | number) => !childKeys.includes(key),
@@ -91,11 +80,7 @@ function select() {
       }
       else {
         newModelValue.push(props.__key)
-        if (
-          props.extend
-          && props.extend.children
-          && props.extend.children.length > 0
-        ) {
+        if (props.extend && props.extend.children && props.extend.children.length > 0) {
           const childKeys = findAllChildrenKeys(props.extend)
           childKeys.forEach((key: string | number) => {
             if (!newModelValue.includes(key)) {
@@ -104,19 +89,13 @@ function select() {
           })
         }
       }
-      if (
-        props.extend
-        && props.extend.parentKey
-        && props.extend.parentKeyPaths
-      ) {
+      if (props.extend && props.extend.parentKey && props.extend.parentKeyPaths) {
         const parentKey = props.extend.parentKey
         const parentNode = findNodeByKey(parentKey, _dataSource.value)
         const siblingKeys = (parentNode?.children || []).map((e: any) => e.key)
         if (
           siblingKeys.length > 0
-          && siblingKeys.every((key: string | number) =>
-            newModelValue.includes(key),
-          )
+          && siblingKeys.every((key: string | number) => newModelValue.includes(key))
         ) {
           if (!newModelValue.includes(parentKey)) {
             newModelValue.push(parentKey)
@@ -165,11 +144,7 @@ async function expand() {
       })) as any
       if (status === 'success') {
         loaded.value = true
-        insertChildByKey(
-          _dataSource.value,
-          props.__key as string | number,
-          result,
-        )
+        insertChildByKey(_dataSource.value, props.__key as string | number, result)
 
         _dataSource.value = formatTree({
           dataSource: _dataSource.value,
@@ -180,10 +155,7 @@ async function expand() {
 
         cacheDataSource.value = cloneDeep(_dataSource.value)
 
-        expandKeys.value = [
-          ...(expandKeys.value as (string | number)[]),
-          props.__key,
-        ]
+        expandKeys.value = [...(expandKeys.value as (string | number)[]), props.__key]
       }
       else {
         loaded.value = false
@@ -231,14 +203,14 @@ const isNodePartiallySelected = computed(() => {
     }"
   >
     <div class="lew-tree-chevron-right" @click.stop="expand">
-      <LewCommonIcon
+      <CommonIcon
         v-if="loading"
         :size="14"
         loading
         class="lew-cascader-loading-icon"
         type="loader"
       />
-      <LewCommonIcon
+      <CommonIcon
         v-else
         class="lew-tree-chevron-right-icon"
         :size="14"
@@ -262,9 +234,7 @@ const isNodePartiallySelected = computed(() => {
         }"
       />
       <template v-else>
-        <RenderComponent
-          :render-fn="icon"
-        />
+        <RenderComponent :render-fn="icon" />
         <RenderComponent
           :render-fn="label"
           type="text-trim"
@@ -278,10 +248,7 @@ const isNodePartiallySelected = computed(() => {
   </div>
   <LewCollapseTransition v-if="!isLeaf">
     <div
-      v-if="
-        ((expandKeys || []).length > 0 && expandKeys.includes(__key))
-          || expandAll
-      "
+      v-if="((expandKeys || []).length > 0 && expandKeys.includes(__key)) || expandAll"
       class="lew-tree-item-main"
     >
       <slot />

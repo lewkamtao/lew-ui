@@ -11,6 +11,7 @@ const value = ref(['浙江大学', '中山大学'])
 <template>
   <lew-select-multiple
     v-model="value"
+    width="300px"
     searchable
     :default-value="value"
     :options="schoolsOptions"

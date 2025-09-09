@@ -39,7 +39,9 @@ function loadMethod(item?: any) {
     // item 不存在的时候 是第一层加载
     axios
       .get({
-        url: `/common/region/${levelMap[_typeKey] || 'province'}/${item ? item.value : 0}`,
+        url: `/common/region/${levelMap[_typeKey] || 'province'}/${
+          item ? item.value : 0
+        }`,
       })
       .then((res: any) => {
         const { data, success } = res
@@ -66,6 +68,7 @@ const v = ref<string>('')
   <lew-flex direction="y" gap="20px" style="width: 300px">
     <lew-tree-select
       v-model="v"
+      width="300px"
       key-field="value"
       label-field="label"
       searchable

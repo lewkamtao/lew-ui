@@ -1,6 +1,7 @@
 export default {
   title: 'Methods',
   columnsKey: 'methods',
+  orderNum: 999,
   data: [
     {
       name: 'getForm',

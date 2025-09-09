@@ -1,16 +1,19 @@
 <script lang="ts" setup>
 import type { RetItemType } from '../../date-picker/src/date'
+
 import dayjs from 'dayjs'
 import { LewButton, LewFlex, locale } from 'lew-ui'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { cloneDeep } from 'lodash-es'
 import { getMonthDate } from '../../date-picker/src/date'
+import { dateRangeEmits } from './emits'
 import { dateRangeProps } from './props'
+
 // Props
 const props = defineProps(dateRangeProps)
 
 // Emits
-const emit = defineEmits(['change'])
+const emit = defineEmits(dateRangeEmits)
 
 // Model
 const modelValue = defineModel<
@@ -148,10 +151,7 @@ function nextMonth1() {
   if (dateState.year1 > dateState.year2) {
     dateState.year2 = dateState.year1
   }
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month1 >= dateState.month2
-  ) {
+  if (dateState.year1 === dateState.year2 && dateState.month1 >= dateState.month2) {
     if (dateState.month1 === 12) {
       dateState.month2 = 1
       dateState.year2 += 1
@@ -175,10 +175,7 @@ function prveMonth2() {
   if (dateState.year2 < dateState.year1) {
     dateState.year1 = dateState.year2
   }
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month2 <= dateState.month1
-  ) {
+  if (dateState.year1 === dateState.year2 && dateState.month2 <= dateState.month1) {
     if (dateState.month2 === 1) {
       dateState.month1 = 12
       dateState.year1 -= 1
@@ -212,10 +209,7 @@ function nextYear1() {
   if (dateState.year1 > dateState.year2) {
     dateState.year2 = dateState.year1
   }
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month1 >= dateState.month2
-  ) {
+  if (dateState.year1 === dateState.year2 && dateState.month1 >= dateState.month2) {
     if (dateState.month1 === 12) {
       dateState.month2 = 1
       dateState.year2 += 1
@@ -234,10 +228,7 @@ function prveYear2() {
   if (dateState.year2 < dateState.year1) {
     dateState.year1 = dateState.year2
   }
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month2 <= dateState.month1
-  ) {
+  if (dateState.year1 === dateState.year2 && dateState.month2 <= dateState.month1) {
     if (dateState.month2 === 1) {
       dateState.month1 = 12
       dateState.year1 -= 1
@@ -311,19 +302,12 @@ function init() {
   // 年
   dateState.year1 = _value[startKey] ? dayjs(_value[startKey]).year() : curYear
   // 月
-  dateState.month1 = _value[startKey]
-    ? dayjs(_value[startKey]).month() + 1
-    : curMonth
+  dateState.month1 = _value[startKey] ? dayjs(_value[startKey]).month() + 1 : curMonth
   // 年
   dateState.year2 = _value[endKey] ? dayjs(_value[endKey]).year() : curYear
   // 月
-  dateState.month2 = _value[endKey]
-    ? dayjs(_value[endKey]).month() + 1
-    : curMonth + 1
-  if (
-    dateState.year1 === dateState.year2
-    && dateState.month1 === dateState.month2
-  ) {
+  dateState.month2 = _value[endKey] ? dayjs(_value[endKey]).month() + 1 : curMonth + 1
+  if (dateState.year1 === dateState.year2 && dateState.month1 === dateState.month2) {
     dateState.month2 += 1
   }
   if (dateState.month2 > 12) {
@@ -365,7 +349,7 @@ const headDate = computed(() => {
             single-icon
             @click="prveYear1"
           >
-            <LewCommonIcon type="chevrons-left" />
+            <CommonIcon type="chevrons-left" />
           </LewButton>
           <LewButton
             type="light"
@@ -374,14 +358,12 @@ const headDate = computed(() => {
             single-icon
             @click="prveMonth1"
           >
-            <LewCommonIcon type="chevron-left" />
+            <CommonIcon type="chevron-left" />
           </LewButton>
         </div>
         <!-- 日期 -->
         <div class="cur-date">
-          {{
-            dayjs(`${dateState.year1}-${dateState.month1}`).format('YYYY-MM')
-          }}
+          {{ dayjs(`${dateState.year1}-${dateState.month1}`).format("YYYY-MM") }}
         </div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
@@ -392,7 +374,7 @@ const headDate = computed(() => {
             single-icon
             @click="nextMonth1"
           >
-            <LewCommonIcon type="chevron-right" />
+            <CommonIcon type="chevron-right" />
           </LewButton>
           <LewButton
             type="light"
@@ -401,17 +383,13 @@ const headDate = computed(() => {
             single-icon
             @click="nextYear1"
           >
-            <LewCommonIcon type="chevrons-right" />
+            <CommonIcon type="chevrons-right" />
           </LewButton>
         </div>
       </LewFlex>
       <div class="lew-date-box">
         <!-- 表头 周 -->
-        <div
-          v-for="(item, index) in headDate"
-          :key="`h${index}`"
-          class="lew-date-item"
-        >
+        <div v-for="(item, index) in headDate" :key="`h${index}`" class="lew-date-item">
           <div class="lew-date-num">
             {{ item }}
           </div>
@@ -426,14 +404,8 @@ const headDate = computed(() => {
           @click="setValue(item)"
           @mouseenter="hoverValueFn(item)"
         >
-          <div
-            class="lew-date-label"
-            :class="object2class('rangeSelected', item)"
-          >
-            <div
-              v-if="object2class('today', item)"
-              class="lew-date-item-today"
-            />
+          <div class="lew-date-label" :class="object2class('rangeSelected', item)">
+            <div v-if="object2class('today', item)" class="lew-date-item-today" />
             <div class="lew-date-value" :class="object2class('selected', item)">
               {{ item.showDate }}
             </div>
@@ -451,7 +423,7 @@ const headDate = computed(() => {
             single-icon
             @click="prveYear2"
           >
-            <LewCommonIcon type="chevrons-left" />
+            <CommonIcon type="chevrons-left" />
           </LewButton>
           <LewButton
             type="light"
@@ -460,13 +432,11 @@ const headDate = computed(() => {
             single-icon
             @click="prveMonth2"
           >
-            <LewCommonIcon type="chevron-left" />
+            <CommonIcon type="chevron-left" />
           </LewButton>
         </div>
         <div class="cur-date">
-          {{
-            dayjs(`${dateState.year2}-${dateState.month2}`).format('YYYY-MM')
-          }}
+          {{ dayjs(`${dateState.year2}-${dateState.month2}`).format("YYYY-MM") }}
         </div>
         <div class="lew-date-control-right">
           <LewButton
@@ -476,7 +446,7 @@ const headDate = computed(() => {
             single-icon
             @click="nextMonth2"
           >
-            <LewCommonIcon type="chevron-right" />
+            <CommonIcon type="chevron-right" />
           </LewButton>
           <!-- 下一年 -->
           <LewButton
@@ -486,16 +456,12 @@ const headDate = computed(() => {
             single-icon
             @click="nextYear2"
           >
-            <LewCommonIcon type="chevrons-right" />
+            <CommonIcon type="chevrons-right" />
           </LewButton>
         </div>
       </LewFlex>
       <div class="lew-date-box">
-        <div
-          v-for="(item, index) in headDate"
-          :key="`h${index}`"
-          class="lew-date-item"
-        >
+        <div v-for="(item, index) in headDate" :key="`h${index}`" class="lew-date-item">
           <div class="lew-date-num">
             {{ item }}
           </div>
@@ -508,14 +474,8 @@ const headDate = computed(() => {
           @click="setValue(item)"
           @mouseenter="hoverValueFn(item)"
         >
-          <div
-            class="lew-date-label"
-            :class="object2class('rangeSelected', item)"
-          >
-            <div
-              v-if="object2class('today', item)"
-              class="lew-date-item-today"
-            />
+          <div class="lew-date-label" :class="object2class('rangeSelected', item)">
+            <div v-if="object2class('today', item)" class="lew-date-item-today" />
             <div class="lew-date-value" :class="object2class('selected', item)">
               {{ item.showDate }}
             </div>
@@ -541,17 +501,14 @@ const headDate = computed(() => {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 10px 5px;
     box-sizing: border-box;
-    height: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    padding: 5px;
 
     .cur-date {
       display: flex;
       align-items: center;
-      height: 100%;
-      font-size: 15px;
-      font-weight: bold;
+      font-size: 14px;
       color: var(--lew-text-color-0);
       white-space: nowrap;
     }
@@ -605,7 +562,7 @@ const headDate = computed(() => {
           width: 24px;
           height: 24px;
           line-height: 24px;
-          color: var(--lew-text-color-7);
+          color: var(--lew-text-color-6);
           border-radius: 50%;
           transition: all 0.1s ease;
           border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -613,7 +570,7 @@ const headDate = computed(() => {
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
 
@@ -661,7 +618,7 @@ const headDate = computed(() => {
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
         }
       }
 
@@ -685,7 +642,7 @@ const headDate = computed(() => {
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
         }
       }
     }
@@ -695,11 +652,12 @@ const headDate = computed(() => {
         .lew-date-value {
           background-color: var(--lew-color-primary-light);
           color: var(--lew-color-primary-dark);
+          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
         }
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
-          color: var(--lew-color-white-text);
+          color: var(--lew-color-white);
         }
       }
     }

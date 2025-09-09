@@ -1,21 +1,23 @@
 <script setup lang="ts">
+import type { LewContextMenusOption } from 'lew-ui'
 import { useMagicKeys } from '@vueuse/core'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { inputEmits } from './emits'
 import { inputProps } from './props'
 
 const props = defineProps(inputProps)
-const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
+const emit = defineEmits(inputEmits)
 const { enter } = useMagicKeys()
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
-const modelValue = defineModel({ required: true })
-const prefixValue = defineModel('prefixValue')
-const suffixValue: any = defineModel('suffixValue')
+const modelValue = defineModel<string | undefined>({ required: true })
+const prefixValue = defineModel<string | undefined>('prefixValue')
+const suffixValue = defineModel<string | undefined>('suffixValue')
 
 const lewInputRef = ref()
 const lewInputCountRef = ref()
@@ -41,6 +43,7 @@ watch(
 function clear() {
   modelValue.value = undefined
   emit('clear')
+  emit('change', undefined)
 }
 
 const toFocus = () => lewInputRef.value?.focus()
@@ -54,13 +57,23 @@ function focus(e: FocusEvent) {
   if (props.selectByFocus) {
     (e.currentTarget as HTMLInputElement)?.select()
   }
-  emit('focus')
+  emit('focus', e)
   isFocus.value = true
 }
 
-function blur() {
-  emit('blur', modelValue.value)
+function blur(e: FocusEvent) {
+  emit('blur', e)
   isFocus.value = false
+}
+
+function handleInput(event: Event) {
+  const target = event.target as HTMLInputElement
+  emit('input', target.value)
+}
+
+function handleChange(event: Event) {
+  const target = event.target as HTMLInputElement
+  emit('change', target.value)
 }
 
 const getIconSize = computed(
@@ -93,11 +106,11 @@ const getInputClassNames = computed(() => {
   })
 })
 
-function prefixesChange(item: { value: string }) {
+function prefixesChange(item: LewContextMenusOption) {
   prefixValue.value = item.value
 }
 
-function suffixChange(item: { value: string }) {
+function suffixChange(item: LewContextMenusOption) {
   suffixValue.value = item.value
 }
 
@@ -189,7 +202,7 @@ defineExpose({ toFocus, toBlur })
         {{ prefixValue }}
       </div>
       <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-        <LewCommonIcon :size="getIconSize" :type="prefixValue as string" />
+        <CommonIcon :size="getIconSize" :type="prefixValue as string" />
       </div>
       <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
         <LewDropdown
@@ -207,11 +220,14 @@ defineExpose({ toFocus, toBlur })
             :class="{
               'lew-input-prefixes-dropdown-open': state.prefixesDropdown === 'show',
             }"
+            :style="{
+              fontSize: `var(--lew-form-font-size-${size})`,
+            }"
           >
             <div>
               {{ getPrefixesLabel }}
             </div>
-            <LewCommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <CommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
           </LewFlex>
         </LewDropdown>
       </div>
@@ -221,7 +237,7 @@ defineExpose({ toFocus, toBlur })
       class="lew-input-copy-btn"
       @click="copy"
     >
-      <LewCommonIcon
+      <CommonIcon
         :size="getIconSize"
         :type="isCopy ? 'check' : 'copy'"
         :class="{ 'lew-input-copy-btn-check': isCopy }"
@@ -244,8 +260,8 @@ defineExpose({ toFocus, toBlur })
         :type="getType"
         :readonly="readonly"
         :maxlength="maxLength"
-        @input="emit('input', modelValue)"
-        @change="emit('change', modelValue)"
+        @input="handleInput"
+        @change="handleChange"
         @blur="blur"
         @focus="focus"
       >
@@ -271,11 +287,11 @@ defineExpose({ toFocus, toBlur })
           @mousedown.prevent=""
           @click="showPasswordFn"
         >
-          <LewCommonIcon v-show="_type === 'text'" :size="getIconSize" type="eye" />
-          <LewCommonIcon v-show="_type === 'password'" :size="getIconSize" type="eye_off" />
+          <CommonIcon v-show="_type === 'text'" :size="getIconSize" type="eye" />
+          <CommonIcon v-show="_type === 'password'" :size="getIconSize" type="eye_off" />
         </div>
         <transition name="lew-form-icon-ani">
-          <LewCommonIcon
+          <CommonIcon
             v-if="clearable && modelValue && !readonly"
             class="lew-form-icon-close"
             :class="{
@@ -301,7 +317,7 @@ defineExpose({ toFocus, toBlur })
         {{ suffixValue }}
       </div>
       <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-        <LewCommonIcon :size="getIconSize" :type="suffixValue" />
+        <CommonIcon :size="getIconSize" :type="suffixValue" />
       </div>
       <div v-if="suffix === 'select'" class="lew-input-suffix-select">
         <LewDropdown
@@ -319,9 +335,12 @@ defineExpose({ toFocus, toBlur })
             :class="{
               'lew-input-suffix-dropdown-open': state.suffixDropdown === 'show',
             }"
+            :style="{
+              fontSize: `var(--lew-form-font-size-${size})`,
+            }"
           >
             <div>{{ getSuffixLabel }}</div>
-            <LewCommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <CommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
           </LewFlex>
         </LewDropdown>
       </div>
@@ -540,6 +559,7 @@ defineExpose({ toFocus, toBlur })
 .lew-input-view-size-small {
   height: var(--lew-form-item-height-small);
   line-height: var(--lew-form-input-line-height-small);
+
   .lew-input-box {
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
@@ -592,6 +612,7 @@ defineExpose({ toFocus, toBlur })
 .lew-input-view-size-medium {
   height: var(--lew-form-item-height-medium);
   line-height: var(--lew-form-input-line-height-medium);
+
   .lew-input-box {
     padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
@@ -644,6 +665,7 @@ defineExpose({ toFocus, toBlur })
 .lew-input-view-size-large {
   height: var(--lew-form-item-height-large);
   line-height: var(--lew-form-input-line-height-large);
+
   .lew-input-box {
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);

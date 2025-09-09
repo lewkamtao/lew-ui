@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
 import { getColorType } from 'lew-ui/utils'
+import { computed } from 'vue'
 import { badgeProps } from './props'
 
 const props = defineProps(badgeProps)
+
+// Computed properties
 const getStyle = computed<CSSProperties>(() => {
   const { color, offset, text } = props
   const _color = getColorType(color)
@@ -63,6 +66,7 @@ const displayValue = computed(() => {
 <style lang="scss">
 .lew-badge {
   position: relative;
+
   .lew-badge-dot {
     position: absolute;
     left: 100%;
@@ -73,6 +77,7 @@ const displayValue = computed(() => {
     cursor: normal;
     border-radius: 50%;
     box-sizing: border-box;
+    border-radius: 50%;
 
     &.is-processing {
       &::after {
@@ -108,17 +113,10 @@ const displayValue = computed(() => {
     z-index: 1;
     font-weight: normal;
     box-sizing: border-box;
-    color: var(--lew-color-white-text);
+    color: var(--lew-color-white);
     background-color: var(--lew-color-error-dark);
+    border-radius: 25px;
   }
-}
-
-.lew-badge-value {
-  border-radius: 25px;
-}
-
-.lew-badge-dot {
-  border-radius: 50%;
 }
 
 @keyframes badge-processing {
@@ -126,6 +124,7 @@ const displayValue = computed(() => {
     transform: scale(1);
     opacity: 0.5;
   }
+
   100% {
     transform: scale(2.4);
     opacity: 0;

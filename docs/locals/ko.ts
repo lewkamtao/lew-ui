@@ -26,7 +26,7 @@ export default {
   },
   base: {
     base: '기본',
-    navigator: '네비게이션',
+    navigation: '네비게이션',
     form: '폼',
     data: '데이터 컴포넌트',
     feedback: '피드백',
@@ -155,7 +155,7 @@ export default {
         type: '스타일 유형',
         size: '크기',
         color: '색상 테마',
-        closable: '닫기 가능 여부',
+        closeable: '닫기 가능 여부',
         disabled: '비활성화 여부',
         round: '둥근 모서리 여부',
         oversize: '더 여유로운 크기',
@@ -410,7 +410,7 @@ export default {
         placement: '메뉴 팝업 위치',
         checkable: '선택 가능 여부',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: '메뉴 표시 이벤트 콜백',
         hide: '메뉴 숨김 이벤트 콜백',
@@ -461,7 +461,7 @@ export default {
         options: '우클릭 메뉴 구성',
         disabled: '우클릭 메뉴 비활성화 여부',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     actionBox: {
       name: '액션 박스',

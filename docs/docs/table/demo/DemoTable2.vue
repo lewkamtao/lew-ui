@@ -8,7 +8,7 @@ const dataSource: any = ref([
     brand: 'NVIDIA',
     memory: '24GB GDDR6X',
     performance: 10,
-    price: 9999,
+    price: 1599,
     features: ['DLSS 3', 'Ray Tracing', '8K Gaming', 'PCIe 4.0', 'HDMI 2.1'],
     releaseDate: '2022-10-12',
     powerConsumption: '450W',
@@ -24,14 +24,8 @@ const dataSource: any = ref([
     brand: 'AMD',
     memory: '24GB GDDR6',
     performance: 9,
-    price: 8999,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '4K Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1',
-    ],
+    price: 999,
+    features: ['FSR 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
     releaseDate: '2022-12-13',
     powerConsumption: '355W',
     architecture: 'RDNA 3',
@@ -46,7 +40,7 @@ const dataSource: any = ref([
     brand: 'NVIDIA',
     memory: '16GB GDDR6X',
     performance: 8,
-    price: 7999,
+    price: 1199,
     features: ['DLSS 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'HDMI 2.1'],
     releaseDate: '2022-11-16',
     powerConsumption: '320W',
@@ -62,14 +56,8 @@ const dataSource: any = ref([
     brand: 'AMD',
     memory: '20GB GDDR6',
     performance: 7.5,
-    price: 7499,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '4K Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1',
-    ],
+    price: 899,
+    features: ['FSR 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
     releaseDate: '2022-12-13',
     powerConsumption: '315W',
     architecture: 'RDNA 3',
@@ -84,7 +72,7 @@ const dataSource: any = ref([
     brand: 'NVIDIA',
     memory: '12GB GDDR6X',
     performance: 7,
-    price: 5999,
+    price: 799,
     features: ['DLSS 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'HDMI 2.1'],
     releaseDate: '2023-01-05',
     powerConsumption: '285W',
@@ -100,7 +88,7 @@ const dataSource: any = ref([
     brand: 'NVIDIA',
     memory: '12GB GDDR6X',
     performance: 6.5,
-    price: 4999,
+    price: 599,
     features: ['DLSS 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'HDMI 2.1'],
     releaseDate: '2023-04-13',
     powerConsumption: '200W',
@@ -116,14 +104,8 @@ const dataSource: any = ref([
     brand: 'AMD',
     memory: '16GB GDDR6',
     performance: 6,
-    price: 4499,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '1440p Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1',
-    ],
+    price: 499,
+    features: ['FSR 3', 'Ray Tracing', '1440p Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
     releaseDate: '2023-09-06',
     powerConsumption: '263W',
     architecture: 'RDNA 3',
@@ -138,14 +120,8 @@ const dataSource: any = ref([
     brand: 'AMD',
     memory: '12GB GDDR6',
     performance: 5.5,
-    price: 3999,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '1440p Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1',
-    ],
+    price: 449,
+    features: ['FSR 3', 'Ray Tracing', '1440p Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
     releaseDate: '2023-09-06',
     powerConsumption: '245W',
     architecture: 'RDNA 3',
@@ -160,7 +136,7 @@ const dataSource: any = ref([
     brand: 'NVIDIA',
     memory: '8GB GDDR6',
     performance: 5,
-    price: 3499,
+    price: 399,
     features: ['DLSS 3', 'Ray Tracing', '1440p Gaming', 'PCIe 4.0', 'HDMI 2.1'],
     releaseDate: '2023-05-24',
     powerConsumption: '160W',
@@ -176,7 +152,7 @@ const dataSource: any = ref([
     brand: 'NVIDIA',
     memory: '8GB GDDR6',
     performance: 4.5,
-    price: 2999,
+    price: 299,
     features: ['DLSS 3', 'Ray Tracing', '1080p Gaming', 'PCIe 4.0', 'HDMI 2.1'],
     releaseDate: '2023-06-29',
     powerConsumption: '115W',
@@ -275,6 +251,9 @@ const columns = [
     fixed: 'right',
     field: 'price',
     x: 'center',
+    customRender: ({ text }: any) => {
+      return h('div', {}, `$${text}`)
+    },
   },
 ]
 
@@ -327,7 +306,7 @@ function update() {
         {{ formatPerformance(row.performance) }}
       </template>
       <template #features="{ row }">
-        <lew-flex :gap="5" x="start" wrap>
+        <lew-flex gap="5px" x="start" wrap>
           <lew-tag
             v-for="(item, index) in row.features"
             :key="index"
@@ -338,9 +317,6 @@ function update() {
             {{ item }}
           </lew-tag>
         </lew-flex>
-      </template>
-      <template #price="{ row }">
-        ¥{{ row.price }}
       </template>
       <template #tdp="{ row }">
         {{ row.tdp }}W

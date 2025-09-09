@@ -7,6 +7,7 @@ const v = ref<string>('')
 <template>
   <lew-tree-select
     v-model="v"
+    width="300px"
     key-field="value"
     label-field="label"
     readonly

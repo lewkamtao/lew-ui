@@ -26,12 +26,13 @@ export default {
   },
   base: {
     base: '基础',
-    navigator: '导航',
+    navigation: '导航',
     form: '表单',
     data: '数据组件',
     feedback: '反馈',
     close: '关闭',
     showCode: '显示源码',
+    copySuccess: '复制成功！',
   },
   components: {
     image: {
@@ -75,7 +76,7 @@ export default {
       demo4: {
         title: '形状',
         description:
-          '通过 shape 控制头像的形状, 可选值为 `circle` `square` `sharp`。',
+          '通过 shape 控制头像的形状, 可选值为 ```circle``` ```square``` ```sharp```。',
       },
       props: {
         size: '尺寸',
@@ -152,7 +153,7 @@ export default {
         type: '样式类型',
         size: '尺寸',
         color: '颜色主题',
-        closable: '是否可关闭',
+        closeable: '是否可关闭',
         disabled: '是否禁用',
         round: '是否圆角',
         oversize: '更宽松的尺寸',
@@ -399,7 +400,7 @@ export default {
         placement: '菜单弹出位置',
         checkable: '是否可选择',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
       'events': {
         show: '菜单显示事件回调',
         hide: '菜单隐藏事件回调',
@@ -450,7 +451,7 @@ export default {
         options: '右键菜单配置',
         disabled: '是否禁用右键菜单',
       },
-      'options(ContextMenus)': contextMenu,
+      'options(LewContextMenusOption[])': contextMenu,
     },
     actionBox: {
       name: '操作按钮 ActionBox',
@@ -883,6 +884,9 @@ export default {
       demo5: {
         title: '圆角的',
       },
+      demo6: {
+        title: '禁用选项',
+      },
       model: {
         modelValue: '绑定值',
       },
@@ -933,6 +937,11 @@ export default {
       },
       demo10: {
         title: '启用搜索缓存',
+      },
+      demo11: {
+        title: '自适应宽度',
+        description:
+          '使用 ```autoWidth``` 属性，自动计算下拉框的宽度，```popoverWidth``` 属性设置弹窗宽度',
       },
       model: {
         modelValue: '绑定值',
@@ -1808,6 +1817,12 @@ export default {
       demo4: {
         title: 'ESC 关闭',
       },
+      demo5: {
+        title: '隐藏图标',
+      },
+      demo6: {
+        title: '自定义图标',
+      },
       props: {
         type: '类型',
         width: '宽度',
@@ -1866,6 +1881,15 @@ export default {
       demo2: {
         title: '触发方式',
       },
+      demo3: {
+        title: '隐藏图标',
+      },
+      demo4: {
+        title: '自定义图标',
+      },
+      demo5: {
+        title: '自定义内容',
+      },
       props: {
         type: '类型',
         width: '宽度',
@@ -1904,6 +1928,7 @@ export default {
         loading: '加载状态',
         hideOnClick: '点击气泡区域外是否自动关闭',
         offset: '偏移量',
+        triggerWidth: '弹窗宽度',
         popoverBodyClassName: '气泡内容类名',
         triggerTarget: '触发目标',
       },
@@ -1928,7 +1953,7 @@ export default {
         title: '支持HTML',
       },
       props: {
-        tips: '提示内容',
+        content: '提示内容',
         placement: '位置',
         trigger: '触发方式',
         allowHTML: '是否支持HTML',

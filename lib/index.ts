@@ -1,4 +1,5 @@
 import type { App } from 'vue'
+
 // 全局 => 定义 install 方法
 import * as components from './components'
 import * as directives from './directives'
@@ -6,6 +7,7 @@ import * as methods from './methods'
 // tippy 样式
 import 'tippy.js/dist/tippy.css' // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css'
+
 import 'tippy.js/animations/scale-subtle.css'
 // 引入样式
 import './styles/index.scss'
@@ -13,10 +15,8 @@ import './styles/index.scss'
 export * from './components'
 export * from './directives'
 export * from './locals'
-
 export * from './methods'
 export * from './types'
-export * from './utils'
 
 function install(Vue: App): void {
   Object.keys(components).forEach((key) => {

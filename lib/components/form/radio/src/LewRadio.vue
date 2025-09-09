@@ -1,11 +1,12 @@
 <script lang="ts" setup>
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
-import LewCommonIcon from 'lew-ui/utils/LewCommonIcon.vue'
+import { radioEmits } from './emits'
 import { radioProps } from './props'
 
 const props = defineProps(radioProps)
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(radioEmits)
 
 function setChecked() {
   emit('change')
@@ -43,7 +44,7 @@ const getRadioClassName = computed(() => {
 <template>
   <div class="lew-radio" :class="getRadioClassName" @click.stop="setChecked">
     <div v-if="iconable || (!iconable && !block)" class="lew-icon-radio-box">
-      <LewCommonIcon
+      <CommonIcon
         :stroke-width="4"
         class="lew-icon-radio"
         type="check"
@@ -75,8 +76,9 @@ const getRadioClassName = computed(() => {
     box-sizing: border-box;
     border-radius: 6px;
     transition: all var(--lew-form-transition-bezier);
-    background-color: var(--lew-bgcolor-1);
+    background-color: var(--lew-radio-bgcolor);
     overflow: hidden;
+    box-shadow: var(--lew-form-box-shadow);
 
     .lew-icon-radio {
       position: absolute;
@@ -102,7 +104,7 @@ const getRadioClassName = computed(() => {
   .lew-icon-radio-box {
     width: 16px;
     height: 16px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 }
 
@@ -114,7 +116,7 @@ const getRadioClassName = computed(() => {
   .lew-icon-radio-box {
     width: 18px;
     height: 18px;
-    border-radius: 5px;
+    border-radius: 7px;
   }
 }
 
@@ -126,7 +128,7 @@ const getRadioClassName = computed(() => {
   .lew-icon-radio-box {
     width: 20px;
     height: 20px;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 }
 
@@ -134,10 +136,12 @@ const getRadioClassName = computed(() => {
   height: var(--lew-form-item-height-small);
   padding: 3px 8px 3px 7px;
 }
+
 .lew-radio-size-medium.lew-radio-block {
   height: var(--lew-form-item-height-medium);
   padding: 3px 10px 3px 8px;
 }
+
 .lew-radio-size-large.lew-radio-block {
   height: var(--lew-form-item-height-large);
   padding: 3px 12px 3px 9px;
@@ -145,6 +149,7 @@ const getRadioClassName = computed(() => {
 
 .lew-radio-unicon.lew-radio-block {
   padding: 4px 12px;
+
   .lew-radio-label {
     margin-left: 0px;
   }
@@ -159,7 +164,7 @@ const getRadioClassName = computed(() => {
 .lew-radio:hover {
   .lew-icon-radio-box {
     border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
-    background: var(--lew-form-bgcolor);
+    background: var(--lew-radio-bgcolor-hover);
   }
 }
 
@@ -168,11 +173,15 @@ const getRadioClassName = computed(() => {
   border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-form-box-shadow);
+
   .lew-icon-radio-box {
+    box-shadow: none;
+
     .lew-icon-radio {
       padding: 1px;
     }
   }
+
   .lew-radio-label {
     margin-left: 4px;
   }
@@ -199,6 +208,7 @@ const getRadioClassName = computed(() => {
 
 .lew-radio-block:hover {
   background: var(--lew-form-bgcolor-hover);
+
   .lew-icon-radio-box {
     border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
   }

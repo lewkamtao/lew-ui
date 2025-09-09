@@ -24,8 +24,7 @@ onMounted(() => {
   <div class="wrapper">
     <TheHeader
       :style="{
-        background:
-          route.name === 'R-LewHome' ? 'transparent' : 'var(--lew-bgcolor-0)',
+        background: route.name === 'R-LewHome' ? 'transparent' : 'var(--lew-bgcolor-0)',
       }"
     />
     <router-view />
@@ -36,7 +35,6 @@ onMounted(() => {
 .wrapper {
   height: 100%;
   margin: 0 auto;
-  max-width: 1440px;
   border-left: var(--lew-border-2);
   border-right: var(--lew-border-2);
   background-color: var(--lew-bgcolor-0);

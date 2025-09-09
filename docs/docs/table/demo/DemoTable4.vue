@@ -67,9 +67,9 @@ const columns = [
   },
   {
     title: 'Company Name',
-    width: 100,
+    width: 130,
     field: 'name',
-    x: 'center',
+    x: 'left',
     fixed: 'left',
   },
   {
@@ -160,16 +160,14 @@ function options(row: any, column: any) {
         {{ row.sector }}
       </lew-tag>
       <lew-tag type="light" color="green" size="small">
-        {{
-          row.industry
-        }}
+        {{ row.industry }}
       </lew-tag>
     </template>
     <template #action="{ row, column }">
       <lew-action-box
         :key="row.id"
         :options="options(row, column)"
-        dropdown-threshold="1"
+        :dropdown-threshold="1"
         dropdown-label="More"
       />
     </template>
