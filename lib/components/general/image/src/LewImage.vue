@@ -19,9 +19,16 @@ const imageStyleObject = computed(() => {
   }
 })
 
-const { isLoading, error } = useImage({
-  src: props.src as string,
-})
+const imageOptions = ref({ src: props.src })
+
+watch(
+  () => props.src,
+  (newVal: string) => {
+    imageOptions.value.src = newVal
+  },
+)
+
+const { isLoading, error } = useImage(imageOptions)
 </script>
 
 <template>

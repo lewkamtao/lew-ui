@@ -35,6 +35,7 @@ export const avatarProps = {
   },
   src: {
     type: String,
+    default: '',
     validator: validators.string({
       componentName: 'LewAvatar',
       propName: 'src',
