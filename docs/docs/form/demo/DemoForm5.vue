@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import options from "./form_20240714_155154_quvi8vkan.json";
+import options from './form_20240714_155154_quvi8vkan.json'
 
-const bindOptions = options;
+const bindOptions = options
 </script>
 
 <template>

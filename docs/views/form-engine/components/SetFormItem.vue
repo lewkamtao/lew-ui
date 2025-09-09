@@ -9,30 +9,30 @@ import {
   LewSwitch,
   LewTabs,
   LewTextarea,
-} from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px } from "lew-ui/utils";
-import SetOptionModal from "./SetOptionModal.vue";
+} from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px } from 'lew-ui/utils'
+import SetOptionModal from './SetOptionModal.vue'
 
 const props = defineProps({
   as: {
     type: String,
-    default: "input",
+    default: 'input',
   },
   label: {
     type: String,
-    default: "",
+    default: '',
   },
   field: {
     type: String,
-    default: "",
+    default: '',
   },
   componentWidth: {
     type: [String, Number],
   },
   direction: {
     type: String,
-    default: "x",
+    default: 'x',
   },
   props: {
     type: Object,
@@ -40,22 +40,22 @@ const props = defineProps({
   tips: {
     type: String,
   },
-});
+})
 
-const modelValue = defineModel();
+const modelValue = defineModel()
 
 const asMap: Record<string, any> = {
-  input: LewInput,
-  textarea: LewTextarea,
-  select: LewSelect,
-  "date-picker": LewDatePicker,
-  tabs: LewTabs,
-  switch: LewSwitch,
-  "input-number": LewInputNumber,
-  "set-option-modal": SetOptionModal,
-  "input-table": LewInputTable,
-  "input-tag": LewInputTag,
-};
+  'input': LewInput,
+  'textarea': LewTextarea,
+  'select': LewSelect,
+  'date-picker': LewDatePicker,
+  'tabs': LewTabs,
+  'switch': LewSwitch,
+  'input-number': LewInputNumber,
+  'set-option-modal': SetOptionModal,
+  'input-table': LewInputTable,
+  'input-tag': LewInputTag,
+}
 </script>
 
 <template>

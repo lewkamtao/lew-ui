@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { LewFormOption } from 'lew-ui'
 import type { LewSize } from 'lew-ui/types'
 
 import { useDark } from '@vueuse/core'
@@ -12,7 +11,6 @@ import { any2px, formatFormByMap, getFormItemRequired, getUniqueId } from 'lew-u
 import { cloneDeep, debounce, has } from 'lodash-es'
 import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
-import * as Yup from 'yup'
 import PreviewModal from './components/PreviewModal.vue'
 import SetForm from './components/SetForm.vue'
 import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
