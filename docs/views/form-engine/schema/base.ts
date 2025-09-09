@@ -27,7 +27,7 @@ export const baseSchema = [
       // 参考文档 a 点击
       return h('span', [
         '参考 ',
-        h('a', { href: 'https://github.com/jquense/yup', style: { textDecoration: 'underline' }, target: '_blank' }, 'Yup 速查表'),
+        h('a', { href: 'https://github.com/lewkamtao/lew-ui/blob/main/docs/views/form-engine/yup.md', style: { textDecoration: 'underline' }, target: '_blank' }, 'Yup 速查表'),
       ])
     },
     field: 'rule',
