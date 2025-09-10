@@ -61,7 +61,7 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
         exports: 'named' as const,
       },
     },
-    copyPublicDir: false, // lib模式下不复制public文件夹
+    copyPublicDir: false,
     outDir: 'dist',
   }
 

@@ -1,9 +1,10 @@
 import type { LewContextMenusOption, LewMenuTrigger } from 'lew-ui/types'
 import type { Instance as TippyInstance } from 'tippy.js'
 import type { DirectiveBinding, App as VueApp } from 'vue'
+import _LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
 import { getUniqueId } from 'lew-ui/utils'
 import tippy from 'tippy.js'
-import { createApp, defineAsyncComponent, h } from 'vue'
+import { createApp, h } from 'vue'
 
 export { contextMenuProps } from './src/props'
 
@@ -78,7 +79,6 @@ export function initLewContextMenu(): void {
 }
 
 function createContextMenu(options: LewContextMenusOption[]): HTMLElement {
-  const _LewContextMenu = defineAsyncComponent(() => import('./src/LewContextMenu.vue'))
   const menuDom = document.createElement('div')
   const app = createApp({
     render() {

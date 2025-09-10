@@ -1,7 +1,7 @@
 {
   "name": "lew-ui",
   "type": "module",
-  "version": "2.7.38",
+  "version": "2.7.47",
   "description": "A Component Library for Vue3.js.",
   "author": "lewkamtao",
   "license": "MIT",
@@ -61,6 +61,7 @@
     "rollup-plugin-scss": "^4.0.1",
     "shiki-code-block-vue": "0.0.6-beta.1",
     "stylelint-config-recommended": "^16.0.0",
+    "terser": "^5.44.0",
     "tippy.js": "^6.3.7",
     "ts-morph": "^26.0.0",
     "vue-i18n": "^11.1.0",
