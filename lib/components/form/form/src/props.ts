@@ -114,8 +114,8 @@ export const formItemProps = {
     }),
   },
   visible: {
-    type: [Boolean, Function] as PropType<boolean | ((formData: Record<string, any>) => boolean)>,
-    default: true,
+    type: Function as PropType<((formData: Record<string, any>) => boolean)>,
+    default: () => true,
     validator: validators.boolean({
       componentName: 'LewForm',
       propName: 'visible',
@@ -176,16 +176,16 @@ export const formItemProps = {
     }),
   },
   disabled: {
-    type: [Boolean, Function] as PropType<boolean | ((formData: Record<string, any>) => boolean)>,
-    default: false,
+    type: Function as PropType<((formData: Record<string, any>) => boolean)>,
+    default: () => false,
     validator: validators.boolean({
       componentName: 'LewFormItem',
       propName: 'disabled',
     }),
   },
   readonly: {
-    type: [Boolean, Function] as PropType<boolean | ((formData: Record<string, any>) => boolean)>,
-    default: false,
+    type: Function as PropType<((formData: Record<string, any>) => boolean)>,
+    default: () => false,
     validator: validators.boolean({
       componentName: 'LewFormItem',
       propName: 'readonly',

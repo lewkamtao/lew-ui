@@ -176,6 +176,7 @@ function showTextAndEmpty(): string {
     height: 100%;
     display: flex;
     word-break: break-word;
+    align-items: center;
     position: relative;
   }
 

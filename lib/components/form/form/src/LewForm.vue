@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { LewFormOption } from 'lew-ui/types'
+import { Parser } from 'expr-eval'
 import {
   any2px,
   formatFormByMap,
@@ -7,7 +8,6 @@ import {
   object2class,
   retrieveNestedFieldValue,
 } from 'lew-ui/utils'
-import { cloneDeep } from 'lodash-es'
 import * as Yup from 'yup'
 import { formEmits } from './emits'
 import LewFormItem from './LewFormItem.vue'
@@ -16,16 +16,35 @@ import { formProps } from './props'
 
 const props = defineProps(formProps)
 const emit = defineEmits(formEmits)
-
 const formMap = ref<Record<string, any>>({})
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
-const componentOptions: LewFormOption[] = cloneDeep(props.options) || []
+const componentOptions = ref<LewFormOption[]>(props.options)
 const formItemRefMap = ref<Record<string, any>>({})
-const formUpdateKey = ref(0) // 用于触发联动更新
+const parser = new Parser()
+
+function normalizeProp(
+  value: string | boolean | ((formData: Record<string, any>) => boolean) | undefined,
+) {
+  return (formData: Record<string, any>) => {
+    if (typeof value === 'function') {
+      return value(formData)
+    }
+    if (typeof value === 'string') {
+      try {
+        console.log(formData)
+        return Boolean(parser.evaluate(value, formData))
+      }
+      catch {
+        return false
+      }
+    }
+    return Boolean(value)
+  }
+}
 
 const formSchema = computed(() => {
-  const schemaMap = componentOptions.reduce<Record<string, any>>((acc, item) => {
+  const schemaMap = componentOptions.value.reduce<Record<string, any>>((acc, item) => {
     if (item.field && item.rule) {
       acc[item.field]
         = typeof item.rule === 'string'
@@ -46,7 +65,7 @@ const getDynamicGridStyle = computed(() => ({
 
 function getForm() {
   let formData: Record<string, any> = formatFormByMap(toRaw(formMap.value))
-  componentOptions.forEach((item) => {
+  componentOptions.value.forEach((item) => {
     if (item.outputFormat && item.field && formData[item.field]) {
       const _value = item.outputFormat({ item, value: formData[item.field] })
       if (typeof _value === 'object' && !Array.isArray(_value)) {
@@ -62,7 +81,7 @@ function getForm() {
 }
 
 function setForm(value: any = {}) {
-  componentOptions.forEach((item) => {
+  componentOptions.value.forEach((item) => {
     if (!item.field)
       return
     let v = retrieveNestedFieldValue(value, item.field)
@@ -75,7 +94,7 @@ function setForm(value: any = {}) {
 }
 
 function resetError() {
-  componentOptions.forEach(item => item.field && resetFieldError(item.field))
+  componentOptions.value.forEach(item => item.field && resetFieldError(item.field))
 }
 
 function resetFieldError(field: string, ignore = false) {
@@ -111,20 +130,10 @@ onMounted(() => {
 provide('formMethods', props.formMethods)
 provide('formSchema', formSchema)
 provide('formData', formMap)
-provide('formUpdateKey', formUpdateKey)
 
 watch(
   () => props.size,
   () => nextTick(() => (autoLabelWidth.value = formLabelRef.value?.getWidth())),
-)
-
-// 监听表单数据变化，触发联动更新
-watch(
-  () => formMap.value,
-  () => {
-    formUpdateKey.value++
-  },
-  { deep: true },
 )
 
 const GAP_MAP = {
@@ -167,9 +176,10 @@ defineExpose({ getForm, setForm, resetError, validate })
         direction,
         size,
         labelWidth: getLabelWidth,
-        disabled,
-        readonly,
         ...item,
+        disabled: item.disabled ? normalizeProp(item.disabled) : () => Boolean(disabled),
+        readonly: item.readonly ? normalizeProp(item.readonly) : () => Boolean(readonly),
+        visible: item.visible === undefined ? () => true : normalizeProp(item.visible),
         required: getFormItemRequired(item),
       }"
       @change="() => emit('change', getForm())"

@@ -2,7 +2,7 @@
 import type { LewContextMenusOption } from 'lew-ui'
 import { LewBadge } from 'lew-ui'
 
-const status = ref('Success')
+const status = ref('success')
 
 const productOptions = ref([
   {
@@ -103,13 +103,17 @@ const colorMap: Record<string, string> = {
 function handleChange(e: LewContextMenusOption) {
   console.log(e)
 }
+
+function getStatusLabel(value: string) {
+  return statusOptions.value.find(item => item.value === value)?.label
+}
 </script>
 
 <template>
   <lew-flex gap="50" x="start">
     <lew-dropdown :options="statusOptions" trigger="click" @change="handleChange">
       <lew-tag style="cursor: pointer" oversize :color="colorMap[status]">
-        {{ status }}
+        {{ getStatusLabel(status) }}
       </lew-tag>
     </lew-dropdown>
 

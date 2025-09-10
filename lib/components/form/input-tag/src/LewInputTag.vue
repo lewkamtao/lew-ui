@@ -31,9 +31,7 @@ function openInput() {
       && Array.isArray(modelValue.value)
       && modelValue.value.length >= props.maxLength
     ) {
-      LewMessage.warning(
-        locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
-      )
+      LewMessage.warning(locale.t('inputTag.maxLength', { maxLength: props.maxLength }))
       return
     }
 
@@ -42,10 +40,7 @@ function openInput() {
 
     // 在下一个渲染周期聚焦输入框
     nextTick(() => {
-      if (
-        lewInputRef.value
-        && typeof lewInputRef.value.toFocus === 'function'
-      ) {
+      if (lewInputRef.value && typeof lewInputRef.value.toFocus === 'function') {
         lewInputRef.value.toFocus()
       }
     })
@@ -120,10 +115,7 @@ function openInput() {
 
           if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
             // 当输入框为空且按下回车键时，失焦
-            if (
-              lewInputRef.value
-              && typeof lewInputRef.value.toBlur === 'function'
-            ) {
+            if (lewInputRef.value && typeof lewInputRef.value.toBlur === 'function') {
               lewInputRef.value.toBlur()
             }
           }
@@ -165,9 +157,7 @@ function addTag() {
     if (props.maxLength > 0 && _value.length >= props.maxLength) {
       inputValue.value = ''
       isInputActive.value = false
-      LewMessage.warning(
-        locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
-      )
+      LewMessage.warning(locale.t('inputTag.maxLength', { maxLength: props.maxLength }))
       return
     }
 
@@ -253,6 +243,7 @@ function clear() {
 
 function onBlur() {
   isInputActive.value = false
+  isTagMarkedForDeletion.value = false
   if (inputValue.value) {
     addTag()
   }
@@ -262,23 +253,18 @@ const shouldShowIcon = computed(
   () => !((modelValue.value || []).length > 0 && props.clearable),
 )
 const shouldShowClearIcon = computed(
-  () =>
-    (modelValue.value || []).length > 0 && props.clearable && !props.readonly,
+  () => (modelValue.value || []).length > 0 && props.clearable && !props.readonly,
 )
 
 const getTagStyle = computed(() => (index: number) => {
   return {
     maxWidth: '100%',
     backgroundColor:
-      isInputActive.value
-      && isTagMarkedForDeletion.value
-      && index === (modelValue.value || []).length - 1
+      isTagMarkedForDeletion.value && index === (modelValue.value || []).length - 1
         ? 'var(--lew-color-red-light)'
         : '',
     color:
-      isInputActive.value
-      && isTagMarkedForDeletion.value
-      && index === (modelValue.value || []).length - 1
+      isTagMarkedForDeletion.value && index === (modelValue.value || []).length - 1
         ? 'var(--lew-color-red-dark)'
         : 'var(--lew-color-primary-dark)',
   }
@@ -318,9 +304,7 @@ const getTagStyle = computed(() => (index: number) => {
           :size="size"
           :readonly="!isInputActive"
           :placeholder="
-            (modelValue || []).length === 0
-              ? locale.t('inputTag.placeholder')
-              : ' '
+            (modelValue || []).length === 0 ? locale.t('inputTag.placeholder') : ' '
           "
           @input="isTagMarkedForDeletion = false"
           @blur="onBlur"

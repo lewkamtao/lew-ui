@@ -4,6 +4,7 @@ import type { Instance as TippyInstance } from 'tippy.js'
 import { LewEmpty, LewFlex } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import _LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
 import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
@@ -96,13 +97,10 @@ function createSubMenu(
   const menuDom = document.createElement('div')
   const app = createApp({
     render() {
-      return h(
-        defineAsyncComponent(() => import('./LewContextMenu.vue')),
-        {
-          options,
-          onChange: (item: LewContextMenusOption) => emit('change', item),
-        },
-      )
+      return h(_LewContextMenu, {
+        options,
+        onChange: (item: LewContextMenusOption) => emit('change', item),
+      })
     },
   })
 

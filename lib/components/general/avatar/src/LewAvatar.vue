@@ -3,11 +3,9 @@ import { useImage } from '@vueuse/core'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, parseDimension } from 'lew-ui/utils'
 import { computed } from 'vue'
-import { avatarEmits } from './emits'
 import { avatarProps } from './props'
 
 const props = defineProps(avatarProps)
-const emit = defineEmits(avatarEmits)
 
 // Constants
 const BORDER_RADIUS_MAP: Record<string, string> = {
@@ -78,16 +76,20 @@ const STATUS_COLOR_CONFIG: Record<string, string> = {
   away: 'var(--lew-color-warning)',
 }
 
-// Image handling
-const { isLoading, error } = useImage({
+const imageOptions = ref({
   src: props.src,
-  onLoaded: () => emit('load'),
-  onError: () => emit('error'),
 })
 
-// Image loading watch is handled by useImage hook
+watch(
+  () => props.src,
+  (newVal: string) => {
+    imageOptions.value.src = newVal
+  },
+)
 
-// Computed
+// Image handling
+const { isLoading, error } = useImage(imageOptions)
+
 const avatarStyleObject = computed(() => ({
   width: any2px(props.size),
   height: any2px(props.size),
@@ -103,7 +105,8 @@ const imageStyleObject = computed(() => ({
 }))
 
 const textStyleObject = computed(() => {
-  const size = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
+  const size
+    = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
   return {
     fontSize: `${size * 0.45}px`,
     lineHeight: `${size - 2}px`,
@@ -129,7 +132,9 @@ const dotStyleObject = computed(() => {
   if (!status)
     return {}
   const statusPlacementConfig
-    = shape === 'circle' ? STATUS_PLACEMENT_CONFIG_CIRCLE : STATUS_PLACEMENT_CONFIG_SQUARE
+    = shape === 'circle'
+      ? STATUS_PLACEMENT_CONFIG_CIRCLE
+      : STATUS_PLACEMENT_CONFIG_SQUARE
   return {
     ...statusPlacementConfig[statusPlacement],
     backgroundColor: STATUS_COLOR_CONFIG[status],
@@ -152,13 +157,24 @@ const getIconSize = computed(() => {
 <template>
   <div class="lew-avatar" :style="avatarStyleObject">
     <div class="lew-avatar-box" :style="avatarBoxStyleObject">
-      <template v-if="src">
-        <div v-if="isLoading || loading" class="skeletons" />
-        <img v-else-if="!error" :alt="alt" :src="src" lazy :style="imageStyleObject">
+      <div v-if="isLoading || loading" class="skeletons" />
+      <template v-else-if="src">
+        <img
+          v-if="!error"
+          :alt="alt"
+          :src="src"
+          lazy
+          :style="imageStyleObject"
+        >
         <div v-else-if="alt" class="lew-avatar-text" :style="textStyleObject">
           {{ altText }}
         </div>
-        <CommonIcon v-else class="lew-avatar-user-icon" :size="getIconSize" type="user" />
+        <CommonIcon
+          v-else
+          class="lew-avatar-user-icon"
+          :size="getIconSize"
+          type="user"
+        />
       </template>
       <template v-else-if="alt">
         <div class="lew-avatar-text" :style="textStyleObject">
@@ -166,7 +182,11 @@ const getIconSize = computed(() => {
         </div>
       </template>
       <template v-else>
-        <CommonIcon class="lew-avatar-user-icon" :size="getIconSize" type="user" />
+        <CommonIcon
+          class="lew-avatar-user-icon"
+          :size="getIconSize"
+          type="user"
+        />
       </template>
     </div>
     <i v-if="status" :style="dotStyleObject" />

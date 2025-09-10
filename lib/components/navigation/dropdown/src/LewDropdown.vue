@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import type { LewContextMenusOption } from 'lew-ui'
 import { LewPopover } from 'lew-ui'
-import { defineAsyncComponent } from 'vue'
+import LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
 import { dropdownEmits } from './emits'
 import { dropdownProps } from './props'
 
 defineProps(dropdownProps)
 
 const emit = defineEmits(dropdownEmits)
-
-const LewContextMenu = defineAsyncComponent(
-  () => import('lew-ui/directives/context-menu/src/LewContextMenu.vue'),
-)
 
 const lewPopoverRef = ref<InstanceType<typeof LewPopover>>()
 

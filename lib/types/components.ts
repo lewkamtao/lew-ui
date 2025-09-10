@@ -144,8 +144,8 @@ export interface LewFormOption {
   width?: Property.Width
   labelWidth?: Property.Width
   direction?: LewDirection
-  disabled?: boolean | ((formData: Record<string, any>) => boolean)
-  readonly?: boolean | ((formData: Record<string, any>) => boolean)
+  disabled?: boolean | ((formData: Record<string, any>) => boolean) | undefined
+  readonly?: boolean | ((formData: Record<string, any>) => boolean) | undefined
   tips?: string
   errMessage?: string
   rule?: any | string
@@ -155,7 +155,7 @@ export interface LewFormOption {
   id?: string
   outputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
   inputFormat?: (params: { value: unknown, item?: LewFormOption }) => unknown
-  visible?: boolean | ((formData: Record<string, any>) => boolean)
+  visible?: boolean | ((formData: Record<string, any>) => boolean) | undefined
   dependencies?: string[]
 }
 
