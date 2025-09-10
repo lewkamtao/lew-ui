@@ -289,7 +289,7 @@ const getIconSize = computed(() => {
 
     .active {
       background-color: var(--lew-color-primary);
-      color: var(--lew-color-primary-text);
+      color: var(--lew-color-white);
     }
   }
 
