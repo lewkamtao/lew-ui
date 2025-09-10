@@ -37,7 +37,6 @@ const emit = defineEmits(formItemEmits)
 
 const formSchema = inject<any>('formSchema', ref(null))
 const formData = inject<Ref<Record<string, any>>>('formData', ref({}))
-const formUpdateKey = inject<Ref<number>>('formUpdateKey', ref(0))
 
 const asMap: Record<LewFormItemAs, Component> = {
   'input': LewInput,
@@ -176,28 +175,6 @@ const getFormItemMainStyle = computed(() => {
   }
 })
 
-// 联动控制逻辑
-const getVisible = computed(() => {
-  if (typeof props.visible === 'function') {
-    return props.visible(formData.value)
-  }
-  return props.visible
-})
-
-const getDisabled = computed(() => {
-  if (typeof props.disabled === 'function') {
-    return props.disabled(formData.value)
-  }
-  return props.disabled
-})
-
-const getReadonly = computed(() => {
-  if (typeof props.readonly === 'function') {
-    return props.readonly(formData.value)
-  }
-  return props.readonly
-})
-
 const getDynamicProps = computed(() => {
   if (typeof props.props === 'function') {
     return props.props(formData.value)
@@ -205,22 +182,19 @@ const getDynamicProps = computed(() => {
   return props.props
 })
 
-// 监听表单数据变化，触发联动更新
-watchEffect(() => {
-  // 当 formUpdateKey 或 formData 变化时，重新计算联动属性
-  const _updateKey = formUpdateKey.value
-  const _formData = formData.value
-  // 这些变量用于触发响应式更新，不需要实际使用
-  void _updateKey
-  void _formData
-})
+function runFunc(func: (formData: Record<string, any>) => any) {
+  if (typeof func === 'function') {
+    return func(formData.value)
+  }
+  return func
+}
 
 defineExpose({ validate, setError, setIgnoreValidate })
 </script>
 
 <template>
   <div
-    v-if="getVisible"
+    v-if="runFunc(visible)"
     ref="formItemRef"
     class="lew-form-item"
     :class="getFormItemClassNames"
@@ -256,8 +230,8 @@ defineExpose({ validate, setError, setIgnoreValidate })
         v-model="modelValue"
         v-bind="{
           size,
-          readonly: getReadonly,
-          disabled: getDisabled,
+          readonly: runFunc(readonly),
+          disabled: runFunc(disabled),
           ...getDynamicProps,
           width:
             as && ['input-number', 'tabs', 'button'].includes(as)

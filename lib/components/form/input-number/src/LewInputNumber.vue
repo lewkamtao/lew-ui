@@ -93,11 +93,11 @@ function clearTimer() {
 
 function plus() {
   lewInputRef.value.stepUp()
-  modelValue.value = lewInputRef.value.value
+  modelValue.value = Number(lewInputRef.value.value)
   longClickTimer.value = setTimeout(() => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepUp()
-      modelValue.value = lewInputRef.value.value
+      modelValue.value = Number(lewInputRef.value.value)
       emit('change', cloneDeep(modelValue.value))
       if (props.max !== undefined && lewInputRef.value.value >= Number(props.max || 0)) {
         clearTimer()
@@ -107,11 +107,11 @@ function plus() {
 }
 function minus() {
   lewInputRef.value.stepDown()
-  modelValue.value = lewInputRef.value.value
+  modelValue.value = Number(lewInputRef.value.value)
   longClickTimer.value = setTimeout(() => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepDown()
-      modelValue.value = lewInputRef.value.value
+      modelValue.value = Number(lewInputRef.value.value)
       emit('change', cloneDeep(modelValue.value))
       if (props.min !== undefined && lewInputRef.value.value <= Number(props.min || 0)) {
         clearTimer()

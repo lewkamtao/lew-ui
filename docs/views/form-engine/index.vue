@@ -475,7 +475,7 @@ onMounted(() => {
               <SetForm
                 v-model="options[options.findIndex((e: any) => e.id === activeId)]
                 "
-                :collapse-height="200"
+                :collapse-height="300"
                 :options="baseSchema"
               />
             </lew-flex>
