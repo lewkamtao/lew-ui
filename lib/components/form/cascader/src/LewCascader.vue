@@ -172,14 +172,8 @@ async function init() {
 
   // 如果有初始化方法，优先使用
   if (_initMethod.value) {
-    try {
-      const newOptions = await _initMethod.value()
-      _tree = newOptions || []
-    }
-    catch (error) {
-      console.error('[LewCascader] initMethod failed', error)
-      _tree = []
-    }
+    const newOptions = await _initMethod.value()
+    _tree = newOptions || []
   }
   else if (_loadMethod.value && !state.loading) {
     state.loading = true

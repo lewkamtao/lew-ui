@@ -94,34 +94,24 @@ function showTippy(): void {
 
   if (props.delay && Array.isArray(props.delay) && props.delay[0] > 0) {
     setTimeout(() => {
-      try {
-        const element = lewTextTrimRef.value
-        if (!element)
-          return
+      const element = lewTextTrimRef.value
+      if (!element)
+        return
 
-        const rect = element.getBoundingClientRect()
-        // Check if mouse is within element bounds
-        if (
-          x.value >= rect.left
-          && x.value <= rect.right
-          && y.value >= rect.top
-          && y.value <= rect.bottom
-        ) {
-          tippyInstance?.show()
-        }
-      }
-      catch (error) {
-        console.error('Error showing tooltip:', error)
+      const rect = element.getBoundingClientRect()
+      // Check if mouse is within element bounds
+      if (
+        x.value >= rect.left
+        && x.value <= rect.right
+        && y.value >= rect.top
+        && y.value <= rect.bottom
+      ) {
+        tippyInstance?.show()
       }
     }, props.delay[0])
   }
   else {
-    try {
-      tippyInstance?.show()
-    }
-    catch (error) {
-      console.error('Error showing tooltip:', error)
-    }
+    tippyInstance?.show()
   }
 }
 

@@ -135,15 +135,9 @@ async function deleteFile(key: string) {
 
     // 调用删除前的回调函数
     if (props.beforeDelete && isFunction(props.beforeDelete)) {
-      try {
-        const shouldDelete = await props.beforeDelete(fileItem)
-        if (!shouldDelete) {
-          return // 用户取消删除
-        }
-      }
-      catch (error) {
-        console.error('[LewUpload] beforeDelete callback error:', error)
-        return // 出错时不删除
+      const shouldDelete = await props.beforeDelete(fileItem)
+      if (!shouldDelete) {
+        return // 用户取消删除
       }
     }
 

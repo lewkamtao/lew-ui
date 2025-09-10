@@ -45,19 +45,14 @@ function clickItem(item: LewContextMenusOption) {
   const instance = props.dropdownInstance || window.LewContextMenu?.instance || null
 
   if (isFunction(item.onClick)) {
-    try {
-      const proxyItem = createItemProxy(item)
-      const proxyOptions = new Proxy(_options.value, {
-        get(target, prop, receiver) {
-          return Reflect.get(target, prop, receiver)
-        },
-      })
+    const proxyItem = createItemProxy(item)
+    const proxyOptions = new Proxy(_options.value, {
+      get(target, prop, receiver) {
+        return Reflect.get(target, prop, receiver)
+      },
+    })
 
-      item.onClick?.(proxyItem, proxyOptions, instance)
-    }
-    catch (error) {
-      console.error('[LewContextMenu] Error in onClick handler:', error)
-    }
+    item.onClick?.(proxyItem, proxyOptions, instance)
   }
   else {
     instance?.hide()
@@ -116,47 +111,37 @@ function initTippy() {
       return
     }
 
-    try {
-      if (!window.LewContextMenu) {
-        initLewContextMenu()
-      }
-
-      const { element: menuDom, app } = createSubMenu(option.children)
-
-      const tippyInstances = tippy(el as Element, {
-        ...TIPPY_CONFIG,
-        content: menuDom,
-      })
-
-      const tippyInstance = Array.isArray(tippyInstances)
-        ? tippyInstances[0]
-        : tippyInstances
-
-      subMenuInstances.set(index, { app, tippy: tippyInstance })
-      window.LewContextMenu.menuInstance[`${uniqueId}-${index}`] = tippyInstance
-
-      const popperElement = tippyInstance.popper?.children?.[0] as HTMLElement
-      popperElement?.setAttribute('data-lew', 'popover')
+    if (!window.LewContextMenu) {
+      initLewContextMenu()
     }
-    catch (error) {
-      console.error('[LewContextMenu] Failed to initialize submenu:', error)
-    }
+
+    const { element: menuDom, app } = createSubMenu(option.children)
+
+    const tippyInstances = tippy(el as Element, {
+      ...TIPPY_CONFIG,
+      content: menuDom,
+    })
+
+    const tippyInstance = Array.isArray(tippyInstances)
+      ? tippyInstances[0]
+      : tippyInstances
+
+    subMenuInstances.set(index, { app, tippy: tippyInstance })
+    window.LewContextMenu.menuInstance[`${uniqueId}-${index}`] = tippyInstance
+
+    const popperElement = tippyInstance.popper?.children?.[0] as HTMLElement
+    popperElement?.setAttribute('data-lew', 'popover')
   })
 }
 
 function cleanup() {
   subMenuInstances.forEach(({ app, tippy }, index) => {
-    try {
-      app?.unmount?.()
-      tippy?.destroy?.()
+    app?.unmount?.()
+    tippy?.destroy?.()
 
-      const key = `${uniqueId}-${index}`
-      if (window.LewContextMenu?.menuInstance?.[key]) {
-        delete window.LewContextMenu.menuInstance[key]
-      }
-    }
-    catch (error) {
-      console.warn('[LewContextMenu] Failed to cleanup submenu instance:', error)
+    const key = `${uniqueId}-${index}`
+    if (window.LewContextMenu?.menuInstance?.[key]) {
+      delete window.LewContextMenu.menuInstance[key]
     }
   })
 

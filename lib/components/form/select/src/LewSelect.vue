@@ -100,15 +100,10 @@ const getOptionText = computed(() => {
 
 async function init() {
   if (_initMethod.value) {
-    try {
-      const newOptions = await _initMethod.value()
-      state.sourceOptions = newOptions
-      state.options = flattenSelectOptions(newOptions)
-      findKeyword()
-    }
-    catch (error) {
-      console.error('[LewSelect] initMethod failed', error)
-    }
+    const newOptions = await _initMethod.value()
+    state.sourceOptions = newOptions
+    state.options = flattenSelectOptions(newOptions)
+    findKeyword()
   }
   if (props.enableSearchCache) {
     state.searchCache.set('', state.options)

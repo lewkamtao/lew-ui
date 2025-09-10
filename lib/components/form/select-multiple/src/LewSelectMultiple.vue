@@ -296,14 +296,9 @@ function hideHandle() {
 
 async function init() {
   if (_initMethod.value) {
-    try {
-      const newOptions = await _initMethod.value()
-      state.sourceOptions = newOptions
-      state.options = flattenSelectOptions(newOptions)
-    }
-    catch (error) {
-      console.error('[LewSelectMultiple] initMethod failed', error)
-    }
+    const newOptions = await _initMethod.value()
+    state.sourceOptions = newOptions
+    state.options = flattenSelectOptions(newOptions)
   }
   if (props.enableSearchCache) {
     state.searchCache.set('', state.options)

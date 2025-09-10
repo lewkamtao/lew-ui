@@ -19,15 +19,8 @@ async function handleClick() {
       return
     }
     _loading.value = true
-    try {
-      await props.request()
-    }
-    catch (error) {
-      console.error('[LewButton] Request failed:', error)
-    }
-    finally {
-      _loading.value = false
-    }
+    await props.request()
+    _loading.value = false
   }
 }
 // Slot detection

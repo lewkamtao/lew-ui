@@ -32,7 +32,6 @@ function normalizeProp(
     }
     if (typeof value === 'string') {
       try {
-        console.log(formData)
         return Boolean(parser.evaluate(value, formData))
       }
       catch {

@@ -108,17 +108,10 @@ async function handleClose(): Promise<void> {
     return
 
   if (props.close) {
-    try {
-      isClosing.value = true
-      await props.close()
-    }
-    catch (error) {
-      console.error('[LewTag] Error in close function:', error)
-    }
-    finally {
-      emit('close')
-      isClosing.value = false
-    }
+    isClosing.value = true
+    await props.close()
+    emit('close')
+    isClosing.value = false
   }
   else {
     emit('close')

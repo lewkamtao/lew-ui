@@ -129,37 +129,32 @@ function setDot(e: MouseEvent): void {
     return
   }
 
-  try {
-    const trackRect = trackRef.value.getBoundingClientRect()
-    const clickX = Math.max(0, Math.min(e.clientX - trackRect.left, trackRect.width))
+  const trackRect = trackRef.value.getBoundingClientRect()
+  const clickX = Math.max(0, Math.min(e.clientX - trackRect.left, trackRect.width))
 
-    const step = safeNumber(props.step, 1)
-    if (step <= 0)
-      return
+  const step = safeNumber(props.step, 1)
+  if (step <= 0)
+    return
 
-    const trackMax = getTrackMax.value
-    const trackMin = getTrackMin.value
-    const range = trackMax - trackMin
+  const trackMax = getTrackMax.value
+  const trackMin = getTrackMin.value
+  const range = trackMax - trackMin
 
-    if (range <= 0)
-      return
+  if (range <= 0)
+    return
 
-    const stepSize = trackRect.width / (range / step)
+  const stepSize = trackRect.width / (range / step)
 
-    const nearestStep = Math.round(clickX / stepSize) * stepSize
+  const nearestStep = Math.round(clickX / stepSize) * stepSize
 
-    const newValue = calculateValue(nearestStep)
-    const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
+  const newValue = calculateValue(nearestStep)
+  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
 
-    if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
-      // 立即更新视图状态
-      throttledUpdateView(clampedValue)
-      // 延迟更新数据绑定
-      throttledUpdateModelValue(clampedValue)
-    }
-  }
-  catch (error) {
-    console.warn('[LewSlider] setDot error:', error)
+  if (clampedValue >= getMin.value && clampedValue <= getMax.value) {
+    // 立即更新视图状态
+    throttledUpdateView(clampedValue)
+    // 延迟更新数据绑定
+    throttledUpdateModelValue(clampedValue)
   }
 }
 
@@ -195,60 +190,45 @@ function setDotByValue(value: number): void {
   if (!dotRef.value)
     return
 
-  try {
-    const safeValue = safeNumber(value, getMin.value)
-    const clampedValue = Math.max(getMin.value, Math.min(getMax.value, safeValue))
-    const nearestStep = calculateNearestStep(clampedValue)
-    const clampedStep = Math.max(0, Math.min(100, nearestStep))
+  const safeValue = safeNumber(value, getMin.value)
+  const clampedValue = Math.max(getMin.value, Math.min(getMax.value, safeValue))
+  const nearestStep = calculateNearestStep(clampedValue)
+  const clampedStep = Math.max(0, Math.min(100, nearestStep))
 
-    dotRef.value.style.left = `${clampedStep}%`
-  }
-  catch (error) {
-    console.warn('[LewSlider] setDotByValue error:', error)
-  }
+  dotRef.value.style.left = `${clampedStep}%`
 }
 
 let _dragmove = (): void => {}
 
 function init(): void {
-  try {
-    const el = dotRef.value
-    const parentEl = trackRef.value
-    const step = safeNumber(props.step, 1)
+  const el = dotRef.value
+  const parentEl = trackRef.value
+  const step = safeNumber(props.step, 1)
 
-    if (el && parentEl && !props.readonly && !props.disabled) {
-      _dragmove = dragmove({
-        el,
-        parentEl,
-        direction: 'horizontal',
-        step: () => step,
-        max: () => getMax.value,
-        min: () => getMin.value,
-        trackMax: () => getTrackMax.value,
-        trackMin: () => getTrackMin.value,
-        callback: (e: any) => {
-          try {
-            const newValue = calculateValue(e.x)
-            const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
-            // 立即更新视图状态
-            throttledUpdateView(clampedValue)
-            // 延迟更新数据绑定
-            throttledUpdateModelValue(clampedValue)
-          }
-          catch (error) {
-            console.warn('[LewSlider] drag callback error:', error)
-          }
-        },
-      })
-    }
+  if (el && parentEl && !props.readonly && !props.disabled) {
+    _dragmove = dragmove({
+      el,
+      parentEl,
+      direction: 'horizontal',
+      step: () => step,
+      max: () => getMax.value,
+      min: () => getMin.value,
+      trackMax: () => getTrackMax.value,
+      trackMin: () => getTrackMin.value,
+      callback: (e: any) => {
+        const newValue = calculateValue(e.x)
+        const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
+        // 立即更新视图状态
+        throttledUpdateView(clampedValue)
+        // 延迟更新数据绑定
+        throttledUpdateModelValue(clampedValue)
+      },
+    })
+  }
 
-    const currentValue = modelValue.value || getMin.value
-    internalViewValue.value = currentValue
-    setDotByValue(currentValue)
-  }
-  catch (error) {
-    console.warn('[LewSlider] init error:', error)
-  }
+  const currentValue = modelValue.value || getMin.value
+  internalViewValue.value = currentValue
+  setDotByValue(currentValue)
 }
 
 watch(
@@ -275,14 +255,9 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  try {
-    _dragmove()
-    throttledUpdateView.cancel()
-    throttledUpdateModelValue.cancel()
-  }
-  catch (error) {
-    console.warn('[LewSlider] cleanup error:', error)
-  }
+  _dragmove()
+  throttledUpdateView.cancel()
+  throttledUpdateModelValue.cancel()
 })
 
 watch(
@@ -344,14 +319,8 @@ const getStyle = computed(() => {
 })
 
 function safeFormatTooltip(value: number): string {
-  try {
-    const formatFn = safeFunction(props.formatTooltip, (val: number) => val.toString())
-    return formatFn(value)
-  }
-  catch (error) {
-    console.warn('[LewSlider] formatTooltip error:', error)
-    return value.toString()
-  }
+  const formatFn = safeFunction(props.formatTooltip, (val: number) => val.toString())
+  return formatFn(value)
 }
 
 function isValidOption(option: any): boolean {
