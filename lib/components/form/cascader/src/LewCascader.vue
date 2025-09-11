@@ -650,6 +650,7 @@ defineExpose({ show, hide })
     box-sizing: border-box;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     box-shadow: var(--lew-form-box-shadow);
+    user-select: none;
 
     .icon-select {
       position: absolute;

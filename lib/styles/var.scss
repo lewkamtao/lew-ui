@@ -75,15 +75,15 @@
   --lew-form-border-width: 0.1rem;
   --lew-form-transition-ease: 0.2s ease;
   --lew-form-transition-bezier: 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
-  --lew-form-bgcolor: rgb(242 242 242 / 60%);
-  --lew-form-bgcolor-hover: rgb(229 229 229 / 80%);
-  --lew-form-bgcolor-active: rgb(209 209 209);
+  --lew-form-bgcolor: #eeeef2;
+  --lew-form-bgcolor-hover: #e4e4e7;
+  --lew-form-bgcolor-active: #d0d0d5;
   --lew-form-bgcolor-focus: rgb(255 255 255);
   --lew-form-border-color: transparent;
   --lew-form-border-color-hover: rgb(174 174 178);
   --lew-form-border-color-active: rgb(142 142 147);
   --lew-form-border-color-focus: var(--lew-color-primary);
-  --lew-form-box-shadow: 0px 1px 1px rgb(0 0 0 / 20%);
+  --lew-form-box-shadow: 0px 0px 0px rgb(0 0 0 / 20%);
   --lew-form-icon-opacity: 1;
   --lew-form-icon-opacity-hover: 0.8;
   --lew-form-icon-opacity-active: 1;
@@ -111,13 +111,17 @@
   --lew-switch-bgcolor-hover: rgb(206, 207, 210);
 
   /* 复选框和单选框 */
-  --lew-checkbox-bgcolor: rgb(242 242 242 / 60%);
-  --lew-checkbox-border-color: rgba(175, 175, 175, 0.6);
+  --lew-checkbox-bgcolor: var(--lew-form-bgcolor);
+  --lew-checkbox-block-bgcolor: #f6f6f8;
+  --lew-checkbox-bgcolor-hover: #ffffff;
+  --lew-checkbox-border-color: var(--lew-form-bgcolor-active);
   --lew-checkbox-color: var(--lew-color-primary);
   --lew-checkbox-color-light: var(--lew-color-primary-light);
   --lew-checkbox-border-color-hover: var(--lew-color-primary);
-  --lew-radio-bgcolor: rgb(242 242 242 / 60%);
-  --lew-radio-border-color: rgba(175, 175, 175, 0.6);
+  --lew-radio-bgcolor: var(--lew-form-bgcolor);
+  --lew-radio-block-bgcolor: #f6f6f8;
+  --lew-radio-bgcolor-hover: #ffffff;
+  --lew-radio-border-color: var(--lew-form-bgcolor-active);
   --lew-radio-border-color-hover: var(--lew-color-primary);
   --lew-radio-color: var(--lew-color-primary);
   --lew-radio-color-light: var(--lew-color-primary-light);
@@ -243,7 +247,7 @@
   --lew-form-bgcolor: #303031;
   --lew-form-bgcolor-hover: rgb(65 65 65);
   --lew-form-bgcolor-active: rgb(75 75 75);
-  --lew-form-bgcolor-focus: rgb(24 24 24);
+  --lew-form-bgcolor-focus: rgb(45 45 45);
   --lew-form-border-color-hover: rgb(102 102 102);
   --lew-form-border-color-focus: var(--lew-color-primary);
 
@@ -253,12 +257,14 @@
 
   /* 复选框和单选框 */
   --lew-checkbox-bgcolor: rgba(45 45 45);
+  --lew-checkbox-block-bgcolor: rgba(55 55 55);
   --lew-checkbox-bgcolor-hover: rgba(35 35 35);
   --lew-checkbox-border-color: rgb(102 102 102);
   --lew-checkbox-color: var(--lew-color-primary);
   --lew-checkbox-color-light: var(--lew-color-primary-light);
   --lew-checkbox-border-color-hover: var(--lew-color-primary);
   --lew-radio-bgcolor: rgba(45 45 45);
+  --lew-radio-block-bgcolor: rgba(55 55 55);
   --lew-radio-bgcolor-hover: rgba(35 35 35);
   --lew-radio-border-color: rgb(102 102 102);
   --lew-radio-border-color-hover: var(--lew-color-primary);

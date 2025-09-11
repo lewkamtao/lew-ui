@@ -304,7 +304,7 @@ onUnmounted(() => {
   }
 
   .lew-tabs-item:hover {
-    background-color: var(--lew-form-bgcolor-hover);
+    background-color: var(--lew-form-bgcolor-active);
   }
 
   .lew-tabs-item-active {
@@ -337,7 +337,7 @@ onUnmounted(() => {
   }
 
   .lew-tabs-item-isInit {
-    transition: all var(--lew-form-transition-bezier);
+    transition: all var(--lew-form-transition-ease);
   }
 }
 
@@ -385,7 +385,7 @@ onUnmounted(() => {
     }
 
     .lew-tabs-item:hover {
-      background: var(--lew-bgcolor-2);
+      background: var(--lew-form-bgcolor-hover);
     }
 
     .lew-tabs-item-active {
@@ -393,7 +393,7 @@ onUnmounted(() => {
     }
 
     .lew-tabs-item-active:hover {
-      transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+      transition: all var(--lew-form-transition-ease);
       background: transparent;
     }
 

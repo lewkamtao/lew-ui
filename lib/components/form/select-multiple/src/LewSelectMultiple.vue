@@ -580,6 +580,7 @@ const showFooterSlot = computed((): boolean => {
               trigger="hover"
               popover-body-class-name="lew-select-multiple-popover-tag"
               placement="top-start"
+              :delay="[250, 250]"
               style="width: 100%"
               :trigger-width="width"
             >

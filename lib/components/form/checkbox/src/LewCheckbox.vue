@@ -195,6 +195,7 @@ function setChecked() {
 
   .lew-checkbox-icon-box {
     box-shadow: none;
+    background-color: var(--lew-checkbox-block-bgcolor);
 
     .lew-checkbox-icon {
       padding: 1px;

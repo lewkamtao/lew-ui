@@ -5,6 +5,7 @@ const loading = ref(false)
 
 function show() {
   loading.value = true
+  data.value = {}
   setTimeout(() => {
     loading.value = false
     data.value = {

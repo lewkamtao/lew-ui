@@ -100,7 +100,7 @@ function initTippy() {
     duration: [250, 250],
     arrow: false,
     offset,
-    delay: trigger === 'mouseenter' ? [120, 120] : undefined,
+    delay: trigger === 'mouseenter' ? props.delay : undefined,
     appendTo: () => document.body,
     allowHTML: true,
     maxWidth: 'none',
