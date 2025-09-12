@@ -98,12 +98,33 @@ export function any2px(value: number | string | undefined): string {
 
   return ''
 }
+let lastTimestamp = 0n
+let counter = 0n
 
-export function getUniqueId() {
-  // 生成 UUID v4
-  const uuid = crypto.randomUUID()
-  // 取前6位
-  return uuid.substring(0, 8)
+export function getUniqueId(): string {
+  const letters = 'abcdefghijklmnopqrstuvwxyz'
+  const firstChar = letters[Math.floor(Math.random() * letters.length)]
+
+  // 当前时间戳（毫秒）
+  const timestamp = BigInt(Date.now())
+
+  // 如果同一毫秒生成多个 ID，则自增计数器，避免重复
+  if (timestamp === lastTimestamp) {
+    counter++
+  }
+  else {
+    counter = 0n
+    lastTimestamp = timestamp
+  }
+
+  // 合并时间戳和计数器，再加上少量随机数
+  const random = BigInt(Math.floor(Math.random() * 1000)) // 0~999
+  const uniqueNumber = timestamp * 1000n + counter + random
+
+  // 转为 Base36 压缩，截取后 7 位
+  const rest = uniqueNumber.toString(36).slice(-7).padStart(7, '0')
+
+  return firstChar + rest
 }
 
 export function formatFormByMap(formMap: any) {
