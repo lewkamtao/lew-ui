@@ -334,8 +334,8 @@ const getIconSize = computed(() => {
   .lew-button-type-text.lew-button-color-#{$name} {
     --lew-button-bg: transparent;
     --lew-button-color: var(--lew-color-#{$name}-dark);
-    --lew-button-hover-bg: var(--lew-bgcolor-2);
-    --lew-button-active-bg: var(--lew-bgcolor-4);
+    --lew-button-hover-bg: var(--lew-form-bgcolor-hover);
+    --lew-button-active-bg: var(--lew-form-bgcolor-active);
     box-shadow: none;
     border: none;
   }

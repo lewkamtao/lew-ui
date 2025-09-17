@@ -136,9 +136,9 @@
   --lew-color-gray-hover: #7b7b81;
   --lew-color-gray-active: #6e6e71;
 
-  --lew-color-gray-light: #f0f0f0;
-  --lew-color-gray-light-hover: #dfdfe0;
-  --lew-color-gray-light-active: #ceced5;
+  --lew-color-gray-light: var(--lew-form-bgcolor);
+  --lew-color-gray-light-hover: var(--lew-form-bgcolor-hover);
+  --lew-color-gray-light-active: var(--lew-form-bgcolor-active);
 
   --lew-color-gray-dark: #414144;
 
@@ -304,9 +304,9 @@
   --lew-color-gray-hover: #7b7b81;
   --lew-color-gray-active: #6e6e71;
 
-  --lew-color-gray-light: #454546;
-  --lew-color-gray-light-hover: #3a3a3b;
-  --lew-color-gray-light-active: #303031;
+  --lew-color-gray-light: var(--lew-form-bgcolor);
+  --lew-color-gray-light-hover: var(--lew-form-bgcolor-hover);
+  --lew-color-gray-light-active: var(--lew-form-bgcolor-active);
 
   --lew-color-gray-dark: rgb(174 174 178);
 

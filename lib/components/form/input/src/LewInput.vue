@@ -271,25 +271,34 @@ defineExpose({ toFocus, toBlur })
       <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear" />
       <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
         <div
-          v-if="modelValue && showCount"
-          ref="lewInputCountRef"
-          class="lew-input-count"
-          :class="{
-            'lew-input-count-clearable': clearable && modelValue,
+          :style="{
+            transform: clearable && modelValue ? 'translateX(-20px)' : 'translateX(0px)',
           }"
+          class="lew-input-controls-box"
         >
-          {{ typeof modelValue === "string" ? modelValue.length : 0
-          }}{{ maxLength ? ` / ${maxLength}` : "" }}
+          <div
+            v-if="modelValue && showCount"
+            ref="lewInputCountRef"
+            class="lew-input-count"
+          >
+            {{ typeof modelValue === "string" ? modelValue.length : 0
+            }}{{ maxLength ? ` / ${maxLength}` : "" }}
+          </div>
+          <div
+            v-if="showPassword && type === 'password'"
+            class="lew-input-show-password"
+            @mousedown.prevent=""
+            @click="showPasswordFn"
+          >
+            <CommonIcon v-show="_type === 'text'" :size="getIconSize" type="eye" />
+            <CommonIcon
+              v-show="_type === 'password'"
+              :size="getIconSize"
+              type="eye_off"
+            />
+          </div>
         </div>
-        <div
-          v-if="showPassword && type === 'password'"
-          class="lew-input-show-password"
-          @mousedown.prevent=""
-          @click="showPasswordFn"
-        >
-          <CommonIcon v-show="_type === 'text'" :size="getIconSize" type="eye" />
-          <CommonIcon v-show="_type === 'password'" :size="getIconSize" type="eye_off" />
-        </div>
+
         <transition name="lew-form-icon-ani">
           <CommonIcon
             v-if="clearable && modelValue && !readonly"
@@ -362,6 +371,13 @@ defineExpose({ toFocus, toBlur })
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-form-box-shadow);
   transition: all var(--lew-form-transition-ease);
+
+  .lew-input-controls-box {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all var(--lew-form-transition-ease);
+  }
 
   .lew-input-box {
     position: relative;
@@ -501,6 +517,8 @@ defineExpose({ toFocus, toBlur })
     }
 
     .lew-input-show-password {
+      display: flex;
+      align-items: center;
       opacity: var(--lew-form-icon-opacity);
       cursor: pointer;
       transition: all 0.25s;
@@ -593,10 +611,6 @@ defineExpose({ toFocus, toBlur })
     .lew-input-count {
       font-size: 12px;
     }
-
-    .lew-input-count-clearable {
-      transform: translateX(-18px);
-    }
   }
 
   .lew-input-auto-width {
@@ -646,10 +660,6 @@ defineExpose({ toFocus, toBlur })
     .lew-input-count {
       font-size: 13px;
     }
-
-    .lew-input-count-clearable {
-      transform: translateX(-18px);
-    }
   }
 
   .lew-input-auto-width {
@@ -698,10 +708,6 @@ defineExpose({ toFocus, toBlur })
 
     .lew-input-count {
       font-size: 14px;
-    }
-
-    .lew-input-count-clearable {
-      transform: translateX(-18px);
     }
   }
 
