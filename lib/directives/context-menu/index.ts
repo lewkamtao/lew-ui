@@ -9,6 +9,7 @@ import { createApp, h } from 'vue'
 export { contextMenuProps } from './src/props'
 
 const MENU_SHOW_DELAY = 120
+const MENU_DESTROY_DELAY = 250
 const ATTR_MENU_ID = 'lew-context-menu-id'
 const ATTR_DATA_LEW = 'data-lew'
 
@@ -138,7 +139,7 @@ function showMenu(e: MouseEvent, options: LewContextMenusOption[], trigger: LewM
   if (currentContent) {
     setTimeout(() => {
       destroyContextMenu(currentContent)
-    }, MENU_SHOW_DELAY)
+    }, MENU_DESTROY_DELAY)
   }
   const menuDom = createContextMenu(options)
 
