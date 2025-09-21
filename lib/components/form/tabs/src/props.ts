@@ -83,4 +83,4 @@ export const tabsProps = {
   },
 }
 
-export type TabsProps = ExtractPublicPropTypes<typeof tabsProps>
+export type LewTabsProps = ExtractPublicPropTypes<typeof tabsProps>
