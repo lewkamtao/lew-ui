@@ -1,3 +1,3 @@
 export const switchEmits = {
-  change: (value?: boolean) => value,
+  change: (value?: boolean) => typeof value === 'boolean' || value === undefined,
 } as const

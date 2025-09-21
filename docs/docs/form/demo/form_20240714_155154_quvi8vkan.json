@@ -928,7 +928,6 @@
       "label": "开关",
       "as": "switch",
       "props": {
-        "round": 1
       },
       "id": "switch_20240810_4c561647",
       "field": "fcc18c48",

@@ -14,8 +14,6 @@ export const treeSelectProps = {
   dataSource: {
     type: Array as PropType<LewTreeDataSource[]>,
     typePopKeys: ['LewTreeDataSource'],
-    required: true,
-
     validator: validators.array({
       componentName: 'LewTreeSelect',
       propName: 'dataSource',

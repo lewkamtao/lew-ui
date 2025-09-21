@@ -1,6 +1,6 @@
 export const formEmits = {
   change: (value: any) => value,
-  mounted: () => { },
+  mounted: () => true,
 } as const
 
 export const formItemEmits = {

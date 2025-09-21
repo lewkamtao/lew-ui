@@ -1,7 +1,7 @@
 {
   "name": "lew-ui",
   "type": "module",
-  "version": "2.7.53",
+  "version": "2.7.54",
   "description": "A Component Library for Vue3.js.",
   "author": "lewkamtao",
   "license": "MIT",

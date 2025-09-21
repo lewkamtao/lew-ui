@@ -98,28 +98,31 @@ export function any2px(value: number | string | undefined): string {
 
   return ''
 }
-let lastTimestamp = 0n
-let counter = 0n
+
+// 先定义一个模块级别的变量来存储最后一个时间戳和计数器
+let lastTimestamp: number = 0
+let counter: number = 0
 
 export function getUniqueId(): string {
   const letters = 'abcdefghijklmnopqrstuvwxyz'
   const firstChar = letters[Math.floor(Math.random() * letters.length)]
 
-  // 当前时间戳（毫秒）
-  const timestamp = BigInt(Date.now())
+  // 当前时间戳（毫秒）- 使用普通数字而非BigInt
+  const timestamp = Date.now()
 
   // 如果同一毫秒生成多个 ID，则自增计数器，避免重复
   if (timestamp === lastTimestamp) {
     counter++
   }
   else {
-    counter = 0n
+    counter = 0 // 使用0而非0n
     lastTimestamp = timestamp
   }
 
   // 合并时间戳和计数器，再加上少量随机数
-  const random = BigInt(Math.floor(Math.random() * 1000)) // 0~999
-  const uniqueNumber = timestamp * 1000n + counter + random
+  const random = Math.floor(Math.random() * 1000) // 0~999
+  // 使用普通数字运算而非BigInt
+  const uniqueNumber = timestamp * 1000 + counter + random
 
   // 转为 Base36 压缩，截取后 7 位
   const rest = uniqueNumber.toString(36).slice(-7).padStart(7, '0')

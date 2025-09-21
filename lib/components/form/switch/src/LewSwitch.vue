@@ -19,14 +19,16 @@ async function handleClick() {
     _loading.value = true
     const isSuccess = await props.request()
     if (isSuccess) {
-      const newValue = !modelValue.value
+      const currentValue = modelValue.value ?? false
+      const newValue = !currentValue
       modelValue.value = newValue
       emit('change', newValue)
     }
     _loading.value = false
   }
   else {
-    const newValue = !modelValue.value
+    const currentValue = modelValue.value ?? false
+    const newValue = !currentValue
     modelValue.value = newValue
     emit('change', newValue)
   }
