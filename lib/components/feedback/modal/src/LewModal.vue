@@ -214,6 +214,7 @@ if (props.closeByEsc) {
               class="lew-modal-footer"
             >
               <LewButton
+                v-if="!props.hideCloseButton"
                 v-bind="{
                   size: 'small',
                   type: 'light',
@@ -223,6 +224,7 @@ if (props.closeByEsc) {
                 }"
               />
               <LewButton
+                v-if="!props.hideOkButton"
                 v-bind="{
                   size: 'small',
                   text: locale.t('modal.okText'),

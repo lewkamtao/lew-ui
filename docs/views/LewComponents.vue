@@ -353,11 +353,7 @@ const options = computed(() => {
     </div>
     <div class="app-main lew-scrollbar">
       <div id="component-main" class="component-main lew-scrollbar">
-        <router-view v-slot="{ Component }">
-          <keep-alive>
-            <Component :is="Component" />
-          </keep-alive>
-        </router-view>
+        <router-view />
       </div>
       <div class="component-nav">
         <LewRightNav />

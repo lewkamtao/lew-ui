@@ -231,6 +231,7 @@ function handleClose(): void {
           class="lew-drawer-footer"
         >
           <LewButton
+            v-if="!props.hideCloseButton"
             v-bind="{
               size: 'small',
               text: locale.t('drawer.closeText'),
@@ -241,6 +242,7 @@ function handleClose(): void {
             }"
           />
           <LewButton
+            v-if="!props.hideOkButton"
             v-bind="{
               size: 'small',
               text: locale.t('drawer.okText'),

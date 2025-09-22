@@ -28,7 +28,7 @@ onMounted(() => {
   visible.value = true
   nextTick(() => {
     if (okRef.value)
-      okRef.value.focus()
+      okRef.value.$el.focus()
   })
 })
 

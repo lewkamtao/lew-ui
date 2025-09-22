@@ -87,6 +87,22 @@ export const drawerProps = {
       propName: 'closeButtonProps',
     }),
   },
+  hideOkButton: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewModal',
+      propName: 'hideOkButton',
+    }),
+  },
+  hideCloseButton: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewModal',
+      propName: 'hideCloseButton',
+    }),
+  },
   zIndex: {
     type: Number,
     default: 1001,

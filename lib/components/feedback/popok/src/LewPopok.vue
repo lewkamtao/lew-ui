@@ -38,7 +38,7 @@ function hide() {
 onMounted(() => {
   nextTick(() => {
     if (okRef.value)
-      okRef.value.focus()
+      okRef.value.$el.focus()
   })
 })
 </script>

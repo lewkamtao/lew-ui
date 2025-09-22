@@ -116,6 +116,7 @@ const options = [
   <lew-cascader
     v-model="v"
     width="300px"
+    multiple
     :options="options"
     placeholder="Explore high-end tech products"
   />
