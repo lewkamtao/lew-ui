@@ -125,6 +125,14 @@ export const treeProps = {
       propName: 'isSelect',
     }),
   },
+  onlyLeafSelectable: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewTree',
+      propName: 'onlyLeafSelectable',
+    }),
+  },
 }
 
 export const treeItemProps = {

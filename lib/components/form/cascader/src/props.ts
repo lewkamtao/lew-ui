@@ -52,14 +52,6 @@ export const cascaderProps = {
       propName: 'showAllLevels',
     }),
   },
-  multiple: {
-    type: Boolean,
-    default: false,
-    validator: validators.boolean({
-      componentName: 'LewCascader',
-      propName: 'multiple',
-    }),
-  },
   free: {
     type: Boolean,
     default: false,

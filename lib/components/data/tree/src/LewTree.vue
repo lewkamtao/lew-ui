@@ -31,6 +31,7 @@ provide('lew-tree', {
   loadMethod: props.loadMethod,
   keyField: props.keyField,
   labelField: props.labelField,
+  onlyLeafSelectable: props.onlyLeafSelectable,
   cacheDataSource,
   _dataSource,
 })

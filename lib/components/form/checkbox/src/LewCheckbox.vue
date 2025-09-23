@@ -28,7 +28,7 @@ const getIconSize = computed(() => {
 
 const getCheckboxClassName = computed(() => {
   const { block, round, iconable, size, disabled, certain, readonly } = props
-  const checked = modelValue.value || props.checked
+  const checked = props.checked || modelValue.value
   const unicon = !iconable && block
 
   return object2class('lew-checkbox', {

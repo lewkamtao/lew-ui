@@ -113,7 +113,7 @@ const options = [
 </script>
 
 <template>
-  <lew-cascader
+  <lew-cascader-multiple
     v-model="v"
     width="300px"
     multiple

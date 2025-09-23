@@ -9,6 +9,6 @@ const v = ref()
 
 <template>
   <div style="width: 300px">
-    <lew-cascader v-model="v" free :options="cityTree" @change="change" />
+    <lew-cascader-multiple v-model="v" free :options="cityTree" @change="change" />
   </div>
 </template>

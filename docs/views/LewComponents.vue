@@ -191,8 +191,16 @@ const options = computed(() => {
           value: '/Cascader',
         },
         {
+          label: 'CascaderMultiple',
+          value: '/CascaderMultiple',
+        },
+        {
           label: 'TreeSelect',
           value: '/TreeSelect',
+        },
+        {
+          label: 'TreeSelectMultiple',
+          value: '/TreeSelectMultiple',
         },
         {
           label: 'InputTable',

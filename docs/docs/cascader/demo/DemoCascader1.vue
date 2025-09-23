@@ -115,6 +115,7 @@ const options = [
 <template>
   <lew-cascader
     v-model="v"
+    clearable
     width="300px"
     multiple
     :options="options"

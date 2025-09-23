@@ -44,28 +44,12 @@ export const cascaderMultipleProps = {
       propName: 'clearable',
     }),
   },
-  showAllLevels: {
-    type: Boolean,
-    default: true,
-    validator: validators.boolean({
-      componentName: 'LewCascader',
-      propName: 'showAllLevels',
-    }),
-  },
   multiple: {
     type: Boolean,
     default: false,
     validator: validators.boolean({
       componentName: 'LewCascader',
       propName: 'multiple',
-    }),
-  },
-  free: {
-    type: Boolean,
-    default: false,
-    validator: validators.boolean({
-      componentName: 'LewCascader',
-      propName: 'free',
     }),
   },
   size: {
@@ -125,6 +109,26 @@ export const cascaderMultipleProps = {
     validator: validators.boolean({
       componentName: 'LewCascader',
       propName: 'readonly',
+    }),
+  },
+  valueLayout: {
+    type: String,
+    default: 'text',
+    validator: validators.string({
+      componentName: 'LewCascader',
+      propName: 'valueLayout',
+    }),
+  },
+  valueTextSplit: {
+    type: String,
+    default: ',',
+  },
+  showAllLevels: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'showAllLevels',
     }),
   },
 }

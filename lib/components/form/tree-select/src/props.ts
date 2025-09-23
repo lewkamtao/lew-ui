@@ -70,7 +70,7 @@ export const treeSelectProps = {
   },
   checkable: {
     type: Boolean,
-    default: false,
+    default: true,
     validator: validators.boolean({
       componentName: 'LewTreeSelect',
       propName: 'checkable',
@@ -84,14 +84,7 @@ export const treeSelectProps = {
       propName: 'showAllLevels',
     }),
   },
-  showCheckIcon: {
-    type: Boolean,
-    default: true,
-    validator: validators.boolean({
-      componentName: 'LewTreeSelect',
-      propName: 'showCheckIcon',
-    }),
-  },
+
   showLine: {
     type: Boolean,
     default: false,
