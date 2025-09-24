@@ -1,32 +1,33 @@
 <script setup lang="ts">
-import type { LewCascaderOption } from 'lew-ui/types'
-import type { CascaderNodeCache } from '../../cascader/src/cascader'
-import { LewCheckbox, LewPopover, LewTooltip } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import SelectMultipleInput from 'lew-ui/_components/SelectMultipleInput.vue'
-import { any2px, object2class } from 'lew-ui/utils'
-import { isFunction } from 'lodash-es'
-import { VirtList } from 'vue-virt-list'
+import type { LewCascaderOption } from "lew-ui/types";
+import type { CascaderNodeCache } from "../../cascader/src/cascader";
+import { LewCheckbox, LewPopover, LewTooltip } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import CommonInput from "lew-ui/_components/CommonInput.vue";
+import { useTreeSelection } from "lew-ui/hooks";
+import { any2px, object2class } from "lew-ui/utils";
+import { cloneDeep, isEqual, isFunction } from "lodash-es";
+import { VirtList } from "vue-virt-list";
 import {
   createCascaderCache,
   findAndAddChildrenByValue,
   findChildrenByValue,
   findObjectByValue,
   formatTree,
-} from '../../cascader/src/cascader'
-import { cascaderMultipleEmits } from './emits'
-import { cascaderMultipleProps } from './props'
+} from "../../cascader/src/cascader";
+import { cascaderMultipleEmits } from "./emits";
+import { cascaderMultipleProps } from "./props";
 
-const props = defineProps(cascaderMultipleProps)
-const emit = defineEmits(cascaderMultipleEmits)
-const modelValue = defineModel()
+const props = defineProps(cascaderMultipleProps);
+const emit = defineEmits(cascaderMultipleEmits);
+const modelValue = defineModel<string[]>();
 
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive("tooltip")) {
+  app.use(LewTooltip);
 }
 
-const lewPopoverRef = ref()
+const lewPopoverRef = ref();
 
 const state = reactive({
   visible: false,
@@ -36,72 +37,97 @@ const state = reactive({
   optionsGroup: [] as LewCascaderOption[][],
   optionsTree: [] as LewCascaderOption[],
   activeValues: [] as string[],
-})
+});
 
-const loadedDataCache = new Map<string, LewCascaderOption[]>()
-const nodeCache: CascaderNodeCache = createCascaderCache()
-const itemWrapperStyleCache = new Map<string, any>()
+const loadedDataCache = new Map<string, LewCascaderOption[]>();
+const nodeCache: CascaderNodeCache = createCascaderCache();
 
-const loadedData = reactive<Record<string, LewCascaderOption[]>>({})
+const loadedData = reactive<Record<string, LewCascaderOption[]>>({});
 
-const formMethods: any = inject('formMethods', {})
+const formMethods: any = inject("formMethods", {});
+
+// 将 LewCascaderOption 转换为 TreeNode 格式
+function convertToTreeNodes(
+  options: LewCascaderOption[]
+): Array<{ key: string; children?: any; disabled?: boolean }> {
+  return options.map((option: LewCascaderOption) => ({
+    key: option.value,
+    children: option.children ? convertToTreeNodes(option.children) : undefined,
+    disabled: option.disabled,
+  }));
+}
+
+const {
+  selectedKeys,
+  init: initTreeSelection,
+  isSelected,
+  isIndeterminate,
+  removeKey,
+  toggleKey,
+  findItemsByValues,
+} = useTreeSelection();
+
+// 防止循环更新的标志
+let isInternalUpdate = false;
 
 const _loadMethod = computed(() => {
   if (isFunction(props.loadMethod)) {
-    return props.loadMethod
+    return props.loadMethod;
+  } else if (props.loadMethodId) {
+    return formMethods[props.loadMethodId];
   }
-  else if (props.loadMethodId) {
-    return formMethods[props.loadMethodId]
-  }
-  return false
-})
+  return false;
+});
 
 const _initMethod = computed(() => {
   if (isFunction(props.initMethod)) {
-    return props.initMethod
+    return props.initMethod;
+  } else if (props.initMethodId) {
+    return formMethods[props.initMethodId];
   }
-  else if (props.initMethodId) {
-    return formMethods[props.initMethodId]
-  }
-  return false
-})
+  return false;
+});
 
 async function init() {
-  let _tree: LewCascaderOption[] = []
+  let _tree: LewCascaderOption[] = [];
   try {
     if (_initMethod.value) {
-      const newOptions = await _initMethod.value()
-      _tree = newOptions || []
-    }
-    else if (_loadMethod.value && !state.loading) {
-      state.loading = true
-      _tree = (await _loadMethod.value()) || []
-      state.loading = false
-    }
-    else if (props.options?.length) {
+      const newOptions = await _initMethod.value();
+      _tree = newOptions || [];
+    } else if (_loadMethod.value && !state.loading) {
+      state.loading = true;
+      _tree = (await _loadMethod.value()) || [];
+      state.loading = false;
+    } else if (props.options?.length) {
       _tree = props.options.map((e: LewCascaderOption) => ({
         ...e,
         isLeaf: !e.children?.length,
-      }))
+      }));
     }
-    nodeCache.clear()
-    loadedDataCache.clear()
-    const formattedTree = formatTree(_tree)
-    state.optionsGroup = [formattedTree]
-    state.optionsTree = formattedTree
-  }
-  catch (error) {
-    console.error('Cascader initialization failed:', error)
-    state.optionsGroup = []
-    state.optionsTree = []
-  }
-  finally {
-    state.initLoading = false
-    state.loading = false
+    nodeCache.clear();
+    loadedDataCache.clear();
+    const formattedTree = formatTree(_tree);
+    state.optionsGroup = [formattedTree];
+    state.optionsTree = formattedTree;
+
+    // 设置树形数据到 hook
+    if (formattedTree.length > 0) {
+      const tree = convertToTreeNodes(formattedTree);
+      // 初始化时同步 modelValue 到选中状态
+
+      initTreeSelection({ tree, keys: modelValue.value || [] });
+    }
+  } catch (error) {
+    console.error("Cascader initialization failed:", error);
+    state.optionsGroup = [];
+    state.optionsTree = [];
+  } finally {
+    state.initLoading = false;
+    state.loading = false;
   }
 }
 
-init()
+init();
 
 watch(
   () => props.options,
@@ -110,256 +136,303 @@ watch(
       const _tree = newOptions.map((e: LewCascaderOption) => ({
         ...e,
         isLeaf: !e.children?.length,
-      }))
-      nodeCache.clear()
-      loadedDataCache.clear()
-      const formattedTree = formatTree(_tree)
-      state.optionsGroup = [formattedTree]
-      state.optionsTree = formattedTree
+      }));
+      nodeCache.clear();
+      loadedDataCache.clear();
+      const formattedTree = formatTree(_tree);
+      state.optionsGroup = [formattedTree];
+      state.optionsTree = formattedTree;
+
+      // 更新树形数据到 hook
+      if (formattedTree.length > 0) {
+        const tree = convertToTreeNodes(formattedTree);
+
+        // 当树结构更新后，重新同步 modelValue 到选中状态
+        if (
+          modelValue.value &&
+          Array.isArray(modelValue.value) &&
+          modelValue.value.length > 0
+        ) {
+          initTreeSelection({ tree, keys: modelValue.value });
+        }
+      }
     }
   },
   {
     deep: true,
-    flush: 'post',
-  },
-)
+    flush: "post",
+  }
+);
 
-/**
- * 比较两个数组是否相等
- */
-function arrayEquals(a: string[] | undefined, b: string[] | undefined): boolean {
-  if (a === b)
-    return true
-  if (!a || !b)
-    return false
-  if (a.length !== b.length)
-    return false
-  return a.every((val, index) => val === b[index])
-}
+// 监听 modelValue 变化，实现单向数据绑定
+watch(
+  () => modelValue.value,
+  (newValue) => {
+    if (isInternalUpdate) {
+      return; // 如果是内部更新，跳过处理
+    }
+
+    initTreeSelection({ keys: newValue || [] });
+  },
+  {
+    immediate: false, // 不需要立即执行，因为初始化时已经处理过了
+    deep: true,
+  }
+);
+
 function changeCheck(item: LewCascaderOption) {
   if (item.disabled) {
-    return
+    return;
   }
 
-  const currentValues = (modelValue.value || []) as string[]
-  const index = currentValues.findIndex((value: string) => value === item.value)
-
-  if (index >= 0) {
-    // 取消选择
-    currentValues.splice(index, 1)
+  const itemValue = item.value;
+  if (props.free) {
+    const isSelected = modelValue.value?.includes(itemValue);
+    if (isSelected) {
+      modelValue.value = modelValue.value?.filter(
+        (value) => value !== itemValue
+      );
+    } else {
+      modelValue.value = [...(modelValue.value || []), itemValue];
+    }
+    emit("change", modelValue.value as string[] | undefined);
+  } else {
+    toggleKey(itemValue);
+    updateModelValue();
   }
-  else {
-    // 添加选择
-    currentValues.push(item.value)
+}
+
+function updateModelValue() {
+  isInternalUpdate = true;
+
+  if (props.onlyLeafSelectable) {
+    modelValue.value = findItemsByValues(selectedKeys.value)
+      .filter((item: any) => item.isLeaf)
+      .map((item: any) => item.key);
+  } else {
+    modelValue.value = cloneDeep(selectedKeys.value);
   }
 
-  modelValue.value = [...currentValues]
-  emit('select', modelValue.value as string[])
-  emit('change', modelValue.value as string[])
+  emit("change", modelValue.value as string[] | undefined);
+
+  nextTick(() => {
+    isInternalUpdate = false;
+  });
+}
+
+// 辅助方法：更新树结构并同步选中状态
+function updateTreeStructure() {
+  if (state.optionsTree.length > 0) {
+    const tree = convertToTreeNodes(state.optionsTree);
+    // 保持当前的选中状态，重新初始化树结构
+    const currentKeys =
+      modelValue.value && Array.isArray(modelValue.value)
+        ? modelValue.value
+        : [];
+    initTreeSelection({ tree, keys: currentKeys });
+  }
 }
 
 async function selectItem(item: LewCascaderOption, level: number) {
   // 非叶子节点，处理展开逻辑
-  if (!item.isLeaf && !arrayEquals(item.valuePaths, state.activeValues)) {
-    state.optionsGroup = state.optionsGroup.slice(0, level + 1)
+  if (!item.isLeaf && !isEqual(item.valuePaths, state.activeValues)) {
+    state.optionsGroup = state.optionsGroup.slice(0, level + 1);
     if (_loadMethod.value && !item.isLeaf) {
       if (loadedDataCache.has(item.value)) {
-        const _options = loadedDataCache.get(item.value)!
-        state.optionsGroup.push(_options)
-      }
-      else if (loadedData[item.value]) {
-        const _options = loadedData[item.value]
-        state.optionsGroup.push(_options)
-        loadedDataCache.set(item.value, _options)
-      }
-      else {
-        item.loading = true
-        state.okLoading = true
+        const _options = loadedDataCache.get(item.value)!;
+        state.optionsGroup.push(_options);
+      } else if (loadedData[item.value]) {
+        const _options = loadedData[item.value];
+        state.optionsGroup.push(_options);
+        loadedDataCache.set(item.value, _options);
+      } else {
+        item.loading = true;
+        state.okLoading = true;
         const loadParam = {
           value: item.value,
           label: item.label,
           level,
-        }
-        const new_options = (await _loadMethod.value(loadParam)) || []
+        };
+        const new_options = (await _loadMethod.value(loadParam)) || [];
         // 格式化新加载的数据，添加路径信息
         const formattedNewOptions = formatTree(
           new_options,
           item.valuePaths,
-          item.labelPaths,
-        )
+          item.labelPaths
+        );
         findAndAddChildrenByValue(
           state.optionsTree,
           item.value,
           formattedNewOptions,
-          nodeCache,
-        )
-        const _options = findChildrenByValue(state.optionsTree, item.value, nodeCache)
-        state.optionsGroup.push(_options)
-        loadedDataCache.set(item.value, _options)
-        loadedData[item.value] = _options
-        item.loading = false
-        state.okLoading = false
+          nodeCache
+        );
+
+        // 重要：异步获取数据后，需要更新树结构并同步选中状态
+        updateTreeStructure();
+        nextTick(() => {
+          updateModelValue();
+        });
+        const _options = findChildrenByValue(
+          state.optionsTree,
+          item.value,
+          nodeCache
+        );
+        state.optionsGroup.push(_options);
+        loadedDataCache.set(item.value, _options);
+        loadedData[item.value] = _options;
+        item.loading = false;
+        state.okLoading = false;
       }
-    }
-    else if (!item.isLeaf && item.children) {
+    } else if (!item.isLeaf && item.children) {
       // 确保静态子节点也有正确的路径信息
-      const _options = item.children.map(e => ({
+      const _options = item.children.map((e) => ({
         ...e,
         isLeaf: !e.children?.length,
-      }))
-      state.optionsGroup.push(_options)
+      }));
+      state.optionsGroup.push(_options);
     }
   }
 
-  if (item.isLeaf)
-    return
+  if (item.isLeaf) return;
 
-  if (arrayEquals(item.valuePaths, state.activeValues)) {
-    state.activeValues = (item.parentValuePaths as string[]) || []
+  if (isEqual(item.valuePaths, state.activeValues)) {
+    state.activeValues = (item.parentValuePaths as string[]) || [];
     if (level < state.optionsGroup.length - 1) {
-      state.optionsGroup.pop()
+      state.optionsGroup.pop();
     }
-  }
-  else {
-    state.activeValues = (item.valuePaths as string[]) || []
+  } else {
+    state.activeValues = (item.valuePaths as string[]) || [];
   }
 }
 
 onBeforeUnmount(() => {
-  nodeCache.clear()
-  loadedDataCache.clear()
-  itemWrapperStyleCache.clear()
-})
+  nodeCache.clear();
+  loadedDataCache.clear();
+});
 
 async function show() {
   try {
-    await lewPopoverRef.value?.show()
-  }
-  catch (error) {
-    console.warn('Failed to show cascader popover:', error)
+    await lewPopoverRef.value?.show();
+  } catch (error) {
+    console.warn("Failed to show cascader popover:", error);
   }
 }
 
 function hide() {
   try {
-    lewPopoverRef.value?.hide()
-  }
-  catch (error) {
-    console.warn('Failed to hide cascader popover:', error)
+    lewPopoverRef.value?.hide();
+  } catch (error) {
+    console.warn("Failed to hide cascader popover:", error);
   }
 }
 
 function clearHandle() {
-  const oldValue = modelValue.value
   Object.assign(state, {
     activeValues: [],
     visible: false,
-  })
-  modelValue.value = []
-  itemWrapperStyleCache.clear()
-  init()
-  if (oldValue && Array.isArray(oldValue) && oldValue.length > 0) {
-    emit('clear')
-    emit('change', [])
-  }
+  });
+
+  // 清空选中状态
+  initTreeSelection({ keys: [] });
+
+  isInternalUpdate = true;
+  modelValue.value = undefined;
+  emit("change", modelValue.value as string[] | undefined);
+  emit("clear");
+
+  nextTick(() => {
+    isInternalUpdate = false;
+  });
 }
 
 function deleteTag(value: string) {
-  const currentValues = (modelValue.value || []) as string[]
-  const index = currentValues.findIndex((v: string) => v === value)
+  // 使用removeKey移除该值，让hook自动处理父子关系
+  removeKey(value);
 
-  if (index >= 0) {
-    currentValues.splice(index, 1)
-    modelValue.value = [...currentValues]
-    emit('delete', modelValue.value as string[], value)
-    emit('change', modelValue.value as string[])
-  }
+  updateModelValue();
+  emit("delete", modelValue.value as string[], value);
 }
 
 function showHandle() {
-  state.visible = true
+  state.visible = true;
 }
 
 function hideHandle() {
-  state.visible = false
-  itemWrapperStyleCache.clear()
+  state.visible = false;
 }
 
 const getCascaderWidth = computed(() => {
-  const validGroups = state.optionsGroup.filter(group => group?.length > 0).length
-  return Math.max(validGroups, 1) * 200
-})
+  const validGroups = state.optionsGroup.filter((group) => group?.length > 0)
+    .length;
+  return Math.max(validGroups, 1) * 200;
+});
 
 const VIRT_LIST_STYLE = {
-  padding: '6px 6px 2px 6px',
-  boxSizing: 'border-box' as const,
-}
+  padding: "6px 6px 2px 6px",
+  boxSizing: "border-box" as const,
+};
 
 const ITEM_PADDING_STYLE = {
-  height: '38px',
-}
+  height: "38px",
+};
 
 const getCascaderBodyStyle = computed(() => ({
   width: `${getCascaderWidth.value}px`,
-}))
+}));
 
 const getBodyClassName = computed(() => {
-  const { size, disabled } = props
-  return object2class('lew-cascader-multiple-body', { size, disabled })
-})
+  const { size, disabled } = props;
+  return object2class("lew-cascader-multiple-body", { size, disabled });
+});
 
 function getItemClass(templateProps: any) {
-  const isSelected
-    = Array.isArray(modelValue.value) && modelValue.value.includes(templateProps.value)
+  const isSelected =
+    Array.isArray(modelValue.value) &&
+    modelValue.value.includes(templateProps.value);
   return {
-    'lew-cascader-multiple-item-disabled': templateProps.disabled,
-    'lew-cascader-multiple-item-active':
+    "lew-cascader-multiple-item-disabled": templateProps.disabled,
+    "lew-cascader-multiple-item-active":
       state.activeValues?.includes(templateProps.value) || false,
-    'lew-cascader-multiple-item-selected': isSelected,
-  }
+    "lew-cascader-multiple-item-selected": isSelected,
+  };
 }
-
-// 添加获取已选中项的计算属性
-const getChecked = computed(() => {
-  const currentValues = (modelValue.value || []) as string[]
-  return (value: string) => currentValues.includes(value)
-})
 
 // 添加格式化已选项的计算属性
 const formatItems = computed(() => {
   if (!modelValue.value || !Array.isArray(modelValue.value)) {
-    return []
+    return [];
   }
 
   return modelValue.value.map((value: string) => {
-    const { label }: any = findObjectByValue(state.optionsTree, value, nodeCache)
+    const { label, labelPaths }: any = findObjectByValue(
+      state.optionsTree,
+      value,
+      nodeCache
+    );
     return {
       value,
-      label,
-    }
-  })
-})
+      label: props.showAllLevels ? labelPaths.join(" / ") : label,
+    };
+  });
+});
 
 function getItemWrapperStyle(oIndex: number, oItem: any) {
-  const key = `${oIndex}-${oItem.length}-${state.optionsGroup.length}`
-  if (itemWrapperStyleCache.has(key)) {
-    return itemWrapperStyleCache.get(key)!
-  }
   const style = {
     zIndex: 20 - oIndex,
     borderRadius: `0 ${
-      oIndex === state.optionsGroup.length - 1 ? 'var(--lew-border-radius-small)' : '0'
+      oIndex === state.optionsGroup.length - 1
+        ? "var(--lew-border-radius-small)"
+        : "0"
     } 0 0`,
-    transform: oItem.length > 0 ? `translateX(${200 * oIndex}px)` : '',
-  }
-  itemWrapperStyleCache.set(key, style)
-  return style
+    transform: oItem.length > 0 ? `translateX(${200 * oIndex}px)` : "",
+  };
+  return style;
 }
 
 defineExpose({
   show,
   hide,
-})
+});
 </script>
 
 <template>
@@ -376,7 +449,7 @@ defineExpose({
     @hide="hideHandle"
   >
     <template #trigger>
-      <SelectMultipleInput
+      <CommonInput
         v-model="modelValue"
         :loading="state.initLoading"
         :clearable="clearable"
@@ -405,7 +478,10 @@ defineExpose({
             v-if="state.optionsGroup.length > 0"
             class="lew-cascader-multiple-options-box"
           >
-            <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
+            <template
+              v-for="(oItem, oIndex) in state.optionsGroup"
+              :key="oIndex"
+            >
               <div
                 class="lew-cascader-multiple-item-wrapper"
                 :style="getItemWrapperStyle(oIndex, oItem)"
@@ -432,7 +508,15 @@ defineExpose({
                         <LewCheckbox
                           :key="templateProps.value"
                           class="lew-cascader-multiple-checkbox"
-                          :checked="getChecked(templateProps.value)"
+                          :checked="
+                            props.free
+                              ? modelValue?.includes(templateProps.value)
+                              : isSelected(templateProps.value)
+                          "
+                          :certain="
+                            !props.free && isIndeterminate(templateProps.value)
+                          "
+                          :disabled="templateProps.disabled"
                           @change="changeCheck(templateProps)"
                         />
 
@@ -451,7 +535,9 @@ defineExpose({
                           type="loader"
                         />
                         <CommonIcon
-                          v-show="!templateProps.loading && !templateProps.isLeaf"
+                          v-show="
+                            !templateProps.loading && !templateProps.isLeaf
+                          "
                           :size="16"
                           class="lew-cascader-multiple-icon"
                           type="chevron-right"
@@ -514,7 +600,7 @@ defineExpose({
     }
 
     .lew-cascader-multiple-item-wrapper::after {
-      content: '';
+      content: "";
       position: absolute;
       right: 0;
       top: 0;

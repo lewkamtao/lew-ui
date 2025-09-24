@@ -1,158 +1,159 @@
 <script setup lang="ts">
 const options = ref([
   {
-    label: 'Living Room Furniture',
+    label: "Living Room Furniture",
     children: [
       {
-        label: 'KIVIK Sofa',
-        value: 'kivik',
+        label: "KIVIK Sofa",
+        value: "kivik",
       },
       {
-        label: 'BILLY Bookcase',
-        value: 'billy',
+        label: "BILLY Bookcase",
+        value: "billy",
       },
       {
-        label: 'KALLAX Shelf Unit',
-        value: 'kallax',
+        label: "KALLAX Shelf Unit",
+        value: "kallax",
       },
       {
-        label: 'POÄNG Armchair',
-        value: 'poang',
+        label: "POÄNG Armchair",
+        value: "poang",
       },
       {
-        label: 'LACK Coffee Table',
-        value: 'lack',
+        label: "LACK Coffee Table",
+        value: "lack",
       },
       {
-        label: 'EKTORP Sofa',
-        value: 'ektorp',
+        label: "EKTORP Sofa",
+        value: "ektorp",
       },
       {
-        label: 'VITTSJÖ TV Unit',
-        value: 'vittsjo',
+        label: "VITTSJÖ TV Unit",
+        value: "vittsjo",
       },
       {
-        label: 'BESTÅ TV Storage Combination',
-        value: 'besta',
+        label: "BESTÅ TV Storage Combination",
+        value: "besta",
       },
     ],
   },
   {
-    label: 'Bedroom Furniture',
+    label: "Bedroom Furniture",
     children: [
       {
-        label: 'MALM Bed',
-        value: 'malm',
+        label: "MALM Bed",
+        value: "malm",
       },
       {
-        label: 'PAX Wardrobe',
-        value: 'pax',
+        label: "PAX Wardrobe",
+        value: "pax",
       },
       {
-        label: 'HEMNES Bedside Table',
-        value: 'hemnes',
+        label: "HEMNES Bedside Table",
+        value: "hemnes",
       },
       {
-        label: 'BRIMNES Bed Frame',
-        value: 'brimnes',
+        label: "BRIMNES Bed Frame",
+        value: "brimnes",
       },
       {
-        label: 'SONGESAND Wardrobe',
-        value: 'songesand',
+        label: "SONGESAND Wardrobe",
+        value: "songesand",
       },
       {
-        label: 'TRYSIL Bed Frame',
-        value: 'trysil',
+        label: "TRYSIL Bed Frame",
+        value: "trysil",
       },
       {
-        label: 'NORDLI Bedside Table',
-        value: 'nordli',
+        label: "NORDLI Bedside Table",
+        value: "nordli",
       },
       {
-        label: 'KULLEN 5-drawer Chest',
-        value: 'kullen',
+        label: "KULLEN 5-drawer Chest",
+        value: "kullen",
       },
     ],
   },
   {
-    label: 'Kitchen Items',
+    label: "Kitchen Items",
     children: [
       {
-        label: 'METOD Cabinet',
-        value: 'metod',
+        label: "METOD Cabinet",
+        value: "metod",
       },
       {
-        label: 'KNOXHULT Kitchen Base Cabinet',
-        value: 'knoxhult',
+        label: "KNOXHULT Kitchen Base Cabinet",
+        value: "knoxhult",
       },
       {
-        label: 'SUNNERSTA Mini-kitchen',
-        value: 'sunnersta',
+        label: "SUNNERSTA Mini-kitchen",
+        value: "sunnersta",
       },
       {
-        label: 'TORNVIKEN Kitchen Island',
-        value: 'tornviken',
+        label: "TORNVIKEN Kitchen Island",
+        value: "tornviken",
       },
       {
-        label: 'ENHET Kitchen Storage Combination',
-        value: 'enhet',
+        label: "ENHET Kitchen Storage Combination",
+        value: "enhet",
       },
       {
-        label: 'RÅSKOG Kitchen Cart',
-        value: 'raskog',
+        label: "RÅSKOG Kitchen Cart",
+        value: "raskog",
       },
       {
-        label: 'KUNGSFORS Kitchen Rail',
-        value: 'kungsfors',
+        label: "KUNGSFORS Kitchen Rail",
+        value: "kungsfors",
       },
     ],
   },
   {
-    label: 'Office Furniture',
+    label: "Office Furniture",
     children: [
       {
-        label: 'MICKE Desk',
-        value: 'micke',
+        label: "MICKE Desk",
+        value: "micke",
       },
       {
-        label: 'MARKUS Office Chair',
-        value: 'markus',
+        label: "MARKUS Office Chair",
+        value: "markus",
       },
       {
-        label: 'ALEX Drawer Unit',
-        value: 'alex',
+        label: "ALEX Drawer Unit",
+        value: "alex",
       },
       {
-        label: 'BEKANT Sit/Stand Desk',
-        value: 'bekant',
+        label: "BEKANT Sit/Stand Desk",
+        value: "bekant",
       },
       {
-        label: 'MILLBERGET Swivel Chair',
-        value: 'millberget',
+        label: "MILLBERGET Swivel Chair",
+        value: "millberget",
       },
       {
-        label: 'FLINTAN Office Chair',
-        value: 'flintan',
+        label: "FLINTAN Office Chair",
+        value: "flintan",
       },
       {
-        label: 'GALANT Filing Cabinet',
-        value: 'galant',
+        label: "GALANT Filing Cabinet",
+        value: "galant",
       },
       {
-        label: 'LÅNGFJÄLL Office Chair',
-        value: 'langfjall',
+        label: "LÅNGFJÄLL Office Chair",
+        value: "langfjall",
       },
     ],
   },
-])
+]);
 
-const value = ref('')
+const value = ref([]);
 </script>
 
 <template>
   <lew-flex style="width: 320px" direction="y" gap="10px">
     <lew-select
       v-model="value"
+      multiple
       :options="options"
       placeholder="Select IKEA Product"
       searchable

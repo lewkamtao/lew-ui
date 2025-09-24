@@ -1,67 +1,66 @@
 <script setup lang="ts">
-import type { LewCascaderOption } from 'lew-ui/types'
-import { LewCascader } from 'lew-ui'
+import type { LewCascaderOption } from "lew-ui/types";
 
-const cascaderValue = ref()
+const cascaderValue = ref();
 async function initMethod(): Promise<LewCascaderOption[]> {
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   return Promise.resolve([
     {
-      label: 'Beijing',
-      value: 'beijing',
+      label: "Beijing",
+      value: "beijing",
       children: [
         {
-          label: 'Chaoyang District',
-          value: 'chaoyang',
+          label: "Chaoyang District",
+          value: "chaoyang",
           children: [
-            { label: 'Sanlitun', value: 'sanlitun' },
-            { label: 'Guomao', value: 'guomao' },
+            { label: "Sanlitun", value: "sanlitun" },
+            { label: "Guomao", value: "guomao" },
           ],
         },
         {
-          label: 'Haidian District',
-          value: 'haidian',
+          label: "Haidian District",
+          value: "haidian",
           children: [
-            { label: 'Zhongguancun', value: 'zhongguancun' },
-            { label: 'Wudaokou', value: 'wudaokou' },
+            { label: "Zhongguancun", value: "zhongguancun" },
+            { label: "Wudaokou", value: "wudaokou" },
           ],
         },
       ],
     },
     {
-      label: 'Shanghai',
-      value: 'shanghai',
+      label: "Shanghai",
+      value: "shanghai",
       children: [
         {
-          label: 'Pudong New District',
-          value: 'pudong',
+          label: "Pudong New District",
+          value: "pudong",
           children: [
-            { label: 'Lujiazui', value: 'lujiazui' },
-            { label: 'Zhangjiang', value: 'zhangjiang' },
+            { label: "Lujiazui", value: "lujiazui" },
+            { label: "Zhangjiang", value: "zhangjiang" },
           ],
         },
         {
-          label: 'Huangpu District',
-          value: 'huangpu',
+          label: "Huangpu District",
+          value: "huangpu",
           children: [
-            { label: 'The Bund', value: 'waitan' },
-            { label: 'Nanjing Road', value: 'nanjinglu' },
+            { label: "The Bund", value: "waitan" },
+            { label: "Nanjing Road", value: "nanjinglu" },
           ],
         },
       ],
     },
-  ])
+  ]);
 }
 
-const updateKey = ref(0)
+const updateKey = ref(0);
 
 function load() {
-  updateKey.value++
+  updateKey.value++;
 }
 </script>
 
 <template>
-  <LewCascader
+  <lew-cascader-multiple
     :key="updateKey"
     v-model="cascaderValue"
     :init-method="initMethod"

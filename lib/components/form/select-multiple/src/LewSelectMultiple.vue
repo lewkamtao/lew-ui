@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import type { LewSelectMultipleOption } from 'lew-ui'
-import { useDebounceFn } from '@vueuse/core'
-import { LewCheckbox, LewEmpty, LewFlex, LewPopover, LewTextTrim, locale } from 'lew-ui'
-import SelectMultipleInput from 'lew-ui/_components/SelectMultipleInput.vue'
+import type { LewSelectMultipleOption } from "lew-ui";
+import { useDebounceFn } from "@vueuse/core";
+import {
+  LewCheckbox,
+  LewEmpty,
+  LewFlex,
+  LewPopover,
+  LewTextTrim,
+  locale,
+} from "lew-ui";
+import CommonInput from "lew-ui/_components/CommonInput.vue";
 import {
   any2px,
   filterSelectOptionsByKeyword,
@@ -10,22 +17,22 @@ import {
   numFormat,
   object2class,
   poll,
-} from 'lew-ui/utils'
-import { cloneDeep, isFunction } from 'lodash-es'
-import { useSlots } from 'vue'
-import { VirtList } from 'vue-virt-list'
-import { selectMultipleEmits } from './emits'
-import { selectMultipleProps } from './props'
+} from "lew-ui/utils";
+import { cloneDeep, isFunction } from "lodash-es";
+import { useSlots } from "vue";
+import { VirtList } from "vue-virt-list";
+import { selectMultipleEmits } from "./emits";
+import { selectMultipleProps } from "./props";
 
-const props = defineProps(selectMultipleProps)
-const emit = defineEmits(selectMultipleEmits)
-const modelValue: any = defineModel()
-const slots = useSlots()
+const props = defineProps(selectMultipleProps);
+const emit = defineEmits(selectMultipleEmits);
+const modelValue: any = defineModel();
+const slots = useSlots();
 
-const lewSelectRef = ref()
-const lewPopoverRef = ref()
-const searchInputRef = ref()
-const virtListRef = ref()
+const lewSelectRef = ref();
+const lewPopoverRef = ref();
+const searchInputRef = ref();
+const virtListRef = ref();
 const state = reactive({
   popoverWidth: 0,
   visible: false,
@@ -33,371 +40,368 @@ const state = reactive({
   initLoading: true,
   sourceOptions: props.options || [],
   options: flattenSelectOptions(props.options || []),
-  keyword: '',
+  keyword: "",
   searchCache: new Map<string, LewSelectMultipleOption[]>(),
-})
+});
 
-const formMethods: any = inject('formMethods', {})
+const formMethods: any = inject("formMethods", {});
 
 const _searchMethod = computed(() => {
   if (isFunction(props.searchMethod)) {
-    return props.searchMethod
+    return props.searchMethod;
+  } else if (props.searchMethodId) {
+    return formMethods[props.searchMethodId];
+  } else {
+    return filterSelectOptionsByKeyword;
   }
-  else if (props.searchMethodId) {
-    return formMethods[props.searchMethodId]
-  }
-  else {
-    return filterSelectOptionsByKeyword
-  }
-})
+});
 
 const _initMethod = computed(() => {
   if (isFunction(props.initMethod)) {
-    return props.initMethod
+    return props.initMethod;
+  } else if (props.initMethodId) {
+    return formMethods[props.initMethodId];
   }
-  else if (props.initMethodId) {
-    return formMethods[props.initMethodId]
-  }
-  return false
-})
+  return false;
+});
 
 // 监听 select 元素宽度变化
 function updateWidths() {
   if (lewSelectRef.value) {
-    const selectWidth = lewSelectRef.value.$el ? lewSelectRef.value.$el.clientWidth : 0
-    state.popoverWidth = selectWidth - 12
+    const selectWidth = lewSelectRef.value.$el
+      ? lewSelectRef.value.$el.clientWidth
+      : 0;
+    state.popoverWidth = selectWidth - 12;
   }
 }
 
 // 使用 ResizeObserver 监听宽度变化
-let resizeObserver: ResizeObserver | null = null
+let resizeObserver: ResizeObserver | null = null;
 
 function show() {
-  lewPopoverRef.value && lewPopoverRef.value.show()
+  lewPopoverRef.value && lewPopoverRef.value.show();
 }
 
 function hide() {
-  lewPopoverRef.value && lewPopoverRef.value.hide()
+  lewPopoverRef.value && lewPopoverRef.value.hide();
 }
 
 const searchDebounce = useDebounceFn(async (e: any) => {
-  search(e)
-}, props.searchDelay)
+  search(e);
+}, props.searchDelay);
 
 async function search(e?: any) {
-  state.loading = true
-  const keyword = e?.target.value
+  state.loading = true;
+  const keyword = e?.target.value;
   if (props.searchable) {
-    let result: any = []
+    let result: any = [];
     if (props.enableSearchCache && state.searchCache.has(keyword)) {
-      result = state.searchCache.get(keyword)!
-    }
-    else {
-      const optionsToSearch = flattenSelectOptions(state.sourceOptions)
+      result = state.searchCache.get(keyword)!;
+    } else {
+      const optionsToSearch = flattenSelectOptions(state.sourceOptions);
       if (!keyword && optionsToSearch.length > 0) {
-        result = optionsToSearch
-      }
-      else {
+        result = optionsToSearch;
+      } else {
         result = await _searchMethod.value({
           options: optionsToSearch,
           keyword,
-        })
+        });
       }
       if (props.enableSearchCache) {
-        state.searchCache.set(keyword, result)
+        state.searchCache.set(keyword, result);
       }
     }
-    state.options = result
+    state.options = result;
   }
-  state.loading = false
+  state.loading = false;
 }
 
 function clearHandle() {
-  modelValue.value = []
-  emit('clear')
+  modelValue.value = [];
+  emit("clear");
   setTimeout(() => {
-    lewPopoverRef.value && lewPopoverRef.value.refresh()
-  }, 100)
-  emit('change', modelValue.value)
-  state.visible = false
-  emit('blur')
+    lewPopoverRef.value && lewPopoverRef.value.refresh();
+  }, 100);
+  emit("change", modelValue.value);
+  state.visible = false;
+  emit("blur");
 }
 
 function deleteTag(value: any) {
-  const valueIndex = modelValue.value.findIndex((_value: any) => value === _value)
+  const valueIndex = modelValue.value.findIndex(
+    (_value: any) => value === _value
+  );
 
   if (valueIndex > -1) {
-    const item = modelValue.value[valueIndex]
-    modelValue.value.splice(valueIndex, 1)
-    emit('delete', cloneDeep(modelValue.value), item)
+    const item = modelValue.value[valueIndex];
+    modelValue.value.splice(valueIndex, 1);
+    emit("delete", cloneDeep(modelValue.value), item);
 
     setTimeout(() => {
-      lewPopoverRef.value && lewPopoverRef.value.refresh()
-    }, 100)
-    emit('change', modelValue.value)
+      lewPopoverRef.value && lewPopoverRef.value.refresh();
+    }, 100);
+    emit("change", modelValue.value);
   }
 }
 
 function selectHandle(item: LewSelectMultipleOption) {
   if (item.disabled || item.isGroup) {
-    return
+    return;
   }
 
-  const _value = modelValue.value || []
+  const _value = modelValue.value || [];
 
-  const index = _value.findIndex((e: string | number) => e === item.value)
+  const index = _value.findIndex((e: string | number) => e === item.value);
 
   if (index >= 0) {
-    _value.splice(index, 1)
-  }
-  else {
-    _value.push(item.value)
+    _value.splice(index, 1);
+  } else {
+    _value.push(item.value);
   }
 
-  modelValue.value = _value
-  emit('select', _value)
+  modelValue.value = _value;
+  emit("select", _value);
   setTimeout(() => {
-    lewPopoverRef.value && lewPopoverRef.value.refresh()
-  }, 100)
-  emit('change', modelValue.value)
-  updateWidths()
+    lewPopoverRef.value && lewPopoverRef.value.refresh();
+  }, 100);
+  emit("change", modelValue.value);
+  updateWidths();
 }
 
 const getChecked = computed(() => (value: string | number) => {
   if (modelValue.value) {
-    return JSON.parse(JSON.stringify(modelValue.value.includes(value)))
+    return JSON.parse(JSON.stringify(modelValue.value.includes(value)));
   }
-  return false
-})
+  return false;
+});
 
 const getBodyClassName = computed(() => {
-  const { size, disabled } = props
-  return object2class('lew-select-body', { size, disabled })
-})
+  const { size, disabled } = props;
+  return object2class("lew-select-body", { size, disabled });
+});
 
 function getSelectItemClassName(e: any) {
-  const { disabled, isGroup } = e
-  const active = getChecked.value(e.value)
+  const { disabled, isGroup } = e;
+  const active = getChecked.value(e.value);
 
-  return object2class('lew-select-item', {
+  return object2class("lew-select-item", {
     disabled,
     active,
-    'is-group': isGroup,
-  })
+    "is-group": isGroup,
+  });
 }
 
 const focusSearchInput = useDebounceFn(() => {
   if (props.searchable) {
-    searchInputRef.value && searchInputRef.value.focus()
+    searchInputRef.value && searchInputRef.value.focus();
   }
-}, 100)
+}, 100);
 
 function showHandle() {
-  state.visible = true
+  state.visible = true;
 
-  updateWidths()
-  focusSearchInput()
+  updateWidths();
+  focusSearchInput();
 
   if (state.options && state.options.length === 0 && props.searchable) {
-    search({ target: { value: '' } })
+    search({ target: { value: "" } });
   }
 
   const indexes = (modelValue.value || [])
     .map((value: any) => state.options.findIndex((e: any) => e.value === value))
-    .filter((index: number) => index > -1)
+    .filter((index: number) => index > -1);
 
-  const minIndex = Math.min(...indexes)
+  const minIndex = Math.min(...indexes);
   poll({
     callback: () => {
       if (minIndex > 0 && minIndex !== Infinity) {
-        virtListRef.value.scrollToIndex(minIndex)
-      }
-      else {
-        virtListRef.value.reset()
+        virtListRef.value.scrollToIndex(minIndex);
+      } else {
+        virtListRef.value.reset();
       }
     },
     vail: () => {
-      return !!virtListRef.value
+      return !!virtListRef.value;
     },
-  })
+  });
 }
 
 const getVirtualHeight = computed(() => {
-  let height = state.options.length * props.itemHeight
-  height = height >= 280 ? 280 : height
-  return height
-})
+  let height = state.options.length * props.itemHeight;
+  height = height >= 280 ? 280 : height;
+  return height;
+});
 
 const isShowScrollBar = computed(() => {
-  return getVirtualHeight.value >= 280
-})
+  return getVirtualHeight.value >= 280;
+});
 
 function hideHandle() {
-  state.visible = false
-  emit('blur')
+  state.visible = false;
+  emit("blur");
 }
 
 async function init() {
   if (_initMethod.value) {
-    const newOptions = await _initMethod.value()
-    state.sourceOptions = newOptions
-    state.options = flattenSelectOptions(newOptions)
+    const newOptions = await _initMethod.value();
+    state.sourceOptions = newOptions;
+    state.options = flattenSelectOptions(newOptions);
   }
   if (props.enableSearchCache) {
-    state.searchCache.set('', state.options)
+    state.searchCache.set("", state.options);
   }
-  state.initLoading = false
+  state.initLoading = false;
 }
 
 onMounted(() => {
-  updateWidths()
-  focusSearchInput()
-  init()
+  updateWidths();
+  focusSearchInput();
+  init();
 
   // 设置 ResizeObserver 监听宽度变化
   nextTick(() => {
     if (lewSelectRef.value && lewSelectRef.value.$el) {
       resizeObserver = new ResizeObserver(() => {
-        updateWidths()
-      })
-      resizeObserver.observe(lewSelectRef.value.$el)
+        updateWidths();
+      });
+      resizeObserver.observe(lewSelectRef.value.$el);
     }
-  })
-})
+  });
+});
 
 onUnmounted(() => {
   // 清理 ResizeObserver
   if (resizeObserver) {
-    resizeObserver.disconnect()
-    resizeObserver = null
+    resizeObserver.disconnect();
+    resizeObserver = null;
   }
-})
+});
 
 defineExpose({
   show,
   hide,
   clearSearchCache: () => {
     if (props.enableSearchCache) {
-      state.searchCache.clear()
+      state.searchCache.clear();
     }
   },
-})
+});
 
 watch(
   () => props.options,
   (newOptions) => {
     if (!_initMethod.value) {
-      state.sourceOptions = newOptions || []
-      state.options = flattenSelectOptions(newOptions || [])
+      state.sourceOptions = newOptions || [];
+      state.options = flattenSelectOptions(newOptions || []);
       if (props.enableSearchCache) {
-        state.searchCache.clear()
+        state.searchCache.clear();
       }
     }
   },
   {
     deep: true,
-  },
-)
+  }
+);
 
 watch(
   () => modelValue.value,
   () => {
-    updateWidths()
+    updateWidths();
   },
   {
     deep: true,
-  },
-)
+  }
+);
 
 const getResultText = computed(() => {
   return state.options.length > 0
-    ? locale.t('selectMultiple.resultCount', {
+    ? locale.t("selectMultiple.resultCount", {
         num: numFormat(state.options.filter((e: any) => !e.isGroup).length),
       })
-    : ''
-})
+    : "";
+});
 
 // 新增计算属性：是否显示搜索结果计数
 const showResultCount = computed(() => {
-  return props.searchable && state.options && state.options.length > 0
-})
+  return props.searchable && state.options && state.options.length > 0;
+});
 
 // 新增计算属性：是否显示空状态
 const showEmptyState = computed(() => {
-  return state.options && state.options.length === 0
-})
+  return state.options && state.options.length === 0;
+});
 
 // 新增计算属性：虚拟列表样式
 const virtualListStyle = computed(() => {
   return {
     height: `${getVirtualHeight.value}px`,
-    paddingRight: isShowScrollBar.value ? '5px' : '0px',
-  }
-})
+    paddingRight: isShowScrollBar.value ? "5px" : "0px",
+  };
+});
 
 // 新增计算属性：选项项样式
 const optionItemStyle = computed(() => {
   return (itemHeight: number) => ({
     height: `${itemHeight}px`,
-  })
-})
+  });
+});
 
 // 新增计算属性：组标签文本
 const groupLabelText = computed(() => {
   return (templateProps: any) => {
     return templateProps.isGroup
       ? `${templateProps.label} (${templateProps.total})`
-      : templateProps.label
-  }
-})
+      : templateProps.label;
+  };
+});
 
 // 新增计算属性：组标签类名
 const groupLabelClass = computed(() => {
   return (templateProps: any) => {
     return {
-      'is-group': templateProps.isGroup,
-    }
-  }
-})
+      "is-group": templateProps.isGroup,
+    };
+  };
+});
 
 // 新增计算属性：是否显示搜索输入框
 const showSearchInput = computed(() => {
-  return props.searchable
-})
+  return props.searchable;
+});
 
 // 新增计算属性：是否显示自定义空状态插槽
 const showCustomEmptySlot = computed((): boolean => {
-  return !!slots.empty
-})
+  return !!slots.empty;
+});
 
 // 新增计算属性：是否显示自定义项插槽
 const showCustomItemSlot = computed((): boolean => {
-  return !!slots.item
-})
+  return !!slots.item;
+});
 
 // 新增计算属性：项插槽属性
 const itemSlotProps = computed(() => {
   return (templateProps: any) => ({
     ...templateProps,
     checked: getChecked.value(templateProps.value),
-  })
-})
+  });
+});
 
 // 新增计算属性：是否显示头部插槽
 const showHeaderSlot = computed((): boolean => {
-  return !!slots.header
-})
+  return !!slots.header;
+});
 
 // 新增计算属性：是否显示底部插槽
 const showFooterSlot = computed((): boolean => {
-  return !!slots.footer
-})
+  return !!slots.footer;
+});
 
 const formatItems = computed(() => {
   return state.options.filter((e: any) => {
-    return (modelValue.value || []).includes(e.value)
-  })
-})
+    return (modelValue.value || []).includes(e.value);
+  });
+});
 </script>
 
 <template>
@@ -415,7 +419,7 @@ const formatItems = computed(() => {
     @hide="hideHandle"
   >
     <template #trigger>
-      <SelectMultipleInput
+      <CommonInput
         ref="lewSelectRef"
         v-model="modelValue"
         :loading="state.initLoading"
@@ -448,7 +452,7 @@ const formatItems = computed(() => {
             v-model="state.keyword"
             :placeholder="locale.t('selectMultiple.searchPlaceholder')"
             @input="searchDebounce"
-          >
+          />
         </div>
         <div class="lew-select-options-box">
           <template v-if="showEmptyState">
@@ -551,11 +555,13 @@ const formatItems = computed(() => {
       padding: 0px 7px;
       box-sizing: border-box;
       transition: all var(--lew-form-transition-bezier);
-      border-bottom: var(--lew-form-border-width) var(--lew-form-bgcolor-hover) solid;
+      border-bottom: var(--lew-form-border-width) var(--lew-form-bgcolor-hover)
+        solid;
       color: var(--lew-text-color-2);
 
       &:focus {
-        border-bottom: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+        border-bottom: var(--lew-form-border-width)
+          var(--lew-form-border-color-focus) solid;
       }
     }
 
@@ -625,7 +631,8 @@ const formatItems = computed(() => {
 
         .lew-checkbox {
           .lew-checkbox-icon-box {
-            border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+            border: var(--lew-form-border-width)
+              var(--lew-checkbox-border-color-hover) solid;
             background: var(--lew-form-bgcolor);
           }
         }
@@ -647,7 +654,8 @@ const formatItems = computed(() => {
 
           .lew-checkbox {
             .lew-checkbox-icon-box {
-              border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+              border: var(--lew-form-border-width) var(--lew-checkbox-color)
+                solid;
               background: var(--lew-checkbox-color);
 
               .icon-checkbox {

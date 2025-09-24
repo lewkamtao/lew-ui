@@ -1,340 +1,346 @@
 <script setup lang="ts">
-import docsLocale from 'docs/locals'
-import { Menu } from 'lucide-vue-next'
-import { useRoute } from 'vue-router'
-import LewRightNav from '../layout/LewRightNav.vue'
-import TheSiderbar from '../layout/TheSiderbar.vue'
+import docsLocale from "docs/locals";
+import { Menu } from "lucide-vue-next";
+import { useRoute } from "vue-router";
+import LewRightNav from "../layout/LewRightNav.vue";
+import TheSiderbar from "../layout/TheSiderbar.vue";
 
-const isShowSider = ref(false)
-const route = useRoute()
+const isShowSider = ref(false);
+const route = useRoute();
 
 onMounted(() => {
-  const isComplete: string[] = []
+  const isComplete: string[] = [];
 
   setTimeout(() => {
-    const menuItems = document.getElementsByClassName('lew-menu-item')
+    const menuItems = document.getElementsByClassName("lew-menu-item");
     for (let i = 0; i < menuItems.length; i++) {
       // 寻找lew-text-trim-wrapper
-      const dom = menuItems[i].querySelector('.lew-text-trim-wrapper')
+      const dom = menuItems[i].querySelector(".lew-text-trim-wrapper");
       if (dom) {
         if (isComplete.includes(dom.textContent as string)) {
-          (dom as HTMLElement).style.opacity = '0.2'
+          (dom as HTMLElement).style.opacity = "0.2";
         }
       }
     }
-  }, 500)
-})
+  }, 500);
+});
 
 watch(route, () => {
   nextTick(() => {
-    const componentMain = document.getElementById('component-main')
+    const componentMain = document.getElementById("component-main");
     if (componentMain) {
-      componentMain.scrollTop = 0
+      componentMain.scrollTop = 0;
     }
-  })
-  isShowSider.value = false
-})
+  });
+  isShowSider.value = false;
+});
 
 const options = computed(() => {
   return [
     {
-      label: docsLocale.t('base.base'),
-      value: docsLocale.t('base.base'),
+      label: docsLocale.t("base.base"),
+      value: docsLocale.t("base.base"),
       children: [
         {
-          label: 'Image',
-          value: '/Image',
+          label: "Image",
+          value: "/Image",
         },
         {
-          label: 'Avatar',
-          value: '/Avatar',
+          label: "Avatar",
+          value: "/Avatar",
         },
         {
-          label: 'Button',
-          value: '/Button',
+          label: "Button",
+          value: "/Button",
         },
 
         {
-          label: 'Tag',
-          value: '/Tag',
+          label: "Tag",
+          value: "/Tag",
         },
         {
-          label: 'Badge',
-          value: '/Badge',
+          label: "Badge",
+          value: "/Badge",
         },
         {
-          label: 'Title',
-          value: '/Title',
+          label: "Title",
+          value: "/Title",
         },
         {
-          label: 'TextTrim',
-          value: '/TextTrim',
+          label: "TextTrim",
+          value: "/TextTrim",
         },
         {
-          label: 'Flex',
-          value: '/Flex',
+          label: "Flex",
+          value: "/Flex",
         },
         {
-          label: 'Mark',
-          value: '/Mark',
+          label: "Mark",
+          value: "/Mark",
         },
         {
-          label: 'Icon',
-          value: '/Icon',
+          label: "Icon",
+          value: "/Icon",
         },
       ],
     },
     {
-      label: docsLocale.t('base.navigation'),
-      value: docsLocale.t('base.navigation'),
+      label: docsLocale.t("base.navigation"),
+      value: docsLocale.t("base.navigation"),
       children: [
         {
-          label: 'BackTop',
-          value: '/BackTop',
+          label: "BackTop",
+          value: "/BackTop",
         },
         {
-          label: 'Steps',
-          value: '/Steps',
+          label: "Steps",
+          value: "/Steps",
         },
         {
-          label: 'Menu',
-          value: '/Menu',
+          label: "Menu",
+          value: "/Menu",
         },
         {
-          label: 'MenuTree',
-          value: '/MenuTree',
+          label: "MenuTree",
+          value: "/MenuTree",
         },
         {
-          label: 'Dropdown',
-          value: '/Dropdown',
+          label: "Dropdown",
+          value: "/Dropdown",
         },
         {
-          label: 'Breadcrumb',
-          value: '/Breadcrumb',
+          label: "Breadcrumb",
+          value: "/Breadcrumb",
         },
         {
-          label: 'ContextMenu',
-          value: '/ContextMenu',
+          label: "ContextMenu",
+          value: "/ContextMenu",
           tagProps: {
-            text: 'New',
-            type: 'ghost',
+            text: "New",
+            type: "ghost",
             round: true,
-            color: 'green',
+            color: "green",
           },
         },
         {
-          label: 'ActionBox',
-          value: '/ActionBox',
+          label: "ActionBox",
+          value: "/ActionBox",
           tagProps: {
-            text: 'New',
-            color: 'green',
-            type: 'ghost',
+            text: "New",
+            color: "green",
+            type: "ghost",
             round: true,
           },
         },
       ],
     },
     {
-      label: docsLocale.t('base.form'),
-      value: docsLocale.t('base.form'),
+      label: docsLocale.t("base.form"),
+      value: docsLocale.t("base.form"),
       children: [
         {
-          label: 'Form',
-          value: '/Form',
+          label: "Form",
+          value: "/Form",
         },
         {
-          label: 'Input',
-          value: '/Input',
+          label: "Input",
+          value: "/Input",
         },
         {
-          label: 'InputNumber',
-          value: '/InputNumber',
+          label: "InputNumber",
+          value: "/InputNumber",
         },
         {
-          label: 'Textarea',
-          value: '/Textarea',
+          label: "Textarea",
+          value: "/Textarea",
         },
         {
-          label: 'InputTag',
-          value: '/InputTag',
+          label: "InputTag",
+          value: "/InputTag",
         },
         {
-          label: 'Checkbox',
-          value: '/Checkbox',
+          label: "Checkbox",
+          value: "/Checkbox",
         },
         {
-          label: 'Radio',
-          value: '/Radio',
+          label: "Radio",
+          value: "/Radio",
         },
         {
-          label: 'Tabs',
-          value: '/Tabs',
+          label: "Tabs",
+          value: "/Tabs",
         },
         {
-          label: 'Select',
-          value: '/Select',
+          label: "Select",
+          value: "/Select",
         },
         {
-          label: 'SelectMultiple',
-          value: '/SelectMultiple',
+          label: "SelectMultiple",
+          value: "/SelectMultiple",
         },
         {
-          label: 'DatePicker',
-          value: '/DatePicker',
+          label: "DatePicker",
+          value: "/DatePicker",
         },
         {
-          label: 'DateRangePicker',
-          value: '/DateRangePicker',
+          label: "DateRangePicker",
+          value: "/DateRangePicker",
         },
         {
-          label: 'Cascader',
-          value: '/Cascader',
+          label: "Cascader",
+          value: "/Cascader",
         },
         {
-          label: 'CascaderMultiple',
-          value: '/CascaderMultiple',
-        },
-        {
-          label: 'TreeSelect',
-          value: '/TreeSelect',
-        },
-        {
-          label: 'TreeSelectMultiple',
-          value: '/TreeSelectMultiple',
-        },
-        {
-          label: 'InputTable',
-          value: '/InputTable',
+          label: "CascaderMultiple",
+          value: "/CascaderMultiple",
           tagProps: {
-            text: 'New',
-            type: 'ghost',
+            text: "Beta",
+            type: "ghost",
             round: true,
-            color: 'green',
+            color: "red",
           },
         },
         {
-          label: 'Switch',
-          value: '/Switch',
+          label: "TreeSelect",
+          value: "/TreeSelect",
+        },
+        // {
+        //   label: 'TreeSelectMultiple',
+        //   value: '/TreeSelectMultiple',
+        // },
+        {
+          label: "InputTable",
+          value: "/InputTable",
+          tagProps: {
+            text: "New",
+            type: "ghost",
+            round: true,
+            color: "green",
+          },
+        },
+        {
+          label: "Switch",
+          value: "/Switch",
         },
 
         {
-          label: 'Slider',
-          value: '/Slider',
+          label: "Slider",
+          value: "/Slider",
         },
         {
-          label: 'SliderRange',
-          value: '/SliderRange',
+          label: "SliderRange",
+          value: "/SliderRange",
         },
         {
-          label: 'Rate',
-          value: '/Rate',
+          label: "Rate",
+          value: "/Rate",
           tagProps: {
-            text: 'New',
-            type: 'ghost',
+            text: "New",
+            type: "ghost",
             round: true,
-            color: 'green',
+            color: "green",
           },
         },
         {
-          label: 'ColorPicker',
-          value: '/ColorPicker',
+          label: "ColorPicker",
+          value: "/ColorPicker",
         },
         {
-          label: 'Upload',
-          value: '/Upload',
+          label: "Upload",
+          value: "/Upload",
         },
       ],
     },
     {
-      label: docsLocale.t('base.data'),
-      value: docsLocale.t('base.data'),
+      label: docsLocale.t("base.data"),
+      value: docsLocale.t("base.data"),
       children: [
         {
-          label: 'Table',
-          value: '/Table',
+          label: "Table",
+          value: "/Table",
         },
         {
-          label: 'Pagination',
-          value: '/Pagination',
+          label: "Pagination",
+          value: "/Pagination",
         },
         {
-          label: 'Tree',
-          value: '/Tree',
+          label: "Tree",
+          value: "/Tree",
         },
 
         {
-          label: 'Collapse',
-          value: '/Collapse',
+          label: "Collapse",
+          value: "/Collapse",
         },
         {
-          label: 'Desc',
-          value: '/Desc',
+          label: "Desc",
+          value: "/Desc",
         },
       ],
     },
     {
-      label: docsLocale.t('base.feedback'),
-      value: docsLocale.t('base.feedback'),
+      label: docsLocale.t("base.feedback"),
+      value: docsLocale.t("base.feedback"),
       children: [
         {
-          label: 'Alert',
-          value: '/Alert',
+          label: "Alert",
+          value: "/Alert",
         },
         {
-          label: 'Message',
-          value: '/Message',
+          label: "Message",
+          value: "/Message",
           tagProps: {
-            text: 'func',
-            type: 'ghost',
+            text: "func",
+            type: "ghost",
             round: true,
           },
         },
         {
-          label: 'Notification',
-          value: '/Notification',
+          label: "Notification",
+          value: "/Notification",
           tagProps: {
-            text: 'func',
-            type: 'ghost',
+            text: "func",
+            type: "ghost",
             round: true,
           },
         },
         {
-          label: 'Drawer',
-          value: '/Drawer',
+          label: "Drawer",
+          value: "/Drawer",
         },
         {
-          label: 'Dialog',
-          value: '/Dialog',
+          label: "Dialog",
+          value: "/Dialog",
           tagProps: {
-            text: 'func',
-            type: 'ghost',
+            text: "func",
+            type: "ghost",
             round: true,
           },
         },
         {
-          label: 'Modal',
-          value: '/Modal',
+          label: "Modal",
+          value: "/Modal",
         },
         {
-          label: 'Popok',
-          value: '/Popok',
+          label: "Popok",
+          value: "/Popok",
         },
         {
-          label: 'Popover',
-          value: '/Popover',
+          label: "Popover",
+          value: "/Popover",
         },
 
         {
-          label: 'Tooltip',
-          value: '/Tooltip',
+          label: "Tooltip",
+          value: "/Tooltip",
         },
         {
-          label: 'Loading',
-          value: '/Loading',
+          label: "Loading",
+          value: "/Loading",
         },
         {
-          label: 'Empty',
-          value: '/Empty',
+          label: "Empty",
+          value: "/Empty",
         },
       ],
     },
@@ -342,9 +348,9 @@ const options = computed(() => {
     return {
       ...item,
       label: `${item.label}（${(item?.children || []).length}）`,
-    }
-  })
-})
+    };
+  });
+});
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 import { convertProps } from 'docs/lib/utils'
-import { cascaderProps } from 'lew-ui'
+import { cascaderMultipleProps } from 'lew-ui'
 
 export default {
   title: 'Props',
   columnsKey: 'props',
-  data: convertProps(cascaderProps),
+  data: convertProps(cascaderMultipleProps),
 }

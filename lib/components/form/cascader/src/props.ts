@@ -119,6 +119,14 @@ export const cascaderProps = {
       propName: 'readonly',
     }),
   },
+  showCheckbox: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'showCheckbox',
+    }),
+  },
 }
 
 export type LewCascaderProps = ExtractPublicPropTypes<typeof cascaderProps>

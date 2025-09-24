@@ -5,14 +5,14 @@ import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const selectModel = {
   modelValue: {
-    type: [String, Number, undefined] as PropType<string | number | undefined>,
+    type: [String, Number, Array, undefined] as PropType<string | number | (string | number)[] | undefined>,
     default: '',
   },
 }
 
 export const selectProps = {
   defaultValue: {
-    type: String,
+    type: [String, Array] as PropType<string | (string | number)[]>,
     default: '',
     validator: validators.string({
       componentName: 'LewSelect',
@@ -77,6 +77,14 @@ export const selectProps = {
       componentName: 'LewSelect',
       propName: 'size',
       values: validSizeList,
+    }),
+  },
+  multiple: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewSelect',
+      propName: 'multiple',
     }),
   },
   itemHeight: {
@@ -181,6 +189,7 @@ export const selectProps = {
       propName: 'enableSearchCache',
     }),
   },
+
 }
 
 export type LewSelectProps = ExtractPublicPropTypes<typeof selectProps>

@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { schools } from 'docs/lib/data'
+import { schools } from "docs/lib/data";
 
-const value = ref([])
+const value = ref();
 
 function initMethod() {
   return new Promise((resolve) => {
     setTimeout(() => {
       const res = schools.map((e) => {
-        return { label: e, value: e }
-      })
-      resolve(res)
-    }, 1000)
-  })
+        return { label: e, value: e };
+      });
+      resolve(res);
+    }, 1000);
+  });
 }
 
-const updateKey = ref(0)
+const updateKey = ref(0);
 
 function load() {
-  updateKey.value++
+  updateKey.value++;
 }
 </script>
 

@@ -37,24 +37,7 @@ export const selectMultipleProps = {
       propName: 'width',
     }),
   },
-  valueLayout: {
-    type: String as PropType<LewSelectMultipleValueLayout>,
-    default: 'text',
-    typeValues: validSelectMultipleValueLayout,
-    validator: validators.enum({
-      componentName: 'LewSelectMultiple',
-      propName: 'valueLayout',
-      values: validSelectMultipleValueLayout,
-    }),
-  },
-  valueTextSplit: {
-    type: String,
-    default: ',',
-    validator: validators.string({
-      componentName: 'LewSelectMultiple',
-      propName: 'valueTextSplit',
-    }),
-  },
+
   placeholder: {
     type: String,
     defaultLocale: true,
@@ -188,6 +171,24 @@ export const selectMultipleProps = {
     validator: validators.array({
       componentName: 'LewSelectMultiple',
       propName: 'defaultValue',
+    }),
+  },
+  valueLayout: {
+    type: String as PropType<LewSelectMultipleValueLayout>,
+    default: 'text',
+    typeValues: validSelectMultipleValueLayout,
+    validator: validators.enum({
+      componentName: 'LewSelectMultiple',
+      propName: 'valueLayout',
+      values: validSelectMultipleValueLayout,
+    }),
+  },
+  valueTextSplit: {
+    type: String,
+    default: ',',
+    validator: validators.string({
+      componentName: 'LewSelectMultiple',
+      propName: 'valueTextSplit',
     }),
   },
 }

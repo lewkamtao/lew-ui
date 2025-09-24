@@ -1168,6 +1168,66 @@ export default {
         disabled: '禁用',
       },
     },
+
+    cascaderMultiple: {
+      name: '多选级联选择器 CascaderMultiple',
+      description: '支持多选的多层级数据选择器，让分类选择更加清晰',
+      demo1: {
+        title: '基础用法',
+      },
+      demo2: {
+        title: '自由模式',
+      },
+      demo3: {
+        title: '仅展示最后层级',
+      },
+      demo4: {
+        title: '异步加载',
+      },
+      demo5: {
+        title: '可清空的',
+      },
+      demo6: {
+        title: '只读',
+      },
+      demo7: {
+        title: '禁用',
+      },
+      demo8: {
+        title: '选项禁用',
+      },
+      demo9: {
+        title: '初始化选项方法',
+        description:
+          '使用 ```initMethod``` 方法，初始化级联数据，并返回一个 ```Promise``` 对象',
+      },
+      model: {
+        modelValue: '绑定值',
+      },
+      props: {
+        width: '宽度',
+        options: '选项',
+        placeholder: '占位提示文本',
+        disabled: '禁用',
+        clearable: '是否可清空',
+        showAllLevels: '显示所有层级',
+        multiple: '是否多选',
+        free: '自由选择',
+        size: '尺寸',
+        trigger: '触发方式',
+        loadMethod: '加载方法',
+        readonly: '只读',
+        initMethod: '初始化选项方法',
+      },
+      options: {
+        label: '标签',
+        value: '值',
+        isLeaf: '是否叶子节点',
+        children: '子节点',
+        disabled: '禁用',
+      },
+    },
+
     treeSelect: {
       name: '树形选择器 TreeSelect',
       description: '树形结构的选择框，让层级选择更加直观',

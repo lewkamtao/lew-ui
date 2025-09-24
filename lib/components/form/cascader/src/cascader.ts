@@ -160,3 +160,42 @@ export function validateCascaderTree(tree: LewCascaderOption[]): boolean {
 
   return true
 }
+
+// 根据指定 value，查找其所有子节点（包括子孙节点），返回一个扁平数组
+export function findAllChildrenByValue(
+  tree: LewCascaderOption[],
+  value: string,
+): LewCascaderOption[] {
+  // 首先找到目标节点
+  let targetNode: LewCascaderOption | null = null
+  const stack: LewCascaderOption[] = [...tree]
+
+  while (stack.length > 0) {
+    const node = stack.pop()!
+    if (node.value === value) {
+      targetNode = node
+      break
+    }
+    if (node.children?.length) {
+      stack.push(...node.children)
+    }
+  }
+
+  if (!targetNode || !targetNode.children) {
+    return []
+  }
+
+  // 扁平化所有子孙节点
+  const result: LewCascaderOption[] = []
+  const childrenStack: LewCascaderOption[] = [...targetNode.children]
+
+  while (childrenStack.length > 0) {
+    const child = childrenStack.pop()!
+    result.push(child)
+    if (child.children?.length) {
+      childrenStack.push(...child.children)
+    }
+  }
+
+  return result
+}
