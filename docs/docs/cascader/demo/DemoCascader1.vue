@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref("computer");
+const v = ref();
 const options = [
   {
     value: "electronics",

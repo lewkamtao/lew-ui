@@ -105,12 +105,17 @@ const formatItems = computed(() => {
     return props.multiple ? [] : "";
   }
 
-  if (!props.multiple) {
-    const { label, labelPaths }: any = findObjectByValue(
+  if (!props.multiple && modelValue.value) {
+    console.log(state.optionsTree, modelValue.value);
+    const result = findObjectByValue(
       state.optionsTree,
       modelValue.value as string,
       nodeCache
     );
+    if (!result) {
+      return "";
+    }
+    const { label, labelPaths }: any = result;
     return props.showAllLevels ? labelPaths.join(" / ") : label;
   }
 
@@ -119,11 +124,14 @@ const formatItems = computed(() => {
   }
 
   return modelValue.value.map((value: string) => {
-    const { label, labelPaths }: any = findObjectByValue(
-      state.optionsTree,
-      value,
-      nodeCache
-    );
+    const result = findObjectByValue(state.optionsTree, value, nodeCache);
+    if (!result) {
+      return {
+        value,
+        label: value, // 如果找不到对应的节点，使用value作为label
+      };
+    }
+    const { label, labelPaths }: any = result;
     return {
       value,
       label: props.multiple ? label : labelPaths.join(" / "),
@@ -164,7 +172,7 @@ function convertToTreeNodes(
 }
 
 function updateTreeStructure() {
-  if (state.optionsTree.length > 0) {
+  if (state.optionsTree.length > 0 && !props.free) {
     const tree = convertToTreeNodes(state.optionsTree);
     const currentKeys =
       modelValue.value && Array.isArray(modelValue.value)
@@ -205,6 +213,12 @@ function getItemClass(templateProps: any) {
   };
 }
 
+const shouldShowCheckbox = computed(() => (templateProps: any) => {
+  return (
+    props.multiple && (props.onlyLeafSelectable ? templateProps.isLeaf : true)
+  );
+});
+
 function getItemWrapperStyle(oIndex: number, oItem: any) {
   const style = {
     zIndex: 20 - oIndex,
@@ -241,7 +255,7 @@ async function init() {
     state.optionsGroup = [formattedTree];
     state.optionsTree = formattedTree;
 
-    if (formattedTree.length > 0) {
+    if (formattedTree.length > 0 && !props.free) {
       const tree = convertToTreeNodes(formattedTree);
       initTreeSelection({ tree, keys: modelValue.value as string[] });
     }
@@ -262,11 +276,11 @@ function changeCheck(item: LewCascaderOption) {
   }
 
   const itemValue = item.value;
-  if (props.free && Array.isArray(modelValue.value)) {
+  if (props.free) {
     const isSelected = modelValue.value?.includes(itemValue);
     if (isSelected) {
-      modelValue.value = modelValue.value?.filter(
-        (value) => value !== itemValue
+      modelValue.value = ((modelValue.value as string[]) || []).filter(
+        (value: string) => value !== itemValue
       );
     } else {
       modelValue.value = [...(modelValue.value || []), itemValue];
@@ -314,10 +328,13 @@ async function selectItem(item: LewCascaderOption, level: number) {
           nodeCache
         );
 
-        updateTreeStructure();
-        nextTick(() => {
-          updateModelValue();
-        });
+        if (!props.free) {
+          updateTreeStructure();
+          nextTick(() => {
+            updateModelValue();
+          });
+        }
+
         const _options = findChildrenByValue(
           state.optionsTree,
           item.value,
@@ -340,6 +357,12 @@ async function selectItem(item: LewCascaderOption, level: number) {
 
   if (!props.multiple) {
     modelValue.value = item.value;
+
+    if (props.onlyLeafSelectable && item.isLeaf) {
+      setTimeout(() => {
+        hide();
+      }, 100);
+    }
   }
 
   if (item.isLeaf) return;
@@ -384,15 +407,18 @@ function showHandle() {
 }
 
 function hideHandle() {
-  if (props.onlyLeafSelectable) {
+  if (props.onlyLeafSelectable && modelValue.value && !props.multiple) {
     // 判断当前选中的节点是否是叶子节点
     const selectedNodes = findObjectByValue(
       state.optionsTree,
       modelValue.value as string,
       nodeCache
     );
-    console.log(selectedNodes, state.optionsTree);
-    const isLeaf = selectedNodes?.isLeaf;
+    if (!selectedNodes) {
+      modelValue.value = state.backupValue;
+      return;
+    }
+    const isLeaf = selectedNodes.isLeaf;
     if (!isLeaf) {
       modelValue.value = state.backupValue;
       return;
@@ -439,7 +465,8 @@ watch(
         if (
           modelValue.value &&
           Array.isArray(modelValue.value) &&
-          modelValue.value.length > 0
+          modelValue.value.length > 0 &&
+          !props.free
         ) {
           initTreeSelection({ tree, keys: modelValue.value });
         }
@@ -458,7 +485,7 @@ watch(
     if (isInternalUpdate) {
       return;
     }
-    if (newValue && Array.isArray(newValue)) {
+    if (newValue && Array.isArray(newValue) && !props.free) {
       initTreeSelection({ keys: newValue });
     }
   },
@@ -554,7 +581,7 @@ defineExpose({
                         :class="getItemClass(templateProps)"
                       >
                         <LewCheckbox
-                          v-if="multiple"
+                          v-if="shouldShowCheckbox(templateProps)"
                           :key="templateProps.value"
                           class="lew-cascader-checkbox"
                           :checked="

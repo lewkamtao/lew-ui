@@ -26,7 +26,7 @@ export function formatTree(
   parentLabelPaths: string[] = [],
 ): LewCascaderOption[] {
   return tree.map((node: LewCascaderOption) => {
-    const { value, label, children = [] } = node
+    const { value, label, children = [], isLeaf } = node
     const valuePaths: string[] = [...parentValuePaths, value]
     const labelPaths: string[] = [...parentLabelPaths, label]
     const level = valuePaths.length - 1
@@ -38,7 +38,7 @@ export function formatTree(
       level,
       parentValuePaths,
       parentLabelPaths,
-      isLeaf: !children.length,
+      isLeaf: isLeaf ?? !children.length,
     }
 
     if (children.length > 0) {

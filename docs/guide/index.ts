@@ -9,7 +9,7 @@ for (const [path, module] of Object.entries(modules)) {
   routes.push({
     name: `R-Lew${tempName}`,
     path: `/${tempName}`,
-    component: module,
+    component: () => module() as Promise<any>,
   })
 }
 

@@ -188,16 +188,6 @@ const options = computed(() => {
           value: "/Cascader",
         },
         {
-          label: "CascaderMultiple",
-          value: "/CascaderMultiple",
-          tagProps: {
-            text: "Beta",
-            type: "ghost",
-            round: true,
-            color: "red",
-          },
-        },
-        {
           label: "TreeSelect",
           value: "/TreeSelect",
         },
