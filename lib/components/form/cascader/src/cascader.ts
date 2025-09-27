@@ -38,6 +38,7 @@ export function formatTree(
       level,
       parentValuePaths,
       parentLabelPaths,
+      isLeaf: !children.length,
     }
 
     if (children.length > 0) {

@@ -134,7 +134,7 @@ export const cascaderMultipleProps = {
   },
   onlyLeafSelectable: {
     type: Boolean,
-    default: true,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewCascader',
       propName: 'onlyLeafSelectable',

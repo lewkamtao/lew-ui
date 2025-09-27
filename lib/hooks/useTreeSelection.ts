@@ -207,32 +207,34 @@ export function useTreeSelection() {
     selectedSet.clear()
     indeterminateSet.clear()
 
+    if (Array.isArray(keys)) {
     // 对每个传入的key执行完整的级联选择逻辑
-    ;(keys || []).forEach((key: string) => {
-      if (parentMap.has(key) || childrenMap.has(key)) {
+      keys.forEach((key: string) => {
+        if (parentMap.has(key) || childrenMap.has(key)) {
         // 如果节点被禁用，跳过
-        if (isNodeDisabled(key)) {
-          return
+          if (isNodeDisabled(key)) {
+            return
+          }
+
+          // 选中节点及其所有后代节点
+          selectNodeAndDescendants(key)
         }
+      })
 
-        // 选中节点及其所有后代节点
-        selectNodeAndDescendants(key)
-      }
-    })
-
-    // 重新计算所有祖先节点的状态
-    const processedAncestors = new Set<string>()
-    keys.forEach((key) => {
-      if (parentMap.has(key) || childrenMap.has(key)) {
+      // 重新计算所有祖先节点的状态
+      const processedAncestors = new Set<string>()
+      keys.forEach((key) => {
+        if (parentMap.has(key) || childrenMap.has(key)) {
         // 更新祖先链状态，避免重复处理
-        let parent = parentMap.get(key)
-        while (parent !== undefined && parent !== null && !processedAncestors.has(parent)) {
-          updateNodeState(parent)
-          processedAncestors.add(parent)
-          parent = parentMap.get(parent)
+          let parent = parentMap.get(key)
+          while (parent !== undefined && parent !== null && !processedAncestors.has(parent)) {
+            updateNodeState(parent)
+            processedAncestors.add(parent)
+            parent = parentMap.get(parent)
+          }
         }
-      }
-    })
+      })
+    }
 
     flush()
   }

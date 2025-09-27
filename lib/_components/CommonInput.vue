@@ -97,7 +97,15 @@ function deleteTag(value: string) {
 }
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, disabled, readonly, focus, multiple, searchable } = props;
+  let {
+    clearable,
+    size,
+    disabled,
+    readonly,
+    focus,
+    multiple,
+    searchable,
+  } = props;
 
   if (multiple) {
     clearable = clearable && (modelValue.value || []).length > 0;
@@ -153,7 +161,9 @@ const showClearButton = computed(() => {
       !props.loading
     );
   } else {
-    return props.clearable && modelValue.value && !props.readonly && !props.loading;
+    return (
+      props.clearable && modelValue.value && !props.readonly && !props.loading
+    );
   }
 });
 
@@ -181,7 +191,7 @@ const selectedItemsText = computed(() => {
     // 多选模式不需要文本显示，使用tag显示
     return "";
   } else {
-    return props.selectedLabel;
+    return props.selectedLabel || props.formatItems;
   }
 });
 
@@ -204,7 +214,10 @@ const placeholderStyle = computed(() => {
 });
 
 const getValueStyle = computed(() => {
-  return props.focus ? "opacity:0.6" : "";
+  return {
+    opacity: props.focus ? 0.6 : 1,
+    paddingRight: props.clearable ? "24px" : "",
+  };
 });
 
 function getInputRefStyle() {
@@ -267,13 +280,21 @@ defineExpose({
         :placeholder="placeholderText"
         @input="inputHandle"
       />
-      <div v-show="showPlaceholder" :style="placeholderStyle" class="lew-placeholder">
+      <div
+        v-show="showPlaceholder"
+        :style="placeholderStyle"
+        class="lew-placeholder"
+      >
         {{ placeholderText }}
       </div>
     </template>
 
     <template v-else>
-      <div v-show="showPlaceholder" :style="placeholderStyle" class="lew-placeholder">
+      <div
+        v-show="showPlaceholder"
+        :style="placeholderStyle"
+        class="lew-placeholder"
+      >
         {{ placeholderText }}
       </div>
       <div

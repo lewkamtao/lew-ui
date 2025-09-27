@@ -1,59 +1,59 @@
 <script setup lang="ts">
-const v = ref()
+const v = ref("computer");
 const options = [
   {
-    value: 'electronics',
-    label: 'Electronics',
+    value: "electronics",
+    label: "Electronics",
     children: [
       {
-        value: 'smartphone',
-        label: 'Smartphone',
+        value: "smartphone",
+        label: "Smartphone",
         children: [
           {
-            value: 'ios',
-            label: 'iOS Devices',
+            value: "ios",
+            label: "iOS Devices",
             children: [
-              { value: 'iphone', label: 'iPhone' },
-              { value: 'ipad', label: 'iPad', disabled: true },
+              { value: "iphone", label: "iPhone" },
+              { value: "ipad", label: "iPad", disabled: true },
             ],
           },
           {
-            value: 'android',
-            label: 'Android Devices',
+            value: "android",
+            label: "Android Devices",
             children: [
-              { value: 'samsung', label: 'Samsung' },
-              { value: 'huawei', label: 'Huawei' },
-              { value: 'xiaomi', label: 'Xiaomi' },
-              { value: 'oppo', label: 'OPPO', disabled: true },
+              { value: "samsung", label: "Samsung" },
+              { value: "huawei", label: "Huawei" },
+              { value: "xiaomi", label: "Xiaomi" },
+              { value: "oppo", label: "OPPO", disabled: true },
             ],
           },
         ],
       },
       {
-        value: 'computer',
-        label: 'Computers',
+        value: "computer",
+        label: "Computers",
         children: [
           {
-            value: 'laptop',
-            label: 'Laptops',
+            value: "laptop",
+            label: "Laptops",
             children: [
-              { value: 'macbook', label: 'MacBook' },
-              { value: 'surface', label: 'Surface' },
-              { value: 'thinkpad', label: 'ThinkPad' },
-              { value: 'dell', label: 'Dell', disabled: true },
+              { value: "macbook", label: "MacBook" },
+              { value: "surface", label: "Surface" },
+              { value: "thinkpad", label: "ThinkPad" },
+              { value: "dell", label: "Dell", disabled: true },
             ],
           },
-          { value: 'desktop', label: 'Desktops', disabled: true },
+          { value: "desktop", label: "Desktops", disabled: true },
         ],
       },
       {
-        value: 'wearables',
-        label: 'Wearable Devices',
+        value: "wearables",
+        label: "Wearable Devices",
         children: [
-          { value: 'smartwatch', label: 'Smartwatch' },
+          { value: "smartwatch", label: "Smartwatch" },
           {
-            value: 'fitnesstracker',
-            label: 'Fitness Tracker',
+            value: "fitnesstracker",
+            label: "Fitness Tracker",
             disabled: true,
           },
         ],
@@ -61,55 +61,55 @@ const options = [
     ],
   },
   {
-    value: 'appliances',
-    label: 'Home Appliances',
+    value: "appliances",
+    label: "Home Appliances",
     children: [
       {
-        value: 'kitchen',
-        label: 'Kitchen Appliances',
+        value: "kitchen",
+        label: "Kitchen Appliances",
         children: [
-          { value: 'refrigerator', label: 'Refrigerator' },
-          { value: 'microwave', label: 'Microwave' },
+          { value: "refrigerator", label: "Refrigerator" },
+          { value: "microwave", label: "Microwave" },
           {
-            value: 'dishwasher',
-            label: 'Dishwasher',
+            value: "dishwasher",
+            label: "Dishwasher",
             disabled: true,
           },
         ],
       },
       {
-        value: 'laundry',
-        label: 'Laundry Appliances',
+        value: "laundry",
+        label: "Laundry Appliances",
         children: [
-          { value: 'washingmachine', label: 'Washing Machine' },
-          { value: 'dryer', label: 'Dryer', disabled: true },
+          { value: "washingmachine", label: "Washing Machine" },
+          { value: "dryer", label: "Dryer", disabled: true },
         ],
       },
     ],
   },
   {
-    value: 'entertainment',
-    label: 'Entertainment Devices',
+    value: "entertainment",
+    label: "Entertainment Devices",
     children: [
       {
-        value: 'gaming',
-        label: 'Gaming Devices',
+        value: "gaming",
+        label: "Gaming Devices",
         children: [
-          { value: 'console', label: 'Game Console' },
-          { value: 'vr', label: 'VR Devices', disabled: true },
+          { value: "console", label: "Game Console" },
+          { value: "vr", label: "VR Devices", disabled: true },
         ],
       },
       {
-        value: 'audio',
-        label: 'Audio Devices',
+        value: "audio",
+        label: "Audio Devices",
         children: [
-          { value: 'speakers', label: 'Speakers' },
-          { value: 'headphones', label: 'Headphones' },
+          { value: "speakers", label: "Speakers" },
+          { value: "headphones", label: "Headphones" },
         ],
       },
     ],
   },
-]
+];
 </script>
 
 <template>
@@ -117,7 +117,6 @@ const options = [
     v-model="v"
     clearable
     width="300px"
-    multiple
     :options="options"
     placeholder="Explore high-end tech products"
   />
