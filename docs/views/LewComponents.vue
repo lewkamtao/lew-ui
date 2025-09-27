@@ -174,10 +174,7 @@ const options = computed(() => {
           label: "Select",
           value: "/Select",
         },
-        {
-          label: "SelectMultiple",
-          value: "/SelectMultiple",
-        },
+
         {
           label: "DatePicker",
           value: "/DatePicker",

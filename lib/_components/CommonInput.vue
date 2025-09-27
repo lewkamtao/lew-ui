@@ -69,8 +69,10 @@ const keyword: any = defineModel("keyword");
 
 watch(
   () => props.focus,
-  () => {
-    keyword.value = "";
+  (v) => {
+    if (!v && props.multiple) {
+      keyword.value = "";
+    }
   }
 );
 
@@ -95,15 +97,7 @@ function deleteTag(value: string) {
 }
 
 const getSelectClassName = computed(() => {
-  let {
-    clearable,
-    size,
-    disabled,
-    readonly,
-    focus,
-    multiple,
-    searchable,
-  } = props;
+  let { clearable, size, disabled, readonly, focus, multiple, searchable } = props;
 
   if (multiple) {
     clearable = clearable && (modelValue.value || []).length > 0;
@@ -159,9 +153,7 @@ const showClearButton = computed(() => {
       !props.loading
     );
   } else {
-    return (
-      props.clearable && modelValue.value && !props.readonly && !props.loading
-    );
+    return props.clearable && modelValue.value && !props.readonly && !props.loading;
   }
 });
 
@@ -275,10 +267,17 @@ defineExpose({
         :placeholder="placeholderText"
         @input="inputHandle"
       />
+      <div v-show="showPlaceholder" :style="placeholderStyle" class="lew-placeholder">
+        {{ placeholderText }}
+      </div>
     </template>
 
     <template v-else>
+      <div v-show="showPlaceholder" :style="placeholderStyle" class="lew-placeholder">
+        {{ placeholderText }}
+      </div>
       <div
+        v-show="!showPlaceholder"
         class="lew-multiple-box"
         :style="{ padding: hasSelectedItems ? '4px' : '' }"
       >
@@ -297,7 +296,7 @@ defineExpose({
         <LewInput
           v-if="searchable"
           key="search-input"
-          :model-value="keyword"
+          v-model="keyword"
           :auto-width="hasSelectedItems"
           class="lew-multiple-search-input"
           :size="(size as any)"
@@ -306,13 +305,6 @@ defineExpose({
         />
       </div>
     </template>
-    <div
-      v-show="showPlaceholder"
-      :style="placeholderStyle"
-      class="lew-placeholder"
-    >
-      {{ placeholderText }}
-    </div>
   </div>
 </template>
 

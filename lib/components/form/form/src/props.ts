@@ -279,7 +279,6 @@ export const formTypeAsMap: Record<string, any> = {
   'radio-group': 'string',
   'checkbox': 'boolean',
   'select': 'string',
-  'select-multiple': 'array',
   'date-picker': 'date',
   'date-range-picker': 'array',
   'tabs': 'string',

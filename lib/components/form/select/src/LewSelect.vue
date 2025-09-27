@@ -1,14 +1,7 @@
 <script setup lang="ts">
 import type { LewSelectOption } from "lew-ui/types";
 import { useDebounceFn } from "@vueuse/core";
-import {
-  LewCheckbox,
-  LewEmpty,
-  LewFlex,
-  LewPopover,
-  LewTextTrim,
-  locale,
-} from "lew-ui";
+import { LewCheckbox, LewEmpty, LewFlex, LewPopover, LewTextTrim, locale } from "lew-ui";
 import CommonIcon from "lew-ui/_components/CommonIcon.vue";
 import CommonInput from "lew-ui/_components/CommonInput.vue";
 import {
@@ -27,9 +20,7 @@ import { selectProps } from "./props";
 
 const props = defineProps(selectProps);
 const emit = defineEmits(selectEmits);
-const selectValue: Ref<
-  string | number | (string | number)[] | undefined
-> = defineModel();
+const selectValue: Ref<string | number | (string | number)[] | undefined> = defineModel();
 
 const lewSelectInputRef = ref();
 
@@ -45,9 +36,7 @@ const state = reactive({
   sourceFlattenOptions: flattenSelectOptions(props.options),
   options: flattenSelectOptions(props.options),
   hideBySelect: false,
-  keyword: props.multiple
-    ? ""
-    : props.defaultValue || (selectValue.value as any),
+  keyword: props.multiple ? "" : props.defaultValue || (selectValue.value as any),
   keywordBackup: props.multiple ? "" : (props.defaultValue as any),
   autoWidth: 0,
   searchCache: new Map<string, LewSelectOption[]>(),
@@ -138,8 +127,7 @@ watch(
       state.sourceOptions = newOptions;
       state.options = flattenSelectOptions(newOptions);
       state.keyword =
-        newOptions?.find((e: any) => e.value === selectValue.value)?.label ||
-        "";
+        newOptions?.find((e: any) => e.value === selectValue.value)?.label || "";
       if (props.enableSearchCache) {
         state.searchCache.clear();
       }
@@ -187,7 +175,7 @@ onUnmounted(() => {
   }
 });
 
-const SELECT_WIDTH_TOLERANCE = 36;
+const SELECT_WIDTH_TOLERANCE = 40;
 
 function calculateAutoWidth() {
   if (!props.autoWidth) return;
@@ -216,8 +204,7 @@ function calculateAutoWidth() {
 
     const textWidth = tempDiv.clientWidth;
     console.log(marginLeft);
-    state.autoWidth =
-      textWidth + SELECT_WIDTH_TOLERANCE + Number.parseInt(marginLeft);
+    state.autoWidth = textWidth + SELECT_WIDTH_TOLERANCE + Number.parseInt(marginLeft);
 
     document.body.removeChild(tempDiv);
   }
@@ -283,7 +270,6 @@ function clearHandle() {
   } else {
     selectValue.value = undefined;
     state.keywordBackup = undefined;
-    state.keyword = "";
     emit("clear");
     emit("change", undefined);
   }
@@ -297,9 +283,7 @@ function selectHandle(item: LewSelectOption) {
   if (props.multiple) {
     // 多选模式
     const currentValues = (selectValue.value as (string | number)[]) || [];
-    const index = currentValues.findIndex(
-      (v: string | number) => v === item.value
-    );
+    const index = currentValues.findIndex((v: string | number) => v === item.value);
 
     if (index >= 0) {
       currentValues.splice(index, 1);
@@ -338,9 +322,7 @@ function deleteTag(value: string | number) {
   if (!props.multiple) return;
 
   const currentValues = (selectValue.value as (string | number)[]) || [];
-  const valueIndex = currentValues.findIndex(
-    (v: string | number) => v === value
-  );
+  const valueIndex = currentValues.findIndex((v: string | number) => v === value);
 
   if (valueIndex > -1) {
     const item = currentValues[valueIndex];
@@ -424,15 +406,11 @@ async function showHandle() {
   if (props.multiple) {
     const currentValues = (selectValue.value as (string | number)[]) || [];
     const indexes = currentValues
-      .map((value: any) =>
-        state.options.findIndex((e: any) => e.value === value)
-      )
+      .map((value: any) => state.options.findIndex((e: any) => e.value === value))
       .filter((index: number) => index > -1);
     targetIndex = indexes.length > 0 ? Math.min(...indexes) : -1;
   } else {
-    targetIndex = state.options.findIndex(
-      (e: any) => e.value === selectValue.value
-    );
+    targetIndex = state.options.findIndex((e: any) => e.value === selectValue.value);
   }
 
   poll({
@@ -488,9 +466,7 @@ watch(
 );
 
 const getResultText = computed(() => {
-  const localeKey = props.multiple
-    ? "selectMultiple.resultCount"
-    : "select.resultCount";
+  const localeKey = props.multiple ? "selectMultiple.resultCount" : "select.resultCount";
   return state.options.length > 0
     ? locale.t(localeKey, {
         num: numFormat(state.options.filter((e: any) => !e.isGroup).length),
@@ -569,9 +545,7 @@ defineExpose({
         class="lew-select-body"
         :class="getBodyClassName"
         :style="{
-          width: multiple
-            ? any2px(state.popoverWidth)
-            : any2px(getPopoverBodyWidth),
+          width: multiple ? any2px(state.popoverWidth) : any2px(getPopoverBodyWidth),
         }"
       >
         <slot name="header" />
