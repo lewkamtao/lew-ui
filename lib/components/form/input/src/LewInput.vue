@@ -46,14 +46,14 @@ function clear() {
   emit('change', undefined)
 }
 
-const toFocus = () => lewInputRef.value?.focus()
-const toBlur = () => lewInputRef.value?.blur()
+const focus = () => lewInputRef.value?.focus()
+const blur = () => lewInputRef.value?.blur()
 
 function showPasswordFn() {
   _type.value = _type.value === 'text' ? 'password' : 'text'
 }
 
-function focus(e: FocusEvent) {
+function _focus(e: FocusEvent) {
   if (props.selectByFocus) {
     (e.currentTarget as HTMLInputElement)?.select()
   }
@@ -61,7 +61,7 @@ function focus(e: FocusEvent) {
   isFocus.value = true
 }
 
-function blur(e: FocusEvent) {
+function _blur(e: FocusEvent) {
   emit('blur', e)
   isFocus.value = false
 }
@@ -181,7 +181,7 @@ onUnmounted(() => {
     clearTimeout(timer)
 })
 
-defineExpose({ toFocus, toBlur })
+defineExpose({ focus, blur })
 </script>
 
 <template>
@@ -262,8 +262,8 @@ defineExpose({ toFocus, toBlur })
         :maxlength="maxLength"
         @input="handleInput"
         @change="handleChange"
-        @blur="blur"
-        @focus="focus"
+        @blur="_blur"
+        @focus="_focus"
       >
       <label v-if="autoWidth" class="lew-input-auto-width">
         {{ modelValue }}

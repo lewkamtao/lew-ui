@@ -9,11 +9,6 @@ const v = ref()
 
 <template>
   <div style="width: 300px">
-    <lew-cascader
-      v-model="v"
-      :only-leaf-selectable="false"
-      :options="cityTree"
-      @change="change"
-    />
+    <lew-cascader v-model="v" free multiple :options="cityTree" @change="change" />
   </div>
 </template>

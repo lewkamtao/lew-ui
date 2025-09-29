@@ -943,6 +943,15 @@ export default {
         description:
           '使用 ```autoWidth``` 属性，自动计算下拉框的宽度，```popoverWidth``` 属性设置弹窗宽度',
       },
+      demo12: {
+        title: '多选',
+      },
+      demo13: {
+        title: '多选搜索',
+      },
+      demo14: {
+        title: '多选分组',
+      },
       model: {
         modelValue: '绑定值',
       },
@@ -1141,6 +1150,15 @@ export default {
         title: '初始化选项方法',
         description:
           '使用 ```initMethod``` 方法，初始化级联数据，并返回一个 ```Promise``` 对象',
+      },
+      demo10: {
+        title: '多选',
+      },
+      demo11: {
+        title: '任意选择层级',
+      },
+      demo12: {
+        title: '严格模式',
       },
       model: {
         modelValue: '绑定值',

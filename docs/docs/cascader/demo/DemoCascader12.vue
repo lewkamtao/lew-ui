@@ -8,12 +8,12 @@ const v = ref()
 </script>
 
 <template>
-  <div style="width: 300px">
-    <lew-cascader
-      v-model="v"
-      :only-leaf-selectable="false"
-      :options="cityTree"
-      @change="change"
-    />
-  </div>
+  <lew-cascader
+    v-model="v"
+    width="300px"
+    :only-leaf-selectable="false"
+    multiple
+    :options="cityTree"
+    @change="change"
+  />
 </template>

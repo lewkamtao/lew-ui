@@ -19,7 +19,7 @@ const isFocus = ref(false)
 
 const validationMessage = ref('')
 
-function toFocus() {
+function focus() {
   lewInputRef.value?.focus()
 }
 
@@ -129,7 +129,7 @@ function validCheck() {
   return ((lewInputRef.value && lewInputRef.value.validationMessage) || '').length === 0
 }
 
-defineExpose({ toFocus, validCheck })
+defineExpose({ focus, validCheck })
 </script>
 
 <template>

@@ -153,6 +153,7 @@ const value = ref([])
   <lew-flex style="width: 320px" direction="y" gap="10px">
     <lew-select
       v-model="value"
+      multiple
       :options="options"
       placeholder="Select IKEA Product"
       searchable

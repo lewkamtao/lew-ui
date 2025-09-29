@@ -20,6 +20,12 @@ import DemoSelect10 from './DemoSelect10.vue'
 import DemoSelect10Code from './DemoSelect10.vue?raw'
 import DemoSelect11 from './DemoSelect11.vue'
 import DemoSelect11Code from './DemoSelect11.vue?raw'
+import DemoSelect12 from './DemoSelect12.vue'
+import DemoSelect12Code from './DemoSelect12.vue?raw'
+import DemoSelect13 from './DemoSelect13.vue'
+import DemoSelect13Code from './DemoSelect13.vue?raw'
+import DemoSelect14 from './DemoSelect14.vue'
+import DemoSelect14Code from './DemoSelect14.vue?raw'
 
 export const demoGroup = [
   DemoSelect1,
@@ -33,6 +39,9 @@ export const demoGroup = [
   DemoSelect9,
   DemoSelect10,
   DemoSelect11,
+  DemoSelect12,
+  DemoSelect13,
+  DemoSelect14,
 ]
 
 export const codeGroup = [
@@ -47,4 +56,7 @@ export const codeGroup = [
   DemoSelect9Code,
   DemoSelect10Code,
   DemoSelect11Code,
+  DemoSelect12Code,
+  DemoSelect13Code,
+  DemoSelect14Code,
 ]

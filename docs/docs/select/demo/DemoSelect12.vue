@@ -20,8 +20,8 @@ const value = ref('')
 <template>
   <lew-select
     v-model="value"
-    auto-width
-    popover-width="220px"
+    width="300px"
+    multiple
     clearable
     placeholder="Select a famous person"
     :options="options"

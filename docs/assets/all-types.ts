@@ -29,7 +29,7 @@ export default {
   "LewTabsType": `export type LewTabsType = 'block' | 'line'`,
   "LewBreadcrumbSeparator": `export type LewBreadcrumbSeparator = 'shoulder' | 'sprit'`,
   "LewUploadStatus": `export type LewUploadStatus = 'success' | 'fail' | 'uploading' | 'complete' | 'wrong_type' | 'wrong_size' | 'pending'`,
-  "LewFormItemAs": `export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group' | 'radio-group' | 'checkbox' | 'select' | 'select-multiple' | 'date-picker' | 'date-range-picker' | 'tabs' | 'cascader' | 'switch' | 'button' | 'upload' | 'input-number' | 'slider' | 'slider-range' | 'color-picker' | 'rate' | 'tree-select'`,
+  "LewFormItemAs": `export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group' | 'radio-group' | 'checkbox' | 'select' | 'date-picker' | 'date-range-picker' | 'tabs' | 'cascader' | 'switch' | 'button' | 'upload' | 'input-number' | 'slider' | 'slider-range' | 'color-picker' | 'rate' | 'tree-select'`,
   "LewSelectMultipleValueLayout": `export type LewSelectMultipleValueLayout = 'tag' | 'text'`,
   "LewStepsStatus": `export type LewStepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'`,
   "LewTagClose": `export type LewTagClose = () => Promise<boolean>`,

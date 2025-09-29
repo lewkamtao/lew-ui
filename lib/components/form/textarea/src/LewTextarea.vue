@@ -49,8 +49,12 @@ function clear(): void {
   emit('change', undefined)
 }
 
-function toFocus() {
+function focus() {
   lewTextareaRef.value?.focus()
+}
+
+function blur() {
+  lewTextareaRef.value?.blur()
 }
 
 const getTextareaClassNames = computed(() => {
@@ -62,14 +66,14 @@ const getTextareaClassNames = computed(() => {
   })
 })
 
-function focus(e: any) {
+function _focus(e: any) {
   if (props.selectByFocus) {
     e?.currentTarget?.select()
   }
   state.isFocus = true
 }
 
-function blur() {
+function _blur() {
   state.isFocus = false
 }
 
@@ -93,16 +97,7 @@ const getIconSize = computed(() => {
 })
 
 const getTextareaStyle: any = computed(() => {
-  const {
-    width,
-    height,
-    size,
-    resize,
-    maxHeight,
-    minHeight,
-    maxWidth,
-    minWidth,
-  } = props
+  const { width, height, size, resize, maxHeight, minHeight, maxWidth, minWidth } = props
   const heightMap: Record<string, number> = {
     small: 60,
     medium: 75,
@@ -140,7 +135,7 @@ if (props.okByEnter) {
   })
 }
 
-defineExpose({ toFocus })
+defineExpose({ focus, blur })
 </script>
 
 <template>
@@ -154,14 +149,12 @@ defineExpose({ toFocus })
       ref="lewTextareaRef"
       v-model="modelValue"
       class="lew-textarea lew-scrollbar"
-      :placeholder="
-        placeholder ? placeholder : locale.t('textarea.placeholder')
-      "
+      :placeholder="placeholder ? placeholder : locale.t('textarea.placeholder')"
       :maxlength="maxLength"
       :disabled="disabled"
       :readonly="readonly"
-      @focus="focus"
-      @blur="blur"
+      @focus="_focus"
+      @blur="_blur"
       @input="handleInput"
       @change="handleChange"
     />

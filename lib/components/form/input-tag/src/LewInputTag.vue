@@ -39,8 +39,8 @@ function openInput() {
 
   // 在下一个渲染周期聚焦输入框
   nextTick(() => {
-    if (lewInputRef.value && typeof lewInputRef.value.toFocus === 'function') {
-      lewInputRef.value.toFocus()
+    if (lewInputRef.value && typeof lewInputRef.value.focus === 'function') {
+      lewInputRef.value.focus()
     }
   })
 
@@ -108,8 +108,8 @@ function openInput() {
 
       if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
         // 当输入框为空且按下回车键时，失焦
-        if (lewInputRef.value && typeof lewInputRef.value.toBlur === 'function') {
-          lewInputRef.value.toBlur()
+        if (lewInputRef.value && typeof lewInputRef.value.blur === 'function') {
+          lewInputRef.value.blur()
         }
       }
     }

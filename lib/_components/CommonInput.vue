@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { LewInput, LewTag, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px, object2class } from "lew-ui/utils";
+import { LewInput, LewTag, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
 
 const props = defineProps({
   size: {
     type: String,
-    default: "medium",
+    default: 'medium',
   },
   readonly: {
     type: Boolean,
@@ -26,11 +26,11 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    default: "",
+    default: '',
   },
   width: {
     type: String,
-    default: "100%",
+    default: '100%',
   },
   formatItems: {
     type: null,
@@ -54,66 +54,60 @@ const props = defineProps({
 
   selectedLabel: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 
-const emit = defineEmits(["clear", "delete", "input"]);
+const emit = defineEmits(['clear', 'delete', 'input'])
 
-const lewSelectRef = ref();
-const selectWidth = ref();
-const inputRef = ref();
+const lewSelectRef = ref()
+const selectWidth = ref()
+const inputRef = ref()
+const searchInputRef = ref()
 
-const modelValue: any = defineModel();
-const keyword: any = defineModel("keyword");
+const modelValue: any = defineModel()
+const keyword: any = defineModel('keyword')
 
 watch(
   () => props.focus,
   (v) => {
     if (!v && props.multiple) {
-      keyword.value = "";
+      keyword.value = ''
     }
-  }
-);
+  },
+)
 
 function updateWidths() {
   if (lewSelectRef.value) {
-    selectWidth.value = lewSelectRef.value.clientWidth;
+    selectWidth.value = lewSelectRef.value.clientWidth
   }
 }
 
-let resizeObserver: ResizeObserver | null = null;
+let resizeObserver: ResizeObserver | null = null
 
 function clearHandle() {
-  emit("clear");
+  emit('clear')
 }
 
 function inputHandle(e: Event) {
-  emit("input", e);
+  emit('input', e)
 }
 
 function deleteTag(value: string) {
-  emit("delete", value);
+  emit('delete', value)
 }
 
 const getSelectClassName = computed(() => {
-  let {
-    clearable,
-    size,
-    disabled,
-    readonly,
-    focus,
-    multiple,
-    searchable,
-  } = props;
+  let { clearable, size, disabled, readonly, focus, multiple, searchable } = props
 
   if (multiple) {
-    clearable = clearable && (modelValue.value || []).length > 0;
-  } else {
-    clearable = clearable && !!modelValue.value;
+    clearable = clearable && (modelValue.value || []).length > 0
+  }
+  else {
+    clearable = clearable && !!modelValue.value
   }
 
-  return object2class("lew-select", {
+  return object2class('lew-select', {
     clearable,
     size,
     disabled,
@@ -121,104 +115,104 @@ const getSelectClassName = computed(() => {
     focus,
     searchable,
     multiple,
-  });
-});
+  })
+})
 
 const getIconSize = computed(() => {
   const size: any = {
     small: 14,
     medium: 15,
     large: 16,
-  };
-  return size[props.size];
-});
+  }
+  return size[props.size]
+})
 
 onMounted(() => {
-  updateWidths();
+  updateWidths()
   // 设置 ResizeObserver 监听宽度变化
   if (lewSelectRef.value) {
     resizeObserver = new ResizeObserver(() => {
-      updateWidths();
-    });
-    resizeObserver.observe(lewSelectRef.value);
+      updateWidths()
+    })
+    resizeObserver.observe(lewSelectRef.value)
   }
-});
+})
 
 onUnmounted(() => {
   // 清理 ResizeObserver
   if (resizeObserver) {
-    resizeObserver.disconnect();
-    resizeObserver = null;
+    resizeObserver.disconnect()
+    resizeObserver = null
   }
-});
+})
 
 const showClearButton = computed(() => {
   if (props.multiple) {
     return (
-      props.clearable &&
-      (modelValue.value || []).length > 0 &&
-      !props.readonly &&
-      !props.loading
-    );
-  } else {
-    return (
-      props.clearable && modelValue.value && !props.readonly && !props.loading
-    );
+      props.clearable
+      && (modelValue.value || []).length > 0
+      && !props.readonly
+      && !props.loading
+    )
   }
-});
+  else {
+    return props.clearable && modelValue.value && !props.readonly && !props.loading
+  }
+})
 
 const hasSelectedItems = computed(() => {
   if (props.multiple) {
-    return (modelValue.value || []).length > 0;
-  } else {
-    return !!modelValue.value;
+    return (modelValue.value || []).length > 0
   }
-});
+  else {
+    return !!modelValue.value
+  }
+})
 
 const showPlaceholder = computed(() => {
   if (props.multiple && !props.searchable) {
-    return (modelValue.value || []).length === 0;
-  } else {
-    // 单选模式下不显示div placeholder，因为input已经有placeholder了
-    return false;
+    return (modelValue.value || []).length === 0
   }
-});
+  else {
+    // 单选模式下不显示div placeholder，因为input已经有placeholder了
+    return false
+  }
+})
 
 const selectedItemsText = computed(() => {
-  if (!hasSelectedItems.value) return "";
+  if (!hasSelectedItems.value)
+    return ''
 
   if (props.multiple) {
     // 多选模式不需要文本显示，使用tag显示
-    return "";
-  } else {
-    return props.selectedLabel || props.formatItems;
+    return ''
   }
-});
+  else {
+    return props.selectedLabel || props.formatItems
+  }
+})
 
 const clearButtonIconClass = computed(() => {
   return {
-    "lew-form-icon-close-focus": props.focus,
-  };
-});
+    'lew-form-icon-close-focus': props.focus,
+  }
+})
 
 const placeholderText = computed(() => {
   if (props.multiple) {
-    return props.placeholder || locale.t("selectMultiple.placeholder");
-  } else {
-    return props.placeholder || locale.t("select.placeholder");
+    return props.placeholder || locale.t('selectMultiple.placeholder')
   }
-});
-
-const placeholderStyle = computed(() => {
-  return {};
-});
+  else {
+    return props.placeholder || locale.t('select.placeholder')
+  }
+})
 
 const getValueStyle = computed(() => {
   return {
     opacity: props.focus ? 0.6 : 1,
-    paddingRight: props.clearable ? "24px" : "",
-  };
-});
+    paddingRight: props.clearable ? '24px' : '',
+  }
+})
 
 function getInputRefStyle() {
   return {
@@ -226,20 +220,31 @@ function getInputRefStyle() {
     padding: getComputedStyle(inputRef.value).padding,
     fontFamily: getComputedStyle(inputRef.value).fontFamily,
     marginLeft: getComputedStyle(inputRef.value).marginLeft,
-  };
+  }
+}
+
+function focus() {
+  if (props.multiple) {
+    setTimeout(() => {
+      searchInputRef.value.focus()
+    }, 100)
+  }
+  else {
+    inputRef.value.focus()
+  }
 }
 
 // 新增计算属性：选择器图标类名
 const selectIconClass = computed(() => {
   return {
-    "lew-icon-select-hide": showClearButton.value,
-  };
-});
+    'lew-icon-select-hide': showClearButton.value,
+  }
+})
 
 defineExpose({
   clearHandle,
   getInputRefStyle,
-});
+})
 </script>
 
 <template>
@@ -248,6 +253,7 @@ defineExpose({
     class="lew-select"
     :class="getSelectClassName"
     :style="{ width: any2px(width) }"
+    @click="focus"
   >
     <div v-if="loading" class="lew-icon-loading-box">
       <CommonIcon :size="getIconSize" :loading="loading" type="loading" />
@@ -279,22 +285,14 @@ defineExpose({
         :readonly="!searchable"
         :placeholder="placeholderText"
         @input="inputHandle"
-      />
-      <div
-        v-show="showPlaceholder"
-        :style="placeholderStyle"
-        class="lew-placeholder"
       >
+      <div v-show="showPlaceholder" class="lew-placeholder">
         {{ placeholderText }}
       </div>
     </template>
 
     <template v-else>
-      <div
-        v-show="showPlaceholder"
-        :style="placeholderStyle"
-        class="lew-placeholder"
-      >
+      <div v-show="showPlaceholder" class="lew-placeholder">
         {{ placeholderText }}
       </div>
       <div
@@ -315,7 +313,8 @@ defineExpose({
           </LewTag>
         </transition-group>
         <LewInput
-          v-if="searchable"
+          v-if="searchable && (props.focus || (formatItems || []).length === 0)"
+          ref="searchInputRef"
           key="search-input"
           v-model="keyword"
           :auto-width="hasSelectedItems"
@@ -482,9 +481,7 @@ defineExpose({
       font-size: var(--lew-form-font-size-small);
       margin-left: 10px;
       padding-right: 26px;
-      line-height: calc(
-        var(--lew-form-item-height-small) - (var(--lew-form-border-width) * 2)
-      );
+      line-height: calc(var(--lew-form-item-height-small) - (var(--lew-form-border-width) * 2));
     }
 
     .lew-single-input {
@@ -517,9 +514,7 @@ defineExpose({
       font-size: var(--lew-form-font-size-medium);
       margin-left: 12px;
       padding-right: 28px;
-      line-height: calc(
-        var(--lew-form-item-height-medium) - (var(--lew-form-border-width) * 2)
-      );
+      line-height: calc(var(--lew-form-item-height-medium) - (var(--lew-form-border-width) * 2));
     }
 
     .lew-single-input {
@@ -552,9 +547,7 @@ defineExpose({
       font-size: var(--lew-form-font-size-large);
       margin-left: 14px;
       padding-right: 30px;
-      line-height: calc(
-        var(--lew-form-item-height-large) - (var(--lew-form-border-width) * 2)
-      );
+      line-height: calc(var(--lew-form-item-height-large) - (var(--lew-form-border-width) * 2));
     }
 
     .lew-single-input {
@@ -615,6 +608,8 @@ defineExpose({
 }
 
 .lew-select-searchable {
+  cursor: text;
+
   .lew-single-input {
     cursor: text;
   }
