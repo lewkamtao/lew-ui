@@ -4,6 +4,7 @@ export interface TreeNode {
   key: string
   children?: TreeNode[]
   disabled?: boolean
+  [key: string]: any
 }
 
 /**
@@ -62,7 +63,7 @@ export function useTreeSelection() {
       node.children?.forEach(child => dfs(child, node.key))
     }
 
-    ;(unref(tree) as TreeNode[]).forEach(root => dfs(root, null))
+      ; (unref(tree) as TreeNode[]).forEach(root => dfs(root, null))
   }
 
   buildMaps()
@@ -208,10 +209,10 @@ export function useTreeSelection() {
     indeterminateSet.clear()
 
     if (Array.isArray(keys)) {
-    // 对每个传入的key执行完整的级联选择逻辑
+      // 对每个传入的key执行完整的级联选择逻辑
       keys.forEach((key: string) => {
         if (parentMap.has(key) || childrenMap.has(key)) {
-        // 如果节点被禁用，跳过
+          // 如果节点被禁用，跳过
           if (isNodeDisabled(key)) {
             return
           }
@@ -225,7 +226,7 @@ export function useTreeSelection() {
       const processedAncestors = new Set<string>()
       keys.forEach((key) => {
         if (parentMap.has(key) || childrenMap.has(key)) {
-        // 更新祖先链状态，避免重复处理
+          // 更新祖先链状态，避免重复处理
           let parent = parentMap.get(key)
           while (parent !== undefined && parent !== null && !processedAncestors.has(parent)) {
             updateNodeState(parent)
@@ -268,7 +269,6 @@ export function useTreeSelection() {
    * @param key 节点key
    */
   function addKey(key: string) {
-    console.log(parentMap, childrenMap, key)
     if (!parentMap.has(key) && !childrenMap.has(key)) {
       return
     }
@@ -359,11 +359,12 @@ export function useTreeSelection() {
     const findInTree = (nodes: TreeNode[], targetValues: string[]): void => {
       for (const node of nodes) {
         if (targetValues.includes(node.key)) {
-          foundItems.push({
-            key: node.key,
-            disabled: node.disabled,
+          const item = {
+            ...node,
             isLeaf: !node.children || node.children.length === 0,
-          })
+          }
+          delete item.children
+          foundItems.push(item)
         }
 
         if (node.children && node.children.length > 0) {

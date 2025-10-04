@@ -33,6 +33,7 @@ export function formatTree(
 
     const formattedNode: LewCascaderOption = {
       ...node,
+      key: value,
       valuePaths,
       labelPaths,
       level,

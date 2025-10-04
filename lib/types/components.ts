@@ -221,6 +221,7 @@ export interface LewDatePickerPresetsOption {
 
 export interface LewCascaderOption {
   label: string
+  key: string
   value: string
   level?: number
   labelPaths?: string[]
