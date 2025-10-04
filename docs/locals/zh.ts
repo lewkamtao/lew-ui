@@ -115,6 +115,7 @@ export default {
         text: '按钮文字',
         type: '类型',
         size: '尺寸',
+        width: '宽度',
         singleIcon: '是否只显示图标',
         color: '颜色',
         round: '是否圆角',
@@ -157,6 +158,10 @@ export default {
         disabled: '是否禁用',
         round: '是否圆角',
         oversize: '更宽松的尺寸',
+        close: '接收一个 Promise 函数，用于关闭标签',
+      },
+      emits: {
+        close: '关闭标签事件回调',
       },
     },
     badge: {

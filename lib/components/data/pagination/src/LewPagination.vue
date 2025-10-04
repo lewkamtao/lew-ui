@@ -83,7 +83,7 @@ function changePage(page: number) {
   emit(
     'change',
     toRaw({
-      currentPage: currentPage.value,
+      currentPage: page,
       pageSize: state.pageSize,
     }),
   )
@@ -167,11 +167,7 @@ const getIconSize = computed(() => {
         >
           <CommonIcon type="chevron-left" :size="getIconSize" />
         </LewButton>
-        <div
-          v-if="showOne"
-          class="lew-pagination-page-btn"
-          @click="changePage(1)"
-        >
+        <div v-if="showOne" class="lew-pagination-page-btn" @click="changePage(1)">
           1
         </div>
         <div
@@ -298,6 +294,7 @@ const getIconSize = computed(() => {
     padding: 0px 5px;
   }
 }
+
 .lew-pagination-size-small {
   .lew-pagination-page-box {
     :deep() {
@@ -307,6 +304,7 @@ const getIconSize = computed(() => {
       }
     }
   }
+
   .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-small) - 6px);
     min-width: calc(var(--lew-form-item-height-small) - 6px);
@@ -314,6 +312,7 @@ const getIconSize = computed(() => {
     padding: 0px 4px;
   }
 }
+
 .lew-pagination-size-medium {
   .lew-pagination-page-box {
     :deep() {
@@ -323,6 +322,7 @@ const getIconSize = computed(() => {
       }
     }
   }
+
   .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-medium) - 8px);
     min-width: calc(var(--lew-form-item-height-medium) - 8px);
@@ -330,6 +330,7 @@ const getIconSize = computed(() => {
     padding: 0px 6px;
   }
 }
+
 .lew-pagination-size-large {
   .lew-pagination-page-box {
     :deep() {
@@ -339,6 +340,7 @@ const getIconSize = computed(() => {
       }
     }
   }
+
   .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-large) - 10px);
     min-width: calc(var(--lew-form-item-height-large) - 10px);

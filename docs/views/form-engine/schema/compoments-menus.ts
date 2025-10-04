@@ -10,7 +10,6 @@ import inputTag from './components/input-tag'
 import radioGroup from './components/radio-group'
 import rate from './components/rate'
 import selectScheme from './components/select'
-import selectMultipleScheme from './components/select-multiple'
 import slider from './components/slider'
 import sliderRange from './components/slider-range'
 import _switch from './components/switch'
@@ -113,27 +112,6 @@ export const componentsMenusSchema = [
         { label: '选项三', value: '3' },
         { label: '选项四', value: '4' },
         { label: '选项五', value: '5' },
-      ],
-    },
-  },
-  {
-    field: 'select_multiple',
-    fieldType: [],
-    label: '下拉多选',
-    as: 'select-multiple',
-    schema: selectMultipleScheme,
-    props: {
-      clearable: true,
-      valueTextSplit: '、',
-      trigger: 'click',
-      align: 'left',
-      valueLayout: 'text',
-      showCheckIcon: true,
-      options: [
-        { label: '选项 A', value: '1' },
-        { label: '选项 B', value: '2' },
-        { label: '选项 C', value: '3' },
-        { label: '选项 D', value: '4' },
       ],
     },
   },

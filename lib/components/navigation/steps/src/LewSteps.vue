@@ -1,44 +1,71 @@
 <script lang="ts" setup>
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { any2px } from 'lew-ui/utils'
-import { stepsProps } from './props'
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import { any2px } from "lew-ui/utils";
+import { stepsProps } from "./props";
 
-defineProps(stepsProps)
-const stepsValue: Ref<number | undefined> = defineModel()
+const props = defineProps(stepsProps);
+const emit = defineEmits(["change"]);
+const stepsValue: Ref<number | undefined> = defineModel();
+
+// 监听 stepsValue 变化，自动触发 change 事件
+watch(stepsValue, (val, oldVal) => {
+  if (val !== oldVal) {
+    emit("change", val);
+  }
+});
+
+const itemStyle = computed(() => {
+  return {
+    cursor: props.canClickItem ? "pointer" : "default",
+    minWidth: any2px(props.minWidth),
+  };
+});
+
+function handleClick(index: number) {
+  if (!props.canClickItem) return;
+  if (!props.canCrossSteps && Math.abs((stepsValue.value || 1) - 1 - index) > 1) return;
+  if (stepsValue.value !== index + 1) {
+    stepsValue.value = index + 1;
+    emit("change", stepsValue.value);
+  }
+}
 </script>
 
 <template>
   <div class="lew-steps lew-scrollbar">
     <div
-      v-for="(item, index) in options"
+      v-for="(item, index) in props.options"
       :key="index"
       class="lew-steps-item"
-      :style="{ minWidth: any2px(minWidth) }"
       :class="{
         'lew-steps-item-active': index === (stepsValue || 1) - 1,
         'lew-steps-item-succeeded': index < (stepsValue || 1) - 1,
-        'lew-steps-item-error': index === (stepsValue || 1) - 1 && status === 'error',
-        'lew-steps-item-warning': index === (stepsValue || 1) - 1 && status === 'warning',
-        'lew-steps-item-done': index === (stepsValue || 1) - 1 && status === 'done',
+        'lew-steps-item-error':
+          index === (stepsValue || 1) - 1 && props.status === 'error',
+        'lew-steps-item-warning':
+          index === (stepsValue || 1) - 1 && props.status === 'warning',
+        'lew-steps-item-done': index === (stepsValue || 1) - 1 && props.status === 'done',
       }"
+      :style="itemStyle"
+      @click="handleClick(index)"
     >
       <div class="lew-steps-item-index">
         <CommonIcon
-          v-if="index === (stepsValue || 1) - 1 && status === 'loading'"
+          v-if="index === (stepsValue || 1) - 1 && props.status === 'loading'"
           :size="16"
           :stroke-width="3"
           loading
           type="loader"
         />
         <CommonIcon
-          v-else-if="index === (stepsValue || 1) - 1 && status === 'warning'"
+          v-else-if="index === (stepsValue || 1) - 1 && props.status === 'warning'"
           :size="16"
           :stroke-width="3"
           type="alert-circle"
         />
         <CommonIcon
-          v-else-if="index === (stepsValue || 1) - 1 && status === 'error'"
+          v-else-if="index === (stepsValue || 1) - 1 && props.status === 'error'"
           :size="16"
           :stroke-width="3"
           type="close"
@@ -46,8 +73,8 @@ const stepsValue: Ref<number | undefined> = defineModel()
 
         <CommonIcon
           v-else-if="
-            index < (stepsValue || 1) - 1
-              || (index === (stepsValue || 1) - 1 && status === 'done')
+            index < (stepsValue || 1) - 1 ||
+            (index === (stepsValue || 1) - 1 && props.status === 'done')
           "
           :style="{ color: 'var(--lew-color-primary)' }"
           :size="16"
@@ -57,7 +84,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
         <span v-else class="index">{{ index + 1 }}</span>
       </div>
       <div class="lew-steps-item-info">
-        <div :style="{ maxWidth: any2px(minWidth) }" class="lew-steps-item-title">
+        <div :style="{ maxWidth: any2px(props.minWidth) }" class="lew-steps-item-title">
           <RenderComponent
             :render-fn="item.title"
             type="text-trim"
@@ -66,7 +93,10 @@ const stepsValue: Ref<number | undefined> = defineModel()
             }"
           />
         </div>
-        <div :style="{ maxWidth: any2px(minWidth) }" class="lew-steps-item-description">
+        <div
+          :style="{ maxWidth: any2px(props.minWidth) }"
+          class="lew-steps-item-description"
+        >
           <RenderComponent
             :render-fn="item.description"
             type="text-trim"
@@ -144,7 +174,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
 
     .lew-steps-item-title::before {
       position: absolute;
-      content: '';
+      content: "";
       top: 50%;
       left: 100%;
       transform: translateY(-50%);
@@ -155,7 +185,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
 
     .lew-steps-item-title::after {
       position: absolute;
-      content: '';
+      content: "";
       top: 50%;
       left: 100%;
       transform: translateY(-50%);

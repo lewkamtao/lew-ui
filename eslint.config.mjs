@@ -12,6 +12,8 @@ export default antfu({
     'regexp/no-unused-capturing-group': 'off',
     'regexp/no-dupe-disjunctions': 'off',
 
+    // 忽略 || 运算符的换行位置检查
+    'vue/operator-linebreak': 'off',
   },
   formatters: {
     css: true,

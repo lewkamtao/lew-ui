@@ -37,6 +37,16 @@ export const stepsProps = {
       propName: 'minWidth',
     }),
   },
+  // 允许点击Item切换步骤
+  canClickItem: {
+    type: Boolean,
+    default: true,
+  },
+  // 允许跨步骤
+  canCrossSteps: {
+    type: Boolean,
+    default: true,
+  },
 }
 
 export type LewStepsProps = ExtractPublicPropTypes<typeof stepsProps>
