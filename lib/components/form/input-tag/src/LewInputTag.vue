@@ -39,8 +39,8 @@ function openInput() {
 
   // 在下一个渲染周期聚焦输入框
   nextTick(() => {
-    if (lewInputRef.value && typeof lewInputRef.value.focus === 'function') {
-      lewInputRef.value.focus()
+    if (lewInputRef.value && typeof lewInputRef.value?.focus === 'function') {
+      lewInputRef.value?.focus()
     }
   })
 

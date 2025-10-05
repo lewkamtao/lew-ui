@@ -9,21 +9,24 @@ async function initMethod(): Promise<LewCascaderOption[]> {
     {
       label: 'Beijing',
       value: 'beijing',
+      key: 'beijing',
       children: [
         {
           label: 'Chaoyang District',
           value: 'chaoyang',
+          key: 'chaoyang',
           children: [
-            { label: 'Sanlitun', value: 'sanlitun' },
-            { label: 'Guomao', value: 'guomao' },
+            { label: 'Sanlitun', value: 'sanlitun', key: 'sanlitun' },
+            { label: 'Guomao', value: 'guomao', key: 'guomao' },
           ],
         },
         {
           label: 'Haidian District',
           value: 'haidian',
+          key: 'haidian',
           children: [
-            { label: 'Zhongguancun', value: 'zhongguancun' },
-            { label: 'Wudaokou', value: 'wudaokou' },
+            { label: 'Zhongguancun', value: 'zhongguancun', key: 'zhongguancun' },
+            { label: 'Wudaokou', value: 'wudaokou', key: 'wudaokou' },
           ],
         },
       ],
@@ -31,21 +34,24 @@ async function initMethod(): Promise<LewCascaderOption[]> {
     {
       label: 'Shanghai',
       value: 'shanghai',
+      key: 'shanghai',
       children: [
         {
           label: 'Pudong New District',
           value: 'pudong',
+          key: 'pudong',
           children: [
-            { label: 'Lujiazui', value: 'lujiazui' },
-            { label: 'Zhangjiang', value: 'zhangjiang' },
+            { label: 'Lujiazui', value: 'lujiazui', key: 'lujiazui' },
+            { label: 'Zhangjiang', value: 'zhangjiang', key: 'zhangjiang' },
           ],
         },
         {
           label: 'Huangpu District',
           value: 'huangpu',
+          key: 'huangpu',
           children: [
-            { label: 'The Bund', value: 'waitan' },
-            { label: 'Nanjing Road', value: 'nanjinglu' },
+            { label: 'The Bund', value: 'waitan', key: 'waitan' },
+            { label: 'Nanjing Road', value: 'nanjinglu', key: 'nanjinglu' },
           ],
         },
       ],

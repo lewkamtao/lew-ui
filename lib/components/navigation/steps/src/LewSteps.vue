@@ -1,33 +1,35 @@
 <script lang="ts" setup>
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
-import { any2px } from "lew-ui/utils";
-import { stepsProps } from "./props";
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { any2px } from 'lew-ui/utils'
+import { stepsProps } from './props'
 
-const props = defineProps(stepsProps);
-const emit = defineEmits(["change"]);
-const stepsValue: Ref<number | undefined> = defineModel();
+const props = defineProps(stepsProps)
+const emit = defineEmits(['change'])
+const stepsValue: Ref<number | undefined> = defineModel()
 
 // 监听 stepsValue 变化，自动触发 change 事件
 watch(stepsValue, (val, oldVal) => {
   if (val !== oldVal) {
-    emit("change", val);
+    emit('change', val)
   }
-});
+})
 
 const itemStyle = computed(() => {
   return {
-    cursor: props.canClickItem ? "pointer" : "default",
+    cursor: props.canClickItem ? 'pointer' : 'default',
     minWidth: any2px(props.minWidth),
-  };
-});
+  }
+})
 
 function handleClick(index: number) {
-  if (!props.canClickItem) return;
-  if (!props.canCrossSteps && Math.abs((stepsValue.value || 1) - 1 - index) > 1) return;
+  if (!props.canClickItem)
+    return
+  if (!props.canCrossSteps && Math.abs((stepsValue.value || 1) - 1 - index) > 1)
+    return
   if (stepsValue.value !== index + 1) {
-    stepsValue.value = index + 1;
-    emit("change", stepsValue.value);
+    stepsValue.value = index + 1
+    emit('change', stepsValue.value)
   }
 }
 </script>
@@ -74,7 +76,7 @@ function handleClick(index: number) {
         <CommonIcon
           v-else-if="
             index < (stepsValue || 1) - 1 ||
-            (index === (stepsValue || 1) - 1 && props.status === 'done')
+              (index === (stepsValue || 1) - 1 && props.status === 'done')
           "
           :style="{ color: 'var(--lew-color-primary)' }"
           :size="16"
@@ -174,7 +176,7 @@ function handleClick(index: number) {
 
     .lew-steps-item-title::before {
       position: absolute;
-      content: "";
+      content: '';
       top: 50%;
       left: 100%;
       transform: translateY(-50%);
@@ -185,7 +187,7 @@ function handleClick(index: number) {
 
     .lew-steps-item-title::after {
       position: absolute;
-      content: "";
+      content: '';
       top: 50%;
       left: 100%;
       transform: translateY(-50%);

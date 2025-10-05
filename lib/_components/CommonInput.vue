@@ -226,11 +226,11 @@ function getInputRefStyle() {
 function focus() {
   if (props.multiple) {
     setTimeout(() => {
-      searchInputRef.value.focus()
+      searchInputRef.value?.focus()
     }, 100)
   }
   else {
-    inputRef.value.focus()
+    inputRef.value?.focus()
   }
 }
 

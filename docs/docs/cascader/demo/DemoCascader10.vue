@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { cityTree } from "docs/lib/data";
+import { cityTree } from 'docs/lib/data'
 
 function change(e: any, items: any) {
-  console.log(e, items);
+  console.log(e, items)
 }
-const v = ref();
+const v = ref([])
 </script>
 
 <template>
