@@ -99,9 +99,8 @@ function addImageToList(files: any) {
       ...cloneDeep(modelValue.value || []),
     ];
     modelValue.value = _value;
-    emit("change", _value);
-
     nextTick(() => {
+      emit("change", _value);
       // 如果配置了uploadHelper且文件格式和大小都符合要求，则开始上传
       if (status === "pending" && isFunction(_uploadHelper.value)) {
         setFileItem({
@@ -137,6 +136,9 @@ async function deleteFile(key: string) {
       fileList.splice(index, 1);
       modelValue.value = fileList;
       emit("delete", key);
+      nextTick(() => {
+        emit("change", fileList);
+      });
       return;
     }
 
@@ -152,6 +154,9 @@ async function deleteFile(key: string) {
     fileList.splice(index, 1);
     modelValue.value = fileList;
     emit("delete", key);
+    nextTick(() => {
+      emit("change", fileList);
+    });
   }
 }
 
@@ -269,6 +274,9 @@ function setFileItem(item: LewUploadFileItem) {
     fileList[index] = { ...fileList[index], ...item, percent: _percent };
   }
   modelValue.value = fileList;
+  nextTick(() => {
+    emit("change", fileList);
+  });
 }
 
 const getUploadLabelClass = computed(() => {
