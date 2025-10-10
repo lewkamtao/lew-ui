@@ -224,8 +224,12 @@ const getColumnStyle = computed(() => {
 
     const tdWidth
       = (width
-        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
-      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
+        / (totalColumnWidth.value
+          - fixedWidths.value.left
+          - fixedWidths.value.right))
+        * (state.scrollClientWidth
+          - fixedWidths.value.left
+          - fixedWidths.value.right)
     return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
   }
 })
@@ -243,8 +247,12 @@ const getHeaderColumnStyle = computed(() => {
 
     const tdWidth
       = (width
-        / (totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right))
-      * (state.scrollClientWidth - fixedWidths.value.left - fixedWidths.value.right)
+        / (totalColumnWidth.value
+          - fixedWidths.value.left
+          - fixedWidths.value.right))
+        * (state.scrollClientWidth
+          - fixedWidths.value.left
+          - fixedWidths.value.right)
     return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
   }
 })
@@ -272,7 +280,9 @@ const columnLevel = computed(() => {
 })
 
 const getFixedHeaderColumns = computed(() => (direction: string) => {
-  return headerColumns.value[direction as keyof typeof headerColumns.value] || []
+  return (
+    headerColumns.value[direction as keyof typeof headerColumns.value] || []
+  )
 })
 
 const getFixedColumns = computed(() => (direction: string) => {
@@ -280,13 +290,15 @@ const getFixedColumns = computed(() => (direction: string) => {
 })
 
 const getScrollLineLeftClassName = computed(() => {
-  return !state.isScrollbarVisible || ['all', 'left'].includes(state.hiddenScrollLine)
+  return !state.isScrollbarVisible
+    || ['all', 'left'].includes(state.hiddenScrollLine)
     ? 'lew-hide-line-left'
     : ''
 })
 
 const getScrollLineRightClassName = computed(() => {
-  return !state.isScrollbarVisible || ['all', 'right'].includes(state.hiddenScrollLine)
+  return !state.isScrollbarVisible
+    || ['all', 'right'].includes(state.hiddenScrollLine)
     ? 'lew-hide-line-right'
     : ''
 })
@@ -297,7 +309,9 @@ const getTableClass = computed(() => {
     'lew-table-scroll': state.isScroll,
     'lew-table-dragging': state.isDragging,
     'lew-table-has-fixed-left':
-      getFixedColumns.value('left').length > 0 || props.checkable || props.sortable,
+      getFixedColumns.value('left').length > 0
+      || props.checkable
+      || props.sortable,
     'lew-table-has-fixed-right': getFixedColumns.value('right').length > 0,
   }
 })
@@ -372,11 +386,17 @@ function updateAllCheckedState() {
   const allDataKeys = state.dataSource.map((row: any) => String(row[_rowKey]))
   const uncheckedKeys = difference(allDataKeys, checkedKeys)
   state.isAllChecked
-    = isEmpty(uncheckedKeys) && props.multiple && props.checkable && checkedKeys.length > 0
+    = isEmpty(uncheckedKeys)
+      && props.multiple
+      && props.checkable
+      && checkedKeys.length > 0
 }
 
 function setAllRowsChecked(checked: boolean) {
-  state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => checked)
+  state.selectedRowsMap = mapValues(
+    keyBy(state.dataSource, _rowKey),
+    () => checked,
+  )
   if (props.multiple) {
     selectedKeys.value = checked ? keys(state.selectedRowsMap) : []
   }
@@ -398,7 +418,10 @@ function toggleRowSelection(row: any) {
 
 function updateSelectedKeys(keys: any) {
   if (props.multiple) {
-    state.selectedRowsMap = mapValues(keyBy(state.dataSource, _rowKey), () => false)
+    state.selectedRowsMap = mapValues(
+      keyBy(state.dataSource, _rowKey),
+      () => false,
+    )
     keys.forEach((key: string) => {
       state.selectedRowsMap[key] = true
     })
@@ -431,10 +454,25 @@ function readerHeaderTd({ column }: any) {
     end: 'end',
   }
 
+  // 使用与表体相同的宽度计算逻辑
+  const width = column.width
+  let calculatedWidth = width
+
+  if (!state.isScrollbarVisible && !column.fixed) {
+    calculatedWidth
+      = (width
+        / (totalColumnWidth.value
+          - fixedWidths.value.left
+          - fixedWidths.value.right))
+        * (state.scrollClientWidth
+          - fixedWidths.value.left
+          - fixedWidths.value.right)
+  }
+
   const tdStyle = {
     display: 'flex',
     flexDirection: 'column',
-    width: any2px(column.width),
+    width: any2px(calculatedWidth),
     justifyContent: 'center',
     alignItems: xMap[column.x] || 'start',
   }
@@ -444,7 +482,7 @@ function readerHeaderTd({ column }: any) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: xMap[column.x],
-    width: any2px(column.width),
+    width: any2px(calculatedWidth),
     height: '100%',
     boxSizing: 'border-box',
   }
@@ -502,7 +540,9 @@ function readerHeaderTd({ column }: any) {
               },
               {
                 default: () =>
-                  column.children.map((child: any) => readerHeaderTd({ column: child })),
+                  column.children.map((child: any) =>
+                    readerHeaderTd({ column: child }),
+                  ),
               },
             )
           : null,
@@ -696,7 +736,10 @@ function initDragState() {
   state.isDragging = false
 }
 
-const throttledTooltipUpdate = throttle(updateTooltipPosition, TOOLTIP_THROTTLE_DELAY)
+const throttledTooltipUpdate = throttle(
+  updateTooltipPosition,
+  TOOLTIP_THROTTLE_DELAY,
+)
 
 function dragStart(event: DragEvent, row: any, index: number) {
   if (!props.sortable)
@@ -763,7 +806,9 @@ function dragEnd() {
       row => row._lew_table_tr_id === state.targetRowId,
     )
     if (dragIndex !== -1 && targetIndex !== -1 && dragIndex !== targetIndex) {
-      const targetPosition = state.isAboveTarget ? targetIndex : targetIndex + 1
+      const targetPosition = state.isAboveTarget
+        ? targetIndex
+        : targetIndex + 1
 
       let actualTargetPosition = targetPosition
       if (dragIndex < targetPosition) {
@@ -822,10 +867,12 @@ function updateDragTarget(mouseY: number) {
 
   let targetRowId = ''
   let isAbove = false
-  const positionEntries = Object.entries(state.trPositionsMap).map(([id, pos]) => ({
-    id,
-    ...pos,
-  }))
+  const positionEntries = Object.entries(state.trPositionsMap).map(
+    ([id, pos]) => ({
+      id,
+      ...pos,
+    }),
+  )
 
   positionEntries.sort((a, b) => a.top - b.top)
 
@@ -850,8 +897,14 @@ function updateDragTarget(mouseY: number) {
       if (positionEntries[i + 1].id === state.dragRowId)
         continue
 
-      if (mouseY > positionEntries[i].bottom && mouseY < positionEntries[i + 1].top) {
-        if (mouseY - positionEntries[i].bottom < positionEntries[i + 1].top - mouseY) {
+      if (
+        mouseY > positionEntries[i].bottom
+        && mouseY < positionEntries[i + 1].top
+      ) {
+        if (
+          mouseY - positionEntries[i].bottom
+          < positionEntries[i + 1].top - mouseY
+        ) {
           targetRowId = positionEntries[i].id
           isAbove = false
         }
@@ -881,7 +934,11 @@ function updateDragTarget(mouseY: number) {
 }
 
 function getIndicatorStyle() {
-  if (!state.isDragging || !state.targetRowId || state.dragRowId === state.targetRowId) {
+  if (
+    !state.isDragging
+    || !state.targetRowId
+    || state.dragRowId === state.targetRowId
+  ) {
     return `
       display: none;
       transform: translateY(0);
@@ -1083,7 +1140,9 @@ watch(
         @mouseenter.stop="hoverRowIndex = -1"
       >
         <div
-          v-if="getFixedHeaderColumns('left').length > 0 || checkable || sortable"
+          v-if="
+            getFixedHeaderColumns('left').length > 0 || checkable || sortable
+          "
           ref="fixedLeftRef"
           class="lew-table-fixed-left"
         >
@@ -1116,7 +1175,11 @@ watch(
                 :certain="hasPartialSelection && !state.isAllChecked"
                 @change="setAllRowsChecked($event)"
               />
-              <CommonIcon v-else :size="getIconSize" type="square-mouse-pointer" />
+              <CommonIcon
+                v-else
+                :size="getIconSize"
+                type="square-mouse-pointer"
+              />
             </LewFlex>
             <readerHeaderTd
               v-for="(column, index) in getFixedHeaderColumns('left')"
@@ -1231,7 +1294,12 @@ watch(
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot :name="column.field" :row="row" :column="column" :index="i" />
+                <slot
+                  :name="column.field"
+                  :row="row"
+                  :column="column"
+                  :index="i"
+                />
               </template>
               <template v-else>
                 <LewFlex
@@ -1242,7 +1310,9 @@ watch(
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
+                  <RenderComponent
+                    :render-fn="getCachedRenderResult(column, row)"
+                  />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1274,7 +1344,12 @@ watch(
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot :name="column.field" :row="row" :column="column" :index="i" />
+                <slot
+                  :name="column.field"
+                  :row="row"
+                  :column="column"
+                  :index="i"
+                />
               </template>
               <template v-else>
                 <LewFlex
@@ -1285,7 +1360,9 @@ watch(
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
+                  <RenderComponent
+                    :render-fn="getCachedRenderResult(column, row)"
+                  />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1294,7 +1371,10 @@ watch(
             </LewFlex>
           </div>
         </div>
-        <div v-if="getFixedColumns('right').length > 0" class="lew-table-fixed-right">
+        <div
+          v-if="getFixedColumns('right').length > 0"
+          class="lew-table-fixed-right"
+        >
           <div
             v-for="(row, i) in state.dataSource"
             :key="row._lew_table_tr_id"
@@ -1316,7 +1396,12 @@ watch(
               :style="getColumnStyle(column, row)"
             >
               <template v-if="$slots[column.field]">
-                <slot :name="column.field" :row="row" :column="column" :index="i" />
+                <slot
+                  :name="column.field"
+                  :row="row"
+                  :column="column"
+                  :index="i"
+                />
               </template>
               <template v-else>
                 <LewFlex
@@ -1327,7 +1412,9 @@ watch(
                   <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
-                  <RenderComponent :render-fn="getCachedRenderResult(column, row)" />
+                  <RenderComponent
+                    :render-fn="getCachedRenderResult(column, row)"
+                  />
                 </template>
                 <template v-else>
                   {{ showTextAndEmpty(row[column.field]) }}
@@ -1622,7 +1709,6 @@ watch(
   height: 100%;
 }
 
-// ==================== 边框控制规则（使用伪类实现，避免影响宽度计算） ====================
 .lew-table {
   box-sizing: border-box;
 
