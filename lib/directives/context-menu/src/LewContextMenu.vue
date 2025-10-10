@@ -1,72 +1,73 @@
 <script setup lang="ts" name="LewContextMenu">
-import type { LewContextMenusOption } from "lew-ui/types";
-import type { Instance as TippyInstance } from "tippy.js";
-import { LewEmpty, LewFlex } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
-import _LewContextMenu from "lew-ui/directives/context-menu/src/LewContextMenu.vue";
-import { getUniqueId } from "lew-ui/utils";
-import { isFunction } from "lodash-es";
-import tippy from "tippy.js";
-import { initLewContextMenu } from "../index";
-import { contextMenuEmits } from "./emits";
-import { contextMenuProps } from "./props";
+import type { LewContextMenusOption } from 'lew-ui/types'
+import type { Instance as TippyInstance } from 'tippy.js'
+import { LewEmpty, LewFlex } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import _LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
+import { getUniqueId } from 'lew-ui/utils'
+import { isFunction } from 'lodash-es'
+import tippy from 'tippy.js'
+import { initLewContextMenu } from '../index'
+import { contextMenuEmits } from './emits'
+import { contextMenuProps } from './props'
 
-const props = defineProps(contextMenuProps);
-const emit = defineEmits(contextMenuEmits);
+const props = defineProps(contextMenuProps)
+const emit = defineEmits(contextMenuEmits)
 
-const _options = computed(() => props.options);
-const hasCheckableItems = computed(() => _options.value.some((item) => item.checkable));
+const _options = computed(() => props.options)
+const hasCheckableItems = computed(() => _options.value.some(item => item.checkable))
 const hasChildrenItems = computed(() =>
-  _options.value.some((item) => item.children?.length)
-);
+  _options.value.some(item => item.children?.length),
+)
 
-const proxyCache = new WeakMap<LewContextMenusOption, LewContextMenusOption>();
+const proxyCache = new WeakMap<LewContextMenusOption, LewContextMenusOption>()
 
 function createItemProxy(item: LewContextMenusOption): LewContextMenusOption {
   if (proxyCache.has(item)) {
-    return proxyCache.get(item)!;
+    return proxyCache.get(item)!
   }
 
   const proxy = new Proxy(item, {
     get(target, prop, receiver) {
-      return Reflect.get(target, prop, receiver);
+      return Reflect.get(target, prop, receiver)
     },
-  });
+  })
 
-  proxyCache.set(item, proxy);
-  return proxy;
+  proxyCache.set(item, proxy)
+  return proxy
 }
 
 function clickItem(item: LewContextMenusOption) {
-  if (item.disabled) return;
+  if (item.disabled)
+    return
 
-  const instance = props.dropdownInstance || window.LewContextMenu?.instance || null;
+  const instance = props.dropdownInstance || window.LewContextMenu?.instance || null
 
   if (isFunction(item.onClick)) {
-    const proxyItem = createItemProxy(item);
+    const proxyItem = createItemProxy(item)
     const proxyOptions = new Proxy(_options.value, {
       get(target, prop, receiver) {
-        return Reflect.get(target, prop, receiver);
+        return Reflect.get(target, prop, receiver)
       },
-    });
+    })
 
-    item.onClick?.(proxyItem, proxyOptions, instance);
+    item.onClick?.(proxyItem, proxyOptions, instance)
   }
 
   if (item.hideMenuOnClick || item.hideMenuOnClick === undefined) {
-    instance?.hide();
+    instance?.hide()
   }
 
-  emit("change", item);
+  emit('change', item)
 }
 
 const TIPPY_CONFIG = {
-  theme: "light" as const,
-  animation: "shift-away-subtle" as const,
-  trigger: "mouseenter" as const,
+  theme: 'light' as const,
+  animation: 'shift-away-subtle' as const,
+  trigger: 'mouseenter' as const,
   interactive: true,
-  placement: "right-start" as const,
+  placement: 'right-start' as const,
   duration: [250, 250] as [number, number],
   delay: [120, 120] as [number, number],
   arrow: false,
@@ -74,90 +75,90 @@ const TIPPY_CONFIG = {
   allowHTML: true,
   hideOnClick: false,
   zIndex: 2001,
-};
+}
 
-const uniqueId = getUniqueId();
-const subMenuInstances = new Map<number, { app: any; tippy: TippyInstance }>();
-const itemRefs = shallowRef<HTMLElement[]>([]);
+const uniqueId = getUniqueId()
+const subMenuInstances = new Map<number, { app: any, tippy: TippyInstance }>()
+const itemRefs = shallowRef<HTMLElement[]>([])
 
 function setItemRef(el: Element | ComponentPublicInstance | null, index: number) {
   if (el && el instanceof HTMLElement) {
-    itemRefs.value[index] = el;
+    itemRefs.value[index] = el
   }
 }
 
 function createSubMenu(
-  options: LewContextMenusOption[]
-): { element: HTMLElement; app: any } {
-  const menuDom = document.createElement("div");
+  options: LewContextMenusOption[],
+): { element: HTMLElement, app: any } {
+  const menuDom = document.createElement('div')
   const app = createApp({
     render() {
       return h(_LewContextMenu, {
         options,
-        onChange: (item: LewContextMenusOption) => emit("change", item),
-      });
+        onChange: (item: LewContextMenusOption) => emit('change', item),
+      })
     },
-  });
+  })
 
-  app.mount(menuDom);
-  return { element: menuDom, app };
+  app.mount(menuDom)
+  return { element: menuDom, app }
 }
 
 function initTippy() {
   itemRefs.value.forEach((el, index) => {
-    const option = _options.value[index];
+    const option = _options.value[index]
 
     if (!el || option?.disabled || !option?.children?.length) {
-      return;
+      return
     }
 
     if (!window.LewContextMenu) {
-      initLewContextMenu();
+      initLewContextMenu()
     }
 
-    const { element: menuDom, app } = createSubMenu(option.children);
+    const { element: menuDom, app } = createSubMenu(option.children)
 
     const tippyInstances = tippy(el as Element, {
       ...TIPPY_CONFIG,
       content: menuDom,
-    });
+    })
 
     const tippyInstance = Array.isArray(tippyInstances)
       ? tippyInstances[0]
-      : tippyInstances;
+      : tippyInstances
 
-    subMenuInstances.set(index, { app, tippy: tippyInstance });
-    window.LewContextMenu.menuInstance[`${uniqueId}-${index}`] = tippyInstance;
+    subMenuInstances.set(index, { app, tippy: tippyInstance })
+    window.LewContextMenu.menuInstance[`${uniqueId}-${index}`] = tippyInstance
 
-    const popperElement = tippyInstance.popper?.children?.[0] as HTMLElement;
-    popperElement?.setAttribute("data-lew", "popover");
-  });
+    const popperElement = tippyInstance.popper?.children?.[0] as HTMLElement
+    popperElement?.setAttribute('data-lew', 'popover')
+  })
 }
 
 function cleanup() {
   subMenuInstances.forEach(({ app, tippy }, index) => {
-    app?.unmount?.();
-    tippy?.destroy?.();
+    app?.unmount?.()
+    tippy?.destroy?.()
 
-    const key = `${uniqueId}-${index}`;
+    const key = `${uniqueId}-${index}`
     if (window.LewContextMenu?.menuInstance?.[key]) {
-      delete window.LewContextMenu.menuInstance[key];
+      delete window.LewContextMenu.menuInstance[key]
     }
-  });
+  })
 
-  subMenuInstances.clear();
+  subMenuInstances.clear()
   // WeakMap 会自动垃圾回收，无需手动清理
 }
 
 onMounted(() => {
   nextTick(() => {
-    initTippy();
-  });
-});
+    initTippy()
+  })
+})
 
 onBeforeUnmount(() => {
-  cleanup();
-});
+  cleanup()
+})
 </script>
 
 <template>
@@ -326,7 +327,7 @@ onBeforeUnmount(() => {
   }
 
   .lew-context-menu-box-divider-line::after {
-    content: "";
+    content: '';
     width: calc(100% - 20px);
     height: 0px;
     border-bottom: var(--lew-pop-border);

@@ -74,7 +74,6 @@ const options = ref([
       uploadHelperId: 'uploadHelper',
       multiple: false,
       viewMode: 'card',
-      size: '580px',
       limit: 1,
       accept: 'image/jpeg,image/png',
       tips: 'Upload a clear photo (JPG/PNG, max 2MB)',

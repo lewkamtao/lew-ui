@@ -411,6 +411,7 @@ defineExpose({ show, hide })
   .lew-select-init-loading {
     pointer-events: none;
     cursor: wait;
+    opacity: var(--lew-disabled-opacity);
 
     .lew-value {
       cursor: wait;
