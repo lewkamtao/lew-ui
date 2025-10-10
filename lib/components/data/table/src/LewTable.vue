@@ -1356,7 +1356,6 @@ watch(
 .lew-table-wrapper {
   position: relative;
   width: 100%;
-  border-bottom: 0px solid transparent;
   box-sizing: border-box;
   background-color: var(--lew-table-bgcolor);
 
@@ -1471,7 +1470,6 @@ watch(
   .lew-table-tr {
     display: flex;
     background-color: var(--lew-table-bgcolor);
-    border-bottom: var(--lew-table-border);
     overflow: hidden;
     width: 100%;
     box-sizing: border-box;
@@ -1491,10 +1489,6 @@ watch(
     flex-grow: 1;
   }
 
-  .lew-table-tr:last-child {
-    border-bottom: none;
-  }
-
   .lew-table-head {
     position: sticky;
     top: 0;
@@ -1505,7 +1499,6 @@ watch(
     .lew-table-tr {
       background-color: var(--lew-table-header-bgcolor);
       flex-shrink: 0;
-      border-bottom: var(--lew-table-border);
       height: 100%;
 
       .lew-table-td {
@@ -1609,20 +1602,6 @@ watch(
   transition: transform 0.1s ease-out;
 }
 
-.lew-table-tr-dragging {
-  position: relative;
-}
-
-.lew-table-tr-dragging::after {
-  position: absolute;
-  content: '';
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--lew-table-tr-dragging-bgcolor);
-}
-
 .lew-table-scroll {
   overflow-x: auto;
 }
@@ -1631,69 +1610,6 @@ watch(
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;
-  margin-left: 1px;
-}
-
-.lew-table-bordered {
-  border: var(--lew-table-border);
-
-  .lew-table-td {
-    border-right: var(--lew-table-border);
-  }
-
-  .lew-table-td-group {
-    border-top: var(--lew-table-border);
-
-    .lew-table-td:last-child {
-      border-right: none;
-    }
-  }
-
-  .lew-table-fixed-left,
-  .lew-table-fixed-right {
-    .lew-table-td:last-child {
-      border-right: none;
-      border-left: none;
-    }
-
-    .lew-table-td:first-child {
-      border-left: none;
-    }
-  }
-
-  .lew-table-main {
-    border-left: var(--lew-table-border);
-  }
-}
-
-.lew-table-head-bordered {
-  .lew-table-td {
-    border-right: var(--lew-table-border);
-  }
-
-  .lew-table-td-group {
-    border-top: var(--lew-table-border);
-
-    .lew-table-td:last-child {
-      border-right: none;
-    }
-  }
-
-  .lew-table-fixed-left,
-  .lew-table-fixed-right {
-    .lew-table-td:last-child {
-      border-right: none;
-      border-left: none;
-    }
-
-    .lew-table-td:first-child {
-      border-left: none;
-    }
-  }
-
-  .lew-table-main {
-    border-left: var(--lew-table-border);
-  }
 }
 
 .lew-table-checkbox-wrapper::after {
@@ -1706,65 +1622,224 @@ watch(
   height: 100%;
 }
 
-// 修改边框控制规则
+// ==================== 边框控制规则（使用伪类实现，避免影响宽度计算） ====================
 .lew-table {
   box-sizing: border-box;
 
+  // -------------------- 基础边框（所有模式都有） --------------------
+
+  // 表头行底边框
+  .lew-table-head .lew-table-tr {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: var(--lew-table-border-color);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  // 表体行底边框
+  .lew-table-body .lew-table-tr {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: var(--lew-table-border-color);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    &:last-child::after {
+      display: none; // 最后一行不需要底边框
+    }
+  }
+
+  // 分组单元格顶部边框（嵌套表头）
+  .lew-table-td-group {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background-color: var(--lew-table-border-color);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  // -------------------- bordered 模式（整表边框） --------------------
+
   &.lew-table-bordered {
-    .lew-table-main {
-      border-left: var(--lew-table-border);
-      border-right: var(--lew-table-border);
+    border: var(--lew-table-border);
+
+    // 所有单元格右边框
+    .lew-table-td::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: var(--lew-table-border-color);
+      pointer-events: none;
+      z-index: 1;
     }
 
-    &:not(.lew-table-has-fixed-left) {
-      .lew-table-main {
-        border-left: none;
+    // 固定左侧列：移除最后一个单元格的右边框
+    .lew-table-fixed-left > .lew-table-tr > .lew-table-td:last-child::after {
+      display: none;
+    }
+
+    // 主区域
+    .lew-table-main {
+      position: relative;
+
+      // 当存在固定左侧列时，添加左边框分隔
+      &:not(:first-child)::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background-color: var(--lew-table-border-color);
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      // 移除最后一个单元格的右边框
+      > .lew-table-tr > .lew-table-td:last-child::after {
+        display: none;
       }
     }
 
-    &:not(.lew-table-has-fixed-right) {
-      .lew-table-main {
-        border-right: none;
+    // 固定右侧列
+    .lew-table-fixed-right {
+      position: relative;
+
+      // 添加左边框分隔
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background-color: var(--lew-table-border-color);
+        pointer-events: none;
+        z-index: 2;
       }
-    }
 
-    .lew-table-td {
-      border-right: var(--lew-table-border);
-    }
-
-    .lew-table-main {
-      .lew-table-td:last-child {
-        border-right: none;
+      // 移除最后一个单元格的右边框
+      > .lew-table-tr > .lew-table-td:last-child::after {
+        display: none;
       }
     }
   }
 
+  // -------------------- head-bordered 模式（仅表头边框） --------------------
+
   &.lew-table-head-bordered {
-    .lew-table-main {
-      border-left: var(--lew-table-border);
-      border-right: var(--lew-table-border);
-    }
+    .lew-table-head {
+      // 表头单元格右边框
+      .lew-table-td::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background-color: var(--lew-table-border-color);
+        pointer-events: none;
+        z-index: 1;
+      }
 
-    &:not(.lew-table-has-fixed-left) {
+      // 固定左侧列：移除最后一个单元格的右边框
+      .lew-table-fixed-left > .lew-table-tr > .lew-table-td:last-child::after {
+        display: none;
+      }
+
+      // 主区域
       .lew-table-main {
-        border-left: none;
+        position: relative;
+
+        // 当存在固定左侧列时，添加左边框分隔
+        &:not(:first-child)::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 1px;
+          background-color: var(--lew-table-border-color);
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        // 移除最后一个单元格的右边框
+        > .lew-table-tr > .lew-table-td:last-child::after {
+          display: none;
+        }
+      }
+
+      // 固定右侧列
+      .lew-table-fixed-right {
+        position: relative;
+
+        // 添加左边框分隔
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 1px;
+          background-color: var(--lew-table-border-color);
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        // 移除最后一个单元格的右边框
+        > .lew-table-tr > .lew-table-td:last-child::after {
+          display: none;
+        }
       }
     }
+  }
 
-    &:not(.lew-table-has-fixed-right) {
-      .lew-table-main {
-        border-right: none;
-      }
-    }
+  // -------------------- 拖拽状态 --------------------
 
-    .lew-table-td {
-      border-right: var(--lew-table-border);
-    }
+  .lew-table-tr-dragging {
+    position: relative;
 
-    .lew-table-main {
-      .lew-table-td:last-child {
-        border-right: none;
-      }
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--lew-table-tr-dragging-bgcolor);
+      pointer-events: none;
+      z-index: 1;
     }
   }
 }

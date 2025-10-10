@@ -1,60 +1,58 @@
 <script setup lang="ts">
-import { LewCollapseTransition, LewFlex } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { isValidComponent } from 'lew-ui/utils/render'
-import { cloneDeep } from 'lodash-es'
-import { inject } from 'vue'
-import { menuTreeItemEmits } from './menuTreeItemEmits'
+import { LewCollapseTransition, LewFlex } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import { isValidComponent } from "lew-ui/utils/render";
+import { cloneDeep } from "lodash-es";
+import { inject } from "vue";
+import { menuTreeItemEmits } from "./menuTreeItemEmits";
 
-import { menuTreeItemProps } from './props'
+import { menuTreeItemProps } from "./props";
 
 interface MenuTreeContext {
-  modelValue: { value: string }
-  expandKeys: { value: string[] | undefined }
-  modelValueKeyPath: { value: string[] | undefined }
-  collapsed: { value: boolean }
+  modelValue: { value: string };
+  expandKeys: { value: string[] | undefined };
+  modelValueKeyPath: { value: string[] | undefined };
+  collapsed: { value: boolean };
 }
 
-const props = defineProps(menuTreeItemProps)
-const emit = defineEmits(menuTreeItemEmits)
+const props = defineProps(menuTreeItemProps);
+const emit = defineEmits(menuTreeItemEmits);
 
-const menuTreeContext = inject<MenuTreeContext>('lew-menu-tree')
+const menuTreeContext = inject<MenuTreeContext>("lew-menu-tree");
 if (!menuTreeContext) {
-  throw new Error('LewMenuTreeItem must be used within LewMenuTree')
+  throw new Error("LewMenuTreeItem must be used within LewMenuTree");
 }
 
 // Type assertion after null check
-const context = menuTreeContext as Required<MenuTreeContext>
+const context = menuTreeContext as Required<MenuTreeContext>;
 
 // Methods
 function handleChange(): void {
   if (props.disabled) {
-    return
+    return;
   }
 
   if (!props.isLeaf) {
     // Handle expand/collapse for parent nodes
     if (!context.expandKeys.value) {
-      context.expandKeys.value = []
+      context.expandKeys.value = [];
     }
 
-    const index = context.expandKeys.value.indexOf(props.value as never)
+    const index = context.expandKeys.value.indexOf(props.value as never);
     if (index > -1) {
-      context.expandKeys.value.splice(index, 1)
+      context.expandKeys.value.splice(index, 1);
+    } else {
+      context.expandKeys.value.push(props.value as never);
     }
-    else {
-      context.expandKeys.value.push(props.value as never)
-    }
-  }
-  else {
+  } else {
     if (context.modelValue.value !== props.value) {
-      context.modelValue.value = props.value as never
+      context.modelValue.value = props.value as never;
     }
   }
 
-  context.expandKeys.value = cloneDeep(context.expandKeys.value || [])
-  emit('change')
+  context.expandKeys.value = cloneDeep(context.expandKeys.value || []);
+  emit("change");
 }
 </script>
 
@@ -77,15 +75,12 @@ function handleChange(): void {
         paddingLeft: context.collapsed.value
           ? '0px'
           : isValidComponent(props.icon)
-            ? '36px'
-            : '11.5px',
+          ? '36px'
+          : '11.5px',
       }"
       @click.stop="handleChange"
     >
-      <RenderComponent
-        :render-fn="props.icon"
-        class="lew-menu-tree-item-icon"
-      />
+      <RenderComponent :render-fn="props.icon" class="lew-menu-tree-item-icon" />
       <RenderComponent
         :render-fn="props.label"
         type="text-trim"
@@ -141,9 +136,6 @@ function handleChange(): void {
     padding: 0px 11.5px;
     height: 36px;
     box-sizing: border-box;
-    transition:
-      background-color 0.25s,
-      color 0.25s;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
   }
@@ -174,6 +166,14 @@ function handleChange(): void {
 
   .lew-menu-tree-item-main {
     box-sizing: border-box;
+
+    .lew-menu-tree-item-label:hover {
+      background-color: var(--lew-bgcolor-4);
+    }
+
+    .lew-menu-tree-item-label-active:hover {
+      background-color: var(--lew-bgcolor-0);
+    }
   }
 
   :deep(.lew-menu-tree-item-icon) {

@@ -1,153 +1,156 @@
 <script setup lang="ts">
-import { LewFlex, LewTooltip, locale } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, object2class } from 'lew-ui/utils'
-import { cloneDeep } from 'lodash-es'
-import { inputNumberEmits } from './emits'
-import { inputNumberProps } from './props'
+import { LewFlex, LewTooltip, locale } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { any2px, object2class } from "lew-ui/utils";
+import { cloneDeep } from "lodash-es";
+import { inputNumberEmits } from "./emits";
+import { inputNumberProps } from "./props";
 
-const props = defineProps(inputNumberProps)
-const emit = defineEmits(inputNumberEmits)
+const props = defineProps(inputNumberProps);
+const emit = defineEmits(inputNumberEmits);
 // 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive("tooltip")) {
+  app.use(LewTooltip);
 }
-const modelValue: Ref<number | undefined> = defineModel({ required: true })
-const lewInputRef = ref()
-const isFocus = ref(false)
+const modelValue: Ref<number | undefined> = defineModel({ required: true });
+const lewInputRef = ref();
+const isFocus = ref(false);
 
-const validationMessage = ref('')
+const validationMessage = ref("");
 
 function focus() {
-  lewInputRef.value?.focus()
+  lewInputRef.value?.focus();
 }
 
 function focusFn(e: any) {
   if (props.selectByFocus) {
-    e?.currentTarget?.select()
+    e?.currentTarget?.select();
   }
 }
 
 function inputFn(e: any) {
-  const target = e.target as HTMLInputElement
-  emit('input', target.value)
-  validationMessage.value = lewInputRef.value.validationMessage
+  const target = e.target as HTMLInputElement;
+  checkValidationMessage();
+  emit("input", target.value);
+  validationMessage.value = lewInputRef.value.validationMessage;
 }
 
 const getInputClassNames = computed(() => {
-  const { size, readonly, disabled, align } = props
-  return object2class('lew-input-number-view', {
+  const { size, readonly, disabled, align } = props;
+  return object2class("lew-input-number-view", {
     focus: isFocus.value,
     size,
     readonly,
     disabled,
     align,
-  })
-})
+  });
+});
 
 function changeFn() {
-  emit('change', cloneDeep(modelValue.value))
+  emit("change", cloneDeep(modelValue.value));
 }
 
 const getInputNumberStyle: any = computed(() => {
-  const { size, align } = props
+  const { size, align } = props;
   return {
     textAlign: align,
     padding: `var(--lew-form-input-padding-${size})`,
     fontSize: `var(--lew-form-font-size-${size})`,
-  }
-})
+  };
+});
 
 const getInputNumberViewStyle = computed(() => {
-  const { width, size } = props
+  const { width, size } = props;
   return {
     width: any2px(width),
     height: `var(--lew-form-item-height-${size})`,
     lineHeight: `var(--lew-form-input-line-height-${size})`,
-  }
-})
+  };
+});
 
 const getIconSize = computed(() => {
-  const { size } = props
+  const { size } = props;
   const sizeMap: Record<string, number> = {
     small: 12,
     medium: 14,
     large: 16,
-  }
-  return sizeMap[size]
-})
+  };
+  return sizeMap[size];
+});
 
 const getControlStyle = computed(() => {
-  const { size } = props
+  const { size } = props;
   return {
     height: `var(--lew-form-item-height-${size})`,
-  }
-})
+  };
+});
 
-const longClickTimer = ref()
+const longClickTimer = ref();
 
 function clearTimer() {
-  clearInterval(longClickTimer.value)
+  clearInterval(longClickTimer.value);
 }
 
 function plus() {
-  lewInputRef.value.stepUp()
-  modelValue.value = Number(lewInputRef.value.value)
+  lewInputRef.value.stepUp();
+  modelValue.value = Number(lewInputRef.value.value);
   longClickTimer.value = setTimeout(() => {
     longClickTimer.value = setInterval(() => {
-      lewInputRef.value.stepUp()
-      modelValue.value = Number(lewInputRef.value.value)
-      emit('change', cloneDeep(modelValue.value))
+      lewInputRef.value.stepUp();
+      modelValue.value = Number(lewInputRef.value.value);
+      emit("change", cloneDeep(modelValue.value));
+      checkValidationMessage();
       if (props.max !== undefined && lewInputRef.value.value >= Number(props.max || 0)) {
-        clearTimer()
+        clearTimer();
       }
-    }, 80)
-  }, 250)
+    }, 80);
+  }, 250);
 }
+
 function minus() {
-  lewInputRef.value.stepDown()
-  modelValue.value = Number(lewInputRef.value.value)
+  lewInputRef.value.stepDown();
+  modelValue.value = Number(lewInputRef.value.value);
   longClickTimer.value = setTimeout(() => {
     longClickTimer.value = setInterval(() => {
-      lewInputRef.value.stepDown()
-      modelValue.value = Number(lewInputRef.value.value)
-      emit('change', cloneDeep(modelValue.value))
+      lewInputRef.value.stepDown();
+      modelValue.value = Number(lewInputRef.value.value);
+      emit("change", cloneDeep(modelValue.value));
+      checkValidationMessage();
       if (props.min !== undefined && lewInputRef.value.value <= Number(props.min || 0)) {
-        clearTimer()
+        clearTimer();
       }
-    }, 80)
-  }, 250)
+    }, 80);
+  }, 250);
 }
 
 function checkValidationMessage() {
-  validationMessage.value = lewInputRef.value && lewInputRef.value.validationMessage
-  return (validationMessage.value || '').length === 0
+  validationMessage.value = lewInputRef.value && lewInputRef.value.validationMessage;
+  return (validationMessage.value || "").length === 0;
 }
 
 function validCheck() {
-  return ((lewInputRef.value && lewInputRef.value.validationMessage) || '').length === 0
+  return ((lewInputRef.value && lewInputRef.value.validationMessage) || "").length === 0;
 }
 
-defineExpose({ focus, validCheck })
+defineExpose({ focus, validCheck });
 </script>
 
 <template>
   <div
+    v-tooltip="{
+      content: validationMessage,
+      triggerFrom: 'input-number',
+    }"
     class="lew-input-number-view"
     :class="getInputClassNames"
     :style="getInputNumberViewStyle"
     @wheel="(e: any) => e.preventDefault()"
     @mouseenter="checkValidationMessage"
-    @mouseleave="validationMessage = ''"
   >
     <input
       ref="lewInputRef"
       v-model="modelValue"
-      v-tooltip="{
-        content: validationMessage,
-        triggerFrom: 'input-number',
-      }"
       title=""
       type="number"
       class="lew-input-number"
@@ -159,7 +162,7 @@ defineExpose({ focus, validCheck })
       @input="inputFn"
       @change="changeFn"
       @focus="focusFn"
-    >
+    />
     <LewFlex
       :style="getControlStyle"
       direction="y"
@@ -215,13 +218,13 @@ defineExpose({ focus, validCheck })
     overflow: hidden;
   }
 
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  input[type='number'] {
+  input[type="number"] {
     -moz-appearance: textfield;
   }
 
