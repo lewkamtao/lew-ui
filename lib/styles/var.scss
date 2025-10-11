@@ -106,7 +106,7 @@
   --lew-tooltip-box-shadow: drop-shadow(0px 0px 1px rgb(142 147 154 / 45%)) drop-shadow(0px 2px 8px rgb(0 0 0 / 4%))
     drop-shadow(0px 30px 70px rgb(0 0 0 / 10%));
 
-  --lew-table-border-color: rgb(230 230 230);
+  --lew-table-border-color: var(--lew-pop-border-color);
   --lew-table-border: 1px var(--lew-table-border-color) solid;
   --lew-table-bgcolor: rgb(255 255 255);
   --lew-table-bgcolor-hover: rgb(235 235 240);
