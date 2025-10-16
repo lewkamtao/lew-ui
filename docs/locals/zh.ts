@@ -1996,7 +1996,7 @@ export default {
         title: '触发方式',
       },
       demo3: {
-        title: '自定义触发器',
+        title: '禁用',
       },
       demo4: {
         title: '点击气泡区域外是否自动关闭',

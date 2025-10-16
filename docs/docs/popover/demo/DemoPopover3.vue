@@ -9,14 +9,12 @@ const targetRef = ref<any>(null)
 </script>
 
 <template>
-  <lew-button ref="targetRef" type="ghost">
-    Custom trigger button
-  </lew-button>
-  <lew-popover
-    trigger="click"
-    placement="bottom-start"
-    :trigger-target="targetRef && targetRef.$el"
-  >
+  <lew-popover trigger="click" placement="bottom-start" disabled>
+    <template #trigger>
+      <lew-button ref="targetRef" type="ghost">
+        Disabled
+      </lew-button>
+    </template>
     <template #popover-body>
       <div class="popover-body">
         <lew-flex x="center" y="center">

@@ -56,16 +56,6 @@ watchDebounced(
   watchOptions,
 )
 
-// trigger
-watchDebounced(
-  () => props.triggerTarget,
-  (value: Element | string) => {
-    instance?.setProps({
-      triggerTarget: value,
-    })
-  },
-  watchOptions,
-)
 // offset
 watchDebounced(
   () => props.offset,
@@ -81,7 +71,7 @@ function initTippy() {
     return
   }
 
-  let { placement, triggerTarget, offset, trigger, disabled }: any = props
+  let { placement, offset, trigger, disabled }: any = props
   if (trigger === 'hover') {
     trigger = 'mouseenter'
   }
@@ -91,7 +81,6 @@ function initTippy() {
   instance = tippy(triggerRef.value, {
     theme: 'light',
     trigger,
-    triggerTarget,
     content: bodyRef.value,
     animation: 'shift-away-subtle',
     interactive: true,
@@ -189,14 +178,6 @@ defineExpose({ show, hide, refresh })
 </template>
 
 <style lang="scss">
-.lew-popover {
-  font-size: 0;
-
-  * {
-    font-size: 14px;
-  }
-}
-
 .lew-popover-body {
   border-radius: var(--lew-border-radius-small);
 }

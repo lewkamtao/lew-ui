@@ -88,14 +88,6 @@ export const popoverProps = {
       propName: 'popoverBodyClassName',
     }),
   },
-  triggerTarget: {
-    type: Object as PropType<Element>,
-    default: null,
-    validator: validators.object({
-      componentName: 'LewPopover',
-      propName: 'triggerTarget',
-    }),
-  },
 }
 
 export type PopoverProps = ExtractPublicPropTypes<typeof popoverProps>
