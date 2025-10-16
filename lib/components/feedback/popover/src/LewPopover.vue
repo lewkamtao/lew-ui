@@ -178,6 +178,18 @@ defineExpose({ show, hide, refresh })
 </template>
 
 <style lang="scss">
+.lew-popover {
+  font-size: 0;
+
+  .lew-popover-trigger {
+    font-size: 0;
+
+    * {
+      font-size: 14px;
+    }
+  }
+}
+
 .lew-popover-body {
   border-radius: var(--lew-border-radius-small);
 }
