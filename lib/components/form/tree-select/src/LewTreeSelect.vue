@@ -186,6 +186,7 @@ defineExpose({ show, hide })
     :trigger-width="width"
     :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
+    :hide-on-click="searchable ? false : true"
     :loading="state.searchLoading"
     @show="showHandle"
     @hide="hideHandle"
