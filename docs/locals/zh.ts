@@ -237,6 +237,9 @@ export default {
         reserveEnd:
           '保留末尾的字符数量，当文本溢出时会在中间显示省略号，保留开头和指定数量的末尾字符',
       },
+      emits: {
+        click: '点击文本时触发',
+      },
     },
     flex: {
       name: '弹性布局 Flex',
@@ -297,7 +300,7 @@ export default {
         valveHeight:
           '设置页面滚动高度的阈值，当滚动高度超过此值时显示回到顶部按钮，单位为像素。',
       },
-      events: {
+      emits: {
         click: '回到顶部事件回调',
       },
     },
@@ -320,10 +323,15 @@ export default {
         options: '步骤配置项数组',
         status: '步骤条的当前状态',
         minWidth: '最小步骤宽度',
+        canClickItem: '是否可以点击步骤项切换',
+        canCrossSteps: '是否可以跨步骤切换',
       },
       options: {
         title: '步骤标题',
         description: '步骤描述',
+      },
+      emits: {
+        change: '步骤切换时触发',
       },
     },
     menu: {
@@ -345,6 +353,9 @@ export default {
         disabled: '是否禁用菜单项',
         icon: '菜单项的图标',
         tagProps: '菜单项标签 Props',
+      },
+      emits: {
+        change: '菜单项切换时触发',
       },
     },
     menuTree: {
@@ -385,6 +396,11 @@ export default {
         disabled: '是否禁用菜单项',
         isLeaf: '是否为叶子节点',
       },
+      emits: {
+        change: '菜单项切换时触发',
+        expand: '菜单项展开时触发',
+        collapse: '菜单项折叠时触发',
+      },
     },
     dropdown: {
       'name': '下拉菜单 Dropdown',
@@ -406,7 +422,7 @@ export default {
         checkable: '是否可选择',
       },
       'options(LewContextMenusOption[])': contextMenu,
-      'events': {
+      'emits': {
         show: '菜单显示事件回调',
         hide: '菜单隐藏事件回调',
         change: '菜单项选择事件回调',
@@ -433,8 +449,8 @@ export default {
         value: '面包屑项的值',
         active: '是否为当前选中项',
       },
-      events: {
-        change: '面包屑项发生变化时触发',
+      emits: {
+        change: '面包屑项切换时触发',
       },
     },
     contextMenu: {
@@ -455,6 +471,7 @@ export default {
       'props': {
         options: '右键菜单配置',
         disabled: '是否禁用右键菜单',
+        trigger: '触发方式',
       },
       'options(LewContextMenusOption[])': contextMenu,
     },
@@ -487,6 +504,9 @@ export default {
         icon: '操作按钮的图标',
         onClick: '操作按钮的点击事件',
         customRender: '自定义渲染内容',
+      },
+      emits: {
+        click: '操作按钮点击时触发',
       },
     },
     form: {
@@ -541,7 +561,7 @@ export default {
         outputFormat: '出参时的格式化方法',
         inputFormat: '入参时的格式化方法',
       },
-      events: {
+      emits: {
         mounted: '表单项挂载时触发',
       },
 
@@ -611,13 +631,13 @@ export default {
         suffixTooltip: '输入框后缀的 tooltip 提示文本',
         okByEnter: '是否允许通过回车键确认输入',
       },
-      events: {
-        change: '输入框值发生变化时触发',
-        focus: '输入框获得焦点时触发',
-        blur: '输入框失去焦点时触发',
-        input: '输入框输入内容时触发',
-        clear: '输入框清空时触发',
-        ok: '输入框确认时触发',
+      emits: {
+        change: '值发生变化时触发',
+        focus: '获得焦点时触发',
+        blur: '失去焦点时触发',
+        input: '输入内容时触发',
+        clear: '清空时触发',
+        ok: '确认时触发',
       },
       model: {
         modelValue: '输入框的绑定值',
@@ -657,6 +677,10 @@ export default {
       },
       model: {
         modelValue: '绑定值',
+      },
+      emits: {
+        change: '值发生变化时触发',
+        input: '输入内容时触发',
       },
     },
     textarea: {
@@ -708,7 +732,7 @@ export default {
         selectByFocus: '聚焦后选择全部文本',
         okByEnter: '是否启用回车键确认（启用后，Shift+Enter可换行）',
       },
-      events: {
+      emits: {
         change: '值发生变化时触发',
         focus: '获得焦点时触发',
         blur: '失去焦点时触发',
@@ -757,7 +781,7 @@ export default {
         maxLength: '允许添加标签的最大数量',
         width: '宽度',
       },
-      events: {
+      emits: {
         change: '值发生变化时触发',
         clear: '清空时触发',
         add: '添加标签时触发',
@@ -816,10 +840,13 @@ export default {
         iconable: '是否可使用图标',
         certain: '确定状态',
       },
-      'events(Checkbox)': {
+      'emits(Checkbox)': {
         change: '值发生变化时触发',
       },
-      'events(CheckboxGroup)': {
+      'emits(CheckboxGroup)': {
+        change: '值发生变化时触发',
+      },
+      'emits': {
         change: '值发生变化时触发',
       },
       'options': {
@@ -867,7 +894,7 @@ export default {
         value: '值',
         disabled: '禁用',
       },
-      'events': {
+      'emits': {
         change: '值发生变化时触发',
       },
     },
@@ -908,6 +935,9 @@ export default {
       options: {
         label: '标题',
         value: '值',
+      },
+      emits: {
+        change: '标签页切换时触发',
       },
     },
     select: {
@@ -978,13 +1008,16 @@ export default {
         disabled: '禁用状态',
         showCheckIcon: '显示勾选图标',
         initMethod: '初始化选项方法',
+        initMethodId: '初始化方法ID',
         enableSearchCache: '是否启用搜索缓存',
+        multiple: '是否多选',
       },
-      events: {
+      emits: {
         change: '值发生变化时触发',
         clear: '清空时触发',
         blur: '失去焦点时触发',
         focus: '获得焦点时触发',
+        delete: '删除选项时触发',
       },
       options: { label: '标题', value: '值', disabled: '禁用' },
       slots: { item: '自定义选项内容', empty: '自定义空状态内容' },
@@ -1045,7 +1078,7 @@ export default {
       model: {
         modelValue: '绑定值',
       },
-      events: { change: '值变化', blur: '失去焦点', focus: '获得焦点' },
+      emits: { change: '值变化', blur: '失去焦点', focus: '获得焦点' },
       options: { label: '标签', value: '值', disabled: '禁用' },
       slots: { item: '自定义选项内容', empty: '自定义空状态内容' },
     },
@@ -1083,11 +1116,11 @@ export default {
         disabled: '禁用',
         presets: '预设值',
       },
-      events: {
-        change: '值变化',
-        focus: '获得焦点',
-        blur: '失去焦点',
-        clear: '清空',
+      emits: {
+        change: '值发生变化时触发',
+        focus: '获得焦点时触发',
+        blur: '失去焦点时触发',
+        clear: '清空时触发',
       },
     },
     dateRangePicker: {
@@ -1117,11 +1150,11 @@ export default {
         readonly: '只读',
         disabled: '禁用',
       },
-      events: {
-        change: '值变化',
-        focus: '获得焦点',
-        blur: '失去焦点',
-        clear: '清空',
+      emits: {
+        change: '值发生变化时触发',
+        focus: '获得焦点时触发',
+        blur: '失去焦点时触发',
+        clear: '清空时触发',
       },
     },
     cascader: {
@@ -1182,6 +1215,8 @@ export default {
         loadMethod: '加载方法',
         readonly: '只读',
         initMethod: '初始化选项方法',
+        initMethodId: '初始化方法ID',
+        onlyLeafSelectable: '是否只能选择叶子节点',
       },
       options: {
         label: '标签',
@@ -1189,6 +1224,11 @@ export default {
         isLeaf: '是否叶子节点',
         children: '子节点',
         disabled: '禁用',
+      },
+      emits: {
+        change: '值发生变化时触发',
+        clear: '清空时触发',
+        delete: '删除选项时触发',
       },
     },
 
@@ -1314,11 +1354,16 @@ export default {
         labelField: '节点标签字段',
         disabledField: '禁用节点字段',
         initMethod: '初始化树节点的方法',
+        initMethodId: '初始化方法ID',
         loadMethod: '异步加载子节点数据的方法',
         width: '宽度',
       },
       slots: {
         handle: '插槽名',
+      },
+      emits: {
+        change: '值发生变化时触发',
+        clear: '清空时触发',
       },
     },
     inputTable: {
@@ -1350,6 +1395,9 @@ export default {
         uniqueField: '唯一字段',
         sortTooltipCustomRender: '排序提示自定义渲染',
       },
+      emits: {
+        change: '值发生变化时触发',
+      },
     },
     switch: {
       name: '开关 Switch',
@@ -1380,8 +1428,8 @@ export default {
         request: '请求',
         loading: '加载中',
       },
-      events: {
-        change: '事件名称',
+      emits: {
+        change: '值发生变化时触发',
       },
     },
     slider: {
@@ -1410,6 +1458,7 @@ export default {
       },
       props: {
         size: '尺寸',
+        width: '宽度',
         min: '最小值',
         max: '最大值',
         step: '步长',
@@ -1417,6 +1466,9 @@ export default {
         disabled: '禁用',
         options: '选项',
         formatTooltip: '格式化提示',
+      },
+      emits: {
+        change: '值发生变化时触发',
       },
     },
     sliderRange: {
@@ -1445,6 +1497,7 @@ export default {
       },
       props: {
         size: '尺寸',
+        width: '宽度',
         min: '最小值',
         max: '最大值',
         step: '步长',
@@ -1452,6 +1505,9 @@ export default {
         disabled: '禁用',
         options: '选项',
         formatTooltip: '格式化提示',
+      },
+      emits: {
+        change: '值发生变化时触发',
       },
     },
     rate: {
@@ -1478,6 +1534,9 @@ export default {
         tips: '提示',
         readonly: '只读',
         disabled: '禁用',
+      },
+      emits: {
+        change: '值发生变化时触发',
       },
     },
     colorPicker: {
@@ -1507,6 +1566,9 @@ export default {
         placeholder: '占位符',
         disabled: '禁用',
         readonly: '只读',
+      },
+      emits: {
+        change: '值发生变化时触发',
       },
     },
     upload: {
@@ -1548,6 +1610,11 @@ export default {
         tips: '提示信息',
         uploadHelper: '上传助手',
         viewMode: '查看模式',
+        beforeDelete: '删除前的钩子函数',
+      },
+      emits: {
+        change: '值发生变化时触发',
+        delete: '删除文件时触发',
       },
     },
     table: {
@@ -1619,6 +1686,11 @@ export default {
         x: 'X轴',
         customRender: '自定义渲染',
       },
+      emits: {
+        sortChange: '排序变化时触发',
+        selectChange: '选择变化时触发',
+        dragSort: '拖拽排序时触发',
+      },
     },
     pagination: {
       name: '分页 Pagination',
@@ -1642,8 +1714,8 @@ export default {
         pageSizeOptions: '每页大小选项',
         visiblePagesCount: '可见页数',
       },
-      events: {
-        change: '事件名称',
+      emits: {
+        change: '分页变化时触发',
       },
     },
     magicNumber: {
@@ -1698,6 +1770,7 @@ export default {
         initMethod: '初始化树节点的方法',
         loadMethod: '异步加载子节点数据的方法',
         isSelect: '是否选中',
+        onlyLeafSelectable: '是否只能选择叶子节点',
       },
       slots: {
         handle: '插槽名',
@@ -1708,6 +1781,12 @@ export default {
         isLeaf: '是否叶子节点',
         children: '子节点',
         disabled: '禁用',
+      },
+      emits: {
+        change: '值发生变化时触发',
+        expand: '节点展开时触发',
+        loadStart: '开始加载时触发',
+        loadEnd: '加载结束时触发',
       },
     },
     collapse: {
@@ -1735,6 +1814,12 @@ export default {
         collapseKey: '折叠键',
         title: '标题',
         radius: '半径',
+      },
+      'emits': {
+        change: '折叠面板展开/收起时触发',
+      },
+      'emits(CollapseItem)': {
+        change: '折叠项展开/收起时触发',
       },
     },
     desc: {
@@ -1813,7 +1898,7 @@ export default {
       demo3: {
         title: '模拟请求',
       },
-      events: {
+      emits: {
         close: '关闭时触发',
       },
       props: {
@@ -1880,9 +1965,14 @@ export default {
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         hideFooter: '是否隐藏底部',
+        hideOkButton: '是否隐藏确认按钮',
+        hideCloseButton: '是否隐藏关闭按钮',
         okButtonProps: '确认按钮的属性',
         closeButtonProps: '取消按钮的属性',
         zIndex: '层级',
+      },
+      emits: {
+        close: '关闭时触发',
       },
     },
     dialog: {
@@ -1911,6 +2001,7 @@ export default {
         width: '宽度',
         trigger: '触发方式',
         title: '标题',
+        content: '内容',
         okText: '确认按钮文本',
         cancelText: '取消按钮文本',
         ok: '确认回调',
@@ -1918,8 +2009,10 @@ export default {
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         transformOrigin: '动画原点',
+        icon: '自定义图标',
+        hideIcon: '是否隐藏图标',
       },
-      events: {
+      emits: {
         ok: '点击确认按钮时触发',
         cancel: '点击取消按钮时触发',
       },
@@ -1947,6 +2040,8 @@ export default {
         width: '宽度',
         top: '距离顶部的距离',
         hideFooter: '是否隐藏底部',
+        hideOkButton: '是否隐藏确认按钮',
+        hideCloseButton: '是否隐藏关闭按钮',
         closeByEsc: '是否可通过按下 ESC 关闭',
         okButtonProps: '确认按钮属性',
         closeButtonProps: '取消按钮属性',
@@ -1984,6 +2079,8 @@ export default {
         cancelText: '取消按钮文本',
         ok: '确认回调',
         cancel: '取消回调',
+        icon: '自定义图标',
+        hideIcon: '是否隐藏图标',
       },
     },
     popover: {
@@ -2007,8 +2104,10 @@ export default {
       props: {
         trigger: '触发方式',
         placement: '位置',
+        delay: '延迟时间',
         disabled: '禁用状态',
         loading: '加载状态',
+        clickOutsideToHide: '点击弹出层外部时是否关闭',
         hideOnClick: '点击气泡区域外是否自动关闭',
         offset: '偏移量',
         triggerWidth: '弹窗宽度',
@@ -2018,6 +2117,10 @@ export default {
       slots: {
         'trigger': '触发插槽',
         'popover-body': '气泡内容插槽',
+      },
+      emits: {
+        show: '显示时触发',
+        hide: '隐藏时触发',
       },
     },
     tooltip: {

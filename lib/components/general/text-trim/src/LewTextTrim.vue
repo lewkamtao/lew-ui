@@ -8,16 +8,8 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { textTrimProps } from './props'
 import { clearMeasureCache, getDisplayText } from './text-trim'
 
-// Types
-interface TextTrimEmits {
-  click: [event: MouseEvent]
-  mouseenter: []
-  mouseleave: []
-}
-
 // Props & Emits
 const props = defineProps(textTrimProps)
-const emit = defineEmits<TextTrimEmits>()
 
 // Refs
 const lewTextTrimRef = ref<HTMLDivElement>()
@@ -145,18 +137,8 @@ function initCalculateDisplayText(): void {
 
 const debouncedCalculate = useDebounceFn(calculateDisplayText, 250)
 
-// Event handlers
-function handleClick(event: MouseEvent): void {
-  emit('click', event)
-}
-
 function handleMouseEnter(): void {
-  emit('mouseenter')
   initTippy()
-}
-
-function handleMouseLeave(): void {
-  emit('mouseleave')
 }
 
 // Lifecycle hooks
@@ -181,9 +163,7 @@ watch(() => [props.text, props.reserveEnd], calculateDisplayText, { flush: 'post
     ref="lewTextTrimRef"
     class="lew-text-trim-wrapper"
     :style="textTrimStyle"
-    @click="handleClick"
     @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
   >
     <template v-if="text">
       {{ displayText }}
@@ -199,6 +179,7 @@ watch(() => [props.text, props.reserveEnd], calculateDisplayText, { flush: 'post
 .lew-text-trim-wrapper {
   width: 100%;
   overflow: hidden;
+
   .lew-text-trim-pop {
     position: fixed;
     opacity: 0;
