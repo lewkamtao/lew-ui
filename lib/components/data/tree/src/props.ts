@@ -64,7 +64,7 @@ export const treeProps = {
   },
   free: {
     type: Boolean,
-    default: true,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewTree',
       propName: 'free',

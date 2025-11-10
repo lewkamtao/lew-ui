@@ -1329,6 +1329,15 @@ export default {
         description:
           '使用 ```initMethod``` 方法，初始化树形数据，并返回一个 ```Promise``` 对象',
       },
+      demo12: {
+        title: '多选',
+      },
+      demo13: {
+        title: '任意选择层级',
+      },
+      demo14: {
+        title: '严格模式',
+      },
       model: {
         modelValue: '绑定值',
       },

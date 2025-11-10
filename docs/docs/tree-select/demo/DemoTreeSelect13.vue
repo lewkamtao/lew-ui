@@ -1,16 +1,23 @@
 <script setup lang="ts">
 import { cityTree } from 'docs/lib/data'
 
-const v = ref<string>('')
+const v = ref<any>([])
+function change(e: any) {
+  console.log(e)
+}
 </script>
 
 <template>
   <lew-tree-select
     v-model="v"
-    width="300px"
+    multiple
     key-field="value"
+    width="300px"
+    size="medium"
+    searchable
+    free
     label-field="label"
-    readonly
     :data-source="cityTree"
+    @change="change"
   />
 </template>
