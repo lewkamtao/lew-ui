@@ -148,15 +148,21 @@ onUnmounted(() => {
 
 const showClearButton = computed(() => {
   if (props.multiple) {
+    // 当 modelValue 是 [] 时也不展示
     return (
       props.clearable
-      && (modelValue.value || []).length > 0
+      && Array.isArray(modelValue.value)
+      && modelValue.value.length > 0
       && !props.readonly
       && !props.loading
     )
   }
   else {
-    return props.clearable && modelValue.value && !props.readonly && !props.loading
+    // 额外处理 modelValue === [] 的情况也不展示
+    if (Array.isArray(modelValue.value) && modelValue.value.length === 0) {
+      return false
+    }
+    return props.clearable && !!modelValue.value && !props.readonly && !props.loading
   }
 })
 

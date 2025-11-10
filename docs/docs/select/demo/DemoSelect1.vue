@@ -11,7 +11,7 @@ const options = ref<LewSelectOption[]>([
   { label: 'Same Day Delivery', value: 'sameDay' },
 ])
 
-const value = ref<(string | number)[]>([])
+const value = ref()
 </script>
 
 <template>
