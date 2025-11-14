@@ -55,6 +55,18 @@ export default {
     Fri: 'Ven',
     Sat: 'Sam',
     Sun: 'Dim',
+    Jan: 'Janvier',
+    Feb: 'Février',
+    Mar: 'Mars',
+    Apr: 'Avril',
+    May: 'Mai',
+    Jun: 'Juin',
+    Jul: 'Juillet',
+    Aug: 'Août',
+    Sep: 'Septembre',
+    Oct: 'Octobre',
+    Nov: 'Novembre',
+    Dec: 'Décembre',
     placeholder: 'Sélectionner une date',
   },
   dateRangePicker: {
@@ -92,6 +104,9 @@ export default {
     cancelText: 'Annuler',
     okText: 'OK',
   },
+  colorPicker: {
+    placeholder: 'Veuillez saisir',
+  },
   upload: {
     dropActive: 'Relâchez pour commencer le téléchargement',
     click: 'Cliquez pour télécharger, ',
@@ -100,9 +115,19 @@ export default {
     accept: 'Prend en charge le téléchargement de {accept}',
     limit: 'Vous pouvez télécharger jusqu\'à {limit} fichiers',
     maxFileSize: 'Chaque fichier ne doit pas dépasser {maxFileSize}',
+    pending: 'En attente',
+    success: 'Téléchargement réussi',
+    fail: 'Échec du téléchargement',
+    uploading: 'Téléchargement en cours',
+    complete: 'Téléchargé',
+    wrong_type: 'Format invalide',
+    wrong_size: 'La taille du fichier dépasse la limite',
   },
   pagination: {
     pageSize: '{pageSize} par page',
     jumpTo: 'Aller à',
+  },
+  empty: {
+    title: 'Aucune donnée',
   },
 }

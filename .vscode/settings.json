@@ -5,7 +5,7 @@
   "window.autoDetectColorScheme": true,
   "workbench.fontAliasing": "antialiased",
   "workbench.list.smoothScrolling": true,
-  "workbench.preferredDarkColorTheme": "Cursor Dark",
+  "workbench.preferredDarkColorTheme": "Default Dark Modern",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.expandMode": "singleClick",
   "workbench.tree.indent": 10,

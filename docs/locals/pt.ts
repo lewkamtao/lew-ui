@@ -32,6 +32,7 @@ export default {
     feedback: 'Feedback',
     close: 'Fechar',
     showCode: 'Mostrar código',
+    copySuccess: 'Cópia bem-sucedida!',
   },
   components: {
     image: {
@@ -117,6 +118,7 @@ export default {
         text: 'Texto do botão',
         type: 'Tipo',
         size: 'Tamanho',
+        width: 'Largura',
         singleIcon: 'Mostrar apenas ícone',
         color: 'Cor',
         round: 'Arredondado',
@@ -160,6 +162,10 @@ export default {
         disabled: 'Desativado',
         round: 'Arredondado',
         oversize: 'Tamanho mais solto',
+        close: 'Recebe uma função Promise para fechar a etiqueta',
+      },
+      emits: {
+        close: 'Callback de evento ao fechar a etiqueta',
       },
     },
     badge: {
@@ -240,6 +246,9 @@ export default {
         reserveEnd:
           'Número de caracteres a preservar no final, mostrando reticências no meio',
       },
+      emits: {
+        click: 'Disparado ao clicar no texto',
+      },
     },
     flex: {
       name: 'Layout flexível Flex',
@@ -299,7 +308,7 @@ export default {
         bottom: 'Distância do fundo da página (pixels)',
         valveHeight: 'Altura de rolagem para exibir o botão (pixels)',
       },
-      events: {
+      emits: {
         click: 'Callback ao clicar para voltar ao topo',
       },
     },
@@ -323,10 +332,15 @@ export default {
         options: 'Array de configuração de passos',
         status: 'Estado atual dos passos',
         minWidth: 'Largura mínima do passo',
+        canClickItem: 'Se é possível clicar no item do passo para alternar',
+        canCrossSteps: 'Se é possível alternar entre passos',
       },
       options: {
         title: 'Título do passo',
         description: 'Descrição do passo',
+      },
+      emits: {
+        change: 'Disparado ao alternar o passo',
       },
     },
     menu: {
@@ -348,6 +362,9 @@ export default {
         disabled: 'Desabilita o item',
         icon: 'Ícone do item',
         tagProps: 'Props da tag do item',
+      },
+      emits: {
+        change: 'Disparado ao alternar o item do menu',
       },
     },
     menuTree: {
@@ -387,6 +404,11 @@ export default {
         disabled: 'Desabilita o item',
         isLeaf: 'É um nó folha',
       },
+      emits: {
+        change: 'Disparado ao alternar o item do menu',
+        expand: 'Disparado ao expandir o item do menu',
+        collapse: 'Disparado ao recolher o item do menu',
+      },
     },
     dropdown: {
       'name': 'Menu suspenso Dropdown',
@@ -407,7 +429,7 @@ export default {
         checkable: 'Permite seleção',
       },
       'options(LewContextMenusOption[])': contextMenu,
-      'events': {
+      'emits': {
         show: 'Callback ao mostrar menu',
         hide: 'Callback ao ocultar menu',
         change: 'Callback ao selecionar item',
@@ -434,9 +456,10 @@ export default {
         value: 'Valor do item',
         active: 'Item atual',
       },
-      events: {
-        change: 'Dispara ao mudar item',
+      emits: {
+        change: 'Disparado ao alternar o item da navegação estrutural',
       },
+
     },
     contextMenu: {
       'name': 'Menu de contexto ContextMenu',
@@ -456,6 +479,7 @@ export default {
       'props': {
         options: 'Configuração do menu',
         disabled: 'Desabilita o menu',
+        trigger: 'Método de acionamento',
       },
       'options(LewContextMenusOption[])': contextMenu,
     },
@@ -488,6 +512,9 @@ export default {
         icon: 'Ícone do botão de ação',
         onClick: 'Evento de clique do botão de ação',
         customRender: 'Conteúdo de renderização personalizado',
+      },
+      emits: {
+        click: 'Disparado ao clicar no botão de ação',
       },
     },
     form: {
@@ -546,7 +573,7 @@ export default {
         outputFormat: 'Formatação de saída',
         inputFormat: 'Formatação de entrada',
       },
-      events: {
+      emits: {
         mounted: 'Disparado quando o item é montado',
       },
       methods: {
@@ -615,7 +642,7 @@ export default {
         suffixTooltip: 'Tooltip do sufixo',
         okByEnter: 'Permite confirmar com Enter',
       },
-      events: {
+      emits: {
         change: 'Ao alterar valor',
         focus: 'Ao receber foco',
         blur: 'Ao perder foco',
@@ -661,6 +688,10 @@ export default {
       },
       model: {
         modelValue: 'Valor vinculado',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
+        input: 'Disparado ao digitar',
       },
     },
     textarea: {
@@ -711,7 +742,7 @@ export default {
         selectByFocus: 'Seleciona ao focar',
         okByEnter: 'Confirma com Enter (Shift+Enter para nova linha)',
       },
-      events: {
+      emits: {
         change: 'Ao alterar valor',
         focus: 'Ao receber foco',
         blur: 'Ao perder foco',
@@ -760,7 +791,7 @@ export default {
         maxLength: 'Número máximo de tags',
         width: 'Largura',
       },
-      events: {
+      emits: {
         change: 'Ao alterar valor',
         clear: 'Ao limpar',
         add: 'Ao adicionar tag',
@@ -819,11 +850,14 @@ export default {
         iconable: 'Permite ícone',
         certain: 'Estado definido',
       },
-      'events(Checkbox)': {
-        change: 'Ao alterar valor',
+      'emits(Checkbox)': {
+        change: 'Disparado ao alterar valor',
       },
-      'events(CheckboxGroup)': {
-        change: 'Ao alterar valor',
+      'emits(CheckboxGroup)': {
+        change: 'Disparado ao alterar valor',
+      },
+      'emits': {
+        change: 'Disparado ao alterar valor',
       },
       'options': {
         label: 'Rótulo',
@@ -870,7 +904,7 @@ export default {
         value: 'Valor',
         disabled: 'Desabilitado',
       },
-      'events': {
+      'emits': {
         change: 'Ao alterar valor',
       },
     },
@@ -893,6 +927,9 @@ export default {
       demo5: {
         title: 'Arredondado',
       },
+      demo6: {
+        title: 'Opção desabilitada',
+      },
       model: {
         modelValue: 'Valor vinculado',
       },
@@ -909,6 +946,9 @@ export default {
       options: {
         label: 'Título',
         value: 'Valor',
+      },
+      emits: {
+        change: 'Disparado ao alterar a aba',
       },
     },
     select: {
@@ -944,6 +984,20 @@ export default {
       demo10: {
         title: 'Habilitar cache de pesquisa',
       },
+      demo11: {
+        title: 'Largura adaptável',
+        description:
+          'Use a propriedade ```autoWidth``` para calcular automaticamente a largura da caixa suspensa, a propriedade ```popoverWidth``` para definir a largura do popover',
+      },
+      demo12: {
+        title: 'Seleção múltipla',
+      },
+      demo13: {
+        title: 'Seleção múltipla com pesquisa',
+      },
+      demo14: {
+        title: 'Seleção múltipla com agrupamento',
+      },
       model: {
         modelValue: 'Valor vinculado',
       },
@@ -965,13 +1019,16 @@ export default {
         disabled: 'Desabilitado',
         showCheckIcon: 'Exibir ícone de seleção',
         initMethod: 'Método de inicialização de opções',
+        initMethodId: 'ID do método de inicialização',
         enableSearchCache: 'Habilitar cache de pesquisa',
+        multiple: 'Seleção múltipla',
       },
-      events: {
+      emits: {
         change: 'Ao alterar valor',
         clear: 'Ao limpar',
         blur: 'Ao perder foco',
         focus: 'Ao ganhar foco',
+        delete: 'Disparado ao deletar uma opção',
       },
       options: {
         label: 'Título',
@@ -1039,7 +1096,7 @@ export default {
       model: {
         modelValue: 'Valor vinculado',
       },
-      events: {
+      emits: {
         change: 'Ao alterar valor',
         blur: 'Ao perder foco',
         focus: 'Ao ganhar foco',
@@ -1088,7 +1145,7 @@ export default {
         disabled: 'Desabilitado',
         presets: 'Valores predefinidos',
       },
-      events: {
+      emits: {
         change: 'Ao alterar valor',
         focus: 'Ao ganhar foco',
         blur: 'Ao perder foco',
@@ -1122,7 +1179,7 @@ export default {
         readonly: 'Somente leitura',
         disabled: 'Desabilitado',
       },
-      events: {
+      emits: {
         change: 'Ao alterar valor',
         focus: 'Ao ganhar foco',
         blur: 'Ao perder foco',
@@ -1133,6 +1190,82 @@ export default {
       name: 'Seletor em Cascata Cascader',
       description:
         'Seletor para dados multinível, tornando a seleção categorizada mais clara',
+      demo1: {
+        title: 'Uso básico',
+      },
+      demo2: {
+        title: 'Modo livre',
+      },
+      demo3: {
+        title: 'Exibir apenas último nível',
+      },
+      demo4: {
+        title: 'Carregamento assíncrono',
+      },
+      demo5: {
+        title: 'Permite limpar',
+      },
+      demo6: {
+        title: 'Somente leitura',
+      },
+      demo7: {
+        title: 'Desabilitado',
+      },
+      demo8: {
+        title: 'Opções desabilitadas',
+      },
+      demo9: {
+        title: 'Método de inicialização de opções',
+        description:
+          'Use o método ```initMethod``` para inicializar dados em cascata e retornar um objeto ```Promise```',
+      },
+      demo10: {
+        title: 'Seleção múltipla',
+      },
+      demo11: {
+        title: 'Selecionar qualquer nível',
+      },
+      demo12: {
+        title: 'Modo estrito',
+      },
+      model: {
+        modelValue: 'Valor vinculado',
+      },
+      props: {
+        width: 'Largura',
+        options: 'Opções',
+        placeholder: 'Texto de placeholder',
+        disabled: 'Desabilitado',
+        clearable: 'Permite limpar',
+        showAllLevels: 'Exibir todos os níveis',
+        multiple: 'Seleção múltipla',
+        free: 'Seleção livre',
+        size: 'Tamanho',
+        trigger: 'Modo de acionamento',
+        loadMethod: 'Método de carregamento',
+        readonly: 'Somente leitura',
+        initMethod: 'Método de inicialização de opções',
+        initMethodId: 'ID do método de inicialização',
+        onlyLeafSelectable: 'Se apenas nós folha podem ser selecionados',
+      },
+      options: {
+        label: 'Rótulo',
+        value: 'Valor',
+        isLeaf: 'É nó folha',
+        children: 'Filhos',
+        disabled: 'Desabilitado',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
+        clear: 'Disparado ao limpar',
+        delete: 'Disparado ao deletar uma opção',
+      },
+    },
+
+    cascaderMultiple: {
+      name: 'Seletor em Cascata Múltiplo CascaderMultiple',
+      description:
+        'Seletor para dados multinível com suporte a seleção múltipla, tornando a seleção categorizada mais clara',
       demo1: {
         title: 'Uso básico',
       },
@@ -1188,6 +1321,7 @@ export default {
         disabled: 'Desabilitado',
       },
     },
+
     treeSelect: {
       name: 'Seletor em Árvore TreeSelect',
       description:
@@ -1227,6 +1361,15 @@ export default {
         description:
           'Use o método ```initMethod``` para inicializar dados em árvore e retornar um objeto ```Promise```',
       },
+      demo12: {
+        title: 'Seleção múltipla',
+      },
+      demo13: {
+        title: 'Selecionar qualquer nível',
+      },
+      demo14: {
+        title: 'Modo estrito',
+      },
       model: {
         modelValue: 'Valor vinculado',
       },
@@ -1253,10 +1396,15 @@ export default {
         labelField: 'Campo rótulo do nó',
         disabledField: 'Campo de desabilitação do nó',
         initMethod: 'Método de inicialização dos nós',
+        initMethodId: 'ID do método de inicialização',
         loadMethod: 'Método de carregamento assíncrono dos filhos',
       },
       slots: {
         handle: 'Nome do slot',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
+        clear: 'Disparado ao limpar',
       },
     },
     inputTable: {
@@ -1290,6 +1438,9 @@ export default {
         sortTooltipCustomRender:
           'Renderização personalizada da dica de ordenação',
       },
+      emits: {
+        change: 'Disparado ao alterar valor',
+      },
     },
     switch: {
       name: 'Interruptor Switch',
@@ -1321,7 +1472,7 @@ export default {
         request: 'Requisição',
         loading: 'Carregando',
       },
-      events: {
+      emits: {
         change: 'Nome do evento',
       },
     },
@@ -1352,6 +1503,7 @@ export default {
       },
       props: {
         size: 'Tamanho',
+        width: 'Largura',
         min: 'Valor mínimo',
         max: 'Valor máximo',
         step: 'Passo',
@@ -1359,6 +1511,9 @@ export default {
         disabled: 'Desabilitado',
         options: 'Opções',
         formatTooltip: 'Formatar dica',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
       },
     },
     sliderRange: {
@@ -1388,6 +1543,7 @@ export default {
       },
       props: {
         size: 'Tamanho',
+        width: 'Largura',
         min: 'Valor mínimo',
         max: 'Valor máximo',
         step: 'Passo',
@@ -1395,6 +1551,9 @@ export default {
         disabled: 'Desabilitado',
         options: 'Opções',
         formatTooltip: 'Formatar dica',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
       },
     },
     rate: {
@@ -1422,6 +1581,9 @@ export default {
         tips: 'Dicas',
         readonly: 'Somente leitura',
         disabled: 'Desabilitado',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
       },
     },
     colorPicker: {
@@ -1451,6 +1613,9 @@ export default {
         placeholder: 'Placeholder',
         disabled: 'Desabilitado',
         readonly: 'Somente leitura',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
       },
     },
     upload: {
@@ -1493,6 +1658,11 @@ export default {
         tips: 'Mensagens de dica',
         uploadHelper: 'Auxiliar de upload',
         viewMode: 'Modo de visualização',
+        beforeDelete: 'Função de hook antes de deletar',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
+        delete: 'Disparado ao deletar arquivo',
       },
     },
     table: {
@@ -1565,6 +1735,11 @@ export default {
         x: 'Eixo X',
         customRender: 'Renderização personalizada',
       },
+      emits: {
+        sortChange: 'Disparado ao alterar ordenação',
+        selectChange: 'Disparado ao alterar seleção',
+        dragSort: 'Disparado ao arrastar e ordenar',
+      },
     },
     pagination: {
       name: 'Paginação Pagination',
@@ -1589,7 +1764,7 @@ export default {
         pageSizeOptions: 'Opções de tamanho da página',
         visiblePagesCount: 'Número de páginas visíveis',
       },
-      events: {
+      emits: {
         change: 'Nome do evento',
       },
     },
@@ -1647,6 +1822,7 @@ export default {
         initMethod: 'Método de inicialização da árvore',
         loadMethod: 'Método de carregamento assíncrono',
         isSelect: 'Está selecionado',
+        onlyLeafSelectable: 'Se apenas nós folha podem ser selecionados',
       },
       slots: {
         handle: 'Nome do slot',
@@ -1657,6 +1833,12 @@ export default {
         isLeaf: 'É nó folha',
         children: 'Filhos',
         disabled: 'Desabilitado',
+      },
+      emits: {
+        change: 'Disparado ao alterar valor',
+        expand: 'Disparado ao expandir nó',
+        loadStart: 'Disparado ao iniciar carregamento',
+        loadEnd: 'Disparado ao finalizar carregamento',
       },
     },
     collapse: {
@@ -1685,6 +1867,12 @@ export default {
         collapseKey: 'Chave de expansão',
         title: 'Título',
         radius: 'Raio',
+      },
+      'emits': {
+        change: 'Disparado ao expandir/recolher painel',
+      },
+      'emits(CollapseItem)': {
+        change: 'Disparado ao expandir/recolher item',
       },
     },
     desc: {
@@ -1766,7 +1954,7 @@ export default {
       demo3: {
         title: 'Simulação de requisição',
       },
-      events: {
+      emits: {
         close: 'Disparado ao fechar',
       },
       props: {
@@ -1834,9 +2022,14 @@ export default {
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         closeByEsc: 'Fechar com a tecla ESC',
         hideFooter: 'Ocultar rodapé',
+        hideOkButton: 'Ocultar botão OK',
+        hideCloseButton: 'Ocultar botão de fechar',
         okButtonProps: 'Propriedades do botão OK',
         closeButtonProps: 'Propriedades do botão de fechar',
         zIndex: 'Índice Z',
+      },
+      emits: {
+        close: 'Disparado ao fechar',
       },
     },
     dialog: {
@@ -1855,11 +2048,18 @@ export default {
       demo4: {
         title: 'Fechar com ESC',
       },
+      demo5: {
+        title: 'Ocultar ícone',
+      },
+      demo6: {
+        title: 'Ícone personalizado',
+      },
       props: {
         type: 'Tipo',
         width: 'Largura',
         trigger: 'Gatilho',
         title: 'Título',
+        content: 'Conteúdo',
         okText: 'Texto do botão OK',
         cancelText: 'Texto do botão Cancelar',
         ok: 'Callback de confirmação',
@@ -1867,8 +2067,10 @@ export default {
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         closeByEsc: 'Fechar com a tecla ESC',
         transformOrigin: 'Origem da transformação',
+        icon: 'Ícone personalizado',
+        hideIcon: 'Ocultar ícone',
       },
-      events: {
+      emits: {
         ok: 'Disparado quando o botão OK é clicado',
         cancel: 'Disparado quando o botão Cancelar é clicado',
       },
@@ -1896,6 +2098,8 @@ export default {
         width: 'Largura',
         top: 'Distância do topo',
         hideFooter: 'Ocultar rodapé',
+        hideOkButton: 'Ocultar botão OK',
+        hideCloseButton: 'Ocultar botão de fechar',
         closeByEsc: 'Fechar com tecla ESC',
         okButtonProps: 'Propriedades do botão OK',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
@@ -1914,6 +2118,15 @@ export default {
       demo2: {
         title: 'Modo de acionamento',
       },
+      demo3: {
+        title: 'Ocultar ícone',
+      },
+      demo4: {
+        title: 'Ícone personalizado',
+      },
+      demo5: {
+        title: 'Conteúdo personalizado',
+      },
       props: {
         type: 'Tipo',
         width: 'Largura',
@@ -1925,6 +2138,8 @@ export default {
         cancelText: 'Texto do botão Cancelar',
         ok: 'Callback de confirmação',
         cancel: 'Callback de cancelamento',
+        icon: 'Ícone personalizado',
+        hideIcon: 'Ocultar ícone',
       },
     },
     popover: {
@@ -1949,16 +2164,23 @@ export default {
       props: {
         trigger: 'Gatilho',
         placement: 'Posicionamento',
+        delay: 'Tempo de atraso',
         disabled: 'Desabilitado',
         loading: 'Carregando',
+        clickOutsideToHide: 'Se deve fechar ao clicar fora da camada popover',
         hideOnClick: 'Ocultar ao clicar',
         offset: 'Deslocamento',
+        triggerWidth: 'Largura do popover',
         popoverBodyClassName: 'Nome da classe do corpo do popover',
         triggerTarget: 'Alvo do gatilho',
       },
       slots: {
         'trigger': 'Slot do gatilho',
         'popover-body': 'Slot do corpo do popover',
+      },
+      emits: {
+        show: 'Disparado ao mostrar',
+        hide: 'Disparado ao ocultar',
       },
     },
     tooltip: {
@@ -1977,7 +2199,7 @@ export default {
         title: 'Suporte a HTML',
       },
       props: {
-        tips: 'Conteúdo da dica',
+        content: 'Conteúdo da dica',
         placement: 'Posicionamento',
         trigger: 'Gatilho',
         allowHTML: 'Permitir HTML',

@@ -33,6 +33,7 @@ export default {
     feedback: 'Retour',
     close: 'Fermer',
     showCode: 'Afficher le code',
+    copySuccess: 'Copie réussie !',
   },
   components: {
     image: {
@@ -118,6 +119,7 @@ export default {
         text: 'Texte du bouton',
         type: 'Type',
         size: 'Taille',
+        width: 'Largeur',
         singleIcon: 'Afficher uniquement l\'icône',
         color: 'Couleur',
         round: 'Arrondi',
@@ -161,6 +163,10 @@ export default {
         disabled: 'Désactivé',
         round: 'Coins arrondis',
         oversize: 'Taille plus relâchée',
+        close: 'Fonction Promise pour fermer l\'étiquette',
+      },
+      emits: {
+        close: 'Déclenché lors de la fermeture',
       },
     },
     badge: {
@@ -243,6 +249,9 @@ export default {
         reserveEnd:
           'Nombre de caractères à conserver à la fin, affichera des points de suspension au milieu lorsque le texte déborde, en conservant le début et le nombre spécifié de caractères finaux',
       },
+      emits: {
+        click: 'Déclenché lors du clic sur le texte',
+      },
     },
     flex: {
       name: 'Flex',
@@ -308,8 +317,8 @@ export default {
         valveHeight:
           'Hauteur de seuil de défilement de la page, le bouton de retour en haut s\'affiche lorsque le défilement dépasse cette valeur, en pixels.',
       },
-      events: {
-        click: 'Callback de l\'événement de retour en haut',
+      emits: {
+        click: 'Déclenché lors du clic sur Retour en haut',
       },
     },
     steps: {
@@ -332,10 +341,15 @@ export default {
         options: 'Tableau de configuration des étapes',
         status: 'État actuel des étapes',
         minWidth: 'Largeur minimale de l\'étape',
+        canClickItem: 'Autoriser le clic sur les éléments d\'étape',
+        canCrossSteps: 'Autoriser de sauter des étapes',
       },
       options: {
         title: 'Titre de l\'étape',
         description: 'Description de l\'étape',
+      },
+      emits: {
+        change: 'Déclenché lorsqu\'une étape change',
       },
     },
     menu: {
@@ -358,6 +372,9 @@ export default {
         disabled: 'Désactiver l\'élément de menu',
         icon: 'Icône de l\'élément de menu',
         tagProps: 'Propriétés du badge',
+      },
+      emits: {
+        change: 'Déclenché lors du changement d\'élément',
       },
     },
     menuTree: {
@@ -404,6 +421,11 @@ export default {
         disabled: 'Désactiver l\'élément de menu',
         isLeaf: 'Si c\'est un nœud feuille',
       },
+      emits: {
+        change: 'Déclenché lors du changement d\'élément',
+        expand: 'Déclenché lors de l\'expansion',
+        collapse: 'Déclenché lors du repli',
+      },
     },
     dropdown: {
       'name': 'Menu déroulant',
@@ -426,10 +448,10 @@ export default {
         checkable: 'Permet la sélection',
       },
       'options(LewContextMenusOption[])': contextMenu,
-      'events': {
-        show: 'Callback d\'affichage du menu',
-        hide: 'Callback de masquage du menu',
-        change: 'Callback de sélection d\'élément de menu',
+      'emits': {
+        show: 'Déclenché lors de l\'affichage',
+        hide: 'Déclenché lors du masquage',
+        change: 'Déclenché lors de la sélection',
       },
     },
     breadcrumb: {
@@ -454,8 +476,8 @@ export default {
         value: 'Valeur de l\'élément du fil d\'Ariane',
         active: 'Si c\'est l\'élément actuellement sélectionné',
       },
-      events: {
-        change: 'Déclenché lorsque l\'élément du fil d\'Ariane change',
+      emits: {
+        change: 'Déclenché lors du changement d\'élément',
       },
     },
     contextMenu: {
@@ -477,6 +499,7 @@ export default {
       'props': {
         options: 'Configuration du menu contextuel',
         disabled: 'Désactiver le menu contextuel',
+        trigger: 'Mode de déclenchement',
       },
       'options(LewContextMenusOption[])': contextMenu,
     },
@@ -545,7 +568,7 @@ export default {
         outputFormat: 'Méthode de formatage pour la sortie des paramètres',
         inputFormat: 'Méthode de formatage pour l\'entrée des paramètres',
       },
-      events: {
+      emits: {
         mounted: 'Déclenché lors du montage de l\'élément de formulaire',
       },
       methods: {
@@ -620,7 +643,7 @@ export default {
         suffixTooltip: 'Texte d\'info-bulle pour le suffixe du champ de saisie',
         okByEnter: 'Autoriser la confirmation par la touche Entrée',
       },
-      events: {
+      emits: {
         change: 'Déclenché lorsque la valeur du champ de saisie change',
         focus: 'Déclenché lorsque le champ de saisie obtient le focus',
         blur: 'Déclenché lorsque le champ de saisie perd le focus',
@@ -668,6 +691,10 @@ export default {
       },
       model: {
         modelValue: 'Valeur liée',
+      },
+      emits: {
+        change: 'Déclenché lorsque la valeur change',
+        input: 'Déclenché lors de la saisie',
       },
     },
     textarea: {
@@ -721,7 +748,7 @@ export default {
         okByEnter:
           'Activer la confirmation par la touche Entrée (lorsque activé, Shift+Entrée permet le saut de ligne)',
       },
-      events: {
+      emits: {
         change: 'Déclenché lorsque la valeur change',
         focus: 'Déclenché lors de l\'obtention du focus',
         blur: 'Déclenché lors de la perte du focus',
@@ -771,7 +798,7 @@ export default {
         maxLength: 'Nombre maximum de tags autorisés',
         width: 'Largeur',
       },
-      events: {
+      emits: {
         change: 'Déclenché lorsque la valeur change',
         clear: 'Déclenché lors de l\'effacement',
         add: 'Déclenché lors de l\'ajout d\'un tag',
@@ -831,10 +858,13 @@ export default {
         iconable: 'Autoriser l\'utilisation d\'icônes',
         certain: 'État certain',
       },
-      'events(Checkbox)': {
+      'emits(Checkbox)': {
         change: 'Déclenché lorsque la valeur change',
       },
-      'events(CheckboxGroup)': {
+      'emits(CheckboxGroup)': {
+        change: 'Déclenché lorsque la valeur change',
+      },
+      'emits': {
         change: 'Déclenché lorsque la valeur change',
       },
       'options': {
@@ -883,7 +913,7 @@ export default {
         value: 'Valeur',
         disabled: 'Désactivé',
       },
-      'events': {
+      'emits': {
         change: 'Déclenché lorsque la valeur change',
       },
     },
@@ -981,12 +1011,14 @@ export default {
         initMethod: 'Méthode d\'initialisation des options',
         enableSearchCache: 'Activer le cache de recherche',
       },
-      events: {
+      emits: {
         change: 'Déclenché lorsque la valeur change',
         clear: 'Déclenché lors de l\'effacement',
         blur: 'Déclenché lors de la perte du focus',
         focus: 'Déclenché lors de l\'obtention du focus',
+        delete: 'Déclenché lors de la suppression d\'option',
       },
+
       options: { label: 'Titre', value: 'Valeur', disabled: 'Désactivé' },
       slots: {
         item: 'Contenu personnalisé des options',
@@ -1050,7 +1082,7 @@ export default {
       model: {
         modelValue: 'Valeur liée',
       },
-      events: {
+      emits: {
         change: 'Changement de valeur',
         blur: 'Perte de focus',
         focus: 'Obtention du focus',
@@ -1100,7 +1132,7 @@ export default {
         disabled: 'Désactivé',
         presets: 'Valeurs prédéfinies',
       },
-      events: {
+      emits: {
         change: 'Changement de valeur',
         focus: 'Obtention du focus',
         blur: 'Perte de focus',
@@ -1135,7 +1167,7 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
       },
-      events: {
+      emits: {
         change: 'Changement de valeur',
         focus: 'Obtention du focus',
         blur: 'Perte de focus',
@@ -1192,6 +1224,8 @@ export default {
         loadMethod: 'Méthode de chargement',
         readonly: 'Lecture seule',
         initMethod: 'Méthode d\'initialisation des options',
+        initMethodId: 'ID de la méthode d\'initialisation',
+        onlyLeafSelectable: 'Seules les feuilles sont sélectionnables',
       },
       options: {
         label: 'Étiquette',
@@ -1266,6 +1300,7 @@ export default {
         labelField: 'Champ d\'étiquette du nœud',
         disabledField: 'Champ de désactivation du nœud',
         initMethod: 'Méthode d\'initialisation des nœuds',
+        initMethodId: 'ID de la méthode d\'initialisation',
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
       },
       slots: {
@@ -1333,7 +1368,7 @@ export default {
         request: 'Requête',
         loading: 'Chargement',
       },
-      events: {
+      emits: {
         change: 'Changement de valeur',
       },
     },
@@ -1364,6 +1399,7 @@ export default {
       },
       props: {
         size: 'Taille',
+        width: 'Largeur',
         min: 'Valeur minimale',
         max: 'Valeur maximale',
         step: 'Pas',
@@ -1371,6 +1407,9 @@ export default {
         disabled: 'Désactivé',
         options: 'Options',
         formatTooltip: 'Formatage de l\'infobulle',
+      },
+      emits: {
+        change: 'Changement de valeur',
       },
     },
     sliderRange: {
@@ -1400,6 +1439,7 @@ export default {
       },
       props: {
         size: 'Taille',
+        width: 'Largeur',
         min: 'Valeur minimale',
         max: 'Valeur maximale',
         step: 'Pas',
@@ -1407,6 +1447,9 @@ export default {
         disabled: 'Désactivé',
         options: 'Options',
         formatTooltip: 'Formatage de l\'infobulle',
+      },
+      emits: {
+        change: 'Changement de valeur',
       },
     },
     rate: {
@@ -1506,6 +1549,11 @@ export default {
         tips: 'Conseils',
         uploadHelper: 'Assistant de téléchargement',
         viewMode: 'Mode d\'affichage',
+        beforeDelete: 'Hook avant suppression',
+      },
+      emits: {
+        change: 'Changement de valeur',
+        delete: 'Suppression de fichier',
       },
     },
     table: {
@@ -1577,6 +1625,11 @@ export default {
         x: 'Axe X',
         customRender: 'Rendu personnalisé',
       },
+      emits: {
+        sortChange: 'Déclenché lors du changement de tri',
+        selectChange: 'Déclenché lors du changement de sélection',
+        dragSort: 'Déclenché lors du tri par glisser-déposer',
+      },
     },
     pagination: {
       name: 'Pagination',
@@ -1601,7 +1654,7 @@ export default {
         pageSizeOptions: 'Options de taille de page',
         visiblePagesCount: 'Nombre de pages visibles',
       },
-      events: {
+      emits: {
         change: 'Changement',
       },
     },
@@ -1659,6 +1712,7 @@ export default {
         initMethod: 'Méthode d\'initialisation des nœuds',
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
         isSelect: 'Est sélectionné',
+        onlyLeafSelectable: 'Seules les feuilles sont sélectionnables',
       },
       slots: {
         handle: 'Nom du slot',
@@ -1669,6 +1723,12 @@ export default {
         isLeaf: 'Est une feuille',
         children: 'Enfants',
         disabled: 'Désactivé',
+      },
+      emits: {
+        change: 'Changement de valeur',
+        expand: 'Développement de nœud',
+        loadStart: 'Début du chargement',
+        loadEnd: 'Fin du chargement',
       },
     },
     collapse: {
@@ -1697,6 +1757,12 @@ export default {
         collapseKey: 'Clé de pliage',
         title: 'Titre',
         radius: 'Rayon',
+      },
+      'emits': {
+        change: 'Déclenché lors de l\'expansion/du repli du panneau',
+      },
+      'emits(CollapseItem)': {
+        change: 'Déclenché lors de l\'expansion/du repli de l\'élément',
       },
     },
     desc: {
@@ -1778,7 +1844,7 @@ export default {
       demo3: {
         title: 'Simulation de requête',
       },
-      events: {
+      emits: {
         close: 'Déclenché à la fermeture',
       },
       props: {
@@ -1847,9 +1913,14 @@ export default {
         closeOnClickOverlay: 'Fermer en cliquant sur le masque',
         closeByEsc: 'Fermer avec la touche Echap',
         hideFooter: 'Masquer le pied de page',
+        hideOkButton: 'Masquer le bouton OK',
+        hideCloseButton: 'Masquer le bouton Fermer',
         okButtonProps: 'Propriétés du bouton OK',
         closeButtonProps: 'Propriétés du bouton de fermeture',
         zIndex: 'Index Z',
+      },
+      emits: {
+        close: 'Déclenché lors de la fermeture',
       },
     },
     dialog: {
@@ -1868,11 +1939,18 @@ export default {
       demo4: {
         title: 'Fermer avec Echap',
       },
+      demo5: {
+        title: 'Masquer l\'icône',
+      },
+      demo6: {
+        title: 'Icône personnalisée',
+      },
       props: {
         type: 'Type',
         width: 'Largeur',
         trigger: 'Déclencheur',
         title: 'Titre',
+        content: 'Contenu',
         okText: 'Texte du bouton OK',
         cancelText: 'Texte du bouton Annuler',
         ok: 'Rappel de confirmation',
@@ -1881,7 +1959,7 @@ export default {
         closeByEsc: 'Fermer avec la touche Echap',
         transformOrigin: 'Origine de la transformation',
       },
-      events: {
+      emits: {
         ok: 'Déclenché lors du clic sur le bouton OK',
         cancel: 'Déclenché lors du clic sur le bouton Annuler',
       },
@@ -1911,6 +1989,8 @@ export default {
         top: 'Distance du haut',
         maxHeight: 'Hauteur maximale',
         hideFooter: 'Masquer le pied',
+        hideOkButton: 'Masquer le bouton OK',
+        hideCloseButton: 'Masquer le bouton Fermer',
         closeByEsc: 'Fermeture par touche ESC',
         okButtonProps: 'Propriétés du bouton de confirmation',
         closeButtonProps: 'Propriétés du bouton de fermeture',
@@ -1928,6 +2008,15 @@ export default {
       demo2: {
         title: 'Modes de déclenchement',
       },
+      demo3: {
+        title: 'Masquer l\'icône',
+      },
+      demo4: {
+        title: 'Icône personnalisée',
+      },
+      demo5: {
+        title: 'Contenu personnalisé',
+      },
       props: {
         type: 'Type',
         width: 'Largeur',
@@ -1939,6 +2028,8 @@ export default {
         cancel: 'Callback d\'annulation',
         okText: 'Texte du bouton de confirmation',
         cancelText: 'Texte du bouton d\'annulation',
+        icon: 'Icône personnalisée',
+        hideIcon: 'Masquer l\'icône',
       },
     },
     popover: {
@@ -1963,10 +2054,13 @@ export default {
       props: {
         trigger: 'Déclencheur',
         placement: 'Position',
+        delay: 'Délai',
         disabled: 'Désactivé',
         loading: 'Chargement',
         hideOnClick: 'Masquer en cliquant',
+        clickOutsideToHide: 'Fermer en cliquant à l\'extérieur',
         offset: 'Décalage',
+        triggerWidth: 'Largeur du popover',
         popoverBodyClassName: 'Nom de classe du corps du popover',
         triggerTarget: 'Cible du déclencheur',
       },
@@ -1992,7 +2086,7 @@ export default {
         title: 'Support HTML',
       },
       props: {
-        tips: 'Contenu de l\'info-bulle',
+        content: 'Contenu de l\'info-bulle',
         placement: 'Position',
         trigger: 'Déclencheur',
         allowHTML: 'Autoriser le HTML',
@@ -2079,6 +2173,9 @@ export default {
         icon: 'Icône du bouton d\'action',
         onClick: 'Événement de clic du bouton d\'action',
         customRender: 'Contenu de rendu personnalisé',
+      },
+      emits: {
+        click: 'Déclenché lors du clic sur le bouton',
       },
     },
   },

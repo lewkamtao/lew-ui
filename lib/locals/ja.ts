@@ -55,6 +55,18 @@ export default {
     Fri: '金',
     Sat: '土',
     Sun: '日',
+    Jan: '1月',
+    Feb: '2月',
+    Mar: '3月',
+    Apr: '4月',
+    May: '5月',
+    Jun: '6月',
+    Jul: '7月',
+    Aug: '8月',
+    Sep: '9月',
+    Oct: '10月',
+    Nov: '11月',
+    Dec: '12月',
     placeholder: '日付を選択',
   },
   dateRangePicker: {
@@ -92,6 +104,9 @@ export default {
     cancelText: 'キャンセル',
     okText: '確定',
   },
+  colorPicker: {
+    placeholder: '入力してください',
+  },
   upload: {
     dropActive: 'ドロップしてアップロードを開始',
     click: 'クリックして、',
@@ -100,9 +115,19 @@ export default {
     accept: '{accept}形式のファイルに対応',
     limit: '最大{limit}個のファイルをアップロード可能',
     maxFileSize: '1ファイルあたり{maxFileSize}まで',
+    pending: 'アップロード待ち',
+    success: 'アップロード成功',
+    fail: 'アップロード失敗',
+    uploading: 'アップロード中',
+    complete: 'アップロード完了',
+    wrong_type: '無効な形式',
+    wrong_size: 'ファイルサイズが制限を超えています',
   },
   pagination: {
     pageSize: '表示件数：{pageSize}件',
     jumpTo: '移動',
+  },
+  empty: {
+    title: 'データがありません',
   },
 }
