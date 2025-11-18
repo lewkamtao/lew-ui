@@ -32,6 +32,7 @@ export default {
     feedback: '피드백',
     close: '닫기',
     showCode: '코드 보기',
+    copySuccess: '복사 성공!',
   },
   components: {
     image: {
@@ -117,6 +118,7 @@ export default {
         text: '버튼 텍스트',
         type: '유형',
         size: '크기',
+        width: '너비',
         singleIcon: '아이콘만 표시 여부',
         color: '색상',
         round: '둥근 모서리 여부',
@@ -159,6 +161,10 @@ export default {
         disabled: '비활성화 여부',
         round: '둥근 모서리 여부',
         oversize: '더 여유로운 크기',
+        close: '태그를 닫기 위한 Promise 함수를 받습니다',
+      },
+      emits: {
+        close: '태그 닫기 이벤트 콜백',
       },
     },
     badge: {
@@ -238,6 +244,9 @@ export default {
         reserveEnd:
           '끝부분 문자 보존 수, 텍스트가 넘칠 때 중간에 생략 부호를 표시하고 시작과 지정된 수의 끝 문자 보존',
       },
+      emits: {
+        click: '텍스트 클릭 시 트리거',
+      },
     },
     flex: {
       name: '플렉스 레이아웃 Flex',
@@ -300,7 +309,7 @@ export default {
         valveHeight:
           '페이지 스크롤 높이 임계값, 이 값을 초과하면 맨 위로 버튼이 표시됨, 단위는 픽셀.',
       },
-      events: {
+      emits: {
         click: '맨 위로 이동 이벤트 콜백',
       },
     },
@@ -324,10 +333,15 @@ export default {
         options: '단계 구성 항목 배열',
         status: '단계의 현재 상태',
         minWidth: '최소 단계 너비',
+        canClickItem: '단계 항목을 클릭하여 전환할 수 있는지 여부',
+        canCrossSteps: '단계 간 전환할 수 있는지 여부',
       },
       options: {
         title: '단계 제목',
         description: '단계 설명',
+      },
+      emits: {
+        change: '단계 전환 시 트리거',
       },
     },
     menu: {
@@ -349,6 +363,9 @@ export default {
         disabled: '메뉴 항목 비활성화 여부',
         icon: '메뉴 항목 아이콘',
         tagProps: '메뉴 항목 태그 Props',
+      },
+      emits: {
+        change: '메뉴 항목 전환 시 트리거',
       },
     },
     menuTree: {

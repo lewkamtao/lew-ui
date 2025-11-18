@@ -936,6 +936,9 @@ export default {
       demo5: {
         title: 'Style arrondi',
       },
+      demo6: {
+        title: 'Options désactivées',
+      },
       model: {
         modelValue: 'Valeur liée',
       },
@@ -952,6 +955,9 @@ export default {
       options: {
         label: 'Titre',
         value: 'Valeur',
+      },
+      emits: {
+        change: 'Déclenché lors du changement d\'onglet',
       },
     },
     select: {
@@ -988,15 +994,29 @@ export default {
       demo10: {
         title: 'Cache de recherche',
       },
+      demo11: {
+        title: 'Largeur automatique',
+        description:
+          'Utilisez la propriété ```autoWidth``` pour calculer automatiquement la largeur de la liste déroulante, la propriété ```popoverWidth``` définit la largeur de la fenêtre contextuelle',
+      },
+      demo12: {
+        title: 'Sélection multiple',
+      },
+      demo13: {
+        title: 'Recherche en sélection multiple',
+      },
+      demo14: {
+        title: 'Groupement en sélection multiple',
+      },
       model: {
         modelValue: 'Valeur liée',
       },
       props: {
         defaultValue: 'Valeur par défaut',
         options: 'Options',
-        width: 'Largeur',
         autoWidth: 'Largeur automatique',
-        popoverWidth: 'Largeur du popover',
+        width: 'Largeur',
+        popoverWidth: 'Largeur de la fenêtre contextuelle',
         trigger: 'Mode de déclenchement',
         placeholder: 'Texte d\'espace réservé',
         size: 'Taille',
@@ -1009,7 +1029,9 @@ export default {
         disabled: 'Désactivé',
         showCheckIcon: 'Afficher l\'icône de vérification',
         initMethod: 'Méthode d\'initialisation des options',
+        initMethodId: 'ID de la méthode d\'initialisation',
         enableSearchCache: 'Activer le cache de recherche',
+        multiple: 'Sélection multiple',
       },
       emits: {
         change: 'Déclenché lorsque la valeur change',
@@ -1207,6 +1229,15 @@ export default {
         description:
           'Utilisez ```initMethod``` pour initialiser les données en cascade et retourner un objet ```Promise```',
       },
+      demo10: {
+        title: 'Sélection multiple',
+      },
+      demo11: {
+        title: 'Sélection de niveau arbitraire',
+      },
+      demo12: {
+        title: 'Mode strict',
+      },
       model: {
         modelValue: 'Valeur liée',
       },
@@ -1226,6 +1257,70 @@ export default {
         initMethod: 'Méthode d\'initialisation des options',
         initMethodId: 'ID de la méthode d\'initialisation',
         onlyLeafSelectable: 'Seules les feuilles sont sélectionnables',
+      },
+      options: {
+        label: 'Étiquette',
+        value: 'Valeur',
+        isLeaf: 'Est une feuille',
+        children: 'Enfants',
+        disabled: 'Désactivé',
+      },
+      emits: {
+        change: 'Déclenché lorsque la valeur change',
+        clear: 'Déclenché lors de l\'effacement',
+        delete: 'Déclenché lors de la suppression d\'option',
+      },
+    },
+    cascaderMultiple: {
+      name: 'Sélecteur en cascade multiple',
+      description:
+        'Sélecteur multi-niveaux avec support de sélection multiple, rendant les choix hiérarchiques plus clairs',
+      demo1: {
+        title: 'Utilisation de base',
+      },
+      demo2: {
+        title: 'Mode libre',
+      },
+      demo3: {
+        title: 'Afficher uniquement le dernier niveau',
+      },
+      demo4: {
+        title: 'Chargement asynchrone',
+      },
+      demo5: {
+        title: 'Effaçable',
+      },
+      demo6: {
+        title: 'Lecture seule',
+      },
+      demo7: {
+        title: 'Désactivé',
+      },
+      demo8: {
+        title: 'Options désactivées',
+      },
+      demo9: {
+        title: 'Méthode d\'initialisation des options',
+        description:
+          'Utilisez ```initMethod``` pour initialiser les données en cascade et retourner un objet ```Promise```',
+      },
+      model: {
+        modelValue: 'Valeur liée',
+      },
+      props: {
+        width: 'Largeur',
+        options: 'Options',
+        placeholder: 'Texte d\'espace réservé',
+        disabled: 'Désactivé',
+        clearable: 'Effaçable',
+        showAllLevels: 'Afficher tous les niveaux',
+        multiple: 'Sélection multiple',
+        free: 'Sélection libre',
+        size: 'Taille',
+        trigger: 'Mode de déclenchement',
+        loadMethod: 'Méthode de chargement',
+        readonly: 'Lecture seule',
+        initMethod: 'Méthode d\'initialisation des options',
       },
       options: {
         label: 'Étiquette',
@@ -1274,6 +1369,15 @@ export default {
         description:
           'Utilisez ```initMethod``` pour initialiser les données d\'arbre et retourner un objet ```Promise```',
       },
+      demo12: {
+        title: 'Sélection multiple',
+      },
+      demo13: {
+        title: 'Sélection de niveau arbitraire',
+      },
+      demo14: {
+        title: 'Mode strict',
+      },
       model: {
         modelValue: 'Valeur liée',
       },
@@ -1281,7 +1385,6 @@ export default {
         dataSource: 'Source de données',
         defaultValue: 'Valeur par défaut',
         placeholder: 'Texte d\'espace réservé',
-        width: 'Largeur',
         size: 'Taille du composant',
         disabled: 'Désactivé',
         clearable: 'Effaçable',
@@ -1302,9 +1405,14 @@ export default {
         initMethod: 'Méthode d\'initialisation des nœuds',
         initMethodId: 'ID de la méthode d\'initialisation',
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
+        width: 'Largeur',
       },
       slots: {
         handle: 'Nom du slot',
+      },
+      emits: {
+        change: 'Déclenché lorsque la valeur change',
+        clear: 'Déclenché lors de l\'effacement',
       },
     },
     inputTable: {
@@ -1336,6 +1444,9 @@ export default {
         autoUniqueId: 'Générer un ID unique automatiquement',
         uniqueField: 'Champ unique',
         sortTooltipCustomRender: `Rendu personnalisé de l'info-bulle de tri`,
+      },
+      emits: {
+        change: 'Déclenché lorsque la valeur change',
       },
     },
     switch: {
@@ -1478,6 +1589,9 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
       },
+      emits: {
+        change: 'Déclenché lorsque la valeur change',
+      },
     },
     colorPicker: {
       name: 'Sélecteur de couleur',
@@ -1507,6 +1621,9 @@ export default {
         placeholder: 'Texte d\'espace réservé',
         disabled: 'Désactivé',
         readonly: 'Lecture seule',
+      },
+      emits: {
+        change: 'Déclenché lorsque la valeur change',
       },
     },
     upload: {
@@ -1958,6 +2075,8 @@ export default {
         closeOnClickOverlay: 'Fermer en cliquant sur le masque',
         closeByEsc: 'Fermer avec la touche Echap',
         transformOrigin: 'Origine de la transformation',
+        icon: 'Icône personnalisée',
+        hideIcon: 'Masquer l\'icône',
       },
       emits: {
         ok: 'Déclenché lors du clic sur le bouton OK',
@@ -2067,6 +2186,10 @@ export default {
       slots: {
         'trigger': 'Slot de déclenchement',
         'popover-body': 'Slot du corps du popover',
+      },
+      emits: {
+        show: 'Déclenché lors de l\'affichage',
+        hide: 'Déclenché lors du masquage',
       },
     },
     tooltip: {
