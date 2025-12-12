@@ -32,6 +32,7 @@ export default {
     feedback: 'フィードバック',
     close: '閉じる',
     showCode: 'コードを表示',
+    copySuccess: 'コピー成功！',
   },
   components: {
     image: {
@@ -117,6 +118,7 @@ export default {
         text: 'ボタンテキスト',
         type: 'タイプ',
         size: 'サイズ',
+        width: '幅',
         singleIcon: 'アイコンのみ表示',
         color: 'カラー',
         round: '角丸',
@@ -159,6 +161,10 @@ export default {
         disabled: '無効状態',
         round: '角丸',
         oversize: 'よりゆったりとしたサイズ',
+        close: 'Promise 関数を受け取り、タグを閉じるために使用',
+      },
+      emits: {
+        close: 'タグを閉じるイベントコールバック',
       },
     },
     badge: {
@@ -235,6 +241,9 @@ export default {
         reserveEnd:
           '末尾の保持文字数（テキストが溢れる場合、中央に省略記号を表示し、開始部分と指定数の末尾文字を保持）',
       },
+      emits: {
+        click: 'テキストクリック時にトリガー',
+      },
     },
     flex: {
       name: 'フレックス Flex',
@@ -298,7 +307,7 @@ export default {
         bottom: 'ページ下端からの距離（ピクセル）',
         valveHeight: 'ボタンを表示するスクロール高さのしきい値（ピクセル）',
       },
-      events: {
+      emits: {
         click: 'トップに戻るクリックイベントコールバック',
       },
     },
@@ -322,10 +331,15 @@ export default {
         options: 'ステップ設定項目の配列',
         status: 'ステップの現在のステータス',
         minWidth: '最小ステップ幅',
+        canClickItem: 'ステップ項目をクリックして切り替えることができるか',
+        canCrossSteps: 'ステップ間で切り替えることができるか',
       },
       options: {
         title: 'ステップのタイトル',
         description: 'ステップの説明',
+      },
+      emits: {
+        change: 'ステップ切り替え時にトリガー',
       },
     },
     menu: {
@@ -347,6 +361,9 @@ export default {
         disabled: 'メニュー項目の無効化',
         icon: 'メニュー項目のアイコン',
         tagProps: 'メニュー項目タグ Props',
+      },
+      emits: {
+        change: 'メニュー項目切り替え時にトリガー',
       },
     },
     menuTree: {
@@ -387,6 +404,11 @@ export default {
         disabled: 'メニュー項目の無効化',
         isLeaf: 'リーフノードかどうか',
       },
+      emits: {
+        change: 'メニュー項目切り替え時にトリガー',
+        expand: 'メニュー項目展開時にトリガー',
+        collapse: 'メニュー項目折りたたみ時にトリガー',
+      },
     },
     dropdown: {
       'name': 'ドロップダウン Dropdown',
@@ -409,7 +431,7 @@ export default {
         checkable: '選択可能',
       },
       'options(LewContextMenusOption[])': contextMenu,
-      'events': {
+      'emits': {
         show: 'メニュー表示イベントコールバック',
         hide: 'メニュー非表示イベントコールバック',
         change: 'メニュー項目選択イベントコールバック',
@@ -436,7 +458,7 @@ export default {
         value: 'パンくずリスト項目の値',
         active: '現在選択中の項目かどうか',
       },
-      events: {
+      emits: {
         change: 'パンくずリスト項目が変更された時に発火',
       },
     },
@@ -458,6 +480,7 @@ export default {
       'props': {
         options: '右クリックメニューの設定',
         disabled: '右クリックメニューを無効化するかどうか',
+        trigger: 'トリガー方式',
       },
       'options(LewContextMenusOption[])': contextMenu,
     },
@@ -513,7 +536,7 @@ export default {
         outputFormat: '出力時のフォーマット方法',
         inputFormat: '入力時のフォーマット方法',
       },
-      events: {
+      emits: {
         mounted: 'フォーム項目がマウントされた時に発火',
       },
       methods: {
@@ -585,7 +608,7 @@ export default {
         suffixTooltip: 'サフィックスのツールチップテキスト',
         okByEnter: 'Enterキーで確定を有効にするかどうか',
       },
-      events: {
+      emits: {
         change: '値が変更された時に発火',
         focus: 'フォーカスを得た時に発火',
         blur: 'フォーカスを失った時に発火',
@@ -631,6 +654,10 @@ export default {
       },
       model: {
         modelValue: 'バインド値',
+      },
+      emits: {
+        change: '値が変更された時に発火',
+        input: '入力時に発火',
       },
     },
     textarea: {
@@ -681,7 +708,7 @@ export default {
         selectByFocus: 'フォーカス時に全テキストを選択',
         okByEnter: 'Enterキーで確定を有効化（Shift+Enterで改行）',
       },
-      events: {
+      emits: {
         change: '値が変更された時に発火',
         focus: 'フォーカスを得た時に発火',
         blur: 'フォーカスを失った時に発火',
@@ -730,7 +757,7 @@ export default {
         maxLength: '追加可能なタグの最大数',
         width: '幅',
       },
-      events: {
+      emits: {
         change: '値が変更された時に発火',
         clear: 'クリア時に発火',
         add: 'タグ追加時に発火',
@@ -789,10 +816,13 @@ export default {
         iconable: 'アイコンを使用可能にするかどうか',
         certain: '確定状態',
       },
-      'events(Checkbox)': {
+      'emits(Checkbox)': {
         change: '値が変更された時に発火',
       },
-      'events(CheckboxGroup)': {
+      'emits(CheckboxGroup)': {
+        change: '値が変更された時に発火',
+      },
+      'emits': {
         change: '値が変更された時に発火',
       },
       'options': {
@@ -840,7 +870,7 @@ export default {
         value: '値',
         disabled: '無効化',
       },
-      'events': {
+      'emits': {
         change: '値が変更された時に発火',
       },
     },
@@ -862,6 +892,9 @@ export default {
       demo5: {
         title: '丸形',
       },
+      demo6: {
+        title: '無効化オプション',
+      },
       model: {
         modelValue: 'バインド値',
       },
@@ -878,6 +911,9 @@ export default {
       options: {
         label: 'ラベル',
         value: '値',
+      },
+      emits: {
+        change: 'タブ切り替え時にトリガー',
       },
     },
     select: {
@@ -913,6 +949,20 @@ export default {
       demo10: {
         title: '検索キャッシュを有効化',
       },
+      demo11: {
+        title: '自動幅調整',
+        description:
+          '```autoWidth``` 属性を使用して、ドロップダウンボックスの幅を自動計算し、```popoverWidth``` 属性でポップアップ幅を設定します',
+      },
+      demo12: {
+        title: '複数選択',
+      },
+      demo13: {
+        title: '複数選択検索',
+      },
+      demo14: {
+        title: '複数選択グループ化',
+      },
       model: {
         modelValue: 'バインド値',
       },
@@ -934,13 +984,16 @@ export default {
         disabled: '無効状態',
         showCheckIcon: 'チェックアイコンを表示',
         initMethod: 'オプション初期化メソッド',
+        initMethodId: '初期化メソッドID',
         enableSearchCache: '検索キャッシュを有効化するかどうか',
+        multiple: '複数選択可能かどうか',
       },
-      events: {
+      emits: {
         change: '値が変更された時に発火',
         clear: 'クリア時に発火',
         blur: 'フォーカスを失った時に発火',
         focus: 'フォーカスを得た時に発火',
+        delete: 'オプション削除時に発火',
       },
       options: { label: 'ラベル', value: '値', disabled: '無効化' },
       slots: {
@@ -1005,11 +1058,7 @@ export default {
       model: {
         modelValue: 'バインド値',
       },
-      events: {
-        change: '値の変更',
-        blur: 'フォーカスを失う',
-        focus: 'フォーカスを得る',
-      },
+      emits: { change: '値の変更', blur: 'フォーカスを失う', focus: 'フォーカスを得る' },
       options: { label: 'ラベル', value: '値', disabled: '無効化' },
       slots: {
         item: 'オプション内容のカスタマイズ',
@@ -1050,11 +1099,11 @@ export default {
         disabled: '無効化',
         presets: 'プリセット値',
       },
-      events: {
-        change: '値の変更',
-        focus: 'フォーカスを得る',
-        blur: 'フォーカスを失う',
-        clear: 'クリア',
+      emits: {
+        change: '値が変更された時に発火',
+        focus: 'フォーカスを得た時に発火',
+        blur: 'フォーカスを失った時に発火',
+        clear: 'クリア時に発火',
       },
     },
     dateRangePicker: {
@@ -1084,16 +1133,91 @@ export default {
         readonly: '読み取り専用',
         disabled: '無効化',
       },
-      events: {
-        change: '値の変更',
-        focus: 'フォーカスを得る',
-        blur: 'フォーカスを失う',
-        clear: 'クリア',
+      emits: {
+        change: '値が変更された時に発火',
+        focus: 'フォーカスを得た時に発火',
+        blur: 'フォーカスを失った時に発火',
+        clear: 'クリア時に発火',
       },
     },
     cascader: {
       name: 'カスケード選択 Cascader',
       description: '階層データを扱う選択器、より明確なカテゴリー選択を実現',
+      demo1: {
+        title: '基本的な使い方',
+      },
+      demo2: {
+        title: 'フリーモード',
+      },
+      demo3: {
+        title: '最終レベルのみ表示',
+      },
+      demo4: {
+        title: '非同期読み込み',
+      },
+      demo5: {
+        title: 'クリア可能',
+      },
+      demo6: {
+        title: '読み取り専用',
+      },
+      demo7: {
+        title: '無効化',
+      },
+      demo8: {
+        title: 'オプション無効化',
+      },
+      demo9: {
+        title: '初期化オプション方法',
+        description:
+          '```initMethod``` メソッドを使用して、カスケードデータを初期化し、```Promise``` オブジェクトを返す',
+      },
+      demo10: {
+        title: '複数選択',
+      },
+      demo11: {
+        title: '任意の階層を選択',
+      },
+      demo12: {
+        title: '厳密モード',
+      },
+      model: {
+        modelValue: 'バインド値',
+      },
+      props: {
+        width: '幅',
+        options: 'オプション',
+        placeholder: 'プレースホルダーテキスト',
+        disabled: '無効化',
+        clearable: 'クリア可能にするかどうか',
+        showAllLevels: '全レベルを表示',
+        multiple: '複数選択可能',
+        free: '自由選択',
+        size: 'サイズ',
+        trigger: 'トリガー方式',
+        loadMethod: '読み込みメソッド',
+        readonly: '読み取り専用',
+        initMethod: 'オプション初期化メソッド',
+        initMethodId: '初期化メソッドID',
+        onlyLeafSelectable: 'リーフノードのみ選択可能かどうか',
+      },
+      options: {
+        label: 'ラベル',
+        value: '値',
+        isLeaf: 'リーフノードかどうか',
+        children: '子ノード',
+        disabled: '無効化',
+      },
+      emits: {
+        change: '値が変更された時に発火',
+        clear: 'クリア時に発火',
+        delete: 'オプション削除時に発火',
+      },
+    },
+
+    cascaderMultiple: {
+      name: '複数カスケード選択 CascaderMultiple',
+      description: '複数選択をサポートする多階層データ選択器で、分類選択をより明確に',
       demo1: {
         title: '基本的な使い方',
       },
@@ -1183,9 +1307,18 @@ export default {
         title: '幅の設定',
       },
       demo11: {
-        title: '高度な設定',
+        title: 'データ初期化',
         description:
           '```initMethod``` メソッドを使用して、ツリーデータを初期化し、```Promise``` オブジェクトを返す',
+      },
+      demo12: {
+        title: '複数選択',
+      },
+      demo13: {
+        title: '任意の階層を選択',
+      },
+      demo14: {
+        title: '厳密モード',
       },
       model: {
         modelValue: 'バインド値',
@@ -1194,7 +1327,6 @@ export default {
         dataSource: 'ツリーデータソース',
         defaultValue: 'デフォルト選択値',
         placeholder: 'プレースホルダーテキスト',
-        width: '幅',
         size: 'コンポーネントサイズ',
         disabled: '無効化するかどうか',
         clearable: 'クリア可能にするかどうか',
@@ -1213,10 +1345,16 @@ export default {
         labelField: 'ノードラベルフィールド',
         disabledField: 'ノード無効化フィールド',
         initMethod: 'ツリーノード初期化メソッド',
+        initMethodId: '初期化メソッドID',
         loadMethod: '子ノードデータの非同期読み込みメソッド',
+        width: '幅',
       },
       slots: {
         handle: 'スロット名',
+      },
+      emits: {
+        change: '値が変更された時に発火',
+        clear: 'クリア時に発火',
       },
     },
     inputTable: {
@@ -1248,6 +1386,9 @@ export default {
         uniqueField: 'ユニークフィールド',
         sortTooltipCustomRender: 'ソートツールチップのカスタムレンダリング',
       },
+      emits: {
+        change: '値が変更された時に発火',
+      },
     },
     switch: {
       name: 'スイッチ Switch',
@@ -1278,8 +1419,8 @@ export default {
         request: 'リクエスト',
         loading: '読み込み中',
       },
-      events: {
-        change: 'イベント名',
+      emits: {
+        change: '値が変更された時に発火',
       },
     },
     slider: {
@@ -1308,6 +1449,7 @@ export default {
       },
       props: {
         size: 'サイズ',
+        width: '幅',
         min: '最小値',
         max: '最大値',
         step: 'ステップ',
@@ -1315,6 +1457,9 @@ export default {
         disabled: '無効',
         options: 'オプション',
         formatTooltip: 'ツールチップのフォーマット',
+      },
+      emits: {
+        change: '値が変更された時に発火',
       },
     },
     sliderRange: {
@@ -1343,6 +1488,7 @@ export default {
       },
       props: {
         size: 'サイズ',
+        width: '幅',
         min: '最小値',
         max: '最大値',
         step: 'ステップ',
@@ -1350,6 +1496,9 @@ export default {
         disabled: '無効',
         options: 'オプション',
         formatTooltip: 'ツールチップのフォーマット',
+      },
+      emits: {
+        change: '値が変更された時に発火',
       },
     },
     rate: {
@@ -1376,6 +1525,9 @@ export default {
         tips: 'ヒント',
         readonly: '読み取り専用',
         disabled: '無効',
+      },
+      emits: {
+        change: '値が変更された時に発火',
       },
     },
     colorPicker: {
@@ -1405,6 +1557,9 @@ export default {
         placeholder: 'プレースホルダー',
         disabled: '無効',
         readonly: '読み取り専用',
+      },
+      emits: {
+        change: '値が変更された時に発火',
       },
     },
     upload: {
@@ -1447,6 +1602,11 @@ export default {
         tips: 'ヒント情報',
         uploadHelper: 'アップロードヘルパー',
         viewMode: '表示モード',
+        beforeDelete: '削除前のフック関数',
+      },
+      emits: {
+        change: '値が変更された時に発火',
+        delete: 'ファイル削除時に発火',
       },
     },
     table: {
@@ -1517,6 +1677,11 @@ export default {
         x: 'X軸',
         customRender: 'カスタムレンダリング',
       },
+      emits: {
+        sortChange: 'ソート変更時にトリガー',
+        selectChange: '選択変更時にトリガー',
+        dragSort: 'ドラッグソート時にトリガー',
+      },
     },
     pagination: {
       name: 'ページネーション Pagination',
@@ -1541,8 +1706,8 @@ export default {
         pageSizeOptions: 'ページサイズオプション',
         visiblePagesCount: '表示ページ数',
       },
-      events: {
-        change: 'イベント名',
+      emits: {
+        change: 'ページ変更時にトリガー',
       },
     },
     magicNumber: {
@@ -1598,6 +1763,7 @@ export default {
         initMethod: 'ツリーノード初期化メソッド',
         loadMethod: '子ノードデータ非同期読み込みメソッド',
         isSelect: '選択状態',
+        onlyLeafSelectable: 'リーフノードのみ選択可能かどうか',
       },
       slots: {
         handle: 'スロット名',
@@ -1608,6 +1774,12 @@ export default {
         isLeaf: 'リーフノードか',
         children: '子ノード',
         disabled: '無効',
+      },
+      emits: {
+        change: '値が変更された時に発火',
+        expand: 'ノード展開時に発火',
+        loadStart: '読み込み開始時に発火',
+        loadEnd: '読み込み終了時に発火',
       },
     },
     collapse: {
@@ -1636,6 +1808,12 @@ export default {
         collapseKey: '折りたたみキー',
         title: 'タイトル',
         radius: '角丸の半径',
+      },
+      'emits': {
+        change: '折りたたみパネル展開/折りたたみ時にトリガー',
+      },
+      'emits(CollapseItem)': {
+        change: '折りたたみ項目展開/折りたたみ時にトリガー',
       },
     },
     desc: {
@@ -1715,7 +1893,7 @@ export default {
       demo3: {
         title: 'リクエストのシミュレーション',
       },
-      events: {
+      emits: {
         close: '閉じられたときに発火',
       },
       props: {
@@ -1784,9 +1962,14 @@ export default {
         closeOnClickOverlay: 'オーバーレイクリックで閉じるかどうか',
         closeByEsc: 'ESCキーで閉じるかどうか',
         hideFooter: 'フッターを非表示にするかどうか',
+        hideOkButton: '確認ボタンを非表示にするかどうか',
+        hideCloseButton: '閉じるボタンを非表示にするかどうか',
         okButtonProps: '確認ボタンのプロパティ',
         closeButtonProps: '閉じるボタンのプロパティ',
         zIndex: '重なり順序',
+      },
+      emits: {
+        close: '閉じられたときに発火',
       },
     },
     dialog: {
@@ -1805,11 +1988,18 @@ export default {
       demo4: {
         title: 'ESCキーで閉じる',
       },
+      demo5: {
+        title: 'アイコンを非表示',
+      },
+      demo6: {
+        title: 'カスタムアイコン',
+      },
       props: {
         type: 'タイプ',
         width: '幅',
         trigger: 'トリガー方式',
         title: 'タイトル',
+        content: '内容',
         okText: '確認ボタンのテキスト',
         cancelText: 'キャンセルボタンのテキスト',
         ok: '確認時のコールバック',
@@ -1817,10 +2007,12 @@ export default {
         closeOnClickOverlay: 'オーバーレイクリックによる閉じる',
         closeByEsc: 'ESCキーによる閉じる',
         transformOrigin: 'アニメーション原点',
+        icon: 'カスタムアイコン',
+        hideIcon: 'アイコンを非表示にするかどうか',
       },
-      events: {
-        ok: '確認ボタンクリック時のイベント',
-        cancel: 'キャンセルボタンクリック時のイベント',
+      emits: {
+        ok: '確認ボタンクリック時にトリガー',
+        cancel: 'キャンセルボタンクリック時にトリガー',
       },
     },
     modal: {
@@ -1847,6 +2039,8 @@ export default {
         width: '幅',
         top: '上端からの距離',
         hideFooter: 'フッターを非表示にするかどうか',
+        hideOkButton: '確認ボタンを非表示にするかどうか',
+        hideCloseButton: '閉じるボタンを非表示にするかどうか',
         closeByEsc: 'ESCキーでの閉じる可否',
         okButtonProps: '確認ボタンのプロパティ',
         closeButtonProps: '閉じるボタンのプロパティ',
@@ -1864,6 +2058,15 @@ export default {
       demo2: {
         title: 'トリガー方式',
       },
+      demo3: {
+        title: 'アイコンを非表示',
+      },
+      demo4: {
+        title: 'カスタムアイコン',
+      },
+      demo5: {
+        title: 'カスタム内容',
+      },
       props: {
         type: 'タイプ',
         width: '幅',
@@ -1871,10 +2074,12 @@ export default {
         title: 'タイトル',
         content: '内容',
         placement: '表示位置',
-        ok: '確認時のコールバック',
-        cancel: 'キャンセル時のコールバック',
         okText: '確認ボタンのテキスト',
         cancelText: 'キャンセルボタンのテキスト',
+        ok: '確認時のコールバック',
+        cancel: 'キャンセル時のコールバック',
+        icon: 'カスタムアイコン',
+        hideIcon: 'アイコンを非表示にするかどうか',
       },
     },
     popover: {
@@ -1898,16 +2103,23 @@ export default {
       props: {
         trigger: 'トリガー方式',
         placement: '表示位置',
+        delay: '遅延時間',
         disabled: '無効状態',
         loading: '読み込み中',
+        clickOutsideToHide: 'ポップオーバー領域外をクリックしたときに閉じるかどうか',
         hideOnClick: 'クリック時に非表示',
         offset: 'オフセット',
+        triggerWidth: 'ポップアップ幅',
         popoverBodyClassName: 'ポップオーバー本体のクラス名',
         triggerTarget: 'トリガー対象',
       },
       slots: {
         'trigger': 'トリガースロット',
         'popover-body': 'ポップオーバー本体スロット',
+      },
+      emits: {
+        show: '表示時にトリガー',
+        hide: '非表示時にトリガー',
       },
     },
     tooltip: {
@@ -1926,7 +2138,7 @@ export default {
         title: 'HTMLサポート',
       },
       props: {
-        tips: 'ヒント内容',
+        content: 'ヒント内容',
         placement: '表示位置',
         trigger: 'トリガー方式',
         allowHTML: 'HTMLの許可',
@@ -2010,6 +2222,9 @@ export default {
         icon: 'アクションボタンのアイコン',
         onClick: 'アクションボタンのクリックイベント',
         customRender: 'カスタムレンダリング内容',
+      },
+      emits: {
+        click: '操作ボタンクリック時にトリガー',
       },
     },
   },
