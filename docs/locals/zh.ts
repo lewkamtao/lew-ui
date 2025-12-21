@@ -33,6 +33,9 @@ export default {
     close: '关闭',
     showCode: '显示源码',
     copySuccess: '复制成功！',
+    back: '返回',
+    backToHome: '返回首页',
+    loading: '加载中...',
   },
   components: {
     image: {
@@ -92,7 +95,7 @@ export default {
     },
     button: {
       name: '按钮 Button',
-      description: '点击它，让交互更加丝滑流畅',
+      description: '点击它,让交互更加丝滑流畅',
       demo1: {
         title: '基础用法',
       },
@@ -123,6 +126,9 @@ export default {
         loading: '是否显示加载中状态',
         disabled: '是否禁用状态',
         request: '是否请求',
+      },
+      emits: {
+        click: '点击按钮时触发（禁用或加载状态下不触发）',
       },
     },
     tag: {

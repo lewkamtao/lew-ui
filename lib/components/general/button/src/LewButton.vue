@@ -1,39 +1,21 @@
 <script setup lang="ts">
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
-import { computed, getCurrentInstance, ref } from 'vue'
+import { computed, ref, useSlots } from 'vue'
+import { buttonEmits } from './emits'
 import { buttonProps } from './props'
 
+// Props & Emits
 const props = defineProps(buttonProps)
+const emit = defineEmits(buttonEmits)
+const slots = useSlots()
 
-const buttonRef = ref<HTMLButtonElement>()
+// 响应式状态
 const _loading = ref(false)
 
-async function handleClick() {
-  if (props.disabled || _loading.value || props.loading) {
-    return
-  }
-
-  if (typeof props.request === 'function') {
-    if (_loading.value) {
-      return
-    }
-    _loading.value = true
-    await props.request()
-    _loading.value = false
-  }
-}
-// Slot detection
-const instance = getCurrentInstance()
-const hasDefaultSlot = ref(false)
-
-if (instance?.slots.default) {
-  hasDefaultSlot.value = true
-}
-
-// Computed
-const getButtonClass = computed(() => {
-  const { size, type, color, singleIcon, round } = props
+// 计算属性
+const buttonClass = computed(() => {
+  const { size, type, color, singleIcon, round, dashed } = props
   const loading = _loading.value || props.loading
   return object2class('lew-button', {
     size,
@@ -42,50 +24,62 @@ const getButtonClass = computed(() => {
     singleIcon,
     color,
     round,
+    dashed,
   })
 })
 
-const getIconSize = computed(() => {
-  const { size } = props
-  switch (size) {
-    case 'mini':
-      return 12
-    case 'small':
-      return 14
-    case 'medium':
-      return 16
-    case 'large':
-      return 18
-    default:
-      return 16
+const iconSize = computed(() => {
+  const sizeMap = {
+    mini: 12,
+    small: 14,
+    medium: 16,
+    large: 18,
   }
+  return sizeMap[props.size] || 16
 })
+
+const isLoading = computed(() => _loading.value || props.loading)
+const hasContent = computed(() => !!slots.default || !!props.text)
+
+// 方法
+async function handleClick(e: MouseEvent) {
+  // 禁用或加载状态下不触发
+  if (props.disabled || isLoading.value) {
+    return
+  }
+
+  // 触发 click 事件
+  emit('click', e)
+
+  // 处理异步请求
+  if (typeof props.request === 'function') {
+    try {
+      _loading.value = true
+      await props.request()
+    }
+    finally {
+      _loading.value = false
+    }
+  }
+}
 </script>
 
 <template>
   <button
-    ref="buttonRef"
     class="lew-button"
-    :class="getButtonClass"
+    :class="buttonClass"
     :disabled="disabled"
     @click="handleClick"
   >
     <div
-      class="lew-button-loading-icon"
-      :class="{
-        'lew-button-loading-isShow': (_loading || loading) && !disabled,
-      }"
+      v-if="isLoading && !disabled"
+      class="lew-button-loading-icon lew-button-loading-isShow"
     >
-      <CommonIcon :size="getIconSize" loading type="loader" />
+      <CommonIcon :size="iconSize" loading type="loader" />
     </div>
-    <div v-if="$slots.default || text" class="lew-button-content">
+    <div v-if="hasContent" class="lew-button-content">
       <span class="lew-button-text">
-        <template v-if="$slots.default">
-          <slot />
-        </template>
-        <template v-else>
-          {{ text }}
-        </template>
+        <slot>{{ text }}</slot>
       </span>
     </div>
   </button>
@@ -93,42 +87,50 @@ const getIconSize = computed(() => {
 
 <style lang="scss" scoped>
 .lew-button {
+  // CSS 变量定义
   --lew-button-bg: transparent;
   --lew-button-color: var(--lew-color-primary-dark);
   --lew-button-border: none;
   --lew-button-hover-bg: var(--lew-color-primary-light);
   --lew-button-active-bg: var(--lew-color-primary-dark);
 
+  // 定位
   position: relative;
+
+  // 盒模型
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  flex-shrink: 0;
-  user-select: none;
   width: auto;
-  white-space: nowrap;
-  box-sizing: border-box;
-  transition: all var(--lew-form-transition-ease);
-  border: none;
-  cursor: pointer;
-  border-radius: var(--lew-border-radius-small);
   box-sizing: border-box;
   overflow: hidden;
-  box-shadow: var(--lew-form-box-shadow);
-  outline: none;
 
+  // 排版
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+
+  // 视觉
   background: var(--lew-button-bg);
   color: var(--lew-button-color);
   border: var(--lew-button-border);
+  border-radius: var(--lew-border-radius-small);
+  box-shadow: var(--lew-form-box-shadow);
+  outline: none;
+
+  // 其他
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--lew-form-transition-ease);
 
   &:hover {
     background: var(--lew-button-hover-bg);
   }
+
   &:active {
     background: var(--lew-button-active-bg);
   }
+
   &[disabled] {
     pointer-events: none;
     opacity: var(--lew-disabled-opacity);
@@ -138,49 +140,51 @@ const getIconSize = computed(() => {
     border-radius: 20px;
   }
 
-  .lew-button-loading-icon {
-    position: absolute;
-    opacity: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: opacity 0.3s ease-in-out;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  &.lew-button-dashed {
+    border-style: dashed;
   }
+}
 
-  .lew-button-loading-isShow {
-    opacity: 1;
-  }
+// 子元素
+.lew-button-loading-icon {
+  position: absolute;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  transform: translateY(-50%);
+}
 
-  .lew-button-content {
-    position: relative;
-    font-size: 0px;
-  }
+.lew-button-loading-isShow {
+  opacity: 1;
+}
 
-  .lew-button-loading-isShow {
-    opacity: 1;
-  }
+.lew-button-content {
+  position: relative;
+  font-size: 0;
 }
 
 .lew-button-text {
   display: flex;
+  gap: 5px;
   align-items: center;
   justify-content: center;
-  gap: 5px;
 }
 
+// 尺寸修饰符
 .lew-button-size-mini {
   min-width: 30px;
   height: calc(var(--lew-form-item-height-mini));
+  padding: 0 14px;
+  gap: 2px;
   line-height: calc(var(--lew-form-item-height-mini));
   font-size: var(--lew-form-font-size-mini);
-  gap: 2px;
-  padding: 0px 14px;
 
   .lew-button-text {
-    font-size: var(--lew-form-font-size-mini);
     gap: 2px;
+    font-size: var(--lew-form-font-size-mini);
   }
 
   .lew-button-loading-icon {
@@ -191,13 +195,13 @@ const getIconSize = computed(() => {
 .lew-button-size-small {
   min-width: 40px;
   height: calc(var(--lew-form-item-height-small));
-  line-height: calc(var(--lew-form-item-height-small));
+  padding: 0 16px;
   gap: 3px;
-  padding: 0px 16px;
+  line-height: calc(var(--lew-form-item-height-small));
 
   .lew-button-text {
-    font-size: var(--lew-form-font-size-small);
     gap: 3px;
+    font-size: var(--lew-form-font-size-small);
   }
 
   .lew-button-loading-icon {
@@ -208,13 +212,13 @@ const getIconSize = computed(() => {
 .lew-button-size-medium {
   min-width: 50px;
   height: calc(var(--lew-form-item-height-medium));
-  line-height: calc(var(--lew-form-item-height-medium));
+  padding: 0 18px;
   gap: 4px;
-  padding: 0px 18px;
+  line-height: calc(var(--lew-form-item-height-medium));
 
   .lew-button-text {
-    font-size: var(--lew-form-font-size-medium);
     gap: 4px;
+    font-size: var(--lew-form-font-size-medium);
   }
 
   .lew-button-loading-icon {
@@ -225,13 +229,13 @@ const getIconSize = computed(() => {
 .lew-button-size-large {
   min-width: 60px;
   height: calc(var(--lew-form-item-height-large));
-  line-height: calc(var(--lew-form-item-height-large));
+  padding: 0 20px;
   gap: 5px;
-  padding: 0px 20px;
+  line-height: calc(var(--lew-form-item-height-large));
 
   .lew-button-text {
-    font-size: var(--lew-form-font-size-large);
     gap: 5px;
+    font-size: var(--lew-form-font-size-large);
   }
 
   .lew-button-loading-icon {
@@ -239,57 +243,47 @@ const getIconSize = computed(() => {
   }
 }
 
+// 单图标按钮
 .lew-button-singleIcon {
   .lew-button-loading-icon {
-    left: 50%;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
   }
 }
 
 .lew-button-size-mini.lew-button-singleIcon {
   min-width: auto;
-  padding: 0px;
   width: calc(var(--lew-form-item-height-mini));
   height: calc(var(--lew-form-item-height-mini));
+  padding: 0;
 }
 
 .lew-button-size-small.lew-button-singleIcon {
   min-width: auto;
-  padding: 0px;
   width: calc(var(--lew-form-item-height-small));
   height: calc(var(--lew-form-item-height-small));
+  padding: 0;
 }
 
 .lew-button-size-medium.lew-button-singleIcon {
   min-width: auto;
-  padding: 0px;
   width: calc(var(--lew-form-item-height-medium));
   height: calc(var(--lew-form-item-height-medium));
+  padding: 0;
 }
 
 .lew-button-size-large.lew-button-singleIcon {
   min-width: auto;
-  padding: 0px;
   width: calc(var(--lew-form-item-height-large));
   height: calc(var(--lew-form-item-height-large));
+  padding: 0;
 }
 
-.lew-button.lew-button-loading.lew-button-singleIcon {
-  padding: 0px;
-
-  .lew-button-text {
-    display: none;
-  }
-
-  .lew-button-icon {
-    display: none;
-  }
-}
-
+// 加载状态
 .lew-button-loading {
   cursor: progress;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 .lew-button-size-mini.lew-button-loading {
@@ -308,8 +302,19 @@ const getIconSize = computed(() => {
   padding-left: 34px;
 }
 
-/* ================== 类型 & 颜色展开 ================== */
-/* Mixin 用来减少重复 */
+.lew-button.lew-button-loading.lew-button-singleIcon {
+  padding: 0;
+
+  .lew-button-text {
+    display: none;
+  }
+
+  .lew-button-icon {
+    display: none;
+  }
+}
+
+// 类型 & 颜色变体（使用 Mixin 减少重复）
 @mixin button-variant($name) {
   .lew-button-type-fill.lew-button-color-#{$name} {
     --lew-button-bg: var(--lew-color-#{$name});
@@ -317,31 +322,36 @@ const getIconSize = computed(() => {
     --lew-button-hover-bg: var(--lew-color-#{$name}-hover);
     --lew-button-active-bg: var(--lew-color-#{$name}-active);
   }
+
   .lew-button-type-light.lew-button-color-#{$name} {
     --lew-button-bg: var(--lew-color-#{$name}-light);
     --lew-button-color: var(--lew-color-#{$name}-dark);
     --lew-button-hover-bg: var(--lew-color-#{$name}-light-hover);
     --lew-button-active-bg: var(--lew-color-#{$name}-light-active);
   }
+
   .lew-button-type-ghost.lew-button-color-#{$name} {
     --lew-button-bg: transparent;
     --lew-button-border: var(--lew-form-border-width) solid var(--lew-color-#{$name}-dark);
     --lew-button-color: var(--lew-color-#{$name}-dark);
     --lew-button-hover-bg: var(--lew-bgcolor-2);
     --lew-button-active-bg: var(--lew-bgcolor-4);
+
     box-shadow: none;
   }
+
   .lew-button-type-text.lew-button-color-#{$name} {
     --lew-button-bg: transparent;
     --lew-button-color: var(--lew-color-#{$name}-dark);
     --lew-button-hover-bg: var(--lew-form-bgcolor-hover);
     --lew-button-active-bg: var(--lew-form-bgcolor-active);
-    box-shadow: none;
+
     border: none;
+    box-shadow: none;
   }
 }
 
-/* 生成主题色 */
+// 生成所有主题色变体
 @include button-variant('blue');
 @include button-variant('gray');
 @include button-variant('red');

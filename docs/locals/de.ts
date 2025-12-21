@@ -2275,6 +2275,6 @@ export default {
         height: 'Höhe',
       },
     },
-    
+
   },
 }

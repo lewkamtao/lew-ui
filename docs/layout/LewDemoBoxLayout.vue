@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import docsLocale from 'docs/locals'
-import { any2px, object2class } from 'lew-ui/utils'
-import { throttle } from 'lodash-es'
-import LewDemoBox from './LewDemoBox.vue'
+import docsLocale from "docs/locals";
+import { any2px, object2class } from "lew-ui/utils";
+import { throttle } from "lodash-es";
+import LewDemoBox from "./LewDemoBox.vue";
 
 const props = defineProps({
   demoGroup: {
@@ -19,96 +19,98 @@ const props = defineProps({
   },
   gap: {
     type: String,
-    default: '30px',
+    default: "30px",
   },
   width: {
     type: String,
-    default: '100%',
+    default: "100%",
   },
   componentName: {
     type: String,
-    default: '',
+    default: "",
   },
-})
+});
 
 // 响应式窗口宽度
-const windowWidth = ref(window.innerWidth)
+const windowWidth = ref(window.innerWidth);
 
 // 监听窗口大小变化
 onMounted(() => {
   const handleResize = throttle(() => {
-    windowWidth.value = window.innerWidth
-  }, 200) // 200ms 节流延迟
+    windowWidth.value = window.innerWidth;
+  }, 200); // 200ms 节流延迟
 
-  window.addEventListener('resize', handleResize)
+  window.addEventListener("resize", handleResize);
 
   // 清理事件监听器
   onUnmounted(() => {
-    window.removeEventListener('resize', handleResize)
-  })
-})
+    window.removeEventListener("resize", handleResize);
+  });
+});
 
 // 根据窗口宽度动态计算列数
 const dynamicColumns = computed(() => {
-  return windowWidth.value < 1600 ? 1 : props.columns
-})
+  return windowWidth.value < 1600 ? 1 : props.columns;
+});
 
 // 计算属性
 const getLayoutStyle = computed(() => {
-  const { width, gap } = props
-  const columns = dynamicColumns.value
+  const { width, gap } = props;
+  const columns = dynamicColumns.value;
   const columnWidth = `calc((100% - ${any2px(gap)} * ${
     columns - 1
-  }) / ${columns})`
+  }) / ${columns})`;
   return {
-    'width': any2px(width),
-    'gap': any2px(gap),
-    '--column-width': columnWidth,
-  }
-})
+    width: any2px(width),
+    gap: any2px(gap),
+    "--column-width": columnWidth,
+  };
+});
 
 const getLayoutClassNames = computed(() => {
-  return object2class('lew-demo-box-layout', {})
-})
+  return object2class("lew-demo-box-layout", {});
+});
 
 // 将demoGroup和codeGroup按列数分组
 const groupedData = computed(() => {
-  const { demoGroup, codeGroup } = props
-  const columns = dynamicColumns.value
-  const result = []
+  const { demoGroup, codeGroup } = props;
+  const columns = dynamicColumns.value;
+  const result = [];
 
   for (let i = 0; i < columns; i++) {
     const columnData = {
       demos: [] as any[],
       codes: [] as string[],
       indices: [] as number[],
-    }
+    };
 
     for (let j = i; j < demoGroup.length; j += columns) {
-      columnData.demos.push(demoGroup[j])
-      columnData.codes.push(codeGroup[j] || '')
-      columnData.indices.push(j)
+      columnData.demos.push(demoGroup[j]);
+      columnData.codes.push(codeGroup[j] || "");
+      columnData.indices.push(j);
     }
 
-    result.push(columnData)
+    result.push(columnData);
   }
 
-  return result
-})
+  return result;
+});
 
 // 获取demo项配置
 function getDemoItemConfig(index: number) {
   return {
     title: props.componentName
       ? docsLocale.t(`components.${props.componentName}.demo${index + 1}.title`)
-      : '',
+      : "",
     description: props.componentName
       ? docsLocale.t(
-          `components.${props.componentName}.demo${index + 1}.description`,
+          `components.${props.componentName}.demo${index + 1}.description`
         )
-      : '',
-    code: props.codeGroup[index] || '',
-  }
+      : "",
+    code: props.codeGroup[index] || "",
+    demoIndex: index,
+    componentName: props.componentName,
+  };
 }
 </script>
 
@@ -129,6 +131,10 @@ function getDemoItemConfig(index: number) {
         :title="getDemoItemConfig(column.indices[itemIndex]).title"
         :description="getDemoItemConfig(column.indices[itemIndex]).description"
         :code="getDemoItemConfig(column.indices[itemIndex]).code"
+        :demo-index="getDemoItemConfig(column.indices[itemIndex]).demoIndex"
+        :component-name="
+          getDemoItemConfig(column.indices[itemIndex]).componentName
+        "
       >
         <component :is="item" />
       </LewDemoBox>

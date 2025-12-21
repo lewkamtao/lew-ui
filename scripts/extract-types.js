@@ -6,9 +6,10 @@ import { Project } from 'ts-morph'
 // 维护性常量定义
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const TS_CONFIG_PATH = path.resolve(__dirname, './tsconfig.json')
-const TYPES_DIR_PATH = path.resolve(__dirname, './lib/types')
-const OUTPUT_PATH = path.resolve(__dirname, './docs/assets/all-types.ts')
+const PROJECT_ROOT = path.resolve(__dirname, '..')
+const TS_CONFIG_PATH = path.resolve(PROJECT_ROOT, './tsconfig.json')
+const TYPES_DIR_PATH = path.resolve(PROJECT_ROOT, './lib/types')
+const OUTPUT_PATH = path.resolve(PROJECT_ROOT, './docs/assets/all-types.ts')
 
 // 获取 types 目录下所有 .ts 文件（不包括 .d.ts）
 function getAllTypeFiles(dir) {

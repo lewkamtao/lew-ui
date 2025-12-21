@@ -1,138 +1,69 @@
 <script lang="ts" setup>
-import type { LewSize } from 'lew-ui'
-import type { LewTagType } from 'lew-ui/types'
-import type { CSSProperties } from 'vue'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { getColorType } from 'lew-ui/utils'
-import { isFunction } from 'lodash-es'
-import { computed, ref } from 'vue'
-import { tagEmits } from './emits'
-import { tagProps } from './props'
+import type { LewSize } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { getColorType } from "lew-ui/utils";
+import { isFunction } from "lodash-es";
+import { tagEmits } from "./emits";
+import { tagProps } from "./props";
 
-interface SizeConfig {
-  minHeight: string
-  minWidth: string
-  lineHeight: string
-  fontSize: string
-  borderRadius: string
-  padding: string
-  oversizePadding: string
-  gap: string
-  closeIconSize: number
-}
+const props = defineProps(tagProps);
+const emit = defineEmits(tagEmits);
+const isClosing = ref(false);
 
-interface TagStyle extends CSSProperties {
-  closeIconSize?: number
-}
+// 关闭图标尺寸配置（仅用于图标大小，其他尺寸配置已移至 CSS class）
+const CLOSE_ICON_SIZE: Record<LewSize, number> = {
+  small: 12,
+  medium: 14,
+  large: 16,
+} as const;
 
-interface TagStyleFunction {
-  (color: string): CSSProperties
-}
+// 计算标签类名（所有配置都用 class，包括 type 和 color）
+const tagClass = computed(() => {
+  const resolvedColor = getColorType(props.color) || "primary";
+  return [
+    "lew-tag",
+    `lew-tag--${props.size || "medium"}`,
+    `lew-tag--${props.type || "light"}`,
+    `lew-tag--${resolvedColor}`,
+    props.round && "lew-tag--round",
+    props.oversize && "lew-tag--oversize",
+    props.disabled && "lew-tag--disabled",
+  ]
+    .filter(Boolean)
+    .join(" ");
+});
 
-const props = defineProps(tagProps)
-const emit = defineEmits(tagEmits)
-const isClosing = ref(false)
-
-const SIZE_CONFIG: Record<LewSize, SizeConfig> = {
-  small: {
-    minHeight: '20px',
-    minWidth: '20px',
-    lineHeight: '16px',
-    fontSize: '13px',
-    borderRadius: '5px',
-    padding: '0px 4px',
-    oversizePadding: '4px 10px',
-    gap: '2px',
-    closeIconSize: 12,
-  },
-  medium: {
-    minHeight: '24px',
-    minWidth: '24px',
-    lineHeight: '18px',
-    fontSize: '14px',
-    borderRadius: '6px',
-    padding: '0px 6px',
-    oversizePadding: '5px 12px',
-    closeIconSize: 14,
-    gap: '3px',
-  },
-  large: {
-    minHeight: '28px',
-    minWidth: '28px',
-    lineHeight: '20px',
-    fontSize: '15px',
-    borderRadius: '7px',
-    padding: '0px 8px',
-    oversizePadding: '6px 14px',
-    closeIconSize: 16,
-    gap: '4px',
-  },
-} as const
-
-const TYPE_STYLES: Record<LewTagType, TagStyleFunction> = {
-  fill: (color: string): CSSProperties => ({
-    backgroundColor: `var(--lew-color-${color})`,
-    color: 'var(--lew-color-white)',
-  }),
-  light: (color: string): CSSProperties => ({
-    backgroundColor: `var(--lew-color-${color}-light)`,
-    color: `var(--lew-color-${color}-dark)`,
-  }),
-  ghost: (color: string): CSSProperties => ({
-    backgroundColor: 'transparent',
-    border: `var(--lew-form-border-width) solid var(--lew-color-${color}-dark)`,
-    color: `var(--lew-color-${color}-dark)`,
-    boxShadow: 'none',
-  }),
-} as const
-
-const tagStyle = computed(
-  (): TagStyle => {
-    const { round, type, color, size, disabled, oversize } = props
-    const resolvedColor = getColorType(color) || 'primary'
-    const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium
-    const styleFunction = TYPE_STYLES[type] || TYPE_STYLES.fill
-
-    return {
-      ...styleFunction(resolvedColor),
-      ...sizeConfig,
-      padding: oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
-      borderRadius: round ? '20px' : sizeConfig.borderRadius,
-      opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
-      pointerEvents: disabled ? 'none' : undefined,
-    }
-  },
-)
+// 关闭图标尺寸（基于 size prop）
+const closeIconSize = computed(() => {
+  return CLOSE_ICON_SIZE[props.size] || CLOSE_ICON_SIZE.medium;
+});
 
 // 修改 handleClose 逻辑：只有 Promise 返回 true 才关闭，否则不处理
 async function handleClose(): Promise<void> {
-  if (props.disabled || isClosing.value)
-    return
+  if (props.disabled || isClosing.value) return;
 
   if (props.close) {
-    isClosing.value = true
-    let result = false
+    isClosing.value = true;
+    let result = false;
     try {
-      result = await props.close()
-    }
-    catch {
+      result = await props.close();
+    } catch {
       // 忽略异常，不关闭
-      isClosing.value = false
-      return
+      isClosing.value = false;
+      return;
     }
     if (result === true) {
-      emit('close')
+      emit("close");
     }
-    isClosing.value = false
-  }
-  else {
-    emit('close')
+    isClosing.value = false;
+  } else {
+    emit("close");
   }
 }
 </script>
 
 <template>
-  <div class="lew-tag" :style="tagStyle">
+  <div :class="tagClass">
     <div v-if="$slots.left" class="lew-tag-left">
       <slot name="left" />
     </div>
@@ -155,11 +86,11 @@ async function handleClose(): Promise<void> {
     >
       <CommonIcon
         v-if="isClosing"
-        :size="tagStyle.closeIconSize"
+        :size="closeIconSize"
         type="loading"
         class="lew-tag-loading"
       />
-      <CommonIcon v-else :size="tagStyle.closeIconSize" type="close" />
+      <CommonIcon v-else :size="closeIconSize" type="close" />
     </div>
   </div>
 </template>
@@ -175,6 +106,112 @@ async function handleClose(): Promise<void> {
   align-items: center;
   justify-content: center;
   transition: all var(--lew-form-transition-ease);
+
+  // Size 配置（静态）
+  &--small {
+    min-height: 20px;
+    min-width: 20px;
+    line-height: 16px;
+    font-size: 13px;
+    border-radius: 5px;
+    padding: 0px 4px;
+    gap: 2px;
+
+    &.lew-tag--oversize {
+      padding: 4px 10px;
+    }
+  }
+
+  &--medium {
+    min-height: 24px;
+    min-width: 24px;
+    line-height: 18px;
+    font-size: 14px;
+    border-radius: 6px;
+    padding: 0px 6px;
+    gap: 3px;
+
+    &.lew-tag--oversize {
+      padding: 5px 12px;
+    }
+  }
+
+  &--large {
+    min-height: 28px;
+    min-width: 28px;
+    line-height: 20px;
+    font-size: 15px;
+    border-radius: 7px;
+    padding: 0px 8px;
+    gap: 4px;
+
+    &.lew-tag--oversize {
+      padding: 6px 14px;
+    }
+  }
+
+  // Round 配置（静态）
+  &--round {
+    border-radius: 20px !important;
+  }
+
+  // Disabled 配置（静态）
+  &--disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none;
+  }
+
+  // Type 配置（fill/light/ghost）
+  &--ghost {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  // Color 配置（与 type 组合使用，使用 SCSS 循环生成所有颜色）
+  $colors: (
+    primary,
+    success,
+    error,
+    warning,
+    info,
+    normal,
+    danger,
+    blue,
+    gray,
+    red,
+    green,
+    yellow,
+    indigo,
+    purple,
+    pink,
+    orange,
+    cyan,
+    teal,
+    mint,
+    brown,
+    black
+  );
+
+  @each $color in $colors {
+    &--#{$color} {
+      &.lew-tag--fill {
+        background-color: var(--lew-color-#{$color});
+        color: var(--lew-color-white);
+      }
+
+      &.lew-tag--light {
+        background-color: var(--lew-color-#{$color}-light);
+        color: var(--lew-color-#{$color}-dark);
+      }
+
+      &.lew-tag--ghost {
+        border: var(--lew-form-border-width)
+          solid
+          var(--lew-color-#{$color}-dark);
+        color: var(--lew-color-#{$color}-dark);
+      }
+    }
+  }
 
   .lew-tag-value {
     box-sizing: border-box;

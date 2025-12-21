@@ -1,0 +1,626 @@
+# 样式 / 主题 / CSS 变量规范
+
+> **重要性**：⭐⭐⭐⭐  
+> 统一的样式系统是组件库视觉一致性和可定制性的基础。
+
+## CSS 变量命名规范
+
+### 变量命名模式
+
+```
+--lew-{component}-{property}-{modifier}
+```
+
+### 命名规则
+
+```scss
+// ✅ 正确示例
+--lew-button-bg              // 组件基础属性
+--lew-button-hover-bg        // 状态修饰
+--lew-button-primary-bg      // 类型修饰
+--lew-button-border-radius   // 复合属性名
+
+// ❌ 错误示例
+--btn-bg                     // ❌ 缺少 lew 前缀
+--lew-bg                     // ❌ 缺少组件名
+--lew-button-backgroundColor // ❌ 使用驼峰而非 kebab-case
+--lew-button_bg              // ❌ 使用下划线
+```
+
+## 全局 CSS 变量
+
+### 色彩系统
+
+```scss
+// 主题色（定义在全局主题文件）
+:root {
+  // 主色调
+  --lew-color-primary: #5b7eff;
+  --lew-color-primary-light: #e8ecff;
+  --lew-color-primary-dark: #4563d8;
+
+  // 语义色
+  --lew-color-success: #27c346;
+  --lew-color-success-light: #e5f8e8;
+  --lew-color-success-dark: #1fa735;
+
+  --lew-color-warning: #ff9800;
+  --lew-color-warning-light: #fff3e0;
+  --lew-color-warning-dark: #f57c00;
+
+  --lew-color-error: #f5222d;
+  --lew-color-error-light: #ffebee;
+  --lew-color-error-dark: #d9181f;
+
+  --lew-color-info: #1890ff;
+  --lew-color-info-light: #e6f7ff;
+  --lew-color-info-dark: #0050b3;
+
+  // 中性色
+  --lew-color-gray-1: #ffffff;
+  --lew-color-gray-2: #fafafa;
+  --lew-color-gray-3: #f5f5f5;
+  --lew-color-gray-4: #e8e8e8;
+  --lew-color-gray-5: #d9d9d9;
+  --lew-color-gray-6: #bfbfbf;
+  --lew-color-gray-7: #8c8c8c;
+  --lew-color-gray-8: #595959;
+  --lew-color-gray-9: #262626;
+  --lew-color-gray-10: #000000;
+
+  // 文字色
+  --lew-text-color-primary: rgba(0, 0, 0, 0.88);
+  --lew-text-color-secondary: rgba(0, 0, 0, 0.65);
+  --lew-text-color-tertiary: rgba(0, 0, 0, 0.45);
+  --lew-text-color-disabled: rgba(0, 0, 0, 0.25);
+
+  // 背景色
+  --lew-bg-color-base: #ffffff;
+  --lew-bg-color-container: #f5f5f5;
+  --lew-bg-color-elevated: #ffffff;
+  --lew-bg-color-overlay: rgba(0, 0, 0, 0.45);
+
+  // 边框色
+  --lew-border-color-base: #d9d9d9;
+  --lew-border-color-light: #e8e8e8;
+  --lew-border-color-dark: #bfbfbf;
+
+  // 阴影
+  --lew-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --lew-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --lew-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  --lew-shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.16);
+}
+```
+
+### 尺寸系统
+
+```scss
+:root {
+  // 间距
+  --lew-spacing-xs: 4px;
+  --lew-spacing-sm: 8px;
+  --lew-spacing-md: 12px;
+  --lew-spacing-lg: 16px;
+  --lew-spacing-xl: 24px;
+  --lew-spacing-2xl: 32px;
+
+  // 圆角
+  --lew-border-radius-xs: 2px;
+  --lew-border-radius-sm: 4px;
+  --lew-border-radius-md: 6px;
+  --lew-border-radius-lg: 8px;
+  --lew-border-radius-xl: 12px;
+  --lew-border-radius-circle: 50%;
+
+  // 字体大小
+  --lew-font-size-xs: 12px;
+  --lew-font-size-sm: 13px;
+  --lew-font-size-md: 14px;
+  --lew-font-size-lg: 16px;
+  --lew-font-size-xl: 18px;
+  --lew-font-size-2xl: 20px;
+
+  // 行高
+  --lew-line-height-tight: 1.2;
+  --lew-line-height-normal: 1.5;
+  --lew-line-height-relaxed: 1.8;
+
+  // z-index 层级
+  --lew-z-index-base: 0;
+  --lew-z-index-dropdown: 1000;
+  --lew-z-index-modal: 2000;
+  --lew-z-index-popover: 3000;
+  --lew-z-index-tooltip: 4000;
+  --lew-z-index-notification: 5000;
+}
+```
+
+### 动画系统
+
+```scss
+:root {
+  // 动画时长
+  --lew-duration-fast: 0.15s;
+  --lew-duration-base: 0.2s;
+  --lew-duration-slow: 0.3s;
+  --lew-duration-slower: 0.5s;
+
+  // 缓动函数
+  --lew-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --lew-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --lew-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --lew-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+```
+
+## 组件级 CSS 变量
+
+### 变量定义位置
+
+```scss
+// ✅ 在组件根元素定义所有可配置变量
+.lew-button {
+  // 1. 背景相关
+  --lew-button-bg: transparent;
+  --lew-button-hover-bg: var(--lew-color-primary-light);
+  --lew-button-active-bg: var(--lew-color-primary-dark);
+  --lew-button-disabled-bg: var(--lew-color-gray-3);
+
+  // 2. 文字相关
+  --lew-button-color: var(--lew-color-primary-dark);
+  --lew-button-hover-color: var(--lew-color-primary-dark);
+  --lew-button-disabled-color: var(--lew-text-color-disabled);
+
+  // 3. 边框相关
+  --lew-button-border: none;
+  --lew-button-border-radius: var(--lew-border-radius-md);
+
+  // 4. 尺寸相关
+  --lew-button-height: 32px;
+  --lew-button-padding: 0 16px;
+  --lew-button-font-size: var(--lew-font-size-md);
+
+  // 5. 其他
+  --lew-button-transition: all var(--lew-duration-base) var(--lew-ease-in-out);
+
+  // 使用变量
+  background: var(--lew-button-bg);
+  color: var(--lew-button-color);
+  border: var(--lew-button-border);
+  border-radius: var(--lew-button-border-radius);
+  height: var(--lew-button-height);
+  padding: var(--lew-button-padding);
+  font-size: var(--lew-button-font-size);
+  transition: var(--lew-button-transition);
+
+  &:hover {
+    background: var(--lew-button-hover-bg);
+    color: var(--lew-button-hover-color);
+  }
+
+  &:disabled {
+    background: var(--lew-button-disabled-bg);
+    color: var(--lew-button-disabled-color);
+  }
+}
+```
+
+### 不同类型/状态的变量覆盖
+
+```scss
+.lew-button {
+  // 基础变量定义
+  --lew-button-bg: transparent;
+  --lew-button-color: var(--lew-color-primary-dark);
+
+  // 类型修饰符 - 通过修饰符类覆盖变量
+  &.lew-button-type-fill {
+    --lew-button-bg: var(--lew-color-primary);
+    --lew-button-color: #fff;
+    --lew-button-hover-bg: var(--lew-color-primary-dark);
+  }
+
+  &.lew-button-type-light {
+    --lew-button-bg: var(--lew-color-primary-light);
+    --lew-button-color: var(--lew-color-primary-dark);
+  }
+
+  &.lew-button-type-ghost {
+    --lew-button-bg: transparent;
+    --lew-button-border: 1px solid var(--lew-color-primary);
+    --lew-button-color: var(--lew-color-primary);
+  }
+
+  // 尺寸修饰符
+  &.lew-button-size-mini {
+    --lew-button-height: 24px;
+    --lew-button-padding: 0 8px;
+    --lew-button-font-size: var(--lew-font-size-xs);
+  }
+
+  &.lew-button-size-small {
+    --lew-button-height: 28px;
+    --lew-button-padding: 0 12px;
+    --lew-button-font-size: var(--lew-font-size-sm);
+  }
+
+  &.lew-button-size-large {
+    --lew-button-height: 40px;
+    --lew-button-padding: 0 20px;
+    --lew-button-font-size: var(--lew-font-size-lg);
+  }
+
+  // 颜色修饰符（动态颜色）
+  &.lew-button-color-success {
+    --lew-button-bg: var(--lew-color-success);
+    --lew-button-hover-bg: var(--lew-color-success-dark);
+  }
+
+  &.lew-button-color-error {
+    --lew-button-bg: var(--lew-color-error);
+    --lew-button-hover-bg: var(--lew-color-error-dark);
+  }
+}
+```
+
+## BEM 命名规范
+
+### 基础结构
+
+```
+.lew-{component}                   // Block (组件根元素)
+.lew-{component}__element          // Element (子元素)
+.lew-{component}--modifier         // Modifier (修饰符)
+.lew-{component}__element--modifier // Element + Modifier
+```
+
+### 实际示例
+
+```scss
+// Block
+.lew-button {
+  // 样式
+}
+
+// Element
+.lew-button__content {
+  // 按钮内容区域
+}
+
+.lew-button__icon {
+  // 按钮图标
+}
+
+.lew-button__text {
+  // 按钮文字
+}
+
+// Modifier
+.lew-button--loading {
+  // 加载状态
+}
+
+.lew-button--disabled {
+  // 禁用状态
+}
+
+// Type Modifier (推荐使用这种方式而非简单的 --fill)
+.lew-button-type-fill {
+  // 填充类型
+}
+
+.lew-button-type-ghost {
+  // 幽灵类型
+}
+
+// Size Modifier
+.lew-button-size-small {
+  // 小尺寸
+}
+
+.lew-button-size-large {
+  // 大尺寸
+}
+
+// Element + Modifier
+.lew-button__icon--left {
+  // 左侧图标
+}
+
+.lew-button__icon--right {
+  // 右侧图标
+}
+```
+
+### 类名生成（使用 object2class 工具）
+
+```typescript
+import { object2class } from 'lew-ui/utils'
+
+const buttonClass = computed(() => {
+  return object2class('lew-button', {
+    size: props.size,        // 生成 lew-button-size-{value}
+    type: props.type,        // 生成 lew-button-type-{value}
+    loading: props.loading,  // 生成 lew-button-loading
+    disabled: props.disabled // 生成 lew-button-disabled
+  })
+})
+```
+
+## SCSS 编码规范
+
+### 文件结构
+
+```scss
+<style lang="scss" scoped>
+// 1. 组件根元素（包含 CSS 变量定义）
+.lew-button {
+  // CSS 变量定义
+  --lew-button-bg: transparent;
+  
+  // 定位相关
+  position: relative;
+  display: inline-flex;
+  
+  // 盒模型
+  width: auto;
+  height: var(--lew-button-height);
+  padding: var(--lew-button-padding);
+  margin: 0;
+  
+  // 排版
+  align-items: center;
+  justify-content: center;
+  gap: var(--lew-spacing-sm);
+  
+  // 文字
+  font-size: var(--lew-button-font-size);
+  line-height: var(--lew-line-height-normal);
+  text-align: center;
+  
+  // 视觉
+  background: var(--lew-button-bg);
+  color: var(--lew-button-color);
+  border: var(--lew-button-border);
+  border-radius: var(--lew-button-border-radius);
+  
+  // 其他
+  cursor: pointer;
+  user-select: none;
+  transition: var(--lew-button-transition);
+  
+  // 伪类（按顺序：:hover, :focus, :active, :disabled）
+  &:hover {
+    background: var(--lew-button-hover-bg);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--lew-color-primary);
+    outline-offset: 2px;
+  }
+  
+  &:active {
+    background: var(--lew-button-active-bg);
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// 2. 子元素（按 DOM 结构顺序）
+.lew-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lew-button__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lew-spacing-xs);
+}
+
+.lew-button__text {
+  white-space: nowrap;
+}
+
+// 3. 修饰符（按字母顺序或逻辑分组）
+.lew-button-size-mini { /* ... */ }
+.lew-button-size-small { /* ... */ }
+.lew-button-size-large { /* ... */ }
+
+.lew-button-type-fill { /* ... */ }
+.lew-button-type-light { /* ... */ }
+.lew-button-type-ghost { /* ... */ }
+
+.lew-button-loading { /* ... */ }
+.lew-button-disabled { /* ... */ }
+</style>
+```
+
+### 属性排序
+
+遵循 stylelint-config-rational-order：
+
+```scss
+.lew-component {
+  // 1. Positioning
+  position: relative;
+  top: 0;
+  right: 0;
+  z-index: 1;
+
+  // 2. Box Model
+  display: flex;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  margin: 10px;
+  overflow: hidden;
+
+  // 3. Typography
+  font-family: sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+
+  // 4. Visual
+  background: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  // 5. Animation
+  transition: all 0.2s;
+  transform: translateX(0);
+
+  // 6. Misc
+  cursor: pointer;
+  user-select: none;
+}
+```
+
+### 避免的写法
+
+```scss
+// ❌ 避免嵌套过深
+.lew-table {
+  .lew-table-body {
+    .lew-table-row {
+      .lew-table-cell {
+        // 4 层嵌套，不好
+      }
+    }
+  }
+}
+
+// ✅ 扁平化
+.lew-table-cell {
+  // 直接定位
+}
+
+// ❌ 避免使用 ID 选择器
+#lew-button { }
+
+// ❌ 避免使用标签选择器（除非必要）
+.lew-button div { }
+
+// ❌ 避免 !important（除非覆盖第三方库）
+.lew-button {
+  color: red !important;
+}
+
+// ❌ 避免魔法数字（使用 CSS 变量）
+.lew-button {
+  padding: 8px 16px;  // 应该使用变量
+}
+
+// ✅ 使用变量
+.lew-button {
+  padding: var(--lew-spacing-sm) var(--lew-spacing-lg);
+}
+```
+
+## 主题定制
+
+### 用户自定义主题
+
+```scss
+// 用户可以通过覆盖 CSS 变量来定制主题
+:root {
+  // 覆盖主色调
+  --lew-color-primary: #ff6b6b;
+  --lew-color-primary-light: #ffe0e0;
+  --lew-color-primary-dark: #d94848;
+  
+  // 覆盖组件变量
+  --lew-button-border-radius: 20px;
+  --lew-button-height: 36px;
+}
+
+// 或者为特定组件定制
+.my-custom-button {
+  --lew-button-bg: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  --lew-button-color: #fff;
+}
+```
+
+### 暗色主题支持（未来）
+
+```scss
+// 为未来的暗色主题预留空间
+:root {
+  color-scheme: light;
+}
+
+// 暗色主题变量
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  
+  --lew-bg-color-base: #1a1a1a;
+  --lew-text-color-primary: rgba(255, 255, 255, 0.88);
+  --lew-color-gray-3: #2a2a2a;
+  // ... 其他暗色变量
+}
+
+// 或使用媒体查询
+@media (prefers-color-scheme: dark) {
+  :root {
+    // 暗色主题变量
+  }
+}
+```
+
+## 响应式设计
+
+### 断点系统
+
+```scss
+// 定义断点（可以放在全局或使用 SCSS 变量）
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 1024px;
+$breakpoint-lg: 1280px;
+$breakpoint-xl: 1536px;
+
+// 使用示例
+.lew-button {
+  --lew-button-height: 32px;
+  
+  @media (max-width: $breakpoint-sm) {
+    --lew-button-height: 36px; // 移动端更大的触摸目标
+  }
+}
+```
+
+## 检查清单
+
+编写组件样式时确认：
+- [ ] 所有可配置样式都使用 CSS 变量
+- [ ] CSS 变量命名遵循 `--lew-{component}-{property}` 格式
+- [ ] 类名遵循 BEM 规范
+- [ ] 使用 `scoped` 作用域
+- [ ] 属性按照合理顺序排列
+- [ ] 没有嵌套超过 3 层
+- [ ] 没有使用魔法数字（使用变量）
+- [ ] 颜色、间距、动画都使用了全局变量
+- [ ] 支持用户通过 CSS 变量定制
+- [ ] 动画只使用 `transform` 和 `opacity`
+
+## 样式调试
+
+```bash
+# 检查样式规范
+pnpm lint:css
+
+# 自动修复样式问题
+pnpm lint:css:fix
+```
+
+---
+
+**记住**：统一的样式系统让组件库更易于定制和维护！

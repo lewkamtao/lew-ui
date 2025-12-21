@@ -1,0 +1,544 @@
+# TypeScript 类型设计规范
+
+> **重要性**：⭐⭐⭐⭐  
+> 良好的类型定义是组件库 DX 的关键。
+
+## 核心原则
+
+1. **类型优先**：先设计类型，再实现逻辑
+2. **类型完备**：所有公开 API 必须有类型定义
+3. **类型推断**：充分利用 TypeScript 的类型推断
+4. **类型安全**：避免使用 `any`，必要时使用 `unknown`
+
+## Props 类型定义
+
+### 基础类型
+
+```typescript
+import type { PropType, ExtractPropTypes } from 'vue'
+
+// ✅ 标准 props 定义
+export const buttonProps = {
+  // 字符串字面量类型
+  size: {
+    type: String as PropType<'mini' | 'small' | 'medium' | 'large'>,
+    default: 'medium'
+  },
+  
+  // 布尔类型
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  
+  // 数字类型
+  count: {
+    type: Number,
+    default: 0
+  },
+  
+  // 数组类型
+  items: {
+    type: Array as PropType<Item[]>,
+    default: () => []  // ✅ 引用类型必须用函数返回
+  },
+  
+  // 对象类型
+  config: {
+    type: Object as PropType<ButtonConfig>,
+    default: () => ({})  // ✅ 引用类型必须用函数返回
+  },
+  
+  // ⚠️ 性能注意事项
+  // 1. default 函数会在每个组件实例创建时调用
+  // 2. 避免在 default 中做昂贵计算
+  
+  // ❌ 不好：每个实例都会执行复杂计算
+  // data: {
+  //   type: Array as PropType<Item[]>,
+  //   default: () => {
+  //     return heavyCalculation()  // ❌ 性能问题
+  //   }
+  // },
+  
+  // ✅ 更好：使用常量引用（如果可以共享）
+  // const DEFAULT_CONFIG = Object.freeze({ /* ... */ })
+  // config: {
+  //   type: Object as PropType<Config>,
+  //   default: () => DEFAULT_CONFIG  // ✅ 引用同一对象
+  // },
+  
+  // 函数类型
+  onClick: {
+    type: Function as PropType<(e: MouseEvent) => void>
+  },
+  
+  // 联合类型
+  value: {
+    type: [String, Number] as PropType<string | number>
+  }
+} as const  // ✅ 使用 as const 获得更精确的类型
+
+// ✅ 导出 Props 类型
+export type ButtonProps = ExtractPropTypes<typeof buttonProps>
+```
+
+### 复杂类型
+
+```typescript
+// ✅ 定义接口/类型别名
+export interface TableColumn {
+  key: string
+  title: string
+  width?: number
+  align?: 'left' | 'center' | 'right'
+  render?: (value: any, row: any, index: number) => VNode | string
+}
+
+export interface SelectOption {
+  label: string
+  value: string | number
+  disabled?: boolean
+  children?: SelectOption[]
+}
+
+// ✅ 在 props 中使用
+export const tableProps = {
+  columns: {
+    type: Array as PropType<TableColumn[]>,
+    required: true
+  },
+  data: {
+    type: Array as PropType<Record<string, any>[]>,
+    default: () => []
+  }
+} as const
+
+// ✅ 泛型 Props（高级）
+export interface TreeNode<T = any> {
+  id: string | number
+  label: string
+  children?: TreeNode<T>[]
+  data?: T
+}
+
+export const treeProps = {
+  data: {
+    type: Array as PropType<TreeNode[]>,
+    default: () => []
+  }
+} as const
+```
+
+### Required vs Optional
+
+```typescript
+// ✅ 明确标记 required
+export const modalProps = {
+  // Required（无默认值）
+  title: {
+    type: String,
+    required: true
+  },
+  
+  // Optional（有默认值）
+  visible: {
+    type: Boolean,
+    default: false
+  },
+  
+  // Optional（无默认值，undefined）
+  footer: {
+    type: String
+  }
+} as const
+
+// TypeScript 会正确推断：
+// title: string            (required)
+// visible: boolean         (optional, 默认 false)
+// footer: string | undefined  (optional)
+```
+
+## Emits 类型定义
+
+### 标准事件
+
+```typescript
+// ✅ 定义事件类型
+export const buttonEmits = {
+  // 简单事件
+  click: (e: MouseEvent) => true,
+  
+  // 自定义数据
+  change: (value: string | number) => true,
+  
+  // 多参数
+  update: (id: number, data: any) => true,
+  
+  // v-model
+  'update:modelValue': (value: string) => true
+}
+
+// ✅ 导出 Emits 类型
+export type ButtonEmits = typeof buttonEmits
+
+// ✅ 在组件中使用
+const emit = defineEmits(buttonEmits)
+
+// TypeScript 会检查：
+emit('click', event)  // ✅ 正确
+emit('change', 123)   // ✅ 正确
+emit('change')        // ❌ 缺少参数
+emit('unknown')       // ❌ 未定义的事件
+```
+
+### 事件验证
+
+```typescript
+// ✅ 运行时验证
+export const inputEmits = {
+  'update:modelValue': (value: string) => {
+    // 验证逻辑
+    return typeof value === 'string'
+  },
+  
+  change: (value: string, oldValue: string) => {
+    return typeof value === 'string' && typeof oldValue === 'string'
+  }
+}
+```
+
+## 组件实例类型
+
+### 暴露的方法和属性
+
+```typescript
+// ✅ 定义组件实例类型
+export interface ButtonInstance {
+  // 暴露的方法
+  focus: () => void
+  blur: () => void
+  
+  // 暴露的属性
+  loading: boolean
+}
+
+// 在组件中使用 defineExpose
+defineExpose<ButtonInstance>({
+  focus: () => buttonRef.value?.focus(),
+  blur: () => buttonRef.value?.blur(),
+  get loading() {
+    return _loading.value
+  }
+})
+
+// 用户使用
+import type { ButtonInstance } from 'lew-ui'
+
+const buttonRef = ref<ButtonInstance>()
+buttonRef.value?.focus()  // ✅ 类型安全
+```
+
+## 工具类型
+
+### 常用工具类型
+
+```typescript
+// ✅ 大小类型
+export type ComponentSize = 'mini' | 'small' | 'medium' | 'large'
+
+// ✅ 颜色类型
+export type ComponentColor = 
+  | 'primary' | 'success' | 'warning' | 'error' | 'info'
+  | 'blue' | 'green' | 'red' | 'yellow' | 'purple'
+  // ... 其他颜色
+
+// ✅ 类型别名（使用 type 而非 interface）
+export type Arrayable<T> = T | T[]
+export type Nullable<T> = T | null
+export type Awaitable<T> = T | Promise<T>
+
+// ✅ 泛型约束
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P]
+}
+
+// ✅ 选择器类型
+export type StringOrNumber = string | number
+export type MaybeRef<T> = T | Ref<T>
+```
+
+### 类型守卫
+
+```typescript
+// ✅ 类型守卫函数
+export function isString(value: unknown): value is string {
+  return typeof value === 'string'
+}
+
+export function isNumber(value: unknown): value is number {
+  return typeof value === 'number' && !Number.isNaN(value)
+}
+
+export function isFunction(value: unknown): value is Function {
+  return typeof value === 'function'
+}
+
+// ✅ 使用示例
+function processValue(value: string | number) {
+  if (isString(value)) {
+    // TypeScript 知道这里 value 是 string
+    return value.toUpperCase()
+  }
+  if (isNumber(value)) {
+    // TypeScript 知道这里 value 是 number
+    return value.toFixed(2)
+  }
+}
+```
+
+## 类型导出策略
+
+### 组件导出
+
+```typescript
+// ✅ 标准导出模式
+// lib/components/button/index.ts
+
+import LewButton from './src/LewButton.vue'
+import type { ButtonProps } from './src/props'
+import type { ButtonEmits } from './src/emits'
+import type { ButtonInstance } from './src/types'
+
+// 组件导出
+export { LewButton }
+
+// 类型导出（使用 type 关键字）
+export type {
+  ButtonProps,
+  ButtonEmits,
+  ButtonInstance
+}
+
+// 默认导出（保持一致）
+export default LewButton
+```
+
+### 全局类型导出
+
+```typescript
+// ✅ lib/index.ts 总出口
+// 组件
+export { LewButton, LewInput, LewTable } from './components'
+
+// 类型
+export type {
+  ButtonProps,
+  InputProps,
+  TableProps,
+  TableColumn,
+  // ... 更多类型
+} from './components'
+
+// 工具类型
+export type {
+  ComponentSize,
+  ComponentColor,
+  Arrayable,
+  Nullable
+} from './types'
+```
+
+## Vue 特定类型
+
+### 常用 Vue 类型
+
+```typescript
+import type {
+  PropType,
+  ExtractPropTypes,
+  VNode,
+  Component,
+  Ref,
+  ComputedRef,
+  CSSProperties,
+  App,
+  Plugin
+} from 'vue'
+
+// ✅ VNode 类型
+const renderHeader = (): VNode => {
+  return h('div', 'Header')
+}
+
+// ✅ Component 类型
+const DynamicComponent: Component = resolveComponent('MyComponent')
+
+// ✅ CSSProperties
+const style: CSSProperties = {
+  width: '100px',
+  height: '100px'
+}
+
+// ✅ Ref 类型
+const count: Ref<number> = ref(0)
+const name: Ref<string> = ref('lew-ui')
+
+// ✅ Plugin 类型
+const plugin: Plugin = {
+  install(app: App) {
+    app.component('LewButton', LewButton)
+  }
+}
+```
+
+### Slot 类型
+
+```typescript
+// ✅ 定义 slot props 类型
+export interface TableSlotProps {
+  row: Record<string, any>
+  column: TableColumn
+  index: number
+}
+
+// 在组件中使用
+<slot name="cell" :row="row" :column="column" :index="index" />
+
+// 用户侧类型提示
+<template #cell="{ row, column, index }: TableSlotProps">
+  {{ row[column.key] }}
+</template>
+```
+
+## 避免的类型陷阱
+
+### ❌ 不要使用的
+
+```typescript
+// ❌ 不要用 any
+const data: any = getData()
+
+// ✅ 用 unknown 或具体类型
+const data: unknown = getData()
+const data: UserData = getData()
+
+// ❌ 不要用 Object
+const config: Object = {}
+
+// ✅ 用具体的对象类型
+const config: Record<string, any> = {}
+const config: ConfigOptions = {}
+
+// ❌ 不要用 Function
+const callback: Function = () => {}
+
+// ✅ 定义具体的函数签名
+const callback: () => void = () => {}
+const callback: (value: string) => number = (value) => value.length
+
+// ❌ 不要用 Boolean/String/Number（大写）
+const flag: Boolean = true
+
+// ✅ 用小写的原始类型
+const flag: boolean = true
+const name: string = 'lew-ui'
+const count: number = 0
+```
+
+### 类型断言使用
+
+```typescript
+// ✅ 必要时使用类型断言
+const element = document.querySelector('.button') as HTMLButtonElement
+
+// ✅ 非空断言（确保不为 null）
+const value = ref<string>()
+console.log(value.value!.toUpperCase())  // 确定有值时
+
+// ⚠️ 谨慎使用，最好添加运行时检查
+if (value.value) {
+  console.log(value.value.toUpperCase())  // 更安全
+}
+```
+
+## 类型测试
+
+### 类型测试工具
+
+```typescript
+// ✅ 使用 Expect 工具类型测试
+import type { Equal, Expect } from '@type-challenges/utils'
+
+type cases = [
+  Expect<Equal<ButtonProps['size'], 'mini' | 'small' | 'medium' | 'large'>>,
+  Expect<Equal<ButtonProps['disabled'], boolean>>,
+]
+
+// ✅ 测试类型推断
+const props = { size: 'small' as const, disabled: true }
+type InferredProps = typeof props
+type cases2 = [
+  Expect<Equal<InferredProps['size'], 'small'>>,
+  Expect<Equal<InferredProps['disabled'], true>>
+]
+```
+
+## 文档注释
+
+### JSDoc 类型注释
+
+```typescript
+/**
+ * 按钮组件的属性定义
+ * @public
+ */
+export const buttonProps = {
+  /**
+   * 按钮尺寸
+   * @default 'medium'
+   */
+  size: {
+    type: String as PropType<'mini' | 'small' | 'medium' | 'large'>,
+    default: 'medium'
+  },
+  
+  /**
+   * 是否禁用
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  
+  /**
+   * 点击回调（异步）
+   * @example
+   * ```typescript
+   * const request = async () => {
+   *   await api.submit()
+   * }
+   * ```
+   */
+  request: {
+    type: Function as PropType<() => Promise<void>>
+  }
+} as const
+```
+
+## 检查清单
+
+定义类型时确认：
+- [ ] 所有 props 都有正确的 PropType
+- [ ] 引用类型的默认值使用函数返回
+- [ ] 使用 `as const` 提高类型精确度
+- [ ] 导出了 Props/Emits/Instance 类型
+- [ ] 没有使用 `any`（必要时用 `unknown`）
+- [ ] 复杂类型有独立的 interface/type 定义
+- [ ] 类型有 JSDoc 注释
+- [ ] 通过 `pnpm typecheck` 检查
+
+---
+
+**记住**：好的类型定义是最好的文档！

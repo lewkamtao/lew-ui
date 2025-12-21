@@ -1,190 +1,128 @@
 <script setup lang="ts">
-const visible = ref(false)
-const nestedVisible = ref(false)
+import type { LewDrawerPosition } from "lew-ui/types";
+
+const visible1 = ref(false);
+const visible2 = ref(false);
+const visible3 = ref(false);
+const position = ref<LewDrawerPosition>("right");
+
+const positionOptions = [
+  { label: "Right", value: "right" },
+  { label: "Left", value: "left" },
+  { label: "Top", value: "top" },
+  { label: "Bottom", value: "bottom" },
+];
+
+function openDrawer1() {
+  visible1.value = true;
+  visible2.value = false;
+  visible3.value = false;
+}
 </script>
 
 <template>
-  <lew-flex gap="20px" x="start">
+  <lew-flex direction="y" gap="20px">
+    <lew-tabs v-model="position" :options="positionOptions" type="line" />
+
+    <lew-button text="Open First Drawer" size="medium" @click="openDrawer1" />
+
+    <!-- 第一层抽屉 -->
     <lew-drawer
-      v-model:visible="visible"
-      title="Nested Drawer Demo"
+      v-model:visible="visible1"
+      title="First Drawer"
       close-by-esc
       close-on-click-overlay
-      position="right"
-      width="400px"
+      :position="position"
+      :width="position === 'left' || position === 'right' ? '500px' : '100vw'"
+      :height="position === 'top' || position === 'bottom' ? '400px' : '100vh'"
     >
-      <lew-flex direction="y" gap="16">
-        <div class="content main-content">
-          <div class="content-header">
-            <h3>Main Drawer Content</h3>
-            <div class="badge">
-              Primary
-            </div>
-          </div>
+      <lew-flex direction="y" gap="16" style="padding: 20px">
+        <div class="drawer-content">
+          <h3>First Layer</h3>
           <p>
-            This is the main drawer. You can open a nested drawer from here.
+            This is the first drawer. Click the button below to open the second
+            drawer.
           </p>
-          <div class="feature-list">
-            <div class="feature-item">
-              <div class="feature-icon">
-                📋
-              </div>
-              <span>Nested functionality</span>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon">
-                ⚡
-              </div>
-              <span>Fast interaction</span>
-            </div>
-          </div>
         </div>
 
         <lew-button
-          text="Open Nested Drawer"
+          text="Open Second Drawer"
           color="blue"
           size="medium"
-          @click="nestedVisible = true"
+          @click="visible2 = true"
         />
       </lew-flex>
     </lew-drawer>
 
+    <!-- 第二层抽屉 -->
     <lew-drawer
-      v-model:visible="nestedVisible"
-      title="Nested Drawer"
+      v-model:visible="visible2"
+      title="Second Drawer"
       close-by-esc
       close-on-click-overlay
-      position="right"
-      width="300px"
+      :position="position"
+      :width="position === 'left' || position === 'right' ? '450px' : '100vw'"
+      :height="position === 'top' || position === 'bottom' ? '350px' : '100vh'"
     >
-      <lew-flex direction="y" gap="16">
-        <div class="content nested-content">
-          <div class="content-header">
-            <h4>Nested Content</h4>
-            <div class="badge secondary">
-              Nested
-            </div>
-          </div>
-          <p>This is a nested drawer opened from within another drawer.</p>
+      <lew-flex direction="y" gap="16" style="padding: 20px">
+        <div class="drawer-content">
+          <h3>Second Layer</h3>
+          <p>
+            This is the second drawer. Notice the first drawer is partially
+            visible (100px).
+          </p>
         </div>
+
+        <lew-button
+          text="Open Third Drawer"
+          color="green"
+          size="medium"
+          @click="visible3 = true"
+        />
       </lew-flex>
     </lew-drawer>
 
-    <lew-button text="Open Main Drawer" size="medium" @click="visible = true" />
+    <!-- 第三层抽屉 -->
+    <lew-drawer
+      v-model:visible="visible3"
+      title="Third Drawer"
+      close-by-esc
+      close-on-click-overlay
+      :position="position"
+      :width="position === 'left' || position === 'right' ? '400px' : '100vw'"
+      :height="position === 'top' || position === 'bottom' ? '300px' : '100vh'"
+    >
+      <lew-flex direction="y" gap="16" style="padding: 20px">
+        <div class="drawer-content">
+          <h3>Third Layer</h3>
+          <p>
+            This is the third drawer. Both previous drawers are visible with
+            100px each.
+          </p>
+        </div>
+      </lew-flex>
+    </lew-drawer>
   </lew-flex>
 </template>
 
 <style scoped>
-.content {
+.drawer-content {
   padding: 20px;
-  background: var(--lew-bg-color-1);
-  border-radius: 12px;
-  border: 1px solid var(--lew-border-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  background: var(--lew-bgcolor-2);
+  border-radius: 8px;
 }
 
-.content:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
-}
-
-.main-content {
-  background: linear-gradient(135deg, var(--lew-bg-color-1) 0%, var(--lew-bg-color-2) 100%);
-}
-
-.nested-content {
-  background: linear-gradient(135deg, var(--lew-bg-color-2) 0%, var(--lew-bg-color-3) 100%);
-}
-
-.content-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.content h3 {
-  margin: 0;
-  color: var(--lew-text-color);
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.content h4 {
-  margin: 0;
-  color: var(--lew-text-color);
+.drawer-content h3 {
+  margin: 0 0 12px 0;
+  color: var(--lew-text-color-1);
   font-size: 18px;
   font-weight: 600;
-  letter-spacing: -0.3px;
 }
 
-.content p {
-  margin: 0 0 16px 0;
+.drawer-content p {
+  margin: 0;
   color: var(--lew-text-color-2);
   font-size: 14px;
   line-height: 1.6;
-}
-
-.badge {
-  padding: 4px 12px;
-  background: var(--lew-primary-color);
-  color: white;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.badge.secondary {
-  background: var(--lew-success-color);
-}
-
-.feature-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: var(--lew-bg-color-2);
-  border-radius: 8px;
-  border: 1px solid var(--lew-border-color);
-}
-
-.feature-icon {
-  font-size: 18px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.feature-item span {
-  color: var(--lew-text-color);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.image-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.image-caption {
-  color: var(--lew-text-color-2);
-  font-size: 12px;
-  font-weight: 500;
-  text-align: center;
 }
 </style>

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const PROJECT_ROOT = path.resolve(__dirname, '..')
 
 // 组件优先级定义（从基础到高级）
 const componentPriority = {
@@ -317,7 +318,7 @@ function regenerateContent(imports, typeDefinitions) {
 
 // 主函数
 function main() {
-  const filePath = path.join(__dirname, 'components.ts')
+  const filePath = path.join(PROJECT_ROOT, 'lib/types/components.ts')
 
   try {
     // 读取文件内容

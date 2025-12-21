@@ -1,0 +1,683 @@
+# 组件目录与文件结构规范
+
+> **重要性**：⭐⭐⭐⭐⭐  
+> 这是 lew-ui 最核心的规范，所有组件必须严格遵循此结构。
+
+## 标准目录结构
+
+```
+lib/components/
+├── general/          # 通用组件（按钮、图标等）
+├── form/             # 表单组件（输入框、选择器等）
+├── data/             # 数据展示组件（表格、树等）
+├── feedback/         # 反馈组件（弹窗、提示等）
+└── navigation/       # 导航组件（菜单、面包屑等）
+```
+
+## 单个组件目录结构
+
+### 基础结构（必需）
+```
+button/
+├── index.ts          # 组件入口，导出组件和类型
+└── src/
+    ├── LewButton.vue # 组件主文件（PascalCase，带 Lew 前缀）
+    └── props.ts      # Props 定义
+```
+
+### 完整结构（根据需要）
+```
+button/
+├── index.ts          # 组件入口
+└── src/
+    ├── LewButton.vue         # 组件主文件
+    ├── props.ts              # Props 定义
+    ├── emits.ts              # Emits 定义（如有事件）
+    ├── model.ts              # v-model 相关（如支持双向绑定）
+    ├── types.ts              # 组件特定类型定义
+    ├── utils.ts              # 工具函数（组件内部使用）
+    └── SubComponent.vue      # 子组件（如 LewButtonGroup）
+```
+
+## 自动导入规范
+
+### Vue API 自动导入
+
+项目已配置 `unplugin-auto-import`，以下 Vue API **不需要手动导入**：
+
+```typescript
+// ❌ 不要手动导入（冗余）
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
+
+// ✅ 直接使用（自动导入）
+const count = ref(0)
+const doubled = computed(() => count.value * 2)
+watch(count, (newVal) => console.log(newVal))
+```
+
+**自动导入的 API 列表**（详见 `lib/auto-imports.d.ts`）：
+- Vue 核心 API: `ref`, `computed`, `watch`, `watchEffect`, `reactive`, `readonly`, `shallowRef`, `markRaw` 等
+- 生命周期: `onMounted`, `onUnmounted`, `onBeforeMount`, `onUpdated` 等
+- 组合式工具: `useSlots`, `useAttrs`, `getCurrentInstance` 等
+- Vue Router: `useRoute`, `useRouter`, `useLink` 等
+
+**需要手动导入的情况**：
+- 第三方库 API（如 `@vueuse/core` 的 `useImage`）
+- 项目内部工具函数（如 `lew-ui/utils` 的 `any2px`）
+- 类型定义（如 `import type { PropType } from 'vue'`）
+
+**性能影响**：
+- 移除冗余导入可减少 ~50-100 字节/组件
+- 提升代码可读性
+- 符合项目配置规范
+
+## 文件命名规范
+
+### 组件文件
+- **主组件**：`Lew{ComponentName}.vue` (PascalCase)
+  - ✅ `LewButton.vue`
+  - ✅ `LewInputNumber.vue`
+  - ❌ `Button.vue`
+  - ❌ `lew-button.vue`
+
+- **子组件**：`Lew{ParentName}{SubName}.vue`
+  - ✅ `LewCheckboxGroup.vue`
+  - ✅ `LewTabsItem.vue`
+
+### 配置文件
+- `props.ts` - Props 定义
+- `emits.ts` - 事件定义
+- `model.ts` - v-model 配置
+- `types.ts` - 类型定义
+
+### 工具文件
+- 仅在组件内部使用时放在 `src/` 下
+- 多组件共享的放在 `lib/utils/`
+
+## index.ts 标准写法
+
+> **详细规范**: 参见 `export-rule.mdc` 的导出规范章节
+
+### 快速参考
+
+```typescript
+// 单组件导出
+import LewButton from './src/LewButton.vue'
+import type { ButtonProps } from './src/props'
+
+export { LewButton }
+export type { ButtonProps }
+export default LewButton
+```
+
+**关键要点**:
+- 具名导出组件和类型（支持 tree-shaking）
+- 类型导出使用 `type` 关键字
+- 默认导出主组件（方便直接引入）
+
+## props.ts 标准写法
+
+> **详细规范**: 参见 `typescript.mdc` 的 Props 类型定义章节
+
+### 快速参考
+
+```typescript
+import type { PropType, ExtractPropTypes } from 'vue'
+
+export const buttonProps = {
+  size: {
+    type: String as PropType<'mini' | 'small' | 'medium' | 'large'>,
+    default: 'medium'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  }
+} as const
+
+export type ButtonProps = ExtractPropTypes<typeof buttonProps>
+```
+
+**关键要点**:
+- 使用 `PropType` 指定精确类型
+- 使用 `as const` 确保类型推断
+- 使用 `ExtractPropTypes` 导出类型
+
+### Props 扩展属性（用于在线文档）
+
+为了让在线文档系统能够正确显示类型信息，props 定义中可以添加以下扩展属性：
+
+#### 1. `typeValues` - 枚举值列表
+
+用于显示可选值的标签：
+
+```typescript
+export const buttonProps = {
+  size: {
+    type: String as PropType<'mini' | 'small' | 'medium' | 'large'>,
+    default: 'medium',
+    typeValues: ['mini', 'small', 'medium', 'large']  // ✅ 文档系统会显示为标签
+  }
+}
+```
+
+#### 2. `typePopKeys` - 复杂类型引用
+
+用于显示可点击的类型定义（从 `docs/assets/all-types.ts` 读取）：
+
+```typescript
+export const selectProps = {
+  options: {
+    type: Array as PropType<LewSelectOption[]>,
+    typePopKeys: ['LewSelectOption'],  // ✅ 显示为可点击的粉色标签，点击显示类型定义
+    validator: validators.array({
+      componentName: 'LewSelect',
+      propName: 'options',
+    }),
+  }
+}
+```
+
+#### 3. `typeComponents` - 组件类型引用
+
+用于显示跳转到其他组件的链接：
+
+```typescript
+export const modalProps = {
+  okButtonProps: {
+    type: Object as PropType<LewButtonProps>,
+    typeComponents: [{ name: 'LewButtonProps', path: '/Button' }],  // ✅ 显示为可点击的紫色标签，点击跳转到 Button 组件
+    validator: validators.object({
+      componentName: 'LewModal',
+      propName: 'okButtonProps',
+    }),
+  }
+}
+```
+
+#### 4. `typeGhost` - 自定义类型文本
+
+用于显示简单的类型文本标签：
+
+```typescript
+export const componentProps = {
+  customProp: {
+    type: null,
+    typeGhost: 'LewComponentSource',  // ✅ 显示为粉色标签
+  }
+}
+```
+
+#### 5. `defaultLocale` - 国际化默认值
+
+用于从国际化配置读取默认值：
+
+```typescript
+export const inputProps = {
+  placeholder: {
+    type: String,
+    defaultLocale: true,  // ✅ 从 locale.t('componentName.placeholder') 读取
+    validator: validators.string({
+      componentName: 'LewInput',
+      propName: 'placeholder',
+    }),
+  }
+}
+```
+
+#### 6. `hidden` - 隐藏属性
+
+用于在文档中隐藏某些内部使用的 prop：
+
+```typescript
+export const selectProps = {
+  searchMethodId: {
+    type: String,
+    hidden: true,  // ✅ 不在文档中显示
+    validator: validators.string({
+      componentName: 'LewSelect',
+      propName: 'searchMethodId',
+    }),
+  }
+}
+```
+
+### Props 命名约定
+- 使用 camelCase
+- Boolean 类型默认值应为 `false`
+- 尺寸统一使用：`mini | small | medium | large`
+- 颜色使用语义化名称或主题色名称
+
+## emits.ts 标准写法
+
+```typescript
+// 定义 emits 对象
+export const buttonEmits = {
+  click: (e: MouseEvent) => true,
+  change: (value: string | number) => true,
+  'update:modelValue': (value: any) => true
+}
+
+// 导出 Emits 类型
+export type ButtonEmits = typeof buttonEmits
+```
+
+## v-model 支持（使用 Vue 3.4+ defineModel）
+
+### 基本用法
+
+lew-ui 使用 Vue 3.4+ 的 `defineModel` API 实现双向绑定，**不再使用** `update:modelValue` 事件方式。
+
+#### 单个 v-model
+
+```typescript
+// ❌ 旧方式（不推荐）
+const props = defineProps({
+  modelValue: String
+})
+const emit = defineEmits(['update:modelValue'])
+
+// ✅ 新方式（推荐）
+const modelValue = defineModel<string | undefined>({ required: true })
+```
+
+#### 多个 v-model
+
+```typescript
+// 组件内部
+const modelValue = defineModel<string | undefined>({ required: true })
+const prefixValue = defineModel<string | undefined>('prefixValue')
+const suffixValue = defineModel<string | undefined>('suffixValue')
+
+// 用户使用
+<LewInput
+  v-model="text"
+  v-model:prefixValue="prefix"
+  v-model:suffixValue="suffix"
+/>
+```
+
+### model.ts 文件
+
+虽然使用了 `defineModel`，但仍需要在 `model.ts` 中定义 model props 供文档系统使用：
+
+```typescript
+// lib/components/form/input/src/model.ts
+export const inputModel = {
+  modelValue: {
+    type: String,
+    default: undefined
+  },
+  prefixValue: {
+    type: String,
+    default: undefined
+  },
+  suffixValue: {
+    type: String,
+    default: undefined
+  }
+}
+
+export type InputModel = typeof inputModel
+```
+
+### 组件导出
+
+```typescript
+// lib/components/form/input/index.ts
+import LewInput from './src/LewInput.vue'
+import { inputEmits, type LewInputEmits } from './src/emits'
+import { inputModel, type InputModel } from './src/model'
+import { inputProps, type LewInputProps } from './src/props'
+
+export { LewInput }
+export type { LewInputEmits, LewInputProps, InputModel }
+export { inputEmits, inputModel, inputProps }
+
+export default LewInput
+```
+
+### 文档配置
+
+在 `docs/docs/{component}/api/` 目录下创建 `model.ts`：
+
+```typescript
+// docs/docs/input/api/model.ts
+import { convertProps } from 'docs/lib/utils'
+import { inputModel } from 'lew-ui'
+
+export default {
+  title: 'Model',
+  columnsKey: 'props',  // 注意：使用 'props'
+  orderNum: 50,
+  data: convertProps(inputModel),
+}
+```
+
+### 国际化配置
+
+```typescript
+// docs/locals/zh.ts
+export default {
+  components: {
+    input: {
+      // ... other config
+      model: {
+        modelValue: '输入框绑定值',
+        prefixValue: '前缀选择器绑定值',
+        suffixValue: '后缀选择器绑定值',
+      },
+    },
+  },
+}
+```
+
+### defineModel 使用规范
+
+#### ✅ 推荐用法
+
+```typescript
+// 1. 必填的 v-model
+const modelValue = defineModel<string | undefined>({ required: true })
+
+// 2. 可选的 v-model
+const expandKeys = defineModel<string[]>('expandKeys', { required: false, default: [] })
+
+// 3. 多类型支持
+const value = defineModel<string | string[]>()
+
+// 4. 对象类型
+const dateRange = defineModel<Record<string, Date | undefined>>({
+  default: () => ({})
+})
+```
+
+#### ❌ 避免用法
+
+```typescript
+// ❌ 不要同时定义 props 和使用 defineModel
+const props = defineProps({
+  modelValue: String  // 与 defineModel 冲突
+})
+const modelValue = defineModel<string>()
+
+// ❌ 不要在 defineModel 的同时 emit update:modelValue
+const modelValue = defineModel<string>()
+emit('update:modelValue', value)  // defineModel 会自动处理
+
+// ❌ 不要在 emits.ts 中定义 update:modelValue
+export const inputEmits = {
+  'update:modelValue': (value: any) => true  // ❌ 不需要
+}
+```
+
+### 类型定义
+
+```typescript
+// model.ts 中定义类型供文档使用
+export const inputModel = {
+  modelValue: {
+    type: String,
+    default: undefined
+  }
+}
+
+// 导出类型
+export type InputModel = typeof inputModel
+```
+
+### 检查清单
+
+实现 v-model 支持时确认：
+- [ ] 组件内使用 `defineModel` API
+- [ ] 创建了 `model.ts` 文件（供文档使用）
+- [ ] 在 `index.ts` 中导出 model 对象和类型
+- [ ] 创建了 `docs/docs/{component}/api/model.ts`
+- [ ] 在 `docs/docs/{component}/api/index.ts` 中导出 model
+- [ ] 添加了国际化配置（`model` 字段）
+- [ ] 没有在 emits 中定义 `update:modelValue`
+- [ ] 没有手动 emit `update:modelValue`
+
+## emits.ts 标准写法（旧版本，保留作为参考）
+
+```typescript
+// 定义 emits 对象
+export const buttonEmits = {
+  click: (e: MouseEvent) => true,
+  change: (value: string | number) => true,
+  'update:modelValue': (value: any) => true
+}
+
+// 导出 Emits 类型
+export type ButtonEmits = typeof buttonEmits
+```
+
+## 组件 Vue 文件结构
+
+### script 区域顺序
+```vue
+<script setup lang="ts">
+// 1. 导入（分组：Vue API / 第三方 / 内部组件 / 工具函数 / 类型/配置）
+import { computed, ref } from 'vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { object2class } from 'lew-ui/utils'
+import { buttonEmits } from './emits'
+import { buttonProps } from './props'
+
+// 2. Props & Emits
+const props = defineProps(buttonProps)
+const emit = defineEmits(buttonEmits)
+
+// 3. v-model（如支持双向绑定）
+const modelValue = defineModel<string | undefined>({ required: true })
+
+// 4. 响应式状态
+const isLoading = ref(false)
+
+// 5. 计算属性
+const buttonClass = computed(() => { ... })
+
+// 6. 方法
+const handleClick = () => { ... }
+
+// 7. 生命周期（如需要）
+onMounted(() => { ... })
+</script>
+```
+
+### template 规范
+- 根元素使用组件名作为类名（kebab-case）：`class="lew-button"`
+- 使用 BEM 命名子元素：`lew-button__content`、`lew-button--loading`
+- 合理使用 v-if / v-show
+- 优先使用具名插槽
+
+### style 规范
+- 必须使用 `<style lang="scss" scoped>`
+- 使用 CSS 变量定义可变样式
+- 遵循 BEM 命名规范
+
+## 工具函数使用规范
+
+### any2px() - CSS 尺寸转换
+
+**作用**：将各种尺寸值统一转换为有效的 CSS 值。
+
+**支持的输入格式**：
+
+```typescript
+import { any2px } from 'lew-ui/utils'
+
+// ✅ 纯数字（自动添加 px）
+any2px(100)           // → '100px'
+any2px('100')         // → '100px'
+
+// ✅ CSS 单位（保持原样）
+any2px('100px')       // → '100px'
+any2px('100%')        // → '100%'
+any2px('100vh')       // → '100vh'    ⭐ 支持视口单位
+any2px('100vw')       // → '100vw'    ⭐ 支持视口单位
+any2px('10rem')       // → '10rem'
+any2px('2em')         // → '2em'
+any2px('100vmin')     // → '100vmin'
+any2px('100vmax')     // → '100vmax'
+
+// ✅ calc() 表达式（保持原样）
+any2px('calc(100% - 20px)')     // → 'calc(100% - 20px)'
+any2px('calc(100vw - 200px)')   // → 'calc(100vw - 200px)'
+
+// ✅ auto 关键字
+any2px('auto')        // → 'auto'
+```
+
+**使用场景**：
+
+```vue
+<script setup>
+import { any2px } from 'lew-ui/utils'
+
+const props = defineProps({
+  width: { type: [String, Number] },  // 允许 '100vw' 或 500
+  height: { type: [String, Number] }, // 允许 'calc(100vh - 60px)' 或 300
+})
+
+const style = computed(() => ({
+  width: any2px(props.width),   // ✅ 统一处理
+  height: any2px(props.height), // ✅ 统一处理
+}))
+</script>
+```
+
+**❌ 错误示例**：
+
+```typescript
+// ❌ 不要直接拼接单位（会导致 '100vw' 变成 '100vwpx'）
+const width = props.width + 'px'
+
+// ❌ 不要手动判断类型
+const width = typeof props.width === 'number' ? `${props.width}px` : props.width
+
+// ✅ 正确：使用 any2px
+const width = any2px(props.width)
+```
+
+### 数值解析（仅限像素值）
+
+**如果需要对像素值进行数值计算**，使用原生 `Number.parseFloat()`：
+
+```typescript
+// ✅ 解析像素值进行计算
+const width = Number.parseFloat('100px')  // → 100
+const height = Number.parseFloat('200')   // → 200
+
+// 用于数值比较
+if (Number.parseFloat(props.width) > 500) {
+  // ...
+}
+
+// 用于数学运算
+const total = Number.parseFloat(props.width) + Number.parseFloat(props.padding)
+
+// 计算后再转回 CSS 值
+const calculatedWidth = Number.parseFloat(props.width) + 100
+style.width = any2px(calculatedWidth)  // 100 → '100px'
+```
+
+**⚠️ 重要提示**：
+
+```typescript
+// ❌ 不要尝试解析非像素单位
+Number.parseFloat('50%')     // → 50  ❌ 失去了 % 含义
+Number.parseFloat('100vw')   // → 100 ❌ 失去了 vw 含义
+Number.parseFloat('10rem')   // → 10  ❌ 失去了 rem 含义
+
+// ✅ 对于非像素单位，直接使用 any2px 保留原样
+any2px('50%')     // → '50%'
+any2px('100vw')   // → '100vw'
+any2px('10rem')   // → '10rem'
+```
+
+### 组件中的典型用法
+
+```vue
+<script setup lang="ts">
+import { any2px } from 'lew-ui/utils'
+
+const props = defineProps({
+  width: { type: [String, Number], default: '500px' },
+  height: { type: [String, Number], default: '100vh' },
+})
+
+// 1. 直接应用到样式（保留原始单位）
+const drawerStyle = computed(() => ({
+  width: any2px(props.width),   // '100vw' → '100vw' ✅
+  height: any2px(props.height), // 'calc(100vh - 60px)' → 'calc(100vh - 60px)' ✅
+}))
+
+// 2. 需要数值计算时（仅限像素值）
+const isWideDrawer = computed(() => {
+  // 只在确定是像素值时才解析
+  const width = Number.parseFloat(String(props.width))
+  const viewportWidth = window.innerWidth
+  return width >= viewportWidth * 0.5  // 数值比较
+})
+
+// 3. 计算后再转换
+const adjustedWidth = computed(() => {
+  const baseWidth = Number.parseFloat(String(props.width))  // 提取数字
+  const finalWidth = baseWidth + 100                        // 计算
+  return any2px(finalWidth)                                 // 转回 CSS 值 '600px'
+})
+</script>
+
+<template>
+  <div :style="drawerStyle">
+    <!-- 内容 -->
+  </div>
+</template>
+```
+
+### 最佳实践总结
+
+| 场景 | 使用方法 | 示例 |
+|-----|---------|------|
+| Props 直接用于样式 | `any2px()` | `:style="{ width: any2px(width) }"` |
+| 像素值比较判断 | `Number.parseFloat()` | `if (Number.parseFloat(width) > 500)` |
+| 像素值计算 | `Number.parseFloat()` | `Number.parseFloat(a) + Number.parseFloat(b)` |
+| 计算后应用样式 | 两者结合 | `any2px(Number.parseFloat(w) + 100)` |
+| 支持多种单位输入 | `any2px()` | 允许 `100vw`, `500px`, `50%`, `calc(...)` |
+
+**⚠️ 性能注意**: `Number.parseFloat()` 只能用于像素值；非像素单位（vw、rem、%）应直接使用 `any2px()` 保留原样。
+
+## 禁止事项
+
+❌ **不允许**：
+- 在 `src/` 外放置组件源码
+- 使用非 `Lew` 前缀的组件名
+- 在 props.ts 中包含业务逻辑
+- 导出未在 index.ts 中声明的内容
+- 在组件内硬编码样式值（应使用 CSS 变量）
+- 创建不必要的深层嵌套目录
+
+✅ **推荐**：
+- 保持文件职责单一
+- Props 和 Emits 分离到独立文件
+- 使用 TypeScript 严格类型
+- 添加清晰的注释（特别是复杂逻辑）
+- 复用公共组件（如 `CommonIcon`）
+
+## 检查清单
+
+创建/修改组件时确认：
+- [ ] 组件名符合 `Lew{Name}` 规范
+- [ ] 目录结构正确（index.ts + src/）
+- [ ] props.ts 使用 PropType 和 as const
+- [ ] index.ts 导出组件和类型
+- [ ] Vue 文件使用 `<script setup lang="ts">`
+- [ ] 样式使用 scoped SCSS
+- [ ] 类名遵循 BEM 规范
+- [ ] 没有 TypeScript 错误
+- [ ] 没有 ESLint/Stylelint 错误
+
+---
+
+**记住**：一致的结构是组件库可维护性的基础！

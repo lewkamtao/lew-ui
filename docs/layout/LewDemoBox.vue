@@ -3,10 +3,10 @@ import { renderDescription } from 'docs/lib/utils'
 import docsLocale from 'docs/locals'
 import { LewCollapseTransition } from 'lew-ui'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { Check, ChevronDown, ChevronUp, Copy } from 'lucide-vue-next'
+import { Check, ChevronDown, ChevronUp, Copy, ExternalLink } from 'lucide-vue-next'
 import LewCodeHighlighter from './LewCodeHighlighter.vue'
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: '',
@@ -35,7 +35,33 @@ defineProps({
     type: String,
     default: '',
   },
+  demoIndex: {
+    type: Number,
+    default: -1,
+  },
+  componentName: {
+    type: String,
+    default: '',
+  },
 })
+
+const router = useRouter()
+
+// 生成独立 demo 页面的完整 URL（用于新标签页打开）
+function getStandaloneDemoUrl() {
+  if (props.demoIndex >= 0 && props.componentName) {
+    // 将组件名转为首字母大写的格式（如 input -> Input）
+    const componentPath = props.componentName
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')
+    
+    const path = `/${componentPath}/demo_${props.demoIndex + 1}`
+    // 使用 router.resolve 获取完整 URL（包含 hash）
+    return router.resolve(path).href
+  }
+  return '#'
+}
 
 const isShowCode = ref(false)
 const isCopied = ref(false)
@@ -86,6 +112,16 @@ async function copyCode(code: string) {
       >
         {{ tag }}
       </lew-tag>
+      <a
+        v-if="demoIndex >= 0 && componentName"
+        class="demo-external-link"
+        :href="getStandaloneDemoUrl()"
+        target="_blank"
+        rel="noopener noreferrer"
+        @click.stop
+      >
+        <ExternalLink :size="14" />
+      </a>
     </lew-title>
     <lew-alert
       v-if="checkHasContent(tipsContent)"
@@ -148,6 +184,39 @@ async function copyCode(code: string) {
 
   .demo-docs-title {
     text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .demo-external-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lew-text-color-5);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    cursor: pointer;
+    margin-left: 8px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    :deep(svg) {
+      width: 14px;
+      height: 14px;
+      color: inherit;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    &:hover {
+      color: var(--lew-color-primary);
+    }
+
+    &:active {
+      opacity: 0.7;
+    }
   }
 
   .hl-pre {

@@ -33,6 +33,9 @@ export default {
     close: 'Close',
     showCode: 'Show Code',
     copySuccess: 'Copy successful!',
+    back: 'Back',
+    backToHome: 'Back to Home',
+    loading: 'Loading...',
   },
   components: {
     image: {
@@ -126,6 +129,9 @@ export default {
         loading: 'Show Loading Status',
         disabled: 'Disabled Status',
         request: 'Request',
+      },
+      emits: {
+        click: 'Triggered when the button is clicked (not triggered when disabled or loading)',
       },
     },
     tag: {

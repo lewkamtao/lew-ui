@@ -1,0 +1,355 @@
+# 对外 API 稳定性规则
+
+> **重要性**：⭐⭐⭐⭐⭐  
+> 作为组件库，API 稳定性是用户信任的基础。
+
+## 核心原则
+
+### 1. 向后兼容优先
+除非绝对必要，否则不要破坏现有 API。用户升级版本时不应该遇到破坏性变更。
+
+### 2. 语义化版本控制
+- **MAJOR (x.0.0)** - 破坏性变更
+- **MINOR (0.x.0)** - 新增功能（向后兼容）
+- **PATCH (0.0.x)** - Bug 修复（向后兼容）
+
+### 3. 废弃而非删除
+不直接删除 API，先标记为 deprecated，至少保留一个大版本。
+
+## API 变更规范
+
+### Props 变更
+
+#### ✅ 允许（Minor）
+```typescript
+// 1. 新增 optional prop
+export const buttonProps = {
+  // ... 现有 props
+  newProp: {  // ✅ 新增
+    type: String,
+    default: 'default-value'  // 必须有默认值
+  }
+}
+
+// 2. 放宽类型限制
+type: String as PropType<'a' | 'b' | 'c' | 'd'>  // ✅ 新增 'd'
+
+// 3. 增加默认值的智能度（不改变默认行为）
+```
+
+#### ❌ 禁止（Breaking）
+```typescript
+// 1. 删除 prop
+disabled: Boolean  // ❌ 直接删除
+
+// 2. 重命名 prop
+btnSize: String  // ❌ size -> btnSize
+
+// 3. 改变默认值（导致行为变化）
+default: 'small'  // ❌ 原来是 'medium'
+
+// 4. 收紧类型
+type: String as PropType<'fill' | 'light'>  // ❌ 删除了 'ghost' 和 'text'
+
+// 5. 将 optional 改为 required
+required: true  // ❌ 原来是 false
+
+// 6. 改变 prop 的行为语义
+loading: Boolean  // ❌ 原来控制按钮状态，现在控制内容显示
+```
+
+#### 🔶 废弃处理
+```typescript
+// 1. 在 props 中保留但添加注释
+export const buttonProps = {
+  /**
+   * @deprecated 使用 `type` 代替
+   * @since v2.5.0 将在 v3.0.0 移除
+   */
+  btnType: {
+    type: String,
+    default: undefined
+  },
+  type: {
+    type: String as PropType<'fill' | 'light' | 'ghost' | 'text'>,
+    default: 'light'
+  }
+}
+
+// 2. 在组件内处理兼容
+const props = defineProps(buttonProps)
+
+// 兼容旧 API
+const finalType = computed(() => props.type || props.btnType || 'light')
+
+// 3. 开发环境警告
+if (process.env.NODE_ENV === 'development' && props.btnType) {
+  console.warn('[lew-ui] Button: `btnType` is deprecated, use `type` instead.')
+}
+```
+
+### Events 变更
+
+#### ✅ 允许（Minor）
+```typescript
+// 1. 新增事件
+export const buttonEmits = {
+  click: (e: MouseEvent) => true,
+  dblclick: (e: MouseEvent) => true  // ✅ 新增事件
+}
+
+// 2. 扩展事件参数（追加可选参数）
+change: (value: string, extraInfo?: any) => true  // ✅ 追加可选
+```
+
+#### ❌ 禁止（Breaking）
+```typescript
+// 1. 删除事件
+// delete: click  // ❌
+
+// 2. 重命名事件
+onChange: (...) => true  // ❌ change -> onChange
+
+// 3. 改变事件参数类型
+click: (id: number) => true  // ❌ 原来是 MouseEvent
+
+// 4. 改变事件参数顺序
+change: (id: number, value: string) => true  // ❌ 原来是 (value, id)
+
+// 5. 移除必需的事件参数
+update: () => true  // ❌ 原来有参数 (value: string)
+```
+
+### Slots 变更
+
+#### ✅ 允许（Minor）
+```typescript
+// 1. 新增插槽
+<slot name="footer"></slot>  // ✅
+
+// 2. 扩展插槽 scope（追加属性）
+<slot name="item" :item="item" :index="index" :extra="extra"></slot>
+//                                            ^^^^^^^ 新增
+```
+
+#### ❌ 禁止（Breaking）
+```typescript
+// 1. 删除插槽
+// <slot name="header"></slot>  // ❌ 删除
+
+// 2. 重命名插槽
+<slot name="title"></slot>  // ❌ header -> title
+
+// 3. 移除 slot scope 属性
+<slot name="item" :item="item"></slot>  // ❌ 移除了 :index
+
+// 4. 改变 slot scope 属性类型
+<slot name="item" :item="itemId"></slot>  // ❌ item 从对象变成 ID
+```
+
+### 组件导出变更
+
+#### ✅ 允许（Minor）
+```typescript
+// 1. 新增组件导出
+export { LewButton, LewButtonGroup }  // ✅ 新增 ButtonGroup
+
+// 2. 新增类型导出
+export type { ButtonProps, ButtonEmits }  // ✅
+```
+
+#### ❌ 禁止（Breaking）
+```typescript
+// 1. 删除组件导出
+// export { LewButton }  // ❌ 删除了 LewButtonGroup
+
+// 2. 改变默认导出
+export default { LewButton }  // ❌ 原来是 export default LewButton
+
+// 3. 改变导出路径
+// 从 'lew-ui/button' 变成 'lew-ui/components/button'  // ❌
+```
+
+## 样式 API 变更
+
+### CSS 变量
+
+#### ✅ 允许（Minor/Patch）
+```scss
+// 1. 新增 CSS 变量
+.lew-button {
+  --lew-button-padding: 0 16px;  // ✅ 新增
+}
+
+// 2. 增加变量的可配置性（不改变默认表现）
+```
+
+#### ❌ 禁止（Breaking）
+```scss
+// 1. 删除 CSS 变量
+// --lew-button-bg  // ❌ 删除
+
+// 2. 重命名 CSS 变量
+--lew-btn-background  // ❌ --lew-button-bg -> --lew-btn-background
+
+// 3. 改变变量默认值（导致视觉变化）
+--lew-button-height: 36px;  // ❌ 原来是 32px
+```
+
+### CSS 类名
+
+#### ✅ 允许（Minor）
+```scss
+// 1. 新增 modifier 类
+.lew-button--rounded { }  // ✅
+
+// 2. 新增 element 类
+.lew-button__badge { }  // ✅
+```
+
+#### ❌ 禁止（Breaking）
+```scss
+// 1. 删除类名（用户可能在用）
+// .lew-button-size-small  // ❌
+
+// 2. 重命名类名
+.lew-button--sm  // ❌ lew-button-size-small -> lew-button--sm
+
+// 3. 改变类名的样式效果
+.lew-button--primary {
+  background: blue;  // ❌ 原来是 green
+}
+```
+
+## API 文档标注
+
+### TypeScript 注释
+```typescript
+export const buttonProps = {
+  /**
+   * 按钮尺寸
+   * @default 'medium'
+   */
+  size: {
+    type: String as PropType<'mini' | 'small' | 'medium' | 'large'>,
+    default: 'medium'
+  },
+
+  /**
+   * @deprecated 使用 `type` 代替
+   * @since v2.5.0
+   * @removal v3.0.0
+   */
+  btnType: {
+    type: String
+  },
+
+  /**
+   * @internal 内部使用，可能随时变更
+   */
+  _internalProp: {
+    type: Boolean,
+    default: false
+  }
+}
+```
+
+### 导出标记
+```typescript
+// 公共 API（稳定）
+export { LewButton }
+export type { ButtonProps }
+
+// 内部 API（不保证稳定）
+export { _ButtonInternal }  // 下划线前缀表示内部 API
+```
+
+## 变更流程
+
+### 1. 评估影响
+- 是否破坏现有用法？
+- 影响范围有多大？
+- 是否有替代方案？
+
+### 2. Breaking Change 处理
+```markdown
+## 变更提案
+- **类型**：Breaking Change
+- **影响**：所有使用 `btnType` 的用户
+- **原因**：统一 API 命名规范
+- **迁移方案**：
+  1. 全局替换 `btnType` -> `type`
+  2. 提供 codemod 工具
+  3. 保留一个大版本的兼容期
+
+## 时间线
+- v2.8.0: 标记 `btnType` 为 deprecated
+- v2.9.0: 添加控制台警告
+- v3.0.0: 移除 `btnType`
+```
+
+### 3. 文档更新
+- 更新 CHANGELOG
+- 更新组件文档
+- 添加迁移指南（如 Breaking）
+- 更新类型定义
+
+### 4. 版本发布
+- 确认版本号正确
+- 标记 Git tag
+- 发布 npm
+- 通知用户（如 Breaking）
+
+## 检查清单
+
+修改组件前确认：
+- [ ] 是否改变了现有 props 的行为？
+- [ ] 是否删除/重命名了 props/events/slots？
+- [ ] 是否改变了默认值导致视觉变化？
+- [ ] 是否更新了类型定义？
+- [ ] 是否更新了文档？
+- [ ] 是否需要标记为 deprecated？
+- [ ] 是否需要提供迁移指南？
+- [ ] 版本号是否正确递增？
+
+## 示例：安全的功能扩展
+
+### 场景：为 Button 添加 icon 支持
+
+```typescript
+// ✅ 正确方式
+export const buttonProps = {
+  // ... 现有 props
+  
+  // 新增 icon 相关 props（都是可选的）
+  icon: {
+    type: String,
+    default: undefined
+  },
+  iconPosition: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'left'
+  }
+}
+```
+
+```vue
+<template>
+  <button class="lew-button">
+    <!-- 向后兼容：原有内容不受影响 -->
+    <CommonIcon v-if="icon && iconPosition === 'left'" :type="icon" />
+    <slot />
+    <CommonIcon v-if="icon && iconPosition === 'right'" :type="icon" />
+  </button>
+</template>
+```
+
+**为什么安全？**
+- 新增的都是可选 props
+- 默认行为与之前完全一致
+- 不影响现有用户的代码
+- 类型定义完整
+
+---
+
+**记住**：API 是契约，轻易修改会失去用户信任！
