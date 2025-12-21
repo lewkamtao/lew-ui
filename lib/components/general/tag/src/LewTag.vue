@@ -1,63 +1,66 @@
 <script lang="ts" setup>
-import type { LewSize } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { getColorType } from "lew-ui/utils";
-import { isFunction } from "lodash-es";
-import { tagEmits } from "./emits";
-import { tagProps } from "./props";
+import type { LewSize } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { getColorType } from 'lew-ui/utils'
+import { isFunction } from 'lodash-es'
+import { tagEmits } from './emits'
+import { tagProps } from './props'
 
-const props = defineProps(tagProps);
-const emit = defineEmits(tagEmits);
-const isClosing = ref(false);
+const props = defineProps(tagProps)
+const emit = defineEmits(tagEmits)
+const isClosing = ref(false)
 
 // 关闭图标尺寸配置（仅用于图标大小，其他尺寸配置已移至 CSS class）
 const CLOSE_ICON_SIZE: Record<LewSize, number> = {
   small: 12,
   medium: 14,
   large: 16,
-} as const;
+} as const
 
 // 计算标签类名（所有配置都用 class，包括 type 和 color）
 const tagClass = computed(() => {
-  const resolvedColor = getColorType(props.color) || "primary";
+  const resolvedColor = getColorType(props.color) || 'primary'
   return [
-    "lew-tag",
-    `lew-tag--${props.size || "medium"}`,
-    `lew-tag--${props.type || "light"}`,
+    'lew-tag',
+    `lew-tag--${props.size || 'medium'}`,
+    `lew-tag--${props.type || 'light'}`,
     `lew-tag--${resolvedColor}`,
-    props.round && "lew-tag--round",
-    props.oversize && "lew-tag--oversize",
-    props.disabled && "lew-tag--disabled",
+    props.round && 'lew-tag--round',
+    props.oversize && 'lew-tag--oversize',
+    props.disabled && 'lew-tag--disabled',
   ]
     .filter(Boolean)
-    .join(" ");
-});
+    .join(' ')
+})
 
 // 关闭图标尺寸（基于 size prop）
 const closeIconSize = computed(() => {
-  return CLOSE_ICON_SIZE[props.size] || CLOSE_ICON_SIZE.medium;
-});
+  return CLOSE_ICON_SIZE[props.size] || CLOSE_ICON_SIZE.medium
+})
 
 // 修改 handleClose 逻辑：只有 Promise 返回 true 才关闭，否则不处理
 async function handleClose(): Promise<void> {
-  if (props.disabled || isClosing.value) return;
+  if (props.disabled || isClosing.value)
+    return
 
   if (props.close) {
-    isClosing.value = true;
-    let result = false;
+    isClosing.value = true
+    let result = false
     try {
-      result = await props.close();
-    } catch {
+      result = await props.close()
+    }
+    catch {
       // 忽略异常，不关闭
-      isClosing.value = false;
-      return;
+      isClosing.value = false
+      return
     }
     if (result === true) {
-      emit("close");
+      emit('close')
     }
-    isClosing.value = false;
-  } else {
-    emit("close");
+    isClosing.value = false
+  }
+  else {
+    emit('close')
   }
 }
 </script>
@@ -169,27 +172,27 @@ async function handleClose(): Promise<void> {
 
   // Color 配置（与 type 组合使用，使用 SCSS 循环生成所有颜色）
   $colors: (
-    primary,
-    success,
-    error,
-    warning,
-    info,
-    normal,
-    danger,
-    blue,
-    gray,
-    red,
-    green,
-    yellow,
-    indigo,
-    purple,
-    pink,
-    orange,
-    cyan,
-    teal,
-    mint,
-    brown,
-    black
+    'primary',
+    'success',
+    'error',
+    'warning',
+    'info',
+    'normal',
+    'danger',
+    'blue',
+    'gray',
+    'red',
+    'green',
+    'yellow',
+    'indigo',
+    'purple',
+    'pink',
+    'orange',
+    'cyan',
+    'teal',
+    'mint',
+    'brown',
+    'black'
   );
 
   @each $color in $colors {
@@ -205,9 +208,7 @@ async function handleClose(): Promise<void> {
       }
 
       &.lew-tag--ghost {
-        border: var(--lew-form-border-width)
-          solid
-          var(--lew-color-#{$color}-dark);
+        border: var(--lew-form-border-width) solid var(--lew-color-#{$color}-dark);
         color: var(--lew-color-#{$color}-dark);
       }
     }

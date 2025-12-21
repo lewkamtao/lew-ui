@@ -3,7 +3,12 @@ import type { LewColor } from 'lew-ui'
 import type { LewUploadFileItem } from 'lew-ui/types'
 import { LewFlex, LewImage, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, checkUrlIsImage, getFileIcon, getUniqueId } from 'lew-ui/utils'
+import {
+  any2px,
+  checkUrlIsImage,
+  getFileIcon,
+  getUniqueId,
+} from 'lew-ui/utils'
 import { uploadByCardEmits } from './emits'
 import { uploadByCardProps } from './props'
 
@@ -66,6 +71,7 @@ const modelValue = defineModel<LewUploadFileItem[]>()
   <LewFlex
     v-show="(modelValue || []).length > 0"
     wrap
+    width="auto"
     class="lew-upload-file-card"
     gap="10"
   >

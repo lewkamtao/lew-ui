@@ -1,122 +1,122 @@
 <script lang="ts" setup>
-import type { LewDrawerPosition } from "lew-ui/types";
-import type { Ref } from "vue";
-import { onClickOutside, useMagicKeys } from "@vueuse/core";
-import { LewButton, LewFlex, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { useDOMCreate } from "lew-ui/hooks";
-import { any2px, getUniqueId, object2class } from "lew-ui/utils";
-import { computed, nextTick, ref, watch } from "vue";
-import { drawerEmits } from "./emits";
+import type { LewDrawerPosition } from 'lew-ui/types'
+import type { Ref } from 'vue'
+import { onClickOutside, useMagicKeys } from '@vueuse/core'
+import { LewButton, LewFlex, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { useDOMCreate } from 'lew-ui/hooks'
+import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
+import { computed, nextTick, ref, watch } from 'vue'
+import { drawerEmits } from './emits'
 
-import { drawerProps } from "./props";
+import { drawerProps } from './props'
 
 // Props & Emits
-const props = defineProps(drawerProps);
-const emit = defineEmits(drawerEmits);
+const props = defineProps(drawerProps)
+const emit = defineEmits(drawerEmits)
 
 // Composables
-const { Escape } = useMagicKeys();
-useDOMCreate("lew-drawer");
+const { Escape } = useMagicKeys()
+useDOMCreate('lew-drawer')
 
 // Models
-const visible: Ref<boolean | undefined> = defineModel("visible");
+const visible: Ref<boolean | undefined> = defineModel('visible')
 
 // Refs
-const drawerBodyRef = ref<HTMLElement | null>(null);
+const drawerBodyRef = ref<HTMLElement | null>(null)
 
 // Constants
-const drawerId = `lew-drawer-${getUniqueId()}`;
+const drawerId = `lew-drawer-${getUniqueId()}`
 
 // 计算当前 drawer 是否在顶层
 const isTopDrawer = computed(() => {
   if (!visible.value) {
-    return false;
+    return false
   }
 
-  const drawerEl = document.getElementById(drawerId);
+  const drawerEl = document.getElementById(drawerId)
   if (!drawerEl) {
-    return false;
+    return false
   }
 
   // 检查是否有 dialog 在顶层
-  const dialogEl = document.getElementById("lew-dialog");
-  const hasDialog = dialogEl && dialogEl.children.length > 0;
+  const dialogEl = document.getElementById('lew-dialog')
+  const hasDialog = dialogEl && dialogEl.children.length > 0
   if (hasDialog) {
-    return false;
+    return false
   }
 
   // 获取所有 drawer 元素
-  const drawerContainer = drawerEl?.parentElement;
+  const drawerContainer = drawerEl?.parentElement
   if (!drawerContainer) {
-    return false;
+    return false
   }
 
   const openDrawers = Array.from(drawerContainer.childNodes)
     .filter((e): e is Element => e instanceof Element)
-    .filter((e) => e.children.length > 0)
+    .filter(e => e.children.length > 0)
     .filter((e) => {
       // 只考虑可见的 drawer
-      const drawerBody = e.querySelector(".lew-drawer-body");
+      const drawerBody = e.querySelector('.lew-drawer-body')
       return (
-        drawerBody && drawerBody.classList.contains("lew-drawer-body-show")
-      );
-    });
+        drawerBody && drawerBody.classList.contains('lew-drawer-body-show')
+      )
+    })
 
   // 检查当前 drawer 是否是最后一个（顶层）
   return (
-    openDrawers.length > 0 &&
-    openDrawers[openDrawers.length - 1]?.id === drawerId
-  );
-});
+    openDrawers.length > 0
+    && openDrawers[openDrawers.length - 1]?.id === drawerId
+  )
+})
 
 // 监听 visible 变化
 watch(visible, async () => {
-  await nextTick();
-});
+  await nextTick()
+})
 
 onClickOutside(drawerBodyRef, (e: any) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const target = e?.target as Element | undefined;
-    const parentElement = target?.parentElement;
+    const target = e?.target as Element | undefined
+    const parentElement = target?.parentElement
     if (parentElement?.id === drawerId) {
-      visible.value = false;
+      visible.value = false
     }
   }
-});
+})
 
 if (props.closeByEsc) {
   watch(Escape, (v: boolean) => {
     if (!visible.value || !v || !isTopDrawer.value) {
-      return;
+      return
     }
 
-    visible.value = false;
-  });
+    visible.value = false
+  })
 }
 
 // Methods
 function getStyle(
   position: LewDrawerPosition,
   width: number | string,
-  height: number | string
+  height: number | string,
 ): string {
   // 简化：移除复杂的 padding 计算
   switch (position) {
-    case "left":
-    case "right":
-      return `width:${any2px(width)};height:100vh;`;
-    case "top":
-    case "bottom":
-      return `width:100vw;height:${any2px(height)};`;
+    case 'left':
+    case 'right':
+      return `width:${any2px(width)};height:100vh;`
+    case 'top':
+    case 'bottom':
+      return `width:100vw;height:${any2px(height)};`
     default:
-      return "width:30%;height:100%";
+      return 'width:30%;height:100%'
   }
 }
 
 function handleClose(): void {
-  visible.value = false;
-  emit("close");
+  visible.value = false
+  emit('close')
 }
 </script>
 
@@ -135,7 +135,7 @@ function handleClose(): void {
         :style="`${getStyle(
           props.position,
           props.width,
-          props.height
+          props.height,
         )}; z-index:${props.zIndex}`"
         class="lew-drawer-body"
         :class="`${object2class('lew-drawer-body', {

@@ -19,7 +19,8 @@ const componentPath = computed(() => {
 
 // 获取组件名（小写，用于国际化）
 const componentName = computed(() => {
-  if (!componentPath.value) return ''
+  if (!componentPath.value)
+    return ''
   // Input -> input, InputNumber -> input-number
   // 处理驼峰命名：InputNumber -> Input-Number -> input-number
   return componentPath.value.componentName
@@ -31,7 +32,8 @@ const componentName = computed(() => {
 // 获取 demo 文件名前缀（用于动态导入）
 // Input -> DemoInput, InputNumber -> DemoInputNumber
 const demoFilePrefix = computed(() => {
-  if (!componentPath.value) return ''
+  if (!componentPath.value)
+    return ''
   return `Demo${componentPath.value.componentName}`
 })
 
@@ -39,16 +41,17 @@ const demoFilePrefix = computed(() => {
 const demoComponent = ref<any>(null)
 
 onMounted(async () => {
-  if (!componentPath.value) return
+  if (!componentPath.value)
+    return
 
   try {
     // 动态导入 demo 文件
     // 例如: /Input/demo_1 -> docs/docs/input/demo/DemoInput1.vue
     const demoNumber = componentPath.value.demoIndex + 1
     const demoFileName = `${demoFilePrefix.value}${demoNumber}`
-    
+
     const demoModule = await import(
-      `../docs/${componentName.value}/demo/${demoFileName}.vue`
+      `../docs/${componentName.value}/demo/${demoFileName}.vue`,
     )
     demoComponent.value = demoModule.default
 
@@ -98,4 +101,3 @@ onMounted(async () => {
   font-size: 14px;
 }
 </style>
-

@@ -4,11 +4,9 @@ import type { CSSProperties } from 'vue'
 import { useDebounceFn, useMouse, useResizeObserver } from '@vueuse/core'
 import { escape } from 'lodash-es'
 import tippy, { roundArrow } from 'tippy.js'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { textTrimProps } from './props'
 import { clearMeasureCache, getDisplayText } from './text-trim'
 
-// Props & Emits
 const props = defineProps(textTrimProps)
 
 // Refs
@@ -18,19 +16,44 @@ const lewTextTrimPopRef = ref<HTMLDivElement>()
 // Reactive state
 const displayText = ref('')
 const isEllipsisByTextTrim = ref(false)
+const isEllipsis = ref(false)
 
 // Instance
 let tippyInstance: Instance | null = null
 
-// Computed
+// 计算类名（静态配置用 class）
+const textTrimClass = computed(() => {
+  const classes = ['lew-text-trim-wrapper']
+
+  // Text align（静态配置）
+  if (props.textAlign && props.textAlign !== 'left') {
+    classes.push(`lew-text-trim-wrapper--align-${props.textAlign}`)
+  }
+
+  // Line clamp 模式
+  if (props.lineClamp) {
+    classes.push('lew-text-trim-wrapper--line-clamp')
+  }
+  else {
+    // 单行模式
+    classes.push('lew-text-trim-wrapper--single-line')
+  }
+
+  // Ellipsis 状态（用于控制 cursor）
+  if (isEllipsis.value || isEllipsisByTextTrim.value) {
+    classes.push('lew-text-trim-wrapper--ellipsis')
+  }
+
+  return classes.join(' ')
+})
+
+// 只计算动态样式
 const textTrimStyle = computed((): CSSProperties | string => {
   if (props.lineClamp) {
-    return `display: -webkit-box;-webkit-line-clamp: ${props.lineClamp};-webkit-box-orient: vertical;`
+    return `-webkit-line-clamp: ${props.lineClamp};`
   }
   return {
     textOverflow: (props.reserveEnd || 0) > 0 ? '' : 'ellipsis',
-    whiteSpace: 'nowrap',
-    textAlign: props.textAlign,
   }
 })
 
@@ -41,19 +64,16 @@ function initTippy(): void {
     return
 
   const { placement, allowHTML, text, offset } = props
-  let isEllipsis = false
 
   if (props.lineClamp) {
-    isEllipsis = element.offsetHeight < element.scrollHeight
+    isEllipsis.value = element.offsetHeight < element.scrollHeight
   }
   else {
-    isEllipsis = element.offsetWidth < element.scrollWidth
+    isEllipsis.value = element.offsetWidth < element.scrollWidth
   }
 
   // Handle overflow state
-  if (isEllipsis || isEllipsisByTextTrim.value) {
-    element.style.cursor = 'pointer'
-
+  if (isEllipsis.value || isEllipsisByTextTrim.value) {
     // Initialize tippy if not already created
     if (!tippyInstance) {
       tippyInstance = tippy(element, {
@@ -76,7 +96,6 @@ function initTippy(): void {
     }
   }
   else {
-    element.style.cursor = ''
     destroyTippy()
   }
 }
@@ -155,13 +174,15 @@ onUnmounted(() => {
 })
 
 // Watchers
-watch(() => [props.text, props.reserveEnd], calculateDisplayText, { flush: 'post' })
+watch(() => [props.text, props.reserveEnd], calculateDisplayText, {
+  flush: 'post',
+})
 </script>
 
 <template>
   <div
     ref="lewTextTrimRef"
-    class="lew-text-trim-wrapper"
+    :class="textTrimClass"
     :style="textTrimStyle"
     @mouseenter="handleMouseEnter"
   >
@@ -179,6 +200,37 @@ watch(() => [props.text, props.reserveEnd], calculateDisplayText, { flush: 'post
 .lew-text-trim-wrapper {
   width: 100%;
   overflow: hidden;
+
+  // 单行模式（静态配置）
+  &--single-line {
+    white-space: nowrap;
+  }
+
+  // Line clamp 模式（静态配置）
+  &--line-clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+
+  // Text align 配置（静态）
+  &--align-center {
+    text-align: center;
+  }
+
+  &--align-end,
+  &--align-right {
+    text-align: right;
+  }
+
+  &--align-start,
+  &--align-left {
+    text-align: left;
+  }
+
+  // Ellipsis 状态（用于控制 cursor）
+  &--ellipsis {
+    cursor: pointer;
+  }
 
   .lew-text-trim-pop {
     position: fixed;

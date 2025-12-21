@@ -320,9 +320,7 @@ const getTips = computed(() => {
     class="lew-upload-wrapper"
     :direction="viewMode === 'list' ? 'y' : 'x'"
     gap="10"
-    :style="{
-      width: viewMode === 'list' ? '100%' : 'auto',
-    }"
+    :width="viewMode === 'list' ? '100%' : 'auto'"
   >
     <LewUploadByCard
       v-if="viewMode === 'card'"

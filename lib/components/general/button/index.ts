@@ -1,6 +1,8 @@
+import type { LewButtonEmits } from './src/emits'
+import type { LewButtonProps } from './src/props'
+import { buttonEmits } from './src/emits'
 import LewButton from './src/LewButton.vue'
-import { buttonEmits, type LewButtonEmits } from './src/emits'
-import { buttonProps, type LewButtonProps } from './src/props'
+import { buttonProps } from './src/props'
 
 // ✅ 具名导出组件
 export { LewButton }

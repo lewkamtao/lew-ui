@@ -1,43 +1,43 @@
 <script setup lang="ts">
-import { useImage } from "@vueuse/core";
-import { LewFlex, LewTooltip, locale } from "lew-ui";
-import { any2px } from "lew-ui/utils";
-import { computed, getCurrentInstance, ref, watch } from "vue";
-import { imageProps } from "./props";
+import { useImage } from '@vueuse/core'
+import { LewFlex, LewTooltip, locale } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
+import { computed, getCurrentInstance, ref, watch } from 'vue'
+import { imageProps } from './props'
 
-const props = defineProps(imageProps);
+const props = defineProps(imageProps)
 
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
 const imageStyleObject = computed(() => {
-  const { width, height } = props;
+  const { width, height } = props
   return {
     width: any2px(width),
     height: any2px(height),
-  };
-});
+  }
+})
 
-const imageOptions = ref({ src: props.src });
+const imageOptions = ref({ src: props.src })
 
 watch(
   () => props.src,
   (newVal: string) => {
-    imageOptions.value.src = newVal;
-  }
-);
+    imageOptions.value.src = newVal
+  },
+)
 
-const { isLoading, error } = useImage(imageOptions);
+const { isLoading, error } = useImage(imageOptions)
 
 const showSkeleton = computed(
-  () => isLoading.value || props.loading || !props.src
-);
-const showError = computed(() => error.value && !showSkeleton.value);
+  () => isLoading.value || props.loading || !props.src,
+)
+const showError = computed(() => error.value && !showSkeleton.value)
 const showImage = computed(
-  () => !error.value && !showSkeleton.value && props.src
-);
+  () => !error.value && !showSkeleton.value && props.src,
+)
 </script>
 
 <template>
@@ -60,7 +60,7 @@ const showImage = computed(
         class="lew-image-fail-icon"
         src="./image_fail_icon.svg"
         :alt="locale.t('image.fail')"
-      />
+      >
     </template>
     <div v-else-if="showImage" class="lew-image-box">
       <img
@@ -72,7 +72,7 @@ const showImage = computed(
           'object-position': objectPosition,
         }"
         :alt
-      />
+      >
     </div>
   </LewFlex>
 </template>

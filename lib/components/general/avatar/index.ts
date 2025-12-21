@@ -1,5 +1,6 @@
+import type { LewAvatarProps } from './src/props'
 import LewAvatar from './src/LewAvatar.vue'
-import { avatarProps, type LewAvatarProps } from './src/props'
+import { avatarProps } from './src/props'
 
 export { LewAvatar }
 export type { LewAvatarProps }

@@ -7,4 +7,3 @@ export default {
   orderNum: 99,
   data: convertEmits(buttonEmits),
 }
-

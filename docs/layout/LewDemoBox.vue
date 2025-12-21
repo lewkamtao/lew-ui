@@ -55,7 +55,7 @@ function getStandaloneDemoUrl() {
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join('')
-    
+
     const path = `/${componentPath}/demo_${props.demoIndex + 1}`
     // 使用 router.resolve 获取完整 URL（包含 hash）
     return router.resolve(path).href

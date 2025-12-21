@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import type { LewDrawerPosition } from "lew-ui/types";
+import type { LewDrawerPosition } from 'lew-ui/types'
 
-const visible1 = ref(false);
-const visible2 = ref(false);
-const visible3 = ref(false);
-const position = ref<LewDrawerPosition>("right");
+const visible1 = ref(false)
+const visible2 = ref(false)
+const visible3 = ref(false)
+const position = ref<LewDrawerPosition>('right')
 
 const positionOptions = [
-  { label: "Right", value: "right" },
-  { label: "Left", value: "left" },
-  { label: "Top", value: "top" },
-  { label: "Bottom", value: "bottom" },
-];
+  { label: 'Right', value: 'right' },
+  { label: 'Left', value: 'left' },
+  { label: 'Top', value: 'top' },
+  { label: 'Bottom', value: 'bottom' },
+]
 
 function openDrawer1() {
-  visible1.value = true;
-  visible2.value = false;
-  visible3.value = false;
+  visible1.value = true
+  visible2.value = false
+  visible3.value = false
 }
 </script>
 

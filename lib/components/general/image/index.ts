@@ -1,5 +1,6 @@
+import type { LewImageProps } from './src/props'
 import LewImage from './src/LewImage.vue'
-import { imageProps, type LewImageProps } from './src/props'
+import { imageProps } from './src/props'
 
 export { LewImage }
 export type { LewImageProps }
