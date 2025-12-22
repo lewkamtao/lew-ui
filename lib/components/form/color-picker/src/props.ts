@@ -46,6 +46,6 @@ export const colorPickerProps = {
       propName: 'readonly',
     }),
   },
-}
+} as const
 
 export type LewColorPickerProps = ExtractPublicPropTypes<typeof colorPickerProps>
