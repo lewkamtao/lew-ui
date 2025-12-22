@@ -1,3 +1,8 @@
+---
+description: 本文是 lew-ui 组件库的核心基础规范，定义了组件目录组织、文件命名、代码结构的统一标准，所有组件必须严格遵循，确保组件库具备高度的一致性、可维护性和可扩展性。 内容涵盖组件分类目录、单个组件的基础 / 完整结构、文件命名规范、各类配置文件（index.ts/props.ts/emits.ts 等）的标准写法，同时明确了 Vue 3.4+ defineModel 的使用规范、工具函数 any2px 的最佳实践，以及各类禁止事项与检查清单。 总结 目录结构：组件按功能归类到 general/form/data/feedback/navigation 目录，单个组件必须包含 index.ts 入口和 src/ 源码目录，主组件文件命名为 Lew{ComponentName}.vue； 配置文件：props.ts 需用 PropType 定义精确类型并加 as const，emits.ts 统一管理事件类型，index.ts 按规范导出组件与类型（支持 Tree-shaking），v-model 优先使用 defineModel 并在 model.ts 中配置文档所需信息； 编码规范：Vue API 自动导入无需手动引入，样式必须使用 scoped SCSS 并遵循 BEM 命名，尺寸处理优先使用 any2px 统一转换，避免硬编码样式与深层目录嵌套。
+alwaysApply: false
+---
+
 # 组件目录与文件结构规范
 
 > **重要性**：⭐⭐⭐⭐⭐  

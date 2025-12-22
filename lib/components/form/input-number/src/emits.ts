@@ -1,4 +1,4 @@
 export const inputNumberEmits = {
-  change: (value?: string) => value,
+  change: (value?: number) => value,
   input: (value?: string) => value,
 } as const

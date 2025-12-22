@@ -1,71 +1,74 @@
-<script lang="ts" setup>
-import type { LewCheckboxOption } from 'lew-ui'
-import { LewCheckbox, LewFlex } from 'lew-ui'
-import { object2class } from 'lew-ui/utils'
-import { cloneDeep } from 'lodash-es'
-import { checkboxGroupEmits } from './emits'
-import { checkboxGroupProps } from './props'
+<script setup lang="ts">
+import type { LewCheckboxOption } from "lew-ui";
+import { LewCheckbox, LewFlex } from "lew-ui";
+import { object2class } from "lew-ui/utils";
+import { checkboxGroupEmits } from "./emits";
+import { checkboxGroupProps } from "./props";
 
-const props = defineProps(checkboxGroupProps)
-const emit = defineEmits(checkboxGroupEmits)
+// Props and Emits
+const props = defineProps(checkboxGroupProps);
+const emit = defineEmits(checkboxGroupEmits);
 
-const modelValue: Ref<string[]> = defineModel({
+// v-model
+const modelValue = defineModel<string[]>({
   default: () => [],
   required: true,
-})
+});
 
-const checkList = ref([] as boolean[])
+// State
+const checkList = ref<boolean[]>([]);
 
+// Computed properties
 const getCheckboxGroupClassName = computed(() => {
-  const { size, readonly, disabled } = props as any
-  return object2class('lew-checkbox-group', {
+  const { size, readonly, disabled } = props;
+  return object2class("lew-checkbox-group", {
     size,
     readonly,
     disabled,
-  })
-})
+  });
+});
 
-function getItemDisabled(item: LewCheckboxOption) {
-  return item.disabled || props.disabled
+// Methods
+function getItemDisabled(item: LewCheckboxOption): boolean {
+  return item.disabled || !!props.disabled;
 }
 
-function change({ item, checked }: { item: LewCheckboxOption, checked: boolean }) {
-  const _value = cloneDeep(modelValue.value) || []
+function change({ item, checked }: { item: LewCheckboxOption; checked: boolean }) {
+  const currentValue = modelValue.value || [];
+  let newValue: string[];
+
   if (checked) {
-    _value.push(item.value as string & number)
+    newValue = [...currentValue, item.value];
+  } else {
+    newValue = currentValue.filter((value) => value !== item.value);
   }
-  else {
-    const index = _value.findIndex((e: any) => e === item.value)
-    if (index >= 0) {
-      _value.splice(index, 1)
-    }
-  }
-  modelValue.value = _value
-  emit('change', _value, item)
+
+  modelValue.value = newValue;
+  emit("change", newValue, item);
 }
 
 function initCheckbox() {
-  if (!props.options)
-    return
+  if (!props.options) {
+    return;
+  }
   checkList.value = props.options.map((item: LewCheckboxOption) => {
-    if (modelValue.value && modelValue.value.includes(item.value as string & number)) {
-      return true
-    }
-    return false
-  })
+    return modelValue.value?.includes(item.value) ?? false;
+  });
 }
 
+// Watchers
 watch(
   () => modelValue.value,
   () => {
-    initCheckbox()
+    initCheckbox();
   },
   {
     deep: true,
-  },
-)
+  }
+);
 
-initCheckbox()
+// Lifecycle
+initCheckbox();
 </script>
 
 <template>

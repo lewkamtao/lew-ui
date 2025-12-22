@@ -1,3 +1,7 @@
+---
+description: 本文是 Vue 组件库类型安全开发的核心指南，聚焦组件开发中的类型定义痛点，以「类型优先、完备安全、充分推断」为核心原则，提供 Props、Emits、组件实例、工具类型等场景的标准化类型设计方案。 内容涵盖基础 / 复杂 Props 定义技巧、事件类型约束与验证、组件暴露实例类型规范、常用工具类型封装、Vue 专属类型使用、类型导出策略，同时明确 any 滥用、类型模糊等常见陷阱的规避方法，配套类型测试方案与开发检查清单，助力提升组件库 DX（开发者体验），构建类型严谨、可维护性强的 Vue 组件库。
+alwaysApply: false
+---
 # TypeScript 类型设计规范
 
 > **重要性**：⭐⭐⭐⭐  
@@ -174,9 +178,6 @@ export const buttonEmits = {
   
   // 多参数
   update: (id: number, data: any) => true,
-  
-  // v-model
-  'update:modelValue': (value: string) => true
 }
 
 // ✅ 导出 Emits 类型
@@ -197,11 +198,6 @@ emit('unknown')       // ❌ 未定义的事件
 ```typescript
 // ✅ 运行时验证
 export const inputEmits = {
-  'update:modelValue': (value: string) => {
-    // 验证逻辑
-    return typeof value === 'string'
-  },
-  
   change: (value: string, oldValue: string) => {
     return typeof value === 'string' && typeof oldValue === 'string'
   }
@@ -484,49 +480,6 @@ type cases2 = [
 ]
 ```
 
-## 文档注释
-
-### JSDoc 类型注释
-
-```typescript
-/**
- * 按钮组件的属性定义
- * @public
- */
-export const buttonProps = {
-  /**
-   * 按钮尺寸
-   * @default 'medium'
-   */
-  size: {
-    type: String as PropType<'mini' | 'small' | 'medium' | 'large'>,
-    default: 'medium'
-  },
-  
-  /**
-   * 是否禁用
-   * @default false
-   */
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  
-  /**
-   * 点击回调（异步）
-   * @example
-   * ```typescript
-   * const request = async () => {
-   *   await api.submit()
-   * }
-   * ```
-   */
-  request: {
-    type: Function as PropType<() => Promise<void>>
-  }
-} as const
-```
-
 ## 检查清单
 
 定义类型时确认：
@@ -536,9 +489,6 @@ export const buttonProps = {
 - [ ] 导出了 Props/Emits/Instance 类型
 - [ ] 没有使用 `any`（必要时用 `unknown`）
 - [ ] 复杂类型有独立的 interface/type 定义
-- [ ] 类型有 JSDoc 注释
 - [ ] 通过 `pnpm typecheck` 检查
 
 ---
-
-**记住**：好的类型定义是最好的文档！

@@ -1,3 +1,8 @@
+---
+description: 本文是 Vue 组件库实现按需引入与 Tree-shaking 的核心指南，围绕「支持按需导入、兼容 Tree-shaking、完善类型导出」三大核心目标，制定了一套标准化的组件导出、入口配置、构建优化流程，确保用户项目仅打包所需组件代码，减小最终体积。 内容涵盖组件级 / 主入口级导出规范（明确允许与禁止的导出方式）、TypeScript 类型导出细节、package.json 关键配置、Vite 构建优化方案，同时明确副作用规避技巧与 Tree-shaking 验证方法，配套开发检查清单与测试命令，助力构建轻量、高效、易用的 Vue 组件库。 总结 核心要求：组件采用具名导出，类型单独用export type导出，主入口按功能分组排序，禁止默认对象导出与 CommonJS 格式，保障 Tree-shaking 有效性； 配置关键：package.json 需设置type: module、合理配置exports与sideEffects，Vite 构建需外部化 peer 依赖、开启 Tree-shaking 优化并生成类型声明； 避坑要点：规避顶层执行代码、全局对象修改等副作用，CSS 文件单独标记副作用，通过测试项目验证按需引入效果，确保打包体积最优。
+alwaysApply: false
+---
+
 # 导出规范（Tree-shaking）
 
 > **重要性**：⭐⭐⭐⭐⭐  

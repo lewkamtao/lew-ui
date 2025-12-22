@@ -1,8 +1,7 @@
-// 单选/多选统一：
-// - 当 props.multiple=false 时，change(value: string | undefined)
-// - 当 props.multiple=true  时，change(value: string[] | undefined)
+import type { LewCascaderOption } from 'lew-ui/types'
+
 export const cascaderEmits = {
-  change: (value: any, items: any) => ({ value, items }),
+  change: (value: string | string[] | undefined, items: LewCascaderOption | LewCascaderOption[] | undefined) => ({ value, items }),
   clear: () => true,
   delete: (value: string[], deletedItem: string) => ({ value, deletedItem }),
 } as const

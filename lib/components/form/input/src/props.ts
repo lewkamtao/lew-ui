@@ -7,15 +7,12 @@ import validators, { validInputPrefixesTypeList, validInputSuffixTypeList, valid
 export const inputModel = {
   modelValue: {
     type: [String, Number],
-    default: undefined,
   },
   prefixValue: {
     type: [String, Number],
-    default: undefined,
   },
   suffixValue: {
     type: [String, Number],
-    default: undefined,
   },
 }
 
@@ -57,7 +54,6 @@ export const inputProps = {
   },
   disabled: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'disabled',
@@ -65,7 +61,6 @@ export const inputProps = {
   },
   readonly: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'readonly',
@@ -73,7 +68,6 @@ export const inputProps = {
   },
   clearable: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'clearable',
@@ -81,7 +75,6 @@ export const inputProps = {
   },
   showPassword: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'showPassword',
@@ -89,7 +82,6 @@ export const inputProps = {
   },
   maxLength: {
     type: [Number, String],
-    default: undefined,
     validator: validators.positiveInteger({
       componentName: 'LewInput',
       propName: 'maxLength',
@@ -97,7 +89,6 @@ export const inputProps = {
   },
   showCount: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'showCount',
@@ -123,7 +114,6 @@ export const inputProps = {
   },
   autoWidth: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'autoWidth',
@@ -131,7 +121,6 @@ export const inputProps = {
   },
   selectByFocus: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'selectByFocus',
@@ -139,7 +128,6 @@ export const inputProps = {
   },
   copyable: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'copyable',
@@ -147,7 +135,6 @@ export const inputProps = {
   },
   prefixes: {
     type: String as PropType<LewInputPrefixesType>,
-    default: '',
     typeValues: validInputPrefixesTypeList,
     validator: validators.enum({
       componentName: 'LewInput',
@@ -165,7 +152,6 @@ export const inputProps = {
   },
   prefixesTooltip: {
     type: String,
-    default: '',
     validator: validators.string({
       componentName: 'LewInput',
       propName: 'prefixesTooltip',
@@ -173,7 +159,6 @@ export const inputProps = {
   },
   suffix: {
     type: String as PropType<LewInputSuffixType>,
-    default: '',
     typeValues: validInputSuffixTypeList,
     validator: validators.enum({
       componentName: 'LewInput',
@@ -191,7 +176,6 @@ export const inputProps = {
   },
   suffixTooltip: {
     type: String,
-    default: '',
     validator: validators.string({
       componentName: 'LewInput',
       propName: 'suffixTooltip',
@@ -199,7 +183,6 @@ export const inputProps = {
   },
   okByEnter: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'okByEnter',

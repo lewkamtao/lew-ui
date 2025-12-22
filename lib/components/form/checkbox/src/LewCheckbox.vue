@@ -1,17 +1,19 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
-import { cloneDeep } from 'lodash-es'
 import { checkboxEmits } from './emits'
 import { checkboxProps } from './props'
 
+// Props and Emits
 const props = defineProps(checkboxProps)
 const emit = defineEmits(checkboxEmits)
 
-const modelValue: Ref<boolean> = defineModel({
+// v-model
+const modelValue = defineModel<boolean>({
   default: false,
 })
 
+// Computed properties
 const getIconSize = computed(() => {
   const { size, block } = props
   switch (size) {
@@ -47,18 +49,21 @@ const shouldShowIconBox = computed(() => {
   return props.iconable || (!props.iconable && !props.block)
 })
 
+// Methods
 function setChecked() {
-  if (props.disabled || props.readonly)
+  if (props.disabled || props.readonly) {
     return
-  const _value = cloneDeep(!modelValue.value)
+  }
+  const _value = !modelValue.value
   modelValue.value = _value
   emit('change', _value)
 }
 
+// Watchers
 watch(
   () => props.checked,
-  () => {
-    modelValue.value = props.checked
+  (newValue) => {
+    modelValue.value = newValue
   },
 )
 </script>
