@@ -1,18 +1,23 @@
 <script setup lang="ts">
+// 1. 类型导入
 import type { CSSProperties } from 'vue'
+
+// 2. 工具函数导入
 import { getColorType } from 'lew-ui/utils'
+
+// 3. 组件配置导入
 import { badgeProps } from './props'
 
+// Props
 const props = defineProps(badgeProps)
 
-// 计算类名（静态配置用 class）
+// 计算属性
 const badgeClass = computed(() => {
   return ['lew-badge', props.text && 'lew-badge--has-text']
     .filter(Boolean)
     .join(' ')
 })
 
-// 计算 badge value/dot 的类名
 const badgeValueClass = computed(() => {
   return [
     props.value ? 'lew-badge-value' : 'lew-badge-dot',
@@ -23,13 +28,12 @@ const badgeValueClass = computed(() => {
     .join(' ')
 })
 
-// 只计算动态样式（color 和 offset）
 const badgeStyle = computed<CSSProperties>(() => {
   const { color, offset, text } = props
   const _color = getColorType(color) || 'red'
 
   const style: CSSProperties = {
-    backgroundColor: `var(--lew-color-${_color})`,
+    '--badge-bg-color': `var(--lew-color-${_color})`,
   }
 
   // 只有在非 text 模式且有 offset 时才应用动态 transform
@@ -40,7 +44,6 @@ const badgeStyle = computed<CSSProperties>(() => {
   return style
 })
 
-// 显示值计算（逻辑计算，保留）
 const displayValue = computed(() => {
   const { value, max } = props
   const numberValue = Number(value)
@@ -67,7 +70,7 @@ const displayValue = computed(() => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .lew-badge {
   position: relative;
 
@@ -86,6 +89,7 @@ const displayValue = computed(() => {
     cursor: normal;
     border-radius: 50%;
     box-sizing: border-box;
+    background-color: var(--badge-bg-color, var(--lew-color-red));
 
     &.is-processing {
       &::after {
@@ -122,6 +126,7 @@ const displayValue = computed(() => {
     font-weight: normal;
     box-sizing: border-box;
     color: var(--lew-color-white);
+    background-color: var(--badge-bg-color, var(--lew-color-red));
 
     // 有 text 时的定位样式（静态配置）
     &--with-text {

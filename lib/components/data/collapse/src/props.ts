@@ -2,19 +2,6 @@ import type { Property } from 'csstype'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
-export const collapseModel = {
-  modelValue: {
-    type: [Array, String] as PropType<string[] | string>,
-  },
-}
-
-export const collapseItemModel = {
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
-}
-
 export const collapseProps = {
   width: {
     type: String as PropType<Property.Width>,

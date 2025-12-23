@@ -1,0 +1,264 @@
+---
+alwaysApply: false
+---
+
+# LewEmpty 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewEmpty
+- **核心用途**：用于展示空状态，当没有数据或内容时显示友好的提示信息，适用于列表为空、搜索结果为空、网络错误等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持 10 种预设类型：404、address、article、goods、likes、car、comment、network、order、search
+  - 每种类型对应不同的图标和视觉样式
+  - 支持自定义标题文本
+  - 支持通过插槽自定义内容区域
+  - 支持自定义尺寸、内边距、字体大小
+  - 支持暗色主题适配（图标透明度自动调整）
+  - 图标使用 SVG 格式，支持缩放不失真
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `type` 属性选择预设类型，自动显示对应的图标和样式
+- **标题显示**：通过 `title` prop 设置标题，如果不设置则使用国际化默认文本
+- **自定义内容**：通过默认插槽可以在图标和标题下方添加自定义内容（如按钮、链接等）
+- **尺寸定制**：通过 `width`、`height`、`padding` 属性可以调整组件尺寸和内边距
+- **字体大小**：通过 `fontSize` 属性可以调整标题字体大小
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| type | `LewEmptyType` | `'search'` | `'404'` / `'address'` / `'article'` / `'goods'` / `'likes'` / `'car'` / `'comment'` / `'network'` / `'order'` / `'search'` | 空状态类型，决定显示的图标 |
+| title | `string` | - | 任意字符串 | 标题文本，如果不设置则使用国际化默认文本（`empty.title`） |
+| width | `Property.Width` | `'200px'` | 任意 CSS width 值 | 组件容器宽度 |
+| height | `Property.Height` | `'auto'` | 任意 CSS height 值 | 组件容器高度 |
+| fontSize | `Property.FontSize` | `'14px'` | 任意 CSS font-size 值 | 标题字体大小 |
+| padding | `Property.Padding` | `'20px'` | 任意 CSS padding 值 | 组件内边距 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 自定义内容区域，显示在图标和标题下方 | `<template><lew-button>重新加载</lew-button></template>` |
+
+### 3.5 类型说明
+
+| 类型值 | 适用场景 | 说明 |
+|--------|----------|------|
+| `'404'` | 页面不存在 | 用于 404 错误页面 |
+| `'address'` | 地址为空 | 用于地址列表为空 |
+| `'article'` | 文章为空 | 用于文章列表为空 |
+| `'goods'` | 商品为空 | 用于商品列表为空 |
+| `'likes'` | 点赞为空 | 用于点赞列表为空 |
+| `'car'` | 购物车为空 | 用于购物车为空 |
+| `'comment'` | 评论为空 | 用于评论列表为空 |
+| `'network'` | 网络错误 | 用于网络请求失败 |
+| `'order'` | 订单为空 | 用于订单列表为空 |
+| `'search'` | 搜索结果为空 | 用于搜索结果为空（默认类型） |
+
+## 4. 注意事项
+
+- ⚠️ **图标路径**：图标使用动态导入（`import.meta.url`），确保构建工具支持此特性
+- ⚠️ **标题显示逻辑**：如果设置了 `title` prop，则显示 prop 值；如果未设置，则显示国际化文本（`locale.t('empty.title')`）
+- ⚠️ **图标尺寸**：图标最大宽度为 200px，宽度设置为 100%，会根据容器宽度自适应缩放
+- ⚠️ **暗色主题**：在暗色主题下（`.lew-dark`），图标透明度会自动调整为 0.6，提升视觉效果
+- ⚠️ **插槽内容**：默认插槽内容会显示在图标和标题下方，适合放置操作按钮、提示链接等
+- ⚠️ **样式定制**：组件使用 CSS 变量传递 `fontSize`，可以通过覆盖 CSS 变量实现更灵活的样式定制
+- ⚠️ **性能考虑**：图标使用 SVG 格式，文件体积小，加载速度快，支持任意缩放
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：图标不显示
+
+**现象**：设置了 `type` 属性，但图标没有显示。
+
+**原因**：
+- 图标文件路径不正确
+- 构建工具不支持 `import.meta.url`
+- 图标文件不存在
+
+**修复方案**：
+1. 确认图标文件存在于 `lib/components/feedback/empty/icon/` 目录下，文件名为 `icon_{type}.svg`：
+```vue
+<template>
+  <!-- ✅ 确保 type 值对应的图标文件存在 -->
+  <lew-empty type="search" />
+</template>
+```
+2. 检查构建工具配置，确保支持 `import.meta.url`（Vite 默认支持，Webpack 需要配置）
+3. 如果使用自定义图标，可以通过插槽替换：
+```vue
+<template>
+  <lew-empty type="search">
+    <template #default>
+      <img src="/custom-icon.svg" alt="Empty" />
+    </template>
+  </lew-empty>
+</template>
+```
+
+### 问题2：标题显示为 key 而不是文本
+
+**现象**：未设置 `title` prop，但显示的标题是 `empty.title` 而不是实际文本。
+
+**原因**：
+- 国际化配置缺失
+- `locale.t()` 无法找到对应的翻译
+
+**修复方案**：
+1. 确保国际化配置中包含 `empty.title`：
+```typescript
+// docs/locals/zh.ts
+export default {
+  empty: {
+    title: '暂无数据',
+  },
+}
+```
+2. 或者直接设置 `title` prop：
+```vue
+<template>
+  <lew-empty type="search" title="暂无数据" />
+</template>
+```
+
+### 问题3：图标尺寸不符合预期
+
+**现象**：设置了 `width` 属性，但图标尺寸没有按预期显示。
+
+**原因**：
+- 图标使用 `width: 100%`，受容器宽度限制
+- 图标最大宽度为 200px，超过此宽度不会继续放大
+
+**修复方案**：
+1. 调整容器宽度，图标会自适应：
+```vue
+<template>
+  <!-- ✅ 图标会占满容器宽度，但最大不超过 200px -->
+  <lew-empty type="search" width="300px" />
+</template>
+```
+2. 如果需要更大的图标，可以通过 CSS 覆盖：
+```vue
+<style>
+.custom-empty :deep(.lew-empty-icon) {
+  max-width: 400px;
+}
+</style>
+<template>
+  <lew-empty class="custom-empty" type="search" />
+</template>
+```
+
+### 问题4：字体大小设置无效
+
+**现象**：设置了 `fontSize` 属性，但标题字体大小没有变化。
+
+**原因**：
+- CSS 变量未正确应用
+- 样式被其他样式覆盖
+
+**修复方案**：
+1. 确认 `fontSize` 值格式正确（需要包含单位）：
+```vue
+<template>
+  <!-- ✅ 正确：包含单位 -->
+  <lew-empty type="search" :font-size="'16px'" />
+  <!-- ✅ 也可以使用数字，会自动添加 px -->
+  <lew-empty type="search" :font-size="16" />
+</template>
+```
+2. 检查是否有其他样式覆盖了字体大小：
+```vue
+<style>
+/* 确保没有全局样式覆盖 */
+.lew-empty-title {
+  font-size: var(--empty-font-size, 14px) !important;
+}
+</style>
+```
+
+### 问题5：暗色主题下图标显示异常
+
+**现象**：在暗色主题下，图标显示过暗或过亮。
+
+**原因**：
+- 暗色主题样式未正确应用
+- 图标透明度设置不当
+
+**修复方案**：
+1. 确保暗色主题类名正确应用：
+```vue
+<template>
+  <!-- ✅ 确保父元素或根元素有 .lew-dark 类 -->
+  <div class="lew-dark">
+    <lew-empty type="search" />
+  </div>
+</template>
+```
+2. 如果需要自定义暗色主题样式，可以通过 CSS 覆盖：
+```vue
+<style>
+.lew-dark .custom-empty .lew-empty-icon {
+  opacity: 0.8; /* 自定义透明度 */
+}
+</style>
+```
+
+### 问题6：插槽内容不显示
+
+**现象**：在默认插槽中添加了内容，但没有显示。
+
+**原因**：
+- 插槽内容被其他元素遮挡
+- 容器高度设置不当
+
+**修复方案**：
+1. 确认插槽内容正确放置：
+```vue
+<template>
+  <lew-empty type="search" title="暂无数据">
+    <!-- ✅ 插槽内容会显示在图标和标题下方 -->
+    <lew-button>重新加载</lew-button>
+  </lew-empty>
+</template>
+```
+2. 检查容器高度设置，确保有足够空间显示内容：
+```vue
+<template>
+  <!-- ✅ 设置合适的高度 -->
+  <lew-empty type="search" height="300px">
+    <lew-button>重新加载</lew-button>
+  </lew-empty>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| - | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合不同的 `type` 值可以快速适配不同的空状态场景，提升用户体验
+- ✅ 使用插槽可以添加操作按钮或提示链接，引导用户进行下一步操作
+- ✅ 通过 `width` 和 `height` 可以控制组件在不同布局中的显示效果
+- ✅ 在列表组件中使用时，可以配合 `v-if` 条件渲染，只在数据为空时显示
+- ✅ 结合国际化配置，可以让空状态提示适配多语言环境
+- ✅ 使用 CSS 变量可以灵活定制样式，无需修改组件代码

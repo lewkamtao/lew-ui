@@ -1,0 +1,245 @@
+---
+alwaysApply: false
+---
+
+# LewAlert 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewAlert
+- **核心用途**：用于展示警告提示信息，支持多种类型（正常、成功、警告、错误、信息），适用于操作反馈、系统通知、错误提示等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持 5 种类型：normal（正常）、success（成功）、warning（警告）、error（错误）、info（信息）
+  - 支持标题、内容、底部三个区域的插槽自定义
+  - 支持可关闭功能（`closeable`）
+  - 支持通过 props 或插槽两种方式传入内容
+  - 自动根据类型显示对应的图标和颜色
+  - 支持多行文本显示（`white-space: pre-line`）
+  - 使用 `useSlots()` 优化插槽检测，避免不必要的 DOM 渲染
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `type` 属性设置类型，自动显示对应颜色的背景和图标
+- **内容展示**：通过 `title` 和 `content` props 或对应的插槽传入标题和内容
+- **关闭功能**：设置 `closeable={true}` 时，右上角显示关闭图标，点击触发 `close` 事件
+- **插槽优先级**：当同时提供插槽和 props 时，插槽优先显示
+- **多行文本**：支持换行符，文本会自动换行显示
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| type | `LewStatusColor` | `'normal'` | `'normal'` / `'success'` / `'warning'` / `'error'` / `'info'` | 警告类型，决定背景色、文字色和图标（组件实际支持的类型，其他类型会使用默认样式） |
+| title | `string` | - | 任意字符串 | 警告标题文本 |
+| content | `string` | - | 任意字符串 | 警告内容文本 |
+| closeable | `boolean` | `false` | `true` / `false` | 是否显示关闭按钮 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| close | 点击关闭按钮时触发 | - | 关闭警告时触发，可用于隐藏组件或执行清理操作 |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| title | 自定义标题内容，优先级高于 `title` prop | `<template #title>自定义标题</template>` |
+| content | 自定义内容，优先级高于 `content` prop | `<template #content>自定义内容</template>` |
+| footer | 自定义底部内容 | `<template #footer><lew-button>操作按钮</lew-button></template>` |
+
+**插槽优先级**：
+- 当同时提供插槽和 props 时，插槽内容会优先显示
+- 例如：同时设置 `title` prop 和 `#title` 插槽，会显示插槽内容
+
+## 4. 注意事项
+
+- ⚠️ **内容显示优先级**：插槽优先级高于 props，当同时提供时，插槽内容会显示，props 内容会被忽略
+- ⚠️ **多行文本支持**：组件支持换行符（`\n`），文本会自动换行显示，适合显示多行内容
+- ⚠️ **关闭事件处理**：点击关闭按钮只会触发 `close` 事件，不会自动隐藏组件，需要在父组件中处理隐藏逻辑
+- ⚠️ **类型与图标映射**：每种 `type` 对应特定的图标，图标类型与 `type` 值相同（如 `type="success"` 显示 success 图标）
+- ⚠️ **样式定制**：组件使用 CSS 变量定义颜色，可以通过覆盖 CSS 变量实现主题定制
+- ⚠️ **性能考虑**：组件使用 `useSlots()` 检测插槽是否存在，避免不必要的 DOM 渲染，提升性能
+- ⚠️ **图标尺寸固定**：左侧图标尺寸固定为 18px，不支持自定义
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：关闭按钮点击后组件没有隐藏
+
+**现象**：设置了 `closeable={true}`，点击关闭按钮后组件仍然显示。
+
+**原因**：
+- `close` 事件只是通知父组件，不会自动隐藏组件
+- 需要在父组件中监听 `close` 事件并控制组件显示/隐藏
+
+**修复方案**：
+1. 使用 `v-if` 或 `v-show` 控制组件显示：
+```vue
+<template>
+  <lew-alert
+    v-if="showAlert"
+    type="warning"
+    title="警告"
+    content="这是一条警告信息"
+    closeable
+    @close="showAlert = false"
+  />
+</template>
+<script setup>
+const showAlert = ref(true)
+</script>
+```
+2. 或者使用响应式数据控制：
+```vue
+<template>
+  <lew-alert
+    v-show="alertVisible"
+    type="error"
+    title="错误"
+    content="操作失败"
+    closeable
+    @close="handleClose"
+  />
+</template>
+<script setup>
+const alertVisible = ref(true)
+function handleClose() {
+  alertVisible.value = false
+  // 可以在这里执行其他清理操作
+}
+</script>
+```
+
+### 问题2：插槽内容不显示
+
+**现象**：定义了插槽（如 `<template #title>`），但内容没有显示。
+
+**原因**：
+- 插槽名拼写错误
+- 同时提供了插槽和 props，但期望显示 props 内容（实际插槽优先级更高）
+
+**修复方案**：
+1. 确认插槽名正确（`title`、`content`、`footer`）：
+```vue
+<template>
+  <lew-alert type="info">
+    <!-- ✅ 正确：插槽名正确 -->
+    <template #title>自定义标题</template>
+    <template #content>自定义内容</template>
+  </lew-alert>
+</template>
+```
+2. 如果希望使用 props 而不是插槽，移除对应的插槽定义：
+```vue
+<template>
+  <!-- ✅ 只使用 props -->
+  <lew-alert
+    type="success"
+    title="成功标题"
+    content="成功内容"
+  />
+</template>
+```
+
+### 问题3：多行文本显示异常
+
+**现象**：设置了包含换行符的文本，但显示时没有换行。
+
+**原因**：
+- 文本中的换行符可能是 `\r\n` 或 `\r`，需要统一为 `\n`
+- CSS `white-space: pre-line` 可能被其他样式覆盖
+
+**修复方案**：
+1. 确保换行符是 `\n`：
+```vue
+<template>
+  <lew-alert
+    type="warning"
+    :content="alertContent"
+  />
+</template>
+<script setup>
+const alertContent = ref('第一行\n第二行\n第三行')
+// 或者从接口获取后处理
+const processedContent = computed(() => 
+  rawContent.value.replace(/\r\n/g, '\n').replace(/\r/g, '\n')
+)
+</script>
+```
+2. 检查是否有全局样式覆盖了 `white-space` 属性
+
+### 问题4：类型颜色不符合预期
+
+**现象**：设置了 `type` 属性，但显示的颜色与预期不符。
+
+**原因**：
+- CSS 变量被全局样式覆盖
+- 主题系统未正确加载
+- 类型值拼写错误
+
+**修复方案**：
+1. 确认 `type` 值正确（`'normal'`、`'success'`、`'warning'`、`'error'`、`'info'`）：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的类型值 -->
+  <lew-alert type="success" title="成功" />
+  <lew-alert type="error" title="错误" />
+</template>
+```
+2. 检查 CSS 变量是否正确定义：
+```css
+/* 确保这些变量已定义 */
+--lew-color-success-dark
+--lew-color-success-light
+--lew-color-error-dark
+--lew-color-error-light
+```
+3. 如果使用自定义主题，确保主题文件已正确加载
+
+### 问题5：图标不显示或显示错误
+
+**现象**：设置了 `type`，但图标不显示或显示错误的图标。
+
+**原因**：
+- `CommonIcon` 组件未正确导入
+- 图标类型与 `type` 值不匹配
+- 图标资源未加载
+
+**修复方案**：
+1. 确认 `type` 值与图标类型匹配，组件内部使用 `type` 值作为图标类型
+2. 检查 `CommonIcon` 组件是否正常工作
+3. 如果使用自定义图标，考虑使用插槽：
+```vue
+<template>
+  <lew-alert type="success" title="成功">
+    <template #title>
+      <lew-icon type="custom-icon" />
+      自定义标题
+    </template>
+  </lew-alert>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| - | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合 `v-if` 和 `close` 事件可以实现自动隐藏的提示，提升用户体验
+- ✅ 使用插槽可以灵活自定义内容，支持复杂的内容展示（如链接、按钮等）
+- ✅ 不同类型的警告适用于不同场景：success 用于成功提示，warning 用于警告信息，error 用于错误提示，info 用于一般信息
+- ✅ 通过 `footer` 插槽可以添加操作按钮，实现交互式警告提示
+- ✅ 多行文本适合显示详细的操作说明或错误信息，提升信息传达的清晰度

@@ -1,0 +1,259 @@
+---
+alwaysApply: false
+---
+
+# LewTextTrim 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewTextTrim
+- **核心用途**：用于文本截断显示，支持单行和多行截断，自动显示省略号，并在文本溢出时显示完整内容的提示框
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持单行截断（默认）和多行截断（lineClamp）
+  - 支持保留末尾字符（reserveEnd），在截断时保留指定数量的末尾字符
+  - 自动检测文本溢出，仅在溢出时显示提示框
+  - 支持自定义提示框位置（placement）和偏移量（offset）
+  - 支持延迟显示（delay）和 HTML 内容（allowHTML）
+  - 使用 `tippy.js` 实现提示框功能
+  - 使用 `@vueuse/core` 的 `useResizeObserver` 监听容器尺寸变化
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **单行截断**：文本超出容器宽度时自动截断并显示省略号，鼠标悬停时显示完整内容
+- **多行截断**：通过 `lineClamp` 设置行数，超出指定行数时截断并显示省略号
+- **保留末尾**：通过 `reserveEnd` 可以在截断时保留指定数量的末尾字符
+- **提示框**：文本溢出时，鼠标悬停会显示包含完整内容的提示框
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| text | `string` | - | 任意字符串 | 需要截断的文本内容，如果设置了插槽内容，插槽优先 |
+| allowHTML | `boolean` | - | `true` / `false` | 提示框内容是否允许 HTML（仅当使用 `text` prop 时有效） |
+| lineClamp | `number` | - | 正整数 | 多行截断的行数，设置后启用多行截断模式 |
+| textAlign | `Property.TextAlign` | `'left'` | CSS text-align 值 | 文本对齐方式 |
+| placement | `LewPlacement` | `'top'` | 所有 placement 值 | 提示框位置 |
+| offset | `[number, number]` | `[0, 15]` | `[number, number]` | 提示框偏移量 `[x, y]`（像素） |
+| delay | `[number, number]` | `[120, 120]` | `[number, number]` | 提示框显示/隐藏延迟 `[show, hide]`（毫秒） |
+| reserveEnd | `number` | - | 非负整数 | 截断时保留的末尾字符数量 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 需要截断的内容，可以包含 HTML | `<template><div>需要截断的内容</div></template>` |
+
+**插槽优先级**：
+- 当设置了插槽内容时，插槽内容优先显示
+- 当未设置插槽时，显示 `text` prop 的内容
+- 如果既无插槽也无 `text`，组件将不显示任何内容
+
+## 4. 注意事项
+
+- ⚠️ **截断模式**：`lineClamp` 和单行模式是互斥的，设置 `lineClamp` 后启用多行截断，否则使用单行截断
+- ⚠️ **溢出检测**：组件会自动检测文本是否溢出，只有在溢出时才会显示提示框
+- ⚠️ **保留末尾字符**：`reserveEnd` 用于在截断时保留指定数量的末尾字符，适合显示文件扩展名等场景
+- ⚠️ **提示框内容**：当使用 `text` prop 时，提示框显示 `text` 的内容；当使用插槽时，提示框显示插槽内容
+- ⚠️ **性能优化**：组件使用测量缓存和 `ResizeObserver` 优化性能，自动监听容器尺寸变化
+- ⚠️ **HTML 内容**：`allowHTML` 仅在 `text` prop 模式下有效，插槽模式下始终允许 HTML
+- ⚠️ **延迟显示**：`delay` 属性控制提示框的显示和隐藏延迟，可以避免鼠标快速移动时的闪烁
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：文本不截断，一直显示完整内容
+
+**现象**：设置了 `text` 或插槽内容，但文本没有截断，一直显示完整内容。
+
+**原因**：
+- 容器宽度足够，文本未溢出
+- CSS 样式被覆盖
+- `lineClamp` 设置不当
+
+**修复方案**：
+1. 确认容器宽度有限制：
+```vue
+<template>
+  <!-- ✅ 正确：容器宽度有限制 -->
+  <div style="width: 200px">
+    <lew-text-trim text="这是一段很长的文本内容" />
+  </div>
+  
+  <!-- ❌ 错误：容器宽度无限制，文本不会截断 -->
+  <lew-text-trim text="这是一段很长的文本内容" />
+</template>
+```
+2. 检查 CSS 样式是否被覆盖：
+```vue
+<template>
+  <lew-text-trim text="文本内容" style="width: 200px" />
+</template>
+```
+
+### 问题2：提示框不显示
+
+**现象**：文本溢出时，鼠标悬停没有显示提示框。
+
+**原因**：
+- 文本未真正溢出
+- `delay` 设置过长
+- `tippy.js` 初始化失败
+
+**修复方案**：
+1. 确认文本真正溢出：
+```vue
+<template>
+  <!-- 确保容器宽度小于文本宽度 -->
+  <div style="width: 100px">
+    <lew-text-trim text="这是一段很长的文本内容" />
+  </div>
+</template>
+```
+2. 检查 `delay` 设置：
+```vue
+<template>
+  <!-- ✅ 正确：delay 设置合理 -->
+  <lew-text-trim text="文本" :delay="[0, 0]" />
+  
+  <!-- ❌ 错误：delay 过长，可能感觉不到提示框 -->
+  <lew-text-trim text="文本" :delay="[5000, 5000]" />
+</template>
+```
+
+### 问题3：多行截断不生效
+
+**现象**：设置了 `lineClamp`，但文本没有按指定行数截断。
+
+**原因**：
+- `lineClamp` 值设置不正确
+- CSS 样式被覆盖
+- 浏览器不支持 `-webkit-line-clamp`
+
+**修复方案**：
+1. 确认 `lineClamp` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：lineClamp 为正整数 -->
+  <lew-text-trim :line-clamp="3">文本内容</lew-text-trim>
+  
+  <!-- ❌ 错误：lineClamp 不是正整数 -->
+  <lew-text-trim :line-clamp="0">文本内容</lew-text-trim>
+</template>
+```
+2. 检查浏览器兼容性（现代浏览器都支持 `-webkit-line-clamp`）
+
+### 问题4：保留末尾字符不生效
+
+**现象**：设置了 `reserveEnd`，但截断时没有保留末尾字符。
+
+**原因**：
+- `reserveEnd` 值设置不当
+- 文本未溢出，不需要截断
+- 文本长度小于 `reserveEnd`
+
+**修复方案**：
+1. 确认 `reserveEnd` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：reserveEnd 小于文本长度 -->
+  <lew-text-trim text="example.txt" :reserve-end="4">
+    文本内容
+  </lew-text-trim>
+  
+  <!-- ❌ 错误：reserveEnd 大于等于文本长度 -->
+  <lew-text-trim text="abc" :reserve-end="3">文本内容</lew-text-trim>
+</template>
+```
+2. 确认文本真正溢出（只有溢出时才会应用 `reserveEnd`）
+
+### 问题5：提示框位置不正确
+
+**现象**：设置了 `placement`，但提示框位置不符合预期。
+
+**原因**：
+- `placement` 值不正确
+- `offset` 设置导致位置偏移
+- 容器位置限制
+
+**修复方案**：
+1. 确认 `placement` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的 placement 值 -->
+  <lew-text-trim text="文本" placement="top" />
+  <lew-text-trim text="文本" placement="bottom" />
+  <lew-text-trim text="文本" placement="left" />
+  <lew-text-trim text="文本" placement="right" />
+</template>
+```
+2. 调整 `offset` 值：
+```vue
+<template>
+  <lew-text-trim text="文本" :offset="[0, 10]" />
+</template>
+```
+
+### 问题6：文本和插槽同时显示
+
+**现象**：同时设置了 `text` prop 和插槽内容，两者都显示了。
+
+**原因**：
+- `text` 和插槽的显示逻辑问题
+- 模板条件判断不正确
+
+**修复方案**：
+1. 确认使用方式（`text` 和插槽是互斥的）：
+```vue
+<template>
+  <!-- ✅ 正确：只使用 text -->
+  <lew-text-trim text="文本内容" />
+  
+  <!-- ✅ 正确：只使用插槽 -->
+  <lew-text-trim>文本内容</lew-text-trim>
+  
+  <!-- ❌ 错误：同时设置时，插槽会显示，text 不会显示 -->
+  <lew-text-trim text="文本">插槽内容</lew-text-trim>
+</template>
+```
+
+### 问题7：性能问题
+
+**现象**：文本内容很长时，组件响应变慢。
+
+**原因**：
+- 文本测量计算开销大
+- `ResizeObserver` 触发频繁
+- 缓存未生效
+
+**修复方案**：
+1. 组件已内置性能优化（测量缓存、防抖），通常不需要额外优化
+2. 如果仍有性能问题，可以考虑减少 `reserveEnd` 的使用或限制文本长度
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（ref, computed, watch, onMounted, onUnmounted），移除所有注释，优化模板中的 prop 引用 | 2024-01-XX |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `reserveEnd` 可以在截断时保留文件扩展名等重要的末尾信息
+- ✅ 通过 `lineClamp` 可以实现多行文本截断，适合列表、卡片等场景
+- ✅ 使用 `delay` 可以优化提示框的显示体验，避免鼠标快速移动时的闪烁
+- ✅ 通过 `allowHTML` 可以在提示框中显示富文本内容，提升信息展示效果
+- ✅ 结合 `textAlign` 可以控制文本对齐方式，适配不同的布局需求
+- ✅ 组件会自动监听容器尺寸变化，响应式更新截断效果

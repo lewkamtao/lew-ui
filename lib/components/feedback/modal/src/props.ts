@@ -3,14 +3,6 @@ import type { LewButtonProps } from 'lew-ui'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
-// Model definitions
-export const modalModel = {
-  visible: {
-    type: Boolean,
-    default: false,
-  },
-}
-
 // Props definitions
 export const modalProps = {
   title: {

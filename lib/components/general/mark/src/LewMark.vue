@@ -1,30 +1,43 @@
-<script lang="ts" setup>
+<script setup lang="ts">
+// 1. 类型导入
 import type { CSSProperties } from 'vue'
+
+// 2. 工具函数导入
 import { getColorType } from 'lew-ui/utils'
-import { computed } from 'vue'
+
+// 3. 组件配置导入
 import { markProps } from './props'
 
+// Props
 const props = defineProps(markProps)
 
-// Computed
-const markStyle = computed(
-  (): CSSProperties => {
-    const { color, round, bold, cursor } = props
-    const resolvedColor = getColorType(color) || 'blue'
+// 计算属性
+const markClass = computed(() => {
+  const classes = ['lew-mark']
+  if (props.round) {
+    classes.push('lew-mark--round')
+  }
+  if (props.cursor === 'pointer') {
+    classes.push('lew-mark--pointer')
+  }
+  return classes.join(' ')
+})
 
-    return {
-      borderRadius: round ? '20px' : 'var(--lew-border-radius-mini)',
-      fontWeight: bold || 400,
-      color: `var(--lew-color-${resolvedColor}-dark)`,
-      backgroundColor: `var(--lew-color-${resolvedColor}-light)`,
-      cursor: cursor || 'default',
-    }
-  },
-)
+const markStyle = computed((): CSSProperties => {
+  const { color, bold } = props
+  const resolvedColor = getColorType(color) || 'blue'
+
+  return {
+    '--mark-color': `var(--lew-color-${resolvedColor}-dark)`,
+    '--mark-bg-color': `var(--lew-color-${resolvedColor}-light)`,
+    fontWeight: bold || 400,
+    cursor: props.cursor || 'default',
+  }
+})
 </script>
 
 <template>
-  <span class="lew-mark" :style="markStyle">
+  <span :class="markClass" :style="markStyle">
     <slot />
   </span>
 </template>
@@ -32,18 +45,20 @@ const markStyle = computed(
 <style lang="scss" scoped>
 .lew-mark {
   display: inline;
-  border-radius: var(--lew-border-radius-small);
+  border-radius: var(--lew-border-radius-mini);
   padding: 2px 6px;
   margin: 0px 3px;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-}
+  color: var(--mark-color, var(--lew-color-blue-dark));
+  background-color: var(--mark-bg-color, var(--lew-color-blue-light));
 
-.lew-mark-to {
-  cursor: pointer;
-}
+  &--round {
+    border-radius: 20px;
+  }
 
-.lew-mark-round {
-  border-radius: 20px;
+  &--pointer {
+    cursor: pointer;
+  }
 }
 </style>

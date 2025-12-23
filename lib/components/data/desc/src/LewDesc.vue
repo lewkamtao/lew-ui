@@ -1,20 +1,29 @@
 <script setup lang="ts">
+// 1. 类型导入
 import type { LewDescOption } from 'lew-ui/types'
+
+// 2. 组件导入（外部）
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
+
+// 3. 工具函数导入
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+
+// 4. 组件导入（同级）
 import LewDescItem from './LewDescItem.vue'
+
+// 5. 组件配置导入
 import { descProps, lewDescSizePaddingMap } from './props'
 
+// Props
 const props = defineProps(descProps)
 
-// Refs
+// 响应式状态
 const descLabelRef = ref<InstanceType<typeof LewGetLabelWidth>>()
 const autoLabelWidth = ref(0)
 
-// Computed
-const componentOptions: ComputedRef<LewDescOption[]> = computed(
+// 计算属性
+const componentOptions = computed<LewDescOption[]>(
   () => cloneDeep(props.options) || [],
 )
 
@@ -29,8 +38,8 @@ const getDescStyle = computed(() => {
 
   return {
     width: any2px(width),
-    minWidth: 320,
-    gap: bordered ? 0 : any2px(gap),
+    minWidth: '320px',
+    gap: bordered ? '0px' : any2px(gap),
     gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
   }
 })
@@ -50,19 +59,19 @@ const getBind = computed(() => (item: LewDescOption) => {
   }
 })
 
-// Methods
+// 方法
 function calculateLabelWidth() {
   autoLabelWidth.value
     = (descLabelRef.value?.getWidth() || 0)
       + (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
 }
 
-// Lifecycle
+// 生命周期
 onMounted(() => {
   calculateLabelWidth()
 })
 
-// Watchers
+// 监听器
 watch(
   () => props.size,
   () => {

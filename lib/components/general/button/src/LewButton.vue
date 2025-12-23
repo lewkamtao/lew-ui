@@ -1,13 +1,19 @@
 <script setup lang="ts">
+// 1. 组件导入
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+
+// 2. 工具函数导入
 import { object2class } from 'lew-ui/utils'
-import { computed, ref, useSlots } from 'vue'
+
+// 3. 组件配置导入
 import { buttonEmits } from './emits'
 import { buttonProps } from './props'
 
 // Props & Emits
 const props = defineProps(buttonProps)
 const emit = defineEmits(buttonEmits)
+
+// Composables
 const slots = useSlots()
 
 // 响应式状态
@@ -29,7 +35,7 @@ const buttonClass = computed(() => {
 })
 
 const iconSize = computed(() => {
-  const sizeMap = {
+  const sizeMap: Record<string, number> = {
     mini: 12,
     small: 14,
     medium: 16,
@@ -43,15 +49,12 @@ const hasContent = computed(() => !!slots.default || !!props.text)
 
 // 方法
 async function handleClick(e: MouseEvent) {
-  // 禁用或加载状态下不触发
   if (props.disabled || isLoading.value) {
     return
   }
 
-  // 触发 click 事件
   emit('click', e)
 
-  // 处理异步请求
   if (typeof props.request === 'function') {
     try {
       _loading.value = true
@@ -68,7 +71,7 @@ async function handleClick(e: MouseEvent) {
   <button
     class="lew-button"
     :class="buttonClass"
-    :disabled="disabled"
+    :disabled="props.disabled"
     @click="handleClick"
   >
     <div

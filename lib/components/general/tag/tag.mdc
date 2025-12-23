@@ -1,0 +1,292 @@
+---
+alwaysApply: false
+---
+
+# LewTag 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewTag
+- **核心用途**：用于显示标签、标记、分类等场景，支持多种样式变体、尺寸、颜色和关闭功能
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持三种类型：填充（fill）、浅色（light）、幽灵（ghost）
+  - 支持三种尺寸：small、medium、large
+  - 支持所有主题色和状态色（primary、success、error 等）
+  - 支持关闭功能（closeable 或 close 函数）
+  - 支持异步关闭确认（close 函数返回 Promise<boolean>）
+  - 支持圆角（round）和超大尺寸（oversize）
+  - 支持禁用状态（disabled）
+  - 支持左侧和右侧插槽（left、right）
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础标签**：通过 `type` 和 `color` 属性控制标签样式
+- **尺寸控制**：通过 `size` 属性控制标签大小
+- **关闭功能**：通过 `closeable` 或 `close` 属性显示关闭按钮
+- **异步确认**：通过 `close` 函数可以实现异步关闭确认逻辑
+- **文本显示**：通过 `text` prop 或默认插槽显示标签文本
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| text | `string` | - | 任意字符串 | 标签文本内容，如果设置了插槽内容，插槽优先 |
+| type | `LewTagType` | `'light'` | `'fill'` / `'light'` / `'ghost'` | 标签类型：填充、浅色、幽灵 |
+| color | `LewColor` | `'primary'` | 所有主题色和状态色 | 标签颜色 |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 标签尺寸 |
+| round | `boolean` | `false` | `true` / `false` | 是否显示圆角 |
+| oversize | `boolean` | `false` | `true` / `false` | 是否使用超大尺寸（增加内边距） |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用标签 |
+| closeable | `boolean` | `false` | `true` / `false` | 是否显示关闭按钮 |
+| close | `() => Promise<boolean>` | - | 异步函数 | 关闭按钮点击时执行的异步函数，返回 `true` 时触发 `close` 事件 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| close | - | 关闭按钮点击时触发（当 `close` 函数返回 `true` 或未设置 `close` 函数时） |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 标签内容，可以包含文本和图标 | `<template><CommonIcon type="add" />标签</template>` |
+| left | 标签左侧内容 | `<template #left><CommonIcon type="user" /></template>` |
+| right | 标签右侧内容 | `<template #right><CommonIcon type="check" /></template>` |
+
+**插槽优先级**：
+- 当设置了插槽内容时，插槽内容优先显示
+- 当未设置插槽时，显示 `text` prop 的内容
+- 如果既无插槽也无 `text`，标签将不显示文本
+
+## 4. 注意事项
+
+- ⚠️ **关闭功能**：`closeable` 和 `close` 函数都可以显示关闭按钮，`close` 函数可以实现异步关闭确认逻辑
+- ⚠️ **异步关闭确认**：`close` 函数必须返回 `Promise<boolean>`，只有当返回 `true` 时才会触发 `close` 事件
+- ⚠️ **关闭状态管理**：组件内部会管理关闭状态（`isClosing`），在异步操作期间显示加载图标
+- ⚠️ **颜色支持**：`color` 支持所有 `LewColor` 类型，包括主题色（blue、green 等）和状态色（error、success 等）
+- ⚠️ **类型与颜色组合**：`type` 和 `color` 的组合会产生不同的视觉效果，fill 类型使用纯色背景，light 类型使用浅色背景，ghost 类型使用透明背景和边框
+- ⚠️ **禁用与关闭**：标签在 `disabled` 状态下不会响应关闭操作
+- ⚠️ **样式定制**：组件使用 CSS class 控制所有样式变体，符合性能最佳实践
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：关闭按钮不显示
+
+**现象**：设置了 `closeable={true}` 或 `close` 函数，但关闭按钮没有显示。
+
+**原因**：
+- `closeable` 和 `close` 都未设置
+- 条件判断逻辑问题
+
+**修复方案**：
+1. 确认设置了 `closeable` 或 `close`：
+```vue
+<template>
+  <!-- ✅ 正确：使用 closeable -->
+  <lew-tag closeable>标签</lew-tag>
+  
+  <!-- ✅ 正确：使用 close 函数 -->
+  <lew-tag :close="handleClose">标签</lew-tag>
+  
+  <!-- ❌ 错误：未设置 closeable 或 close -->
+  <lew-tag>标签</lew-tag>
+</template>
+```
+
+### 问题2：异步关闭确认不生效
+
+**现象**：设置了 `close` 函数，但关闭按钮点击后没有执行确认逻辑。
+
+**原因**：
+- `close` 函数不是异步函数
+- `close` 函数返回的不是 `Promise<boolean>`
+- 函数执行出错
+
+**修复方案**：
+1. 确认 `close` 是异步函数并返回 `Promise<boolean>`：
+```vue
+<template>
+  <lew-tag :close="handleClose">标签</lew-tag>
+</template>
+<script setup>
+// ✅ 正确：返回 Promise<boolean>
+const handleClose = async () => {
+  const confirmed = await confirm('确定要关闭吗？')
+  return confirmed
+}
+
+// ❌ 错误：不是异步函数
+const handleClose = () => {
+  return true
+}
+
+// ❌ 错误：返回的不是 boolean
+const handleClose = async () => {
+  return 'yes'
+}
+</script>
+```
+
+### 问题3：关闭事件不触发
+
+**现象**：点击关闭按钮后，`@close` 事件没有触发。
+
+**原因**：
+- `close` 函数返回 `false`
+- `close` 函数执行出错
+- 标签处于 `disabled` 状态
+
+**修复方案**：
+1. 确认 `close` 函数返回 `true`：
+```vue
+<template>
+  <lew-tag :close="handleClose" @close="onClose">标签</lew-tag>
+</template>
+<script setup>
+const handleClose = async () => {
+  const confirmed = await confirm('确定要关闭吗？')
+  return confirmed  // 只有返回 true 才会触发 @close
+}
+
+const onClose = () => {
+  console.log('标签已关闭')
+}
+</script>
+```
+2. 确认标签未禁用：
+```vue
+<template>
+  <!-- ✅ 正确：未禁用，可以关闭 -->
+  <lew-tag closeable @close="onClose">标签</lew-tag>
+  
+  <!-- ❌ 错误：禁用状态下不会响应关闭 -->
+  <lew-tag closeable disabled @close="onClose">标签</lew-tag>
+</template>
+```
+
+### 问题4：颜色设置无效
+
+**现象**：设置了 `color` 属性，但标签颜色没有变化。
+
+**原因**：
+- `color` 值不在有效列表中
+- CSS 变量未正确定义
+- 样式被其他样式覆盖
+
+**修复方案**：
+1. 确认 `color` 值正确（支持所有主题色和状态色）：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的颜色值 -->
+  <lew-tag color="primary">标签</lew-tag>
+  <lew-tag color="success">标签</lew-tag>
+  <lew-tag color="error">标签</lew-tag>
+</template>
+```
+2. 检查 CSS 变量是否正确定义：
+```css
+/* 确保这些变量已定义 */
+--lew-color-primary
+--lew-color-success
+--lew-color-error
+```
+
+### 问题5：类型与颜色组合效果不符合预期
+
+**现象**：设置了 `type` 和 `color`，但视觉效果不符合预期。
+
+**原因**：
+- 对 `type` 和 `color` 的组合效果理解有误
+- CSS 变量未正确定义
+
+**修复方案**：
+1. 理解 `type` 和 `color` 的组合效果：
+```vue
+<template>
+  <!-- fill：纯色背景，白色文字 -->
+  <lew-tag type="fill" color="primary">标签</lew-tag>
+  
+  <!-- light：浅色背景，深色文字 -->
+  <lew-tag type="light" color="primary">标签</lew-tag>
+  
+  <!-- ghost：透明背景，边框和文字同色 -->
+  <lew-tag type="ghost" color="primary">标签</lew-tag>
+</template>
+```
+
+### 问题6：文本和插槽同时显示
+
+**现象**：同时设置了 `text` prop 和插槽内容，两者都显示了。
+
+**原因**：
+- `text` 和插槽的显示逻辑问题
+- 模板条件判断不正确
+
+**修复方案**：
+1. 确认使用方式（`text` 和插槽是互斥的）：
+```vue
+<template>
+  <!-- ✅ 正确：只使用 text -->
+  <lew-tag text="标签" />
+  
+  <!-- ✅ 正确：只使用插槽 -->
+  <lew-tag>标签</lew-tag>
+  
+  <!-- ❌ 错误：同时设置时，插槽会显示，text 不会显示 -->
+  <lew-tag text="标签">插槽内容</lew-tag>
+</template>
+```
+
+### 问题7：关闭按钮加载状态一直显示
+
+**现象**：点击关闭按钮后，加载图标一直显示，不消失。
+
+**原因**：
+- `close` 函数一直处于 pending 状态
+- `close` 函数执行出错但未正确处理
+
+**修复方案**：
+1. 确保 `close` 函数正确完成：
+```vue
+<template>
+  <lew-tag :close="handleClose">标签</lew-tag>
+</template>
+<script setup>
+const handleClose = async () => {
+  try {
+    const result = await someAsyncOperation()
+    return result === 'success'
+  } catch (error) {
+    console.error('关闭失败:', error)
+    return false  // 返回 false 不会触发 close 事件，但会隐藏加载状态
+  }
+}
+</script>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（ref, computed），移除注释，优化样式（添加 scoped，移除未使用的 CSS class） | 2024-01-XX |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合 `type` 和 `color` 可以快速创建不同风格的标签，适配不同的设计需求
+- ✅ 使用 `close` 函数可以实现异步关闭确认，提升用户体验
+- ✅ 通过 `left` 和 `right` 插槽可以在标签两侧添加图标或其他内容
+- ✅ 使用 `round` 可以创建圆角标签，适合现代风格的界面设计
+- ✅ 通过 `oversize` 可以增加标签内边距，适合需要突出显示的标签
+- ✅ 结合 `disabled` 可以实现完善的交互反馈，提升用户体验

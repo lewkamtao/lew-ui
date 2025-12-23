@@ -1,129 +1,129 @@
 <script setup lang="ts">
-import { useImage } from '@vueuse/core'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px } from 'lew-ui/utils'
-import { avatarProps } from './props'
+// 1. 第三方库导入
+import { useImage } from "@vueuse/core";
 
-const props = defineProps(avatarProps)
+// 2. 组件导入
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
 
-// Constants (moved outside component for performance)
-const BORDER_RADIUS_MAP: Record<string, string> = {
-  circle: '50%',
-  sharp: '0',
-  square: 'var(--lew-border-radius-small)',
-}
+// 3. 工具函数导入
+import { any2px } from "lew-ui/utils";
 
-// STATUS_COLOR_CONFIG 已移至 CSS class，无需在 JS 中定义
+// 4. 组件配置导入
+import { avatarProps } from "./props";
 
-// Image handling
+// Props
+const props = defineProps(avatarProps);
+
+// Composables
 const imageOptions = ref({
   src: props.src,
-})
+});
 
 watch(
   () => props.src,
   (newVal: string) => {
-    imageOptions.value.src = newVal
+    imageOptions.value.src = newVal;
   },
-  { immediate: true },
-)
+  { immediate: true }
+);
 
-const { isLoading, error } = useImage(imageOptions)
+const { isLoading, error } = useImage(imageOptions);
 
-const avatarStyleObject = computed(() => ({
+// 常量
+const BORDER_RADIUS_MAP: Record<string, string> = {
+  circle: "50%",
+  sharp: "0",
+  square: "var(--lew-border-radius-small)",
+};
+
+// 计算属性
+const avatarStyle = computed(() => ({
   width: any2px(props.size),
   height: any2px(props.size),
-}))
+}));
 
-const avatarBoxStyleObject = computed(() => ({
+const avatarBoxStyle = computed(() => ({
   borderRadius: BORDER_RADIUS_MAP[props.shape],
-}))
+}));
 
-const imageStyleObject = computed(() => ({
+const imageStyle = computed(() => ({
   objectFit: props.objectFit,
   objectPosition: props.objectPosition,
-}))
+}));
 
-const textStyleObject = computed(() => {
-  const size
-    = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
+const textStyle = computed(() => {
+  const size =
+    typeof props.size === "number" ? props.size : Number.parseInt(props.size);
   return {
     fontSize: `${size * 0.45}px`,
     lineHeight: `${size - 2}px`,
-    textAlign: 'center' as const,
-    color: 'var(--lew-color-text-2)',
-    userSelect: 'none' as const,
-  }
-})
+    textAlign: "center" as const,
+    color: "var(--lew-color-text-2)",
+    userSelect: "none" as const,
+  };
+});
 
 const altText = computed(() => {
-  if (!props.alt)
-    return ''
+  if (!props.alt) return "";
   const result = props.alt
-    .split(' ')
-    .map(word => word.charAt(0))
-    .join('')
-    .toUpperCase()
-  return result.length > 2 ? result.charAt(0) : result
-})
+    .split(" ")
+    .map((word) => word.charAt(0))
+    .join("")
+    .toUpperCase();
+  return result.length > 2 ? result.charAt(0) : result;
+});
 
-// Status dot class (使用 class 而非 computed style，性能更好)
-// 包含：形状-位置-状态（所有静态配置都在 CSS 中）
 const statusDotClass = computed(() => {
-  if (!props.status)
-    return ''
-  return `lew-avatar-status-dot lew-avatar-status-dot--${props.shape}-${props.statusPlacement} lew-avatar-status-dot--${props.status}`
-})
+  if (!props.status) return "";
+  return `lew-avatar-status-dot lew-avatar-status-dot--${props.shape}-${props.statusPlacement} lew-avatar-status-dot--${props.status}`;
+});
 
-// Status dot style (只包含动态计算的尺寸，颜色已移至 CSS class)
 const statusDotStyle = computed(() => {
-  if (!props.status)
-    return {}
+  if (!props.status) return {};
 
-  // 解析 size：只支持纯数字或带 px 的字符串
-  const sizeValue
-    = typeof props.size === 'number' ? props.size : Number.parseFloat(props.size)
-  const dotSize = sizeValue * 0.2
+  const sizeValue =
+    typeof props.size === "number" ? props.size : Number.parseFloat(props.size);
+  const dotSize = sizeValue * 0.2;
 
   return {
     width: any2px(dotSize),
     height: any2px(dotSize),
-  }
-})
+  };
+});
 
 const iconSize = computed(() => {
-  const { size } = props
-  return typeof size === 'number' ? size * 0.5 : Number.parseInt(size) * 0.5
-})
+  const { size } = props;
+  return typeof size === "number" ? size * 0.5 : Number.parseInt(size) * 0.5;
+});
 
-const showSkeleton = computed(() => isLoading.value || props.loading)
+const showSkeleton = computed(() => isLoading.value || props.loading);
 const showImage = computed(
-  () => props.src && !error.value && !showSkeleton.value,
-)
+  () => props.src && !error.value && !showSkeleton.value
+);
 const showAltText = computed(
-  () => !props.src && props.alt && !showSkeleton.value,
-)
+  () => !props.src && props.alt && !showSkeleton.value
+);
 const showIcon = computed(
-  () => !props.src && !props.alt && !showSkeleton.value,
-)
-const showFallback = computed(() => error.value && !showSkeleton.value)
+  () => !props.src && !props.alt && !showSkeleton.value
+);
+const showFallback = computed(() => error.value && !showSkeleton.value);
 </script>
 
 <template>
-  <div class="lew-avatar" :style="avatarStyleObject">
-    <div class="lew-avatar-box" :style="avatarBoxStyleObject">
+  <div class="lew-avatar" :style="avatarStyle">
+    <div class="lew-avatar-box" :style="avatarBoxStyle">
       <div v-if="showSkeleton" class="skeletons" />
       <img
         v-else-if="showImage"
         :alt="props.alt"
         :src="props.src"
         loading="lazy"
-        :style="imageStyleObject"
-      >
+        :style="imageStyle"
+      />
       <div
         v-else-if="showAltText || (showFallback && props.alt)"
         class="lew-avatar-text"
-        :style="textStyleObject"
+        :style="textStyle"
       >
         {{ altText }}
       </div>
@@ -195,7 +195,7 @@ const showFallback = computed(() => error.value && !showSkeleton.value)
     border-radius: 50%;
     z-index: 19;
     border: var(--lew-form-border-width) var(--lew-color-white) solid;
-    content: '';
+    content: "";
   }
 
   // Status colors (静态配置，使用 CSS class)

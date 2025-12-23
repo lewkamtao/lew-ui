@@ -1,35 +1,41 @@
-<script lang="ts" setup>
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
-import { computed } from 'vue'
-import { emptyProps } from './props'
+<script setup lang="ts">
+// 1. 组件导入
+import { locale } from "lew-ui";
 
-const props = defineProps(emptyProps)
+// 2. 工具函数导入
+import { any2px } from "lew-ui/utils";
 
-// Computed
+// 3. 组件配置导入
+import { emptyProps } from "./props";
+
+// Props
+const props = defineProps(emptyProps);
+
+// 计算属性
 const iconSrc = computed(() => {
-  return new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href
-})
+  return new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href;
+});
 
-const emptyStyleObject = computed(() => {
-  const { width, height, padding } = props
+const emptyStyle = computed(() => {
+  const { width, height, padding, fontSize } = props;
   return {
     width: any2px(width),
     height: any2px(height),
     padding: any2px(padding),
-  }
-})
+    "--empty-font-size": any2px(fontSize),
+  };
+});
 
-const titleStyle = computed(() => ({
-  fontSize: any2px(props.fontSize),
-}))
+const displayTitle = computed(() => {
+  return props.title || locale.t("empty.title");
+});
 </script>
 
 <template>
-  <div class="lew-empty-container" :style="emptyStyleObject">
-    <img :src="iconSrc" :alt="title" class="lew-empty-icon">
-    <div v-if="title" :style="titleStyle" class="lew-empty-title">
-      {{ title ? title : locale.t("empty.title") }}
+  <div class="lew-empty-container" :style="emptyStyle">
+    <img :src="iconSrc" :alt="displayTitle" class="lew-empty-icon" />
+    <div v-if="displayTitle" class="lew-empty-title">
+      {{ displayTitle }}
     </div>
     <slot />
   </div>
@@ -52,6 +58,7 @@ const titleStyle = computed(() => ({
 
   .lew-empty-title {
     margin-top: 16px;
+    font-size: var(--empty-font-size, 14px);
     color: var(--lew-text-color-5);
     text-align: center;
     line-height: 1.5;

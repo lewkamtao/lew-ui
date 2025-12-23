@@ -1,37 +1,37 @@
 <script setup lang="ts">
+// 1. 类型导入
 import type { CSSProperties } from 'vue'
+
+// 2. 工具函数导入
 import { any2px } from 'lew-ui/utils'
+
+// 3. 组件配置导入
 import { flexProps } from './props'
 
+// Props
 const props = defineProps(flexProps)
 
-// 计算类名（静态配置用 class）
+// 计算属性
 const flexClass = computed(() => {
   const classes = ['lew-flex']
 
-  // Direction
   classes.push(`lew-flex--${props.direction || 'x'}`)
 
-  // Wrap
   if (props.wrap) {
     classes.push('lew-flex--wrap')
   }
 
-  // Mode (justify-content)
   if (props.mode) {
     classes.push(`lew-flex--${props.mode}`)
   }
   else {
-    // 根据 direction 和 x/y 设置 justify-content 和 align-items
     const mainAxis = props.direction === 'x' ? props.x : props.y
     const crossAxis = props.direction === 'x' ? props.y : props.x
 
-    // Justify-content (main axis)
     if (mainAxis) {
       classes.push(`lew-flex--justify-${mainAxis}`)
     }
 
-    // Align-items (cross axis)
     if (crossAxis) {
       classes.push(`lew-flex--align-${crossAxis}`)
     }
@@ -40,29 +40,25 @@ const flexClass = computed(() => {
   return classes.join(' ')
 })
 
-// 只计算动态样式（gap 和 width）
-const flexStyle = computed(
-  (): CSSProperties => {
-    const style: CSSProperties = {}
+const flexStyle = computed((): CSSProperties => {
+  const style: CSSProperties = {}
 
-    const gap = any2px(props.gap)
-    if (gap) {
-      style.gap = gap
-    }
+  const gap = any2px(props.gap)
+  if (gap) {
+    style.gap = gap
+  }
 
-    const width = props.width ? any2px(props.width) : undefined
-    if (width) {
-      style.width = width
-    }
+  const width = props.width ? any2px(props.width) : undefined
+  if (width) {
+    style.width = width
+  }
 
-    return style
-  },
-)
+  return style
+})
 </script>
 
 <template>
   <div :class="flexClass" :style="flexStyle">
-    <pre v-show="false">{{ flexStyle }}</pre>
     <slot />
   </div>
 </template>
@@ -73,7 +69,6 @@ const flexStyle = computed(
   box-sizing: border-box;
   width: 100%;
 
-  // Direction 配置（静态）
   &--x {
     flex-direction: row;
   }
@@ -82,12 +77,10 @@ const flexStyle = computed(
     flex-direction: column;
   }
 
-  // Wrap 配置（静态）
   &--wrap {
     flex-wrap: wrap;
   }
 
-  // Mode 配置（justify-content，静态）
   &--around {
     justify-content: space-around;
   }
@@ -96,7 +89,6 @@ const flexStyle = computed(
     justify-content: space-between;
   }
 
-  // Justify-content 配置（main axis，静态）
   &--justify-start,
   &--justify-left {
     justify-content: flex-start;
@@ -111,7 +103,6 @@ const flexStyle = computed(
     justify-content: center;
   }
 
-  // Align-items 配置（cross axis，静态）
   &--align-start,
   &--align-top {
     align-items: flex-start;

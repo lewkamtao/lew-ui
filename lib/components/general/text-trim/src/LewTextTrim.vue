@@ -9,37 +9,28 @@ import { clearMeasureCache, getDisplayText } from './text-trim'
 
 const props = defineProps(textTrimProps)
 
-// Refs
 const lewTextTrimRef = ref<HTMLDivElement>()
 const lewTextTrimPopRef = ref<HTMLDivElement>()
-
-// Reactive state
 const displayText = ref('')
 const isEllipsisByTextTrim = ref(false)
 const isEllipsis = ref(false)
 
-// Instance
 let tippyInstance: Instance | null = null
 
-// 计算类名（静态配置用 class）
 const textTrimClass = computed(() => {
   const classes = ['lew-text-trim-wrapper']
 
-  // Text align（静态配置）
   if (props.textAlign && props.textAlign !== 'left') {
     classes.push(`lew-text-trim-wrapper--align-${props.textAlign}`)
   }
 
-  // Line clamp 模式
   if (props.lineClamp) {
     classes.push('lew-text-trim-wrapper--line-clamp')
   }
   else {
-    // 单行模式
     classes.push('lew-text-trim-wrapper--single-line')
   }
 
-  // Ellipsis 状态（用于控制 cursor）
   if (isEllipsis.value || isEllipsisByTextTrim.value) {
     classes.push('lew-text-trim-wrapper--ellipsis')
   }
@@ -47,7 +38,6 @@ const textTrimClass = computed(() => {
   return classes.join(' ')
 })
 
-// 只计算动态样式
 const textTrimStyle = computed((): CSSProperties | string => {
   if (props.lineClamp) {
     return `-webkit-line-clamp: ${props.lineClamp};`
@@ -57,7 +47,6 @@ const textTrimStyle = computed((): CSSProperties | string => {
   }
 })
 
-// Methods
 function initTippy(): void {
   const element = lewTextTrimRef.value
   if (!element)
@@ -72,9 +61,7 @@ function initTippy(): void {
     isEllipsis.value = element.offsetWidth < element.scrollWidth
   }
 
-  // Handle overflow state
   if (isEllipsis.value || isEllipsisByTextTrim.value) {
-    // Initialize tippy if not already created
     if (!tippyInstance) {
       tippyInstance = tippy(element, {
         theme: 'light',
@@ -110,7 +97,6 @@ function showTippy(): void {
         return
 
       const rect = element.getBoundingClientRect()
-      // Check if mouse is within element bounds
       if (
         x.value >= rect.left
         && x.value <= rect.right
@@ -160,11 +146,8 @@ function handleMouseEnter(): void {
   initTippy()
 }
 
-// Lifecycle hooks
 onMounted(() => {
   initCalculateDisplayText()
-
-  // Use ResizeObserver only in client environment
   useResizeObserver(lewTextTrimRef, debouncedCalculate)
 })
 
@@ -173,7 +156,6 @@ onUnmounted(() => {
   clearMeasureCache()
 })
 
-// Watchers
 watch(() => [props.text, props.reserveEnd], calculateDisplayText, {
   flush: 'post',
 })
@@ -186,7 +168,7 @@ watch(() => [props.text, props.reserveEnd], calculateDisplayText, {
     :style="textTrimStyle"
     @mouseenter="handleMouseEnter"
   >
-    <template v-if="text">
+    <template v-if="props.text">
       {{ displayText }}
     </template>
     <slot v-else />
@@ -201,18 +183,15 @@ watch(() => [props.text, props.reserveEnd], calculateDisplayText, {
   width: 100%;
   overflow: hidden;
 
-  // 单行模式（静态配置）
   &--single-line {
     white-space: nowrap;
   }
 
-  // Line clamp 模式（静态配置）
   &--line-clamp {
     display: -webkit-box;
     -webkit-box-orient: vertical;
   }
 
-  // Text align 配置（静态）
   &--align-center {
     text-align: center;
   }
@@ -227,7 +206,6 @@ watch(() => [props.text, props.reserveEnd], calculateDisplayText, {
     text-align: left;
   }
 
-  // Ellipsis 状态（用于控制 cursor）
   &--ellipsis {
     cursor: pointer;
   }

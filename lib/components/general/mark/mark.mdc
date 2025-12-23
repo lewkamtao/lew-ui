@@ -1,0 +1,245 @@
+---
+alwaysApply: false
+---
+
+# LewMark 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewMark
+- **核心用途**：用于高亮标记文本内容，支持自定义颜色、圆角、字体粗细等样式，常用于搜索结果高亮、关键词标记等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持所有主题色和状态色（通过 `color` 属性）
+  - 支持圆角样式（`round`）
+  - 支持自定义字体粗细（`bold`）
+  - 支持自定义鼠标样式（`cursor`）
+  - 使用 CSS 变量传递颜色，支持主题定制
+  - 支持文本换行时的样式保持（`box-decoration-break: clone`）
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **文本高亮**：组件会将插槽内容包裹在高亮背景中，形成标记效果
+- **颜色定制**：通过 `color` 属性可以设置标记的颜色主题
+- **圆角样式**：通过 `round` 属性可以设置圆角标记
+- **换行处理**：文本换行时，标记样式会在每行独立显示
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| color | `LewColor` | `'blue'` | 所有主题色和状态色 | 标记颜色主题，支持所有主题色和状态色 |
+| bold | `Property.FontWeight` | `400` | CSS font-weight 值 | 字体粗细，支持数字（100-900）或字符串（normal、bold 等） |
+| cursor | `Property.Cursor` | - | CSS cursor 值 | 鼠标样式，如 `'pointer'`、`'default'` 等 |
+| round | `boolean` | - | `true` / `false` | 是否显示圆角样式 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 需要标记的文本内容 | `<template>关键词</template>` |
+
+## 4. 注意事项
+
+- ⚠️ **颜色支持**：`color` 支持所有 `LewColor` 类型，包括主题色（blue、green 等）和状态色（error、success 等）
+- ⚠️ **换行处理**：组件使用 `box-decoration-break: clone` 确保文本换行时，每行都有独立的标记样式
+- ⚠️ **样式定制**：组件使用 CSS 变量（`--mark-color`、`--mark-bg-color`）传递颜色，可以通过覆盖 CSS 变量实现更灵活的样式定制
+- ⚠️ **圆角样式**：`round` 属性会设置 `border-radius: 20px`，不使用 `round` 时使用 `var(--lew-border-radius-mini)`
+- ⚠️ **字体粗细**：`bold` 属性支持数字（100-900）或字符串（normal、bold 等），默认值为 `400`
+- ⚠️ **鼠标样式**：`cursor` 属性可以设置鼠标悬停时的样式，常用值包括 `'pointer'`、`'default'`、`'not-allowed'` 等
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：颜色设置无效
+
+**现象**：设置了 `color` 属性，但标记颜色没有变化。
+
+**原因**：
+- `color` 值不在有效列表中
+- CSS 变量未正确定义
+- 样式被其他样式覆盖
+
+**修复方案**：
+1. 确认 `color` 值正确（支持所有主题色和状态色）：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的颜色值 -->
+  <lew-mark color="blue">标记文本</lew-mark>
+  <lew-mark color="success">标记文本</lew-mark>
+  <lew-mark color="error">标记文本</lew-mark>
+</template>
+```
+2. 检查 CSS 变量是否正确定义：
+```css
+/* 确保这些变量已定义 */
+--lew-color-blue-dark
+--lew-color-blue-light
+--lew-color-success-dark
+--lew-color-success-light
+```
+
+### 问题2：圆角不显示
+
+**现象**：设置了 `round={true}`，但标记没有圆角。
+
+**原因**：
+- `round` 属性设置不正确
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确认 `round` 属性设置正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用 boolean 值 -->
+  <lew-mark round>标记文本</lew-mark>
+  <lew-mark :round="true">标记文本</lew-mark>
+  
+  <!-- ❌ 错误：round 应该是 boolean 类型 -->
+  <lew-mark round="true">标记文本</lew-mark>
+</template>
+```
+
+### 问题3：字体粗细不生效
+
+**现象**：设置了 `bold` 属性，但字体粗细没有变化。
+
+**原因**：
+- `bold` 值格式不正确
+- 字体不支持该粗细值
+
+**修复方案**：
+1. 确认 `bold` 值格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的 font-weight 值 -->
+  <lew-mark :bold="700">标记文本</lew-mark>
+  <lew-mark bold="bold">标记文本</lew-mark>
+  <lew-mark :bold="600">标记文本</lew-mark>
+</template>
+```
+2. 检查字体是否支持该粗细值（某些字体可能不支持所有粗细值）
+
+### 问题4：文本换行时样式丢失
+
+**现象**：标记文本换行时，标记样式只在第一行显示。
+
+**原因**：
+- 浏览器不支持 `box-decoration-break: clone`
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确认浏览器支持（现代浏览器都支持）：
+```vue
+<template>
+  <!-- 组件已自动处理换行样式 -->
+  <lew-mark>
+    这是一段很长的文本，当它换行时会自动在每行显示标记样式
+  </lew-mark>
+</template>
+```
+2. 检查 CSS 样式是否被覆盖：
+```css
+/* 确保 box-decoration-break 没有被覆盖 */
+.lew-mark {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+```
+
+### 问题5：鼠标样式不生效
+
+**现象**：设置了 `cursor` 属性，但鼠标样式没有变化。
+
+**原因**：
+- `cursor` 值格式不正确
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确认 `cursor` 值格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的 CSS cursor 值 -->
+  <lew-mark cursor="pointer">标记文本</lew-mark>
+  <lew-mark cursor="default">标记文本</lew-mark>
+  <lew-mark cursor="not-allowed">标记文本</lew-mark>
+</template>
+```
+2. 注意：当 `cursor="pointer"` 时，组件会自动添加 `lew-mark--pointer` class，也可以通过 CSS 覆盖
+
+### 问题6：标记样式被其他样式覆盖
+
+**现象**：标记的样式被父元素或其他样式覆盖。
+
+**原因**：
+- CSS 优先级问题
+- 样式作用域问题
+
+**修复方案**：
+1. 使用 `!important`（不推荐，但可以临时解决）：
+```css
+.lew-mark {
+  color: var(--mark-color) !important;
+  background-color: var(--mark-bg-color) !important;
+}
+```
+2. 提高选择器优先级：
+```css
+.parent .lew-mark {
+  color: var(--mark-color);
+  background-color: var(--mark-bg-color);
+}
+```
+
+### 问题7：标记在换行时显示异常
+
+**现象**：标记文本换行时，标记样式显示不正确。
+
+**原因**：
+- `box-decoration-break` 不支持
+- 文本换行方式问题
+
+**修复方案**：
+1. 确认浏览器支持（现代浏览器都支持 `box-decoration-break: clone`）
+2. 检查文本换行方式：
+```vue
+<template>
+  <!-- ✅ 正确：文本会自动换行，标记样式会在每行显示 -->
+  <lew-mark>
+    这是一段很长的文本，当它换行时会自动在每行显示标记样式
+  </lew-mark>
+  
+  <!-- ❌ 错误：如果设置了 white-space: nowrap，文本不会换行 -->
+  <div style="white-space: nowrap">
+    <lew-mark>这段文本不会换行</lew-mark>
+  </div>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（computed），优化样式实现（使用 CSS 变量和 class），修复 script 标签顺序 | 2024-01-XX |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合不同的 `color` 值可以快速适配不同的场景，如蓝色表示信息、绿色表示成功、红色表示错误等
+- ✅ 使用 `round` 可以创建圆角标记，适合现代风格的界面设计
+- ✅ 通过 `bold` 可以调整标记的字体粗细，突出重要内容
+- ✅ 使用 `cursor="pointer"` 可以将标记设置为可点击样式，适合交互场景
+- ✅ 通过 CSS 变量可以灵活定制标记样式，无需修改组件代码
+- ✅ 标记组件会自动处理文本换行，确保每行都有独立的标记样式

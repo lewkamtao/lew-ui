@@ -1,22 +1,33 @@
 <script setup lang="ts">
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { object2class } from 'lew-ui/utils'
-import { computed } from 'vue'
-import { alertEmits } from './emits'
-import { alertProps } from './props'
+// 1. 组件导入
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
 
-const props = defineProps(alertProps)
-const emit = defineEmits(alertEmits)
+// 2. 工具函数导入
+import { object2class } from "lew-ui/utils";
 
-// Computed
+// 3. 组件配置导入
+import { alertEmits } from "./emits";
+import { alertProps } from "./props";
+
+// Props & Emits
+const props = defineProps(alertProps);
+const emit = defineEmits(alertEmits);
+
+// Slots 检测
+const slots = useSlots();
+const hasTitle = computed(() => !!slots.title || !!props.title);
+const hasContent = computed(() => !!slots.content || !!props.content);
+const hasFooter = computed(() => !!slots.footer);
+
+// 计算属性
 const alertClassName = computed(() => {
-  const { type } = props
-  return object2class('lew-alert', { type })
-})
+  const { type } = props;
+  return object2class("lew-alert", { type });
+});
 
-// Methods
+// 方法
 function handleClose(): void {
-  emit('close')
+  emit("close");
 }
 </script>
 
@@ -24,21 +35,21 @@ function handleClose(): void {
   <div class="lew-alert" :class="alertClassName">
     <CommonIcon dark :size="18" :type="props.type" />
     <div class="lew-alert-message">
-      <div v-if="$slots.title" class="lew-alert-title">
-        <slot name="title" />
-      </div>
-      <div v-else-if="props.title" class="lew-alert-title">
-        {{ props.title }}
-      </div>
-
-      <div v-if="$slots.content" class="lew-alert-content">
-        <slot name="content" />
-      </div>
-      <div v-else-if="props.content" class="lew-alert-content">
-        {{ props.content }}
+      <div v-if="hasTitle" class="lew-alert-title">
+        <slot v-if="slots.title" name="title" />
+        <template v-else>
+          {{ props.title }}
+        </template>
       </div>
 
-      <div v-if="$slots.footer" class="lew-alert-footer">
+      <div v-if="hasContent" class="lew-alert-content">
+        <slot v-if="slots.content" name="content" />
+        <template v-else>
+          {{ props.content }}
+        </template>
+      </div>
+
+      <div v-if="hasFooter" class="lew-alert-footer">
         <slot name="footer" />
       </div>
     </div>
