@@ -239,6 +239,9 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-checked:not(.lew-radio-block) {
+  // 单选逻辑：选中后不允许取消，移除 cursor 指针效果
+  cursor: default;
+
   .lew-radio-icon-box {
     border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border) solid;
     background: var(--lew-radio-checked-icon-bg);
@@ -253,16 +256,20 @@ const getRadioClassName = computed(() => {
 
 .lew-radio-checked:not(.lew-radio-block):hover {
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border-hover) solid;
-    background: var(--lew-radio-checked-icon-bg-hover);
+    // 单选逻辑：选中后不允许取消，移除 hover 效果
+    border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border) solid;
+    background: var(--lew-radio-checked-icon-bg);
 
     .lew-radio-icon {
-      color: var(--lew-radio-checked-icon-color-hover);
+      color: var(--lew-radio-checked-icon-color);
     }
   }
 }
 
 .lew-radio-block.lew-radio-checked {
+  // 单选逻辑：选中后不允许取消，移除 cursor 指针效果
+  cursor: default;
+
   .lew-radio-icon-box {
     border: var(--lew-form-border-width) var(--lew-radio-block-checked-icon-border) solid;
     background: var(--lew-radio-block-checked-icon-bg);
@@ -276,6 +283,10 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-block.lew-radio-checked:hover {
+  // 单选逻辑：选中后不允许取消，移除 hover 效果
+  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border) solid;
+  background: var(--lew-radio-block-checked-bg);
+  
   .lew-radio-icon-box {
     border: var(--lew-form-border-width) var(--lew-radio-block-checked-icon-border) solid;
   }

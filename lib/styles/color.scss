@@ -8,155 +8,110 @@
 }
 
 @mixin export-base-colors-light($color-name, $color-map) {
-  // 主色和状态色（step 6, 7, 8）
   --lew-color-#{$color-name}: #{get-color-value($color-map, 6)};
   --lew-color-#{$color-name}-hover: #{get-color-value($color-map, 7)};
   --lew-color-#{$color-name}-active: #{get-color-value($color-map, 8)};
-
-  // Light 类型（step 1, 2, 3）- 轻色背景，调整为更淡的色阶
   --lew-color-#{$color-name}-light: #{get-color-value($color-map, 1)};
   --lew-color-#{$color-name}-light-hover: #{get-color-value($color-map, 2)};
   --lew-color-#{$color-name}-light-active: #{get-color-value($color-map, 3)};
-  // Light 类型文字色（step 8，深色）
   --lew-color-#{$color-name}-light-text: #{get-color-value($color-map, 8)};
   --lew-color-#{$color-name}-light-text-hover: #{get-color-value($color-map, 8)};
   --lew-color-#{$color-name}-light-text-active: #{get-color-value($color-map, 9)};
-
-  // Ghost 和 Text 类型文字色（step 6，主色）
   --lew-color-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
   --lew-color-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, 7)};
   --lew-color-#{$color-name}-ghost-text-active: #{get-color-value($color-map, 8)};
   --lew-color-#{$color-name}-text-text: #{get-color-value($color-map, 6)};
   --lew-color-#{$color-name}-text-text-hover: #{get-color-value($color-map, 7)};
   --lew-color-#{$color-name}-text-text-active: #{get-color-value($color-map, 8)};
-
-  // Dark（step 6，与主色相同）
   --lew-color-#{$color-name}-dark: #{get-color-value($color-map, 6)};
 }
 
 @mixin export-base-colors-dark($color-name, $color-map) {
-  // 主色和状态色（step 6, 7, 8）
   --lew-color-#{$color-name}: #{get-color-value($color-map, 6)};
   --lew-color-#{$color-name}-hover: #{get-color-value($color-map, 7)};
   --lew-color-#{$color-name}-active: #{get-color-value($color-map, 8)};
-
-  // Light 类型（step 1, 2, 3）- 轻色背景，保持更淡的效果
   --lew-color-#{$color-name}-light: #{get-color-value($color-map, 1)};
   --lew-color-#{$color-name}-light-hover: #{get-color-value($color-map, 2)};
   --lew-color-#{$color-name}-light-active: #{get-color-value($color-map, 3)};
-  // Light 类型文字色（step 7，浅色）
   --lew-color-#{$color-name}-light-text: #{get-color-value($color-map, 7)};
   --lew-color-#{$color-name}-light-text-hover: #{get-color-value($color-map, 8)};
   --lew-color-#{$color-name}-light-text-active: #{get-color-value($color-map, 9)};
-
-  // Ghost 和 Text 类型文字色（step 6，主色，浅色）
   --lew-color-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
   --lew-color-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, 7)};
   --lew-color-#{$color-name}-ghost-text-active: #{get-color-value($color-map, 8)};
   --lew-color-#{$color-name}-text-text: #{get-color-value($color-map, 6)};
   --lew-color-#{$color-name}-text-text-hover: #{get-color-value($color-map, 7)};
   --lew-color-#{$color-name}-text-text-active: #{get-color-value($color-map, 8)};
-
-  // Dark（step 6，与主色相同）
   --lew-color-#{$color-name}-dark: #{get-color-value($color-map, 6)};
 }
 
 @mixin export-button-colors-light($color-name, $color-map) {
-  // Button Fill 类型（浅色模式：step 6, 7, 8）- 实心按钮，使用主色（深色）作为背景，白色文字
   --lew-color-button-#{$color-name}-fill: #{get-color-value($color-map, 6)};
   --lew-color-button-#{$color-name}-fill-hover: #{get-color-value($color-map, 7)};
   --lew-color-button-#{$color-name}-fill-active: #{get-color-value($color-map, 8)};
   --lew-color-button-#{$color-name}-fill-text: #fff;
   --lew-color-button-#{$color-name}-fill-text-hover: #fff;
   --lew-color-button-#{$color-name}-fill-text-active: #fff;
-
-  // Button Light 类型（step 1, 2, 3）
   --lew-color-button-#{$color-name}-light: #{get-color-value($color-map, 1)};
   --lew-color-button-#{$color-name}-light-hover: #{get-color-value($color-map, 2)};
   --lew-color-button-#{$color-name}-light-active: #{get-color-value($color-map, 3)};
   --lew-color-button-#{$color-name}-light-text: #{get-color-value($color-map, 8)};
   --lew-color-button-#{$color-name}-light-text-hover: #{get-color-value($color-map, 8)};
   --lew-color-button-#{$color-name}-light-text-active: #{get-color-value($color-map, 9)};
-
-  // Button Ghost 类型文字色（step 6, 7, 8）
   --lew-color-button-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
   --lew-color-button-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, 7)};
   --lew-color-button-#{$color-name}-ghost-text-active: #{get-color-value($color-map, 8)};
-
-  // Button Text 类型文字色（step 6, 7, 8）
   --lew-color-button-#{$color-name}-text-text: #{get-color-value($color-map, 6)};
   --lew-color-button-#{$color-name}-text-text-hover: #{get-color-value($color-map, 7)};
   --lew-color-button-#{$color-name}-text-text-active: #{get-color-value($color-map, 8)};
 }
 
 @mixin export-button-colors-dark($color-name, $color-map) {
-  // Button Fill 类型（暗黑模式：step 4, 5, 6）- 使用更饱和的色阶
   --lew-color-button-#{$color-name}-fill: #{get-color-value($color-map, 4)};
   --lew-color-button-#{$color-name}-fill-hover: #{get-color-value($color-map, 5)};
   --lew-color-button-#{$color-name}-fill-active: #{get-color-value($color-map, 4)};
   --lew-color-button-#{$color-name}-fill-text: #{get-color-value($color-map, 7)};
   --lew-color-button-#{$color-name}-fill-text-hover: #{get-color-value($color-map, 8)};
   --lew-color-button-#{$color-name}-fill-text-active: #{get-color-value($color-map, 9)};
-
-  // Button Light 类型（step 1, 2, 3）
   --lew-color-button-#{$color-name}-light: #{get-color-value($color-map, 1)};
   --lew-color-button-#{$color-name}-light-hover: #{get-color-value($color-map, 2)};
   --lew-color-button-#{$color-name}-light-active: #{get-color-value($color-map, 3)};
   --lew-color-button-#{$color-name}-light-text: #{get-color-value($color-map, 7)};
   --lew-color-button-#{$color-name}-light-text-hover: #{get-color-value($color-map, 8)};
   --lew-color-button-#{$color-name}-light-text-active: #{get-color-value($color-map, 9)};
-
-  // Button Ghost 类型文字色（step 6, 7, 8）
   --lew-color-button-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
   --lew-color-button-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, 7)};
   --lew-color-button-#{$color-name}-ghost-text-active: #{get-color-value($color-map, 8)};
-
-  // Button Text 类型文字色（step 6, 7, 8）
   --lew-color-button-#{$color-name}-text-text: #{get-color-value($color-map, 6)};
   --lew-color-button-#{$color-name}-text-text-hover: #{get-color-value($color-map, 7)};
   --lew-color-button-#{$color-name}-text-text-active: #{get-color-value($color-map, 8)};
 }
 
 @mixin export-tag-colors-light($color-name, $color-map) {
-  // Tag Fill 类型（浅色模式：step 6）- 实心标签，不需要 hover/active
   --lew-color-tag-#{$color-name}-fill: #{get-color-value($color-map, 6)};
   --lew-color-tag-#{$color-name}-fill-text: #fff;
-
-  // Tag Light 类型（step 1）
   --lew-color-tag-#{$color-name}-light: #{get-color-value($color-map, 1)};
   --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, 8)};
-
-  // Tag Ghost 类型文字色（step 6）
   --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
 }
 
 @mixin export-tag-colors-dark($color-name, $color-map) {
-  // Tag Fill 类型（暗黑模式：step 4）
   --lew-color-tag-#{$color-name}-fill: #{get-color-value($color-map, 4)};
   --lew-color-tag-#{$color-name}-fill-text: #{get-color-value($color-map, 7)};
-
-  // Tag Light 类型（step 1）
   --lew-color-tag-#{$color-name}-light: #{get-color-value($color-map, 1)};
   --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, 7)};
-
-  // Tag Ghost 类型文字色（step 6）
   --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
 }
 
 @mixin export-checkbox-colors-light($color-name, $color-map) {
-  // Checkbox 图标相关颜色（非选中状态）
   --lew-color-checkbox-#{$color-name}-icon-border: #{get-color-value($color-map, 6)};
   --lew-color-checkbox-#{$color-name}-icon-bg: transparent;
-
-  // Checkbox 选中状态（非 block）- 使用 fill 类型
   --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 6)};
   --lew-color-checkbox-#{$color-name}-checked-icon-color: #fff;
   --lew-color-checkbox-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, 7)};
   --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #fff;
   --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 8)};
   --lew-color-checkbox-#{$color-name}-checked-icon-color-active: #fff;
-
-  // Checkbox block 模式选中状态 - 使用 light 类型背景 + 深色图标（浅色背景上需要深色图标）
   --lew-color-checkbox-#{$color-name}-block-checked-bg: #{get-color-value($color-map, 1)};
   --lew-color-checkbox-#{$color-name}-block-checked-border: #{get-color-value($color-map, 6)};
   --lew-color-checkbox-#{$color-name}-block-checked-color: #{get-color-value($color-map, 6)};
@@ -164,22 +119,17 @@
 }
 
 @mixin export-checkbox-colors-dark($color-name, $color-map) {
-  // Checkbox 图标相关颜色（非选中状态）
   --lew-color-checkbox-#{$color-name}-icon-border: #{get-color-value($color-map, 6)};
   --lew-color-checkbox-#{$color-name}-icon-bg: transparent;
-
-  // Checkbox 选中状态（非 block）- 使用 fill 类型，边框和背景色一致（参考 button fill）
-  --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 4)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-border: #{get-color-value($color-map, 4)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-color: #{get-color-value($color-map, 7)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 5)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border: #{get-color-value($color-map, 5)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-color: #{get-color-value($color-map, 8)};
   --lew-color-checkbox-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, 5)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, 5)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #{get-color-value($color-map, 8)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 4)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, 4)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, 6)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #{get-color-value($color-map, 9)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 5)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, 5)};
   --lew-color-checkbox-#{$color-name}-checked-icon-color-active: #{get-color-value($color-map, 9)};
-
-  // Checkbox block 模式选中状态 - 使用 light 类型背景 + fill 类型图标
   --lew-color-checkbox-#{$color-name}-block-checked-bg: #{get-color-value($color-map, 1)};
   --lew-color-checkbox-#{$color-name}-block-checked-border: #{get-color-value($color-map, 6)};
   --lew-color-checkbox-#{$color-name}-block-checked-color: #{get-color-value($color-map, 6)};
@@ -187,11 +137,8 @@
 }
 
 @mixin export-radio-colors-light($color-name, $color-map) {
-  // Radio 图标相关颜色（非选中状态）
   --lew-color-radio-#{$color-name}-icon-border: #{get-color-value($color-map, 6)};
   --lew-color-radio-#{$color-name}-icon-bg: transparent;
-
-  // Radio 选中状态（非 block）- 使用 fill 类型，边框和背景色一致
   --lew-color-radio-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 6)};
   --lew-color-radio-#{$color-name}-checked-icon-border: #{get-color-value($color-map, 6)};
   --lew-color-radio-#{$color-name}-checked-icon-color: #fff;
@@ -201,8 +148,6 @@
   --lew-color-radio-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 8)};
   --lew-color-radio-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, 8)};
   --lew-color-radio-#{$color-name}-checked-icon-color-active: #fff;
-
-  // Radio block 模式选中状态 - 使用 light 类型背景 + 深色图标（浅色背景上需要深色图标）
   --lew-color-radio-#{$color-name}-block-checked-bg: #{get-color-value($color-map, 1)};
   --lew-color-radio-#{$color-name}-block-checked-border: #{get-color-value($color-map, 6)};
   --lew-color-radio-#{$color-name}-block-checked-color: #{get-color-value($color-map, 6)};
@@ -210,22 +155,17 @@
 }
 
 @mixin export-radio-colors-dark($color-name, $color-map) {
-  // Radio 图标相关颜色（非选中状态）
   --lew-color-radio-#{$color-name}-icon-border: #{get-color-value($color-map, 6)};
   --lew-color-radio-#{$color-name}-icon-bg: transparent;
-
-  // Radio 选中状态（非 block）- 使用 fill 类型，边框和背景色一致
-  --lew-color-radio-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 4)};
-  --lew-color-radio-#{$color-name}-checked-icon-border: #{get-color-value($color-map, 4)};
-  --lew-color-radio-#{$color-name}-checked-icon-color: #{get-color-value($color-map, 7)};
+  --lew-color-radio-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 5)};
+  --lew-color-radio-#{$color-name}-checked-icon-border: #{get-color-value($color-map, 5)};
+  --lew-color-radio-#{$color-name}-checked-icon-color: #{get-color-value($color-map, 8)};
   --lew-color-radio-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, 5)};
-  --lew-color-radio-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, 5)};
-  --lew-color-radio-#{$color-name}-checked-icon-color-hover: #{get-color-value($color-map, 8)};
-  --lew-color-radio-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 4)};
-  --lew-color-radio-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, 4)};
+  --lew-color-radio-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, 6)};
+  --lew-color-radio-#{$color-name}-checked-icon-color-hover: #{get-color-value($color-map, 9)};
+  --lew-color-radio-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 5)};
+  --lew-color-radio-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, 5)};
   --lew-color-radio-#{$color-name}-checked-icon-color-active: #{get-color-value($color-map, 9)};
-
-  // Radio block 模式选中状态 - 使用 light 类型背景 + fill 类型图标
   --lew-color-radio-#{$color-name}-block-checked-bg: #{get-color-value($color-map, 1)};
   --lew-color-radio-#{$color-name}-block-checked-border: #{get-color-value($color-map, 6)};
   --lew-color-radio-#{$color-name}-block-checked-color: #{get-color-value($color-map, 6)};
@@ -233,23 +173,24 @@
 }
 
 @mixin export-switch-colors-light($color-name, $color-map) {
-  // Switch 开启状态
   --lew-color-switch-#{$color-name}-checked-bg: #{get-color-value($color-map, 6)};
   --lew-color-switch-#{$color-name}-checked-bg-hover: #{get-color-value($color-map, 7)};
   --lew-color-switch-#{$color-name}-checked-bg-active: #{get-color-value($color-map, 8)};
   --lew-color-switch-#{$color-name}-dot-color: #fff;
+  --lew-color-switch-#{$color-name}-loading-off: #{get-color-value($color-map, 8)};
+  --lew-color-switch-#{$color-name}-loading-on: #{get-color-value($color-map, 8)};
 }
 
 @mixin export-switch-colors-dark($color-name, $color-map) {
-  // Switch 开启状态
   --lew-color-switch-#{$color-name}-checked-bg: #{get-color-value($color-map, 4)};
   --lew-color-switch-#{$color-name}-checked-bg-hover: #{get-color-value($color-map, 5)};
   --lew-color-switch-#{$color-name}-checked-bg-active: #{get-color-value($color-map, 4)};
   --lew-color-switch-#{$color-name}-dot-color: #{get-color-value($color-map, 7)};
+  --lew-color-switch-#{$color-name}-loading-off: #{get-color-value($color-map, 5)};
+  --lew-color-switch-#{$color-name}-loading-on: #{get-color-value($color-map, 4)};
 }
 
 @mixin export-datepicker-colors-light($color-name, $color-map) {
-  // DatePicker 选中状态 - 使用 fill 类型
   --lew-color-datepicker-#{$color-name}-selected-bg: #{get-color-value($color-map, 6)};
   --lew-color-datepicker-#{$color-name}-selected-text: #fff;
   --lew-color-datepicker-#{$color-name}-selected-bg-hover: #{get-color-value($color-map, 7)};
@@ -259,7 +200,6 @@
 }
 
 @mixin export-datepicker-colors-dark($color-name, $color-map) {
-  // DatePicker 选中状态 - 使用 fill 类型
   --lew-color-datepicker-#{$color-name}-selected-bg: #{get-color-value($color-map, 4)};
   --lew-color-datepicker-#{$color-name}-selected-text: #{get-color-value($color-map, 7)};
   --lew-color-datepicker-#{$color-name}-selected-bg-hover: #{get-color-value($color-map, 5)};
@@ -269,64 +209,42 @@
 }
 
 @mixin export-steps-colors-light($color-name, $color-map) {
-  // Steps 激活状态 - 使用 fill 类型
   --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, 6)};
   --lew-color-steps-#{$color-name}-active-text: #fff;
   --lew-color-steps-#{$color-name}-active-icon: #fff;
-
-  // Steps 已完成状态 - 使用 light 类型背景
   --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, 1)};
   --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, 6)};
-
-  // Steps 标题文本色（激活状态）
   --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, 6)};
 }
 
 @mixin export-steps-colors-dark($color-name, $color-map) {
-  // Steps 激活状态 - 使用 fill 类型
   --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, 4)};
   --lew-color-steps-#{$color-name}-active-text: #{get-color-value($color-map, 7)};
   --lew-color-steps-#{$color-name}-active-icon: #{get-color-value($color-map, 7)};
-
-  // Steps 已完成状态 - 使用 light 类型背景
   --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, 1)};
   --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, 6)};
-
-  // Steps 标题文本色（激活状态）
   --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, 6)};
 }
 
 @mixin export-pagination-colors-light($color-name, $color-map) {
-  // Pagination hover 状态 - 使用 light 类型
   --lew-color-pagination-#{$color-name}-hover-bg: #{get-color-value($color-map, 1)};
-
-  // Pagination active 状态 - 使用 fill 类型
   --lew-color-pagination-#{$color-name}-active-bg: #{get-color-value($color-map, 6)};
   --lew-color-pagination-#{$color-name}-active-text: #fff;
 }
 
 @mixin export-pagination-colors-dark($color-name, $color-map) {
-  // Pagination hover 状态 - 使用 light 类型
   --lew-color-pagination-#{$color-name}-hover-bg: #{get-color-value($color-map, 1)};
-
-  // Pagination active 状态 - 使用 fill 类型（参考 button fill）
   --lew-color-pagination-#{$color-name}-active-bg: #{get-color-value($color-map, 4)};
   --lew-color-pagination-#{$color-name}-active-text: #{get-color-value($color-map, 7)};
 }
 
 @mixin export-inputtag-colors-light($color-name, $color-map) {
-  // InputTag focus 状态下 tag 背景色 - 使用 light 类型
   --lew-color-inputtag-#{$color-name}-tag-focus-bg: #{get-color-value($color-map, 1)};
-
-  // InputTag tag 文字色
   --lew-color-inputtag-#{$color-name}-tag-text: #{get-color-value($color-map, 8)};
 }
 
 @mixin export-inputtag-colors-dark($color-name, $color-map) {
-  // InputTag focus 状态下 tag 背景色 - 使用 light 类型
   --lew-color-inputtag-#{$color-name}-tag-focus-bg: #{get-color-value($color-map, 1)};
-
-  // InputTag tag 文字色
   --lew-color-inputtag-#{$color-name}-tag-text: #{get-color-value($color-map, 7)};
 }
 

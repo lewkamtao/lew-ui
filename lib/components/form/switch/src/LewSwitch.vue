@@ -173,9 +173,15 @@ const getSwitchStyle = computed(() => {
 
   .lew-switch-dot::after {
     border: var(--lew-form-border-width) solid rgba(0, 0, 0, 0);
-    border-left: 2px solid var(--lew-color-primary);
+    border-left: 2px solid var(--lew-color-switch-primary-loading-off);
     width: 10px;
     height: 10px;
+  }
+}
+
+.lew-switch-loading.lew-switch-checked {
+  .lew-switch-dot::after {
+    border-left: 2px solid var(--lew-color-switch-primary-loading-on);
   }
 }
 
