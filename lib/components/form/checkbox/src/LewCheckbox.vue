@@ -89,6 +89,29 @@ watch(
 
 <style lang="scss" scoped>
 .lew-checkbox {
+  // 组件级 CSS 变量定义
+  --lew-checkbox-icon-bg: var(--lew-checkbox-bgcolor);
+  --lew-checkbox-icon-border: var(--lew-checkbox-border-color);
+  --lew-checkbox-icon-color: transparent;
+  --lew-checkbox-icon-bg-hover: var(--lew-checkbox-bgcolor-hover);
+  --lew-checkbox-icon-border-hover: var(--lew-checkbox-border-color-hover);
+
+  // checked 状态（非 block）- 使用 checkbox 特定颜色
+  --lew-checkbox-checked-icon-bg: var(--lew-color-checkbox-primary-checked-icon-bg);
+  --lew-checkbox-checked-icon-border: var(--lew-color-checkbox-primary-checked-icon-border);
+  --lew-checkbox-checked-icon-color: var(--lew-color-checkbox-primary-checked-icon-color);
+  --lew-checkbox-checked-icon-bg-hover: var(--lew-color-checkbox-primary-checked-icon-bg-hover);
+  --lew-checkbox-checked-icon-border-hover: var(--lew-color-checkbox-primary-checked-icon-border-hover);
+  --lew-checkbox-checked-icon-color-hover: var(--lew-color-checkbox-primary-checked-icon-color-hover);
+
+  // block 模式 checked 状态 - 使用 checkbox 特定颜色
+  --lew-checkbox-block-checked-bg: var(--lew-color-checkbox-primary-block-checked-bg);
+  --lew-checkbox-block-checked-border: var(--lew-color-checkbox-primary-block-checked-border);
+  --lew-checkbox-block-checked-color: var(--lew-color-checkbox-primary-block-checked-color);
+  --lew-checkbox-block-checked-icon-bg: transparent;
+  --lew-checkbox-block-checked-icon-border: var(--lew-form-border-color);
+  --lew-checkbox-block-checked-icon-color: var(--lew-color-checkbox-primary-block-checked-icon-color);
+
   display: inline-flex;
   align-items: center;
   user-select: none;
@@ -107,11 +130,11 @@ watch(
     justify-content: center;
     width: 18px;
     height: 18px;
-    border: var(--lew-form-border-width) var(--lew-checkbox-border-color) solid;
+    border: var(--lew-form-border-width) var(--lew-checkbox-icon-border) solid;
     box-sizing: border-box;
     border-radius: 6px;
     transition: all var(--lew-form-transition-bezier);
-    background-color: var(--lew-checkbox-bgcolor);
+    background-color: var(--lew-checkbox-icon-bg);
     overflow: hidden;
     box-shadow: var(--lew-form-box-shadow);
 
@@ -122,7 +145,7 @@ watch(
       transform: translate(-50%, 5px) scale(0);
       transition: all var(--lew-form-transition-bezier);
       opacity: 0;
-      color: var(--lew-color-white);
+      color: var(--lew-checkbox-icon-color);
     }
   }
 
@@ -198,8 +221,8 @@ watch(
 
 .lew-checkbox:hover {
   .lew-checkbox-icon-box {
-    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-    background: var(--lew-checkbox-bgcolor-hover);
+    border: var(--lew-form-border-width) var(--lew-checkbox-icon-border-hover) solid;
+    background: var(--lew-checkbox-icon-bg-hover);
   }
 }
 
@@ -224,14 +247,14 @@ watch(
 }
 
 .lew-checkbox-checked.lew-checkbox-block {
-  border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-  background: var(--lew-checkbox-color-light);
-  color: var(--lew-checkbox-color);
+  border: var(--lew-form-border-width) var(--lew-checkbox-block-checked-border) solid;
+  background: var(--lew-checkbox-block-checked-bg);
+  color: var(--lew-checkbox-block-checked-color);
 }
 
 .lew-checkbox-checked.lew-checkbox-block:hover {
-  border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-  background: var(--lew-checkbox-color-light);
+  border: var(--lew-form-border-width) var(--lew-checkbox-block-checked-border) solid;
+  background: var(--lew-checkbox-block-checked-bg);
 }
 
 .lew-checkbox-round {
@@ -250,40 +273,46 @@ watch(
   }
 }
 
-.lew-checkbox-checked {
+.lew-checkbox-checked:not(.lew-checkbox-block) {
   .lew-checkbox-icon-box {
-    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-    background: var(--lew-checkbox-color);
+    border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border) solid;
+    background: var(--lew-checkbox-checked-icon-bg);
 
     .lew-checkbox-icon {
       transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
+      color: var(--lew-checkbox-checked-icon-color);
     }
   }
 }
 
-.lew-checkbox-checked:hover {
+.lew-checkbox-checked:not(.lew-checkbox-block):hover {
   .lew-checkbox-icon-box {
-    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-    background: var(--lew-checkbox-color);
+    border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+    background: var(--lew-checkbox-checked-icon-bg-hover);
+
+    .lew-checkbox-icon {
+      color: var(--lew-checkbox-checked-icon-color-hover);
+    }
   }
 }
 
 .lew-checkbox-block.lew-checkbox-checked {
   .lew-checkbox-icon-box {
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-    background: transparent;
+    border: var(--lew-form-border-width) var(--lew-checkbox-block-checked-icon-border) solid;
+    background: var(--lew-checkbox-block-checked-icon-bg);
 
     .lew-checkbox-icon {
-      color: var(--lew-checkbox-color);
+      transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
+      color: var(--lew-checkbox-block-checked-icon-color);
     }
   }
 }
 
 .lew-checkbox-block.lew-checkbox-checked:hover {
   .lew-checkbox-icon-box {
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border: var(--lew-form-border-width) var(--lew-checkbox-block-checked-icon-border) solid;
   }
 }
 
@@ -298,8 +327,8 @@ watch(
 
 .lew-checkbox-certain {
   .lew-checkbox-icon-box {
-    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-    background: var(--lew-checkbox-color);
+    border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border) solid;
+    background: var(--lew-checkbox-checked-icon-bg);
 
     .lew-checkbox-icon-certain {
       position: absolute;
@@ -309,15 +338,19 @@ watch(
       width: 55%;
       height: 2px;
       border-radius: 4px;
-      background-color: var(--lew-color-white);
+      background-color: var(--lew-checkbox-checked-icon-color);
     }
   }
 }
 
 .lew-checkbox-certain:hover {
   .lew-checkbox-icon-box {
-    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-    background: var(--lew-checkbox-color);
+    border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+    background: var(--lew-checkbox-checked-icon-bg-hover);
+
+    .lew-checkbox-icon-certain {
+      background-color: var(--lew-checkbox-checked-icon-color-hover);
+    }
   }
 }
 </style>

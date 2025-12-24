@@ -320,8 +320,8 @@ defineExpose({ init, getValue })
     .lew-date-item-selected {
       .lew-date-label {
         .lew-date-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
@@ -330,8 +330,8 @@ defineExpose({ init, getValue })
     .lew-date-item-selected:active {
       .lew-date-label {
         .lew-date-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg-active);
+          color: var(--lew-color-datepicker-primary-selected-text-active);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
@@ -340,8 +340,8 @@ defineExpose({ init, getValue })
     .lew-date-item-selected:hover {
       .lew-date-label {
         .lew-date-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg-hover);
+          color: var(--lew-color-datepicker-primary-selected-text-hover);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }

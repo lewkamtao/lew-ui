@@ -268,8 +268,8 @@ defineExpose({ init })
     .lew-quarter-item-selected {
       .lew-quarter-label {
         .lew-quarter-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
 
           .lew-quarter-months {
@@ -282,8 +282,8 @@ defineExpose({ init })
     .lew-quarter-item-selected:active {
       .lew-quarter-label {
         .lew-quarter-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg-active);
+          color: var(--lew-color-datepicker-primary-selected-text-active);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
@@ -292,8 +292,8 @@ defineExpose({ init })
     .lew-quarter-item-selected:hover {
       .lew-quarter-label {
         .lew-quarter-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg-hover);
+          color: var(--lew-color-datepicker-primary-selected-text-hover);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }

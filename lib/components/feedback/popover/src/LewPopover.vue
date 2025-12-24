@@ -211,7 +211,7 @@ defineExpose({ show, hide, refresh });
   .lew-popover-trigger {
     font-size: 0;
 
-    * {
+    > * {
       font-size: 14px;
     }
   }

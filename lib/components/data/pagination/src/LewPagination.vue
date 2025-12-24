@@ -291,7 +291,7 @@ const getPaginationClassName = computed(() => {
   }
 
   .lew-pagination-page-btn:hover {
-    background-color: var(--lew-color-primary-light);
+    background-color: var(--lew-color-pagination-primary-hover-bg);
   }
 
   .lew-pagination-page-box {
@@ -300,8 +300,8 @@ const getPaginationClassName = computed(() => {
     height: 100%;
 
     .active {
-      background-color: var(--lew-color-primary);
-      color: var(--lew-color-white);
+      background-color: var(--lew-color-pagination-primary-active-bg);
+      color: var(--lew-color-pagination-primary-active-text);
     }
   }
 

@@ -245,8 +245,8 @@ defineExpose({ init })
     .lew-year-item-selected {
       .lew-year-label {
         .lew-year-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
@@ -255,8 +255,8 @@ defineExpose({ init })
     .lew-year-item-selected:active {
       .lew-year-label {
         .lew-year-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg-active);
+          color: var(--lew-color-datepicker-primary-selected-text-active);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
@@ -265,8 +265,8 @@ defineExpose({ init })
     .lew-year-item-selected:hover {
       .lew-year-label {
         .lew-year-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg-hover);
+          color: var(--lew-color-datepicker-primary-selected-text-hover);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }

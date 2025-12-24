@@ -57,6 +57,29 @@ const getRadioClassName = computed(() => {
 
 <style lang="scss" scoped>
 .lew-radio {
+  // 组件级 CSS 变量定义
+  --lew-radio-icon-bg: var(--lew-radio-bgcolor);
+  --lew-radio-icon-border: var(--lew-radio-border-color);
+  --lew-radio-icon-color: transparent;
+  --lew-radio-icon-bg-hover: var(--lew-radio-bgcolor-hover);
+  --lew-radio-icon-border-hover: var(--lew-radio-border-color-hover);
+  
+  // checked 状态（非 block）- 使用 radio 特定颜色
+  --lew-radio-checked-icon-bg: var(--lew-color-radio-primary-checked-icon-bg);
+  --lew-radio-checked-icon-border: var(--lew-color-radio-primary-checked-icon-border);
+  --lew-radio-checked-icon-color: var(--lew-color-radio-primary-checked-icon-color);
+  --lew-radio-checked-icon-bg-hover: var(--lew-color-radio-primary-checked-icon-bg-hover);
+  --lew-radio-checked-icon-border-hover: var(--lew-color-radio-primary-checked-icon-border-hover);
+  --lew-radio-checked-icon-color-hover: var(--lew-color-radio-primary-checked-icon-color-hover);
+  
+  // block 模式 checked 状态 - 使用 radio 特定颜色
+  --lew-radio-block-checked-bg: var(--lew-color-radio-primary-block-checked-bg);
+  --lew-radio-block-checked-border: var(--lew-color-radio-primary-block-checked-border);
+  --lew-radio-block-checked-color: var(--lew-color-radio-primary-block-checked-color);
+  --lew-radio-block-checked-icon-bg: transparent;
+  --lew-radio-block-checked-icon-border: var(--lew-form-border-color);
+  --lew-radio-block-checked-icon-color: var(--lew-color-radio-primary-block-checked-icon-color);
+
   display: inline-flex;
   align-items: center;
   user-select: none;
@@ -72,11 +95,11 @@ const getRadioClassName = computed(() => {
     position: relative;
     width: 18px;
     height: 18px;
-    border: var(--lew-form-border-width) var(--lew-radio-border-color) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-icon-border) solid;
     box-sizing: border-box;
     border-radius: 6px;
     transition: all var(--lew-form-transition-bezier);
-    background-color: var(--lew-radio-bgcolor);
+    background-color: var(--lew-radio-icon-bg);
     overflow: hidden;
     box-shadow: var(--lew-form-box-shadow);
 
@@ -87,7 +110,7 @@ const getRadioClassName = computed(() => {
       transform: translate(-50%, 5px) scale(0);
       transition: all var(--lew-form-transition-bezier);
       opacity: 0;
-      color: var(--lew-color-white);
+      color: var(--lew-radio-icon-color);
     }
   }
 
@@ -163,8 +186,8 @@ const getRadioClassName = computed(() => {
 
 .lew-radio:hover {
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
-    background: var(--lew-radio-bgcolor-hover);
+    border: var(--lew-form-border-width) var(--lew-radio-icon-border-hover) solid;
+    background: var(--lew-radio-icon-bg-hover);
   }
 }
 
@@ -189,14 +212,14 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-checked.lew-radio-block {
-  border: var(--lew-form-border-width) var(--lew-radio-color) solid;
-  background: var(--lew-radio-color-light);
-  color: var(--lew-radio-color);
+  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border) solid;
+  background: var(--lew-radio-block-checked-bg);
+  color: var(--lew-radio-block-checked-color);
 }
 
 .lew-radio-checked.lew-radio-block:hover {
-  border: var(--lew-form-border-width) var(--lew-radio-color) solid;
-  background: var(--lew-radio-color-light);
+  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border) solid;
+  background: var(--lew-radio-block-checked-bg);
 }
 
 .lew-radio-round {
@@ -215,40 +238,46 @@ const getRadioClassName = computed(() => {
   }
 }
 
-.lew-radio-checked {
+.lew-radio-checked:not(.lew-radio-block) {
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-color) solid;
-    background: var(--lew-radio-color);
+    border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border) solid;
+    background: var(--lew-radio-checked-icon-bg);
 
     .lew-radio-icon {
       transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
+      color: var(--lew-radio-checked-icon-color);
     }
   }
 }
 
-.lew-radio-checked:hover {
+.lew-radio-checked:not(.lew-radio-block):hover {
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-color) solid;
-    background: var(--lew-radio-color);
+    border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border-hover) solid;
+    background: var(--lew-radio-checked-icon-bg-hover);
+
+    .lew-radio-icon {
+      color: var(--lew-radio-checked-icon-color-hover);
+    }
   }
 }
 
 .lew-radio-block.lew-radio-checked {
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-    background: transparent;
+    border: var(--lew-form-border-width) var(--lew-radio-block-checked-icon-border) solid;
+    background: var(--lew-radio-block-checked-icon-bg);
 
     .lew-radio-icon {
-      color: var(--lew-radio-color);
+      transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
+      color: var(--lew-radio-block-checked-icon-color);
     }
   }
 }
 
 .lew-radio-block.lew-radio-checked:hover {
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-block-checked-icon-border) solid;
   }
 }
 

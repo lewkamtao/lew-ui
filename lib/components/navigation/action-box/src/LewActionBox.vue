@@ -109,7 +109,7 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
     align-items: center;
     justify-content: center;
     padding: 3px 4px;
-    color: var(--lew-color-primary-dark);
+    color: var(--lew-color-primary-text-text);
     white-space: nowrap;
     border-radius: 5px;
     cursor: pointer;

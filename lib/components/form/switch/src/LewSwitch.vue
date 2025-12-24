@@ -149,7 +149,7 @@ const getSwitchStyle = computed(() => {
   }
 
   input:checked + .lew-switch-dot {
-    background: #fff;
+    background: var(--lew-color-switch-primary-dot-color);
     transform: translate(19px, 4px);
   }
 
@@ -199,15 +199,15 @@ const getSwitchStyle = computed(() => {
 }
 
 .lew-switch.lew-switch-checked {
-  background: var(--lew-color-primary);
+  background: var(--lew-color-switch-primary-checked-bg);
 }
 
 .lew-switch.lew-switch-checked:hover {
-  background: var(--lew-color-primary);
+  background: var(--lew-color-switch-primary-checked-bg-hover);
 }
 
 .lew-switch.lew-switch-checked:active {
-  background: var(--lew-color-primary);
+  background: var(--lew-color-switch-primary-checked-bg-active);
 
   .lew-switch-dot {
     width: var(--lew-switch-dot-width-active);

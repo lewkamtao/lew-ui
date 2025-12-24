@@ -1,59 +1,62 @@
 <script setup lang="ts">
-import type { LewSize } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { getColorType } from "lew-ui/utils";
-import { isFunction } from "lodash-es";
-import { tagEmits } from "./emits";
-import { tagProps } from "./props";
+import type { LewSize } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { getColorType } from 'lew-ui/utils'
+import { isFunction } from 'lodash-es'
+import { tagEmits } from './emits'
+import { tagProps } from './props'
 
-const props = defineProps(tagProps);
-const emit = defineEmits(tagEmits);
-const slots = useSlots();
-const isClosing = ref(false);
+const props = defineProps(tagProps)
+const emit = defineEmits(tagEmits)
+const slots = useSlots()
+const isClosing = ref(false)
 
 const CLOSE_ICON_SIZE: Record<LewSize, number> = {
   small: 12,
   medium: 14,
   large: 16,
-} as const;
+} as const
 
 const tagClass = computed(() => {
-  const resolvedColor = getColorType(props.color) || "primary";
+  const resolvedColor = getColorType(props.color) || 'primary'
   return [
-    "lew-tag",
-    `lew-tag--${props.size || "medium"}`,
-    `lew-tag--${props.type || "light"}`,
+    'lew-tag',
+    `lew-tag--${props.size || 'medium'}`,
+    `lew-tag--${props.type || 'light'}`,
     `lew-tag--${resolvedColor}`,
-    props.round && "lew-tag--round",
-    props.oversize && "lew-tag--oversize",
-    props.disabled && "lew-tag--disabled",
+    props.round && 'lew-tag--round',
+    props.oversize && 'lew-tag--oversize',
+    props.disabled && 'lew-tag--disabled',
   ]
     .filter(Boolean)
-    .join(" ");
-});
+    .join(' ')
+})
 
 const closeIconSize = computed(() => {
-  return CLOSE_ICON_SIZE[props.size] || CLOSE_ICON_SIZE.medium;
-});
+  return CLOSE_ICON_SIZE[props.size] || CLOSE_ICON_SIZE.medium
+})
 
 async function handleClose(): Promise<void> {
-  if (props.disabled || isClosing.value) return;
+  if (props.disabled || isClosing.value)
+    return
 
   if (props.close) {
-    isClosing.value = true;
-    let result = false;
+    isClosing.value = true
+    let result = false
     try {
-      result = await props.close();
-    } catch {
-      isClosing.value = false;
-      return;
+      result = await props.close()
+    }
+    catch {
+      isClosing.value = false
+      return
     }
     if (result === true) {
-      emit("close");
+      emit('close')
     }
-    isClosing.value = false;
-  } else {
-    emit("close");
+    isClosing.value = false
+  }
+  else {
+    emit('close')
   }
 }
 </script>
@@ -93,6 +96,11 @@ async function handleClose(): Promise<void> {
 
 <style lang="scss" scoped>
 .lew-tag {
+  // CSS 变量定义
+  --lew-tag-bg: transparent;
+  --lew-tag-color: var(--lew-color-primary);
+  --lew-tag-border: none;
+
   position: relative;
   display: inline-flex;
   box-sizing: border-box;
@@ -103,11 +111,16 @@ async function handleClose(): Promise<void> {
   justify-content: center;
   transition: all var(--lew-form-transition-ease);
 
+  // 视觉
+  background-color: var(--lew-tag-bg);
+  color: var(--lew-tag-color);
+  border: var(--lew-tag-border);
+
   &--small {
     min-height: 20px;
     min-width: 20px;
     line-height: 16px;
-    font-size: 13px;
+    font-size: 12px;
     border-radius: 5px;
     padding: 0px 4px;
     gap: 2px;
@@ -121,7 +134,7 @@ async function handleClose(): Promise<void> {
     min-height: 24px;
     min-width: 24px;
     line-height: 18px;
-    font-size: 14px;
+    font-size: 13px;
     border-radius: 6px;
     padding: 0px 6px;
     gap: 3px;
@@ -135,7 +148,7 @@ async function handleClose(): Promise<void> {
     min-height: 28px;
     min-width: 28px;
     line-height: 20px;
-    font-size: 15px;
+    font-size: 14px;
     border-radius: 7px;
     padding: 0px 8px;
     gap: 4px;
@@ -155,60 +168,8 @@ async function handleClose(): Promise<void> {
   }
 
   &--ghost {
-    background-color: transparent;
+    --lew-tag-bg: transparent;
     box-shadow: none;
-  }
-
-  $colors: (
-    "primary",
-    "success",
-    "error",
-    "warning",
-    "info",
-    "normal",
-    "danger",
-    "blue",
-    "gray",
-    "red",
-    "green",
-    "yellow",
-    "indigo",
-    "purple",
-    "pink",
-    "orange",
-    "cyan",
-    "teal",
-    "mint",
-    "brown",
-    "black"
-  );
-
-  @each $color in $colors {
-    &--#{$color} {
-      &.lew-tag--fill {
-        background-color: var(--lew-color-#{$color}-fill);
-        color: var(--lew-color-#{$color}-fill-text);
-      }
-
-      &.lew-tag--light {
-        background-color: color-mix(
-          in srgb,
-          var(--lew-color-#{$color}-light) 35%,
-          var(--lew-bgcolor-0)
-        );
-        color: var(--lew-color-#{$color}-light-text);
-
-        // 如果浏览器不支持 color-mix，使用 fallback
-        @supports not (color-mix(in srgb, red 35%, white)) {
-          background-color: var(--lew-color-#{$color}-light);
-        }
-      }
-
-      &.lew-tag--ghost {
-        border: var(--lew-form-border-width) solid var(--lew-color-#{$color});
-        color: var(--lew-color-#{$color}-ghost-text);
-      }
-    }
   }
 
   .lew-tag-value {
@@ -264,4 +225,53 @@ async function handleClose(): Promise<void> {
     transform: rotate(360deg);
   }
 }
+
+// 类型 & 颜色变体（使用 Mixin 减少重复）
+@mixin tag-variant($name) {
+  .lew-tag--#{$name}.lew-tag--fill {
+    --lew-tag-bg: var(--lew-color-tag-#{$name}-fill);
+    --lew-tag-color: var(--lew-color-tag-#{$name}-fill-text);
+    --lew-tag-border: none;
+  }
+
+  .lew-tag--#{$name}.lew-tag--light {
+    --lew-tag-bg: color-mix(in srgb, var(--lew-color-tag-#{$name}-light) 35%, var(--lew-bgcolor-0));
+    --lew-tag-color: var(--lew-color-tag-#{$name}-light-text);
+    --lew-tag-border: none;
+
+    // 如果浏览器不支持 color-mix，使用 fallback
+    @supports not (color-mix(in srgb, red 35%, white)) {
+      --lew-tag-bg: var(--lew-color-tag-#{$name}-light);
+    }
+  }
+
+  .lew-tag--#{$name}.lew-tag--ghost {
+    --lew-tag-bg: transparent;
+    --lew-tag-border: var(--lew-form-border-width) solid var(--lew-color-#{$name});
+    --lew-tag-color: var(--lew-color-tag-#{$name}-ghost-text);
+  }
+}
+
+// 生成所有主题色变体
+@include tag-variant('blue');
+@include tag-variant('gray');
+@include tag-variant('red');
+@include tag-variant('green');
+@include tag-variant('yellow');
+@include tag-variant('indigo');
+@include tag-variant('purple');
+@include tag-variant('pink');
+@include tag-variant('orange');
+@include tag-variant('cyan');
+@include tag-variant('teal');
+@include tag-variant('mint');
+@include tag-variant('brown');
+@include tag-variant('black');
+@include tag-variant('error');
+@include tag-variant('success');
+@include tag-variant('warning');
+@include tag-variant('info');
+@include tag-variant('normal');
+@include tag-variant('primary');
+@include tag-variant('danger');
 </style>

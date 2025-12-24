@@ -191,7 +191,7 @@ const getTagStyle = computed(() => (index: number) => {
     color:
       isTagMarkedForDeletion.value && index === (modelValue.value || []).length - 1
         ? 'var(--lew-color-red-dark)'
-        : 'var(--lew-color-primary-dark)',
+        : 'var(--lew-color-inputtag-primary-tag-text)',
   }
 })
 
@@ -384,7 +384,7 @@ onUnmounted(() => {
   background-color: var(--lew-form-bgcolor-focus);
 
   :deep(.lew-tag) {
-    background-color: var(--lew-color-primary-light);
+    background-color: var(--lew-color-inputtag-primary-tag-focus-bg);
   }
 }
 

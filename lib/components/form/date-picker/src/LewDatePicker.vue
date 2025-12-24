@@ -428,8 +428,8 @@ defineExpose({ show, hide })
   }
 
   .lew-date-picker-presets-item-active {
-    background-color: var(--lew-color-primary) !important;
-    color: var(--lew-color-white);
+    background-color: var(--lew-color-datepicker-primary-selected-bg) !important;
+    color: var(--lew-color-datepicker-primary-selected-text);
   }
 }
 

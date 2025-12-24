@@ -569,8 +569,8 @@ const headDate = computed(() => {
         }
 
         .lew-date-value-selected {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
           border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
 
@@ -617,8 +617,8 @@ const headDate = computed(() => {
         }
 
         .lew-date-value-selected {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
         }
       }
 
@@ -641,8 +641,8 @@ const headDate = computed(() => {
         }
 
         .lew-date-value-selected {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
         }
       }
     }
@@ -656,8 +656,8 @@ const headDate = computed(() => {
         }
 
         .lew-date-value-selected {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
         }
       }
     }

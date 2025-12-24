@@ -78,7 +78,7 @@ function handleClick(index: number) {
             index < (stepsValue || 1) - 1 ||
               (index === (stepsValue || 1) - 1 && props.status === 'done')
           "
-          :style="{ color: 'var(--lew-color-primary)' }"
+          :style="{ color: 'var(--lew-color-steps-primary-succeeded-icon)' }"
           :size="16"
           :stroke-width="3"
           type="check"
@@ -193,7 +193,7 @@ function handleClick(index: number) {
       transform: translateY(-50%);
       width: 0px;
       height: 1px;
-      background-color: var(--lew-color-primary);
+      background-color: var(--lew-color-steps-primary-active-title);
       transition: 0.5s all ease-in;
     }
 
@@ -207,41 +207,44 @@ function handleClick(index: number) {
 
   .lew-steps-item-active {
     .lew-steps-item-index {
-      background-color: var(--lew-color-primary);
-      color: var(--lew-color-white);
+      background-color: var(--lew-color-steps-primary-active-bg);
+      color: var(--lew-color-steps-primary-active-text);
     }
 
     .lew-steps-item-title {
       font-weight: bold;
+      color: var(--lew-color-steps-primary-active-title);
     }
   }
 
   .lew-steps-item-warning {
     .lew-steps-item-index {
-      background-color: var(--lew-color-warning);
-      color: var(--lew-color-white);
+      background-color: var(--lew-color-steps-warning-active-bg);
+      color: var(--lew-color-steps-warning-active-text);
     }
 
     .lew-steps-item-title {
       font-weight: bold;
+      color: var(--lew-color-steps-warning-active-title);
     }
   }
 
   .lew-steps-item-error {
     .lew-steps-item-index {
-      background-color: var(--lew-color-error);
-      color: var(--lew-color-white);
+      background-color: var(--lew-color-steps-error-active-bg);
+      color: var(--lew-color-steps-error-active-text);
     }
 
     .lew-steps-item-title {
       font-weight: bold;
+      color: var(--lew-color-steps-error-active-title);
     }
   }
 
   .lew-steps-item-succeeded,
   .lew-steps-item-done {
     .lew-steps-item-index {
-      background-color: var(--lew-color-primary-light);
+      background-color: var(--lew-color-steps-primary-succeeded-bg);
 
       .index {
         display: none;
