@@ -36,43 +36,144 @@ alwaysApply: false
 
 ### 色彩系统
 
+#### 设计理念
+
+色彩系统基于 Material You M3 设计规范，每个颜色都支持 `fill`、`light`、`ghost`、`text` 四种变体，并且自动适配浅色和暗黑模式。
+
+#### 基础颜色定义
+
 ```scss
-// 主题色（定义在全局主题文件）
+// 每个基础颜色包含以下变量
 :root {
-  // 主色调
-  --lew-color-primary: #5b7eff;
-  --lew-color-primary-light: #e8ecff;
-  --lew-color-primary-dark: #4563d8;
+  // 基础语义变量
+  --lew-color-{color}: <文字色>;          // 用于所有类型的文字和 ghost/text 类型的边框
+  --lew-color-{color}-tone: <背景色>;      // 用于 light 类型的背景
 
-  // 语义色
-  --lew-color-success: #27c346;
-  --lew-color-success-light: #e5f8e8;
-  --lew-color-success-dark: #1fa735;
+  // Fill 类型（实心填充）
+  --lew-color-{color}-fill-hover: <hover背景色>;    // fill 类型 hover 状态
+  --lew-color-{color}-fill-active: <active背景色>;  // fill 类型 active 状态
 
-  --lew-color-warning: #ff9800;
-  --lew-color-warning-light: #fff3e0;
-  --lew-color-warning-dark: #f57c00;
+  // Light 类型（轻量填充）
+  --lew-color-{color}-light-hover: <hover背景色>;   // light 类型 hover 状态
+  --lew-color-{color}-light-active: <active背景色>; // light 类型 active 状态
+}
 
-  --lew-color-error: #f5222d;
-  --lew-color-error-light: #ffebee;
-  --lew-color-error-dark: #d9181f;
+.lew-dark {
+  // 暗黑模式下，变量会自动切换为适配的值
+  // --lew-color-{color}: <暗黑模式文字色>
+  // --lew-color-{color}-tone: <暗黑模式背景色>
+  // ... 其他状态色同样适配
+}
+```
 
-  --lew-color-info: #1890ff;
-  --lew-color-info-light: #e6f7ff;
-  --lew-color-info-dark: #0050b3;
+#### 基础颜色列表
 
-  // 中性色
-  --lew-color-gray-1: #ffffff;
-  --lew-color-gray-2: #fafafa;
-  --lew-color-gray-3: #f5f5f5;
-  --lew-color-gray-4: #e8e8e8;
-  --lew-color-gray-5: #d9d9d9;
-  --lew-color-gray-6: #bfbfbf;
-  --lew-color-gray-7: #8c8c8c;
-  --lew-color-gray-8: #595959;
-  --lew-color-gray-9: #262626;
-  --lew-color-gray-10: #000000;
+支持的基础颜色：`blue`、`gray`、`red`、`green`、`yellow`、`indigo`、`purple`、`pink`、`orange`、`cyan`、`teal`、`mint`、`brown`、`black`、`white`
 
+#### 语义颜色映射
+
+语义颜色通过 `base-color.scss` 映射到基础颜色：
+
+```scss
+:root,
+.lew-dark {
+  // Primary -> Blue
+  --lew-color-primary: var(--lew-color-blue);
+  --lew-color-primary-tone: var(--lew-color-blue-tone);
+  --lew-color-primary-fill-hover: var(--lew-color-blue-fill-hover);
+  // ... 其他变量映射
+
+  // Success -> Green
+  --lew-color-success: var(--lew-color-green);
+  // ...
+
+  // Error/Danger -> Red
+  --lew-color-error: var(--lew-color-red);
+  --lew-color-danger: var(--lew-color-red);
+  // ...
+
+  // Warning -> Orange
+  --lew-color-warning: var(--lew-color-orange);
+  // ...
+
+  // Info -> Blue
+  --lew-color-info: var(--lew-color-blue);
+  // ...
+
+  // Normal -> Gray
+  --lew-color-normal: var(--lew-color-gray);
+  // ...
+}
+```
+
+#### 颜色变体说明
+
+**Fill（实心填充）**：
+- 背景：使用 `--lew-color-{color}-tone`（在 checked 状态等场景下使用深色背景）
+- 文字：使用 `--lew-color-{color}`
+- 说明：在浅色模式下，tone 是浅色背景；在暗黑模式下，tone 是深色背景。对于 checked 状态的 checkbox/radio 等需要深色背景的场景，需要通过 CSS 选择器在暗黑模式下使用 tone 变量。
+
+**Light（轻量填充）**：
+- 背景：使用 `--lew-color-{color}-tone`
+- 文字：使用 `--lew-color-{color}`
+- Hover/Active：使用 `--lew-color-{color}-light-hover` / `--lew-color-{color}-light-active`
+
+**Ghost（边框模式）**：
+- 背景：`transparent`
+- 边框：使用 `--lew-color-{color}`（通常配合透明度）
+- 文字：使用 `--lew-color-{color}`
+- Hover/Active：使用表单背景色变量
+
+**Text（文本模式）**：
+- 背景：`transparent`
+- 文字：使用 `--lew-color-{color}`
+- Hover/Active：使用表单背景色变量
+
+#### 使用示例
+
+```scss
+// Button Fill 类型
+.lew-button-type-fill.lew-button-color-primary {
+  --lew-button-bg: var(--lew-color-primary-tone);
+  --lew-button-color: var(--lew-color-primary);
+  --lew-button-hover-bg: var(--lew-color-primary-fill-hover);
+  --lew-button-active-bg: var(--lew-color-primary-fill-active);
+}
+
+// Button Light 类型
+.lew-button-type-light.lew-button-color-primary {
+  --lew-button-bg: var(--lew-color-primary-tone);
+  --lew-button-color: var(--lew-color-primary);
+  --lew-button-hover-bg: var(--lew-color-primary-light-hover);
+  --lew-button-active-bg: var(--lew-color-primary-light-active);
+}
+
+// Button Ghost 类型
+.lew-button-type-ghost.lew-button-color-primary {
+  --lew-button-bg: transparent;
+  --lew-button-border: 1px solid var(--lew-color-primary);
+  --lew-button-color: var(--lew-color-primary);
+  --lew-button-hover-bg: var(--lew-bgcolor-2);
+  --lew-button-active-bg: var(--lew-bgcolor-4);
+}
+
+// Button Text 类型
+.lew-button-type-text.lew-button-color-primary {
+  --lew-button-bg: transparent;
+  --lew-button-color: var(--lew-color-primary);
+  --lew-button-hover-bg: var(--lew-form-bgcolor-hover);
+  --lew-button-active-bg: var(--lew-form-bgcolor-active);
+}
+```
+
+#### 暗黑模式适配
+
+在暗黑模式下，所有颜色变量会自动切换为适配的值，确保在深色背景下的对比度和可读性。
+
+#### 其他颜色变量
+
+```scss
+:root {
   // 文字色
   --lew-text-color-primary: rgba(0, 0, 0, 0.88);
   --lew-text-color-secondary: rgba(0, 0, 0, 0.65);
@@ -168,13 +269,13 @@ alwaysApply: false
 .lew-button {
   // 1. 背景相关
   --lew-button-bg: transparent;
-  --lew-button-hover-bg: var(--lew-color-primary-light);
-  --lew-button-active-bg: var(--lew-color-primary-dark);
-  --lew-button-disabled-bg: var(--lew-color-gray-3);
+  --lew-button-hover-bg: var(--lew-color-primary-tone);
+  --lew-button-active-bg: var(--lew-color-primary-tone);
+  --lew-button-disabled-bg: var(--lew-form-bgcolor);
 
   // 2. 文字相关
-  --lew-button-color: var(--lew-color-primary-dark);
-  --lew-button-hover-color: var(--lew-color-primary-dark);
+  --lew-button-color: var(--lew-color-primary);
+  --lew-button-hover-color: var(--lew-color-primary);
   --lew-button-disabled-color: var(--lew-text-color-disabled);
 
   // 3. 边框相关
@@ -217,24 +318,36 @@ alwaysApply: false
 .lew-button {
   // 基础变量定义
   --lew-button-bg: transparent;
-  --lew-button-color: var(--lew-color-primary-dark);
+  --lew-button-color: var(--lew-color-primary);
 
   // 类型修饰符 - 通过修饰符类覆盖变量
   &.lew-button-type-fill {
-    --lew-button-bg: var(--lew-color-primary);
-    --lew-button-color: #fff;
-    --lew-button-hover-bg: var(--lew-color-primary-dark);
+    --lew-button-bg: var(--lew-color-primary-tone);
+    --lew-button-color: var(--lew-color-primary);
+    --lew-button-hover-bg: var(--lew-color-primary-fill-hover);
+    --lew-button-active-bg: var(--lew-color-primary-fill-active);
   }
 
   &.lew-button-type-light {
-    --lew-button-bg: var(--lew-color-primary-light);
-    --lew-button-color: var(--lew-color-primary-dark);
+    --lew-button-bg: var(--lew-color-primary-tone);
+    --lew-button-color: var(--lew-color-primary);
+    --lew-button-hover-bg: var(--lew-color-primary-light-hover);
+    --lew-button-active-bg: var(--lew-color-primary-light-active);
   }
 
   &.lew-button-type-ghost {
     --lew-button-bg: transparent;
     --lew-button-border: 1px solid var(--lew-color-primary);
     --lew-button-color: var(--lew-color-primary);
+    --lew-button-hover-bg: var(--lew-bgcolor-2);
+    --lew-button-active-bg: var(--lew-bgcolor-4);
+  }
+
+  &.lew-button-type-text {
+    --lew-button-bg: transparent;
+    --lew-button-color: var(--lew-color-primary);
+    --lew-button-hover-bg: var(--lew-form-bgcolor-hover);
+    --lew-button-active-bg: var(--lew-form-bgcolor-active);
   }
 
   // 尺寸修饰符
@@ -256,16 +369,8 @@ alwaysApply: false
     --lew-button-font-size: var(--lew-font-size-lg);
   }
 
-  // 颜色修饰符（动态颜色）
-  &.lew-button-color-success {
-    --lew-button-bg: var(--lew-color-success);
-    --lew-button-hover-bg: var(--lew-color-success-dark);
-  }
-
-  &.lew-button-color-error {
-    --lew-button-bg: var(--lew-color-error);
-    --lew-button-hover-bg: var(--lew-color-error-dark);
-  }
+  // 颜色修饰符（动态颜色） - 通过 mixin 统一生成，见组件实现
+  // 每个颜色都支持 fill、light、ghost、text 四种类型
 }
 ```
 

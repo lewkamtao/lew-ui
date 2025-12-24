@@ -186,20 +186,27 @@ async function handleClose(): Promise<void> {
   @each $color in $colors {
     &--#{$color} {
       &.lew-tag--fill {
-        background-color: var(--lew-color-#{$color});
-        color: var(--lew-color-white);
+        background-color: var(--lew-color-#{$color}-fill);
+        color: var(--lew-color-#{$color}-fill-text);
       }
 
       &.lew-tag--light {
-        background-color: var(--lew-color-#{$color}-light);
-        color: var(--lew-color-#{$color}-dark);
+        background-color: color-mix(
+          in srgb,
+          var(--lew-color-#{$color}-light) 35%,
+          var(--lew-bgcolor-0)
+        );
+        color: var(--lew-color-#{$color}-light-text);
+
+        // 如果浏览器不支持 color-mix，使用 fallback
+        @supports not (color-mix(in srgb, red 35%, white)) {
+          background-color: var(--lew-color-#{$color}-light);
+        }
       }
 
       &.lew-tag--ghost {
-        border: var(--lew-form-border-width)
-          solid
-          var(--lew-color-#{$color}-dark);
-        color: var(--lew-color-#{$color}-dark);
+        border: var(--lew-form-border-width) solid var(--lew-color-#{$color});
+        color: var(--lew-color-#{$color}-ghost-text);
       }
     }
   }

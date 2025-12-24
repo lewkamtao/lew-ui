@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Material You M3 – Tag & Button</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      /* =====================================================
+   1. Core Design Tokens
+===================================================== */
+
+      :root {
+        --radius-lg: 20px;
+        --radius-pill: 999px;
+
+        --font: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+        /* Light */
+        --bg: #fef7ff;
+        --surface: #ffffff;
+        --surface-variant: #f3edf7;
+
+        --text: #1c1b1f;
+      }
+
+      body.dark {
+        /* Dark */
+        --bg: #1c1b1f;
+        --surface: #2b2930;
+        --surface-variant: #3a3841;
+
+        --text: #e6e1e5;
+      }
+
+      /* =====================================================
+   2. Color Tokens (Light / Dark tones)
+===================================================== */
+
+      .blue {
+        --tone-light: #d0e4ff;
+        --on-light: #0b57d0;
+        --tone-dark: #274777;
+        --on-dark: #d0e4ff;
+      }
+      .gray {
+        --tone-light: #e6e1e5;
+        --on-light: #444746;
+        --tone-dark: #444746;
+        --on-dark: #e6e1e5;
+      }
+      .red {
+        --tone-light: #fddede;
+        --on-light: #b3261e;
+        --tone-dark: #8c1d18;
+        --on-dark: #fddede;
+      }
+      .green {
+        --tone-light: #d6f5e8;
+        --on-light: #0f9d58;
+        --tone-dark: #0b6b43;
+        --on-dark: #d6f5e8;
+      }
+      .yellow {
+        --tone-light: #fff3d1;
+        --on-light: #7a5b00;
+        --tone-dark: #5c4600;
+        --on-dark: #fff3d1;
+      }
+      .indigo {
+        --tone-light: #e0e0ff;
+        --on-light: #3f51b5;
+        --tone-dark: #2f3b8f;
+        --on-dark: #e0e0ff;
+      }
+      .purple {
+        --tone-light: #f2dcff;
+        --on-light: #8e24aa;
+        --tone-dark: #5e1577;
+        --on-dark: #f2dcff;
+      }
+      .pink {
+        --tone-light: #ffd8e4;
+        --on-light: #c2185b;
+        --tone-dark: #8a1140;
+        --on-dark: #ffd8e4;
+      }
+      .orange {
+        --tone-light: #ffe2cc;
+        --on-light: #ef6c00;
+        --tone-dark: #a14a00;
+        --on-dark: #ffe2cc;
+      }
+      .cyan {
+        --tone-light: #cff7f4;
+        --on-light: #00796b;
+        --tone-dark: #004f47;
+        --on-dark: #cff7f4;
+      }
+      .teal {
+        --tone-light: #d1f0ea;
+        --on-light: #00695c;
+        --tone-dark: #004a40;
+        --on-dark: #d1f0ea;
+      }
+      .mint {
+        --tone-light: #d9f8f1;
+        --on-light: #1b8f83;
+        --tone-dark: #136b62;
+        --on-dark: #d9f8f1;
+      }
+      .brown {
+        --tone-light: #e7dcd6;
+        --on-light: #6d4c41;
+        --tone-dark: #4e342e;
+        --on-dark: #e7dcd6;
+      }
+      .black {
+        --tone-light: #e0e0e0;
+        --on-light: #1f1f1f;
+        --tone-dark: #2a2a2a;
+        --on-dark: #e0e0e0;
+      }
+
+      /* =====================================================
+   3. Base Layout
+===================================================== */
+
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+
+      .container {
+        max-width: 1100px;
+        padding: 32px;
+        margin: auto;
+      }
+
+      .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        margin-top: 16px;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      /* =====================================================
+   4. Theme Binding
+===================================================== */
+
+      .tag,
+      .btn {
+        --tone: var(--tone-light);
+        --on: var(--on-light);
+      }
+
+      body.dark .tag,
+      body.dark .btn {
+        --tone: var(--tone-dark);
+        --on: var(--on-dark);
+      }
+
+      /* =====================================================
+   5. Tag (Assist Chip)
+===================================================== */
+
+      .tag {
+        height: 32px;
+        padding: 0 14px;
+        border-radius: var(--radius-pill);
+        background: var(--tone);
+        color: var(--on);
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      /* =====================================================
+   6. Button – Base
+===================================================== */
+
+      .btn {
+        position: relative;
+        height: 40px;
+        padding: 0 24px;
+        border-radius: var(--radius-pill);
+        border: none;
+        background: transparent;
+        color: var(--on);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        overflow: hidden;
+        transition: transform 0.05s;
+      }
+
+      /* Ripple / State Layer */
+      .btn::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: currentColor;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+
+      /* Hover / Active (Material You style) */
+      .btn:hover::after {
+        opacity: 0.08;
+      }
+      .btn:active::after {
+        opacity: 0.12;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+
+      /* =====================================================
+   7. Button Types
+===================================================== */
+
+      /* Fill – Filled Tonal */
+      .btn.fill {
+        background: var(--tone);
+      }
+
+      /* Light – Soft / Elevated */
+      .btn.light {
+        background: color-mix(in srgb, var(--tone) 35%, var(--surface));
+      }
+
+      /* Ghost – Outlined */
+      .btn.ghost {
+        background: transparent;
+        border: 1px solid color-mix(in srgb, var(--on) 40%, transparent);
+      }
+
+      /* Text – Text Button */
+      .btn.text {
+        padding: 0 12px;
+        background: transparent;
+      }
+
+      /* =====================================================
+   8. Toggle
+===================================================== */
+
+      .toggle {
+        height: 36px;
+        padding: 0 20px;
+        border-radius: var(--radius-pill);
+        border: none;
+        background: var(--surface-variant);
+        color: var(--text);
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="toolbar">
+        <h1>Material You · M3</h1>
+        <button class="toggle" onclick="toggleTheme()">Dark / Light</button>
+      </div>
+
+      <h2>Tags</h2>
+      <div class="card">
+        <div class="row">
+          <span class="tag blue">Blue</span>
+          <span class="tag green">Green</span>
+          <span class="tag red">Red</span>
+          <span class="tag purple">Purple</span>
+          <span class="tag orange">Orange</span>
+          <span class="tag cyan">Cyan</span>
+          <span class="tag teal">Teal</span>
+          <span class="tag mint">Mint</span>
+          <span class="tag brown">Brown</span>
+          <span class="tag black">Black</span>
+          <span class="tag gray">Gray</span>
+          <span class="tag pink">Pink</span>
+          <span class="tag indigo">Indigo</span>
+          <span class="tag yellow">Yellow</span>
+          <span class="tag blue">Blue</span>
+          <span class="tag green">Green</span>
+          <span class="tag red">Red</span>
+          <span class="tag purple">Purple</span>
+          <span class="tag orange">Orange</span>
+          <span class="tag cyan">Cyan</span>
+          <span class="tag teal">Teal</span>
+          <span class="tag mint">Mint</span>
+          <span class="tag brown">Brown</span>
+          <span class="tag black">Black</span>
+        </div>
+      </div>
+
+      <h2>Buttons</h2>
+      <div class="card">
+        <div class="row">
+          <button class="btn fill blue">Fill</button>
+          <button class="btn light blue">Light</button>
+          <button class="btn ghost blue">Ghost</button>
+          <button class="btn text blue">Text</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleTheme() {
+        document.body.classList.toggle('dark')
+      }
+    </script>
+  </body>
+</html>

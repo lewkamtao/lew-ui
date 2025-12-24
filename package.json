@@ -79,6 +79,7 @@
     "@vitejs/plugin-vue": "^6.0.0",
     "eslint": "^9.31.0",
     "eslint-plugin-format": "^1.0.1",
+    "markdown-it": "^14.1.0",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.89.2",
     "stylelint": "16.2.1",

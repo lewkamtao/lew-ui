@@ -158,3 +158,88 @@ export function renderDescription(text: string) {
   // 将数组转换为 VNode，使用 span 作为容器
   return h('span', {}, parts)
 }
+
+/**
+ * 组件分类映射表
+ * 根据组件名映射到对应的分类目录
+ */
+const componentCategoryMap: Record<string, string> = {
+  // general
+  avatar: 'general',
+  badge: 'general',
+  button: 'general',
+  flex: 'general',
+  image: 'general',
+  mark: 'general',
+  tag: 'general',
+  title: 'general',
+  'text-trim': 'general',
+  icon: 'general',
+  // form
+  cascader: 'form',
+  checkbox: 'form',
+  'color-picker': 'form',
+  'date-picker': 'form',
+  'date-range-picker': 'form',
+  input: 'form',
+  'input-number': 'form',
+  'input-table': 'form',
+  'input-tag': 'form',
+  radio: 'form',
+  rate: 'form',
+  select: 'form',
+  slider: 'form',
+  'slider-range': 'form',
+  switch: 'form',
+  textarea: 'form',
+  'tree-select': 'form',
+  upload: 'form',
+  // data
+  collapse: 'data',
+  desc: 'data',
+  table: 'data',
+  tree: 'data',
+  // feedback
+  alert: 'feedback',
+  drawer: 'feedback',
+  empty: 'feedback',
+  loading: 'feedback',
+  message: 'feedback',
+  modal: 'feedback',
+  notification: 'feedback',
+  popok: 'feedback',
+  popover: 'feedback',
+  // navigation
+  'back-top': 'navigation',
+  breadcrumb: 'navigation',
+  menu: 'navigation',
+  'menu-tree': 'navigation',
+  pagination: 'navigation',
+  steps: 'navigation',
+  tabs: 'navigation',
+}
+
+/**
+ * 根据组件名获取 mdc 文件路径
+ * @param componentName - 组件名（如 'collapse', 'input-number'）
+ * @returns mdc 文件路径，如果找不到返回 null
+ */
+export function getMdcPath(componentName: string): string | null {
+  if (!componentName) return null
+
+  // 将组件名转换为小写
+  const normalizedName = componentName.toLowerCase()
+
+  // 查找组件分类
+  const category = componentCategoryMap[normalizedName]
+
+  if (!category) {
+    // 如果找不到，尝试所有分类
+    const categories = ['general', 'form', 'data', 'feedback', 'navigation']
+    // 返回第一个可能的路径（让组件尝试加载）
+    return `../../lib/components/${categories[0]}/${normalizedName}/${normalizedName}.mdc`
+  }
+
+  // 返回完整的相对路径
+  return `../../lib/components/${category}/${normalizedName}/${normalizedName}.mdc`
+}

@@ -92,10 +92,10 @@ async function handleClick(e: MouseEvent) {
 .lew-button {
   // CSS 变量定义
   --lew-button-bg: transparent;
-  --lew-button-color: var(--lew-color-primary-dark);
+  --lew-button-color: var(--lew-color-primary);
   --lew-button-border: none;
   --lew-button-hover-bg: var(--lew-color-primary-light);
-  --lew-button-active-bg: var(--lew-color-primary-dark);
+  --lew-button-active-bg: var(--lew-color-primary-light-active);
 
   // 定位
   position: relative;
@@ -128,10 +128,12 @@ async function handleClick(e: MouseEvent) {
 
   &:hover {
     background: var(--lew-button-hover-bg);
+    color: var(--lew-button-hover-color, var(--lew-button-color));
   }
 
   &:active {
     background: var(--lew-button-active-bg);
+    color: var(--lew-button-active-color, var(--lew-button-color));
   }
 
   &[disabled] {
@@ -320,34 +322,49 @@ async function handleClick(e: MouseEvent) {
 // 类型 & 颜色变体（使用 Mixin 减少重复）
 @mixin button-variant($name) {
   .lew-button-type-fill.lew-button-color-#{$name} {
-    --lew-button-bg: var(--lew-color-#{$name});
-    --lew-button-color: #fff;
-    --lew-button-hover-bg: var(--lew-color-#{$name}-hover);
-    --lew-button-active-bg: var(--lew-color-#{$name}-active);
+    --lew-button-bg: var(--lew-color-#{$name}-fill);
+    --lew-button-color: var(--lew-color-#{$name}-fill-text);
+    --lew-button-hover-bg: var(--lew-color-#{$name}-fill-hover);
+    --lew-button-hover-color: var(--lew-color-#{$name}-fill-text-hover);
+    --lew-button-active-bg: var(--lew-color-#{$name}-fill-active);
+    --lew-button-active-color: var(--lew-color-#{$name}-fill-text-active);
   }
 
   .lew-button-type-light.lew-button-color-#{$name} {
-    --lew-button-bg: var(--lew-color-#{$name}-light);
-    --lew-button-color: var(--lew-color-#{$name}-dark);
-    --lew-button-hover-bg: var(--lew-color-#{$name}-light-hover);
-    --lew-button-active-bg: var(--lew-color-#{$name}-light-active);
+    --lew-button-bg: color-mix(in srgb, var(--lew-color-#{$name}-light) 35%, var(--lew-bgcolor-0));
+    --lew-button-color: var(--lew-color-#{$name}-light-text);
+    --lew-button-hover-bg: color-mix(in srgb, var(--lew-color-#{$name}-light-hover) 35%, var(--lew-bgcolor-0));
+    --lew-button-hover-color: var(--lew-color-#{$name}-light-text-hover);
+    --lew-button-active-bg: color-mix(in srgb, var(--lew-color-#{$name}-light-active) 35%, var(--lew-bgcolor-0));
+    --lew-button-active-color: var(--lew-color-#{$name}-light-text-active);
+
+    // 如果浏览器不支持 color-mix，使用 fallback
+    @supports not (color-mix(in srgb, red 35%, white)) {
+      --lew-button-bg: var(--lew-color-#{$name}-light);
+      --lew-button-hover-bg: var(--lew-color-#{$name}-light-hover);
+      --lew-button-active-bg: var(--lew-color-#{$name}-light-active);
+    }
   }
 
   .lew-button-type-ghost.lew-button-color-#{$name} {
     --lew-button-bg: transparent;
-    --lew-button-border: var(--lew-form-border-width) solid var(--lew-color-#{$name}-dark);
-    --lew-button-color: var(--lew-color-#{$name}-dark);
+    --lew-button-border: var(--lew-form-border-width) solid var(--lew-color-#{$name});
+    --lew-button-color: var(--lew-color-#{$name}-ghost-text);
     --lew-button-hover-bg: var(--lew-bgcolor-2);
+    --lew-button-hover-color: var(--lew-color-#{$name}-ghost-text-hover);
     --lew-button-active-bg: var(--lew-bgcolor-4);
+    --lew-button-active-color: var(--lew-color-#{$name}-ghost-text-active);
 
     box-shadow: none;
   }
 
   .lew-button-type-text.lew-button-color-#{$name} {
     --lew-button-bg: transparent;
-    --lew-button-color: var(--lew-color-#{$name}-dark);
+    --lew-button-color: var(--lew-color-#{$name}-text-text);
     --lew-button-hover-bg: var(--lew-form-bgcolor-hover);
+    --lew-button-hover-color: var(--lew-color-#{$name}-text-text-hover);
     --lew-button-active-bg: var(--lew-form-bgcolor-active);
+    --lew-button-active-color: var(--lew-color-#{$name}-text-text-active);
 
     border: none;
     box-shadow: none;
