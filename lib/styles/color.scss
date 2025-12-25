@@ -4,255 +4,271 @@
 @use './color/semantic' as semantic;
 
 @function get-color-value($color-map, $step) {
-  @return map-get($color-map, $step);
+  @return map.get($color-map, $step);
 }
 
 @mixin export-base-colors-light($color-name, $color-map) {
-  --lew-color-#{$color-name}: #{get-color-value($color-map, 6)};
-  --lew-color-#{$color-name}-hover: #{get-color-value($color-map, 7)};
-  --lew-color-#{$color-name}-active: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-light: #{get-color-value($color-map, 1)};
-  --lew-color-#{$color-name}-light-hover: #{get-color-value($color-map, 2)};
-  --lew-color-#{$color-name}-light-active: #{get-color-value($color-map, 3)};
-  --lew-color-#{$color-name}-light-text: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-light-text-hover: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-light-text-active: #{get-color-value($color-map, 9)};
-  --lew-color-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
-  --lew-color-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, 7)};
-  --lew-color-#{$color-name}-ghost-text-active: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-text-text: #{get-color-value($color-map, 6)};
-  --lew-color-#{$color-name}-text-text-hover: #{get-color-value($color-map, 7)};
-  --lew-color-#{$color-name}-text-text-active: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-dark: #{get-color-value($color-map, 6)};
+  --lew-color-#{$color-name}: #{get-color-value($color-map, '6')};
+  --lew-color-#{$color-name}-hover: #{get-color-value($color-map, '7')};
+  --lew-color-#{$color-name}-active: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-light: #{get-color-value($color-map, '2')};
+  --lew-color-#{$color-name}-light-hover: #{get-color-value($color-map, '3')};
+  --lew-color-#{$color-name}-light-active: #{get-color-value($color-map, '4')};
+  --lew-color-#{$color-name}-light-text: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-light-text-hover: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-light-text-active: #{get-color-value($color-map, '9')};
+  --lew-color-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
+  --lew-color-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, '7')};
+  --lew-color-#{$color-name}-ghost-text-active: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-text-text: #{get-color-value($color-map, '6')};
+  --lew-color-#{$color-name}-text-text-hover: #{get-color-value($color-map, '7')};
+  --lew-color-#{$color-name}-text-text-active: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-dark: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-base-colors-dark($color-name, $color-map) {
-  --lew-color-#{$color-name}: #{get-color-value($color-map, 6)};
-  --lew-color-#{$color-name}-hover: #{get-color-value($color-map, 7)};
-  --lew-color-#{$color-name}-active: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-light: #{get-color-value($color-map, 1)};
-  --lew-color-#{$color-name}-light-hover: #{get-color-value($color-map, 2)};
-  --lew-color-#{$color-name}-light-active: #{get-color-value($color-map, 3)};
-  --lew-color-#{$color-name}-light-text: #{get-color-value($color-map, 7)};
-  --lew-color-#{$color-name}-light-text-hover: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-light-text-active: #{get-color-value($color-map, 9)};
-  --lew-color-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
-  --lew-color-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, 7)};
-  --lew-color-#{$color-name}-ghost-text-active: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-text-text: #{get-color-value($color-map, 6)};
-  --lew-color-#{$color-name}-text-text-hover: #{get-color-value($color-map, 7)};
-  --lew-color-#{$color-name}-text-text-active: #{get-color-value($color-map, 8)};
-  --lew-color-#{$color-name}-dark: #{get-color-value($color-map, 6)};
+  --lew-color-#{$color-name}: #{get-color-value($color-map, '6')};
+  --lew-color-#{$color-name}-hover: #{get-color-value($color-map, '7')};
+  --lew-color-#{$color-name}-active: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-light: #{get-color-value($color-map, '3')};
+  --lew-color-#{$color-name}-light-hover: #{get-color-value($color-map, '4')};
+  --lew-color-#{$color-name}-light-active: #{get-color-value($color-map, '5')};
+  --lew-color-#{$color-name}-light-text: #{get-color-value($color-map, '7')};
+  --lew-color-#{$color-name}-light-text-hover: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-light-text-active: #{get-color-value($color-map, '9')};
+  --lew-color-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
+  --lew-color-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, '7')};
+  --lew-color-#{$color-name}-ghost-text-active: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-text-text: #{get-color-value($color-map, '6')};
+  --lew-color-#{$color-name}-text-text-hover: #{get-color-value($color-map, '7')};
+  --lew-color-#{$color-name}-text-text-active: #{get-color-value($color-map, '8')};
+  --lew-color-#{$color-name}-dark: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-button-colors-light($color-name, $color-map) {
-  --lew-color-button-#{$color-name}-fill: #{get-color-value($color-map, 6)};
-  --lew-color-button-#{$color-name}-fill-hover: #{get-color-value($color-map, 7)};
-  --lew-color-button-#{$color-name}-fill-active: #{get-color-value($color-map, 8)};
+  --lew-color-button-#{$color-name}-fill: #{get-color-value($color-map, '6')};
+  --lew-color-button-#{$color-name}-fill-hover: #{get-color-value($color-map, '7')};
+  --lew-color-button-#{$color-name}-fill-hover-base: #{get-color-value($color-map, '7')};
+  --lew-color-button-#{$color-name}-fill-active: #{get-color-value($color-map, '8')};
+  --lew-color-button-#{$color-name}-fill-active-base: #{get-color-value($color-map, '8')};
   --lew-color-button-#{$color-name}-fill-text: #fff;
   --lew-color-button-#{$color-name}-fill-text-hover: #fff;
   --lew-color-button-#{$color-name}-fill-text-active: #fff;
-  --lew-color-button-#{$color-name}-light: #{get-color-value($color-map, 1)};
-  --lew-color-button-#{$color-name}-light-hover: #{get-color-value($color-map, 2)};
-  --lew-color-button-#{$color-name}-light-active: #{get-color-value($color-map, 3)};
-  --lew-color-button-#{$color-name}-light-text: #{get-color-value($color-map, 8)};
-  --lew-color-button-#{$color-name}-light-text-hover: #{get-color-value($color-map, 8)};
-  --lew-color-button-#{$color-name}-light-text-active: #{get-color-value($color-map, 9)};
-  --lew-color-button-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
-  --lew-color-button-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, 7)};
-  --lew-color-button-#{$color-name}-ghost-text-active: #{get-color-value($color-map, 8)};
-  --lew-color-button-#{$color-name}-text-text: #{get-color-value($color-map, 6)};
-  --lew-color-button-#{$color-name}-text-text-hover: #{get-color-value($color-map, 7)};
-  --lew-color-button-#{$color-name}-text-text-active: #{get-color-value($color-map, 8)};
+  --lew-color-button-#{$color-name}-light: #{get-color-value($color-map, '2')};
+  --lew-color-button-#{$color-name}-light-hover: #{get-color-value($color-map, '3')};
+  --lew-color-button-#{$color-name}-light-active: #{get-color-value($color-map, '4')};
+  --lew-color-button-#{$color-name}-light-text: #{get-color-value($color-map, '8')};
+  --lew-color-button-#{$color-name}-light-text-hover: #{get-color-value($color-map, '8')};
+  --lew-color-button-#{$color-name}-light-text-active: #{get-color-value($color-map, '9')};
+  --lew-color-button-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
+  --lew-color-button-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, '7')};
+  --lew-color-button-#{$color-name}-ghost-text-active: #{get-color-value($color-map, '8')};
+  --lew-color-button-#{$color-name}-text-text: #{get-color-value($color-map, '6')};
+  --lew-color-button-#{$color-name}-text-text-hover: #{get-color-value($color-map, '7')};
+  --lew-color-button-#{$color-name}-text-text-active: #{get-color-value($color-map, '8')};
 }
 
 @mixin export-button-colors-dark($color-name, $color-map) {
-  --lew-color-button-#{$color-name}-fill: #{get-color-value($color-map, 4)};
-  --lew-color-button-#{$color-name}-fill-hover: #{get-color-value($color-map, 5)};
-  --lew-color-button-#{$color-name}-fill-active: #{get-color-value($color-map, 4)};
-  --lew-color-button-#{$color-name}-fill-text: #{get-color-value($color-map, 7)};
-  --lew-color-button-#{$color-name}-fill-text-hover: #{get-color-value($color-map, 8)};
-  --lew-color-button-#{$color-name}-fill-text-active: #{get-color-value($color-map, 9)};
-  --lew-color-button-#{$color-name}-light: #{get-color-value($color-map, 1)};
-  --lew-color-button-#{$color-name}-light-hover: #{get-color-value($color-map, 2)};
-  --lew-color-button-#{$color-name}-light-active: #{get-color-value($color-map, 3)};
-  --lew-color-button-#{$color-name}-light-text: #{get-color-value($color-map, 7)};
-  --lew-color-button-#{$color-name}-light-text-hover: #{get-color-value($color-map, 8)};
-  --lew-color-button-#{$color-name}-light-text-active: #{get-color-value($color-map, 9)};
-  --lew-color-button-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
-  --lew-color-button-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, 7)};
-  --lew-color-button-#{$color-name}-ghost-text-active: #{get-color-value($color-map, 8)};
-  --lew-color-button-#{$color-name}-text-text: #{get-color-value($color-map, 6)};
-  --lew-color-button-#{$color-name}-text-text-hover: #{get-color-value($color-map, 7)};
-  --lew-color-button-#{$color-name}-text-text-active: #{get-color-value($color-map, 8)};
+  --lew-color-button-#{$color-name}-fill: #{get-color-value($color-map, '5')};
+  --lew-color-button-#{$color-name}-fill-hover: #{get-color-value($color-map, '4')};
+  --lew-color-button-#{$color-name}-fill-hover-base: #{get-color-value($color-map, '4')};
+  --lew-color-button-#{$color-name}-fill-active: #{get-color-value($color-map, '4')};
+  --lew-color-button-#{$color-name}-fill-active-base: #{get-color-value($color-map, '4')};
+  --lew-color-button-#{$color-name}-fill-text: #{get-color-value($color-map, '9')};
+  --lew-color-button-#{$color-name}-fill-text-hover: #{get-color-value($color-map, '9')};
+  --lew-color-button-#{$color-name}-fill-text-active: #{get-color-value($color-map, '9')};
+  --lew-color-button-#{$color-name}-light: #{get-color-value($color-map, '3')};
+  --lew-color-button-#{$color-name}-light-hover: #{get-color-value($color-map, '4')};
+  --lew-color-button-#{$color-name}-light-active: #{get-color-value($color-map, '3')};
+  --lew-color-button-#{$color-name}-light-text: #{get-color-value($color-map, '7')};
+  --lew-color-button-#{$color-name}-light-text-hover: #{get-color-value($color-map, '8')};
+  --lew-color-button-#{$color-name}-light-text-active: #{get-color-value($color-map, '9')};
+  --lew-color-button-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
+  --lew-color-button-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, '7')};
+  --lew-color-button-#{$color-name}-ghost-text-active: #{get-color-value($color-map, '6')};
+  --lew-color-button-#{$color-name}-text-text: #{get-color-value($color-map, '6')};
+  --lew-color-button-#{$color-name}-text-text-hover: #{get-color-value($color-map, '7')};
+  --lew-color-button-#{$color-name}-text-text-active: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-tag-colors-light($color-name, $color-map) {
-  --lew-color-tag-#{$color-name}-fill: #{get-color-value($color-map, 6)};
+  --lew-color-tag-#{$color-name}-fill: #{get-color-value($color-map, '6')};
   --lew-color-tag-#{$color-name}-fill-text: #fff;
-  --lew-color-tag-#{$color-name}-light: #{get-color-value($color-map, 1)};
-  --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, 8)};
-  --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
+  --lew-color-tag-#{$color-name}-light: #{get-color-value($color-map, '2')};
+  --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, '8')};
+  --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-tag-colors-dark($color-name, $color-map) {
-  --lew-color-tag-#{$color-name}-fill: #{get-color-value($color-map, 4)};
-  --lew-color-tag-#{$color-name}-fill-text: #{get-color-value($color-map, 7)};
-  --lew-color-tag-#{$color-name}-light: #{get-color-value($color-map, 1)};
-  --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, 7)};
-  --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, 6)};
+  --lew-color-tag-#{$color-name}-fill: #{get-color-value($color-map, '5')};
+  --lew-color-tag-#{$color-name}-fill-text: #{get-color-value($color-map, '9')};
+  --lew-color-tag-#{$color-name}-light: #{get-color-value($color-map, '3')};
+  --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, '7')};
+  --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-checkbox-colors-light($color-name, $color-map) {
-  --lew-color-checkbox-#{$color-name}-icon-border: #{get-color-value($color-map, 6)};
+  --lew-color-checkbox-#{$color-name}-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-checkbox-#{$color-name}-icon-bg: transparent;
-  --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 6)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, '6')};
   --lew-color-checkbox-#{$color-name}-checked-icon-color: #fff;
-  --lew-color-checkbox-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, 7)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, '7')};
   --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #fff;
-  --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 8)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, '8')};
   --lew-color-checkbox-#{$color-name}-checked-icon-color-active: #fff;
-  --lew-color-checkbox-#{$color-name}-block-checked-bg: #{get-color-value($color-map, 1)};
-  --lew-color-checkbox-#{$color-name}-block-checked-border: #{get-color-value($color-map, 6)};
-  --lew-color-checkbox-#{$color-name}-block-checked-color: #{get-color-value($color-map, 6)};
-  --lew-color-checkbox-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, 6)};
+  --lew-color-checkbox-#{$color-name}-block-checked-bg: #{get-color-value($color-map, '1')};
+  --lew-color-checkbox-#{$color-name}-block-checked-border: #{get-color-value($color-map, '6')};
+  --lew-color-checkbox-#{$color-name}-block-checked-color: #{get-color-value($color-map, '6')};
+  --lew-color-checkbox-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-checkbox-colors-dark($color-name, $color-map) {
-  --lew-color-checkbox-#{$color-name}-icon-border: #{get-color-value($color-map, 6)};
+  --lew-color-checkbox-#{$color-name}-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-checkbox-#{$color-name}-icon-bg: transparent;
-  --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 5)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-border: #{get-color-value($color-map, 5)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-color: #{get-color-value($color-map, 8)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, 5)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, 6)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #{get-color-value($color-map, 9)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 5)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, 5)};
-  --lew-color-checkbox-#{$color-name}-checked-icon-color-active: #{get-color-value($color-map, 9)};
-  --lew-color-checkbox-#{$color-name}-block-checked-bg: #{get-color-value($color-map, 1)};
-  --lew-color-checkbox-#{$color-name}-block-checked-border: #{get-color-value($color-map, 6)};
-  --lew-color-checkbox-#{$color-name}-block-checked-color: #{get-color-value($color-map, 6)};
-  --lew-color-checkbox-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, 7)};
+  --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, '5')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border: #{get-color-value($color-map, '5')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-color: #{get-color-value($color-map, '8')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, '5')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, '6')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #{get-color-value($color-map, '9')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, '5')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, '5')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-color-active: #{get-color-value($color-map, '9')};
+  --lew-color-checkbox-#{$color-name}-block-checked-bg: #{get-color-value($color-map, '1')};
+  --lew-color-checkbox-#{$color-name}-block-checked-border: #{get-color-value($color-map, '6')};
+  --lew-color-checkbox-#{$color-name}-block-checked-color: #{get-color-value($color-map, '6')};
+  --lew-color-checkbox-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, '7')};
 }
 
 @mixin export-radio-colors-light($color-name, $color-map) {
-  --lew-color-radio-#{$color-name}-icon-border: #{get-color-value($color-map, 6)};
+  --lew-color-radio-#{$color-name}-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-radio-#{$color-name}-icon-bg: transparent;
-  --lew-color-radio-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 6)};
-  --lew-color-radio-#{$color-name}-checked-icon-border: #{get-color-value($color-map, 6)};
+  --lew-color-radio-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, '6')};
+  --lew-color-radio-#{$color-name}-checked-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-radio-#{$color-name}-checked-icon-color: #fff;
-  --lew-color-radio-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, 7)};
-  --lew-color-radio-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, 7)};
+  --lew-color-radio-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, '7')};
+  --lew-color-radio-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, '7')};
   --lew-color-radio-#{$color-name}-checked-icon-color-hover: #fff;
-  --lew-color-radio-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 8)};
-  --lew-color-radio-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, 8)};
+  --lew-color-radio-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, '8')};
+  --lew-color-radio-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, '8')};
   --lew-color-radio-#{$color-name}-checked-icon-color-active: #fff;
-  --lew-color-radio-#{$color-name}-block-checked-bg: #{get-color-value($color-map, 1)};
-  --lew-color-radio-#{$color-name}-block-checked-border: #{get-color-value($color-map, 6)};
-  --lew-color-radio-#{$color-name}-block-checked-color: #{get-color-value($color-map, 6)};
-  --lew-color-radio-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, 6)};
+  --lew-color-radio-#{$color-name}-block-checked-bg: #{get-color-value($color-map, '1')};
+  --lew-color-radio-#{$color-name}-block-checked-border: #{get-color-value($color-map, '6')};
+  --lew-color-radio-#{$color-name}-block-checked-color: #{get-color-value($color-map, '6')};
+  --lew-color-radio-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-radio-colors-dark($color-name, $color-map) {
-  --lew-color-radio-#{$color-name}-icon-border: #{get-color-value($color-map, 6)};
+  --lew-color-radio-#{$color-name}-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-radio-#{$color-name}-icon-bg: transparent;
-  --lew-color-radio-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, 5)};
-  --lew-color-radio-#{$color-name}-checked-icon-border: #{get-color-value($color-map, 5)};
-  --lew-color-radio-#{$color-name}-checked-icon-color: #{get-color-value($color-map, 8)};
-  --lew-color-radio-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, 5)};
-  --lew-color-radio-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, 6)};
-  --lew-color-radio-#{$color-name}-checked-icon-color-hover: #{get-color-value($color-map, 9)};
-  --lew-color-radio-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, 5)};
-  --lew-color-radio-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, 5)};
-  --lew-color-radio-#{$color-name}-checked-icon-color-active: #{get-color-value($color-map, 9)};
-  --lew-color-radio-#{$color-name}-block-checked-bg: #{get-color-value($color-map, 1)};
-  --lew-color-radio-#{$color-name}-block-checked-border: #{get-color-value($color-map, 6)};
-  --lew-color-radio-#{$color-name}-block-checked-color: #{get-color-value($color-map, 6)};
-  --lew-color-radio-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, 7)};
+  --lew-color-radio-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, '5')};
+  --lew-color-radio-#{$color-name}-checked-icon-border: #{get-color-value($color-map, '5')};
+  --lew-color-radio-#{$color-name}-checked-icon-color: #{get-color-value($color-map, '8')};
+  --lew-color-radio-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, '5')};
+  --lew-color-radio-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, '6')};
+  --lew-color-radio-#{$color-name}-checked-icon-color-hover: #{get-color-value($color-map, '9')};
+  --lew-color-radio-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, '5')};
+  --lew-color-radio-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, '5')};
+  --lew-color-radio-#{$color-name}-checked-icon-color-active: #{get-color-value($color-map, '9')};
+  --lew-color-radio-#{$color-name}-block-checked-bg: #{get-color-value($color-map, '1')};
+  --lew-color-radio-#{$color-name}-block-checked-border: #{get-color-value($color-map, '6')};
+  --lew-color-radio-#{$color-name}-block-checked-color: #{get-color-value($color-map, '6')};
+  --lew-color-radio-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, '7')};
 }
 
 @mixin export-switch-colors-light($color-name, $color-map) {
-  --lew-color-switch-#{$color-name}-checked-bg: #{get-color-value($color-map, 6)};
-  --lew-color-switch-#{$color-name}-checked-bg-hover: #{get-color-value($color-map, 7)};
-  --lew-color-switch-#{$color-name}-checked-bg-active: #{get-color-value($color-map, 8)};
+  --lew-color-switch-#{$color-name}-checked-bg: #{get-color-value($color-map, '6')};
+  --lew-color-switch-#{$color-name}-checked-bg-hover: #{get-color-value($color-map, '7')};
+  --lew-color-switch-#{$color-name}-checked-bg-active: #{get-color-value($color-map, '8')};
   --lew-color-switch-#{$color-name}-dot-color: #fff;
-  --lew-color-switch-#{$color-name}-loading-off: #{get-color-value($color-map, 8)};
-  --lew-color-switch-#{$color-name}-loading-on: #{get-color-value($color-map, 8)};
+  --lew-color-switch-#{$color-name}-loading-off: #{get-color-value($color-map, '8')};
+  --lew-color-switch-#{$color-name}-loading-on: #{get-color-value($color-map, '8')};
 }
 
 @mixin export-switch-colors-dark($color-name, $color-map) {
-  --lew-color-switch-#{$color-name}-checked-bg: #{get-color-value($color-map, 4)};
-  --lew-color-switch-#{$color-name}-checked-bg-hover: #{get-color-value($color-map, 5)};
-  --lew-color-switch-#{$color-name}-checked-bg-active: #{get-color-value($color-map, 4)};
-  --lew-color-switch-#{$color-name}-dot-color: #{get-color-value($color-map, 7)};
-  --lew-color-switch-#{$color-name}-loading-off: #{get-color-value($color-map, 5)};
-  --lew-color-switch-#{$color-name}-loading-on: #{get-color-value($color-map, 4)};
+  --lew-color-switch-#{$color-name}-checked-bg: #{get-color-value($color-map, '4')};
+  --lew-color-switch-#{$color-name}-checked-bg-hover: #{get-color-value($color-map, '5')};
+  --lew-color-switch-#{$color-name}-checked-bg-active: #{get-color-value($color-map, '4')};
+  --lew-color-switch-#{$color-name}-dot-color: #{get-color-value($color-map, '7')};
+  --lew-color-switch-#{$color-name}-loading-off: #{get-color-value($color-map, '5')};
+  --lew-color-switch-#{$color-name}-loading-on: #{get-color-value($color-map, '4')};
 }
 
 @mixin export-datepicker-colors-light($color-name, $color-map) {
-  --lew-color-datepicker-#{$color-name}-selected-bg: #{get-color-value($color-map, 6)};
+  --lew-color-datepicker-#{$color-name}-selected-bg: #{get-color-value($color-map, '6')};
   --lew-color-datepicker-#{$color-name}-selected-text: #fff;
-  --lew-color-datepicker-#{$color-name}-selected-bg-hover: #{get-color-value($color-map, 7)};
+  --lew-color-datepicker-#{$color-name}-selected-bg-hover: #{get-color-value($color-map, '7')};
   --lew-color-datepicker-#{$color-name}-selected-text-hover: #fff;
-  --lew-color-datepicker-#{$color-name}-selected-bg-active: #{get-color-value($color-map, 8)};
+  --lew-color-datepicker-#{$color-name}-selected-bg-active: #{get-color-value($color-map, '8')};
   --lew-color-datepicker-#{$color-name}-selected-text-active: #fff;
 }
 
 @mixin export-datepicker-colors-dark($color-name, $color-map) {
-  --lew-color-datepicker-#{$color-name}-selected-bg: #{get-color-value($color-map, 4)};
-  --lew-color-datepicker-#{$color-name}-selected-text: #{get-color-value($color-map, 7)};
-  --lew-color-datepicker-#{$color-name}-selected-bg-hover: #{get-color-value($color-map, 5)};
-  --lew-color-datepicker-#{$color-name}-selected-text-hover: #{get-color-value($color-map, 8)};
-  --lew-color-datepicker-#{$color-name}-selected-bg-active: #{get-color-value($color-map, 4)};
-  --lew-color-datepicker-#{$color-name}-selected-text-active: #{get-color-value($color-map, 9)};
+  --lew-color-datepicker-#{$color-name}-selected-bg: #{get-color-value($color-map, '4')};
+  --lew-color-datepicker-#{$color-name}-selected-text: #{get-color-value($color-map, '7')};
+  --lew-color-datepicker-#{$color-name}-selected-bg-hover: #{get-color-value($color-map, '5')};
+  --lew-color-datepicker-#{$color-name}-selected-text-hover: #{get-color-value($color-map, '8')};
+  --lew-color-datepicker-#{$color-name}-selected-bg-active: #{get-color-value($color-map, '4')};
+  --lew-color-datepicker-#{$color-name}-selected-text-active: #{get-color-value($color-map, '9')};
 }
 
 @mixin export-steps-colors-light($color-name, $color-map) {
-  --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, 6)};
+  --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, '6')};
   --lew-color-steps-#{$color-name}-active-text: #fff;
   --lew-color-steps-#{$color-name}-active-icon: #fff;
-  --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, 1)};
-  --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, 6)};
-  --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, 6)};
+  --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, '1')};
+  --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, '6')};
+  --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-steps-colors-dark($color-name, $color-map) {
-  --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, 4)};
-  --lew-color-steps-#{$color-name}-active-text: #{get-color-value($color-map, 7)};
-  --lew-color-steps-#{$color-name}-active-icon: #{get-color-value($color-map, 7)};
-  --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, 1)};
-  --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, 6)};
-  --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, 6)};
+  --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, '4')};
+  --lew-color-steps-#{$color-name}-active-text: #{get-color-value($color-map, '7')};
+  --lew-color-steps-#{$color-name}-active-icon: #{get-color-value($color-map, '7')};
+  --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, '1')};
+  --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, '6')};
+  --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, '6')};
 }
 
 @mixin export-pagination-colors-light($color-name, $color-map) {
-  --lew-color-pagination-#{$color-name}-hover-bg: #{get-color-value($color-map, 1)};
-  --lew-color-pagination-#{$color-name}-active-bg: #{get-color-value($color-map, 6)};
+  --lew-color-pagination-#{$color-name}-hover-bg: #{get-color-value($color-map, '1')};
+  --lew-color-pagination-#{$color-name}-active-bg: #{get-color-value($color-map, '6')};
   --lew-color-pagination-#{$color-name}-active-text: #fff;
 }
 
 @mixin export-pagination-colors-dark($color-name, $color-map) {
-  --lew-color-pagination-#{$color-name}-hover-bg: #{get-color-value($color-map, 1)};
-  --lew-color-pagination-#{$color-name}-active-bg: #{get-color-value($color-map, 4)};
-  --lew-color-pagination-#{$color-name}-active-text: #{get-color-value($color-map, 7)};
+  --lew-color-pagination-#{$color-name}-hover-bg: #{get-color-value($color-map, '1')};
+  --lew-color-pagination-#{$color-name}-active-bg: #{get-color-value($color-map, '4')};
+  --lew-color-pagination-#{$color-name}-active-text: #{get-color-value($color-map, '7')};
 }
 
 @mixin export-inputtag-colors-light($color-name, $color-map) {
-  --lew-color-inputtag-#{$color-name}-tag-focus-bg: #{get-color-value($color-map, 1)};
-  --lew-color-inputtag-#{$color-name}-tag-text: #{get-color-value($color-map, 8)};
+  --lew-color-inputtag-#{$color-name}-tag-focus-bg: #{get-color-value($color-map, '1')};
+  --lew-color-inputtag-#{$color-name}-tag-text: #{get-color-value($color-map, '8')};
 }
 
 @mixin export-inputtag-colors-dark($color-name, $color-map) {
-  --lew-color-inputtag-#{$color-name}-tag-focus-bg: #{get-color-value($color-map, 1)};
-  --lew-color-inputtag-#{$color-name}-tag-text: #{get-color-value($color-map, 7)};
+  --lew-color-inputtag-#{$color-name}-tag-focus-bg: #{get-color-value($color-map, '1')};
+  --lew-color-inputtag-#{$color-name}-tag-text: #{get-color-value($color-map, '7')};
+}
+
+@mixin export-badge-colors-light($color-name, $color-map) {
+  --lew-color-badge-#{$color-name}-bg: #{get-color-value($color-map, '6')};
+  --lew-color-badge-#{$color-name}-dot-bg: #{get-color-value($color-map, '7')};
+  --lew-color-badge-#{$color-name}-text: #fff;
+}
+
+@mixin export-badge-colors-dark($color-name, $color-map) {
+  --lew-color-badge-#{$color-name}-bg: #{get-color-value($color-map, '5')};
+  --lew-color-badge-#{$color-name}-dot-bg: #{get-color-value($color-map, '6')};
+  --lew-color-badge-#{$color-name}-text: #{get-color-value($color-map, '8')};
 }
 
 @mixin export-colors($colors-map, $is-dark: false) {
-  $color-names: map-keys($colors-map);
+  $color-names: map.keys($colors-map);
 
   @each $name in $color-names {
-    $color-map: map-get($colors-map, $name);
+    $color-map: map.get($colors-map, $name);
     @if $is-dark {
       @include export-base-colors-dark($name, $color-map);
       @include export-button-colors-dark($name, $color-map);
@@ -264,6 +280,7 @@
       @include export-steps-colors-dark($name, $color-map);
       @include export-pagination-colors-dark($name, $color-map);
       @include export-inputtag-colors-dark($name, $color-map);
+      @include export-badge-colors-dark($name, $color-map);
     } @else {
       @include export-base-colors-light($name, $color-map);
       @include export-button-colors-light($name, $color-map);
@@ -275,16 +292,17 @@
       @include export-steps-colors-light($name, $color-map);
       @include export-pagination-colors-light($name, $color-map);
       @include export-inputtag-colors-light($name, $color-map);
+      @include export-badge-colors-light($name, $color-map);
     }
   }
 }
 
 @mixin export-semantic-colors($colors-map, $is-dark: false) {
-  $semantic-names: map-keys(semantic.$semantic-colors);
+  $semantic-names: map.keys(semantic.$semantic-colors);
 
   @each $semantic-name in $semantic-names {
-    $base-color-name: map-get(semantic.$semantic-colors, $semantic-name);
-    $color-map: map-get($colors-map, $base-color-name);
+    $base-color-name: map.get(semantic.$semantic-colors, $semantic-name);
+    $color-map: map.get($colors-map, $base-color-name);
     @if $is-dark {
       @include export-base-colors-dark($semantic-name, $color-map);
       @include export-button-colors-dark($semantic-name, $color-map);
@@ -296,6 +314,7 @@
       @include export-steps-colors-dark($semantic-name, $color-map);
       @include export-pagination-colors-dark($semantic-name, $color-map);
       @include export-inputtag-colors-dark($semantic-name, $color-map);
+      @include export-badge-colors-dark($semantic-name, $color-map);
     } @else {
       @include export-base-colors-light($semantic-name, $color-map);
       @include export-button-colors-light($semantic-name, $color-map);
@@ -307,6 +326,7 @@
       @include export-steps-colors-light($semantic-name, $color-map);
       @include export-pagination-colors-light($semantic-name, $color-map);
       @include export-inputtag-colors-light($semantic-name, $color-map);
+      @include export-badge-colors-light($semantic-name, $color-map);
     }
   }
 }

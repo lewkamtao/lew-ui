@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import dayjs from 'dayjs'
 import { LewPopover, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -9,10 +9,9 @@ import LewPanel from './LewPanel.vue'
 import { datePickerProps } from './props'
 
 const props = defineProps(datePickerProps)
-
 const emit = defineEmits(datePickerEmits)
 
-const modelValue: Ref<string | undefined> = defineModel({ required: true })
+const modelValue = defineModel<string | undefined>({ required: true })
 
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -371,12 +370,12 @@ defineExpose({ show, hide })
     }
 
     .lew-date-picker-input::placeholder {
-      color: rgb(165, 165, 165);
+      color: var(--lew-text-color-5);
       letter-spacing: 0;
     }
 
     .lew-date-picker-placeholder {
-      color: rgb(165, 165, 165);
+      color: var(--lew-text-color-5);
     }
   }
 

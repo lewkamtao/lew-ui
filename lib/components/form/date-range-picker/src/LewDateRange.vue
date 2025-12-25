@@ -1,6 +1,5 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { RetItemType } from '../../date-picker/src/date'
-
 import dayjs from 'dayjs'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -9,13 +8,9 @@ import { getMonthDate } from '../../date-picker/src/date'
 import { dateRangeEmits } from './emits'
 import { dateRangeProps } from './props'
 
-// Props
 const props = defineProps(dateRangeProps)
-
-// Emits
 const emit = defineEmits(dateRangeEmits)
 
-// Model
 const modelValue = defineModel<
   | {
     [key: string]: string
@@ -23,22 +18,18 @@ const modelValue = defineModel<
   | undefined
 >()
 
-// Refs
 const hoverValue = ref<{
   [key: string]: string
 }>({})
 
-// Destructuring
 const { startKey, endKey } = props
 
-// Constants
 const today = new Date()
 const curYear = today.getFullYear()
 const curMonth = today.getMonth() + 1
 const curDay = today.getDate()
 const _curDate = dayjs(`${curYear}-${curMonth}-${curDay}`)
 
-// Reactive state
 const dateState = reactive({
   year1: 0,
   year2: 0,
@@ -50,8 +41,6 @@ const state = reactive({
   leftPanel: getMonthDate(1),
   rightPanel: getMonthDate(2),
 })
-
-// Computed
 const object2class = computed(() => (type: string, item: RetItemType) => {
   if (!item.year || !item.month || !item.showDate) {
     return
@@ -119,7 +108,6 @@ const object2class = computed(() => (type: string, item: RetItemType) => {
   }
 })
 
-// Methods
 function setMonthDate(type: string) {
   if (type === 'left') {
     state.leftPanel = getMonthDate(dateState.year1, dateState.month1)
@@ -318,10 +306,8 @@ function init() {
   setMonthDate('right')
 }
 
-// Lifecycle hooks
 init()
 
-// Expose
 defineExpose({ init })
 
 const headDate = computed(() => {
@@ -571,7 +557,7 @@ const headDate = computed(() => {
         .lew-date-value-selected {
           background: var(--lew-color-datepicker-primary-selected-bg);
           color: var(--lew-color-datepicker-primary-selected-text);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
 
         .lew-date-item-today {
@@ -579,11 +565,12 @@ const headDate = computed(() => {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: rgba($color: #19c175, $alpha: 0.8);
+          background: var(--lew-color-success);
           left: 50%;
           transform: translateX(-50%);
           bottom: 0px;
-          box-shadow: 0px 0px 12px #0e7346;
+          opacity: 0.8;
+          box-shadow: 0px 0px 8px var(--lew-color-success-light);
         }
       }
 
@@ -592,16 +579,16 @@ const headDate = computed(() => {
           to right,
           rgba(0, 0, 0, 0) 0%,
           rgba(0, 0, 0, 0) 50%,
-          var(--lew-color-primary-light) 51%,
-          var(--lew-color-primary-light) 100%
+          color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0)) 51%,
+          color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0)) 100%
         );
       }
 
       .lew-date-label-selected-end {
         background: linear-gradient(
           to right,
-          var(--lew-color-primary-light) 0%,
-          var(--lew-color-primary-light) 50%,
+          color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0)) 0%,
+          color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0)) 50%,
           rgba(0, 0, 0, 0) 51%,
           rgba(0, 0, 0, 0) 100%
         );
@@ -623,7 +610,7 @@ const headDate = computed(() => {
       }
 
       .lew-date-label-selected {
-        background: var(--lew-color-primary-light);
+        background: color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0));
 
         .lew-date-value {
           color: var(--lew-text-color-0);
@@ -635,7 +622,7 @@ const headDate = computed(() => {
       .lew-date-label {
         .lew-date-value {
           position: relative;
-          color: var(--lew-color-success-dark);
+          color: var(--lew-color-success);
           font-weight: 900;
           background-color: var(--lew-color-success-light);
         }
@@ -650,9 +637,9 @@ const headDate = computed(() => {
     .lew-date-item-curMonth:hover {
       .lew-date-label {
         .lew-date-value {
-          background-color: var(--lew-color-primary-light);
-          color: var(--lew-color-primary-dark);
-          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+          background-color: color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0));
+          color: var(--lew-color-primary);
+          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
 
         .lew-date-value-selected {
@@ -673,8 +660,8 @@ const headDate = computed(() => {
     .lew-date-item-select {
       .lew-date-label {
         .lew-date-value {
-          background-color: var(--lew-color-primary-light);
-          color: var(--lew-color-primary-dark);
+          background-color: color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0));
+          color: var(--lew-color-primary);
         }
       }
     }

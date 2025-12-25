@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { LewSize } from 'lew-ui'
 import { LewDateRange, LewPopover, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -9,18 +9,16 @@ import { dateRangePickerProps } from './props'
 const props = defineProps(dateRangePickerProps)
 const emit = defineEmits(dateRangePickerEmits)
 
-const modelValue = defineModel<DateRange | undefined>({ required: true })
-
-// 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
-}
-
-// 定义日期范围对象类型
 interface DateRange {
   start?: string
   end?: string
+}
+
+const modelValue = defineModel<DateRange | undefined>({ required: true })
+
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
 const visible = ref(false)
@@ -265,7 +263,7 @@ defineExpose({ show, hide })
     }
 
     .lew-date-range-picker-placeholder {
-      color: rgb(165, 165, 165);
+      color: var(--lew-text-color-5);
     }
   }
 

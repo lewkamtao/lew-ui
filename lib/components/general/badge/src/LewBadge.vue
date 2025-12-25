@@ -29,11 +29,13 @@ const badgeValueClass = computed(() => {
 })
 
 const badgeStyle = computed<CSSProperties>(() => {
-  const { color, offset, text } = props
+  const { color, offset, text, value } = props
   const _color = getColorType(color) || 'red'
 
   const style: CSSProperties = {
-    '--badge-bg-color': `var(--lew-color-${_color})`,
+    '--badge-bg-color': `var(--lew-color-badge-${_color}-bg)`,
+    '--badge-dot-bg-color': `var(--lew-color-badge-${_color}-dot-bg)`,
+    '--badge-text-color': `var(--lew-color-badge-${_color}-text)`,
   }
 
   // 只有在非 text 模式且有 offset 时才应用动态 transform
@@ -89,7 +91,7 @@ const displayValue = computed(() => {
     cursor: normal;
     border-radius: 50%;
     box-sizing: border-box;
-    background-color: var(--badge-bg-color, var(--lew-color-red));
+    background-color: var(--badge-dot-bg-color, var(--lew-color-red));
 
     &.is-processing {
       &::after {
@@ -125,8 +127,8 @@ const displayValue = computed(() => {
     z-index: 1;
     font-weight: normal;
     box-sizing: border-box;
-    color: var(--lew-color-white);
-    background-color: var(--badge-bg-color, var(--lew-color-red));
+    color: var(--badge-text-color, #fff);
+    background-color: var(--badge-bg-color, var(--lew-color-badge-red-bg));
 
     // 有 text 时的定位样式（静态配置）
     &--with-text {

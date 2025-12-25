@@ -235,12 +235,12 @@ async function handleClose(): Promise<void> {
   }
 
   .lew-tag--#{$name}.lew-tag--light {
-    --lew-tag-bg: color-mix(in srgb, var(--lew-color-tag-#{$name}-light) 35%, var(--lew-bgcolor-0));
+    --lew-tag-bg: color-mix(in srgb, var(--lew-color-tag-#{$name}-light) 50%, var(--lew-bgcolor-0));
     --lew-tag-color: var(--lew-color-tag-#{$name}-light-text);
     --lew-tag-border: none;
 
     // 如果浏览器不支持 color-mix，使用 fallback
-    @supports not (color-mix(in srgb, red 35%, white)) {
+    @supports not (color-mix(in srgb, red 50%, white)) {
       --lew-tag-bg: var(--lew-color-tag-#{$name}-light);
     }
   }

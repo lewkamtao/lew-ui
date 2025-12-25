@@ -323,30 +323,44 @@ async function handleClick(e: MouseEvent) {
   .lew-button-type-fill.lew-button-color-#{$name} {
     --lew-button-bg: var(--lew-color-button-#{$name}-fill);
     --lew-button-color: var(--lew-color-button-#{$name}-fill-text);
-    --lew-button-hover-bg: var(--lew-color-button-#{$name}-fill-hover);
+    --lew-button-hover-bg: color-mix(
+      in srgb,
+      var(--lew-color-button-#{$name}-fill) 70%,
+      var(--lew-color-button-#{$name}-fill-hover-base) 30%
+    );
     --lew-button-hover-color: var(--lew-color-button-#{$name}-fill-text-hover);
-    --lew-button-active-bg: var(--lew-color-button-#{$name}-fill-active);
+    --lew-button-active-bg: color-mix(
+      in srgb,
+      var(--lew-color-button-#{$name}-fill) 60%,
+      var(--lew-color-button-#{$name}-fill-active-base) 40%
+    );
     --lew-button-active-color: var(
       --lew-color-button-#{$name}-fill-text-active
     );
+
+    // 如果浏览器不支持 color-mix，使用 fallback
+    @supports not (color-mix(in srgb, red 50%, white)) {
+      --lew-button-hover-bg: var(--lew-color-button-#{$name}-fill-hover);
+      --lew-button-active-bg: var(--lew-color-button-#{$name}-fill-active);
+    }
   }
 
   .lew-button-type-light.lew-button-color-#{$name} {
     --lew-button-bg: color-mix(
       in srgb,
-      var(--lew-color-button-#{$name}-light) 35%,
+      var(--lew-color-button-#{$name}-light) 50%,
       var(--lew-bgcolor-0)
     );
     --lew-button-color: var(--lew-color-button-#{$name}-light-text);
     --lew-button-hover-bg: color-mix(
       in srgb,
-      var(--lew-color-button-#{$name}-light-hover) 35%,
+      var(--lew-color-button-#{$name}-light-hover) 50%,
       var(--lew-bgcolor-0)
     );
     --lew-button-hover-color: var(--lew-color-button-#{$name}-light-text-hover);
     --lew-button-active-bg: color-mix(
       in srgb,
-      var(--lew-color-button-#{$name}-light-active) 35%,
+      var(--lew-color-button-#{$name}-light-active) 50%,
       var(--lew-bgcolor-0)
     );
     --lew-button-active-color: var(
@@ -354,7 +368,7 @@ async function handleClick(e: MouseEvent) {
     );
 
     // 如果浏览器不支持 color-mix，使用 fallback
-    @supports not (color-mix(in srgb, red 35%, white)) {
+    @supports not (color-mix(in srgb, red 50%, white)) {
       --lew-button-bg: var(--lew-color-button-#{$name}-light);
       --lew-button-hover-bg: var(--lew-color-button-#{$name}-light-hover);
       --lew-button-active-bg: var(--lew-color-button-#{$name}-light-active);
