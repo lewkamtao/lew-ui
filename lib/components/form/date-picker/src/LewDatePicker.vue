@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { LewPopover, LewTooltip, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { datePickerEmits } from './emits'
@@ -266,10 +267,10 @@ defineExpose({ show, hide })
             type="calendar"
           />
           <transition name="lew-form-icon-ani">
-            <CommonIcon
+            <CloseIcon
               v-if="shouldShowClearIcon"
-              :size="getIconSize"
-              type="close"
+              size="small"
+              color="gray"
               class="lew-form-icon-close lew-date-picker-icon-close"
               :class="{
                 'lew-form-icon-close-focus': visible,
@@ -346,7 +347,7 @@ defineExpose({ show, hide })
     .lew-date-picker-icon-calendar {
       position: absolute;
       top: 50%;
-      right: 12px;
+      right: 14px;
       transform: translateY(-50%);
       transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
@@ -355,6 +356,14 @@ defineExpose({ show, hide })
     .lew-date-picker-icon-calendar-hide {
       opacity: 0;
       transform: translateY(-50%) translateX(100%);
+    }
+
+    .lew-form-icon-close {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      z-index: 9;
+      transform: translateY(-50%);
     }
 
     .lew-date-picker-input {

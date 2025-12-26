@@ -71,6 +71,22 @@ function select(item: LewMenuOption) {
 
 <style lang="scss" scoped>
 .lew-menu {
+  // CSS 变量定义
+  --lew-menu-item-bg: var(--lew-color-menu-primary-item-bg);
+  --lew-menu-item-bg-hover: var(--lew-color-menu-primary-item-bg-hover);
+  --lew-menu-item-bg-active: var(--lew-color-menu-primary-item-bg-active);
+  --lew-menu-item-text: var(--lew-color-menu-primary-item-text);
+  --lew-menu-item-text-hover: var(--lew-color-menu-primary-item-text-hover);
+  --lew-menu-item-text-active: var(--lew-color-menu-primary-item-text-active);
+  --lew-menu-item-selected-bg: var(--lew-color-menu-primary-item-selected-bg);
+  --lew-menu-item-selected-bg-hover: var(--lew-color-menu-primary-item-selected-bg-hover);
+  --lew-menu-item-selected-text: var(--lew-color-menu-primary-item-selected-text);
+  --lew-menu-item-selected-text-hover: var(--lew-color-menu-primary-item-selected-text-hover);
+  --lew-menu-item-icon: var(--lew-color-menu-primary-item-icon);
+  --lew-menu-item-icon-hover: var(--lew-color-menu-primary-item-icon-hover);
+  --lew-menu-item-icon-selected: var(--lew-color-menu-primary-item-icon-selected);
+  --lew-menu-item-icon-selected-hover: var(--lew-color-menu-primary-item-icon-selected-hover);
+
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -96,35 +112,58 @@ function select(item: LewMenuOption) {
   }
 
   .lew-menu-item-child {
-    color: var(--lew-text-color-1);
+    color: var(--lew-menu-item-text);
     font-size: 14px;
     height: 36px;
     line-height: 36px;
     cursor: pointer;
     border-radius: var(--lew-border-radius-small);
-    transition:
-      background-color 0.25s,
-      color 0.25s;
-  }
+    background-color: var(--lew-menu-item-bg);
+    transition: all var(--lew-form-transition-ease);
 
-  :deep(.lew-menu-icon) {
-    flex-shrink: 0;
+    :deep(.lew-menu-icon) {
+      flex-shrink: 0;
+      color: var(--lew-menu-item-icon);
+      transition: color var(--lew-form-transition-ease);
+    }
   }
 
   .lew-menu-item-child:hover {
-    background-color: var(--lew-form-bgcolor-hover);
-    color: var(--lew-text-color-1);
+    background-color: var(--lew-menu-item-bg-hover);
+    color: var(--lew-menu-item-text-hover);
+
+    :deep(.lew-menu-icon) {
+      color: var(--lew-menu-item-icon-hover);
+    }
+  }
+
+  .lew-menu-item-child:active {
+    background-color: var(--lew-menu-item-bg-active);
+    color: var(--lew-menu-item-text-active);
   }
 
   .lew-menu-item-active {
-    background-color: var(--lew-color-primary-light);
-    color: var(--lew-color-primary-dark);
-    font-weight: bold;
+    background-color: var(--lew-menu-item-selected-bg);
+    color: var(--lew-menu-item-selected-text);
+    font-weight: 600;
+
+    :deep(.lew-menu-icon) {
+      color: var(--lew-menu-item-icon-selected);
+    }
   }
 
   .lew-menu-item-active:hover {
-    background-color: var(--lew-color-primary-light);
-    color: var(--lew-color-primary-dark);
+    background-color: var(--lew-menu-item-selected-bg-hover);
+    color: var(--lew-menu-item-selected-text-hover);
+
+    :deep(.lew-menu-icon) {
+      color: var(--lew-menu-item-icon-selected-hover);
+    }
+  }
+
+  .lew-menu-item-active:active {
+    background-color: var(--lew-menu-item-selected-bg-hover);
+    color: var(--lew-menu-item-selected-text-hover);
   }
 
   .lew-menu-item-last {

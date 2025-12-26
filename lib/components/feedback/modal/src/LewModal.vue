@@ -4,7 +4,7 @@ import { onClickOutside, useMagicKeys } from '@vueuse/core'
 
 // 2. 组件导入
 import { LewButton, LewFlex, LewTextTrim, locale } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import CloseButton from 'lew-ui/_components/CloseButton.vue'
 
 // 3. Hooks 导入
 import { useDOMCreate } from 'lew-ui/hooks'
@@ -66,7 +66,7 @@ const isTopModal = computed(() => {
 
   const openModals = Array.from(modalContainer.childNodes)
     .filter((e): e is Element => e instanceof Element)
-    .filter((e) => e.children.length > 0)
+    .filter(e => e.children.length > 0)
     .filter((e) => {
       // 只考虑可见的 modal
       const modalBody = e.querySelector('.lew-modal') as HTMLElement
@@ -74,9 +74,7 @@ const isTopModal = computed(() => {
     })
 
   // 检查当前 modal 是否是最后一个（顶层）
-  return (
-    openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId
-  )
+  return openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId
 })
 
 const modalStyle = computed(() => {
@@ -143,7 +141,8 @@ watch(visible, async (newVal) => {
   // 控制全局检查定时器
   if (newVal) {
     startGlobalCheck()
-  } else {
+  }
+  else {
     stopGlobalCheck()
   }
 })
@@ -197,22 +196,15 @@ onUnmounted(() => {
               class="lew-modal-header"
             >
               <LewTextTrim class="lew-modal-title" :text="props.title" />
-              <LewButton
-                type="light"
+              <CloseButton
+                size="large"
                 color="gray"
                 round
-                single-icon
-                size="small"
                 class="lew-modal-icon-close"
                 @click="handleClose"
-              >
-                <CommonIcon :size="14" type="close" />
-              </LewButton>
+              />
             </LewFlex>
-            <div
-              class="lew-modal-body-main lew-scrollbar"
-              :style="modalBodyMainStyle"
-            >
+            <div class="lew-modal-body-main lew-scrollbar" :style="modalBodyMainStyle">
               <slot />
             </div>
             <div v-if="slots.footer" class="lew-modal-footer-slot">
@@ -292,11 +284,9 @@ onUnmounted(() => {
 
       .lew-modal-icon-close {
         position: absolute;
-        width: auto;
-        height: auto;
-        padding: 5px;
         top: 10px;
         right: 10px;
+        z-index: 9;
       }
     }
 

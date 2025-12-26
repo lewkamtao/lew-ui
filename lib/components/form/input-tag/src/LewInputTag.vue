@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LewInput, LewMessage, LewTag, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
@@ -249,15 +250,14 @@ onUnmounted(() => {
         type="tags"
       />
       <transition name="lew-form-icon-ani">
-        <CommonIcon
+        <CloseIcon
           v-if="shouldShowClearIcon"
+          :size="size"
+          color="gray"
           class="lew-form-icon-close"
           :class="{
             'lew-form-icon-close-focus': isInputActive,
           }"
-          :size="getIconSize"
-          type="close"
-          @mousedown.prevent=""
           @click="clear"
         />
       </transition>
@@ -298,7 +298,7 @@ onUnmounted(() => {
   .lew-input-tag-icon {
     position: absolute;
     top: 50%;
-    right: 12px;
+    right: 14px;
     transform: translateY(-50%);
     transition: all var(--lew-form-transition-bezier);
     opacity: var(--lew-form-icon-opacity);
@@ -307,6 +307,14 @@ onUnmounted(() => {
   .lew-input-tag-icon-hide {
     opacity: 0;
     transform: translateY(-50%) translateX(100%);
+  }
+
+  .lew-form-icon-close {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 9;
+    transform: translateY(-50%);
   }
 
   .lew-input-tag-box {

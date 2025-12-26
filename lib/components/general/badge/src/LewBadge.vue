@@ -29,7 +29,7 @@ const badgeValueClass = computed(() => {
 })
 
 const badgeStyle = computed<CSSProperties>(() => {
-  const { color, offset, text, value } = props
+  const { color, offset, text } = props
   const _color = getColorType(color) || 'red'
 
   const style: CSSProperties = {

@@ -1,34 +1,30 @@
 <script setup lang="ts">
 // 1. 组件导入
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 
 // 2. 工具函数导入
-import { object2class } from "lew-ui/utils";
+import { object2class } from 'lew-ui/utils'
 
 // 3. 组件配置导入
-import { alertEmits } from "./emits";
-import { alertProps } from "./props";
+import { alertEmits } from './emits'
+import { alertProps } from './props'
 
 // Props & Emits
-const props = defineProps(alertProps);
-const emit = defineEmits(alertEmits);
+const props = defineProps(alertProps)
+const emit = defineEmits(alertEmits)
 
 // Slots 检测
-const slots = useSlots();
-const hasTitle = computed(() => !!slots.title || !!props.title);
-const hasContent = computed(() => !!slots.content || !!props.content);
-const hasFooter = computed(() => !!slots.footer);
+const slots = useSlots()
+const hasTitle = computed(() => !!slots.title || !!props.title)
+const hasContent = computed(() => !!slots.content || !!props.content)
+const hasFooter = computed(() => !!slots.footer)
 
 // 计算属性
 const alertClassName = computed(() => {
-  const { type } = props;
-  return object2class("lew-alert", { type });
-});
+  const { type } = props
+  return object2class('lew-alert', { type })
+})
 
-// 方法
-function handleClose(): void {
-  emit("close");
-}
 </script>
 
 <template>
@@ -53,12 +49,6 @@ function handleClose(): void {
         <slot name="footer" />
       </div>
     </div>
-    <CommonIcon
-      v-if="props.closeable"
-      class="lew-form-icon-close lew-alert-close-icon"
-      type="close"
-      @click="handleClose"
-    />
   </div>
 </template>
 
@@ -77,7 +67,7 @@ function handleClose(): void {
   border-radius: var(--lew-border-radius-small);
 
   .lew-alert-message {
-    width: calc(100% - 30px);
+    width: 100%;
     margin-left: 12px;
 
     .lew-alert-title {
@@ -99,12 +89,6 @@ function handleClose(): void {
     .lew-alert-footer {
       margin-top: 8px;
     }
-  }
-
-  .lew-alert-close-icon {
-    top: 11px;
-    right: 11px;
-    transform: none;
   }
 }
 

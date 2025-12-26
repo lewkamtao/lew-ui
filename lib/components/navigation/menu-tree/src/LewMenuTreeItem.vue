@@ -126,10 +126,26 @@ function handleChange(): void {
 
 <style scoped lang="scss">
 .lew-menu-tree-item {
+  // CSS 变量定义
+  --lew-menu-tree-item-bg: var(--lew-color-menu-primary-item-bg);
+  --lew-menu-tree-item-bg-hover: var(--lew-color-menu-primary-item-bg-hover);
+  --lew-menu-tree-item-bg-active: var(--lew-color-menu-primary-item-bg-active);
+  --lew-menu-tree-item-text: var(--lew-color-menu-primary-item-text);
+  --lew-menu-tree-item-text-hover: var(--lew-color-menu-primary-item-text-hover);
+  --lew-menu-tree-item-text-active: var(--lew-color-menu-primary-item-text-active);
+  --lew-menu-tree-item-selected-bg: var(--lew-color-menu-primary-item-selected-bg);
+  --lew-menu-tree-item-selected-bg-hover: var(--lew-color-menu-primary-item-selected-bg-hover);
+  --lew-menu-tree-item-selected-text: var(--lew-color-menu-primary-item-selected-text);
+  --lew-menu-tree-item-selected-text-hover: var(--lew-color-menu-primary-item-selected-text-hover);
+  --lew-menu-tree-item-icon: var(--lew-color-menu-primary-item-icon);
+  --lew-menu-tree-item-icon-hover: var(--lew-color-menu-primary-item-icon-hover);
+  --lew-menu-tree-item-icon-selected: var(--lew-color-menu-primary-item-icon-selected);
+  --lew-menu-tree-item-icon-selected-hover: var(--lew-color-menu-primary-item-icon-selected-hover);
+
   position: relative;
   user-select: none;
   font-size: 14px;
-  color: var(--lew-text-color-1);
+  color: var(--lew-menu-tree-item-text);
 
   .lew-menu-tree-item-label {
     display: flex;
@@ -140,41 +156,74 @@ function handleChange(): void {
     box-sizing: border-box;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
+    background-color: var(--lew-menu-tree-item-bg);
+    transition: all var(--lew-form-transition-ease);
   }
 
   .lew-menu-tree-item-label:hover {
-    background-color: var(--lew-bgcolor-2);
+    background-color: var(--lew-menu-tree-item-bg-hover);
+    color: var(--lew-menu-tree-item-text-hover);
+
+    :deep(.lew-menu-tree-item-icon) {
+      color: var(--lew-menu-tree-item-icon-hover);
+    }
+  }
+
+  .lew-menu-tree-item-label:active {
+    background-color: var(--lew-menu-tree-item-bg-active);
+    color: var(--lew-menu-tree-item-text-active);
   }
 
   .lew-menu-tree-item-label-active {
-    background-color: var(--lew-bgcolor-0);
-    color: var(--lew-color-primary-dark);
+    background-color: var(--lew-menu-tree-item-selected-bg);
+    color: var(--lew-menu-tree-item-selected-text);
     font-weight: 600;
+
+    :deep(.lew-menu-tree-item-icon) {
+      color: var(--lew-menu-tree-item-icon-selected);
+    }
   }
 
   .lew-menu-tree-item-label-active:hover {
-    background-color: var(--lew-bgcolor-0);
-    color: var(--lew-color-primary-dark);
+    background-color: var(--lew-menu-tree-item-selected-bg-hover);
+    color: var(--lew-menu-tree-item-selected-text-hover);
+
+    :deep(.lew-menu-tree-item-icon) {
+      color: var(--lew-menu-tree-item-icon-selected-hover);
+    }
+  }
+
+  .lew-menu-tree-item-label-active:active {
+    background-color: var(--lew-menu-tree-item-selected-bg-hover);
+    color: var(--lew-menu-tree-item-selected-text-hover);
   }
 
   .lew-menu-tree-item-label-selected {
-    color: var(--lew-color-primary-dark);
+    color: var(--lew-menu-tree-item-selected-text);
     font-weight: 600;
+
+    :deep(.lew-menu-tree-item-icon) {
+      color: var(--lew-menu-tree-item-icon-selected);
+    }
   }
 
   .lew-menu-tree-item-label-selected:hover {
-    color: var(--lew-color-primary-dark);
+    color: var(--lew-menu-tree-item-selected-text-hover);
+
+    :deep(.lew-menu-tree-item-icon) {
+      color: var(--lew-menu-tree-item-icon-selected-hover);
+    }
   }
 
   .lew-menu-tree-item-main {
     box-sizing: border-box;
 
     .lew-menu-tree-item-label:hover {
-      background-color: var(--lew-bgcolor-4);
+      background-color: var(--lew-menu-tree-item-bg-hover);
     }
 
     .lew-menu-tree-item-label-active:hover {
-      background-color: var(--lew-bgcolor-0);
+      background-color: var(--lew-menu-tree-item-selected-bg-hover);
     }
   }
 
@@ -182,19 +231,33 @@ function handleChange(): void {
     position: absolute;
     left: 11px;
     top: 11px;
+    color: var(--lew-menu-tree-item-icon);
+    transition: color var(--lew-form-transition-ease);
   }
 
   .lew-menu-tree-item-chevron-right {
     flex-shrink: 0;
+    color: var(--lew-text-color-3);
+    transition: color var(--lew-form-transition-ease);
+  }
+
+  .lew-menu-tree-item-label:hover .lew-menu-tree-item-chevron-right {
+    color: var(--lew-text-color-1);
+  }
+
+  .lew-menu-tree-item-label-active .lew-menu-tree-item-chevron-right,
+  .lew-menu-tree-item-label-selected .lew-menu-tree-item-chevron-right {
+    color: var(--lew-menu-tree-item-icon-selected);
   }
 
   .lew-menu-tree-item-label-disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: var(--lew-disabled-opacity);
   }
 
   .lew-menu-tree-item-label-disabled:hover {
     background-color: transparent;
+    color: var(--lew-menu-tree-item-text);
   }
 
   .lew-menu-tree-item-label-collapsed {

@@ -244,7 +244,7 @@ function handleClick(index: number) {
   .lew-steps-item-succeeded,
   .lew-steps-item-done {
     .lew-steps-item-index {
-      background-color: var(--lew-color-steps-primary-succeeded-bg);
+      background-color: var(--lew-bgcolor-3);
 
       .index {
         display: none;

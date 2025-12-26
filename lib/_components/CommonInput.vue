@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LewInput, LewTag, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 
@@ -255,42 +256,23 @@ defineExpose({
 
 <template>
   <div
-    ref="lewSelectRef"
-    class="lew-select"
-    :class="getSelectClassName"
-    :style="{ width: any2px(width) }"
+    ref="lewSelectRef" class="lew-select" :class="getSelectClassName" :style="{ width: any2px(width) }"
     @click="focus"
   >
     <div v-if="loading" class="lew-icon-loading-box">
       <CommonIcon :size="getIconSize" :loading="loading" type="loading" />
     </div>
-    <CommonIcon
-      v-else
-      :size="getIconSize"
-      type="chevron-down"
-      class="lew-icon-select"
-      :class="selectIconClass"
-    />
+    <CommonIcon v-else :size="getIconSize" type="chevron-down" class="lew-icon-select" :class="selectIconClass" />
     <transition name="lew-form-icon-ani">
-      <CommonIcon
-        v-if="showClearButton"
-        :size="getIconSize"
-        type="close"
-        class="lew-form-icon-close"
-        :class="clearButtonIconClass"
-        @click.stop="clearHandle"
+      <CloseIcon
+        v-if="showClearButton" :size="size" color="gray" class="lew-form-icon-close"
+        :class="clearButtonIconClass" @click.stop="clearHandle"
       />
     </transition>
     <template v-if="!multiple">
       <input
-        ref="inputRef"
-        :value="selectedItemsText"
-        :title="selectedItemsText"
-        class="lew-value lew-single-input"
-        :style="getValueStyle"
-        :readonly="!searchable"
-        :placeholder="placeholderText"
-        @input="inputHandle"
+        ref="inputRef" :value="selectedItemsText" :title="selectedItemsText" class="lew-value lew-single-input"
+        :style="getValueStyle" :readonly="!searchable" :placeholder="placeholderText" @input="inputHandle"
       >
       <div v-show="showPlaceholder" class="lew-placeholder">
         {{ placeholderText }}
@@ -301,32 +283,19 @@ defineExpose({
       <div v-show="showPlaceholder" class="lew-placeholder">
         {{ placeholderText }}
       </div>
-      <div
-        v-show="!showPlaceholder"
-        class="lew-multiple-box"
-        :style="{ padding: hasSelectedItems ? '4px' : '' }"
-      >
+      <div v-show="!showPlaceholder" class="lew-multiple-box" :style="{ padding: hasSelectedItems ? '4px' : '' }">
         <transition-group name="tag-list">
           <LewTag
-            v-for="item in formatItems"
-            :key="item.value"
-            type="light"
-            :size="props.size as any"
-            :closeable="!disabled && !readonly"
-            @close="deleteTag(item.value)"
+            v-for="item in formatItems" :key="item.value" type="light" :size="props.size as any"
+            :closeable="!disabled && !readonly" @close="deleteTag(item.value)"
           >
             {{ item.label }}
           </LewTag>
         </transition-group>
         <LewInput
-          v-if="searchable && (props.focus || (formatItems || []).length === 0)"
-          ref="searchInputRef"
-          key="search-input"
-          v-model="keyword"
-          :auto-width="hasSelectedItems"
-          class="lew-multiple-search-input"
-          :size="(size as any)"
-          :placeholder="!hasSelectedItems ? placeholderText : ' '"
+          v-if="searchable && (props.focus || (formatItems || []).length === 0)" ref="searchInputRef"
+          key="search-input" v-model="keyword" :auto-width="hasSelectedItems" class="lew-multiple-search-input"
+          :size="(size as any)" :placeholder="!hasSelectedItems ? placeholderText : ' '"
           @input="(value) => inputHandle({ target: { value } } as unknown as Event)"
         />
       </div>
@@ -357,14 +326,14 @@ defineExpose({
     align-items: center;
     position: absolute;
     top: 50%;
-    right: 12px;
+    right: 14px;
     transform: translateY(-50%);
   }
 
   .lew-icon-select {
     position: absolute;
     top: 50%;
-    right: 12px;
+    right: 14px;
     transform: translateY(-50%) rotate(0deg);
     transition: all var(--lew-form-transition-bezier);
     opacity: var(--lew-form-icon-opacity);
@@ -373,6 +342,14 @@ defineExpose({
       opacity: 0;
       transform: translate(100%, -50%);
     }
+  }
+
+  .lew-form-icon-close {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 9;
+    transform: translateY(-50%);
   }
 
   .lew-placeholder {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { LewSize } from 'lew-ui'
 import { LewDateRange, LewPopover, LewTooltip, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { dateRangePickerEmits } from './emits'
@@ -190,10 +191,10 @@ defineExpose({ show, hide })
             />
           </lew-flex>
           <transition name="lew-form-icon-ani">
-            <CommonIcon
+            <CloseIcon
               v-if="clearable && checkClear && !readonly"
-              :size="getIconSize"
-              type="close"
+              :size="size"
+              color="gray"
               class="lew-form-icon-close lew-date-range-picker-form-icon-close"
               :class="{
                 'lew-form-icon-close-focus': visible,
@@ -251,7 +252,7 @@ defineExpose({ show, hide })
     .lew-date-range-picker-icon-calendar {
       position: absolute;
       top: 50%;
-      right: 12px;
+      right: 14px;
       transform: translateY(-50%);
       transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
@@ -260,6 +261,14 @@ defineExpose({ show, hide })
     .lew-date-range-picker-icon-calendar-hide {
       opacity: 0;
       transform: translateY(-50%) translateX(100%);
+    }
+
+    .lew-form-icon-close {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      z-index: 9;
+      transform: translateY(-50%);
     }
 
     .lew-date-range-picker-placeholder {

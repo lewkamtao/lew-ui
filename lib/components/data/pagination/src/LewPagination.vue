@@ -288,10 +288,19 @@ const getPaginationClassName = computed(() => {
     border-radius: var(--lew-border-radius-small);
     text-align: center;
     cursor: pointer;
+    transition: all 0.1s ease;
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    background: transparent;
   }
 
   .lew-pagination-page-btn:hover {
-    background-color: var(--lew-color-pagination-primary-hover-bg);
+    background-color: color-mix(in srgb, var(--lew-color-pagination-primary-hover-bg-base) 50%, var(--lew-bgcolor-0));
+    color: var(--lew-color-pagination-primary-hover-text);
+    border: var(--lew-form-border-width) var(--lew-color-primary) solid;
+  }
+
+  .lew-pagination-page-btn:active {
+    transform: scale(0.9);
   }
 
   .lew-pagination-page-box {
@@ -302,6 +311,19 @@ const getPaginationClassName = computed(() => {
     .active {
       background-color: var(--lew-color-pagination-primary-active-bg);
       color: var(--lew-color-pagination-primary-active-text);
+      border: var(--lew-form-border-width) var(--lew-color-primary) solid;
+    }
+
+    .active:hover {
+      background-color: var(--lew-color-pagination-primary-active-bg-hover);
+      color: var(--lew-color-pagination-primary-active-text-hover);
+      border: var(--lew-form-border-width) var(--lew-color-primary) solid;
+    }
+
+    .active:active {
+      background-color: var(--lew-color-pagination-primary-active-bg-active);
+      color: var(--lew-color-pagination-primary-active-text-active);
+      border: var(--lew-form-border-width) var(--lew-color-primary) solid;
     }
   }
 

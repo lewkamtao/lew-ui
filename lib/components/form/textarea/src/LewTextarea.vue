@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
 import { LewTooltip, locale } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { throttle } from 'lodash-es'
 import { textareaEmits } from './emits'
@@ -87,15 +87,6 @@ function handleChange(event: Event) {
   emit('change', target.value)
 }
 
-const getIconSize = computed(() => {
-  const size: Record<string, number> = {
-    small: 12,
-    medium: 14,
-    large: 16,
-  }
-  return size[props.size]
-})
-
 const getTextareaStyle: any = computed(() => {
   const { width, height, size, resize, maxHeight, minHeight, maxWidth, minWidth } = props
   const heightMap: Record<string, number> = {
@@ -163,17 +154,15 @@ defineExpose({ focus, blur })
       {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : "" }}
     </div>
     <transition name="lew-form-icon-ani">
-      <CommonIcon
+      <CloseIcon
         v-if="clearable && modelValue && !readonly"
-        :size="getIconSize"
-        type="close"
+        :size="size"
+        color="gray"
         class="lew-form-icon-close"
         :class="{
           'lew-form-icon-close-focus': state.isFocus,
         }"
-        style="top: 14px"
         @click="clear"
-        @mousedown.prevent=""
       />
     </transition>
   </div>
@@ -227,6 +216,13 @@ defineExpose({ focus, blur })
   }
   .lew-textarea-count:hover {
     opacity: 0.2;
+  }
+
+  .lew-form-icon-close {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    z-index: 9;
   }
 }
 

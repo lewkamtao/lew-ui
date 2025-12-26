@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import { getColorType } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import { tagEmits } from './emits'
@@ -10,12 +9,6 @@ const props = defineProps(tagProps)
 const emit = defineEmits(tagEmits)
 const slots = useSlots()
 const isClosing = ref(false)
-
-const CLOSE_ICON_SIZE: Record<LewSize, number> = {
-  small: 12,
-  medium: 14,
-  large: 16,
-} as const
 
 const tagClass = computed(() => {
   const resolvedColor = getColorType(props.color) || 'primary'
@@ -30,10 +23,6 @@ const tagClass = computed(() => {
   ]
     .filter(Boolean)
     .join(' ')
-})
-
-const closeIconSize = computed(() => {
-  return CLOSE_ICON_SIZE[props.size] || CLOSE_ICON_SIZE.medium
 })
 
 async function handleClose(): Promise<void> {
@@ -78,19 +67,15 @@ async function handleClose(): Promise<void> {
       <slot name="right" />
     </div>
 
-    <div
+    <CloseIcon
       v-if="props.closeable || isFunction(props.close)"
+      :size="props.size || 'medium'"
+      color="gray"
+      :loading="isClosing"
+      :disabled="props.disabled || isClosing"
       class="lew-tag-close"
       @click.stop="handleClose"
-    >
-      <CommonIcon
-        v-if="isClosing"
-        :size="closeIconSize"
-        type="loading"
-        class="lew-tag-loading"
-      />
-      <CommonIcon v-else :size="closeIconSize" type="close" />
-    </div>
+    />
   </div>
 </template>
 
@@ -179,25 +164,8 @@ async function handleClose(): Promise<void> {
   }
 
   .lew-tag-close {
-    display: inline-flex;
-    padding: 2px;
-    border-radius: var(--lew-border-radius-small);
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all var(--lew-form-transition-ease);
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.15);
-    }
-
-    &:active {
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    .lew-tag-loading {
-      animation: spin 1s linear infinite;
-    }
+    // CloseButton 组件已处理样式
+    flex-shrink: 0;
   }
 
   .lew-tag-left,
@@ -213,16 +181,6 @@ async function handleClose(): Promise<void> {
     .lew-tag-value {
       font-weight: bold;
     }
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
   }
 }
 

@@ -3,6 +3,7 @@ import type { LewContextMenusOption } from "lew-ui";
 import { useMagicKeys } from "@vueuse/core";
 import { LewDropdown, LewFlex, LewMessage, LewTooltip, locale } from "lew-ui";
 import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import CloseIcon from "lew-ui/_components/CloseIcon.vue";
 import { any2px, object2class } from "lew-ui/utils";
 import { inputEmits } from "./emits";
 import { inputProps } from "./props";
@@ -315,15 +316,14 @@ defineExpose({ focus, blur });
         </div>
 
         <transition name="lew-form-icon-ani">
-          <CommonIcon
+          <CloseIcon
             v-if="clearable && modelValue && !readonly"
+            :size="size"
+            color="gray"
             class="lew-form-icon-close"
             :class="{
               'lew-form-icon-close-focus': isFocus,
             }"
-            :size="getIconSize"
-            type="close"
-            @mousedown.prevent=""
             @click="clear"
           />
         </transition>
@@ -519,6 +519,14 @@ defineExpose({ focus, blur });
       white-space: nowrap;
       justify-content: center;
       align-items: center;
+    }
+
+    .lew-form-icon-close {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      z-index: 9;
+      transform: translateY(-50%);
     }
 
     .lew-input-count {
