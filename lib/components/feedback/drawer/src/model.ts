@@ -12,4 +12,3 @@ export const drawerModel = {
 }
 
 export type DrawerModel = typeof drawerModel
-

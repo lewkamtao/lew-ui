@@ -165,58 +165,58 @@ export function renderDescription(text: string) {
  */
 const componentCategoryMap: Record<string, string> = {
   // general
-  avatar: 'general',
-  badge: 'general',
-  button: 'general',
-  flex: 'general',
-  image: 'general',
-  mark: 'general',
-  tag: 'general',
-  title: 'general',
+  'avatar': 'general',
+  'badge': 'general',
+  'button': 'general',
+  'flex': 'general',
+  'image': 'general',
+  'mark': 'general',
+  'tag': 'general',
+  'title': 'general',
   'text-trim': 'general',
-  icon: 'general',
+  'icon': 'general',
   // form
-  cascader: 'form',
-  checkbox: 'form',
+  'cascader': 'form',
+  'checkbox': 'form',
   'color-picker': 'form',
   'date-picker': 'form',
   'date-range-picker': 'form',
-  input: 'form',
+  'input': 'form',
   'input-number': 'form',
   'input-table': 'form',
   'input-tag': 'form',
-  radio: 'form',
-  rate: 'form',
-  select: 'form',
-  slider: 'form',
+  'radio': 'form',
+  'rate': 'form',
+  'select': 'form',
+  'slider': 'form',
   'slider-range': 'form',
-  switch: 'form',
-  textarea: 'form',
+  'switch': 'form',
+  'textarea': 'form',
   'tree-select': 'form',
-  upload: 'form',
+  'upload': 'form',
   // data
-  collapse: 'data',
-  desc: 'data',
-  table: 'data',
-  tree: 'data',
+  'collapse': 'data',
+  'desc': 'data',
+  'table': 'data',
+  'tree': 'data',
   // feedback
-  alert: 'feedback',
-  drawer: 'feedback',
-  empty: 'feedback',
-  loading: 'feedback',
-  message: 'feedback',
-  modal: 'feedback',
-  notification: 'feedback',
-  popok: 'feedback',
-  popover: 'feedback',
+  'alert': 'feedback',
+  'drawer': 'feedback',
+  'empty': 'feedback',
+  'loading': 'feedback',
+  'message': 'feedback',
+  'modal': 'feedback',
+  'notification': 'feedback',
+  'popok': 'feedback',
+  'popover': 'feedback',
   // navigation
   'back-top': 'navigation',
-  breadcrumb: 'navigation',
-  menu: 'navigation',
+  'breadcrumb': 'navigation',
+  'menu': 'navigation',
   'menu-tree': 'navigation',
-  pagination: 'navigation',
-  steps: 'navigation',
-  tabs: 'navigation',
+  'pagination': 'navigation',
+  'steps': 'navigation',
+  'tabs': 'navigation',
 }
 
 /**
@@ -225,7 +225,8 @@ const componentCategoryMap: Record<string, string> = {
  * @returns mdc 文件路径，如果找不到返回 null
  */
 export function getMdcPath(componentName: string): string | null {
-  if (!componentName) return null
+  if (!componentName)
+    return null
 
   // 将组件名转换为小写
   const normalizedName = componentName.toLowerCase()

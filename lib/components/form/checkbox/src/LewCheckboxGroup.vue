@@ -1,74 +1,75 @@
 <script setup lang="ts">
-import type { LewCheckboxOption } from "lew-ui";
-import { LewCheckbox, LewFlex } from "lew-ui";
-import { object2class } from "lew-ui/utils";
-import { checkboxGroupEmits } from "./emits";
-import { checkboxGroupProps } from "./props";
+import type { LewCheckboxOption } from 'lew-ui'
+import { LewCheckbox, LewFlex } from 'lew-ui'
+import { object2class } from 'lew-ui/utils'
+import { checkboxGroupEmits } from './emits'
+import { checkboxGroupProps } from './props'
 
 // Props and Emits
-const props = defineProps(checkboxGroupProps);
-const emit = defineEmits(checkboxGroupEmits);
+const props = defineProps(checkboxGroupProps)
+const emit = defineEmits(checkboxGroupEmits)
 
 // v-model
 const modelValue = defineModel<string[]>({
   default: () => [],
   required: true,
-});
+})
 
 // State
-const checkList = ref<boolean[]>([]);
+const checkList = ref<boolean[]>([])
 
 // Computed properties
 const getCheckboxGroupClassName = computed(() => {
-  const { size, readonly, disabled } = props;
-  return object2class("lew-checkbox-group", {
+  const { size, readonly, disabled } = props
+  return object2class('lew-checkbox-group', {
     size,
     readonly,
     disabled,
-  });
-});
+  })
+})
 
 // Methods
 function getItemDisabled(item: LewCheckboxOption): boolean {
-  return item.disabled || !!props.disabled;
+  return item.disabled || !!props.disabled
 }
 
-function change({ item, checked }: { item: LewCheckboxOption; checked: boolean }) {
-  const currentValue = modelValue.value || [];
-  let newValue: string[];
+function change({ item, checked }: { item: LewCheckboxOption, checked: boolean }) {
+  const currentValue = modelValue.value || []
+  let newValue: string[]
 
   if (checked) {
-    newValue = [...currentValue, item.value];
-  } else {
-    newValue = currentValue.filter((value) => value !== item.value);
+    newValue = [...currentValue, item.value]
+  }
+  else {
+    newValue = currentValue.filter(value => value !== item.value)
   }
 
-  modelValue.value = newValue;
-  emit("change", newValue, item);
+  modelValue.value = newValue
+  emit('change', newValue, item)
 }
 
 function initCheckbox() {
   if (!props.options) {
-    return;
+    return
   }
   checkList.value = props.options.map((item: LewCheckboxOption) => {
-    return modelValue.value?.includes(item.value) ?? false;
-  });
+    return modelValue.value?.includes(item.value) ?? false
+  })
 }
 
 // Watchers
 watch(
   () => modelValue.value,
   () => {
-    initCheckbox();
+    initCheckbox()
   },
   {
     deep: true,
-  }
-);
+  },
+)
 
 // Lifecycle
-initCheckbox();
+initCheckbox()
 </script>
 
 <template>

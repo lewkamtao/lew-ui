@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getMdcPath, renderDescription } from 'docs/lib/utils'
-import LewMdcDrawer from '../components/LewMdcDrawer.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import LewMdcDrawer from '../components/LewMdcDrawer.vue'
 
 const route = useRoute()
 
@@ -30,10 +30,12 @@ async function checkMdcFileExists() {
     const mdcModule = await import(/* @vite-ignore */ `${mdcPath.value}?raw`)
     if (mdcModule.default || mdcModule) {
       mdcFileExists.value = true
-    } else {
+    }
+    else {
       mdcFileExists.value = false
     }
-  } catch {
+  }
+  catch {
     mdcFileExists.value = false
   }
 }
@@ -44,7 +46,7 @@ watch(
   () => {
     checkMdcFileExists()
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 function openMdcDrawer() {
@@ -75,7 +77,7 @@ function openMdcDrawer() {
         "
       />
     </div>
-    <lew-mdc-drawer
+    <LewMdcDrawer
       v-if="mdcPath && mdcFileExists"
       v-model:visible="showMdcDrawer"
       :mdc-path="mdcPath"

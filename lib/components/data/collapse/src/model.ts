@@ -15,4 +15,3 @@ export const collapseItemModel = {
 
 export type CollapseModel = typeof collapseModel
 export type CollapseItemModel = typeof collapseItemModel
-

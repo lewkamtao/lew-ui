@@ -63,7 +63,7 @@ const getRadioClassName = computed(() => {
   --lew-radio-icon-color: transparent;
   --lew-radio-icon-bg-hover: var(--lew-radio-bgcolor-hover);
   --lew-radio-icon-border-hover: var(--lew-radio-border-color-hover);
-  
+
   // checked 状态（非 block）- 使用 radio 特定颜色
   --lew-radio-checked-icon-bg: var(--lew-color-radio-primary-checked-icon-bg);
   --lew-radio-checked-icon-border: var(--lew-color-radio-primary-checked-icon-border);
@@ -71,7 +71,7 @@ const getRadioClassName = computed(() => {
   --lew-radio-checked-icon-bg-hover: var(--lew-color-radio-primary-checked-icon-bg-hover);
   --lew-radio-checked-icon-border-hover: var(--lew-color-radio-primary-checked-icon-border-hover);
   --lew-radio-checked-icon-color-hover: var(--lew-color-radio-primary-checked-icon-color-hover);
-  
+
   // block 模式 checked 状态 - 使用 radio 特定颜色
   --lew-radio-block-checked-bg: var(--lew-color-radio-primary-block-checked-bg);
   --lew-radio-block-checked-border: var(--lew-color-radio-primary-block-checked-border);
@@ -286,7 +286,7 @@ const getRadioClassName = computed(() => {
   // 单选逻辑：选中后不允许取消，移除 hover 效果
   border: var(--lew-form-border-width) var(--lew-radio-block-checked-border) solid;
   background: var(--lew-radio-block-checked-bg);
-  
+
   .lew-radio-icon-box {
     border: var(--lew-form-border-width) var(--lew-radio-block-checked-icon-border) solid;
   }

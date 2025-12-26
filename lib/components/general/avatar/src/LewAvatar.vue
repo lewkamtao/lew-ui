@@ -1,112 +1,115 @@
 <script setup lang="ts">
 // 1. 第三方库导入
-import { useImage } from "@vueuse/core";
+import { useImage } from '@vueuse/core'
 
 // 2. 组件导入
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 
 // 3. 工具函数导入
-import { any2px } from "lew-ui/utils";
+import { any2px } from 'lew-ui/utils'
 
 // 4. 组件配置导入
-import { avatarProps } from "./props";
+import { avatarProps } from './props'
 
 // Props
-const props = defineProps(avatarProps);
+const props = defineProps(avatarProps)
 
 // Composables
 const imageOptions = ref({
   src: props.src,
-});
+})
 
 watch(
   () => props.src,
   (newVal: string) => {
-    imageOptions.value.src = newVal;
+    imageOptions.value.src = newVal
   },
-  { immediate: true }
-);
+  { immediate: true },
+)
 
-const { isLoading, error } = useImage(imageOptions);
+const { isLoading, error } = useImage(imageOptions)
 
 // 常量
 const BORDER_RADIUS_MAP: Record<string, string> = {
-  circle: "50%",
-  sharp: "0",
-  square: "var(--lew-border-radius-small)",
-};
+  circle: '50%',
+  sharp: '0',
+  square: 'var(--lew-border-radius-small)',
+}
 
 // 计算属性
 const avatarStyle = computed(() => ({
   width: any2px(props.size),
   height: any2px(props.size),
-}));
+}))
 
 const avatarBoxStyle = computed(() => ({
   borderRadius: BORDER_RADIUS_MAP[props.shape],
-}));
+}))
 
 const imageStyle = computed(() => ({
   objectFit: props.objectFit,
   objectPosition: props.objectPosition,
-}));
+}))
 
 const textStyle = computed(() => {
-  const size =
-    typeof props.size === "number" ? props.size : Number.parseInt(props.size);
+  const size
+    = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
   return {
     fontSize: `${size * 0.45}px`,
     lineHeight: `${size - 2}px`,
-    textAlign: "center" as const,
-    color: "var(--lew-color-text-2)",
-    userSelect: "none" as const,
-  };
-});
+    textAlign: 'center' as const,
+    color: 'var(--lew-color-text-2)',
+    userSelect: 'none' as const,
+  }
+})
 
 const altText = computed(() => {
-  if (!props.alt) return "";
+  if (!props.alt)
+    return ''
   const result = props.alt
-    .split(" ")
-    .map((word) => word.charAt(0))
-    .join("")
-    .toUpperCase();
-  return result.length > 2 ? result.charAt(0) : result;
-});
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .toUpperCase()
+  return result.length > 2 ? result.charAt(0) : result
+})
 
 const statusDotClass = computed(() => {
-  if (!props.status) return "";
-  return `lew-avatar-status-dot lew-avatar-status-dot--${props.shape}-${props.statusPlacement} lew-avatar-status-dot--${props.status}`;
-});
+  if (!props.status)
+    return ''
+  return `lew-avatar-status-dot lew-avatar-status-dot--${props.shape}-${props.statusPlacement} lew-avatar-status-dot--${props.status}`
+})
 
 const statusDotStyle = computed(() => {
-  if (!props.status) return {};
+  if (!props.status)
+    return {}
 
-  const sizeValue =
-    typeof props.size === "number" ? props.size : Number.parseFloat(props.size);
-  const dotSize = sizeValue * 0.2;
+  const sizeValue
+    = typeof props.size === 'number' ? props.size : Number.parseFloat(props.size)
+  const dotSize = sizeValue * 0.2
 
   return {
     width: any2px(dotSize),
     height: any2px(dotSize),
-  };
-});
+  }
+})
 
 const iconSize = computed(() => {
-  const { size } = props;
-  return typeof size === "number" ? size * 0.5 : Number.parseInt(size) * 0.5;
-});
+  const { size } = props
+  return typeof size === 'number' ? size * 0.5 : Number.parseInt(size) * 0.5
+})
 
-const showSkeleton = computed(() => isLoading.value || props.loading);
+const showSkeleton = computed(() => isLoading.value || props.loading)
 const showImage = computed(
-  () => props.src && !error.value && !showSkeleton.value
-);
+  () => props.src && !error.value && !showSkeleton.value,
+)
 const showAltText = computed(
-  () => !props.src && props.alt && !showSkeleton.value
-);
+  () => !props.src && props.alt && !showSkeleton.value,
+)
 const showIcon = computed(
-  () => !props.src && !props.alt && !showSkeleton.value
-);
-const showFallback = computed(() => error.value && !showSkeleton.value);
+  () => !props.src && !props.alt && !showSkeleton.value,
+)
+const showFallback = computed(() => error.value && !showSkeleton.value)
 </script>
 
 <template>
@@ -119,7 +122,7 @@ const showFallback = computed(() => error.value && !showSkeleton.value);
         :src="props.src"
         loading="lazy"
         :style="imageStyle"
-      />
+      >
       <div
         v-else-if="showAltText || (showFallback && props.alt)"
         class="lew-avatar-text"
@@ -195,7 +198,7 @@ const showFallback = computed(() => error.value && !showSkeleton.value);
     border-radius: 50%;
     z-index: 19;
     border: var(--lew-form-border-width) var(--lew-color-white) solid;
-    content: "";
+    content: '';
   }
 
   // Status colors (静态配置，使用 CSS class)

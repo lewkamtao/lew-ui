@@ -1,57 +1,57 @@
 <script setup lang="ts">
 // 1. 第三方库导入
-import { useImage } from "@vueuse/core";
+import { useImage } from '@vueuse/core'
 
 // 2. 组件导入
-import { LewFlex, LewTooltip, locale } from "lew-ui";
+import { LewFlex, LewTooltip, locale } from 'lew-ui'
 
 // 3. 工具函数导入
-import { any2px } from "lew-ui/utils";
+import { any2px } from 'lew-ui/utils'
 
 // 4. 组件配置导入
-import { imageProps } from "./props";
+import { imageProps } from './props'
 
 // Props
-const props = defineProps(imageProps);
+const props = defineProps(imageProps)
 
 // Composables
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
-const imageOptions = ref({ src: props.src });
+const imageOptions = ref({ src: props.src })
 
 watch(
   () => props.src,
   (newVal: string) => {
-    imageOptions.value.src = newVal;
-  }
-);
+    imageOptions.value.src = newVal
+  },
+)
 
-const { isLoading, error } = useImage(imageOptions);
+const { isLoading, error } = useImage(imageOptions)
 
 // 计算属性
 const imageStyle = computed(() => {
-  const { width, height } = props;
+  const { width, height } = props
   return {
     width: any2px(width),
     height: any2px(height),
-  };
-});
+  }
+})
 
 const imageInnerStyle = computed(() => ({
   objectFit: props.objectFit,
   objectPosition: props.objectPosition,
-}));
+}))
 
 const showSkeleton = computed(
-  () => isLoading.value || props.loading || !props.src
-);
-const showError = computed(() => error.value && !showSkeleton.value);
+  () => isLoading.value || props.loading || !props.src,
+)
+const showError = computed(() => error.value && !showSkeleton.value)
 const showImage = computed(
-  () => !error.value && !showSkeleton.value && props.src
-);
+  () => !error.value && !showSkeleton.value && props.src,
+)
 </script>
 
 <template>
@@ -74,7 +74,7 @@ const showImage = computed(
         class="lew-image-fail-icon"
         src="./image_fail_icon.svg"
         :alt="locale.t('image.fail')"
-      />
+      >
     </template>
     <div v-else-if="showImage" class="lew-image-box">
       <img
@@ -83,7 +83,7 @@ const showImage = computed(
         :loading="props.lazy ? 'lazy' : undefined"
         :style="imageInnerStyle"
         :alt="props.alt"
-      />
+      >
     </div>
   </LewFlex>
 </template>

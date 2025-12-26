@@ -1,75 +1,75 @@
 <script setup lang="ts">
 // 1. 类型导入
-import type { LewColor } from "lew-ui";
+import type { LewColor } from 'lew-ui'
 
 // 2. 组件导入
-import { LewButton, LewFlex, LewPopover, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import { LewButton, LewFlex, LewPopover, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 
 // 3. 工具函数导入
-import { any2px } from "lew-ui/utils";
+import { any2px } from 'lew-ui/utils'
 
 // 4. 组件配置导入
-import { popokButtonProps } from "./props";
+import { popokButtonProps } from './props'
 
 // Props
-const props = defineProps(popokButtonProps);
+const props = defineProps(popokButtonProps)
 
 // 响应式状态
-const lewPopoverRef = ref();
-const okLoading = ref(false);
-const cancelLoading = ref(false);
-const okRef = ref();
+const lewPopoverRef = ref()
+const okLoading = ref(false)
+const cancelLoading = ref(false)
+const okRef = ref()
 
 // 计算属性
 const popokBodyStyle = computed(() => ({
   width: any2px(props.width),
-}));
+}))
 
 const cancelButtonText = computed(() => {
-  return props.cancelText || locale.t("popok.cancelText");
-});
+  return props.cancelText || locale.t('popok.cancelText')
+})
 
 const okButtonText = computed(() => {
-  return props.okText || locale.t("popok.okText");
-});
+  return props.okText || locale.t('popok.okText')
+})
 
 // 方法
-async function handleAction(action: "ok" | "cancel") {
-  const actionFunction = props[action];
-  const loadingRef = action === "ok" ? okLoading : cancelLoading;
+async function handleAction(action: 'ok' | 'cancel') {
+  const actionFunction = props[action]
+  const loadingRef = action === 'ok' ? okLoading : cancelLoading
 
-  if (typeof actionFunction === "function") {
-    loadingRef.value = true;
-    const result = await actionFunction();
+  if (typeof actionFunction === 'function') {
+    loadingRef.value = true
+    const result = await actionFunction()
     if (result !== false) {
-      hide();
+      hide()
     }
-    loadingRef.value = false;
+    loadingRef.value = false
   }
 }
 
 function ok() {
-  handleAction("ok");
+  handleAction('ok')
 }
 
 function cancel() {
-  handleAction("cancel");
+  handleAction('cancel')
 }
 
 function hide() {
-  lewPopoverRef.value.hide();
+  lewPopoverRef.value.hide()
 }
 
 // 生命周期
 onMounted(() => {
   nextTick(() => {
     if (okRef.value) {
-      okRef.value.$el.focus();
+      okRef.value.$el.focus()
     }
-  });
-});
+  })
+})
 </script>
 
 <template>

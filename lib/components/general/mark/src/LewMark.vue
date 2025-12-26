@@ -30,8 +30,8 @@ const markStyle = computed((): CSSProperties => {
   return {
     '--mark-color': `var(--lew-color-${resolvedColor}-dark)`,
     '--mark-bg-color': `var(--lew-color-${resolvedColor}-light)`,
-    fontWeight: bold || 400,
-    cursor: props.cursor || 'default',
+    'fontWeight': bold || 400,
+    'cursor': props.cursor || 'default',
   }
 })
 </script>

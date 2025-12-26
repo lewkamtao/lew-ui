@@ -12,4 +12,3 @@ export const modalModel = {
 }
 
 export type ModalModel = typeof modalModel
-

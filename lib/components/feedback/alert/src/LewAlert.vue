@@ -6,12 +6,10 @@ import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { object2class } from 'lew-ui/utils'
 
 // 3. 组件配置导入
-import { alertEmits } from './emits'
 import { alertProps } from './props'
 
 // Props & Emits
 const props = defineProps(alertProps)
-const emit = defineEmits(alertEmits)
 
 // Slots 检测
 const slots = useSlots()
@@ -24,7 +22,6 @@ const alertClassName = computed(() => {
   const { type } = props
   return object2class('lew-alert', { type })
 })
-
 </script>
 
 <template>

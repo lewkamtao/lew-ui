@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px } from 'lew-ui/utils'
 
 import { notificationEmits } from './emits'
