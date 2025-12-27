@@ -4,10 +4,12 @@ import type { CSSProperties } from 'vue'
 import { useDebounceFn, useMouse, useResizeObserver } from '@vueuse/core'
 import { escape } from 'lodash-es'
 import tippy, { roundArrow } from 'tippy.js'
+import { textTrimEmits } from './emits'
 import { textTrimProps } from './props'
 import { clearMeasureCache, getDisplayText } from './text-trim'
 
 const props = defineProps(textTrimProps)
+const _emit = defineEmits(textTrimEmits)
 
 const lewTextTrimRef = ref<HTMLDivElement>()
 const lewTextTrimPopRef = ref<HTMLDivElement>()
@@ -182,6 +184,7 @@ watch(() => [props.text, props.reserveEnd], calculateDisplayText, {
 .lew-text-trim-wrapper {
   width: 100%;
   overflow: hidden;
+  color: var(--lew-text-color-0);
 
   &--single-line {
     white-space: nowrap;

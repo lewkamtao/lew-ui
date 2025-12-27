@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { LewSize } from 'lew-ui'
 import { LewInput, LewTag, locale } from 'lew-ui'
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -265,7 +266,7 @@ defineExpose({
     <CommonIcon v-else :size="getIconSize" type="chevron-down" class="lew-icon-select" :class="selectIconClass" />
     <transition name="lew-form-icon-ani">
       <CloseIcon
-        v-if="showClearButton" :size="size" color="gray" class="lew-form-icon-close"
+        v-if="showClearButton" :size="size as LewSize" color="gray" class="lew-form-icon-close"
         :class="clearButtonIconClass" @click.stop="clearHandle"
       />
     </transition>

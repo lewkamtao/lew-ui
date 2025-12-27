@@ -15,6 +15,14 @@ module.exports = {
       'empty-line-between-groups': false,
     }],
   },
+  overrides: [
+    {
+      files: ['**/*.scss'],
+      rules: {
+        'property-no-unknown': null,
+      },
+    },
+  ],
 
   ignoreFiles: [
     'node_modules/**/*.css',

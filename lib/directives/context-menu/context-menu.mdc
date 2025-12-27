@@ -1,0 +1,240 @@
+---
+alwaysApply: false
+---
+
+# v-context-menu 指令使用文档
+
+## 1. 指令基础信息
+
+- **指令名称**：v-context-menu
+- **核心用途**：用于在元素上添加上下文菜单功能，支持右键点击、左键点击、鼠标悬停三种触发方式，适用于表格操作、右键菜单、悬停菜单等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持三种触发方式：right-click（右键点击）、left-click（左键点击）、hover（鼠标悬停）
+  - 支持嵌套子菜单
+  - 支持禁用状态
+  - 支持可选中模式（checkable）
+  - 支持图标、标签等自定义内容
+  - 使用 tippy.js 实现菜单定位和显示
+  - 使用 CSS 变量实现主题定制，支持暗色模式自动适配
+  - 符合组件库规范：规范的代码结构、导出格式和样式系统
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **右键菜单**：在元素上右键点击时显示上下文菜单
+- **左键菜单**：在元素上左键点击时显示菜单
+- **悬停菜单**：鼠标悬停在元素上时显示菜单
+- **嵌套菜单**：支持多级嵌套的子菜单
+- **选中状态**：支持菜单项的可选中状态
+
+## 3. 详细 API 说明
+
+### 3.1 指令值（Binding Value）
+
+指令接受一个对象作为值，包含以下属性：
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewContextMenusOption[]` | - | 必填 | 菜单项配置数组，每个项包含 `label`（标签）、`icon`（图标，可选）、`onClick`（点击回调，可选）、`children`（子菜单，可选）等属性 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用菜单 |
+| trigger | `LewMenuTrigger` | `'right-click'` | `'right-click'` / `'left-click'` / `'hover'` | 触发方式 |
+
+### 3.2 菜单项配置（LewContextMenusOption）
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| label | `LewComponentSource` | 菜单项标签（支持字符串、函数、组件） |
+| icon | `LewComponentSource` | 菜单项图标（可选，支持字符串、函数、组件） |
+| value | `string` | 菜单项值（可选） |
+| disabled | `boolean` | 是否禁用（可选） |
+| checkable | `boolean` | 是否可选中（可选） |
+| checked | `boolean` | 是否已选中（可选，仅在 `checkable` 为 `true` 时有效） |
+| active | `boolean` | 是否激活状态（可选） |
+| children | `LewContextMenusOption[]` | 子菜单项数组（可选） |
+| isDividerLine | `boolean` | 是否为分隔线（可选） |
+| hideMenuOnClick | `boolean` | 点击后是否隐藏菜单（可选，默认为 `true`） |
+| onClick | `(item: LewContextMenusOption, options: LewContextMenusOption[], instance: any) => void` | 点击回调函数（可选） |
+
+### 3.3 方法
+
+#### initLewContextMenu()
+
+初始化上下文菜单系统，通常在应用启动时调用。
+
+```typescript
+import { initLewContextMenu } from 'lew-ui/directives/context-menu'
+
+initLewContextMenu()
+```
+
+#### destroyLewContextMenu()
+
+销毁上下文菜单系统，清理所有实例和事件监听。
+
+```typescript
+import { destroyLewContextMenu } from 'lew-ui/directives/context-menu'
+
+destroyLewContextMenu()
+```
+
+## 4. 注意事项
+
+- ⚠️ **初始化**：使用指令前需要先调用 `initLewContextMenu()` 初始化菜单系统
+- ⚠️ **触发方式**：`trigger` 为 `hover` 时，鼠标悬停显示菜单；为 `right-click` 时，右键点击显示菜单；为 `left-click` 时，左键点击显示菜单
+- ⚠️ **嵌套菜单**：支持多级嵌套，通过 `children` 属性配置子菜单
+- ⚠️ **禁用状态**：当 `disabled` 为 `true` 时，菜单不会显示
+- ⚠️ **可选中模式**：当菜单项设置了 `checkable: true` 时，会显示复选框图标
+- ⚠️ **点击回调**：`onClick` 回调函数接收三个参数：当前菜单项、所有菜单项、tippy 实例
+- ⚠️ **菜单隐藏**：默认情况下，点击菜单项后会自动隐藏菜单，可以通过 `hideMenuOnClick: false` 禁用此行为
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：菜单不显示
+
+**现象**：设置了指令和 `options`，但菜单不显示。
+
+**原因**：
+- 未初始化菜单系统
+- `options` 配置不正确
+- `disabled` 为 `true`
+
+**修复方案**：
+1. 确认已初始化菜单系统：
+```vue
+<script setup>
+import { initLewContextMenu } from 'lew-ui/directives/context-menu'
+
+onMounted(() => {
+  initLewContextMenu()
+})
+</script>
+```
+2. 确认 `options` 配置正确：
+```vue
+<template>
+  <!-- ✅ 正确：options 为数组，包含 label -->
+  <div v-context-menu="{ options: menuOptions }">
+    右键点击我
+  </div>
+  
+  <!-- ❌ 错误：options 不是数组 -->
+  <div v-context-menu="{ options: {} }">
+    右键点击我
+  </div>
+</template>
+```
+
+### 问题2：点击无反应
+
+**现象**：点击菜单项没有触发回调。
+
+**原因**：
+- 菜单项未设置 `onClick` 回调
+- 菜单项被禁用
+
+**修复方案**：
+1. 确认菜单项设置了 `onClick` 回调：
+```vue
+<template>
+  <div v-context-menu="{ options: menuOptions }">
+    右键点击我
+  </div>
+</template>
+
+<script setup>
+const menuOptions = [
+  {
+    label: '操作1',
+    onClick: (item, options, instance) => {
+      console.log('点击了:', item)
+    },
+  },
+]
+</script>
+```
+
+### 问题3：触发方式不生效
+
+**现象**：设置了 `trigger`，但触发方式不符合预期。
+
+**原因**：
+- `trigger` 值不正确
+- 事件冲突
+
+**修复方案**：
+1. 确认 `trigger` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：trigger 为有效值 -->
+  <div v-context-menu="{ options: menuOptions, trigger: 'hover' }">
+    悬停显示菜单
+  </div>
+  <div v-context-menu="{ options: menuOptions, trigger: 'left-click' }">
+    点击显示菜单
+  </div>
+  <div v-context-menu="{ options: menuOptions, trigger: 'right-click' }">
+    右键显示菜单
+  </div>
+</template>
+```
+
+### 问题4：子菜单不显示
+
+**现象**：设置了 `children`，但子菜单不显示。
+
+**原因**：
+- `children` 配置不正确
+- 子菜单项被禁用
+
+**修复方案**：
+1. 确认 `children` 配置正确：
+```vue
+<template>
+  <div v-context-menu="{ options: menuOptions }">
+    右键点击我
+  </div>
+</template>
+
+<script setup>
+const menuOptions = [
+  {
+    label: '父菜单',
+    children: [
+      { label: '子菜单1', onClick: () => console.log('子菜单1') },
+      { label: '子菜单2', onClick: () => console.log('子菜单2') },
+    ],
+  },
+]
+</script>
+```
+
+### 问题5：菜单位置不正确
+
+**现象**：菜单显示位置不符合预期。
+
+**原因**：
+- 可用空间不足
+- 触发元素位置特殊
+
+**修复方案**：
+1. 菜单会自动根据可用空间调整位置，确保菜单完全可见
+2. 如果位置仍有问题，可以检查触发元素的位置和大小
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 规范化代码结构：优化 Vue 文件导入顺序和代码结构；优化 emits.ts（添加类型定义）；优化样式系统（使用 CSS 变量和全局过渡变量）；优化 index.ts 导入顺序 | 2024-12-19 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `trigger` 可以控制菜单的触发方式，适配不同的交互场景
+- ✅ 通过 `children` 可以实现多级嵌套菜单，构建复杂的菜单结构
+- ✅ 使用 `checkable` 可以实现菜单项的可选中功能，适合批量操作场景
+- ✅ 通过 `onClick` 回调可以处理菜单项的点击事件，实现自定义逻辑
+- ✅ 使用 `disabled` 可以动态控制菜单的启用/禁用状态
+- ✅ 通过 `hideMenuOnClick` 可以控制点击后是否自动隐藏菜单

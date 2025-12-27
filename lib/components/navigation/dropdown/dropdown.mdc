@@ -1,0 +1,180 @@
+---
+alwaysApply: false
+---
+
+# LewDropdown 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewDropdown
+- **核心用途**：用于显示下拉菜单，支持自定义触发方式、位置、选项等功能，适用于操作菜单、上下文菜单等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持多种触发方式（hover、click）
+  - 支持自定义位置（placement）
+  - 支持可选中模式（checkable）
+  - 支持通过插槽自定义触发元素
+  - 使用 CSS 变量实现主题定制，支持暗色模式自动适配
+  - 符合组件库规范：规范的代码结构、导出格式和样式系统
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `options` 配置菜单项，使用插槽定义触发元素，鼠标悬停或点击时显示下拉菜单
+- **触发方式**：通过 `trigger` 属性设置触发方式（hover 或 click）
+- **位置控制**：通过 `placement` 属性设置菜单显示位置
+- **可选中模式**：通过 `checkable` 属性启用可选中模式，支持多选
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewContextMenusOption[]` | - | 必填 | 菜单项配置数组，每个项包含 `label`（标签）、`icon`（图标，可选）、`onClick`（点击回调，可选）等属性 |
+| trigger | `LewTrigger` | `'hover'` | `'hover'` / `'click'` | 触发方式，`hover` 为鼠标悬停，`click` 为点击 |
+| placement | `LewPlacement` | `'bottom'` | 所有 placement 值 | 菜单显示位置 |
+| checkable | `boolean` | `false` | `true` / `false` | 是否启用可选中模式（支持多选） |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| selectedKeys | `string[]` | `[]` | 选中的菜单项 key 数组（仅在 `checkable` 为 `true` 时有效），使用 v-model:selectedKeys 绑定 |
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| change | `item: LewContextMenusOption` | 点击菜单项时触发，返回点击的菜单项 |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 触发下拉菜单的元素 | `<template><lew-button>菜单</lew-button></template>` |
+
+## 4. 注意事项
+
+- ⚠️ **触发方式**：`trigger` 为 `hover` 时，鼠标悬停显示菜单；为 `click` 时，点击显示菜单
+- ⚠️ **可选中模式**：当 `checkable` 为 `true` 时，菜单项可以选中，需要使用 `v-model:selectedKeys` 绑定选中状态
+- ⚠️ **菜单项配置**：菜单项通过 `options` 配置，支持嵌套子菜单、禁用、分隔线等功能
+- ⚠️ **位置控制**：`placement` 属性控制菜单显示位置，会根据可用空间自动调整
+- ⚠️ **方法暴露**：组件暴露 `show()` 和 `hide()` 方法，可以通过 ref 调用
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：下拉菜单不显示
+
+**现象**：设置了 `options` 和触发元素，但下拉菜单不显示。
+
+**原因**：
+- `options` 配置不正确
+- 触发元素未正确设置
+- `trigger` 设置不当
+
+**修复方案**：
+1. 确认 `options` 配置正确：
+```vue
+<template>
+  <!-- ✅ 正确：options 为数组，包含 label -->
+  <lew-dropdown :options="menuOptions">
+    <lew-button>菜单</lew-button>
+  </lew-dropdown>
+  
+  <!-- ❌ 错误：options 不是数组 -->
+  <lew-dropdown :options="{}">
+    <lew-button>菜单</lew-button>
+  </lew-dropdown>
+</template>
+```
+2. 确认触发元素正确设置（使用插槽）
+
+### 问题2：点击无反应
+
+**现象**：点击菜单项没有触发 `change` 事件。
+
+**原因**：
+- 菜单项未设置 `onClick` 回调
+- 事件监听未正确绑定
+
+**修复方案**：
+1. 确认菜单项设置了 `onClick` 或监听 `change` 事件：
+```vue
+<template>
+  <!-- ✅ 正确：监听 change 事件 -->
+  <lew-dropdown :options="menuOptions" @change="handleChange">
+    <lew-button>菜单</lew-button>
+  </lew-dropdown>
+</template>
+
+<script setup>
+function handleChange(item) {
+  console.log('选中:', item)
+}
+</script>
+```
+
+### 问题3：位置不正确
+
+**现象**：设置了 `placement`，但菜单位置不符合预期。
+
+**原因**：
+- `placement` 值不正确
+- 可用空间不足，自动调整位置
+
+**修复方案**：
+1. 确认 `placement` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：placement 为有效值 -->
+  <lew-dropdown :options="menuOptions" placement="bottom">
+    <lew-button>菜单</lew-button>
+  </lew-dropdown>
+</template>
+```
+2. 注意：组件会根据可用空间自动调整位置，确保菜单完全可见
+
+### 问题4：可选中模式不生效
+
+**现象**：设置了 `checkable` 为 `true`，但菜单项无法选中。
+
+**原因**：
+- 未绑定 `v-model:selectedKeys`
+- 菜单项未设置 `value`
+
+**修复方案**：
+1. 确认绑定了 `v-model:selectedKeys`：
+```vue
+<template>
+  <!-- ✅ 正确：绑定 selectedKeys -->
+  <lew-dropdown
+    v-model:selected-keys="selectedKeys"
+    :options="menuOptions"
+    :checkable="true"
+  >
+    <lew-button>菜单</lew-button>
+  </lew-dropdown>
+</template>
+
+<script setup>
+const selectedKeys = ref([])
+</script>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 规范化代码结构：创建 model.ts 文件分离 v-model 定义；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件代码结构；优化 props.ts（移除 model 定义） | 2024-12-19 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `trigger` 可以控制菜单的触发方式，适配不同的交互场景
+- ✅ 通过 `placement` 可以控制菜单显示位置，避免菜单被遮挡
+- ✅ 使用 `checkable` 可以实现多选功能，适合批量操作场景
+- ✅ 通过插槽可以自定义触发元素，灵活适配不同的 UI 需求
+- ✅ 组件暴露 `show()` 和 `hide()` 方法，可以通过编程方式控制菜单显示

@@ -69,7 +69,10 @@ async function initMarkdownIt() {
     }
   }
   catch (err) {
-    console.warn('[LewMdcDrawer] markdown-it library not found, using plain text', err)
+    console.warn(
+      '[LewMdcDrawer] markdown-it library not found, using plain text',
+      err,
+    )
     hasMarkdownIt.value = false
   }
 }
@@ -95,7 +98,11 @@ async function tryLoadMdc(paths: string[]): Promise<string | null> {
 
 // 渲染 markdown 内容
 function renderMarkdown(content: string) {
-  if (markdownIt && hasMarkdownIt.value && typeof markdownIt.render === 'function') {
+  if (
+    markdownIt
+    && hasMarkdownIt.value
+    && typeof markdownIt.render === 'function'
+  ) {
     try {
       // 使用 markdown-it 渲染 markdown
       const html = markdownIt.render(content)
@@ -118,7 +125,9 @@ function renderMarkdown(content: string) {
     console.warn('[LewMdcDrawer] markdown-it not available', {
       hasMarkdownIt: hasMarkdownIt.value,
       markdownItExists: !!markdownIt,
-      renderMethodExists: markdownIt ? typeof markdownIt.render === 'function' : false,
+      renderMethodExists: markdownIt
+        ? typeof markdownIt.render === 'function'
+        : false,
     })
     mdcContent.value = content
   }
@@ -148,7 +157,10 @@ watch(
       }
 
       // 移除 frontmatter（--- 之间的内容）
-      const rawText = typeof loadedContent === 'string' ? loadedContent : String(loadedContent)
+      const rawText
+        = typeof loadedContent === 'string'
+          ? loadedContent
+          : String(loadedContent)
       let content = rawText
       const frontmatterRegex = /^---\n[\s\S]*?\n---\n/
       content = content.replace(frontmatterRegex, '')
@@ -223,7 +235,7 @@ async function copyMdcContent() {
     :hide-footer="true"
     @close="handleClose"
   >
-    <div class="mdc-drawer-content">
+    <div class="mdc-drawer-content lew-scrollbar">
       <div v-if="loading" class="mdc-loading">
         加载中...
       </div>
@@ -231,7 +243,11 @@ async function copyMdcContent() {
         <p>加载失败: {{ error }}</p>
         <p>请确保 MDC 文件路径正确</p>
       </div>
-      <div v-else-if="mdcContent" class="mdc-content" :class="{ 'mdc-html': hasMarkdownIt }">
+      <div
+        v-else-if="mdcContent"
+        class="mdc-content"
+        :class="{ 'mdc-html': hasMarkdownIt }"
+      >
         <div v-if="hasMarkdownIt" v-html="mdcContent" />
         <pre v-else>{{ mdcContent }}</pre>
       </div>
@@ -250,7 +266,9 @@ async function copyMdcContent() {
         >
           <Check v-if="isCopied" :size="16" class="copy-icon success" />
           <Copy v-else :size="16" class="copy-icon" />
-          <span style="margin-left: 6px">{{ isCopied ? '已复制' : '复制 MDC 内容' }}</span>
+          <span style="margin-left: 6px">{{
+            isCopied ? "已复制" : "复制 MDC 内容"
+          }}</span>
         </lew-button>
       </div>
     </template>

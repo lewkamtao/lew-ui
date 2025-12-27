@@ -17,6 +17,8 @@ alwaysApply: false
   - 支持延迟显示（delay）和 HTML 内容（allowHTML）
   - 使用 `tippy.js` 实现提示框功能
   - 使用 `@vueuse/core` 的 `useResizeObserver` 监听容器尺寸变化
+  - 使用 CSS 变量实现主题定制，支持暗色模式自动适配
+  - 符合组件库规范：规范的代码结构、导出格式和样式系统
 
 ## 2. 快速开始
 
@@ -245,6 +247,7 @@ alwaysApply: false
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
+| 1.2.0 | 规范化代码结构：创建 emits.ts 文件保持结构一致性；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构；优化样式系统（添加 CSS 变量 `var(--lew-text-color-0)` 支持暗色模式自动适配） | 2024-12-19 |
 | 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（ref, computed, watch, onMounted, onUnmounted），移除所有注释，优化模板中的 prop 引用 | 2024-01-XX |
 | 1.0.0 | 初始版本 | - |
 

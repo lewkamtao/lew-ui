@@ -8,6 +8,7 @@ import _LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.v
 import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
+import { createApp, h } from 'vue'
 import { initLewContextMenu } from '../index'
 import { contextMenuEmits } from './emits'
 import { contextMenuProps } from './props'
@@ -75,7 +76,7 @@ const TIPPY_CONFIG = {
   allowHTML: true,
   hideOnClick: false,
   zIndex: 2001,
-}
+} as const
 
 const uniqueId = getUniqueId()
 const subMenuInstances = new Map<number, { app: any, tippy: TippyInstance }>()
@@ -147,7 +148,6 @@ function cleanup() {
   })
 
   subMenuInstances.clear()
-  // WeakMap 会自动垃圾回收，无需手动清理
 }
 
 onMounted(() => {
@@ -244,10 +244,11 @@ onBeforeUnmount(() => {
       cursor: pointer;
       color: var(--lew-text-color-1);
       box-sizing: border-box;
-      border-radius: calc(var(--lew-border-radius-small) - 1px);
+      border-radius: var(--lew-border-radius-small);
       padding: 0px 5px;
       animation: enterAni 0.3s cubic-bezier(0.3, 1.3, 0.3, 1) forwards;
       opacity: 0;
+      transition: all var(--lew-form-transition-bezier);
 
       @keyframes enterAni {
         0% {

@@ -1,16 +1,16 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { any2px } from 'lew-ui/utils'
+import { stepsEmits } from './emits'
 import { stepsProps } from './props'
 
 const props = defineProps(stepsProps)
-const emit = defineEmits(['change'])
-const stepsValue: Ref<number | undefined> = defineModel()
+const emit = defineEmits(stepsEmits)
+const stepsValue = defineModel<number | undefined>('modelValue', { required: false })
 
-// 监听 stepsValue 变化，自动触发 change 事件
 watch(stepsValue, (val, oldVal) => {
-  if (val !== oldVal) {
+  if (val !== oldVal && val !== undefined) {
     emit('change', val)
   }
 })
@@ -72,7 +72,6 @@ function handleClick(index: number) {
           :stroke-width="3"
           type="close"
         />
-
         <CommonIcon
           v-else-if="
             index < (stepsValue || 1) - 1 ||

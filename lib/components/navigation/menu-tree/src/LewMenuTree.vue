@@ -2,15 +2,7 @@
 import type { LewMenuTreeOption } from 'lew-ui/types'
 import { any2px } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
-import {
-  computed,
-  h,
-  onMounted,
-  provide,
-  resolveDirective,
-  toRaw,
-  withDirectives,
-} from 'vue'
+import { h, provide, resolveDirective, toRaw, withDirectives } from 'vue'
 import { menuTreeEmits } from './emits'
 import LewMenuTreeItem from './LewMenuTreeItem.vue'
 import { menuTreeProps } from './props'
@@ -18,9 +10,9 @@ import { menuTreeProps } from './props'
 const props = defineProps(menuTreeProps)
 const emit = defineEmits(menuTreeEmits)
 
-const modelValue = defineModel<string>({ default: '' })
-const expandKeys = defineModel<string[]>('expandKeys', { default: () => [] })
-const collapsed = defineModel<boolean>('collapsed', { default: false })
+const modelValue = defineModel<string>('modelValue', { required: false, default: '' })
+const expandKeys = defineModel<string[]>('expandKeys', { required: false, default: () => [] })
+const collapsed = defineModel<boolean>('collapsed', { required: false, default: false })
 
 const getModelValueKeyPath = computed(() => {
   function findKeyPath(
@@ -158,16 +150,15 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .lew-menu-tree {
   display: flex;
   flex-direction: column;
   width: 100%;
-  box-sizing: border-box;
   gap: 5px;
-  transition: width 0.2s;
   padding: 4px;
   box-sizing: border-box;
   background-color: var(--lew-bgcolor-0);
+  transition: width var(--lew-form-transition-bezier);
 }
 </style>

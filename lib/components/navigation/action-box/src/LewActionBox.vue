@@ -3,14 +3,13 @@ import type { LewActionBoxOption, LewContextMenusOption } from 'lew-ui/types'
 import { LewDropdown, LewFlex } from 'lew-ui'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { parseDimension } from 'lew-ui/utils'
-
 import { isValidComponent } from 'lew-ui/utils/render'
-import { computed } from 'vue'
+import { actionBoxEmits } from './emits'
 import { actionBoxProps } from './props'
-// Props & Emits
-const props = defineProps(actionBoxProps)
 
-// Computed
+const props = defineProps(actionBoxProps)
+const emit = defineEmits(actionBoxEmits)
+
 const threshold = computed((): number => parseDimension(props.dropdownThreshold || 0))
 
 const visibleOptions = computed((): LewActionBoxOption[] => {
@@ -22,13 +21,11 @@ const visibleOptions = computed((): LewActionBoxOption[] => {
   return props.options.slice(0, threshold.value)
 })
 
-// Methods
 function convertToContextMenus(options: LewActionBoxOption[]): LewContextMenusOption[] {
   return options.map(option => ({
     label: option.label,
     icon: option.icon,
     onClick: (item: LewContextMenusOption) => {
-      // Find original option for proper callback
       const originalOption = options.find(
         opt => (typeof opt.label === 'string' ? opt.label : '') === item.label,
       )
@@ -48,11 +45,12 @@ const dropdownOptions = computed((): LewContextMenusOption[] => {
 
 function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void {
   option.onClick?.(event)
+  emit('click', option, event)
 }
 </script>
 
 <template>
-  <LewFlex class="lew-action-box" gap="5px" :x="x">
+  <LewFlex class="lew-action-box" gap="5px" :x="props.x">
     <template v-for="(option, index) in visibleOptions" :key="index">
       <RenderComponent
         v-if="isValidComponent(option.customRender)"
@@ -65,11 +63,11 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
         @click="(event: MouseEvent) => handleOptionClick(option, event)"
       >
         <RenderComponent
-          v-if="option.icon && !iconOnly"
+          v-if="option.icon && !props.iconOnly"
           :render-fn="option.icon"
           class="lew-action-box-icon"
         />
-        <RenderComponent v-if="!iconOnly" :render-fn="option.label" />
+        <RenderComponent v-if="!props.iconOnly" :render-fn="option.label" />
         <RenderComponent
           v-else
           :render-fn="option.icon || option.label"
@@ -78,7 +76,7 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
       </div>
       <i
         v-if="
-          divider
+          props.divider
             && (dropdownOptions.length > 0
               || (visibleOptions.length === (props.options?.length || 0)
                 && index !== (props.options?.length || 0) - 1))
@@ -89,11 +87,11 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
     <LewDropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
       <div class="lew-action-box-item">
         <RenderComponent
-          v-if="dropdownIcon"
-          :render-fn="dropdownIcon"
+          v-if="props.dropdownIcon"
+          :render-fn="props.dropdownIcon"
           class="lew-action-box-icon"
         />
-        <RenderComponent v-if="!iconOnly" :render-fn="dropdownLabel" />
+        <RenderComponent v-if="!props.iconOnly" :render-fn="props.dropdownLabel" />
       </div>
     </LewDropdown>
   </LewFlex>
@@ -111,9 +109,9 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
     padding: 3px 4px;
     color: var(--lew-color-primary-text-text);
     white-space: nowrap;
-    border-radius: 5px;
+    border-radius: var(--lew-border-radius-small);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--lew-form-transition-bezier);
     user-select: none;
 
     &:hover {

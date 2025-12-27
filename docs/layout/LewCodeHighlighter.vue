@@ -33,26 +33,26 @@ defineProps({
 .lew-code-highlighter {
   box-sizing: border-box;
   overflow-x: auto;
-}
 
-pre {
-  z-index: 1;
-  padding: 15px;
-  overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  position: relative;
-  background-color: var(--lew-bgcolor-0) !important;
-  border-radius: var(--lew-border-radius-small);
-}
+  pre {
+    z-index: 1;
+    padding: 15px;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    position: relative;
+    background-color: var(--lew-bgcolor-0) !important;
+    border-radius: var(--lew-border-radius-small);
+  }
 
-code {
-  display: block;
-  line-height: 1.7;
-  font-size: var(--lew-font-size-code) !important;
-  letter-spacing: 0.05em;
-  white-space: pre-wrap;
-  font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace !important;
+  code {
+    display: block;
+    line-height: 1.7;
+    font-size: var(--lew-font-size-code) !important;
+    letter-spacing: 0.05em;
+    white-space: pre-wrap;
+    font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace !important;
+  }
 }
 
 .shiki,

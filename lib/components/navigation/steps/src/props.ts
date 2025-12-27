@@ -1,13 +1,7 @@
 import type { Property } from 'csstype'
 import type { LewStepsOption, LewStepsStatus } from 'lew-ui/types'
-import type { ExtractPublicPropTypes } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validStepsStatusList } from 'lew-ui/validators'
-
-export const stepsModel = {
-  modelValue: {
-    type: Number,
-  },
-}
 
 export const stepsProps = {
   options: {
@@ -37,15 +31,21 @@ export const stepsProps = {
       propName: 'minWidth',
     }),
   },
-  // 允许点击Item切换步骤
   canClickItem: {
     type: Boolean,
     default: true,
+    validator: validators.boolean({
+      componentName: 'LewSteps',
+      propName: 'canClickItem',
+    }),
   },
-  // 允许跨步骤
   canCrossSteps: {
     type: Boolean,
     default: true,
+    validator: validators.boolean({
+      componentName: 'LewSteps',
+      propName: 'canCrossSteps',
+    }),
   },
 }
 

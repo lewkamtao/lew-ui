@@ -27,15 +27,26 @@ function handleItemClick(item: LewBreadcrumbOption, index: number): void {
       </span>
       <div v-if="index !== (props.options?.length || 0) - 1" class="lew-breadcrumb-parting">
         <svg
-          v-if="props.separator === 'sprit'" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"
-          stroke="currentColor" stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter"
+          v-if="props.separator === 'sprit'"
+          viewBox="0 0 48 48"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          stroke="currentColor"
+          stroke-width="4"
+          stroke-linecap="butt"
+          stroke-linejoin="miter"
         >
           <path d="M29.506 6.502 18.493 41.498" />
         </svg>
-
         <svg
-          v-if="props.separator === 'shoulder'" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"
-          stroke="currentColor" stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter"
+          v-if="props.separator === 'shoulder'"
+          viewBox="0 0 48 48"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          stroke="currentColor"
+          stroke-width="4"
+          stroke-linecap="butt"
+          stroke-linejoin="miter"
         >
           <path d="m16 39.513 15.556-15.557L16 8.4" />
         </svg>
@@ -57,13 +68,13 @@ function handleItemClick(item: LewBreadcrumbOption, index: number): void {
     color: var(--lew-text-color-5);
     user-select: none;
     white-space: nowrap;
-    transition: color 0.2s ease;
+    transition: color var(--lew-form-transition-bezier);
 
     .lew-breadcrumb-item-label {
       cursor: default;
       padding: 2px 4px;
-      border-radius: 6px;
-      transition: all 0.2s ease;
+      border-radius: var(--lew-border-radius-small);
+      transition: all var(--lew-form-transition-bezier);
     }
 
     .lew-breadcrumb-isPath {
@@ -101,7 +112,7 @@ function handleItemClick(item: LewBreadcrumbOption, index: number): void {
       width: auto;
       color: var(--lew-text-color-5);
       opacity: var(--lew-disabled-opacity);
-      transition: opacity 0.2s ease;
+      transition: opacity var(--lew-form-transition-bezier);
     }
   }
 }

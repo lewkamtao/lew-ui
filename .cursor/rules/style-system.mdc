@@ -563,6 +563,96 @@ $colors: (
 2. 提高选择器优先级（如 `.lew-component.lew-component`）
 3. 使用 CSS 变量而非直接样式值
 
+### 问题4：hover 状态闪烁
+
+**现象**：鼠标悬浮时背景色或颜色闪烁，过渡效果不稳定。
+
+**原因**：
+- 使用了 `transition: all`，导致所有属性都过渡，性能开销大
+- 选择器优先级冲突，导致状态切换不稳定
+- 普通状态和选中状态的 hover 规则冲突
+
+**修复方案**：
+
+1. **避免使用 `transition: all`**，只过渡需要的属性：
+
+```scss
+// ❌ 错误：过渡所有属性，性能差且可能闪烁
+.lew-component {
+  transition: all var(--lew-form-transition-bezier);
+}
+
+// ✅ 正确：只过渡需要的属性
+.lew-component {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+```
+
+2. **使用精确的选择器避免状态冲突**：
+
+```scss
+// ❌ 错误：普通状态和选中状态的 hover 可能冲突
+.lew-component:hover {
+  background-color: var(--lew-component-bg-hover);
+}
+
+.lew-component-active:hover {
+  background-color: var(--lew-component-selected-bg-hover);
+}
+
+// ✅ 正确：使用 :not() 和组合选择器明确优先级
+.lew-component:hover:not(.lew-component-active) {
+  background-color: var(--lew-component-bg-hover);
+}
+
+.lew-component.lew-component-active:hover {
+  background-color: var(--lew-component-selected-bg-hover);
+}
+```
+
+3. **使用固定的过渡时间**（可选，根据实际情况）：
+
+```scss
+// ✅ 使用固定的过渡时间，避免 CSS 变量计算导致的延迟
+.lew-component {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+// 或者使用全局变量（如果变量值稳定）
+.lew-component {
+  transition: background-color var(--lew-form-transition-bezier),
+    color var(--lew-form-transition-bezier);
+}
+```
+
+**完整示例**：
+
+```scss
+.lew-menu-item-child {
+  background-color: var(--lew-menu-item-bg);
+  color: var(--lew-menu-item-text);
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  // 普通状态的 hover
+  &:hover:not(.lew-menu-item-active) {
+    background-color: var(--lew-menu-item-bg-hover);
+    color: var(--lew-menu-item-text-hover);
+  }
+}
+
+.lew-menu-item-child.lew-menu-item-active {
+  background-color: var(--lew-menu-item-selected-bg);
+  color: var(--lew-menu-item-selected-text);
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  // 选中状态的 hover（优先级更高）
+  &:hover {
+    background-color: var(--lew-menu-item-selected-bg-hover);
+    color: var(--lew-menu-item-selected-text-hover);
+  }
+}
+```
+
 ## 检查清单
 
 开发组件样式前确认：
@@ -573,7 +663,8 @@ $colors: (
 - [ ] 使用 scoped 样式避免污染
 - [ ] 动态颜色使用 `getColorType` 工具函数
 - [ ] 所有尺寸使用全局变量（如 `--lew-border-radius-small`）
-- [ ] 过渡动画使用全局变量（如 `--lew-form-transition-ease`）
+- [ ] 过渡动画只过渡需要的属性，避免使用 `transition: all`
+- [ ] hover 状态使用精确选择器，避免状态冲突导致闪烁
 - [ ] 在亮色和暗色模式下测试样式
 - [ ] 检查样式是否被外部样式覆盖
 

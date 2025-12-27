@@ -1,16 +1,6 @@
 <script setup lang="ts">
+import { LewBadge } from 'lew-ui'
 import { useRoute, useRouter } from 'vue-router'
-
-defineProps({
-  group: {
-    type: Array as PropType<Group[]>,
-    default() {
-      return []
-    },
-  },
-})
-const route = useRoute()
-const router = useRouter()
 
 interface Item {
   name: string
@@ -24,6 +14,13 @@ interface Group {
   title: string
   items: Item[]
 }
+
+defineProps<{
+  group: Group[]
+}>()
+
+const route = useRoute()
+const router = useRouter()
 
 function toPath(item: Item) {
   router.push(item.path)
