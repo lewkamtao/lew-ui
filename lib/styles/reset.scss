@@ -1,92 +1,28 @@
-body,
-dl,
-dt,
-dd,
-pre,
-form,
-fieldset,
-input,
-p,
-blockquote,
-th,
-td,
-a,
-button,
-select,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  padding: 0;
-}
+/* ============================================
+   组件库内部样式重置
+   只针对组件库内部使用的元素，不影响全局
+   ============================================ */
 
-/* 表单元素样式 */
-select {
-  font-size: 14px;
-}
-
-/* 表格样式 */
-table {
+/* 组件库表格样式 */
+.lew-table-wrapper table,
+.lew-table {
   border-collapse: collapse;
 }
 
-caption,
-th {
+.lew-table-wrapper caption,
+.lew-table-wrapper th {
   text-align: left;
 }
 
-table caption {
-  margin-left: -var(--lew-border-width);
-}
-
-/* 图片和字段集样式 */
-fieldset,
-img {
-  border: 0 none;
-}
-
-fieldset {
-  margin: 0;
-  padding: 0;
-}
-
-fieldset p {
-  margin: 0;
-  padding: 0 0 0 8px;
-}
-
-legend {
-  display: none;
-}
-
-/* 列表样式 */
-ol,
-ul {
-  list-style-position: outside;
-  list-style-image: none;
-}
-
-/* 引用样式 */
-q::before,
-q::after,
-blockquote::before,
-blockquote::after {
-  content: '';
-}
-
-/* 链接样式 */
-a {
-  text-decoration: none;
-}
-
-/* 输入框自动填充样式 */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+/* 组件库输入框自动填充样式修复 */
+.lew-input-view input:-webkit-autofill,
+.lew-input-view input:-webkit-autofill:hover,
+.lew-input-view input:-webkit-autofill:focus,
+.lew-input-view input:-webkit-autofill:active,
+.lew-textarea-view textarea:-webkit-autofill,
+.lew-textarea-view textarea:-webkit-autofill:hover,
+.lew-textarea-view textarea:-webkit-autofill:focus,
+.lew-textarea-view textarea:-webkit-autofill:active {
   transition:
     color 9999999s ease-out,
     background-color 9999999s ease-out;

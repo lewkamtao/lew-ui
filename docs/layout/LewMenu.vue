@@ -131,12 +131,12 @@ function toPath(item: Item) {
     }
 
     .active {
-      color: var(--lew-color-white);
-      background: var(--lew-color-primary);
+      color: var(--lew-color-primary);
+      background: var(--lew-color-primary-light);
     }
     .active:hover {
-      color: var(--lew-color-white);
-      background: var(--lew-color-primary);
+      color: var(--lew-color-primary);
+      background: var(--lew-color-primary-light-hover);
     }
   }
 

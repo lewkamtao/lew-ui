@@ -579,16 +579,16 @@ const headDate = computed(() => {
           to right,
           rgba(0, 0, 0, 0) 0%,
           rgba(0, 0, 0, 0) 50%,
-          color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0)) 51%,
-          color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0)) 100%
+          var(--lew-color-datepicker-primary-range-bg) 51%,
+          var(--lew-color-datepicker-primary-range-bg) 100%
         );
       }
 
       .lew-date-label-selected-end {
         background: linear-gradient(
           to right,
-          color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0)) 0%,
-          color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0)) 50%,
+          var(--lew-color-datepicker-primary-range-bg) 0%,
+          var(--lew-color-datepicker-primary-range-bg) 50%,
           rgba(0, 0, 0, 0) 51%,
           rgba(0, 0, 0, 0) 100%
         );
@@ -610,7 +610,7 @@ const headDate = computed(() => {
       }
 
       .lew-date-label-selected {
-        background: color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0));
+        background: var(--lew-color-datepicker-primary-range-bg);
 
         .lew-date-value {
           color: var(--lew-text-color-0);
@@ -637,7 +637,7 @@ const headDate = computed(() => {
     .lew-date-item-curMonth:hover {
       .lew-date-label {
         .lew-date-value {
-          background-color: color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0));
+          background-color: var(--lew-color-datepicker-primary-range-bg);
           color: var(--lew-color-primary);
           border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
@@ -660,7 +660,7 @@ const headDate = computed(() => {
     .lew-date-item-select {
       .lew-date-label {
         .lew-date-value {
-          background-color: color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0));
+          background-color: var(--lew-color-datepicker-primary-range-bg);
           color: var(--lew-color-primary);
         }
       }

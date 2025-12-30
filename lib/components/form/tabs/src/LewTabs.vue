@@ -300,23 +300,22 @@ onUnmounted(() => {
     cursor: pointer;
     flex-shrink: 0;
     height: calc(100% - 6px);
-    transition: all var(--lew-form-transition-ease);
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
 
-  .lew-tabs-item:hover {
-    background-color: var(--lew-form-bgcolor-active);
+  .lew-tabs-item:hover:not(.lew-tabs-item-active) {
+    background-color: var(--lew-tabs-hover-bgcolor, var(--lew-form-bgcolor-hover));
+    color: var(--lew-tabs-hover-text-color, var(--lew-text-color-1));
   }
 
   .lew-tabs-item-active {
     background-color: rgba(0, 0, 0, 0);
+    color: var(--lew-tabs-active-text-color, var(--lew-text-color-1));
   }
 
   .lew-tabs-item-active:hover {
     background-color: rgba(0, 0, 0, 0);
-  }
-
-  .lew-tabs-item-active:hover {
-    opacity: 1;
+    color: var(--lew-tabs-active-text-color, var(--lew-text-color-1));
   }
 
   .lew-tabs-item-disabled {
@@ -384,17 +383,19 @@ onUnmounted(() => {
       padding-bottom: 5px;
     }
 
-    .lew-tabs-item:hover {
-      background: var(--lew-form-bgcolor-hover);
+    .lew-tabs-item:hover:not(.lew-tabs-item-active) {
+      background: var(--lew-tabs-hover-bgcolor, var(--lew-form-bgcolor-hover));
     }
 
     .lew-tabs-item-active {
       background: transparent;
+      color: var(--lew-tabs-line-active-text-color, var(--lew-color-primary));
     }
 
     .lew-tabs-item-active:hover {
-      transition: all var(--lew-form-transition-ease);
       background: transparent;
+      color: var(--lew-tabs-line-active-text-color, var(--lew-color-primary));
+      transition: background-color 0.15s ease, color 0.15s ease;
     }
 
     .lew-tabs-item-animation-active {

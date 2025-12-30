@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 聊天助手</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      :root {
+        /* Material Design 3 颜色系统 */
+        --md-sys-color-primary: #6750a4;
+        --md-sys-color-on-primary: #ffffff;
+        --md-sys-color-primary-container: #eaddff;
+        --md-sys-color-on-primary-container: #21005d;
+        --md-sys-color-secondary: #625b71;
+        --md-sys-color-on-secondary: #ffffff;
+        --md-sys-color-surface: #fffbfe;
+        --md-sys-color-on-surface: #1c1b1f;
+        --md-sys-color-surface-variant: #e7e0ec;
+        --md-sys-color-on-surface-variant: #49454f;
+        --md-sys-color-outline: #79747e;
+        --md-sys-color-shadow: #000000;
+      }
+
+      body {
+        font-family:
+          'Roboto',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+        background: linear-gradient(135deg, #e8eaf6 0%, #f3e5f5 100%);
+        min-height: 100vh;
+        color: var(--md-sys-color-on-surface);
+      }
+
+      .chat-container {
+        background: var(--md-sys-color-surface);
+        border-radius: 28px;
+        box-shadow:
+          0 1px 3px rgba(0, 0, 0, 0.12),
+          0 1px 2px rgba(0, 0, 0, 0.24);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .message-bubble {
+        animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .user-message {
+        background: var(--md-sys-color-primary);
+        color: var(--md-sys-color-on-primary);
+      }
+
+      .ai-message {
+        background: var(--md-sys-color-surface-variant);
+        color: var(--md-sys-color-on-surface);
+      }
+
+      .typing-indicator {
+        display: inline-flex;
+        gap: 4px;
+      }
+
+      .typing-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--md-sys-color-on-surface-variant);
+        animation: typing 1.4s infinite;
+      }
+
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typing {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.7;
+        }
+        30% {
+          transform: translateY(-8px);
+          opacity: 1;
+        }
+      }
+
+      .input-area {
+        resize: none;
+        min-height: 56px;
+        max-height: 200px;
+        overflow-y: auto;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .input-area::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .input-area::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .input-area::-webkit-scrollbar-thumb {
+        background: var(--md-sys-color-outline);
+        border-radius: 10px;
+        opacity: 0.3;
+      }
+
+      .input-area::-webkit-scrollbar-thumb:hover {
+        opacity: 0.5;
+      }
+
+      .send-button {
+        min-height: 56px;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 28px;
+      }
+
+      .send-button:hover:not(:disabled) {
+        box-shadow:
+          0 2px 4px rgba(0, 0, 0, 0.2),
+          0 1px 2px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .send-button:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.2),
+          0 1px 1px rgba(0, 0, 0, 0.1);
+      }
+
+      .send-button:disabled {
+        opacity: 0.38;
+        cursor: not-allowed;
+      }
+
+      .token-input {
+        min-height: 56px;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 4px;
+      }
+
+      .token-input:focus {
+        outline: 2px solid var(--md-sys-color-primary);
+        outline-offset: 2px;
+      }
+
+      .message-content {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        line-height: 1.5;
+        font-size: 14px;
+      }
+
+      /* Material Design 3 按钮样式 */
+      .m3-button {
+        background: var(--md-sys-color-primary);
+        color: var(--md-sys-color-on-primary);
+        border-radius: 20px;
+        font-weight: 500;
+        letter-spacing: 0.1px;
+        text-transform: none;
+      }
+
+      .m3-button:hover {
+        box-shadow:
+          0 2px 4px rgba(0, 0, 0, 0.2),
+          0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      /* 输入框 Material Design 3 样式 */
+      .m3-input {
+        border: 1px solid var(--md-sys-color-outline);
+        border-radius: 4px;
+        background: var(--md-sys-color-surface);
+        color: var(--md-sys-color-on-surface);
+      }
+
+      .m3-input:focus {
+        border-color: var(--md-sys-color-primary);
+      }
+
+      /* 确保输入框和按钮对齐 */
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .input-wrapper textarea {
+        flex: 1;
+      }
+
+      .input-wrapper button {
+        flex-shrink: 0;
+        height: 56px;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header with Token Configuration -->
+      <div class="chat-container p-6 mb-4">
+        <div class="flex items-end gap-4 mb-4">
+          <div class="flex-1">
+            <label class="block text-sm font-medium mb-2" style="color: var(--md-sys-color-on-surface-variant)">
+              <span class="material-icons align-middle text-lg mr-1">vpn_key</span>
+              API Token
+            </label>
+            <input
+              type="password"
+              id="tokenInput"
+              placeholder="请输入您的 API Token"
+              class="m3-input token-input w-full px-4 py-3"
+            />
+          </div>
+          <button
+            id="saveTokenBtn"
+            class="m3-button px-6 py-3 text-white font-medium flex items-center gap-2"
+            style="min-height: 56px"
+          >
+            <span class="material-icons text-lg">save</span>
+            保存
+          </button>
+        </div>
+        <div
+          id="tokenStatus"
+          class="text-sm flex items-center gap-2"
+          style="color: var(--md-sys-color-on-surface-variant)"
+        >
+          <span class="material-icons text-lg" style="color: #ba1a1a">error_outline</span>
+          <span>未配置 Token</span>
+        </div>
+      </div>
+
+      <!-- Chat Container -->
+      <div class="chat-container flex flex-col" style="height: calc(100vh - 200px); min-height: 600px">
+        <!-- Messages Area -->
+        <div id="messagesContainer" class="flex-1 overflow-y-auto p-6 space-y-4">
+          <div class="text-center py-8" style="color: var(--md-sys-color-on-surface-variant)">
+            <span class="material-icons text-6xl mb-4 opacity-50">chat_bubble_outline</span>
+            <p class="text-lg font-medium">开始与 AI 对话吧！</p>
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <div
+          class="border-t p-4 rounded-b-2xl"
+          style="border-color: rgba(121, 116, 126, 0.2); background: var(--md-sys-color-surface)"
+        >
+          <div class="input-wrapper">
+            <textarea
+              id="messageInput"
+              placeholder="输入消息..."
+              class="m3-input input-area w-full px-4 py-3"
+              rows="1"
+            ></textarea>
+            <button
+              id="sendButton"
+              class="m3-button send-button px-6 py-3 text-white font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span class="material-icons">send</span>
+              <span class="hidden md:inline">发送</span>
+            </button>
+          </div>
+          <div class="mt-2 text-xs flex items-center gap-2" style="color: var(--md-sys-color-on-surface-variant)">
+            <span class="material-icons text-sm">info_outline</span>
+            <span>按 Enter 发送，Shift + Enter 换行</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 状态管理
+      const state = {
+        token: localStorage.getItem('apiToken') || '',
+        isStreaming: false,
+        currentAbortController: null,
+      }
+
+      // DOM 元素
+      const tokenInput = document.getElementById('tokenInput')
+      const saveTokenBtn = document.getElementById('saveTokenBtn')
+      const tokenStatus = document.getElementById('tokenStatus')
+      const messagesContainer = document.getElementById('messagesContainer')
+      const messageInput = document.getElementById('messageInput')
+      const sendButton = document.getElementById('sendButton')
+
+      // 初始化
+      function init() {
+        if (state.token) {
+          tokenInput.value = state.token
+          updateTokenStatus(true)
+        }
+
+        // 绑定事件
+        saveTokenBtn.addEventListener('click', saveToken)
+        sendButton.addEventListener('click', sendMessage)
+        messageInput.addEventListener('keydown', handleKeyDown)
+        messageInput.addEventListener('input', autoResize)
+
+        // 从 localStorage 加载 token
+        loadToken()
+      }
+
+      // 保存 Token
+      function saveToken() {
+        const token = tokenInput.value.trim()
+        if (!token) {
+          alert('请输入有效的 Token')
+          return
+        }
+        state.token = token
+        localStorage.setItem('apiToken', token)
+        updateTokenStatus(true)
+        alert('Token 已保存')
+      }
+
+      // 加载 Token
+      function loadToken() {
+        const savedToken = localStorage.getItem('apiToken')
+        if (savedToken) {
+          state.token = savedToken
+          tokenInput.value = savedToken
+          updateTokenStatus(true)
+        }
+      }
+
+      // 更新 Token 状态显示
+      function updateTokenStatus(isValid) {
+        if (isValid) {
+          tokenStatus.innerHTML = `
+                    <span class="material-icons text-lg text-green-500">check_circle</span>
+                    <span class="text-green-600">Token 已配置</span>
+                `
+        } else {
+          tokenStatus.innerHTML = `
+                    <span class="material-icons text-lg text-red-500">error_outline</span>
+                    <span>未配置 Token</span>
+                `
+        }
+      }
+
+      // 处理键盘事件
+      function handleKeyDown(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault()
+          sendMessage()
+        }
+      }
+
+      // 自动调整输入框高度
+      function autoResize() {
+        const textarea = messageInput
+        textarea.style.height = 'auto'
+        textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px'
+      }
+
+      // 添加消息到界面
+      function addMessage(content, isUser = true) {
+        // 移除空状态提示
+        const emptyState = messagesContainer.querySelector('.text-center')
+        if (emptyState) {
+          emptyState.remove()
+        }
+
+        const messageDiv = document.createElement('div')
+        messageDiv.className = `message-bubble flex ${isUser ? 'justify-end' : 'justify-start'}`
+
+        const bubbleClass = isUser
+          ? 'user-message text-white rounded-2xl px-4 py-3 max-w-[80%] md:max-w-[70%]'
+          : 'ai-message rounded-2xl px-4 py-3 max-w-[80%] md:max-w-[70%]'
+
+        messageDiv.innerHTML = `
+                <div class="${bubbleClass}">
+                    <div class="message-content">${content}</div>
+                </div>
+            `
+
+        messagesContainer.appendChild(messageDiv)
+        scrollToBottom()
+        return messageDiv
+      }
+
+      // 更新消息内容（用于流式响应）
+      function updateMessage(element, content) {
+        const contentDiv = element.querySelector('.message-content')
+        if (contentDiv) {
+          contentDiv.textContent = content
+        }
+      }
+
+      // 滚动到底部
+      function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight
+      }
+
+      // 显示加载状态
+      function showTypingIndicator() {
+        const messageDiv = document.createElement('div')
+        messageDiv.className = 'message-bubble flex justify-start'
+        messageDiv.id = 'typing-indicator'
+        messageDiv.innerHTML = `
+                <div class="ai-message rounded-2xl px-4 py-3 shadow-sm">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `
+        messagesContainer.appendChild(messageDiv)
+        scrollToBottom()
+        return messageDiv
+      }
+
+      // 移除加载状态
+      function removeTypingIndicator() {
+        const indicator = document.getElementById('typing-indicator')
+        if (indicator) {
+          indicator.remove()
+        }
+      }
+
+      // 发送消息
+      async function sendMessage() {
+        const message = messageInput.value.trim()
+        if (!message) return
+
+        if (!state.token) {
+          alert('请先配置 API Token')
+          return
+        }
+
+        if (state.isStreaming) {
+          // 如果正在流式响应，取消当前请求
+          if (state.currentAbortController) {
+            state.currentAbortController.abort()
+          }
+          return
+        }
+
+        // 添加用户消息
+        addMessage(message, true)
+
+        // 清空输入框
+        messageInput.value = ''
+        messageInput.style.height = 'auto'
+
+        // 禁用输入和按钮
+        setLoadingState(true)
+
+        // 显示加载状态
+        const typingIndicator = showTypingIndicator()
+
+        // 创建 AbortController 用于取消请求
+        const abortController = new AbortController()
+        state.currentAbortController = abortController
+
+        try {
+          // 创建 AI 消息元素
+          removeTypingIndicator()
+          const aiMessageElement = addMessage('', false)
+          let fullResponse = ''
+
+          // 发送请求
+          // 注意：如果遇到跨域问题，API 服务器需要配置 CORS 头
+          // 或者使用后端代理服务器转发请求
+          const requestBody = {
+            content: {
+              query: {
+                prompt: [
+                  {
+                    type: 'text',
+                    content: {
+                      text: message,
+                    },
+                  },
+                ],
+              },
+            },
+            type: 'query',
+            project_id: 7588798228804648969,
+          }
+
+          const response = await fetch('https://qkv5z9vnyf.coze.site/stream_run', {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'omit',
+            headers: {
+              Authorization: `Bearer ${state.token}`,
+              'Content-Type': 'application/json',
+              Accept: 'text/event-stream, application/json',
+            },
+            body: JSON.stringify(requestBody),
+            signal: abortController.signal,
+          })
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+
+          // 处理流式响应
+          const reader = response.body.getReader()
+          const decoder = new TextDecoder()
+
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+
+            const chunk = decoder.decode(value, { stream: true })
+            const lines = chunk.split('\n')
+
+            for (const line of lines) {
+              if (line.trim() === '') continue
+
+              try {
+                // 尝试解析 JSON（如果 API 返回 JSON 格式）
+                if (line.startsWith('data: ')) {
+                  const jsonStr = line.substring(6)
+                  const data = JSON.parse(jsonStr)
+
+                  // 根据实际 API 响应格式提取文本
+                  if (data.content || data.text || data.message) {
+                    const text = data.content || data.text || data.message
+                    if (text) {
+                      fullResponse += text
+                      updateMessage(aiMessageElement, fullResponse)
+                      scrollToBottom()
+                    }
+                  }
+                } else if (line.trim().startsWith('{')) {
+                  // 直接是 JSON 对象
+                  const data = JSON.parse(line)
+                  if (data.content || data.text || data.message) {
+                    const text = data.content || data.text || data.message
+                    if (text) {
+                      fullResponse += text
+                      updateMessage(aiMessageElement, fullResponse)
+                      scrollToBottom()
+                    }
+                  }
+                } else {
+                  // 纯文本流
+                  fullResponse += line
+                  updateMessage(aiMessageElement, fullResponse)
+                  scrollToBottom()
+                }
+              } catch (e) {
+                // 如果不是 JSON，直接作为文本处理
+                if (line.trim()) {
+                  fullResponse += line
+                  updateMessage(aiMessageElement, fullResponse)
+                  scrollToBottom()
+                }
+              }
+            }
+          }
+
+          // 如果最终消息为空，显示提示
+          if (!fullResponse.trim()) {
+            updateMessage(aiMessageElement, '抱歉，没有收到有效响应。请检查 API 配置或网络连接。')
+          }
+        } catch (error) {
+          if (error.name === 'AbortError') {
+            console.log('请求已取消')
+            removeTypingIndicator()
+          } else {
+            console.error('发送消息失败:', error)
+            removeTypingIndicator()
+            let errorText = '发送消息失败: ' + error.message
+            if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
+              errorText =
+                '跨域请求失败。请检查：\n1. API 服务器是否配置了 CORS 头\n2. 或使用后端代理服务器转发请求\n3. 错误详情: ' +
+                error.message
+            }
+            const errorMessage = addMessage(errorText, false)
+            const errorBubble = errorMessage.querySelector('.ai-message')
+            errorBubble.style.background = '#fce8e6'
+            errorBubble.style.color = '#ba1a1a'
+          }
+        } finally {
+          setLoadingState(false)
+          state.currentAbortController = null
+        }
+      }
+
+      // 设置加载状态
+      function setLoadingState(loading) {
+        state.isStreaming = loading
+        messageInput.disabled = loading
+        sendButton.disabled = loading
+
+        if (loading) {
+          sendButton.innerHTML = `
+                    <span class="material-icons animate-spin">refresh</span>
+                    <span class="hidden md:inline">发送中...</span>
+                `
+        } else {
+          sendButton.innerHTML = `
+                    <span class="material-icons">send</span>
+                    <span class="hidden md:inline">发送</span>
+                `
+        }
+      }
+
+      // 初始化应用
+      init()
+    </script>
+  </body>
+</html>

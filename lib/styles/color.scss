@@ -51,9 +51,9 @@
   --lew-color-button-#{$color-name}-fill-hover-base: #{get-color-value($color-map, '7')};
   --lew-color-button-#{$color-name}-fill-active: #{get-color-value($color-map, '8')};
   --lew-color-button-#{$color-name}-fill-active-base: #{get-color-value($color-map, '8')};
-  --lew-color-button-#{$color-name}-fill-text: #fff;
-  --lew-color-button-#{$color-name}-fill-text-hover: #fff;
-  --lew-color-button-#{$color-name}-fill-text-active: #fff;
+  --lew-color-button-#{$color-name}-fill-text: #{get-color-value($text-color, '9')};
+  --lew-color-button-#{$color-name}-fill-text-hover: #{get-color-value($text-color, '9')};
+  --lew-color-button-#{$color-name}-fill-text-active: #{get-color-value($text-color, '9')};
   --lew-color-button-#{$color-name}-light: #{get-color-value($color-map, '2')};
   --lew-color-button-#{$color-name}-light-hover: #{get-color-value($color-map, '3')};
   --lew-color-button-#{$color-name}-light-active: #{get-color-value($color-map, '4')};
@@ -93,7 +93,7 @@
 
 @mixin export-tag-colors-light($color-name, $color-map) {
   --lew-color-tag-#{$color-name}-fill: #{get-color-value($color-map, '6')};
-  --lew-color-tag-#{$color-name}-fill-text: #fff;
+  --lew-color-tag-#{$color-name}-fill-text: #{get-color-value($text-color, '9')};
   --lew-color-tag-#{$color-name}-light: #{get-color-value($color-map, '2')};
   --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, '8')};
   --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
@@ -107,15 +107,20 @@
   --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
 }
 
+// ============================================
+// Checkbox 组件主题颜色变量（用于 checked 状态）
+// 生成变量格式：--lew-color-checkbox-{color-name}-*
+// 例如：--lew-color-checkbox-primary-checked-icon-bg
+// ============================================
 @mixin export-checkbox-colors-light($color-name, $color-map) {
   --lew-color-checkbox-#{$color-name}-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-checkbox-#{$color-name}-icon-bg: transparent;
   --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, '6')};
-  --lew-color-checkbox-#{$color-name}-checked-icon-color: #fff;
+  --lew-color-checkbox-#{$color-name}-checked-icon-color: #{get-color-value($text-color, '9')};
   --lew-color-checkbox-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, '7')};
-  --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #fff;
+  --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #{get-color-value($text-color, '9')};
   --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, '8')};
-  --lew-color-checkbox-#{$color-name}-checked-icon-color-active: #fff;
+  --lew-color-checkbox-#{$color-name}-checked-icon-color-active: #{get-color-value($text-color, '9')};
   --lew-color-checkbox-#{$color-name}-block-checked-bg: #{get-color-value($color-map, '1')};
   --lew-color-checkbox-#{$color-name}-block-checked-border: #{get-color-value($color-map, '6')};
   --lew-color-checkbox-#{$color-name}-block-checked-color: #{get-color-value($color-map, '6')};
@@ -140,18 +145,23 @@
   --lew-color-checkbox-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, '6')};
 }
 
+// ============================================
+// Radio 组件主题颜色变量（用于 checked 状态）
+// 生成变量格式：--lew-color-radio-{color-name}-*
+// 例如：--lew-color-radio-primary-checked-icon-bg
+// ============================================
 @mixin export-radio-colors-light($color-name, $color-map) {
   --lew-color-radio-#{$color-name}-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-radio-#{$color-name}-icon-bg: transparent;
   --lew-color-radio-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, '6')};
   --lew-color-radio-#{$color-name}-checked-icon-border: #{get-color-value($color-map, '6')};
-  --lew-color-radio-#{$color-name}-checked-icon-color: #fff;
+  --lew-color-radio-#{$color-name}-checked-icon-color: #{get-color-value($text-color, '9')};
   --lew-color-radio-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, '7')};
   --lew-color-radio-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, '7')};
-  --lew-color-radio-#{$color-name}-checked-icon-color-hover: #fff;
+  --lew-color-radio-#{$color-name}-checked-icon-color-hover: #{get-color-value($text-color, '9')};
   --lew-color-radio-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, '8')};
   --lew-color-radio-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, '8')};
-  --lew-color-radio-#{$color-name}-checked-icon-color-active: #fff;
+  --lew-color-radio-#{$color-name}-checked-icon-color-active: #{get-color-value($text-color, '9')};
   --lew-color-radio-#{$color-name}-block-checked-bg: #{get-color-value($color-map, '1')};
   --lew-color-radio-#{$color-name}-block-checked-border: #{get-color-value($color-map, '6')};
   --lew-color-radio-#{$color-name}-block-checked-color: #{get-color-value($color-map, '6')};
@@ -176,11 +186,16 @@
   --lew-color-radio-#{$color-name}-block-checked-icon-color: #{get-color-value($color-map, '6')};
 }
 
+// ============================================
+// Switch 组件主题颜色变量（用于 checked 状态）
+// 生成变量格式：--lew-color-switch-{color-name}-*
+// 例如：--lew-color-switch-primary-checked-bg
+// ============================================
 @mixin export-switch-colors-light($color-name, $color-map) {
   --lew-color-switch-#{$color-name}-checked-bg: #{get-color-value($color-map, '6')};
   --lew-color-switch-#{$color-name}-checked-bg-hover: #{get-color-value($color-map, '7')};
   --lew-color-switch-#{$color-name}-checked-bg-active: #{get-color-value($color-map, '8')};
-  --lew-color-switch-#{$color-name}-dot-color: #fff;
+  --lew-color-switch-#{$color-name}-dot-color: #{get-color-value($text-color, '9')};
   --lew-color-switch-#{$color-name}-loading-off: #{get-color-value($color-map, '8')};
   --lew-color-switch-#{$color-name}-loading-on: #{get-color-value($color-map, '8')};
 }
@@ -196,11 +211,16 @@
 
 @mixin export-datepicker-colors-light($color-name, $color-map) {
   --lew-color-datepicker-#{$color-name}-selected-bg: #{get-color-value($color-map, '6')};
-  --lew-color-datepicker-#{$color-name}-selected-text: #fff;
+  --lew-color-datepicker-#{$color-name}-selected-text: #{get-color-value($text-color, '9')};
   --lew-color-datepicker-#{$color-name}-selected-bg-hover: #{get-color-value($color-map, '7')};
-  --lew-color-datepicker-#{$color-name}-selected-text-hover: #fff;
+  --lew-color-datepicker-#{$color-name}-selected-text-hover: #{get-color-value($text-color, '9')};
   --lew-color-datepicker-#{$color-name}-selected-bg-active: #{get-color-value($color-map, '8')};
-  --lew-color-datepicker-#{$color-name}-selected-text-active: #fff;
+  --lew-color-datepicker-#{$color-name}-selected-text-active: #{get-color-value($text-color, '9')};
+  --lew-color-datepicker-#{$color-name}-range-bg: color-mix(
+    in srgb,
+    #{get-color-value($color-map, '2')} 70%,
+    #{get-color-value($bgcolor, '0')}
+  );
 }
 
 @mixin export-datepicker-colors-dark($color-name, $color-map) {
@@ -210,12 +230,17 @@
   --lew-color-datepicker-#{$color-name}-selected-text-hover: #{get-color-value($color-map, '8')};
   --lew-color-datepicker-#{$color-name}-selected-bg-active: #{get-color-value($color-map, '4')};
   --lew-color-datepicker-#{$color-name}-selected-text-active: #{get-color-value($color-map, '9')};
+  --lew-color-datepicker-#{$color-name}-range-bg: color-mix(
+    in srgb,
+    #{get-color-value($color-map, '4')} 50%,
+    #{get-color-value(dark.$dark-bgcolor, '2')}
+  );
 }
 
 @mixin export-steps-colors-light($color-name, $color-map) {
   --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, '6')};
-  --lew-color-steps-#{$color-name}-active-text: #fff;
-  --lew-color-steps-#{$color-name}-active-icon: #fff;
+  --lew-color-steps-#{$color-name}-active-text: #{get-color-value($text-color, '9')};
+  --lew-color-steps-#{$color-name}-active-icon: #{get-color-value($text-color, '9')};
   --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, '1')};
   --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, '6')};
   --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, '6')};
@@ -234,11 +259,11 @@
   --lew-color-pagination-#{$color-name}-hover-bg-base: #{get-color-value($color-map, '2')};
   --lew-color-pagination-#{$color-name}-hover-text: #{get-color-value($color-map, '6')};
   --lew-color-pagination-#{$color-name}-active-bg: #{get-color-value($color-map, '6')};
-  --lew-color-pagination-#{$color-name}-active-text: #fff;
+  --lew-color-pagination-#{$color-name}-active-text: #{get-color-value($text-color, '9')};
   --lew-color-pagination-#{$color-name}-active-bg-hover: #{get-color-value($color-map, '7')};
-  --lew-color-pagination-#{$color-name}-active-text-hover: #fff;
+  --lew-color-pagination-#{$color-name}-active-text-hover: #{get-color-value($text-color, '9')};
   --lew-color-pagination-#{$color-name}-active-bg-active: #{get-color-value($color-map, '8')};
-  --lew-color-pagination-#{$color-name}-active-text-active: #fff;
+  --lew-color-pagination-#{$color-name}-active-text-active: #{get-color-value($text-color, '9')};
 }
 
 @mixin export-pagination-colors-dark($color-name, $color-map) {
@@ -265,7 +290,7 @@
 @mixin export-badge-colors-light($color-name, $color-map) {
   --lew-color-badge-#{$color-name}-bg: #{get-color-value($color-map, '6')};
   --lew-color-badge-#{$color-name}-dot-bg: #{get-color-value($color-map, '7')};
-  --lew-color-badge-#{$color-name}-text: #fff;
+  --lew-color-badge-#{$color-name}-text: #{get-color-value($text-color, '9')};
 }
 
 @mixin export-badge-colors-dark($color-name, $color-map) {
@@ -379,12 +404,341 @@
   }
 }
 
+@mixin export-bgcolor-colors-light() {
+  --lew-bgcolor-0: #{get-color-value($bgcolor, '0')};
+  --lew-bgcolor-1: #{get-color-value($bgcolor, '1')};
+  --lew-bgcolor-2: #{get-color-value($bgcolor, '2')};
+  --lew-bgcolor-3: #{get-color-value($bgcolor, '3')};
+  --lew-bgcolor-4: #{get-color-value($bgcolor, '4')};
+  --lew-bgcolor-5: #{get-color-value($bgcolor, '5')};
+  --lew-bgcolor-6: #{get-color-value($bgcolor, '6')};
+  --lew-bgcolor-7: #{get-color-value($bgcolor, '7')};
+  --lew-bgcolor-8: #{get-color-value($bgcolor, '8')};
+  --lew-bgcolor-9: #{get-color-value($bgcolor, '9')};
+}
+
+@mixin export-bgcolor-colors-dark() {
+  --lew-bgcolor-0: #{get-color-value(dark.$dark-bgcolor, '0')};
+  --lew-bgcolor-1: #{get-color-value(dark.$dark-bgcolor, '1')};
+  --lew-bgcolor-2: #{get-color-value(dark.$dark-bgcolor, '2')};
+  --lew-bgcolor-3: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-bgcolor-4: #{get-color-value(dark.$dark-bgcolor, '4')};
+  --lew-bgcolor-5: #{get-color-value(dark.$dark-bgcolor, '5')};
+  --lew-bgcolor-6: #{get-color-value(dark.$dark-bgcolor, '6')};
+  --lew-bgcolor-7: #{get-color-value(dark.$dark-bgcolor, '7')};
+  --lew-bgcolor-8: #{get-color-value(dark.$dark-bgcolor, '8')};
+  --lew-bgcolor-9: #{get-color-value(dark.$dark-bgcolor, '9')};
+}
+
+@mixin export-text-colors-light() {
+  --lew-text-color-0: #{get-color-value($text-color, '0')};
+  --lew-text-color-1: #{get-color-value($text-color, '1')};
+  --lew-text-color-2: #{get-color-value($text-color, '2')};
+  --lew-text-color-3: #{get-color-value($text-color, '3')};
+  --lew-text-color-4: #{get-color-value($text-color, '4')};
+  --lew-text-color-5: #{get-color-value($text-color, '5')};
+  --lew-text-color-6: #{get-color-value($text-color, '6')};
+  --lew-text-color-7: #{get-color-value($text-color, '7')};
+  --lew-text-color-8: #{get-color-value($text-color, '8')};
+  --lew-text-color-9: #{get-color-value($text-color, '9')};
+}
+
+@mixin export-text-colors-dark() {
+  --lew-text-color-0: #{get-color-value(dark.$dark-text-color, '0')};
+  --lew-text-color-1: #{get-color-value(dark.$dark-text-color, '1')};
+  --lew-text-color-2: #{get-color-value(dark.$dark-text-color, '2')};
+  --lew-text-color-3: #{get-color-value(dark.$dark-text-color, '3')};
+  --lew-text-color-4: #{get-color-value(dark.$dark-text-color, '4')};
+  --lew-text-color-5: #{get-color-value(dark.$dark-text-color, '5')};
+  --lew-text-color-6: #{get-color-value(dark.$dark-text-color, '6')};
+  --lew-text-color-7: #{get-color-value(dark.$dark-text-color, '7')};
+  --lew-text-color-8: #{get-color-value(dark.$dark-text-color, '8')};
+  --lew-text-color-9: #{get-color-value(dark.$dark-text-color, '9')};
+}
+
+@mixin export-invert-colors() {
+  --lew-bgcolor-0-invert: #{get-color-value($bgcolor, '0')};
+  --lew-bgcolor-1-invert: #{get-color-value($bgcolor, '1')};
+  --lew-bgcolor-2-invert: #{get-color-value($bgcolor, '2')};
+  --lew-bgcolor-3-invert: #{get-color-value($bgcolor, '3')};
+  --lew-bgcolor-4-invert: #{get-color-value($bgcolor, '4')};
+  --lew-bgcolor-5-invert: #{get-color-value($bgcolor, '5')};
+  --lew-bgcolor-6-invert: #{get-color-value($bgcolor, '6')};
+  --lew-bgcolor-7-invert: #{get-color-value($bgcolor, '7')};
+  --lew-bgcolor-8-invert: #{get-color-value($bgcolor, '8')};
+  --lew-bgcolor-9-invert: #{get-color-value($bgcolor, '9')};
+
+  --lew-text-color-0-invert: #{get-color-value($text-color, '0')};
+  --lew-text-color-1-invert: #{get-color-value($text-color, '1')};
+  --lew-text-color-2-invert: #{get-color-value($text-color, '2')};
+  --lew-text-color-3-invert: #{get-color-value($text-color, '3')};
+  --lew-text-color-4-invert: #{get-color-value($text-color, '4')};
+  --lew-text-color-5-invert: #{get-color-value($text-color, '5')};
+  --lew-text-color-6-invert: #{get-color-value($text-color, '6')};
+  --lew-text-color-7-invert: #{get-color-value($text-color, '7')};
+  --lew-text-color-8-invert: #{get-color-value($text-color, '8')};
+  --lew-text-color-9-invert: #{get-color-value($text-color, '9')};
+}
+
+@mixin export-form-colors-light() {
+  --lew-form-bgcolor: #{get-color-value($bgcolor, '4')};
+  --lew-form-bgcolor-hover: #{get-color-value($bgcolor, '5')};
+  --lew-form-bgcolor-active: #{get-color-value($bgcolor, '6')};
+  --lew-form-bgcolor-focus: #{get-color-value($bgcolor, '1')};
+  --lew-form-border-color: transparent;
+  --lew-form-border-color-focus: var(--lew-color-primary);
+  --lew-form-border-color-hover: #{get-color-value($bgcolor, '7')};
+  --lew-form-border-color-active: #{get-color-value($bgcolor, '8')};
+  --lew-form-box-shadow: 0px 0px 0px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 20%, transparent);
+}
+
+@mixin export-form-colors-dark() {
+  --lew-form-bgcolor: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-form-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '4')};
+  --lew-form-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-form-bgcolor-focus: #{get-color-value(dark.$dark-bgcolor, '1')};
+  --lew-form-border-color: transparent;
+  --lew-form-border-color-focus: var(--lew-color-primary);
+  --lew-form-border-color-hover: #{get-color-value(dark.$dark-bgcolor, '6')};
+}
+
+// ============================================
+// Switch 组件基础背景颜色（用于未选中状态）
+// 注意：checked 状态的颜色通过 export-switch-colors-light/dark() 生成主题颜色变量
+// ============================================
+@mixin export-switch-bg-colors-light() {
+  --lew-switch-bgcolor: #{get-color-value($bgcolor, '2')};
+  --lew-switch-bgcolor-hover: #{get-color-value($bgcolor, '4')};
+}
+
+@mixin export-switch-bg-colors-dark() {
+  --lew-switch-bgcolor: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-switch-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '4')};
+}
+
+// ============================================
+// Checkbox 组件基础颜色变量
+// 注意：checked 状态的颜色通过 export-checkbox-colors-light/dark() 生成主题颜色变量
+// 组件使用：
+//   - 基础状态：--lew-checkbox-bgcolor, --lew-checkbox-border-color 等
+//   - checked 状态：--lew-color-checkbox-primary-checked-icon-bg 等（通过主题颜色变量）
+// ============================================
+@mixin export-checkbox-bg-colors-light() {
+  --lew-checkbox-bgcolor: var(--lew-form-bgcolor);
+  --lew-checkbox-border-color: var(--lew-form-bgcolor-active);
+  --lew-checkbox-color: var(--lew-color-primary);
+  --lew-checkbox-color-light: var(--lew-color-primary-light);
+  --lew-checkbox-border-color-hover: var(--lew-color-primary);
+  --lew-checkbox-block-bgcolor: #{get-color-value($bgcolor, '1')};
+  --lew-checkbox-bgcolor-hover: #{get-color-value($bgcolor, '0')};
+}
+
+@mixin export-checkbox-bg-colors-dark() {
+  --lew-checkbox-bgcolor: var(--lew-form-bgcolor);
+  --lew-checkbox-border-color: #{get-color-value(dark.$dark-bgcolor, '6')};
+  --lew-checkbox-color: var(--lew-color-primary);
+  --lew-checkbox-color-light: var(--lew-color-primary-light);
+  --lew-checkbox-border-color-hover: var(--lew-color-primary);
+  --lew-checkbox-block-bgcolor: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-checkbox-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '2')};
+}
+
+// ============================================
+// Radio 组件基础颜色变量
+// 注意：checked 状态的颜色通过 export-radio-colors-light/dark() 生成主题颜色变量
+// 组件使用：
+//   - 基础状态：--lew-radio-bgcolor, --lew-radio-border-color 等
+//   - checked 状态：--lew-color-radio-primary-checked-icon-bg 等（通过主题颜色变量）
+// ============================================
+@mixin export-radio-bg-colors-light() {
+  --lew-radio-bgcolor: var(--lew-form-bgcolor);
+  --lew-radio-border-color: var(--lew-form-bgcolor-active);
+  --lew-radio-border-color-hover: var(--lew-color-primary);
+  --lew-radio-color: var(--lew-color-primary);
+  --lew-radio-color-light: var(--lew-color-primary-light);
+  --lew-radio-block-bgcolor: #{get-color-value($bgcolor, '1')};
+  --lew-radio-bgcolor-hover: #{get-color-value($bgcolor, '0')};
+}
+
+@mixin export-radio-bg-colors-dark() {
+  --lew-radio-bgcolor: var(--lew-form-bgcolor);
+  --lew-radio-border-color: #{get-color-value(dark.$dark-bgcolor, '6')};
+  --lew-radio-border-color-hover: var(--lew-color-primary);
+  --lew-radio-color: var(--lew-color-primary);
+  --lew-radio-color-light: var(--lew-color-primary-light);
+  --lew-radio-block-bgcolor: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-radio-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '2')};
+}
+
+@mixin export-table-colors-light() {
+  --lew-table-bgcolor: #{get-color-value($bgcolor, '0')};
+  --lew-table-bgcolor-hover: #{get-color-value($bgcolor, '1')};
+  --lew-table-bgcolor-active: #{get-color-value($bgcolor, '2')};
+  --lew-table-header-bgcolor: #{get-color-value($bgcolor, '1')};
+  --lew-table-header-bgcolor-hover: #{get-color-value($bgcolor, '2')};
+  --lew-table-header-bgcolor-active: #{get-color-value($bgcolor, '3')};
+  --lew-table-tr-hover-bgcolor: #{get-color-value($bgcolor, '1')};
+  --lew-table-tr-selected: #{get-color-value(map.get($colors, 'blue'), '1')};
+  --lew-table-scroll-line-color-start: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 0%, transparent);
+  --lew-table-scroll-line-color-end: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 15%, transparent);
+  --lew-table-tr-dragging-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '0')} 80%, transparent);
+  --lew-table-border-color: var(--lew-pop-border-color);
+  --lew-table-border: 1px var(--lew-table-border-color) solid;
+}
+
+@mixin export-table-colors-dark() {
+  --lew-table-bgcolor: #{get-color-value(dark.$dark-bgcolor, '2')};
+  --lew-table-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-table-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '4')};
+  --lew-table-header-bgcolor: #{get-color-value(dark.$dark-bgcolor, '4')};
+  --lew-table-header-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '5')};
+  --lew-table-header-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '6')};
+  --lew-table-tr-hover-bgcolor: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-table-tr-selected: #{get-color-value(dark.$dark-bgcolor, '4')};
+  --lew-table-scroll-line-color-start: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 0%, transparent);
+  --lew-table-scroll-line-color-end: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 20%, transparent);
+  --lew-table-tr-dragging-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 40%, transparent);
+  --lew-table-border-color: var(--lew-pop-border-color);
+  --lew-table-border: 1px var(--lew-table-border-color) solid;
+}
+
+@mixin export-pop-colors-light() {
+  --lew-pop-bgcolor: #{get-color-value($bgcolor, '0')};
+  --lew-pop-bgcolor-hover: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 5%, transparent);
+  --lew-pop-bgcolor-active: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 8%, transparent);
+  --lew-pop-shadow: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 4%, transparent) 0px 2px 8px;
+  --lew-pop-border-color: var(--lew-form-bgcolor-hover);
+  --lew-pop-border: 1px var(--lew-pop-border-color) solid;
+  --lew-drawer-header-border: 1px #{get-color-value($bgcolor, '4')} solid;
+  --lew-drawer-footer-border: 1px #{get-color-value($bgcolor, '4')} solid;
+  --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
+  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
+  --lew-tooltip-box-shadow: drop-shadow(
+      0px 0px 1px color-mix(in srgb, #{get-color-value($bgcolor, '6')} 45%, transparent)
+    )
+    drop-shadow(0px 2px 8px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 4%, transparent))
+    drop-shadow(0px 30px 70px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 10%, transparent));
+}
+
+@mixin export-pop-colors-dark() {
+  --lew-pop-bgcolor: #{get-color-value(dark.$dark-bgcolor, '2')};
+  --lew-pop-bgcolor-hover: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 5%, transparent);
+  --lew-pop-shadow: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 4%, transparent) 0px 2px 8px;
+  --lew-pop-border-color: var(--lew-form-bgcolor-hover);
+  --lew-pop-border: 1px var(--lew-pop-border-color) solid;
+  --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
+  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
+  --lew-tooltip-box-shadow: drop-shadow(
+      0px 0px 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 45%, transparent)
+    )
+    drop-shadow(0px 2px 8px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 4%, transparent))
+    drop-shadow(0px 30px 70px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 10%, transparent));
+  --lew-drawer-header-border: 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 10%, transparent) solid;
+  --lew-drawer-footer-border: 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 10%, transparent) solid;
+}
+
+@mixin export-other-colors-light() {
+  --lew-box-shadow: 0px 2px 2px -2px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 50%, transparent);
+  --lew-tabs-active-color: #{get-color-value($bgcolor, '0')};
+  --lew-tabs-active-text-color: #{get-color-value($text-color, '0')};
+  --lew-tabs-line-active-text-color: var(--lew-color-primary);
+  --lew-tabs-hover-bgcolor: #{get-color-value($bgcolor, '6')};
+  --lew-tabs-hover-text-color: #{get-color-value($text-color, '1')};
+  --lew-modal-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 30%, transparent);
+  --lew-modal-body-bgcolor: var(--lew-pop-bgcolor);
+  --lew-drawer-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 60%, transparent);
+  --lew-drawer-body-bgcolor: var(--lew-pop-bgcolor);
+  --lew-loading-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '0')} 80%, transparent);
+  --lew-expand-control-bg-gradient: linear-gradient(
+    color-mix(in srgb, #{get-color-value($bgcolor, '0')} 0%, transparent) 0%,
+    var(--lew-pop-bgcolor) 100%
+  );
+}
+
+@mixin export-other-colors-dark() {
+  --lew-box-shadow: 0px 1px 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 80%, transparent);
+  --lew-tabs-active-color: var(--lew-color-primary);
+  --lew-tabs-active-text-color: #{get-color-value(map.get(dark.$dark-colors, 'blue'), '1')};
+  --lew-tabs-line-active-text-color: var(--lew-color-primary);
+  --lew-tabs-hover-bgcolor: #{get-color-value(dark.$dark-bgcolor, '5')};
+  --lew-tabs-hover-text-color: #{get-color-value(dark.$dark-text-color, '0')};
+  --lew-modal-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 75%, transparent);
+  --lew-modal-body-bgcolor: var(--lew-pop-bgcolor);
+  --lew-drawer-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 75%, transparent);
+  --lew-drawer-body-bgcolor: var(--lew-pop-bgcolor);
+  --lew-loading-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 70%, transparent);
+  --lew-expand-control-bg-gradient: linear-gradient(
+    color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 0%, transparent) 0%,
+    var(--lew-pop-bgcolor) 100%
+  );
+}
+
+@mixin export-desc-colors-light() {
+  --lew-desc-border: var(--lew-table-border);
+  --lew-desc-label-bgcolor: var(--lew-table-header-bgcolor);
+  --lew-desc-bgcolor: var(--lew-table-bgcolor);
+}
+
+@mixin export-desc-colors-dark() {
+  --lew-desc-border: var(--lew-table-border);
+  --lew-desc-label-bgcolor: var(--lew-table-header-bgcolor);
+  --lew-desc-bgcolor: var(--lew-table-bgcolor);
+}
+
+@mixin export-border-colors-dark() {
+  --lew-border-0: 1px solid #{get-color-value(dark.$dark-text-color, '9')};
+  --lew-border-1: 1px solid #{get-color-value(dark.$dark-text-color, '8')};
+  --lew-border-2: 1px solid #{get-color-value(dark.$dark-text-color, '7')};
+  --lew-border-3: 1px solid #{get-color-value(dark.$dark-text-color, '6')};
+  --lew-border-4: 1px solid #{get-color-value(dark.$dark-text-color, '5')};
+  --lew-border-5: 1px solid #{get-color-value(dark.$dark-text-color, '4')};
+  --lew-border-6: 1px solid #{get-color-value(dark.$dark-text-color, '3')};
+  --lew-border-7: 1px solid #{get-color-value(dark.$dark-text-color, '2')};
+  --lew-border-8: 1px solid #{get-color-value(dark.$dark-text-color, '1')};
+  --lew-border-9: 1px solid #{get-color-value(dark.$dark-text-color, '0')};
+}
+
+// ============================================
+// 基础颜色变量导出（统一在 :root 和 .lew-dark 中导出）
+// ============================================
 :root {
+  // 基础色阶
+  @include export-bgcolor-colors-light();
+  @include export-text-colors-light();
+
+  // 组件基础颜色
+  @include export-form-colors-light();
+  @include export-switch-bg-colors-light();
+  @include export-checkbox-bg-colors-light();
+  @include export-radio-bg-colors-light();
+  @include export-table-colors-light();
+  @include export-pop-colors-light();
+  @include export-desc-colors-light();
+  @include export-other-colors-light();
+
+  // 主题颜色变量（通过循环生成）
   @include export-colors($colors, false);
   @include export-semantic-colors($colors, false);
 }
 
 .lew-dark {
+  // 基础色阶
+  @include export-bgcolor-colors-dark();
+  @include export-text-colors-dark();
+  @include export-invert-colors();
+  @include export-border-colors-dark();
+
+  // 组件基础颜色
+  @include export-form-colors-dark();
+  @include export-switch-bg-colors-dark();
+  @include export-checkbox-bg-colors-dark();
+  @include export-radio-bg-colors-dark();
+  @include export-table-colors-dark();
+  @include export-pop-colors-dark();
+  @include export-desc-colors-dark();
+  @include export-other-colors-dark();
+
+  // 主题颜色变量（通过循环生成）
   @include export-colors(dark.$dark-colors, true);
   @include export-semantic-colors(dark.$dark-colors, true);
 }
