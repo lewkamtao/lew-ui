@@ -1,51 +1,57 @@
 <script setup lang="ts">
-import type { LewActionBoxOption, LewContextMenusOption } from 'lew-ui/types'
-import { LewDropdown, LewFlex } from 'lew-ui'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { parseDimension } from 'lew-ui/utils'
-import { isValidComponent } from 'lew-ui/utils/render'
-import { actionBoxEmits } from './emits'
-import { actionBoxProps } from './props'
+import type { LewActionBoxOption, LewContextMenusOption } from "lew-ui/types";
+import { LewDropdown, LewFlex } from "lew-ui";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import { parseDimension } from "lew-ui/utils";
+import { isValidComponent } from "lew-ui/utils/render";
+import { actionBoxEmits } from "./emits";
+import { actionBoxProps } from "./props";
 
-const props = defineProps(actionBoxProps)
-const emit = defineEmits(actionBoxEmits)
+const props = defineProps(actionBoxProps);
+const emit = defineEmits(actionBoxEmits);
 
-const threshold = computed((): number => parseDimension(props.dropdownThreshold || 0))
+const threshold = computed((): number =>
+  parseDimension(props.dropdownThreshold || 0)
+);
 
 const visibleOptions = computed((): LewActionBoxOption[] => {
-  if (!props.options)
-    return []
+  if (!props.options) return [];
   if (threshold.value <= 0) {
-    return props.options
+    return props.options;
   }
-  return props.options.slice(0, threshold.value)
-})
+  return props.options.slice(0, threshold.value);
+});
 
-function convertToContextMenus(options: LewActionBoxOption[]): LewContextMenusOption[] {
-  return options.map(option => ({
+function convertToContextMenus(
+  options: LewActionBoxOption[]
+): LewContextMenusOption[] {
+  return options.map((option) => ({
     label: option.label,
     icon: option.icon,
     onClick: (item: LewContextMenusOption) => {
       const originalOption = options.find(
-        opt => (typeof opt.label === 'string' ? opt.label : '') === item.label,
-      )
+        (opt) => (typeof opt.label === "string" ? opt.label : "") === item.label
+      );
       if (originalOption?.onClick) {
-        originalOption.onClick()
+        originalOption.onClick();
       }
     },
-  }))
+  }));
 }
 
 const dropdownOptions = computed((): LewContextMenusOption[] => {
   if (!props.options || threshold.value <= 0) {
-    return []
+    return [];
   }
-  return convertToContextMenus(props.options.slice(threshold.value))
-})
+  return convertToContextMenus(props.options.slice(threshold.value));
+});
 
-function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void {
-  option.onClick?.(event)
-  emit('click', option, event)
+function handleOptionClick(
+  option: LewActionBoxOption,
+  event: MouseEvent
+): void {
+  option.onClick?.(event);
+  emit("click", option, event);
 }
 </script>
 
@@ -76,10 +82,10 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
       </div>
       <i
         v-if="
-          props.divider
-            && (dropdownOptions.length > 0
-              || (visibleOptions.length === (props.options?.length || 0)
-                && index !== (props.options?.length || 0) - 1))
+          props.divider &&
+          (dropdownOptions.length > 0 ||
+            (visibleOptions.length === (props.options?.length || 0) &&
+              index !== (props.options?.length || 0) - 1))
         "
         class="lew-action-box-divider"
       />
@@ -91,7 +97,10 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
           :render-fn="props.dropdownIcon"
           class="lew-action-box-icon"
         />
-        <RenderComponent v-if="!props.iconOnly" :render-fn="props.dropdownLabel" />
+        <RenderComponent
+          v-if="!props.iconOnly"
+          :render-fn="props.dropdownLabel"
+        />
       </div>
     </LewDropdown>
   </LewFlex>
@@ -107,33 +116,34 @@ function handleOptionClick(option: LewActionBoxOption, event: MouseEvent): void 
     align-items: center;
     justify-content: center;
     padding: 3px 4px;
-    color: var(--lew-color-primary-text-text);
+    color: var(--lew-action-box-text-color);
     white-space: nowrap;
     border-radius: var(--lew-border-radius-small);
     cursor: pointer;
-    transition: all var(--lew-form-transition-bezier);
     user-select: none;
 
     &:hover {
-      background-color: var(--lew-form-bgcolor-hover);
+      background-color: var(--lew-action-box-bgcolor-hover);
+      color: var(--lew-action-box-text-color);
     }
 
     &:active {
-      background-color: var(--lew-form-bgcolor-active);
-    }
-
-    :deep(.lew-action-box-icon) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
+      background-color: var(--lew-action-box-bgcolor-active);
+      color: var(--lew-action-box-text-color);
     }
   }
 
-  .lew-action-box-divider {
-    width: 1px;
-    height: 14px;
-    background-color: var(--lew-form-bgcolor-hover);
+  :deep(.lew-action-box-icon) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
   }
+}
+
+.lew-action-box-divider {
+  width: 1px;
+  height: 14px;
+  background-color: var(--lew-text-color-7);
 }
 </style>

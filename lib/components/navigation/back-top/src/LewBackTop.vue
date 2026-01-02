@@ -114,7 +114,8 @@ onMounted(() => {
   user-select: none;
   cursor: pointer;
   color: var(--lew-color-primary);
-  transition: var(--lew-form-transition-bezier);
+  transition: transform var(--lew-form-transition-bezier),
+              opacity var(--lew-form-transition-ease);
 
   &:hover {
     transform: translateY(-2px);
@@ -127,7 +128,7 @@ onMounted(() => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: var(--lew-form-transition-bezier);
+  transition: opacity var(--lew-form-transition-ease);
 }
 
 .fade-enter-from,

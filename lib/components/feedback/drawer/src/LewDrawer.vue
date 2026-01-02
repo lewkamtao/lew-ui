@@ -306,7 +306,7 @@ if (props.closeByEsc) {
 
   .lew-drawer-mask-enter-active,
   .lew-drawer-mask-leave-active {
-    transition: all var(--lew-form-transition-ease);
+    transition: opacity var(--lew-form-transition-ease);
   }
 
   .lew-drawer-mask-enter-from,

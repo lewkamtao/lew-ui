@@ -1,35 +1,35 @@
 <script lang="ts" setup>
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { object2class } from 'lew-ui/utils'
-import { radioEmits } from './emits'
-import { radioProps } from './props'
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { object2class } from "lew-ui/utils";
+import { radioEmits } from "./emits";
+import { radioProps } from "./props";
 
-const props = defineProps(radioProps)
+const props = defineProps(radioProps);
 
-const emit = defineEmits(radioEmits)
+const emit = defineEmits(radioEmits);
 
 function setChecked() {
-  emit('change')
+  emit("change");
 }
 
 const getIconSize = computed(() => {
-  const { size, block } = props
+  const { size, block } = props;
   switch (size) {
-    case 'small':
-      return block ? 14 : 12
-    case 'medium':
-      return block ? 16 : 14
-    case 'large':
-      return block ? 18 : 16
+    case "small":
+      return block ? 14 : 12;
+    case "medium":
+      return block ? 16 : 14;
+    case "large":
+      return block ? 18 : 16;
     default:
-      return block ? 16 : 14
+      return block ? 16 : 14;
   }
-})
+});
 
 const getRadioClassName = computed(() => {
-  const { block, checked, iconable, size, disabled, round, readonly } = props
-  const unicon = !iconable && block
-  return object2class('lew-radio', {
+  const { block, checked, iconable, size, disabled, round, readonly } = props;
+  const unicon = !iconable && block;
+  return object2class("lew-radio", {
     block,
     checked,
     unicon,
@@ -37,8 +37,8 @@ const getRadioClassName = computed(() => {
     disabled,
     round,
     readonly,
-  })
-})
+  });
+});
 </script>
 
 <template>
@@ -66,19 +66,35 @@ const getRadioClassName = computed(() => {
 
   // checked 状态（非 block）- 使用 radio 特定颜色
   --lew-radio-checked-icon-bg: var(--lew-color-radio-primary-checked-icon-bg);
-  --lew-radio-checked-icon-border: var(--lew-color-radio-primary-checked-icon-border);
-  --lew-radio-checked-icon-color: var(--lew-color-radio-primary-checked-icon-color);
-  --lew-radio-checked-icon-bg-hover: var(--lew-color-radio-primary-checked-icon-bg-hover);
-  --lew-radio-checked-icon-border-hover: var(--lew-color-radio-primary-checked-icon-border-hover);
-  --lew-radio-checked-icon-color-hover: var(--lew-color-radio-primary-checked-icon-color-hover);
+  --lew-radio-checked-icon-border: var(
+    --lew-color-radio-primary-checked-icon-border
+  );
+  --lew-radio-checked-icon-color: var(
+    --lew-color-radio-primary-checked-icon-color
+  );
+  --lew-radio-checked-icon-bg-hover: var(
+    --lew-color-radio-primary-checked-icon-bg-hover
+  );
+  --lew-radio-checked-icon-border-hover: var(
+    --lew-color-radio-primary-checked-icon-border-hover
+  );
+  --lew-radio-checked-icon-color-hover: var(
+    --lew-color-radio-primary-checked-icon-color-hover
+  );
 
   // block 模式 checked 状态 - 使用 radio 特定颜色
   --lew-radio-block-checked-bg: var(--lew-color-radio-primary-block-checked-bg);
-  --lew-radio-block-checked-border: var(--lew-color-radio-primary-block-checked-border);
-  --lew-radio-block-checked-color: var(--lew-color-radio-primary-block-checked-color);
+  --lew-radio-block-checked-border: var(
+    --lew-color-radio-primary-block-checked-border
+  );
+  --lew-radio-block-checked-color: var(
+    --lew-color-radio-primary-block-checked-color
+  );
   --lew-radio-block-checked-icon-bg: transparent;
   --lew-radio-block-checked-icon-border: var(--lew-form-border-color);
-  --lew-radio-block-checked-icon-color: var(--lew-color-radio-primary-block-checked-icon-color);
+  --lew-radio-block-checked-icon-color: var(
+    --lew-color-radio-primary-block-checked-icon-color
+  );
 
   display: inline-flex;
   align-items: center;
@@ -86,7 +102,9 @@ const getRadioClassName = computed(() => {
   cursor: pointer;
   color: var(--lew-text-color-1);
   font-size: 0px;
-  transition: all var(--lew-form-transition-ease);
+  transition: background-color var(--lew-form-transition-ease),
+    color var(--lew-form-transition-ease),
+    border-color var(--lew-form-transition-ease);
   white-space: nowrap;
   box-sizing: border-box;
   border: var(--lew-form-border-width) transparent solid;
@@ -98,7 +116,8 @@ const getRadioClassName = computed(() => {
     border: var(--lew-form-border-width) var(--lew-radio-icon-border) solid;
     box-sizing: border-box;
     border-radius: 6px;
-    transition: all var(--lew-form-transition-bezier);
+    transition: background-color var(--lew-form-transition-ease),
+      border-color var(--lew-form-transition-ease);
     background-color: var(--lew-radio-icon-bg);
     overflow: hidden;
     box-shadow: var(--lew-form-box-shadow);
@@ -108,7 +127,9 @@ const getRadioClassName = computed(() => {
       left: 50%;
       top: 50%;
       transform: translate(-50%, 5px) scale(0);
-      transition: all var(--lew-form-transition-bezier);
+      transition: background-color var(--lew-form-transition-ease),
+        transform var(--lew-form-transition-bezier),
+        opacity var(--lew-form-transition-ease);
       opacity: 0;
       color: var(--lew-radio-icon-color);
     }
@@ -186,7 +207,8 @@ const getRadioClassName = computed(() => {
 
 .lew-radio:hover {
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-icon-border-hover) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-icon-border-hover)
+      solid;
     background: var(--lew-radio-icon-bg-hover);
   }
 }
@@ -200,10 +222,6 @@ const getRadioClassName = computed(() => {
   .lew-radio-icon-box {
     box-shadow: none;
     background-color: var(--lew-radio-block-bgcolor);
-
-    .lew-radio-icon {
-      padding: 1px;
-    }
   }
 
   .lew-radio-label {
@@ -212,13 +230,15 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-checked.lew-radio-block {
-  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border) solid;
+  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border)
+    solid;
   background: var(--lew-radio-block-checked-bg);
   color: var(--lew-radio-block-checked-color);
 }
 
 .lew-radio-checked.lew-radio-block:hover {
-  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border) solid;
+  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border)
+    solid;
   background: var(--lew-radio-block-checked-bg);
 }
 
@@ -234,7 +254,8 @@ const getRadioClassName = computed(() => {
   background: var(--lew-form-bgcolor-hover);
 
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
+      solid;
   }
 }
 
@@ -243,7 +264,8 @@ const getRadioClassName = computed(() => {
   cursor: default;
 
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border)
+      solid;
     background: var(--lew-radio-checked-icon-bg);
 
     .lew-radio-icon {
@@ -257,7 +279,8 @@ const getRadioClassName = computed(() => {
 .lew-radio-checked:not(.lew-radio-block):hover {
   .lew-radio-icon-box {
     // 单选逻辑：选中后不允许取消，移除 hover 效果
-    border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-checked-icon-border)
+      solid;
     background: var(--lew-radio-checked-icon-bg);
 
     .lew-radio-icon {
@@ -271,7 +294,8 @@ const getRadioClassName = computed(() => {
   cursor: default;
 
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-block-checked-icon-border) solid;
+    border: var(--lew-form-border-width)
+      var(--lew-radio-block-checked-icon-border) solid;
     background: var(--lew-radio-block-checked-icon-bg);
 
     .lew-radio-icon {
@@ -284,11 +308,13 @@ const getRadioClassName = computed(() => {
 
 .lew-radio-block.lew-radio-checked:hover {
   // 单选逻辑：选中后不允许取消，移除 hover 效果
-  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border) solid;
+  border: var(--lew-form-border-width) var(--lew-radio-block-checked-border)
+    solid;
   background: var(--lew-radio-block-checked-bg);
 
   .lew-radio-icon-box {
-    border: var(--lew-form-border-width) var(--lew-radio-block-checked-icon-border) solid;
+    border: var(--lew-form-border-width)
+      var(--lew-radio-block-checked-icon-border) solid;
   }
 }
 

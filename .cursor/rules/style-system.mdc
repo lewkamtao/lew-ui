@@ -216,12 +216,72 @@ CSS 变量遵循统一的命名规范：
 --lew-border-radius-large   // 16px
 ```
 
+#### 过渡动画变量
+
+组件库提供两种过渡动画变量，用于不同场景：
+
+```scss
+--lew-form-transition-ease: 0.2s ease;  // 用于色彩变化（颜色、背景色、边框色、透明度等）
+--lew-form-transition-bezier: 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);  // 用于尺寸/位置变化（宽度、高度、transform、位置等）
+```
+
+**使用规范**：
+
+1. **色彩变化使用 `--lew-form-transition-ease`**：
+   - `background-color`、`color`、`border-color`
+   - `opacity`、`box-shadow`（阴影颜色变化）
+   - 所有颜色相关的属性变化
+
+2. **尺寸/位置变化使用 `--lew-form-transition-bezier`**：
+   - `width`、`height`、`transform`
+   - `top`、`left`、`right`、`bottom`
+   - `scale`、`translate`、`rotate` 等 transform 属性
+   - 所有几何属性变化
+
+3. **禁止使用 `transition: all`**：
+   - 必须明确指定需要过渡的属性
+   - 避免性能问题和闪烁问题
+
+**示例**：
+
+```scss
+// ✅ 正确：色彩变化
+.lew-button {
+  transition: background-color var(--lew-form-transition-ease),
+              color var(--lew-form-transition-ease),
+              border-color var(--lew-form-transition-ease);
+}
+
+// ✅ 正确：尺寸/位置变化
+.lew-modal {
+  transition: transform var(--lew-form-transition-bezier),
+              width var(--lew-form-transition-bezier),
+              height var(--lew-form-transition-bezier);
+}
+
+// ✅ 正确：混合使用
+.lew-component {
+  transition: background-color var(--lew-form-transition-ease),
+              color var(--lew-form-transition-ease),
+              transform var(--lew-form-transition-bezier);
+}
+
+// ❌ 错误：使用 all
+.lew-component {
+  transition: all var(--lew-form-transition-ease);  // ❌
+}
+
+// ❌ 错误：色彩变化使用 bezier
+.lew-button {
+  transition: background-color var(--lew-form-transition-bezier);  // ❌ 会导致闪烁
+}
+```
+
 #### 其他变量
 
 ```scss
 --lew-disabled-opacity      // 禁用透明度
 --lew-box-shadow            // 阴影
---lew-form-transition-ease  // 过渡动画
 ```
 
 ### 组件变量

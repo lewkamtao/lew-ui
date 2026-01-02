@@ -316,7 +316,8 @@ onUnmounted(() => {
 
 .lew-modal-enter-active,
 .lew-modal-leave-active {
-  transition: all var(--lew-form-transition-bezier);
+  transition: opacity var(--lew-form-transition-ease),
+              transform var(--lew-form-transition-bezier);
 }
 
 .lew-modal-leave-to,

@@ -100,7 +100,15 @@ function deleteTag(value: string) {
 }
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, disabled, readonly, focus, multiple, searchable } = props
+  let {
+    clearable,
+    size,
+    disabled,
+    readonly,
+    focus,
+    multiple,
+    searchable,
+  } = props
 
   if (multiple) {
     clearable = clearable && (modelValue.value || []).length > 0
@@ -164,7 +172,9 @@ const showClearButton = computed(() => {
     if (Array.isArray(modelValue.value) && modelValue.value.length === 0) {
       return false
     }
-    return props.clearable && !!modelValue.value && !props.readonly && !props.loading
+    return (
+      props.clearable && !!modelValue.value && !props.readonly && !props.loading
+    )
   }
 })
 
@@ -197,12 +207,6 @@ const selectedItemsText = computed(() => {
   }
   else {
     return props.selectedLabel || props.formatItems
-  }
-})
-
-const clearButtonIconClass = computed(() => {
-  return {
-    'lew-form-icon-close-focus': props.focus,
   }
 })
 
@@ -257,23 +261,38 @@ defineExpose({
 
 <template>
   <div
-    ref="lewSelectRef" class="lew-select" :class="getSelectClassName" :style="{ width: any2px(width) }"
+    ref="lewSelectRef"
+    class="lew-select"
+    :class="getSelectClassName"
+    :style="{ width: any2px(width) }"
     @click="focus"
   >
     <div v-if="loading" class="lew-icon-loading-box">
       <CommonIcon :size="getIconSize" :loading="loading" type="loading" />
     </div>
-    <CommonIcon v-else :size="getIconSize" type="chevron-down" class="lew-icon-select" :class="selectIconClass" />
-    <transition name="lew-form-icon-ani">
-      <CloseIcon
-        v-if="showClearButton" :size="size as LewSize" color="gray" class="lew-form-icon-close"
-        :class="clearButtonIconClass" @click.stop="clearHandle"
-      />
-    </transition>
+    <CommonIcon
+      v-else
+      :size="getIconSize"
+      type="chevron-down"
+      class="lew-icon-select"
+      :class="selectIconClass"
+    />
+    <CloseIcon
+      v-if="showClearButton"
+      :size="size as LewSize"
+      class="lew-form-icon-close"
+      @click.stop="clearHandle"
+    />
     <template v-if="!multiple">
       <input
-        ref="inputRef" :value="selectedItemsText" :title="selectedItemsText" class="lew-value lew-single-input"
-        :style="getValueStyle" :readonly="!searchable" :placeholder="placeholderText" @input="inputHandle"
+        ref="inputRef"
+        :value="selectedItemsText"
+        :title="selectedItemsText"
+        class="lew-value lew-single-input"
+        :style="getValueStyle"
+        :readonly="!searchable"
+        :placeholder="placeholderText"
+        @input="inputHandle"
       >
       <div v-show="showPlaceholder" class="lew-placeholder">
         {{ placeholderText }}
@@ -284,19 +303,32 @@ defineExpose({
       <div v-show="showPlaceholder" class="lew-placeholder">
         {{ placeholderText }}
       </div>
-      <div v-show="!showPlaceholder" class="lew-multiple-box" :style="{ padding: hasSelectedItems ? '4px' : '' }">
+      <div
+        v-show="!showPlaceholder"
+        class="lew-multiple-box"
+        :style="{ padding: hasSelectedItems ? '4px' : '' }"
+      >
         <transition-group name="tag-list">
           <LewTag
-            v-for="item in formatItems" :key="item.value" type="light" :size="props.size as any"
-            :closeable="!disabled && !readonly" @close="deleteTag(item.value)"
+            v-for="item in formatItems"
+            :key="item.value"
+            type="light"
+            :size="props.size as any"
+            :closeable="!disabled && !readonly"
+            @close="deleteTag(item.value)"
           >
             {{ item.label }}
           </LewTag>
         </transition-group>
         <LewInput
-          v-if="searchable && (props.focus || (formatItems || []).length === 0)" ref="searchInputRef"
-          key="search-input" v-model="keyword" :auto-width="hasSelectedItems" class="lew-multiple-search-input"
-          :size="(size as any)" :placeholder="!hasSelectedItems ? placeholderText : ' '"
+          v-if="searchable && (props.focus || (formatItems || []).length === 0)"
+          ref="searchInputRef"
+          key="search-input"
+          v-model="keyword"
+          :auto-width="hasSelectedItems"
+          class="lew-multiple-search-input"
+          :size="(size as any)"
+          :placeholder="!hasSelectedItems ? placeholderText : ' '"
           @input="(value) => inputHandle({ target: { value } } as unknown as Event)"
         />
       </div>
@@ -318,7 +350,9 @@ defineExpose({
   overflow: hidden;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: all var(--lew-form-transition-ease);
+  transition:
+    background-color var(--lew-form-transition-ease),
+    border-color var(--lew-form-transition-ease);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
 
@@ -336,12 +370,10 @@ defineExpose({
     top: 50%;
     right: 14px;
     transform: translateY(-50%) rotate(0deg);
-    transition: all var(--lew-form-transition-bezier);
     opacity: var(--lew-form-icon-opacity);
 
     &-hide {
       opacity: 0;
-      transform: translate(100%, -50%);
     }
   }
 
@@ -401,7 +433,7 @@ defineExpose({
     flex-wrap: wrap;
     gap: 4px;
     box-sizing: border-box;
-    transition: all var(--lew-form-transition-bezier);
+    transition: width var(--lew-form-transition-bezier);
     width: calc(100% - 24px);
     min-height: calc(100% - 4px);
 
@@ -574,7 +606,6 @@ defineExpose({
 
     &-hide {
       opacity: 0;
-      transform: translate(100%, -50%) rotate(180deg);
     }
   }
 }

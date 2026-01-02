@@ -5,7 +5,7 @@ import { createApp } from 'vue'
 import AppVue from './App.vue'
 import router from './router/index'
 import 'lew-ui/styles/reset.scss'
-
+import 'docs/assets/style/reset.scss'
 import 'lew-ui/styles/var.scss'
 import 'lew-ui/styles/main.scss'
 import 'docs/assets/style/main.scss'

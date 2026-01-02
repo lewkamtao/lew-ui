@@ -1,99 +1,108 @@
 <script setup lang="ts">
-import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
-import { LewTooltip, locale } from 'lew-ui'
-import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
-import { any2px, object2class } from 'lew-ui/utils'
-import { throttle } from 'lodash-es'
-import { textareaEmits } from './emits'
-import { textareaProps } from './props'
+import { useDebounceFn, useMagicKeys, useResizeObserver } from "@vueuse/core";
+import { LewTooltip, locale } from "lew-ui";
+import CloseIcon from "lew-ui/_components/CloseIcon.vue";
+import { any2px, object2class } from "lew-ui/utils";
+import { throttle } from "lodash-es";
+import { textareaEmits } from "./emits";
+import { textareaProps } from "./props";
 
-const props = defineProps(textareaProps)
-const emit = defineEmits(textareaEmits)
-const { shift, enter } = useMagicKeys()
+const props = defineProps(textareaProps);
+const emit = defineEmits(textareaEmits);
+const { shift, enter } = useMagicKeys();
 // 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive("tooltip")) {
+  app.use(LewTooltip);
 }
-const lewTextareaRef = ref()
-const lewTextareaViewRef = ref()
+const lewTextareaRef = ref();
+const lewTextareaViewRef = ref();
 
 const resizeObj = ref({
   height: 0,
   width: 0,
-})
+});
 
 const handleResize = throttle(() => {
-  if (props.resize !== 'none') {
-    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
+  if (props.resize !== "none") {
+    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect();
     resizeObj.value = {
       width,
       height,
-    }
+    };
   }
-}, 250)
+}, 250);
 
 onMounted(() => {
   // 只在客户端环境下使用 ResizeObserver
-  useResizeObserver(lewTextareaViewRef, handleResize)
-})
+  useResizeObserver(lewTextareaViewRef, handleResize);
+});
 
-const modelValue: Ref<string | undefined> = defineModel()
+const modelValue: Ref<string | undefined> = defineModel();
 const state = reactive({
   isFocus: false,
-})
+});
 
 function clear(): void {
-  modelValue.value = undefined
-  emit('clear')
-  emit('change', undefined)
+  modelValue.value = undefined;
+  emit("clear");
+  emit("change", undefined);
 }
 
 function focus() {
-  lewTextareaRef.value?.focus()
+  lewTextareaRef.value?.focus();
 }
 
 function blur() {
-  lewTextareaRef.value?.blur()
+  lewTextareaRef.value?.blur();
 }
 
 const getTextareaClassNames = computed(() => {
-  const { size, readonly, disabled } = props
-  return object2class('lew-textarea-view', {
+  const { size, readonly, disabled } = props;
+  return object2class("lew-textarea-view", {
     size,
     readonly,
     disabled,
-  })
-})
+  });
+});
 
 function _focus(e: any) {
   if (props.selectByFocus) {
-    e?.currentTarget?.select()
+    e?.currentTarget?.select();
   }
-  state.isFocus = true
+  state.isFocus = true;
 }
 
 function _blur() {
-  state.isFocus = false
+  state.isFocus = false;
 }
 
 function handleInput(event: Event) {
-  const target = event.target as HTMLTextAreaElement
-  emit('input', target.value)
+  const target = event.target as HTMLTextAreaElement;
+  emit("input", target.value);
 }
 
 function handleChange(event: Event) {
-  const target = event.target as HTMLTextAreaElement
-  emit('change', target.value)
+  const target = event.target as HTMLTextAreaElement;
+  emit("change", target.value);
 }
 
 const getTextareaStyle: any = computed(() => {
-  const { width, height, size, resize, maxHeight, minHeight, maxWidth, minWidth } = props
+  const {
+    width,
+    height,
+    size,
+    resize,
+    maxHeight,
+    minHeight,
+    maxWidth,
+    minWidth,
+  } = props;
   const heightMap: Record<string, number> = {
     small: 60,
     medium: 75,
     large: 90,
-  }
+  };
   const obj = {
     resize: resize as string,
     minWidth: width ? any2px(width) : any2px(minWidth),
@@ -102,31 +111,30 @@ const getTextareaStyle: any = computed(() => {
     maxHeight: any2px(maxHeight),
     width: any2px(width),
     height: any2px(height || heightMap[size]),
-  }
+  };
   if (resizeObj.value.width > 0) {
-    obj.width = `${resizeObj.value.width}px`
-    obj.height = `${resizeObj.value.height}px`
+    obj.width = `${resizeObj.value.width}px`;
+    obj.height = `${resizeObj.value.height}px`;
   }
-  return obj
-})
+  return obj;
+});
 
 const ok = useDebounceFn(() => {
-  emit('ok', modelValue.value)
-}, 250)
+  emit("ok", modelValue.value);
+}, 250);
 
 if (props.okByEnter) {
   watchEffect(() => {
     if (shift.value && enter.value) {
       // Do nothing when shift+enter is pressed
+    } else if (enter.value && state.isFocus) {
+      lewTextareaRef.value?.blur();
+      ok();
     }
-    else if (enter.value && state.isFocus) {
-      lewTextareaRef.value?.blur()
-      ok()
-    }
-  })
+  });
 }
 
-defineExpose({ focus, blur })
+defineExpose({ focus, blur });
 </script>
 
 <template>
@@ -140,7 +148,9 @@ defineExpose({ focus, blur })
       ref="lewTextareaRef"
       v-model="modelValue"
       class="lew-textarea lew-scrollbar"
-      :placeholder="placeholder ? placeholder : locale.t('textarea.placeholder')"
+      :placeholder="
+        placeholder ? placeholder : locale.t('textarea.placeholder')
+      "
       :maxlength="maxLength"
       :disabled="disabled"
       :readonly="readonly"
@@ -153,18 +163,12 @@ defineExpose({ focus, blur })
     <div v-if="modelValue && showCount" class="lew-textarea-count">
       {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : "" }}
     </div>
-    <transition name="lew-form-icon-ani">
-      <CloseIcon
-        v-if="clearable && modelValue && !readonly"
-        :size="size"
-        color="gray"
-        class="lew-form-icon-close"
-        :class="{
-          'lew-form-icon-close-focus': state.isFocus,
-        }"
-        @click="clear"
-      />
-    </transition>
+    <CloseIcon
+      v-if="clearable && modelValue && !readonly"
+      :size="size"
+      class="lew-form-icon-close"
+      @click.stop="clear"
+    />
   </div>
 </template>
 
@@ -179,10 +183,7 @@ defineExpose({ focus, blur })
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   background-color: var(--lew-form-bgcolor);
   box-shadow: var(--lew-form-box-shadow);
-  transition:
-    all var(--lew-form-transition-ease),
-    width 0s,
-    height 0s;
+  transition: all var(--lew-form-transition-ease), width 0s, height 0s;
 
   .lew-textarea {
     width: 100%;
@@ -212,7 +213,7 @@ defineExpose({ focus, blur })
     padding: 0px 4px;
     z-index: 2;
     user-select: none;
-    transition: all var(--lew-form-transition-ease);
+    transition: opacity var(--lew-form-transition-ease);
   }
   .lew-textarea-count:hover {
     opacity: 0.2;
@@ -220,9 +221,7 @@ defineExpose({ focus, blur })
 
   .lew-form-icon-close {
     position: absolute;
-    top: 14px;
     right: 10px;
-    z-index: 9;
   }
 }
 
@@ -238,6 +237,9 @@ defineExpose({ focus, blur })
     font-size: 12px;
     line-height: 18px;
   }
+  .lew-form-icon-close {
+    top: 5px;
+  }
 }
 
 .lew-textarea-view-size-medium {
@@ -252,6 +254,9 @@ defineExpose({ focus, blur })
     font-size: 13px;
     line-height: 20px;
   }
+  .lew-form-icon-close {
+    top: 6px;
+  }
 }
 
 .lew-textarea-view-size-large {
@@ -265,6 +270,9 @@ defineExpose({ focus, blur })
   .lew-textarea-count {
     font-size: 14px;
     line-height: 22px;
+  }
+  .lew-form-icon-close {
+    top: 7px;
   }
 }
 
@@ -282,7 +290,7 @@ defineExpose({ focus, blur })
     width: 10px;
     height: 10px;
     border-radius: 4px;
-    content: '';
+    content: "";
     z-index: 9;
     opacity: 1;
     display: none;

@@ -1,49 +1,49 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
-import { object2class } from '../utils'
-import CommonIcon from './CommonIcon.vue'
+import type { LewSize } from "lew-ui";
+import { object2class } from "../utils";
+import CommonIcon from "./CommonIcon.vue";
 
 interface Props {
-  size?: LewSize
-  color?: 'gray' | 'primary' | 'normal'
-  loading?: boolean
-  disabled?: boolean
+  size?: LewSize;
+  color?: "gray" | "primary" | "normal";
+  loading?: boolean;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: 'medium',
-  color: 'gray',
+  size: "medium",
+  color: "gray",
   loading: false,
   disabled: false,
-})
+});
 
 const emit = defineEmits<{
-  click: [event: MouseEvent]
-}>()
+  click: [event: MouseEvent];
+}>();
 
 // 图标大小与 CommonInput 中的箭头保持一致
 const iconSizeMap: Record<LewSize, number> = {
   small: 14,
   medium: 15,
   large: 16,
-}
+};
 
-const iconSize = computed(() => iconSizeMap[props.size] || iconSizeMap.medium)
+const iconSize = computed(() => iconSizeMap[props.size] || iconSizeMap.medium);
 
 const closeIconClass = computed(() => {
-  return object2class('lew-close-icon', {
+  return object2class("lew-close-icon", {
     size: props.size,
     color: props.color,
     loading: props.loading,
     disabled: props.disabled,
-  })
-})
+  });
+});
 
 function handleClick(event: MouseEvent) {
   if (props.disabled || props.loading) {
-    return
+    return;
   }
-  emit('click', event)
+  emit("click", event);
 }
 </script>
 
@@ -55,7 +55,12 @@ function handleClick(event: MouseEvent) {
       type="loading"
       class="lew-close-icon-loading"
     />
-    <CommonIcon v-else :size="iconSize" type="close" class="lew-close-icon-icon" />
+    <CommonIcon
+      v-else
+      :size="iconSize"
+      type="close"
+      class="lew-close-icon-icon"
+    />
   </div>
 </template>
 
@@ -65,12 +70,7 @@ function handleClick(event: MouseEvent) {
   --lew-close-icon-bg: transparent;
   --lew-close-icon-bg-hover: var(--lew-bgcolor-2);
   --lew-close-icon-bg-active: var(--lew-bgcolor-4);
-  --lew-close-icon-color: var(--lew-text-color-3);
-  --lew-close-icon-color-hover: var(--lew-text-color-1);
-  --lew-close-icon-color-active: var(--lew-text-color-0);
   --lew-close-icon-opacity: var(--lew-form-icon-opacity);
-  --lew-close-icon-opacity-hover: var(--lew-form-icon-opacity-hover);
-  --lew-close-icon-opacity-active: var(--lew-form-icon-opacity-active);
 
   display: inline-flex;
   align-items: center;
@@ -78,10 +78,11 @@ function handleClick(event: MouseEvent) {
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
-  transition: all var(--lew-form-transition-ease);
   background-color: var(--lew-close-icon-bg);
-  color: var(--lew-close-icon-color);
   opacity: var(--lew-close-icon-opacity);
+
+  // 保持颜色不变，只改变背景色
+  transition: background-color var(--lew-form-transition-ease);
   padding: 2px;
   border-radius: 50%;
 
@@ -90,7 +91,7 @@ function handleClick(event: MouseEvent) {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--lew-form-transition-ease);
+    transition: opacity var(--lew-form-transition-ease);
   }
 
   .lew-close-icon-loading {
@@ -99,25 +100,16 @@ function handleClick(event: MouseEvent) {
 
   &:hover {
     background-color: var(--lew-close-icon-bg-hover);
-    color: var(--lew-close-icon-color-hover);
-    opacity: var(--lew-close-icon-opacity-hover);
   }
 
   &:active {
     background-color: var(--lew-close-icon-bg-active);
-    color: var(--lew-close-icon-color-active);
-    opacity: var(--lew-close-icon-opacity-active);
   }
 
   // 兼容原有的 lew-form-icon-close-focus 样式
   &.lew-form-icon-close-focus {
     &:hover {
       background-color: var(--lew-bgcolor-4);
-      opacity: var(--lew-form-icon-opacity-hover);
-    }
-
-    &:active {
-      opacity: var(--lew-form-icon-opacity-active);
     }
   }
 }
@@ -149,24 +141,18 @@ function handleClick(event: MouseEvent) {
   --lew-close-icon-bg-hover: var(--lew-bgcolor-2);
   --lew-close-icon-bg-active: var(--lew-bgcolor-4);
   --lew-close-icon-color: var(--lew-text-color-3);
-  --lew-close-icon-color-hover: var(--lew-text-color-1);
-  --lew-close-icon-color-active: var(--lew-text-color-0);
 }
 
 .lew-close-icon-color-primary {
   --lew-close-icon-bg-hover: var(--lew-color-primary-light);
   --lew-close-icon-bg-active: var(--lew-color-primary-light-active);
   --lew-close-icon-color: var(--lew-text-color-3);
-  --lew-close-icon-color-hover: var(--lew-color-primary);
-  --lew-close-icon-color-active: var(--lew-color-primary-active);
 }
 
 .lew-close-icon-color-normal {
   --lew-close-icon-bg-hover: var(--lew-color-normal-light);
   --lew-close-icon-bg-active: var(--lew-color-normal-light-active);
   --lew-close-icon-color: var(--lew-text-color-3);
-  --lew-close-icon-color-hover: var(--lew-color-normal);
-  --lew-close-icon-color-active: var(--lew-color-normal-active);
 }
 
 // 禁用状态

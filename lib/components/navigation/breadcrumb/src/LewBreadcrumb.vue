@@ -65,29 +65,27 @@ function handleItemClick(item: LewBreadcrumbOption, index: number): void {
     display: inline-flex;
     align-items: center;
     font-weight: 400;
-    color: var(--lew-text-color-5);
+    color: var(--lew-text-color-4);
     user-select: none;
     white-space: nowrap;
-    transition: color var(--lew-form-transition-bezier);
 
     .lew-breadcrumb-item-label {
       cursor: default;
       padding: 2px 4px;
       border-radius: var(--lew-border-radius-small);
-      transition: all var(--lew-form-transition-bezier);
     }
 
     .lew-breadcrumb-isPath {
       cursor: pointer;
 
       &:hover {
-        background-color: var(--lew-bgcolor-2);
-        color: var(--lew-text-color-3);
+        background-color: var(--lew-form-bgcolor-hover);
+        color: var(--lew-text-color-2);
       }
 
       &:active {
-        background-color: var(--lew-bgcolor-3);
-        transform: translateY(1px);
+        background-color: var(--lew-form-bgcolor-active);
+        color: var(--lew-text-color-2);
       }
     }
 
@@ -110,9 +108,8 @@ function handleItemClick(item: LewBreadcrumbOption, index: number): void {
       margin: 0 2px;
       height: 1em;
       width: auto;
-      color: var(--lew-text-color-5);
+      color: var(--lew-text-color-6);
       opacity: var(--lew-disabled-opacity);
-      transition: opacity var(--lew-form-transition-bezier);
     }
   }
 }

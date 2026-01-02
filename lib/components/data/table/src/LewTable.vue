@@ -1486,7 +1486,6 @@ watch(
     box-sizing: border-box;
     flex-grow: 0;
     flex-shrink: 0;
-    transition: background 0.08s;
     position: relative;
   }
 
@@ -1515,7 +1514,6 @@ watch(
       .lew-table-td {
         color: var(--lew-text-color-1);
         white-space: nowrap;
-        transition: background 0.08s;
       }
 
       .lew-table-td-sortable {
@@ -1532,16 +1530,17 @@ watch(
           right: 0px;
           width: auto;
           transform: translate(calc(100% + 10px), -50%);
-          transition: all 0.2s;
+          transition: opacity var(--lew-form-transition-ease),
+                      transform var(--lew-form-transition-ease);
         }
       }
 
       .lew-table-td-sortable:hover {
-        background: var(--lew-table-bgcolor-hover);
+        background-color: var(--lew-table-header-bgcolor-hover);
       }
 
       .lew-table-td-sortable:active {
-        background: var(--lew-table-bgcolor-active);
+        background-color: var(--lew-table-header-bgcolor-active);
       }
     }
   }

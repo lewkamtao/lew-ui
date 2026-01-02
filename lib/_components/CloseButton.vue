@@ -1,63 +1,72 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
-import { object2class } from '../utils'
-import CommonIcon from './CommonIcon.vue'
+import type { LewSize } from "lew-ui";
+import { object2class } from "../utils";
+import CommonIcon from "./CommonIcon.vue";
 
 interface Props {
-  size?: LewSize
-  color?: 'gray' | 'primary' | 'normal'
-  loading?: boolean
-  disabled?: boolean
-  round?: boolean
+  size?: LewSize;
+  color?: "gray" | "primary" | "normal";
+  loading?: boolean;
+  disabled?: boolean;
+  round?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: 'medium',
-  color: 'gray',
+  size: "medium",
+  color: "gray",
   loading: false,
   disabled: false,
   round: false,
-})
+});
 
 const emit = defineEmits<{
-  click: [event: MouseEvent]
-}>()
+  click: [event: MouseEvent];
+}>();
 
 const iconSizeMap: Record<LewSize, number> = {
-  small: 12,
-  medium: 14,
-  large: 16,
-}
+  small: 14,
+  medium: 16,
+  large: 18,
+};
 
-const iconSize = computed(() => iconSizeMap[props.size] || iconSizeMap.medium)
+const iconSize = computed(() => iconSizeMap[props.size] || iconSizeMap.medium);
 
 const closeButtonClass = computed(() => {
-  return object2class('lew-close-button', {
+  return object2class("lew-close-button", {
     size: props.size,
     color: props.color,
     loading: props.loading,
     disabled: props.disabled,
     round: props.round,
-  })
-})
+  });
+});
 
 function handleClick(event: MouseEvent) {
   if (props.disabled || props.loading) {
-    return
+    return;
   }
-  emit('click', event)
+  emit("click", event);
 }
 </script>
 
 <template>
-  <div class="lew-close-button" :class="closeButtonClass" @click.stop="handleClick">
+  <div
+    class="lew-close-button"
+    :class="closeButtonClass"
+    @click.stop="handleClick"
+  >
     <CommonIcon
       v-if="loading"
       :size="iconSize"
       type="loading"
       class="lew-close-button-icon-loading"
     />
-    <CommonIcon v-else :size="iconSize" type="close" class="lew-close-button-icon" />
+    <CommonIcon
+      v-else
+      :size="iconSize"
+      type="close"
+      class="lew-close-button-icon"
+    />
   </div>
 </template>
 
@@ -65,11 +74,11 @@ function handleClick(event: MouseEvent) {
 .lew-close-button {
   // CSS 变量定义
   --lew-close-button-bg: transparent;
-  --lew-close-button-bg-hover: var(--lew-bgcolor-2);
-  --lew-close-button-bg-active: var(--lew-bgcolor-4);
+  --lew-close-button-bg-hover: var(--lew-close-button-bgcolor-hover);
+  --lew-close-button-bg-active: var(--lew-close-button-bgcolor-active);
   --lew-close-button-color: var(--lew-text-color-3);
-  --lew-close-button-color-hover: var(--lew-text-color-1);
-  --lew-close-button-color-active: var(--lew-text-color-0);
+  --lew-close-button-color-hover: var(--lew-close-button-textcolor-hover);
+  --lew-close-button-color-active: var(--lew-close-button-textcolor-active);
   --lew-close-button-opacity: var(--lew-form-icon-opacity);
   --lew-close-button-opacity-hover: var(--lew-form-icon-opacity-hover);
   --lew-close-button-opacity-active: var(--lew-form-icon-opacity-active);
@@ -80,7 +89,8 @@ function handleClick(event: MouseEvent) {
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
-  transition: all var(--lew-form-transition-ease);
+  transition: background-color var(--lew-form-transition-ease),
+    color var(--lew-form-transition-ease);
   background-color: var(--lew-close-button-bg);
   color: var(--lew-close-button-color);
   opacity: var(--lew-close-button-opacity);
@@ -93,7 +103,6 @@ function handleClick(event: MouseEvent) {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--lew-form-transition-ease);
   }
 
   .lew-close-button-icon-loading {
@@ -103,14 +112,11 @@ function handleClick(event: MouseEvent) {
   &:hover {
     background-color: var(--lew-close-button-bg-hover);
     color: var(--lew-close-button-color-hover);
-    opacity: var(--lew-close-button-opacity-hover);
   }
 
   &:active {
     background-color: var(--lew-close-button-bg-active);
     color: var(--lew-close-button-color-active);
-    opacity: var(--lew-close-button-opacity-active);
-    transform: scale(0.9);
   }
 }
 
@@ -120,36 +126,27 @@ function handleClick(event: MouseEvent) {
 
 // 尺寸
 .lew-close-button-size-small {
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  min-height: 20px;
-  padding: 3px;
+  width: 24px;
+  height: 24px;
 }
 
 .lew-close-button-size-medium {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  min-height: 24px;
-  padding: 4px;
+  width: 28px;
+  height: 28px;
 }
 
 .lew-close-button-size-large {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  min-height: 28px;
-  padding: 5px;
+  width: 32px;
+  height: 32px;
 }
 
 // 颜色变体
 .lew-close-button-color-gray {
-  --lew-close-button-bg-hover: var(--lew-bgcolor-2);
-  --lew-close-button-bg-active: var(--lew-bgcolor-4);
+  --lew-close-button-bg-hover: var(--lew-close-button-bgcolor-hover);
+  --lew-close-button-bg-active: var(--lew-close-button-bgcolor-active);
   --lew-close-button-color: var(--lew-text-color-3);
-  --lew-close-button-color-hover: var(--lew-text-color-1);
-  --lew-close-button-color-active: var(--lew-text-color-0);
+  --lew-close-button-color-hover: var(--lew-close-button-textcolor-hover);
+  --lew-close-button-color-active: var(--lew-close-button-textcolor-active);
 }
 
 .lew-close-button-color-primary {

@@ -136,7 +136,8 @@ function convertToHex(color: string): string {
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     border-radius: var(--lew-border-radius-small);
     box-shadow: var(--lew-form-box-shadow);
-    transition: all var(--lew-form-transition-ease);
+    transition: background-color var(--lew-form-transition-ease),
+                border-color var(--lew-form-transition-ease);
 
     .lew-color-picker-input {
       border: none;
