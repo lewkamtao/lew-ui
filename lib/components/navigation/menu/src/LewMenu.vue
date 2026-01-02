@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import type { LewMenuOption } from "lew-ui";
-import { LewTag } from "lew-ui";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
-import { toRaw } from "vue";
-import { menuEmits } from "./emits";
-import { menuProps } from "./props";
+import type { LewMenuOption } from 'lew-ui'
+import { LewTag } from 'lew-ui'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { toRaw } from 'vue'
+import { menuEmits } from './emits'
+import { menuProps } from './props'
 
-const props = defineProps(menuProps);
-const emit = defineEmits(menuEmits);
+const props = defineProps(menuProps)
+const emit = defineEmits(menuEmits)
 
-const modelValue = defineModel<string>("modelValue", {
+const modelValue = defineModel<string>('modelValue', {
   required: false,
-  default: "",
-});
+  default: '',
+})
 
 function select(item: LewMenuOption) {
-  modelValue.value = item.value || "";
-  emit("change", toRaw(item));
+  modelValue.value = item.value || ''
+  emit('change', toRaw(item))
 }
 </script>
 
@@ -80,14 +80,10 @@ function select(item: LewMenuOption) {
   --lew-menu-item-text: var(--lew-color-menu-primary-item-text);
   --lew-menu-item-text-hover: var(--lew-color-menu-primary-item-text-hover);
   --lew-menu-item-selected-bg: var(--lew-color-menu-primary-item-selected-bg);
-  --lew-menu-item-selected-text: var(
-    --lew-color-menu-primary-item-selected-text
-  );
+  --lew-menu-item-selected-text: var(--lew-color-menu-primary-item-selected-text);
   --lew-menu-item-icon: var(--lew-color-menu-primary-item-icon);
   --lew-menu-item-icon-hover: var(--lew-color-menu-primary-item-icon-hover);
-  --lew-menu-item-icon-selected: var(
-    --lew-color-menu-primary-item-icon-selected
-  );
+  --lew-menu-item-icon-selected: var(--lew-color-menu-primary-item-icon-selected);
 
   display: flex;
   flex-direction: column;
