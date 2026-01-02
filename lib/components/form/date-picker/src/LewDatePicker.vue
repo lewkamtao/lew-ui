@@ -1,210 +1,218 @@
 <script setup lang="ts">
-import dayjs from "dayjs";
-import { LewPopover, LewTooltip, locale } from "lew-ui";
-import CloseIcon from "lew-ui/_components/CloseIcon.vue";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px, object2class } from "lew-ui/utils";
-import { datePickerEmits } from "./emits";
-import { formatDate, isValidDate } from "./formatters";
-import LewPanel from "./LewPanel.vue";
-import { datePickerProps } from "./props";
+import dayjs from 'dayjs'
+import { LewPopover, LewTooltip, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
+import { datePickerEmits } from './emits'
+import { formatDate, isValidDate } from './formatters'
+import LewPanel from './LewPanel.vue'
+import { datePickerProps } from './props'
 
-const props = defineProps(datePickerProps);
-const emit = defineEmits(datePickerEmits);
+const props = defineProps(datePickerProps)
+const emit = defineEmits(datePickerEmits)
 
-const modelValue = defineModel<string | undefined>({ required: true });
+const modelValue = defineModel<string | undefined>({ required: true })
 
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
-const visible = ref(false);
-const lewPopoverRef = ref();
-const lewPanelRef = ref();
-const inputRef = ref();
-let cacheValue: string | undefined;
+const visible = ref(false)
+const lewPopoverRef = ref()
+const lewPanelRef = ref()
+const inputRef = ref()
+let cacheValue: string | undefined
 
-const isInputFocused = ref(false);
-const valueBeforeFocus = ref<string | undefined>("");
+const isInputFocused = ref(false)
+const valueBeforeFocus = ref<string | undefined>('')
 
 const getPanelType = computed(() => {
-  const format = props.valueFormat;
+  const format = props.valueFormat
 
   // 判断是否包含时间部分（HH、mm、ss）
-  const hasTime = /[Hh]+|m+|s+/.test(format);
+  const hasTime = /[Hh]+|m+|s+/.test(format)
 
   // 判断是否包含日期部分（DD、D）
-  const hasDay = /D+/.test(format);
+  const hasDay = /D+/.test(format)
 
   // 判断是否包含月份部分（MM、M）
-  const hasMonth = /M+/.test(format);
+  const hasMonth = /M+/.test(format)
 
   // 判断是否包含季度部分（Q）
-  const hasQuarter = /Q+/.test(format);
+  const hasQuarter = /Q+/.test(format)
 
   // 判断是否只有年份（YYYY、YY）
-  const hasYear = /Y+/.test(format);
+  const hasYear = /Y+/.test(format)
 
   // 根据格式判断面板类型
   if (hasTime && !hasDay && !hasMonth && !hasYear) {
     // 只包含时间，使用time面板
-    return "time";
-  } else if (hasTime && (hasDay || hasMonth || hasYear)) {
+    return 'time'
+  }
+  else if (hasTime && (hasDay || hasMonth || hasYear)) {
     // 如果包含时间和日期，使用date-time面板
-    return "date-time";
-  } else if (hasDay && hasMonth) {
+    return 'date-time'
+  }
+  else if (hasDay && hasMonth) {
     // 包含日期和月份，使用date面板
-    return "date";
-  } else if (hasQuarter) {
+    return 'date'
+  }
+  else if (hasQuarter) {
     // 包含季度，使用quarter面板
-    return "quarter";
-  } else if (hasMonth && !hasDay) {
+    return 'quarter'
+  }
+  else if (hasMonth && !hasDay) {
     // 只包含月份，使用month面板
-    return "month";
-  } else if (hasYear && !hasMonth && !hasDay && !hasQuarter) {
+    return 'month'
+  }
+  else if (hasYear && !hasMonth && !hasDay && !hasQuarter) {
     // 只包含年份，使用year面板
-    return "year";
+    return 'year'
   }
 
   // 默认返回date面板
-  return "date";
-});
+  return 'date'
+})
 
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
     small: 13,
     medium: 14,
     large: 15,
-  };
-  return size[props.size];
-});
+  }
+  return size[props.size]
+})
 
 const lewDatePickerClassNames = computed(() => {
-  const focus = visible.value || isInputFocused.value;
-  const { size, readonly, disabled } = props;
-  return object2class("lew-date-picker", {
+  const focus = visible.value || isInputFocused.value
+  const { size, readonly, disabled } = props
+  return object2class('lew-date-picker', {
     focus,
     size,
     readonly,
     disabled,
-  });
-});
+  })
+})
 
 const getDatePickerInputStyle = computed(() => {
-  const { size } = props;
+  const { size } = props
   return {
     height: `var(--lew-form-item-height-${size})`,
     lineHeight: `var(--lew-form-input-line-height-${size})`,
     padding: `var(--lew-form-input-padding-${size})`,
     fontSize: `var(--lew-form-font-size-${size})`,
-  };
-});
+  }
+})
 
 const getDisplayPlaceholder = computed(() => {
   return props.placeholder
     ? props.placeholder
-    : locale.t("datePicker.placeholder");
-});
+    : locale.t('datePicker.placeholder')
+})
 
 const shouldShowClearIcon = computed(
-  () => modelValue.value && props.clearable && !props.readonly
-);
+  () => modelValue.value && props.clearable && !props.readonly,
+)
 const shouldShowCalendarIcon = computed(
-  () => !(modelValue.value && props.clearable)
-);
+  () => !(modelValue.value && props.clearable),
+)
 
 function show() {
-  lewPopoverRef.value.show();
+  lewPopoverRef.value.show()
 }
 
 function hide() {
-  lewPopoverRef.value.hide();
+  lewPopoverRef.value.hide()
 }
 
 function panelChange(value?: string) {
-  modelValue.value = formatDate(value!, props.valueFormat)! || cacheValue;
-  emit("change", value);
+  modelValue.value = formatDate(value!, props.valueFormat)! || cacheValue
+  emit('change', value)
   setTimeout(() => {
-    hide();
-  }, 100);
+    hide()
+  }, 100)
 }
 
 function handlePanelCancel() {
-  hide();
+  hide()
 }
 
-function selectPresets(item: { label: string; value: string }) {
-  modelValue.value = formatDate(item.value, props.valueFormat)! || cacheValue;
-  lewPanelRef.value && lewPanelRef.value.init(modelValue.value);
+function selectPresets(item: { label: string, value: string }) {
+  modelValue.value = formatDate(item.value, props.valueFormat)! || cacheValue
+  lewPanelRef.value && lewPanelRef.value.init(modelValue.value)
   setTimeout(() => {
     nextTick(() => {
-      panelChange(modelValue.value);
-    });
-  }, 100);
+      panelChange(modelValue.value)
+    })
+  }, 100)
 }
 
 function clearHandle() {
-  modelValue.value = undefined;
-  emit("clear");
-  emit("change", undefined);
+  modelValue.value = undefined
+  emit('clear')
+  emit('change', undefined)
 }
 
 function showHandle() {
-  visible.value = true;
-  inputRef.value?.focus();
-  lewPanelRef.value && lewPanelRef.value.init(modelValue.value);
+  visible.value = true
+  inputRef.value?.focus()
+  lewPanelRef.value && lewPanelRef.value.init(modelValue.value)
 }
 
 function hideHandle() {
-  visible.value = false;
+  visible.value = false
 }
 
 function handleInputFocus() {
-  if (props.readonly || props.disabled) return;
-  valueBeforeFocus.value = modelValue.value;
-  isInputFocused.value = true;
-  cacheValue = modelValue.value;
+  if (props.readonly || props.disabled)
+    return
+  valueBeforeFocus.value = modelValue.value
+  isInputFocused.value = true
+  cacheValue = modelValue.value
 }
 
 function handleInputBlur(e: FocusEvent) {
-  const target = e.target as HTMLInputElement;
-  const value = target.value;
+  const target = e.target as HTMLInputElement
+  const value = target.value
 
-  isInputFocused.value = false;
-  modelValue.value = formatDate(value!, props.valueFormat)! || cacheValue;
-  emit("change", modelValue.value);
+  isInputFocused.value = false
+  modelValue.value = formatDate(value!, props.valueFormat)! || cacheValue
+  emit('change', modelValue.value)
 }
 
 function handleInput(e: Event) {
-  const target = e.target as HTMLInputElement;
-  const value = target.value;
+  const target = e.target as HTMLInputElement
+  const value = target.value
 
   // 检查输入值是否合法
   if (value && isValidDate(value, props.valueFormat)) {
     // 如果值合法，更新面板显示
-    lewPanelRef.value && lewPanelRef.value.init(value);
-  } else if (value) {
+    lewPanelRef.value && lewPanelRef.value.init(value)
+  }
+  else if (value) {
     // 如果输入的不是目标格式，但可能是其他有效日期格式，尝试解析并更新面板
-    const formattedValue = formatDate(value, props.valueFormat, false);
+    const formattedValue = formatDate(value, props.valueFormat, false)
     if (formattedValue) {
-      lewPanelRef.value &&
-        lewPanelRef.value.init(formatDate(value, props.valueFormat, true));
+      lewPanelRef.value
+      && lewPanelRef.value.init(formatDate(value, props.valueFormat, true))
     }
   }
 }
 
 function handleKeydown(event: KeyboardEvent) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    inputRef.value?.blur();
-  } else if (event.key === "Escape") {
-    event.preventDefault();
+  if (event.key === 'Enter') {
+    event.preventDefault()
+    inputRef.value?.blur()
+  }
+  else if (event.key === 'Escape') {
+    event.preventDefault()
     if (valueBeforeFocus.value !== undefined) {
-      modelValue.value = valueBeforeFocus.value;
-      emit("change", valueBeforeFocus.value);
+      modelValue.value = valueBeforeFocus.value
+      emit('change', valueBeforeFocus.value)
     }
-    inputRef.value?.blur();
+    inputRef.value?.blur()
   }
 }
 
@@ -212,13 +220,14 @@ onMounted(() => {
   if (modelValue.value) {
     if (isValidDate(modelValue.value, props.valueFormat)) {
       //
-    } else {
-      throw new Error("[LewDatePicker] modelValue Invalid date");
+    }
+    else {
+      throw new Error('[LewDatePicker] modelValue Invalid date')
     }
   }
-});
+})
 
-defineExpose({ show, hide });
+defineExpose({ show, hide })
 </script>
 
 <template>
@@ -252,7 +261,7 @@ defineExpose({ show, hide });
             @blur="handleInputBlur"
             @input="handleInput"
             @keydown="handleKeydown"
-          />
+          >
           <CommonIcon
             class="lew-date-picker-icon-calendar"
             :size="getIconSize"
@@ -327,7 +336,8 @@ defineExpose({ show, hide });
     border-radius: var(--lew-border-radius-small);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition: background-color var(--lew-form-transition-ease),
+    transition:
+      background-color var(--lew-form-transition-ease),
       border-color var(--lew-form-transition-ease);
     cursor: pointer;
     user-select: none;
@@ -382,8 +392,7 @@ defineExpose({ show, hide });
 
   .lew-date-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   }
 
   .lew-date-picker-focus:hover {
@@ -425,9 +434,7 @@ defineExpose({ show, hide });
   }
 
   .lew-date-picker-presets-item-active {
-    background-color: var(
-      --lew-color-datepicker-primary-selected-bg
-    ) !important;
+    background-color: var(--lew-color-datepicker-primary-selected-bg) !important;
     color: var(--lew-color-datepicker-primary-selected-text);
   }
 }

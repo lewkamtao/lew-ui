@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { LewCheckbox, LewCollapseTransition, LewMessage } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
-import { insertChildByKey } from "lew-ui/utils";
-import { cloneDeep } from "lodash-es";
-import { treeItemProps } from "./props";
-import transformTree, { formatTree } from "./transformTree";
-import { treeItemEmits } from "./treeItemEmits";
-import { TREE_INJECTION_KEY } from "./types";
+import { LewCheckbox, LewCollapseTransition, LewMessage } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { insertChildByKey } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
+import { treeItemProps } from './props'
+import transformTree, { formatTree } from './transformTree'
+import { treeItemEmits } from './treeItemEmits'
+import { TREE_INJECTION_KEY } from './types'
 
-const props = defineProps(treeItemProps);
-const emit = defineEmits(treeItemEmits);
+const props = defineProps(treeItemProps)
+const emit = defineEmits(treeItemEmits)
 
 // 使用类型安全的 inject
-const treeContext = inject(TREE_INJECTION_KEY)!;
+const treeContext = inject(TREE_INJECTION_KEY)!
 const {
   modelValue,
   expandKeys,
@@ -27,118 +27,129 @@ const {
   labelField,
   free,
   treeSelection,
-} = treeContext;
+} = treeContext
 
-const loading = ref(false);
-const loaded = ref(false);
+const loading = ref(false)
+const loaded = ref(false)
 
 function select() {
-  if (props.disabled || !props.__key) return;
+  if (props.disabled || !props.__key)
+    return
 
-  const nodeKey = props.__key;
+  const nodeKey = props.__key
 
   if (multiple) {
     if (free) {
       // free 模式：简单的切换选中状态，不级联
       // 确保始终使用数组
-      const currentValue = modelValue.value;
+      const currentValue = modelValue.value
       const newModelValue = Array.isArray(currentValue)
         ? [...currentValue]
-        : [];
-      const index = newModelValue.indexOf(nodeKey);
+        : []
+      const index = newModelValue.indexOf(nodeKey)
       if (index > -1) {
-        newModelValue.splice(index, 1);
-      } else {
-        newModelValue.push(nodeKey);
+        newModelValue.splice(index, 1)
       }
-      modelValue.value = newModelValue;
-    } else {
-      // 使用 Hook 的 toggleKey，自动处理级联和半选状态
-      treeSelection?.toggleKey(nodeKey);
+      else {
+        newModelValue.push(nodeKey)
+      }
+      modelValue.value = newModelValue
     }
-  } else {
+    else {
+      // 使用 Hook 的 toggleKey，自动处理级联和半选状态
+      treeSelection?.toggleKey(nodeKey)
+    }
+  }
+  else {
     // 单选模式：直接设置值
-    modelValue.value = nodeKey;
+    modelValue.value = nodeKey
   }
 
-  emit("change");
+  emit('change')
 }
 
 async function expand() {
   if (!props.isLeaf && props.__key) {
-    const nodeKey = props.__key;
-    const index = expandKeys.value.indexOf(nodeKey);
+    const nodeKey = props.__key
+    const index = expandKeys.value.indexOf(nodeKey)
     if (index > -1) {
-      expandKeys.value.splice(index, 1);
-    } else if (loadMethod && !loading.value && !loaded.value) {
-      loading.value = true;
-      const _tree =
-        ((await loadMethod(
+      expandKeys.value.splice(index, 1)
+    }
+    else if (loadMethod && !loading.value && !loaded.value) {
+      loading.value = true
+      const _tree
+        = ((await loadMethod(
           cloneDeep({
             ...props,
             key: nodeKey,
             value: nodeKey,
             extend: props.extend,
-          }) as any
-        )) as any) || [];
+          }) as any,
+        )) as any) || []
 
       const { status, result, error } = (await transformTree({
         dataSource: _tree,
         keyField,
         labelField,
         free,
-      })) as any;
-      if (status === "success") {
-        loaded.value = true;
-        insertChildByKey(dataSource.value, nodeKey as string | number, result);
+      })) as any
+      if (status === 'success') {
+        loaded.value = true
+        insertChildByKey(dataSource.value, nodeKey as string | number, result)
 
         dataSource.value = formatTree({
           dataSource: dataSource.value,
           keyField,
           labelField,
           free,
-        });
+        })
 
-        cacheDataSource.value = cloneDeep(dataSource.value);
+        cacheDataSource.value = cloneDeep(dataSource.value)
 
-        expandKeys.value = [...expandKeys.value, nodeKey];
-      } else {
-        loaded.value = false;
-        LewMessage.error(error.message);
+        expandKeys.value = [...expandKeys.value, nodeKey]
       }
-      loading.value = false;
-    } else {
-      expandKeys.value.push(nodeKey);
+      else {
+        loaded.value = false
+        LewMessage.error(error.message)
+      }
+      loading.value = false
+    }
+    else {
+      expandKeys.value.push(nodeKey)
     }
   }
-  expandKeys.value = cloneDeep(expandKeys.value);
-  emit("expand");
+  expandKeys.value = cloneDeep(expandKeys.value)
+  emit('expand')
 }
 
 // 计算节点的选中状态
 const isNodeSelected = computed(() => {
-  if (!props.__key) return false;
+  if (!props.__key)
+    return false
 
   if (multiple) {
     if (free) {
       // free 模式：直接查看 modelValue
-      return modelValue.value?.includes(props.__key) || false;
-    } else {
-      // 使用 Hook 的 isSelected 方法
-      return treeSelection?.isSelected(props.__key) || false;
+      return modelValue.value?.includes(props.__key) || false
     }
-  } else {
-    return modelValue.value === props.__key;
+    else {
+      // 使用 Hook 的 isSelected 方法
+      return treeSelection?.isSelected(props.__key) || false
+    }
   }
-});
+  else {
+    return modelValue.value === props.__key
+  }
+})
 
 // 计算节点的半选状态
 const isNodePartiallySelected = computed(() => {
-  if (!multiple || free || !props.__key) return false;
+  if (!multiple || free || !props.__key)
+    return false
 
   // 使用 Hook 的 isIndeterminate 方法
-  return treeSelection?.isIndeterminate(props.__key) || false;
-});
+  return treeSelection?.isIndeterminate(props.__key) || false
+})
 </script>
 
 <template>
@@ -205,7 +216,7 @@ const isNodePartiallySelected = computed(() => {
         ((expandKeys || []).length > 0 &&
           __key &&
           expandKeys.includes(__key)) ||
-        expandAll
+          expandAll
       "
       class="lew-tree-item-main"
     >
@@ -258,7 +269,7 @@ const isNodePartiallySelected = computed(() => {
     left: 0;
     top: 0;
     z-index: 9;
-    content: "";
+    content: '';
     width: 100%;
     height: 100%;
   }
@@ -269,8 +280,7 @@ const isNodePartiallySelected = computed(() => {
     background-color: var(--lew-pop-bgcolor-hover);
     user-select: none;
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
-      border: var(--lew-form-border-width) var(--lew-checkbox-icon-border-hover)
-        solid;
+      border: var(--lew-form-border-width) var(--lew-checkbox-icon-border-hover) solid;
       background: var(--lew-checkbox-icon-bg-hover);
     }
   }
@@ -282,8 +292,7 @@ const isNodePartiallySelected = computed(() => {
   }
   .lew-tree-item-label:hover {
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
-      border: var(--lew-form-border-width)
-        var(--lew-checkbox-checked-icon-border-hover) solid;
+      border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
       background: var(--lew-checkbox-checked-icon-bg-hover);
       .icon-checkbox {
         transform: translate(-50%, -50%) scale(0.7);
@@ -297,8 +306,7 @@ const isNodePartiallySelected = computed(() => {
 .lew-tree-item-certain {
   .lew-tree-item-label:hover {
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
-      border: var(--lew-form-border-width)
-        var(--lew-checkbox-checked-icon-border-hover) solid;
+      border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
       background: var(--lew-checkbox-checked-icon-bg-hover);
       .lew-checkbox-icon-certain {
         background-color: var(--lew-checkbox-checked-icon-color-hover);

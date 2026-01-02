@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import type { LewMenuOption } from 'lew-ui'
-import { LewTag } from 'lew-ui'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { toRaw } from 'vue'
-import { menuEmits } from './emits'
-import { menuProps } from './props'
+import type { LewMenuOption } from "lew-ui";
+import { LewTag } from "lew-ui";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import { toRaw } from "vue";
+import { menuEmits } from "./emits";
+import { menuProps } from "./props";
 
-const props = defineProps(menuProps)
-const emit = defineEmits(menuEmits)
+const props = defineProps(menuProps);
+const emit = defineEmits(menuEmits);
 
-const modelValue = defineModel<string>('modelValue', {
+const modelValue = defineModel<string>("modelValue", {
   required: false,
-  default: '',
-})
+  default: "",
+});
 
 function select(item: LewMenuOption) {
-  modelValue.value = item.value || ''
-  emit('change', toRaw(item))
+  modelValue.value = item.value || "";
+  emit("change", toRaw(item));
 }
 </script>
 
@@ -52,6 +52,7 @@ function select(item: LewMenuOption) {
         >
           <RenderComponent :render-fn="cItem.icon" class="lew-menu-icon" />
           <RenderComponent
+            class="lew-menu-item-text"
             :render-fn="cItem.label"
             type="text-trim"
             :component-props="{
@@ -76,18 +77,17 @@ function select(item: LewMenuOption) {
 .lew-menu {
   --lew-menu-item-bg: var(--lew-color-menu-primary-item-bg);
   --lew-menu-item-bg-hover: var(--lew-color-menu-primary-item-bg-hover);
-  --lew-menu-item-bg-active: var(--lew-color-menu-primary-item-bg-active);
   --lew-menu-item-text: var(--lew-color-menu-primary-item-text);
   --lew-menu-item-text-hover: var(--lew-color-menu-primary-item-text-hover);
-  --lew-menu-item-text-active: var(--lew-color-menu-primary-item-text-active);
   --lew-menu-item-selected-bg: var(--lew-color-menu-primary-item-selected-bg);
-  --lew-menu-item-selected-bg-hover: var(--lew-color-menu-primary-item-selected-bg-hover);
-  --lew-menu-item-selected-text: var(--lew-color-menu-primary-item-selected-text);
-  --lew-menu-item-selected-text-hover: var(--lew-color-menu-primary-item-selected-text-hover);
+  --lew-menu-item-selected-text: var(
+    --lew-color-menu-primary-item-selected-text
+  );
   --lew-menu-item-icon: var(--lew-color-menu-primary-item-icon);
   --lew-menu-item-icon-hover: var(--lew-color-menu-primary-item-icon-hover);
-  --lew-menu-item-icon-selected: var(--lew-color-menu-primary-item-icon-selected);
-  --lew-menu-item-icon-selected-hover: var(--lew-color-menu-primary-item-icon-selected-hover);
+  --lew-menu-item-icon-selected: var(
+    --lew-color-menu-primary-item-icon-selected
+  );
 
   display: flex;
   flex-direction: column;
@@ -137,33 +137,16 @@ function select(item: LewMenuOption) {
     }
   }
 
-  .lew-menu-item-child:active:not(.lew-menu-item-active) {
-    background-color: var(--lew-menu-item-bg-active);
-    color: var(--lew-menu-item-text-active);
-  }
-
   .lew-menu-item-child.lew-menu-item-active {
     background-color: var(--lew-menu-item-selected-bg);
-    color: var(--lew-menu-item-selected-text);
-    font-weight: 600;
+
+    .lew-menu-item-text {
+      color: var(--lew-menu-item-selected-text);
+    }
 
     :deep(.lew-menu-icon) {
-      color: var(--lew-menu-item-icon-selected);
+      color: var(--lew-menu-item-selected-text);
     }
-  }
-
-  .lew-menu-item-child.lew-menu-item-active:hover {
-    background-color: var(--lew-menu-item-selected-bg-hover);
-    color: var(--lew-menu-item-selected-text-hover);
-
-    :deep(.lew-menu-icon) {
-      color: var(--lew-menu-item-icon-selected-hover);
-    }
-  }
-
-  .lew-menu-item-child.lew-menu-item-active:active {
-    background-color: var(--lew-menu-item-selected-bg-hover);
-    color: var(--lew-menu-item-selected-text-hover);
   }
 
   .lew-menu-item-last {

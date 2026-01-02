@@ -1,51 +1,51 @@
 <script setup lang="ts">
-import type { LewSize } from "lew-ui";
-import { object2class } from "../utils";
-import CommonIcon from "./CommonIcon.vue";
+import type { LewSize } from 'lew-ui'
+import { object2class } from '../utils'
+import CommonIcon from './CommonIcon.vue'
 
 interface Props {
-  size?: LewSize;
-  color?: "gray" | "primary" | "normal";
-  loading?: boolean;
-  disabled?: boolean;
-  round?: boolean;
+  size?: LewSize
+  color?: 'gray' | 'primary' | 'normal'
+  loading?: boolean
+  disabled?: boolean
+  round?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: "medium",
-  color: "gray",
+  size: 'medium',
+  color: 'gray',
   loading: false,
   disabled: false,
   round: false,
-});
+})
 
 const emit = defineEmits<{
-  click: [event: MouseEvent];
-}>();
+  click: [event: MouseEvent]
+}>()
 
 const iconSizeMap: Record<LewSize, number> = {
   small: 14,
   medium: 16,
   large: 18,
-};
+}
 
-const iconSize = computed(() => iconSizeMap[props.size] || iconSizeMap.medium);
+const iconSize = computed(() => iconSizeMap[props.size] || iconSizeMap.medium)
 
 const closeButtonClass = computed(() => {
-  return object2class("lew-close-button", {
+  return object2class('lew-close-button', {
     size: props.size,
     color: props.color,
     loading: props.loading,
     disabled: props.disabled,
     round: props.round,
-  });
-});
+  })
+})
 
 function handleClick(event: MouseEvent) {
   if (props.disabled || props.loading) {
-    return;
+    return
   }
-  emit("click", event);
+  emit('click', event)
 }
 </script>
 
@@ -89,7 +89,8 @@ function handleClick(event: MouseEvent) {
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
-  transition: background-color var(--lew-form-transition-ease),
+  transition:
+    background-color var(--lew-form-transition-ease),
     color var(--lew-form-transition-ease);
   background-color: var(--lew-close-button-bg);
   color: var(--lew-close-button-color);

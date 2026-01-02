@@ -670,8 +670,9 @@ defineExpose({
   min-width: 200px;
   height: 320px;
   overflow: hidden;
-  transition: width var(--lew-form-transition-bezier),
-              height var(--lew-form-transition-bezier);
+  transition:
+    width var(--lew-form-transition-bezier),
+    height var(--lew-form-transition-bezier);
   user-select: none;
 
   .not-found {

@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import CloseIcon from "lew-ui/_components/CloseIcon.vue";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px } from "lew-ui/utils";
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px } from 'lew-ui/utils'
 
-import { notificationEmits } from "./emits";
+import { notificationEmits } from './emits'
 
 defineProps<{
-  type: string;
-  title: string;
-  content: string;
-  duration: number;
-  showProgress: boolean;
-  width: number | string;
-}>();
+  type: string
+  title: string
+  content: string
+  duration: number
+  showProgress: boolean
+  width: number | string
+}>()
 
-const emit = defineEmits(notificationEmits);
+const emit = defineEmits(notificationEmits)
 
 function onClose() {
-  emit("close");
+  emit('close')
 }
 </script>
 

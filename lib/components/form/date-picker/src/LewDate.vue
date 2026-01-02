@@ -301,9 +301,10 @@ defineExpose({ init, getValue })
       z-index: 10;
       opacity: 1;
       border: 1.5px solid var(--lew-bgcolor-0);
-      box-shadow: 0px 0px 8px var(--lew-color-success-light),
-                  0px 0px 3px rgba(0, 0, 0, 0.15),
-                  inset 0px 0px 2px rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0px 0px 8px var(--lew-color-success-light),
+        0px 0px 3px rgba(0, 0, 0, 0.15),
+        inset 0px 0px 2px rgba(255, 255, 255, 0.2);
     }
 
     .lew-date-item:hover {

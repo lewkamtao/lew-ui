@@ -1,208 +1,216 @@
 <script setup lang="ts">
-import { LewInput, LewMessage, LewTag, locale } from "lew-ui";
-import CloseIcon from "lew-ui/_components/CloseIcon.vue";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px, object2class } from "lew-ui/utils";
-import { cloneDeep } from "lodash-es";
-import { inputTagEmits } from "./emits";
-import { inputTagProps } from "./props";
+import { LewInput, LewMessage, LewTag, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
+import { inputTagEmits } from './emits'
+import { inputTagProps } from './props'
 
-const props = defineProps(inputTagProps);
-const emit = defineEmits(inputTagEmits);
+const props = defineProps(inputTagProps)
+const emit = defineEmits(inputTagEmits)
 
-const modelValue = defineModel<string[] | undefined>();
-const inputValue = ref<string>("");
-const lewInputRef = ref<any>(null);
-const isInputActive = ref<boolean>(false);
-const isTagMarkedForDeletion = ref<boolean>(false);
-const autoWidthDelay = ref<boolean>(false);
+const modelValue = defineModel<string[] | undefined>()
+const inputValue = ref<string>('')
+const lewInputRef = ref<any>(null)
+const isInputActive = ref<boolean>(false)
+const isTagMarkedForDeletion = ref<boolean>(false)
+const autoWidthDelay = ref<boolean>(false)
 
-let originalKeydownHandler: ((event: KeyboardEvent) => void) | null = null;
+let originalKeydownHandler: ((event: KeyboardEvent) => void) | null = null
 
 function attachKeydownListener() {
-  originalKeydownHandler = document.onkeydown;
+  originalKeydownHandler = document.onkeydown
   document.onkeydown = function (event: KeyboardEvent) {
-    const keyCode = event.key || event.code;
-    if (!isInputActive.value) return;
+    const keyCode = event.key || event.code
+    if (!isInputActive.value)
+      return
 
     if (inputValue.value) {
-      if (keyCode === "Enter" || keyCode === "NumpadEnter") {
-        isTagMarkedForDeletion.value = false;
-        document.onkeydown = originalKeydownHandler;
-        isInputActive.value = false;
+      if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
+        isTagMarkedForDeletion.value = false
+        document.onkeydown = originalKeydownHandler
+        isInputActive.value = false
         if (inputValue.value) {
           if (props.allowDuplicates) {
-            addTag();
-          } else {
+            addTag()
+          }
+          else {
             if (
-              !Array.isArray(modelValue.value) ||
-              !modelValue.value.includes(inputValue.value)
+              !Array.isArray(modelValue.value)
+              || !modelValue.value.includes(inputValue.value)
             ) {
-              addTag();
-            } else {
-              LewMessage.warning(locale.t("inputTag.duplicate"));
+              addTag()
+            }
+            else {
+              LewMessage.warning(locale.t('inputTag.duplicate'))
             }
           }
-          openInput();
-        }
-      }
-    } else {
-      if (keyCode === "Backspace" || keyCode === "Delete") {
-        if (
-          Array.isArray(modelValue.value) &&
-          modelValue.value.length > 0 &&
-          isTagMarkedForDeletion.value
-        ) {
-          const newValue = [...(modelValue.value || [])];
-          newValue.splice(newValue.length - 1, 1);
-          modelValue.value = newValue;
-          emit("change", cloneDeep(newValue));
-          isTagMarkedForDeletion.value = false;
-        } else {
-          isTagMarkedForDeletion.value = true;
+          openInput()
         }
       }
     }
-  };
+    else {
+      if (keyCode === 'Backspace' || keyCode === 'Delete') {
+        if (
+          Array.isArray(modelValue.value)
+          && modelValue.value.length > 0
+          && isTagMarkedForDeletion.value
+        ) {
+          const newValue = [...(modelValue.value || [])]
+          newValue.splice(newValue.length - 1, 1)
+          modelValue.value = newValue
+          emit('change', cloneDeep(newValue))
+          isTagMarkedForDeletion.value = false
+        }
+        else {
+          isTagMarkedForDeletion.value = true
+        }
+      }
+    }
+  }
 }
 
 function detachKeydownListener() {
   if (document.onkeydown && document.onkeydown !== originalKeydownHandler) {
-    document.onkeydown = originalKeydownHandler;
+    document.onkeydown = originalKeydownHandler
   }
 }
 
 function openInput() {
-  if (isInputActive.value || props.disabled || props.readonly) return;
+  if (isInputActive.value || props.disabled || props.readonly)
+    return
   if (
-    props.maxLength > 0 &&
-    Array.isArray(modelValue.value) &&
-    modelValue.value.length >= props.maxLength
+    props.maxLength > 0
+    && Array.isArray(modelValue.value)
+    && modelValue.value.length >= props.maxLength
   ) {
     LewMessage.warning(
-      locale.t("inputTag.maxLength", { maxLength: props.maxLength })
-    );
-    return;
+      locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
+    )
+    return
   }
-  isInputActive.value = true;
+  isInputActive.value = true
   nextTick(() => {
-    if (lewInputRef.value && typeof lewInputRef.value?.focus === "function") {
-      lewInputRef.value?.focus();
+    if (lewInputRef.value && typeof lewInputRef.value?.focus === 'function') {
+      lewInputRef.value?.focus()
     }
-  });
-  attachKeydownListener();
+  })
+  attachKeydownListener()
 }
 
 function addTag() {
-  const _value = Array.isArray(modelValue.value) ? [...modelValue.value] : [];
-  if (!inputValue.value || inputValue.value.trim() === "") return;
+  const _value = Array.isArray(modelValue.value) ? [...modelValue.value] : []
+  if (!inputValue.value || inputValue.value.trim() === '')
+    return
   if (props.maxLength > 0 && _value.length >= props.maxLength) {
-    inputValue.value = "";
-    isInputActive.value = false;
+    inputValue.value = ''
+    isInputActive.value = false
     LewMessage.warning(
-      locale.t("inputTag.maxLength", { maxLength: props.maxLength })
-    );
-    return;
+      locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
+    )
+    return
   }
-  _value.push(inputValue.value);
-  const addedValue = inputValue.value;
-  inputValue.value = "";
-  modelValue.value = _value;
-  emit("change", cloneDeep(_value));
-  emit("add", addedValue);
+  _value.push(inputValue.value)
+  const addedValue = inputValue.value
+  inputValue.value = ''
+  modelValue.value = _value
+  emit('change', cloneDeep(_value))
+  emit('add', addedValue)
 }
 
 function delTag(index: number) {
   if (
-    !Array.isArray(modelValue.value) ||
-    index < 0 ||
-    index >= modelValue.value.length
+    !Array.isArray(modelValue.value)
+    || index < 0
+    || index >= modelValue.value.length
   ) {
-    return;
+    return
   }
-  const removedTag = modelValue.value[index];
-  const newValue = [...modelValue.value];
-  newValue.splice(index, 1);
-  modelValue.value = newValue;
+  const removedTag = modelValue.value[index]
+  const newValue = [...modelValue.value]
+  newValue.splice(index, 1)
+  modelValue.value = newValue
   if (newValue.length === 0) {
-    autoWidthDelay.value = true;
+    autoWidthDelay.value = true
     setTimeout(() => {
-      autoWidthDelay.value = false;
-    }, 550);
+      autoWidthDelay.value = false
+    }, 550)
   }
-  emit("change", cloneDeep(newValue));
-  emit("remove", removedTag, index);
+  emit('change', cloneDeep(newValue))
+  emit('remove', removedTag, index)
 }
 
 function clear() {
-  modelValue.value = [];
-  inputValue.value = "";
-  emit("clear");
-  emit("change", undefined);
+  modelValue.value = []
+  inputValue.value = ''
+  emit('clear')
+  emit('change', undefined)
 }
 
 function onBlur() {
-  isInputActive.value = false;
-  isTagMarkedForDeletion.value = false;
-  detachKeydownListener();
+  isInputActive.value = false
+  isTagMarkedForDeletion.value = false
+  detachKeydownListener()
   if (inputValue.value) {
-    addTag();
+    addTag()
   }
 }
 
 function onFocus() {
-  if (props.disabled || props.readonly) return;
-  isInputActive.value = true;
-  attachKeydownListener();
+  if (props.disabled || props.readonly)
+    return
+  isInputActive.value = true
+  attachKeydownListener()
 }
 
 const getInputClassNames = computed(() => {
-  const { size, readonly, disabled, clearable } = props;
-  return object2class("lew-input-tag-view", {
+  const { size, readonly, disabled, clearable } = props
+  return object2class('lew-input-tag-view', {
     size,
     readonly,
     disabled,
     clearable,
-  });
-});
+  })
+})
 
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
     small: 13,
     medium: 14,
     large: 16,
-  };
-  return size[props.size] || 14;
-});
+  }
+  return size[props.size] || 14
+})
 
 const shouldShowIcon = computed(
-  () => !((modelValue.value || []).length > 0 && props.clearable)
-);
+  () => !((modelValue.value || []).length > 0 && props.clearable),
+)
 
 const shouldShowClearIcon = computed(
   () =>
-    (modelValue.value || []).length > 0 && props.clearable && !props.readonly
-);
+    (modelValue.value || []).length > 0 && props.clearable && !props.readonly,
+)
 
 const getTagStyle = computed(() => (index: number) => {
   return {
-    maxWidth: "100%",
+    maxWidth: '100%',
     backgroundColor:
-      isTagMarkedForDeletion.value &&
-      index === (modelValue.value || []).length - 1
-        ? "var(--lew-color-red-light)"
-        : "",
+      isTagMarkedForDeletion.value
+      && index === (modelValue.value || []).length - 1
+        ? 'var(--lew-color-red-light)'
+        : '',
     color:
-      isTagMarkedForDeletion.value &&
-      index === (modelValue.value || []).length - 1
-        ? "var(--lew-color-red-dark)"
-        : "var(--lew-color-inputtag-primary-tag-text)",
-  };
-});
+      isTagMarkedForDeletion.value
+      && index === (modelValue.value || []).length - 1
+        ? 'var(--lew-color-red-dark)'
+        : 'var(--lew-color-inputtag-primary-tag-text)',
+  }
+})
 
 onUnmounted(() => {
-  detachKeydownListener();
-});
+  detachKeydownListener()
+})
 </script>
 
 <template>
@@ -275,7 +283,8 @@ onUnmounted(() => {
   box-sizing: border-box;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
-  transition: background-color var(--lew-form-transition-ease),
+  transition:
+    background-color var(--lew-form-transition-ease),
     border-color var(--lew-form-transition-ease);
   overflow: hidden;
   width: 100%;
@@ -398,7 +407,8 @@ onUnmounted(() => {
 .tag-list-move,
 .tag-list-enter-active,
 .tag-list-leave-active {
-  transition: background-color var(--lew-form-transition-ease),
+  transition:
+    background-color var(--lew-form-transition-ease),
     border-color var(--lew-form-transition-ease);
 }
 

@@ -1,46 +1,48 @@
 <script setup lang="ts">
-const visible1 = ref(false);
-const visible2 = ref(false);
+const visible1 = ref(false)
+const visible2 = ref(false)
 
 function ok1() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      visible1.value = false;
-      resolve(true);
-    }, 1000);
-  });
+      visible1.value = false
+      resolve(true)
+    }, 1000)
+  })
 }
 
 function ok2() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      visible2.value = false;
-      resolve(true);
-    }, 1000);
-  });
+      visible2.value = false
+      resolve(true)
+    }, 1000)
+  })
 }
 function close1() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      visible1.value = false;
-      resolve(true);
-    }, 1000);
-  });
+      visible1.value = false
+      resolve(true)
+    }, 1000)
+  })
 }
 
 function close2() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      visible2.value = false;
-      resolve(true);
-    }, 1000);
-  });
+      visible2.value = false
+      resolve(true)
+    }, 1000)
+  })
 }
 </script>
 
 <template>
   <lew-flex x="start">
-    <lew-button @click="visible1 = true"> Product Details </lew-button>
+    <lew-button @click="visible1 = true">
+      Product Details
+    </lew-button>
   </lew-flex>
   <lew-modal
     v-model:visible="visible1"
@@ -66,7 +68,9 @@ function close2() {
         />
         <div class="product-info">
           <h2>BILLY Bookcase</h2>
-          <p class="price">$69.99</p>
+          <p class="price">
+            $69.99
+          </p>
           <div class="description">
             <p>Height: 79 1/2"</p>
             <p>Width: 31 1/2"</p>
@@ -82,7 +86,9 @@ function close2() {
             </ul>
           </div>
           <lew-flex x="start">
-            <lew-button @click="visible2 = true"> Assembly Guide </lew-button>
+            <lew-button @click="visible2 = true">
+              Assembly Guide
+            </lew-button>
           </lew-flex>
         </div>
       </div>
@@ -179,7 +185,7 @@ function close2() {
       align-items: center;
 
       &::before {
-        content: "•";
+        content: '•';
         color: var(--lew-color-primary-dark);
         margin-right: 8px;
         font-size: 18px;
@@ -202,7 +208,7 @@ function close2() {
       align-items: center;
 
       &::before {
-        content: "✨";
+        content: '✨';
         margin-right: 8px;
       }
     }
@@ -246,7 +252,7 @@ function close2() {
     align-items: center;
 
     &::before {
-      content: "📋";
+      content: '📋';
       margin-right: 8px;
     }
   }

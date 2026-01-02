@@ -125,7 +125,7 @@ function toPath(item: Item) {
         opacity: 1;
       }
     }
-    .item:hover {
+    .item:hover:not(.active) {
       color: var(--lew-text-color-0);
       background: var(--lew-bgcolor-2);
     }
@@ -134,9 +134,11 @@ function toPath(item: Item) {
       color: var(--lew-color-primary);
       background: var(--lew-color-primary-light);
     }
-    .active:hover {
+
+    // 选中项 hover 时保持选中背景色，移除 hover 效果
+    .item.active:hover {
       color: var(--lew-color-primary);
-      background: var(--lew-color-primary-light-hover);
+      background: var(--lew-color-primary-light);
     }
   }
 

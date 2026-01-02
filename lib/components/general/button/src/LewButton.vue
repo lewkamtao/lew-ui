@@ -1,29 +1,29 @@
 <script setup lang="ts">
 // 1. 组件导入
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 
 // 2. 工具函数导入
-import { object2class } from "lew-ui/utils";
+import { object2class } from 'lew-ui/utils'
 
 // 3. 组件配置导入
-import { buttonEmits } from "./emits";
-import { buttonProps } from "./props";
+import { buttonEmits } from './emits'
+import { buttonProps } from './props'
 
 // Props & Emits
-const props = defineProps(buttonProps);
-const emit = defineEmits(buttonEmits);
+const props = defineProps(buttonProps)
+const emit = defineEmits(buttonEmits)
 
 // Composables
-const slots = useSlots();
+const slots = useSlots()
 
 // 响应式状态
-const _loading = ref(false);
+const _loading = ref(false)
 
 // 计算属性
 const buttonClass = computed(() => {
-  const { size, type, color, singleIcon, round, dashed } = props;
-  const loading = _loading.value || props.loading;
-  return object2class("lew-button", {
+  const { size, type, color, singleIcon, round, dashed } = props
+  const loading = _loading.value || props.loading
+  return object2class('lew-button', {
     size,
     type,
     loading,
@@ -31,8 +31,8 @@ const buttonClass = computed(() => {
     color,
     round,
     dashed,
-  });
-});
+  })
+})
 
 const iconSize = computed(() => {
   const sizeMap: Record<string, number> = {
@@ -40,27 +40,28 @@ const iconSize = computed(() => {
     small: 14,
     medium: 16,
     large: 18,
-  };
-  return sizeMap[props.size] || 16;
-});
+  }
+  return sizeMap[props.size] || 16
+})
 
-const isLoading = computed(() => _loading.value || props.loading);
-const hasContent = computed(() => !!slots.default || !!props.text);
+const isLoading = computed(() => _loading.value || props.loading)
+const hasContent = computed(() => !!slots.default || !!props.text)
 
 // 方法
 async function handleClick(e: MouseEvent) {
   if (props.disabled || isLoading.value) {
-    return;
+    return
   }
 
-  emit("click", e);
+  emit('click', e)
 
-  if (typeof props.request === "function") {
+  if (typeof props.request === 'function') {
     try {
-      _loading.value = true;
-      await props.request();
-    } finally {
-      _loading.value = false;
+      _loading.value = true
+      await props.request()
+    }
+    finally {
+      _loading.value = false
     }
   }
 }
@@ -122,9 +123,11 @@ async function handleClick(e: MouseEvent) {
   // 其他
   cursor: pointer;
   user-select: none;
-  transition: background-color var(--lew-form-transition-ease),
+  transition:
+    background-color var(--lew-form-transition-ease),
     color var(--lew-form-transition-ease),
-    padding var(--lew-form-transition-ease), width 0.25s ease,
+    padding var(--lew-form-transition-ease),
+    width 0.25s ease,
     min-width 0.25s ease;
 
   &:hover {
@@ -356,9 +359,7 @@ async function handleClick(e: MouseEvent) {
       var(--lew-color-button-#{$name}-fill) 60%,
       var(--lew-color-button-#{$name}-fill-active-base) 40%
     );
-    --lew-button-active-color: var(
-      --lew-color-button-#{$name}-fill-text-active
-    );
+    --lew-button-active-color: var(--lew-color-button-#{$name}-fill-text-active);
 
     // 如果浏览器不支持 color-mix，使用 fallback
     @supports not (color-mix(in srgb, red 50%, white)) {
@@ -368,26 +369,12 @@ async function handleClick(e: MouseEvent) {
   }
 
   .lew-button-type-light.lew-button-color-#{$name} {
-    --lew-button-bg: color-mix(
-      in srgb,
-      var(--lew-color-button-#{$name}-light) 50%,
-      var(--lew-bgcolor-0)
-    );
+    --lew-button-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light) 50%, var(--lew-bgcolor-0));
     --lew-button-color: var(--lew-color-button-#{$name}-light-text);
-    --lew-button-hover-bg: color-mix(
-      in srgb,
-      var(--lew-color-button-#{$name}-light-hover) 50%,
-      var(--lew-bgcolor-0)
-    );
+    --lew-button-hover-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light-hover) 50%, var(--lew-bgcolor-0));
     --lew-button-hover-color: var(--lew-color-button-#{$name}-light-text-hover);
-    --lew-button-active-bg: color-mix(
-      in srgb,
-      var(--lew-color-button-#{$name}-light-active) 50%,
-      var(--lew-bgcolor-0)
-    );
-    --lew-button-active-color: var(
-      --lew-color-button-#{$name}-light-text-active
-    );
+    --lew-button-active-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light-active) 50%, var(--lew-bgcolor-0));
+    --lew-button-active-color: var(--lew-color-button-#{$name}-light-text-active);
 
     // 如果浏览器不支持 color-mix，使用 fallback
     @supports not (color-mix(in srgb, red 50%, white)) {
@@ -399,15 +386,12 @@ async function handleClick(e: MouseEvent) {
 
   .lew-button-type-ghost.lew-button-color-#{$name} {
     --lew-button-bg: transparent;
-    --lew-button-border: var(--lew-form-border-width) solid
-      var(--lew-color-#{$name});
+    --lew-button-border: var(--lew-form-border-width) solid var(--lew-color-#{$name});
     --lew-button-color: var(--lew-color-button-#{$name}-ghost-text);
     --lew-button-hover-bg: var(--lew-bgcolor-2);
     --lew-button-hover-color: var(--lew-color-button-#{$name}-ghost-text-hover);
     --lew-button-active-bg: var(--lew-bgcolor-4);
-    --lew-button-active-color: var(
-      --lew-color-button-#{$name}-ghost-text-active
-    );
+    --lew-button-active-color: var(--lew-color-button-#{$name}-ghost-text-active);
 
     box-shadow: none;
   }
@@ -418,9 +402,7 @@ async function handleClick(e: MouseEvent) {
     --lew-button-hover-bg: var(--lew-form-bgcolor-hover);
     --lew-button-hover-color: var(--lew-color-button-#{$name}-text-text-hover);
     --lew-button-active-bg: var(--lew-form-bgcolor-active);
-    --lew-button-active-color: var(
-      --lew-color-button-#{$name}-text-text-active
-    );
+    --lew-button-active-color: var(--lew-color-button-#{$name}-text-text-active);
 
     border: none;
     box-shadow: none;
@@ -428,25 +410,25 @@ async function handleClick(e: MouseEvent) {
 }
 
 // 生成所有主题色变体
-@include button-variant("blue");
-@include button-variant("gray");
-@include button-variant("red");
-@include button-variant("green");
-@include button-variant("yellow");
-@include button-variant("indigo");
-@include button-variant("purple");
-@include button-variant("pink");
-@include button-variant("orange");
-@include button-variant("cyan");
-@include button-variant("teal");
-@include button-variant("mint");
-@include button-variant("brown");
-@include button-variant("black");
-@include button-variant("error");
-@include button-variant("success");
-@include button-variant("warning");
-@include button-variant("info");
-@include button-variant("normal");
-@include button-variant("primary");
-@include button-variant("danger");
+@include button-variant('blue');
+@include button-variant('gray');
+@include button-variant('red');
+@include button-variant('green');
+@include button-variant('yellow');
+@include button-variant('indigo');
+@include button-variant('purple');
+@include button-variant('pink');
+@include button-variant('orange');
+@include button-variant('cyan');
+@include button-variant('teal');
+@include button-variant('mint');
+@include button-variant('brown');
+@include button-variant('black');
+@include button-variant('error');
+@include button-variant('success');
+@include button-variant('warning');
+@include button-variant('info');
+@include button-variant('normal');
+@include button-variant('primary');
+@include button-variant('danger');
 </style>

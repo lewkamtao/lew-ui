@@ -315,10 +315,8 @@
 @mixin export-menu-colors-light($color-name, $color-map) {
   --lew-color-menu-#{$color-name}-item-bg: transparent;
   --lew-color-menu-#{$color-name}-item-bg-hover: var(--lew-form-bgcolor-hover);
-  --lew-color-menu-#{$color-name}-item-bg-active: var(--lew-form-bgcolor-active);
   --lew-color-menu-#{$color-name}-item-text: var(--lew-text-color-1);
   --lew-color-menu-#{$color-name}-item-text-hover: var(--lew-text-color-1);
-  --lew-color-menu-#{$color-name}-item-text-active: var(--lew-text-color-1);
   --lew-color-menu-#{$color-name}-item-selected-bg: #{get-color-value($color-map, '2')};
   --lew-color-menu-#{$color-name}-item-selected-bg-hover: #{get-color-value($color-map, '3')};
   --lew-color-menu-#{$color-name}-item-selected-text: #{get-color-value($color-map, '6')};
@@ -332,10 +330,8 @@
 @mixin export-menu-colors-dark($color-name, $color-map) {
   --lew-color-menu-#{$color-name}-item-bg: transparent;
   --lew-color-menu-#{$color-name}-item-bg-hover: var(--lew-bgcolor-2);
-  --lew-color-menu-#{$color-name}-item-bg-active: var(--lew-bgcolor-4);
   --lew-color-menu-#{$color-name}-item-text: var(--lew-text-color-1);
   --lew-color-menu-#{$color-name}-item-text-hover: var(--lew-text-color-0);
-  --lew-color-menu-#{$color-name}-item-text-active: var(--lew-text-color-0);
   --lew-color-menu-#{$color-name}-item-selected-bg: #{get-color-value($color-map, '3')};
   --lew-color-menu-#{$color-name}-item-selected-bg-hover: #{get-color-value($color-map, '4')};
   --lew-color-menu-#{$color-name}-item-selected-text: #{get-color-value($color-map, '6')};

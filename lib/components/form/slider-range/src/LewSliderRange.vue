@@ -555,8 +555,9 @@ const tooltipContent = computed(() => {
     border-radius: 50%;
     border: var(--lew-color-primary) solid 2px;
     background: var(--lew-bgcolor-0);
-    transition: transform var(--lew-form-transition-bezier),
-                border-width var(--lew-form-transition-ease);
+    transition:
+      transform var(--lew-form-transition-bezier),
+      border-width var(--lew-form-transition-ease);
     cursor: pointer;
     box-sizing: border-box;
     z-index: 3;

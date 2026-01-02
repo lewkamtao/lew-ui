@@ -114,8 +114,9 @@ onMounted(() => {
   user-select: none;
   cursor: pointer;
   color: var(--lew-color-primary);
-  transition: transform var(--lew-form-transition-bezier),
-              opacity var(--lew-form-transition-ease);
+  transition:
+    transform var(--lew-form-transition-bezier),
+    opacity var(--lew-form-transition-ease);
 
   &:hover {
     transform: translateY(-2px);

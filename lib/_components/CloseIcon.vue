@@ -1,49 +1,49 @@
 <script setup lang="ts">
-import type { LewSize } from "lew-ui";
-import { object2class } from "../utils";
-import CommonIcon from "./CommonIcon.vue";
+import type { LewSize } from 'lew-ui'
+import { object2class } from '../utils'
+import CommonIcon from './CommonIcon.vue'
 
 interface Props {
-  size?: LewSize;
-  color?: "gray" | "primary" | "normal";
-  loading?: boolean;
-  disabled?: boolean;
+  size?: LewSize
+  color?: 'gray' | 'primary' | 'normal'
+  loading?: boolean
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: "medium",
-  color: "gray",
+  size: 'medium',
+  color: 'gray',
   loading: false,
   disabled: false,
-});
+})
 
 const emit = defineEmits<{
-  click: [event: MouseEvent];
-}>();
+  click: [event: MouseEvent]
+}>()
 
 // 图标大小与 CommonInput 中的箭头保持一致
 const iconSizeMap: Record<LewSize, number> = {
   small: 14,
   medium: 15,
   large: 16,
-};
+}
 
-const iconSize = computed(() => iconSizeMap[props.size] || iconSizeMap.medium);
+const iconSize = computed(() => iconSizeMap[props.size] || iconSizeMap.medium)
 
 const closeIconClass = computed(() => {
-  return object2class("lew-close-icon", {
+  return object2class('lew-close-icon', {
     size: props.size,
     color: props.color,
     loading: props.loading,
     disabled: props.disabled,
-  });
-});
+  })
+})
 
 function handleClick(event: MouseEvent) {
   if (props.disabled || props.loading) {
-    return;
+    return
   }
-  emit("click", event);
+  emit('click', event)
 }
 </script>
 

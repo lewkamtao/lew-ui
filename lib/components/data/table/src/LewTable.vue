@@ -1530,8 +1530,9 @@ watch(
           right: 0px;
           width: auto;
           transform: translate(calc(100% + 10px), -50%);
-          transition: opacity var(--lew-form-transition-ease),
-                      transform var(--lew-form-transition-ease);
+          transition:
+            opacity var(--lew-form-transition-ease),
+            transform var(--lew-form-transition-ease);
         }
       }
 

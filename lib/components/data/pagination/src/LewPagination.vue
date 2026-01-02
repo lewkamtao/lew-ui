@@ -1,169 +1,169 @@
 <script lang="ts" setup>
 // 1. 类型导入
-import type { LewSelectOption } from "lew-ui/types";
+import type { LewSelectOption } from 'lew-ui/types'
 
 // 2. 组件导入
-import { LewButton, LewFlex, LewInput, LewSelect, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 
 // 3. 工具函数导入
-import { object2class } from "lew-ui/utils";
+import { object2class } from 'lew-ui/utils'
 
 // 4. 组件配置导入
-import { paginationEmits } from "./emits";
-import { paginationProps } from "./props";
+import { paginationEmits } from './emits'
+import { paginationProps } from './props'
 
 // Props & Emits
-const props = defineProps(paginationProps);
-const emit = defineEmits(paginationEmits);
+const props = defineProps(paginationProps)
+const emit = defineEmits(paginationEmits)
 
 // v-model
-const total: Ref<number> = defineModel("total", { default: 0 });
-const currentPage: Ref<number> = defineModel("currentPage", { default: 1 });
-const pageSize: Ref<number> = defineModel("pageSize", { default: 10 });
+const total: Ref<number> = defineModel('total', { default: 0 })
+const currentPage: Ref<number> = defineModel('currentPage', { default: 1 })
+const pageSize: Ref<number> = defineModel('pageSize', { default: 10 })
 
 // 响应式状态
 const state = reactive({
   toPage: undefined as string | undefined,
   visiblePagesCount: props.visiblePagesCount,
-});
+})
 
 // 图标尺寸映射（用于 computed）
 const iconSizeMap: Record<string, number> = {
   small: 16,
   medium: 18,
   large: 20,
-};
+}
 
 // 计算属性
 const getPageSizeOptions = (computed(() => {
   if (Array.isArray(props.pageSizeOptions)) {
     if (
-      typeof props.pageSizeOptions[0] === "string" ||
-      typeof props.pageSizeOptions[0] === "number"
+      typeof props.pageSizeOptions[0] === 'string'
+      || typeof props.pageSizeOptions[0] === 'number'
     ) {
-      return props.pageSizeOptions.map((item) => ({
-        label: locale.t("pagination.pageSize", { pageSize: item }),
+      return props.pageSizeOptions.map(item => ({
+        label: locale.t('pagination.pageSize', { pageSize: item }),
         value: item,
-      }));
+      }))
     }
-    return props.pageSizeOptions;
+    return props.pageSizeOptions
   }
-  return [];
-}) as unknown) as LewSelectOption[];
+  return []
+}) as unknown) as LewSelectOption[]
 
 // 图标尺寸（使用映射对象优化，避免 switch）
-const getIconSize = computed(() => iconSizeMap[props.size] || 18);
+const getIconSize = computed(() => iconSizeMap[props.size] || 18)
 
 onMounted(() => {
   // Ensure that the number of visible pages is at least 5 and at most 12.
-  state.visiblePagesCount = Math.max(state.visiblePagesCount, 5);
-  state.visiblePagesCount = Math.min(state.visiblePagesCount, 12);
-});
+  state.visiblePagesCount = Math.max(state.visiblePagesCount, 5)
+  state.visiblePagesCount = Math.min(state.visiblePagesCount, 12)
+})
 
-const totalPages = computed(() => Math.ceil(total.value / pageSize.value));
+const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
 
 const visiblePages = computed(() => {
-  const _currentPage = currentPage.value;
-  const _totalPages = Math.ceil(total.value / pageSize.value);
-  const _visibleCount = state.visiblePagesCount;
+  const _currentPage = currentPage.value
+  const _totalPages = Math.ceil(total.value / pageSize.value)
+  const _visibleCount = state.visiblePagesCount
 
-  let startPage = _currentPage - Math.floor(_visibleCount / 2);
+  let startPage = _currentPage - Math.floor(_visibleCount / 2)
   if (_currentPage < _visibleCount / 2 + 2) {
-    startPage = 1;
+    startPage = 1
   }
 
   if (startPage < 1) {
-    startPage = 1;
+    startPage = 1
   }
 
-  let endPage = startPage + _visibleCount - 1;
+  let endPage = startPage + _visibleCount - 1
   if (endPage > _totalPages) {
-    endPage = _totalPages;
-    startPage = endPage - _visibleCount + 1;
+    endPage = _totalPages
+    startPage = endPage - _visibleCount + 1
     if (startPage < 1) {
-      startPage = 1;
+      startPage = 1
     }
   }
 
-  const pages: number[] = [];
+  const pages: number[] = []
   for (let i = startPage; i <= endPage; i++) {
-    pages.push(i);
+    pages.push(i)
   }
-  return pages;
-});
+  return pages
+})
 
 function changePage(page: number) {
-  page = Math.floor(page);
+  page = Math.floor(page)
 
   if (page < 1 || page > totalPages.value) {
-    return;
+    return
   }
 
-  currentPage.value = page;
+  currentPage.value = page
   emit(
-    "change",
+    'change',
     toRaw({
       currentPage: page,
       pageSize: pageSize.value,
-    })
-  );
+    }),
+  )
 }
 
 // 是否显示省略号
-const startEllipsis = computed(() => visiblePages.value[0] > 3);
+const startEllipsis = computed(() => visiblePages.value[0] > 3)
 const endEllipsis = computed(
-  () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2
-);
+  () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2,
+)
 
 // 是否显示最大和最小页码
-const showOne = computed(() => visiblePages.value[0] > 1);
+const showOne = computed(() => visiblePages.value[0] > 1)
 const showMax = computed(
-  () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value
-);
+  () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value,
+)
 
 // 是否显示第二页
 const showSecondPage = computed(() => {
   return (
-    currentPage.value > visiblePages.value.length / 2 + 2 &&
-    state.visiblePagesCount < totalPages.value
-  );
-});
+    currentPage.value > visiblePages.value.length / 2 + 2
+    && state.visiblePagesCount < totalPages.value
+  )
+})
 
 // 是否显示倒数第二页
 const showSecondLastPage = computed(() => {
   return (
-    currentPage.value < totalPages.value - visiblePages.value.length / 2 - 1 &&
-    state.visiblePagesCount < totalPages.value
-  );
-});
+    currentPage.value < totalPages.value - visiblePages.value.length / 2 - 1
+    && state.visiblePagesCount < totalPages.value
+  )
+})
 
 function checkPageSize(value: any) {
-  pageSize.value = value;
+  pageSize.value = value
   // 切换 pageSize 后，需要重新计算当前页是否超出范围
-  const newTotalPages = Math.ceil(total.value / value);
+  const newTotalPages = Math.ceil(total.value / value)
   if (currentPage.value > newTotalPages) {
-    currentPage.value = newTotalPages || 1;
+    currentPage.value = newTotalPages || 1
   }
-  changePage(currentPage.value);
+  changePage(currentPage.value)
 }
 
 function checkPageNum(value: any) {
-  const page = Number(value);
-  state.toPage = undefined;
+  const page = Number(value)
+  state.toPage = undefined
   if (page > totalPages.value || page < 1 || Number.isNaN(page)) {
-    return;
+    return
   }
-  currentPage.value = page;
-  changePage(page);
+  currentPage.value = page
+  changePage(page)
 }
 
 const getPaginationClassName = computed(() => {
-  const { size } = props;
-  return object2class("lew-pagination", {
+  const { size } = props
+  return object2class('lew-pagination', {
     size,
-  });
-});
+  })
+})
 </script>
 
 <template>
@@ -291,7 +291,8 @@ const getPaginationClassName = computed(() => {
     background: transparent;
     color: var(--lew-text-color-1);
     // 只过渡需要的属性，避免使用 transition: all
-    transition: background-color var(--lew-form-transition-ease),
+    transition:
+      background-color var(--lew-form-transition-ease),
       color var(--lew-form-transition-ease),
       transform var(--lew-form-transition-bezier);
   }

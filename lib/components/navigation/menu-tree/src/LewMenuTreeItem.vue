@@ -159,7 +159,7 @@ function handleChange(): void {
     background-color: var(--lew-menu-tree-item-bg);
   }
 
-  .lew-menu-tree-item-label:hover {
+  .lew-menu-tree-item-label:hover:not(.lew-menu-tree-item-label-active) {
     background-color: var(--lew-menu-tree-item-bg-hover);
 
     :deep(.lew-menu-tree-item-icon) {
@@ -180,66 +180,44 @@ function handleChange(): void {
   }
 
   .lew-menu-tree-item-label-active {
-    background-color: var(--lew-menu-tree-item-selected-bg);
+    background-color: var(--lew-color-primary-light);
 
     :deep(.lew-menu-tree-item-icon) {
-      color: var(--lew-menu-tree-item-icon-selected);
+      color: var(--lew-color-primary);
     }
 
     :deep(.lew-menu-tree-item-text) {
-      color: var(--lew-menu-tree-item-icon-selected);
+      color: var(--lew-color-primary);
     }
   }
 
   .lew-menu-tree-item-label-active:hover {
-    background-color: var(--lew-menu-tree-item-selected-bg-hover);
+    background-color: var(--lew-color-primary-light);
 
     :deep(.lew-menu-tree-item-icon) {
-      color: var(--lew-menu-tree-item-icon-selected-hover);
+      color: var(--lew-color-primary);
     }
 
     :deep(.lew-menu-tree-item-text) {
-      color: var(--lew-menu-tree-item-icon-selected-hover);
-    }
-  }
-
-  .lew-menu-tree-item-label-active:active {
-    background-color: var(--lew-menu-tree-item-selected-bg-hover);
-
-    :deep(.lew-menu-tree-item-text) {
-      color: var(--lew-menu-tree-item-icon-selected-hover);
+      color: var(--lew-color-primary);
     }
   }
 
   .lew-menu-tree-item-label-selected {
     :deep(.lew-menu-tree-item-icon) {
-      color: var(--lew-menu-tree-item-icon-selected);
+      color: var(--lew-color-primary);
     }
 
     :deep(.lew-menu-tree-item-text) {
-      color: var(--lew-menu-tree-item-icon-selected);
-    }
-  }
-
-  .lew-menu-tree-item-label-selected:hover {
-    :deep(.lew-menu-tree-item-icon) {
-      color: var(--lew-menu-tree-item-icon-selected-hover);
-    }
-
-    :deep(.lew-menu-tree-item-text) {
-      color: var(--lew-menu-tree-item-icon-selected-hover);
+      color: var(--lew-color-primary);
     }
   }
 
   .lew-menu-tree-item-main {
     box-sizing: border-box;
 
-    .lew-menu-tree-item-label:hover {
+    .lew-menu-tree-item-label:hover:not(.lew-menu-tree-item-label-active) {
       background-color: var(--lew-menu-tree-item-bg-hover);
-    }
-
-    .lew-menu-tree-item-label-active:hover {
-      background-color: var(--lew-menu-tree-item-selected-bg-hover);
     }
   }
 
@@ -261,7 +239,7 @@ function handleChange(): void {
 
   .lew-menu-tree-item-label-active .lew-menu-tree-item-chevron-right,
   .lew-menu-tree-item-label-selected .lew-menu-tree-item-chevron-right {
-    color: var(--lew-menu-tree-item-icon-selected);
+    color: var(--lew-color-primary);
   }
 
   .lew-menu-tree-item-label-disabled {

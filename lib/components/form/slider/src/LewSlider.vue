@@ -613,8 +613,9 @@ const optionLabelStyles = computed(() => {
     border-radius: 50%;
     border: 2px solid var(--lew-color-primary);
     background: var(--lew-bgcolor-0);
-    transition: transform var(--lew-form-transition-bezier),
-                border-width var(--lew-form-transition-ease);
+    transition:
+      transform var(--lew-form-transition-bezier),
+      border-width var(--lew-form-transition-ease);
     cursor: pointer;
     box-sizing: border-box;
     z-index: 3;
