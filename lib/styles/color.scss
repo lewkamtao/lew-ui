@@ -116,10 +116,13 @@
   --lew-color-checkbox-#{$color-name}-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-checkbox-#{$color-name}-icon-bg: transparent;
   --lew-color-checkbox-#{$color-name}-checked-icon-bg: #{get-color-value($color-map, '6')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border: #{get-color-value($color-map, '6')};
   --lew-color-checkbox-#{$color-name}-checked-icon-color: #{get-color-value($text-color, '9')};
   --lew-color-checkbox-#{$color-name}-checked-icon-bg-hover: #{get-color-value($color-map, '7')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border-hover: #{get-color-value($color-map, '7')};
   --lew-color-checkbox-#{$color-name}-checked-icon-color-hover: #{get-color-value($text-color, '9')};
   --lew-color-checkbox-#{$color-name}-checked-icon-bg-active: #{get-color-value($color-map, '8')};
+  --lew-color-checkbox-#{$color-name}-checked-icon-border-active: #{get-color-value($color-map, '8')};
   --lew-color-checkbox-#{$color-name}-checked-icon-color-active: #{get-color-value($text-color, '9')};
   --lew-color-checkbox-#{$color-name}-block-checked-bg: #{get-color-value($color-map, '1')};
   --lew-color-checkbox-#{$color-name}-block-checked-border: #{get-color-value($color-map, '6')};
@@ -489,6 +492,19 @@
   --lew-text-color-9-invert: #{get-color-value($text-color, '9')};
 }
 
+// ============================================
+// 通用边界颜色变量（用于所有需要边界的组件）
+// ============================================
+@mixin export-common-border-colors-light() {
+  --lew-border-color: #{get-color-value($bgcolor, '7')};
+  --lew-border: 1px var(--lew-border-color) solid;
+}
+
+@mixin export-common-border-colors-dark() {
+  --lew-border-color: #{get-color-value(dark.$dark-bgcolor, '7')};
+  --lew-border: 1px var(--lew-border-color) solid;
+}
+
 @mixin export-form-colors-light() {
   --lew-form-bgcolor: #{get-color-value($bgcolor, '4')};
   --lew-form-bgcolor-hover: #{get-color-value($bgcolor, '5')};
@@ -596,9 +612,9 @@
   --lew-table-scroll-line-color-end: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 15%, transparent);
   --lew-table-tr-dragging-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '0')} 80%, transparent);
   // M3 风格：使用色阶的具体颜色作为边框，不使用透明度
-  // 表格背景是 bgcolor-0，头部是 bgcolor-2，边框使用 bgcolor-7 形成清晰对比
-  --lew-table-border-color: #{get-color-value($bgcolor, '7')};
-  --lew-table-border: 1px var(--lew-table-border-color) solid;
+  // 表格背景是 bgcolor-0，头部是 bgcolor-2，边框使用通用边界颜色
+  --lew-table-border-color: var(--lew-border-color);
+  --lew-table-border: var(--lew-border);
 }
 
 @mixin export-table-colors-dark() {
@@ -618,9 +634,9 @@
   --lew-table-scroll-line-color-end: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 20%, transparent);
   --lew-table-tr-dragging-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 40%, transparent);
   // M3 风格：使用色阶的具体颜色作为边框，不使用透明度
-  // 表格背景是 dark-bgcolor-2，头部是 dark-bgcolor-4，边框使用 dark-bgcolor-7 形成清晰对比
-  --lew-table-border-color: #{get-color-value(dark.$dark-bgcolor, '7')};
-  --lew-table-border: 1px var(--lew-table-border-color) solid;
+  // 表格背景是 dark-bgcolor-2，头部是 dark-bgcolor-4，边框使用通用边界颜色
+  --lew-table-border-color: var(--lew-border-color);
+  --lew-table-border: var(--lew-border);
 }
 
 @mixin export-action-box-colors-light() {
@@ -644,8 +660,8 @@
   --lew-pop-bgcolor-hover: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 8%, transparent);
   --lew-pop-bgcolor-active: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 12%, transparent);
   --lew-pop-shadow: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 4%, transparent) 0px 2px 8px;
-  --lew-pop-border-color: var(--lew-form-bgcolor-hover);
-  --lew-pop-border: 1px var(--lew-pop-border-color) solid;
+  --lew-pop-border-color: var(--lew-border-color);
+  --lew-pop-border: var(--lew-border);
   --lew-drawer-header-border: 1px #{get-color-value($bgcolor, '4')} solid;
   --lew-drawer-footer-border: 1px #{get-color-value($bgcolor, '4')} solid;
   --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
@@ -662,8 +678,8 @@
   --lew-pop-bgcolor-hover: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 10%, transparent);
   --lew-pop-bgcolor-active: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 15%, transparent);
   --lew-pop-shadow: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 4%, transparent) 0px 2px 8px;
-  --lew-pop-border-color: var(--lew-form-bgcolor-hover);
-  --lew-pop-border: 1px var(--lew-pop-border-color) solid;
+  --lew-pop-border-color: var(--lew-border-color);
+  --lew-pop-border: var(--lew-border);
   --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
   --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
   --lew-tooltip-box-shadow: drop-shadow(
@@ -684,8 +700,11 @@
   --lew-tabs-hover-text-color: #{get-color-value($text-color, '1')};
   --lew-modal-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 30%, transparent);
   --lew-modal-body-bgcolor: var(--lew-pop-bgcolor);
+  --lew-modal-border: var(--lew-border);
+  --lew-dialog-border: var(--lew-border);
   --lew-drawer-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 60%, transparent);
   --lew-drawer-body-bgcolor: var(--lew-pop-bgcolor);
+  --lew-drawer-border-color: var(--lew-border-color);
   --lew-loading-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '0')} 80%, transparent);
   --lew-expand-control-bg-gradient: linear-gradient(
     color-mix(in srgb, #{get-color-value($bgcolor, '0')} 0%, transparent) 0%,
@@ -707,8 +726,11 @@
   --lew-tabs-hover-text-color: #{get-color-value(dark.$dark-text-color, '0')};
   --lew-modal-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 75%, transparent);
   --lew-modal-body-bgcolor: var(--lew-pop-bgcolor);
+  --lew-modal-border: var(--lew-border);
+  --lew-dialog-border: var(--lew-border);
   --lew-drawer-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 75%, transparent);
   --lew-drawer-body-bgcolor: var(--lew-pop-bgcolor);
+  --lew-drawer-border-color: var(--lew-border-color);
   --lew-loading-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 70%, transparent);
   --lew-expand-control-bg-gradient: linear-gradient(
     color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 0%, transparent) 0%,
@@ -722,13 +744,13 @@
 }
 
 @mixin export-desc-colors-light() {
-  --lew-desc-border: var(--lew-table-border);
+  --lew-desc-border: var(--lew-border);
   --lew-desc-label-bgcolor: var(--lew-table-header-bgcolor);
   --lew-desc-bgcolor: var(--lew-table-bgcolor);
 }
 
 @mixin export-desc-colors-dark() {
-  --lew-desc-border: var(--lew-table-border);
+  --lew-desc-border: var(--lew-border);
   --lew-desc-label-bgcolor: var(--lew-table-header-bgcolor);
   --lew-desc-bgcolor: var(--lew-table-bgcolor);
 }
@@ -753,6 +775,7 @@
   // 基础色阶
   @include export-bgcolor-colors-light();
   @include export-text-colors-light();
+  @include export-common-border-colors-light();
 
   // 组件基础颜色
   @include export-form-colors-light();
@@ -776,6 +799,7 @@
   @include export-text-colors-dark();
   @include export-invert-colors();
   @include export-border-colors-dark();
+  @include export-common-border-colors-dark();
 
   // 组件基础颜色
   @include export-form-colors-dark();

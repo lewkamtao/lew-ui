@@ -308,18 +308,16 @@ defineExpose({
         class="lew-multiple-box"
         :style="{ padding: hasSelectedItems ? '4px' : '' }"
       >
-        <transition-group name="tag-list">
-          <LewTag
-            v-for="item in formatItems"
-            :key="item.value"
-            type="light"
-            :size="props.size as any"
-            :closeable="!disabled && !readonly"
-            @close="deleteTag(item.value)"
-          >
-            {{ item.label }}
-          </LewTag>
-        </transition-group>
+        <LewTag
+          v-for="item in formatItems"
+          :key="item.value"
+          type="light"
+          :size="props.size as any"
+          :closeable="!disabled && !readonly"
+          @close="deleteTag(item.value)"
+        >
+          {{ item.label }}
+        </LewTag>
         <LewInput
           v-if="searchable && (props.focus || (formatItems || []).length === 0)"
           ref="searchInputRef"
@@ -651,21 +649,4 @@ defineExpose({
   }
 }
 
-.tag-list {
-  &-move,
-  &-enter-active,
-  &-leave-active {
-    transition: all var(--lew-form-transition-ease);
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-    transform: scale(0);
-  }
-
-  &-leave-active {
-    position: absolute !important;
-  }
-}
 </style>

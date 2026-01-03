@@ -131,7 +131,6 @@ function handleClick(index: number) {
     overflow: hidden;
     padding: 0px 15px;
     box-sizing: border-box;
-    transition: 0.25s all;
 
     .lew-steps-item-index {
       display: flex;
@@ -143,7 +142,6 @@ function handleClick(index: number) {
       border-radius: 50%;
       font-size: 16px;
       background-color: var(--lew-bgcolor-3);
-      transition: 0.25s all;
 
       span {
         display: flex;
@@ -161,7 +159,6 @@ function handleClick(index: number) {
       gap: 5px;
       margin-top: 4px;
       margin-left: 10px;
-      transition: 0.25s all;
     }
 
     .lew-steps-item-title {
@@ -193,7 +190,6 @@ function handleClick(index: number) {
       width: 0px;
       height: 1px;
       background-color: var(--lew-color-steps-primary-active-title);
-      transition: 0.5s all ease-in;
     }
 
     .lew-steps-item-description {

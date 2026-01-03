@@ -271,6 +271,7 @@ if (props.closeByEsc) {
   .lew-drawer-body-position-right {
     right: 0;
     top: 0;
+    border-left: var(--lew-drawer-border-color) 1px solid;
   }
 
   .lew-drawer-body-position-right:not(.lew-drawer-body-show) {
@@ -280,6 +281,7 @@ if (props.closeByEsc) {
   .lew-drawer-body-position-top {
     left: 0;
     top: 0;
+    border-bottom: var(--lew-drawer-border-color) 1px solid;
   }
 
   .lew-drawer-body-position-top:not(.lew-drawer-body-show) {
@@ -289,6 +291,7 @@ if (props.closeByEsc) {
   .lew-drawer-body-position-left {
     left: 0;
     top: 0;
+    border-right: var(--lew-drawer-border-color) 1px solid;
   }
 
   .lew-drawer-body-position-left:not(.lew-drawer-body-show) {
@@ -298,6 +301,7 @@ if (props.closeByEsc) {
   .lew-drawer-body-position-bottom {
     left: 0;
     bottom: 0;
+    border-top: var(--lew-drawer-border-color) 1px solid;
   }
 
   .lew-drawer-body-position-bottom:not(.lew-drawer-body-show) {

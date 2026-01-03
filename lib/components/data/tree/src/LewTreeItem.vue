@@ -288,7 +288,6 @@ const isNodePartiallySelected = computed(() => {
 .lew-tree-item-selected {
   .lew-tree-item-label {
     color: var(--lew-color-primary);
-    font-weight: 600;
   }
   .lew-tree-item-label:hover {
     .lew-checkbox:deep(.lew-checkbox-icon-box) {

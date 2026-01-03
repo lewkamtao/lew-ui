@@ -95,7 +95,7 @@ setModelValue()
 
 <style scoped lang="scss">
 .lew-collapse-item {
-  border-bottom: 1px solid var(--lew-bgcolor-4);
+  border-bottom: var(--lew-table-border);
 
   .lew-collapse-item-title {
     cursor: pointer;

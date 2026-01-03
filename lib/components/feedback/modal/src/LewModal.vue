@@ -267,6 +267,7 @@ onUnmounted(() => {
     position: relative;
     border-radius: var(--lew-border-radius-large);
     background-color: var(--lew-modal-body-bgcolor);
+    border: var(--lew-modal-border);
     overflow: hidden;
 
     .lew-modal-body-main {

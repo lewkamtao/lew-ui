@@ -784,6 +784,24 @@ defineExpose({
     .lew-cascader-item:hover {
       color: var(--lew-text-color-0);
       background-color: var(--lew-form-bgcolor);
+
+      // 多选模式下，hover item 时 checkbox 也显示 hover 效果
+      .lew-cascader-checkbox:deep(.lew-checkbox-icon-box) {
+        border: var(--lew-form-border-width) var(--lew-checkbox-icon-border-hover) solid;
+        background: var(--lew-checkbox-icon-bg-hover);
+      }
+
+      // checked 状态的 hover 效果
+      .lew-cascader-checkbox.lew-checkbox-checked:deep(.lew-checkbox-icon-box) {
+        border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+        background: var(--lew-checkbox-checked-icon-bg-hover);
+      }
+
+      // certain（半选）状态的 hover 效果
+      .lew-cascader-checkbox.lew-checkbox-certain:deep(.lew-checkbox-icon-box) {
+        border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+        background: var(--lew-checkbox-checked-icon-bg-hover);
+      }
     }
 
     .lew-cascader-slot-item {
@@ -813,6 +831,12 @@ defineExpose({
 
     .lew-cascader-item-selected:hover {
       color: var(--lew-color-primary);
+
+      // 多选模式下，hover selected item 时 checkbox 也显示 hover 效果
+      .lew-cascader-checkbox:deep(.lew-checkbox-icon-box) {
+        border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+        background: var(--lew-checkbox-checked-icon-bg-hover);
+      }
     }
   }
 }

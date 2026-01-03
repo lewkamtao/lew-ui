@@ -18,6 +18,8 @@ const slots = useSlots()
 
 // 响应式状态
 const _loading = ref(false)
+const showLoading = ref(false)
+let loadingTimer: ReturnType<typeof setTimeout> | null = null
 
 // 计算属性
 const buttonClass = computed(() => {
@@ -47,6 +49,24 @@ const iconSize = computed(() => {
 const isLoading = computed(() => _loading.value || props.loading)
 const hasContent = computed(() => !!slots.default || !!props.text)
 
+// 显示 loading 的状态：外部 props.loading 立即显示，内部 loading 需要延迟
+const shouldShowLoading = computed(() => {
+  // 如果外部通过 props 控制 loading，立即显示
+  if (props.loading) {
+    return true
+  }
+  // 内部 loading 需要延迟显示
+  return showLoading.value
+})
+
+// 清理定时器
+function clearLoadingTimer() {
+  if (loadingTimer) {
+    clearTimeout(loadingTimer)
+    loadingTimer = null
+  }
+}
+
 // 方法
 async function handleClick(e: MouseEvent) {
   if (props.disabled || isLoading.value) {
@@ -56,15 +76,37 @@ async function handleClick(e: MouseEvent) {
   emit('click', e)
 
   if (typeof props.request === 'function') {
+    // 清理之前的定时器
+    clearLoadingTimer()
+    
+    // 重置状态
+    _loading.value = true
+    showLoading.value = false
+    
+    // 设置 80ms 延迟显示 loading
+    loadingTimer = setTimeout(() => {
+      if (_loading.value) {
+        showLoading.value = true
+      }
+      loadingTimer = null
+    }, 80)
+    
     try {
-      _loading.value = true
       await props.request()
     }
     finally {
+      // 如果定时器还在，说明异步操作在 80ms 内完成，清除定时器
+      clearLoadingTimer()
       _loading.value = false
+      showLoading.value = false
     }
   }
 }
+
+// 组件卸载时清理定时器
+onUnmounted(() => {
+  clearLoadingTimer()
+})
 </script>
 
 <template>
@@ -75,7 +117,7 @@ async function handleClick(e: MouseEvent) {
     @click="handleClick"
   >
     <Transition name="lew-button-loading">
-      <div v-if="isLoading && !disabled" class="lew-button-loading-icon">
+      <div v-if="shouldShowLoading && !disabled" class="lew-button-loading-icon">
         <CommonIcon :size="iconSize" loading type="loader" />
       </div>
     </Transition>
@@ -164,30 +206,29 @@ async function handleClick(e: MouseEvent) {
   transform: translateY(-50%);
 }
 
-// Loading 过渡动画
-.lew-button-loading-enter-active,
+// Loading 过渡动画（透明过渡）
+.lew-button-loading-enter-active {
+  transition: opacity 0.2s ease;
+}
+
 .lew-button-loading-leave-active {
-  transition: all 0.25s ease;
+  transition: opacity 0.15s ease;
 }
 
 .lew-button-loading-enter-from {
   opacity: 0;
-  transform: translateY(-50%);
 }
 
 .lew-button-loading-enter-to {
   opacity: 1;
-  transform: translateY(-50%);
 }
 
 .lew-button-loading-leave-from {
   opacity: 1;
-  transform: translateY(-50%);
 }
 
 .lew-button-loading-leave-to {
   opacity: 0;
-  transform: translateY(-50%);
 }
 
 .lew-button-content {

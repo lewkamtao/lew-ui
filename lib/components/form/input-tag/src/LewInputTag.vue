@@ -224,37 +224,35 @@ onUnmounted(() => {
       :style="{ padding: (modelValue || []).length > 0 ? '4px' : '' }"
       class="lew-input-tag-box"
     >
-      <transition-group name="tag-list">
-        <LewTag
-          v-for="(item, index) in modelValue"
-          :key="index"
-          type="light"
-          :style="getTagStyle(index)"
-          :size="size"
-          :closeable="!readonly && !disabled"
-          :readonly="readonly || disabled"
-          @close="delTag(index)"
-        >
-          {{ item }}
-        </LewTag>
-        <LewInput
-          v-if="isInputActive || (modelValue || []).length === 0"
-          ref="lewInputRef"
-          v-model="inputValue"
-          :auto-width="(modelValue || []).length > 0"
-          class="lew-input-tag"
-          :size="size"
-          :readonly="!isInputActive"
-          :placeholder="
-            (modelValue || []).length === 0
-              ? locale.t('inputTag.placeholder')
-              : ' '
-          "
-          @input="isTagMarkedForDeletion = false"
-          @focus="onFocus"
-          @blur="onBlur"
-        />
-      </transition-group>
+      <LewTag
+        v-for="(item, index) in modelValue"
+        :key="index"
+        type="light"
+        :style="getTagStyle(index)"
+        :size="size"
+        :closeable="!readonly && !disabled"
+        :readonly="readonly || disabled"
+        @close="delTag(index)"
+      >
+        {{ item }}
+      </LewTag>
+      <LewInput
+        v-if="isInputActive || (modelValue || []).length === 0"
+        ref="lewInputRef"
+        v-model="inputValue"
+        :auto-width="(modelValue || []).length > 0"
+        class="lew-input-tag"
+        :size="size"
+        :readonly="!isInputActive"
+        :placeholder="
+          (modelValue || []).length === 0
+            ? locale.t('inputTag.placeholder')
+            : ' '
+        "
+        @input="isTagMarkedForDeletion = false"
+        @focus="onFocus"
+        @blur="onBlur"
+      />
       <CommonIcon
         class="lew-input-tag-icon"
         :size="getIconSize"
@@ -402,24 +400,6 @@ onUnmounted(() => {
   :deep(.lew-tag) {
     background-color: var(--lew-color-inputtag-primary-tag-focus-bg);
   }
-}
-
-.tag-list-move,
-.tag-list-enter-active,
-.tag-list-leave-active {
-  transition:
-    background-color var(--lew-form-transition-ease),
-    border-color var(--lew-form-transition-ease);
-}
-
-.tag-list-enter-from,
-.tag-list-leave-to {
-  opacity: 0;
-  transform: scale(0);
-}
-
-.tag-list-leave-active {
-  position: absolute !important;
 }
 
 .lew-input-tag-view-size-small {

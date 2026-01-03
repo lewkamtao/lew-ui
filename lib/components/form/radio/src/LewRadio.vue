@@ -114,9 +114,9 @@ const getRadioClassName = computed(() => {
       top: 50%;
       transform: translate(-50%, 5px) scale(0);
       transition:
-        background-color var(--lew-form-transition-ease),
         transform var(--lew-form-transition-bezier),
-        opacity var(--lew-form-transition-ease);
+        opacity var(--lew-form-transition-ease),
+        color var(--lew-form-transition-ease);
       opacity: 0;
       color: var(--lew-radio-icon-color);
     }
