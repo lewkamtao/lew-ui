@@ -10,9 +10,18 @@ import { menuTreeProps } from './props'
 const props = defineProps(menuTreeProps)
 const emit = defineEmits(menuTreeEmits)
 
-const modelValue = defineModel<string>('modelValue', { required: false, default: '' })
-const expandKeys = defineModel<string[]>('expandKeys', { required: false, default: () => [] })
-const collapsed = defineModel<boolean>('collapsed', { required: false, default: false })
+const modelValue = defineModel<string>('modelValue', {
+  required: false,
+  default: '',
+})
+const expandKeys = defineModel<string[]>('expandKeys', {
+  required: false,
+  default: () => [],
+})
+const collapsed = defineModel<boolean>('collapsed', {
+  required: false,
+  default: false,
+})
 
 const getModelValueKeyPath = computed(() => {
   function findKeyPath(
@@ -51,7 +60,11 @@ provide('lew-menu-tree', {
 
 const hoverMenu = resolveDirective('context-menu')
 
-function handleMenuSelect(item: LewMenuTreeOption, _options: any, instance: any): void {
+function handleMenuSelect(
+  item: LewMenuTreeOption,
+  _options: any,
+  instance: any,
+): void {
   if (item.disabled) {
     return
   }
