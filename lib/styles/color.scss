@@ -611,8 +611,7 @@
   --lew-table-scroll-line-color-start: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 0%, transparent);
   --lew-table-scroll-line-color-end: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 15%, transparent);
   --lew-table-tr-dragging-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '0')} 80%, transparent);
-  // M3 风格：使用色阶的具体颜色作为边框，不使用透明度
-  // 表格背景是 bgcolor-0，头部是 bgcolor-2，边框使用通用边界颜色
+
   --lew-table-border-color: var(--lew-border-color);
   --lew-table-border: var(--lew-border);
 }
@@ -633,8 +632,7 @@
   --lew-table-scroll-line-color-start: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 0%, transparent);
   --lew-table-scroll-line-color-end: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 20%, transparent);
   --lew-table-tr-dragging-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 40%, transparent);
-  // M3 风格：使用色阶的具体颜色作为边框，不使用透明度
-  // 表格背景是 dark-bgcolor-2，头部是 dark-bgcolor-4，边框使用通用边界颜色
+
   --lew-table-border-color: var(--lew-border-color);
   --lew-table-border: var(--lew-border);
 }

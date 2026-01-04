@@ -78,11 +78,11 @@ async function handleClick(e: MouseEvent) {
   if (typeof props.request === 'function') {
     // 清理之前的定时器
     clearLoadingTimer()
-    
+
     // 重置状态
     _loading.value = true
     showLoading.value = false
-    
+
     // 设置 80ms 延迟显示 loading
     loadingTimer = setTimeout(() => {
       if (_loading.value) {
@@ -90,7 +90,7 @@ async function handleClick(e: MouseEvent) {
       }
       loadingTimer = null
     }, 80)
-    
+
     try {
       await props.request()
     }

@@ -19,7 +19,6 @@ import {
   LewSwitch,
   LewTabs,
   LewTextarea,
-  LewTextTrim,
   LewTooltip,
   LewTreeSelect,
   LewUpload,
@@ -240,12 +239,9 @@ defineExpose({ validate, setError, setIgnoreValidate })
         @change="change"
       />
       <transition name="lew-slide-fade">
-        <LewTextTrim
-          v-if="errMsg"
-          style="width: 100%"
-          :text="errMsg"
-          class="lew-error-message"
-        />
+        <div v-if="errMsg" class="lew-error-message">
+          {{ errMsg }}
+        </div>
       </transition>
     </div>
   </div>
@@ -351,10 +347,15 @@ defineExpose({ validate, setError, setIgnoreValidate })
     position: absolute;
     left: 0px;
     bottom: 0px;
+    width: 100%;
     font-size: 12px;
     transition: all 0.1s;
     transform: translateY(calc(100% + 2px));
     color: var(--lew-color-error-dark);
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.5;
   }
 }
 

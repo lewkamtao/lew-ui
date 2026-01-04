@@ -3,7 +3,7 @@
 import { onClickOutside, useMagicKeys } from '@vueuse/core'
 
 // 2. 组件导入
-import { LewButton, LewFlex, LewTextTrim, locale } from 'lew-ui'
+import { LewButton, LewFlex, locale } from 'lew-ui'
 import CloseButton from 'lew-ui/_components/CloseButton.vue'
 
 // 3. Hooks 导入
@@ -195,7 +195,12 @@ onUnmounted(() => {
               y="center"
               class="lew-modal-header"
             >
-              <LewTextTrim class="lew-modal-title" :text="props.title" />
+              <div
+                class="lew-modal-title"
+                :title="props.title"
+              >
+                {{ props.title }}
+              </div>
               <CloseButton
                 size="large"
                 color="gray"
@@ -281,6 +286,11 @@ onUnmounted(() => {
       .lew-modal-title {
         font-size: 16px;
         font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+        min-width: 0;
       }
 
       .lew-modal-icon-close {

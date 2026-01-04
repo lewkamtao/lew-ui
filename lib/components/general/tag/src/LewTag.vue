@@ -1,48 +1,51 @@
 <script setup lang="ts">
-import CloseIcon from "lew-ui/_components/CloseIcon.vue";
-import { getColorType } from "lew-ui/utils";
-import { isFunction } from "lodash-es";
-import { tagEmits } from "./emits";
-import { tagProps } from "./props";
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import { getColorType } from 'lew-ui/utils'
+import { isFunction } from 'lodash-es'
+import { tagEmits } from './emits'
+import { tagProps } from './props'
 
-const props = defineProps(tagProps);
-const emit = defineEmits(tagEmits);
-const slots = useSlots();
-const isClosing = ref(false);
+const props = defineProps(tagProps)
+const emit = defineEmits(tagEmits)
+const slots = useSlots()
+const isClosing = ref(false)
 
 const tagClass = computed(() => {
-  const resolvedColor = getColorType(props.color) || "primary";
+  const resolvedColor = getColorType(props.color) || 'primary'
   return [
-    "lew-tag",
-    `lew-tag--${props.size || "medium"}`,
-    `lew-tag--${props.type || "light"}`,
+    'lew-tag',
+    `lew-tag--${props.size || 'medium'}`,
+    `lew-tag--${props.type || 'light'}`,
     `lew-tag--${resolvedColor}`,
-    props.round && "lew-tag--round",
-    props.oversize && "lew-tag--oversize",
-    props.disabled && "lew-tag--disabled",
+    props.round && 'lew-tag--round',
+    props.oversize && 'lew-tag--oversize',
+    props.disabled && 'lew-tag--disabled',
   ]
     .filter(Boolean)
-    .join(" ");
-});
+    .join(' ')
+})
 
 async function handleClose(): Promise<void> {
-  if (props.disabled || isClosing.value) return;
+  if (props.disabled || isClosing.value)
+    return
 
   if (props.close) {
-    isClosing.value = true;
-    let result = false;
+    isClosing.value = true
+    let result = false
     try {
-      result = await props.close();
-    } catch {
-      isClosing.value = false;
-      return;
+      result = await props.close()
+    }
+    catch {
+      isClosing.value = false
+      return
     }
     if (result === true) {
-      emit("close");
+      emit('close')
     }
-    isClosing.value = false;
-  } else {
-    emit("close");
+    isClosing.value = false
+  }
+  else {
+    emit('close')
   }
 }
 </script>
@@ -70,8 +73,8 @@ async function handleClose(): Promise<void> {
         props.size === 'small'
           ? 'small'
           : props.size === 'large'
-          ? 'medium'
-          : 'small'
+            ? 'medium'
+            : 'small'
       "
       :loading="isClosing"
       :disabled="props.disabled || isClosing"
@@ -194,11 +197,7 @@ async function handleClose(): Promise<void> {
   }
 
   .lew-tag--#{$name}.lew-tag--light {
-    --lew-tag-bg: color-mix(
-      in srgb,
-      var(--lew-color-tag-#{$name}-light) 50%,
-      var(--lew-bgcolor-0)
-    );
+    --lew-tag-bg: color-mix(in srgb, var(--lew-color-tag-#{$name}-light) 50%, var(--lew-bgcolor-0));
     --lew-tag-color: var(--lew-color-tag-#{$name}-light-text);
     --lew-tag-border: none;
 
@@ -210,32 +209,31 @@ async function handleClose(): Promise<void> {
 
   .lew-tag--#{$name}.lew-tag--ghost {
     --lew-tag-bg: transparent;
-    --lew-tag-border: var(--lew-form-border-width) solid
-      var(--lew-color-#{$name});
+    --lew-tag-border: var(--lew-form-border-width) solid var(--lew-color-#{$name});
     --lew-tag-color: var(--lew-color-tag-#{$name}-ghost-text);
   }
 }
 
 // 生成所有主题色变体
-@include tag-variant("blue");
-@include tag-variant("gray");
-@include tag-variant("red");
-@include tag-variant("green");
-@include tag-variant("yellow");
-@include tag-variant("indigo");
-@include tag-variant("purple");
-@include tag-variant("pink");
-@include tag-variant("orange");
-@include tag-variant("cyan");
-@include tag-variant("teal");
-@include tag-variant("mint");
-@include tag-variant("brown");
-@include tag-variant("black");
-@include tag-variant("error");
-@include tag-variant("success");
-@include tag-variant("warning");
-@include tag-variant("info");
-@include tag-variant("normal");
-@include tag-variant("primary");
-@include tag-variant("danger");
+@include tag-variant('blue');
+@include tag-variant('gray');
+@include tag-variant('red');
+@include tag-variant('green');
+@include tag-variant('yellow');
+@include tag-variant('indigo');
+@include tag-variant('purple');
+@include tag-variant('pink');
+@include tag-variant('orange');
+@include tag-variant('cyan');
+@include tag-variant('teal');
+@include tag-variant('mint');
+@include tag-variant('brown');
+@include tag-variant('black');
+@include tag-variant('error');
+@include tag-variant('success');
+@include tag-variant('warning');
+@include tag-variant('info');
+@include tag-variant('normal');
+@include tag-variant('primary');
+@include tag-variant('danger');
 </style>
