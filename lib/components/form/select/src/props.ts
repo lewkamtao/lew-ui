@@ -89,7 +89,7 @@ export const selectProps = {
   },
   itemHeight: {
     type: Number,
-    default: 38,
+    default: 34,
     validator: validators.number({
       componentName: 'LewSelect',
       propName: 'itemHeight',

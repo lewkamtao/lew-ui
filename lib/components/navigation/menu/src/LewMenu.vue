@@ -87,7 +87,6 @@ function select(item: LewMenuOption) {
 
   display: flex;
   flex-direction: column;
-  gap: 4px;
   border-radius: var(--lew-border-radius-small);
   padding: 2px 6px;
   margin: 0px 3px;

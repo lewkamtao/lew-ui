@@ -29,9 +29,9 @@ const VIRT_LIST_STYLE = {
   boxSizing: 'border-box' as const,
 }
 
-const ITEM_PADDING_STYLE = {
-  height: '38px',
-}
+const ITEM_HEIGHT = 34
+
+const VIRTUAL_LIST_THRESHOLD = 20
 
 const modelValue = defineModel<string | string[] | undefined>()
 
@@ -107,6 +107,10 @@ const getBodyClassName = computed(() => {
   const { size, disabled } = props
   return object2class('lew-cascader-body', { size, disabled })
 })
+
+const useVirtualList = (options: LewCascaderOption[]) => {
+  return options.length > VIRTUAL_LIST_THRESHOLD
+}
 
 const formatItems = computed(() => {
   if (!modelValue.value) {
@@ -590,62 +594,110 @@ defineExpose({
                 :style="getItemWrapperStyle(oIndex, oItem)"
               >
                 <VirtList
+                  v-if="useVirtualList(oItem)"
                   :key="oItem?.[0]?.parentValuePaths?.join('-') || 'root'"
                   class="lew-scrollbar-hover"
                   :list="oItem"
-                  :min-size="38"
+                  :min-size="ITEM_HEIGHT"
                   :buffer="5"
                   item-key="value"
                   :style="VIRT_LIST_STYLE"
                 >
                   <template #default="{ itemData: templateProps }">
                     <div
-                      class="lew-cascader-item-padding"
-                      :style="ITEM_PADDING_STYLE"
+                      class="lew-cascader-item"
+                      :class="getItemClass(templateProps)"
+                      :style="{ height: `${ITEM_HEIGHT}px` }"
                       @click="selectItem(templateProps, oIndex)"
                     >
-                      <div class="lew-cascader-item" :class="getItemClass(templateProps)">
-                        <LewCheckbox
-                          v-if="props.multiple"
-                          :key="templateProps.value"
-                          class="lew-cascader-checkbox"
-                          :checked="
-                            props.free
-                              ? modelValue?.includes(templateProps.value)
-                              : isSelected(templateProps.value)
-                          "
-                          :certain="!props.free && isIndeterminate(templateProps.value)"
-                          :disabled="templateProps.disabled"
-                          @change="changeCheck(templateProps)"
-                        />
-
-                        <div
-                          :title="templateProps.label"
-                          class="lew-cascader-label"
-                          :style="{
-                            width: props.multiple ? 'calc(100% - 36px)' : '100%',
-                          }"
-                        >
-                          {{ templateProps.label }}
-                        </div>
-
-                        <CommonIcon
-                          v-show="templateProps.loading"
-                          :size="14"
-                          loading
-                          class="lew-cascader-loading-icon"
-                          type="loader"
-                        />
-                        <CommonIcon
-                          v-show="!templateProps.loading && !templateProps.isLeaf"
-                          :size="16"
-                          class="lew-cascader-icon"
-                          type="chevron-right"
-                        />
+                      <LewCheckbox
+                        v-if="props.multiple"
+                        :key="templateProps.value"
+                        class="lew-cascader-checkbox"
+                        :checked="
+                          props.free
+                            ? modelValue?.includes(templateProps.value)
+                            : isSelected(templateProps.value)
+                        "
+                        :certain="!props.free && isIndeterminate(templateProps.value)"
+                        :disabled="templateProps.disabled"
+                        @change="changeCheck(templateProps)"
+                      />
+                      <div
+                        :title="templateProps.label"
+                        class="lew-cascader-label"
+                        :style="{
+                          width: props.multiple ? 'calc(100% - 36px)' : '100%',
+                        }"
+                      >
+                        {{ templateProps.label }}
                       </div>
+                      <CommonIcon
+                        v-show="templateProps.loading"
+                        :size="14"
+                        loading
+                        class="lew-cascader-loading-icon"
+                        type="loader"
+                      />
+                      <CommonIcon
+                        v-show="!templateProps.loading && !templateProps.isLeaf"
+                        :size="16"
+                        class="lew-cascader-icon"
+                        type="chevron-right"
+                      />
                     </div>
                   </template>
                 </VirtList>
+                <div
+                  v-else
+                  class="lew-cascader-options-list lew-scrollbar-hover"
+                  :style="VIRT_LIST_STYLE"
+                >
+                  <template v-for="item in oItem" :key="item.value">
+                    <div
+                      class="lew-cascader-item"
+                      :class="getItemClass(item)"
+                      :style="{ height: `${ITEM_HEIGHT}px` }"
+                      @click="selectItem(item, oIndex)"
+                    >
+                      <LewCheckbox
+                        v-if="props.multiple"
+                        :key="item.value"
+                        class="lew-cascader-checkbox"
+                        :checked="
+                          props.free
+                            ? modelValue?.includes(item.value)
+                            : isSelected(item.value)
+                        "
+                        :certain="!props.free && isIndeterminate(item.value)"
+                        :disabled="item.disabled"
+                        @change="changeCheck(item)"
+                      />
+                      <div
+                        :title="item.label"
+                        class="lew-cascader-label"
+                        :style="{
+                          width: props.multiple ? 'calc(100% - 36px)' : '100%',
+                        }"
+                      >
+                        {{ item.label }}
+                      </div>
+                      <CommonIcon
+                        v-show="item.loading"
+                        :size="14"
+                        loading
+                        class="lew-cascader-loading-icon"
+                        type="loader"
+                      />
+                      <CommonIcon
+                        v-show="!item.loading && !item.isLeaf"
+                        :size="16"
+                        class="lew-cascader-icon"
+                        type="chevron-right"
+                      />
+                    </div>
+                  </template>
+                </div>
               </div>
             </template>
           </div>
@@ -698,7 +750,11 @@ defineExpose({
       height: 100%;
       width: 200px;
       box-sizing: border-box;
-      gap: 4px;
+    }
+
+    .lew-cascader-options-list {
+      height: 100%;
+      overflow-y: auto;
     }
 
     .lew-cascader-item-wrapper::after {
@@ -719,7 +775,6 @@ defineExpose({
       position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       width: 100%;
       font-size: 14px;
       overflow: hidden;
@@ -729,7 +784,6 @@ defineExpose({
       color: var(--lew-text-color-1);
       box-sizing: border-box;
       border-radius: var(--lew-border-radius-small);
-      height: 34px;
       flex-shrink: 0;
       padding: 0px 12px;
 

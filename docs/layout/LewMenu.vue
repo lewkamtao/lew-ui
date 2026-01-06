@@ -99,8 +99,8 @@ function toPath(item: Item) {
       display: flex;
       align-items: center;
       position: relative;
-      height: 36px;
-      line-height: 36px;
+      height: 34px;
+      line-height: 34px;
       padding-left: 20px;
       box-sizing: border-box;
       list-style: none;

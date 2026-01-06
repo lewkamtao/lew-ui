@@ -168,7 +168,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 5px;
   padding: 4px;
   box-sizing: border-box;
   background-color: var(--lew-bgcolor-0);
