@@ -19,26 +19,23 @@ const isEllipsis = ref(false)
 
 let tippyInstance: Instance | null = null
 
-const textTrimClass = computed(() => {
-  const classes = ['lew-text-trim-wrapper']
+// 缓存上一次计算的输入，避免重复计算
+let lastCalculateInput = { text: '', reserveEnd: 0, width: 0 }
 
-  if (props.textAlign && props.textAlign !== 'left') {
-    classes.push(`lew-text-trim-wrapper--align-${props.textAlign}`)
-  }
+// 在组件顶层调用 useMouse，避免每次 showTippy 时重复创建
+const { x: mouseX, y: mouseY } = useMouse()
 
-  if (props.lineClamp) {
-    classes.push('lew-text-trim-wrapper--line-clamp')
-  }
-  else {
-    classes.push('lew-text-trim-wrapper--single-line')
-  }
+// 使用 shallowRef 避免深度响应式
+const hasEllipsis = computed(() => isEllipsis.value || isEllipsisByTextTrim.value)
 
-  if (isEllipsis.value || isEllipsisByTextTrim.value) {
-    classes.push('lew-text-trim-wrapper--ellipsis')
-  }
-
-  return classes.join(' ')
-})
+const textTrimClass = computed(() => ({
+  'lew-text-trim-wrapper': true,
+  'lew-text-trim-wrapper--line-clamp': props.lineClamp,
+  'lew-text-trim-wrapper--single-line': !props.lineClamp,
+  'lew-text-trim-wrapper--ellipsis': hasEllipsis.value,
+  [`lew-text-trim-wrapper--align-${props.textAlign}`]:
+    props.textAlign && props.textAlign !== 'left',
+}))
 
 const textTrimStyle = computed((): CSSProperties | string => {
   if (props.lineClamp) {
@@ -49,50 +46,60 @@ const textTrimStyle = computed((): CSSProperties | string => {
   }
 })
 
+function checkEllipsis(): boolean {
+  const element = lewTextTrimRef.value
+  if (!element)
+    return false
+
+  if (props.lineClamp) {
+    return element.offsetHeight < element.scrollHeight
+  }
+  return element.offsetWidth < element.scrollWidth
+}
+
 function initTippy(): void {
   const element = lewTextTrimRef.value
   if (!element)
     return
 
-  const { placement, allowHTML, text, offset } = props
-
-  if (props.lineClamp) {
-    isEllipsis.value = element.offsetHeight < element.scrollHeight
-  }
-  else {
-    isEllipsis.value = element.offsetWidth < element.scrollWidth
+  // 如果 tippy 已存在，直接显示
+  if (tippyInstance) {
+    showTippy()
+    return
   }
 
-  if (isEllipsis.value || isEllipsisByTextTrim.value) {
-    if (!tippyInstance) {
-      tippyInstance = tippy(element, {
-        theme: 'light',
-        delay: props.delay,
-        duration: [250, 250],
-        content: text ? sanitizeHtml(String(text)) : lewTextTrimPopRef.value,
-        animation: 'scale-subtle',
-        hideOnClick: false,
-        interactive: true,
-        appendTo: () => document.body,
-        placement,
-        offset,
-        allowHTML,
-        arrow: roundArrow,
-        maxWidth: 250,
-      })
-      tippyInstance?.popper.children[0].setAttribute('data-lew', 'tooltip')
-      showTippy()
-    }
-  }
-  else {
-    destroyTippy()
+  // 计算是否需要省略
+  isEllipsis.value = checkEllipsis()
+
+  if (hasEllipsis.value) {
+    const { placement, allowHTML, text, offset } = props
+
+    tippyInstance = tippy(element, {
+      theme: 'light',
+      delay: props.delay,
+      duration: [250, 250],
+      content: text ? escape(String(text)) : lewTextTrimPopRef.value,
+      animation: 'scale-subtle',
+      hideOnClick: false,
+      interactive: true,
+      appendTo: () => document.body,
+      placement,
+      offset,
+      allowHTML,
+      arrow: roundArrow,
+      maxWidth: 250,
+    })
+    tippyInstance?.popper.children[0].setAttribute('data-lew', 'tooltip')
+    showTippy()
   }
 }
 
 function showTippy(): void {
-  const { x, y } = useMouse()
+  if (!tippyInstance)
+    return
 
-  if (props.delay && Array.isArray(props.delay) && props.delay[0] > 0) {
+  const { delay } = props
+  if (delay && Array.isArray(delay) && delay[0] > 0) {
     setTimeout(() => {
       const element = lewTextTrimRef.value
       if (!element)
@@ -100,22 +107,18 @@ function showTippy(): void {
 
       const rect = element.getBoundingClientRect()
       if (
-        x.value >= rect.left
-        && x.value <= rect.right
-        && y.value >= rect.top
-        && y.value <= rect.bottom
+        mouseX.value >= rect.left
+        && mouseX.value <= rect.right
+        && mouseY.value >= rect.top
+        && mouseY.value <= rect.bottom
       ) {
         tippyInstance?.show()
       }
-    }, props.delay[0])
+    }, delay[0])
   }
   else {
     tippyInstance?.show()
   }
-}
-
-function sanitizeHtml(html: string): string {
-  return escape(html)
 }
 
 function destroyTippy(): void {
@@ -126,30 +129,49 @@ function destroyTippy(): void {
 }
 
 function calculateDisplayText(): void {
-  const { text, reserveEnd } = props
-  if (lewTextTrimRef.value) {
-    const result = getDisplayText({
-      text: String(text || ''),
-      reserveEnd: reserveEnd || 0,
-      target: lewTextTrimRef.value,
-    })
-    displayText.value = result.text
-    isEllipsisByTextTrim.value = result.isEllipsis
+  const element = lewTextTrimRef.value
+  if (!element)
+    return
+
+  const { text, reserveEnd = 0 } = props
+  const textStr = String(text || '')
+  const currentWidth = element.offsetWidth
+
+  // 输入未变化时跳过计算
+  if (
+    lastCalculateInput.text === textStr
+    && lastCalculateInput.reserveEnd === reserveEnd
+    && lastCalculateInput.width === currentWidth
+  ) {
+    return
+  }
+
+  // 更新缓存
+  lastCalculateInput = { text: textStr, reserveEnd, width: currentWidth }
+
+  const result = getDisplayText({
+    text: textStr,
+    reserveEnd,
+    target: element,
+  })
+  displayText.value = result.text
+  isEllipsisByTextTrim.value = result.isEllipsis
+
+  // 文本变化后重新检查省略状态，如果不再省略则销毁 tippy
+  isEllipsis.value = checkEllipsis()
+  if (!hasEllipsis.value) {
+    destroyTippy()
   }
 }
 
-function initCalculateDisplayText(): void {
-  requestAnimationFrame(calculateDisplayText)
-}
-
-const debouncedCalculate = useDebounceFn(calculateDisplayText, 250)
+const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
 
 function handleMouseEnter(): void {
   initTippy()
 }
 
 onMounted(() => {
-  initCalculateDisplayText()
+  requestAnimationFrame(calculateDisplayText)
   useResizeObserver(lewTextTrimRef, debouncedCalculate)
 })
 
@@ -158,9 +180,16 @@ onUnmounted(() => {
   clearMeasureCache()
 })
 
-watch(() => [props.text, props.reserveEnd], calculateDisplayText, {
-  flush: 'post',
-})
+watch(
+  () => [props.text, props.reserveEnd],
+  () => {
+    // 文本变化时先销毁旧的 tippy，清除缓存，再重新计算
+    destroyTippy()
+    lastCalculateInput = { text: '', reserveEnd: 0, width: 0 }
+    calculateDisplayText()
+  },
+  { flush: 'post' },
+)
 </script>
 
 <template>

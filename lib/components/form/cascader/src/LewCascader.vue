@@ -31,7 +31,8 @@ const VIRT_LIST_STYLE = {
 
 const ITEM_HEIGHT = 34
 
-const VIRTUAL_LIST_THRESHOLD = 20
+// 虚拟列表启用阈值，超过此数量时启用虚拟滚动以优化性能
+const VIRTUAL_LIST_THRESHOLD = 30
 
 const modelValue = defineModel<string | string[] | undefined>()
 
@@ -74,6 +75,12 @@ const formMethods: any = inject('formMethods', {})
 let isInternalUpdate = false
 
 // Computed properties
+
+// 预计算每列是否启用虚拟列表，避免模板中重复计算
+const useVirtualListMap = computed(() =>
+  state.optionsGroup.map(options => options.length > VIRTUAL_LIST_THRESHOLD),
+)
+
 const _loadMethod = computed(() => {
   if (isFunction(props.loadMethod)) {
     return props.loadMethod
@@ -107,10 +114,6 @@ const getBodyClassName = computed(() => {
   const { size, disabled } = props
   return object2class('lew-cascader-body', { size, disabled })
 })
-
-const useVirtualList = (options: LewCascaderOption[]) => {
-  return options.length > VIRTUAL_LIST_THRESHOLD
-}
 
 const formatItems = computed(() => {
   if (!modelValue.value) {
@@ -594,7 +597,7 @@ defineExpose({
                 :style="getItemWrapperStyle(oIndex, oItem)"
               >
                 <VirtList
-                  v-if="useVirtualList(oItem)"
+                  v-if="useVirtualListMap[oIndex]"
                   :key="oItem?.[0]?.parentValuePaths?.join('-') || 'root'"
                   class="lew-scrollbar-hover"
                   :list="oItem"
@@ -623,13 +626,7 @@ defineExpose({
                         :disabled="templateProps.disabled"
                         @change="changeCheck(templateProps)"
                       />
-                      <div
-                        :title="templateProps.label"
-                        class="lew-cascader-label"
-                        :style="{
-                          width: props.multiple ? 'calc(100% - 36px)' : '100%',
-                        }"
-                      >
+                      <div :title="templateProps.label" class="lew-cascader-label">
                         {{ templateProps.label }}
                       </div>
                       <CommonIcon
@@ -673,13 +670,7 @@ defineExpose({
                         :disabled="item.disabled"
                         @change="changeCheck(item)"
                       />
-                      <div
-                        :title="item.label"
-                        class="lew-cascader-label"
-                        :style="{
-                          width: props.multiple ? 'calc(100% - 36px)' : '100%',
-                        }"
-                      >
+                      <div :title="item.label" class="lew-cascader-label">
                         {{ item.label }}
                       </div>
                       <CommonIcon
@@ -787,6 +778,11 @@ defineExpose({
       flex-shrink: 0;
       padding: 0px 12px;
 
+      .lew-cascader-checkbox {
+        flex-shrink: 0;
+        margin-right: 8px;
+      }
+
       .lew-cascader-icon {
         position: absolute;
         right: 2px;
@@ -803,6 +799,8 @@ defineExpose({
       .lew-cascader-label {
         position: relative;
         z-index: 5;
+        flex: 1;
+        min-width: 0;
         user-select: none;
         font-size: 14px;
         overflow: hidden;

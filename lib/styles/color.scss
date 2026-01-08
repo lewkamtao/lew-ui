@@ -57,8 +57,8 @@
   --lew-color-button-#{$color-name}-light: #{get-color-value($color-map, '2')};
   --lew-color-button-#{$color-name}-light-hover: #{get-color-value($color-map, '3')};
   --lew-color-button-#{$color-name}-light-active: #{get-color-value($color-map, '4')};
-  --lew-color-button-#{$color-name}-light-text: #{get-color-value($color-map, '8')};
-  --lew-color-button-#{$color-name}-light-text-hover: #{get-color-value($color-map, '8')};
+  --lew-color-button-#{$color-name}-light-text: #{get-color-value($color-map, '9')};
+  --lew-color-button-#{$color-name}-light-text-hover: #{get-color-value($color-map, '9')};
   --lew-color-button-#{$color-name}-light-text-active: #{get-color-value($color-map, '9')};
   --lew-color-button-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
   --lew-color-button-#{$color-name}-ghost-text-hover: #{get-color-value($color-map, '7')};
@@ -95,7 +95,7 @@
   --lew-color-tag-#{$color-name}-fill: #{get-color-value($color-map, '6')};
   --lew-color-tag-#{$color-name}-fill-text: #{get-color-value($text-color, '9')};
   --lew-color-tag-#{$color-name}-light: #{get-color-value($color-map, '2')};
-  --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, '8')};
+  --lew-color-tag-#{$color-name}-light-text: #{get-color-value($color-map, '9')};
   --lew-color-tag-#{$color-name}-ghost-text: #{get-color-value($color-map, '6')};
 }
 

@@ -787,7 +787,6 @@ export default {
         clearable: 'Limpável',
         placeholder: 'Texto de placeholder',
         readonly: 'Somente leitura',
-        allowDuplicates: 'Permite duplicatas',
         maxLength: 'Número máximo de tags',
         width: 'Largura',
       },

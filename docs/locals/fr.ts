@@ -794,7 +794,6 @@ export default {
         clearable: 'Effaçable',
         placeholder: 'Texte d\'espace réservé',
         readonly: 'Lecture seule',
-        allowDuplicates: 'Autoriser les doublons',
         maxLength: 'Nombre maximum de tags autorisés',
         width: 'Largeur',
       },

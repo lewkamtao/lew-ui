@@ -753,7 +753,6 @@ export default {
         clearable: 'クリア可能かどうか',
         placeholder: 'プレースホルダーテキスト',
         readonly: '読み取り専用かどうか',
-        allowDuplicates: '重複を許可するかどうか',
         maxLength: '追加可能なタグの最大数',
         width: '幅',
       },

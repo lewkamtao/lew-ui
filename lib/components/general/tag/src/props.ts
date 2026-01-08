@@ -11,6 +11,18 @@ export const tagProps = {
       propName: 'text',
     }),
   },
+  editable: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewTag',
+      propName: 'editable',
+    }),
+  },
+  placeholder: {
+    type: String,
+    default: '',
+  },
   type: {
     type: String as PropType<LewTagType>,
     typeValues: validTagTypeList,

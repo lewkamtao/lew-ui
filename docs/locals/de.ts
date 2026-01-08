@@ -810,7 +810,6 @@ export default {
         clearable: 'Löschbar',
         placeholder: 'Platzhaltertext',
         readonly: 'Schreibgeschützt',
-        allowDuplicates: 'Duplikate erlauben',
         maxLength: 'Maximale Anzahl von Tags',
         width: 'Breite',
       },

@@ -9,9 +9,4 @@ export default [
     as: 'switch',
     field: 'clearable',
   },
-  {
-    label: '允许重复值',
-    as: 'switch',
-    field: 'allowDuplicates',
-  },
 ]

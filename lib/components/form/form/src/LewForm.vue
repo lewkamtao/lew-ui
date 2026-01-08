@@ -82,16 +82,16 @@ function createFormSchema(options: LewFormOption[]) {
 const formSchema = computed(() => {
   const options = componentOptions.value;
   const keyParts: string[] = [];
-  for (let i = 0; i < options.length; i++) {
-    const item = options[i];
+
+  for (const item of options) {
     if (item.field && item.rule) {
       keyParts.push(
-        `${item.field}:${typeof item.rule === "string" ? item.rule : "object"}`
+        `${item.field}:${typeof item.rule === "string" ? item.rule : "object"}`,
       );
     }
   }
-  const currentKey = keyParts.join("|");
 
+  const currentKey = keyParts.join("|");
   if (currentKey === formSchemaCacheKey && cachedFormSchema) {
     return cachedFormSchema;
   }
@@ -102,17 +102,15 @@ const formSchema = computed(() => {
   return schema;
 });
 
-const getDynamicGridStyle = computed(() => ({
-  gridTemplateColumns: `repeat(${props.columns}, minmax(0, 1fr))`,
-}));
+const gridTemplateColumns = computed(
+  () => `repeat(${props.columns}, minmax(0, 1fr))`,
+);
 
 function getForm() {
   const formData = formatFormByMap(toRaw(formMap.value));
-  const options = componentOptions.value;
   const result: Record<string, any> = { ...formData };
 
-  for (let i = 0; i < options.length; i++) {
-    const item = options[i];
+  for (const item of componentOptions.value) {
     if (item.outputFormat && item.field && result[item.field] !== undefined) {
       const _value = item.outputFormat({ item, value: result[item.field] });
       if (
@@ -131,9 +129,7 @@ function getForm() {
 }
 
 function setForm(value: any = {}) {
-  const options = componentOptions.value;
-  for (let i = 0; i < options.length; i++) {
-    const item = options[i];
+  for (const item of componentOptions.value) {
     if (!item.field) continue;
     let v = retrieveNestedFieldValue(value, item.field);
     if (item.inputFormat) {
@@ -145,10 +141,8 @@ function setForm(value: any = {}) {
 }
 
 function resetError() {
-  const refMap = formItemRefMap.value;
-  const keys = Object.keys(refMap);
-  for (let i = 0; i < keys.length; i++) {
-    resetFieldError(keys[i]);
+  for (const field of Object.keys(formItemRefMap.value)) {
+    resetFieldError(field);
   }
 }
 
@@ -162,18 +156,16 @@ function resetFieldError(field: string, ignore = false) {
 function validate() {
   return new Promise<boolean>((resolve) => {
     const refMap = formItemRefMap.value;
-    const keys = Object.keys(refMap);
-    for (let i = 0; i < keys.length; i++) {
-      resetFieldError(keys[i], false);
+
+    for (const field of Object.keys(refMap)) {
+      resetFieldError(field, false);
     }
 
     formSchema.value
       .validate(formMap.value, { abortEarly: false })
       .then(() => resolve(true))
       .catch((error: any) => {
-        const inner = error?.inner || [];
-        for (let i = 0; i < inner.length; i++) {
-          const item = inner[i];
+        for (const item of error?.inner || []) {
           const path = item.path.replace(/^\["?|"?\]$/g, "");
           refMap[path]?.setError(item.message);
         }
@@ -211,15 +203,12 @@ const GAP_MAP: Record<string, string> = {
   large: "28px",
 };
 
-const getFormStyle = computed(() => {
-  const style: Record<string, string> = {
+const getFormStyle = computed(() => ({
     width: any2px(props.width),
     minWidth: "320px",
     gap: GAP_MAP[props.size] || "26px",
-    gridTemplateColumns: getDynamicGridStyle.value.gridTemplateColumns,
-  };
-  return style;
-});
+  gridTemplateColumns: gridTemplateColumns.value,
+}));
 
 const getLabelWidth = computed(() => {
   if (props.labelWidth === "auto") {
@@ -238,16 +227,20 @@ function setItemRef(field: string, el: any) {
 
 const itemPropsCache = new Map<string, any>();
 
+// 预创建默认函数，避免每次调用 getItemProps 时重复创建
+const defaultDisabledFn = () => Boolean(props.disabled);
+const defaultReadonlyFn = () => Boolean(props.readonly);
+const defaultVisibleFn = () => true;
+
 function getItemProps(item: LewFormOption) {
   const fieldKey =
     item.field || `__index_${componentOptions.value.indexOf(item)}`;
   const currentLabelWidth = getLabelWidth.value;
-  const cacheKeyFull = `${fieldKey}_${props.direction}_${props.size}_${String(
-    currentLabelWidth
-  )}`;
+  const cacheKeyFull = `${fieldKey}_${props.direction}_${props.size}_${currentLabelWidth}`;
 
-  if (itemPropsCache.has(cacheKeyFull)) {
-    return itemPropsCache.get(cacheKeyFull)!;
+  const cached = itemPropsCache.get(cacheKeyFull);
+  if (cached) {
+    return cached;
   }
 
   const baseProps: any = {
@@ -256,21 +249,14 @@ function getItemProps(item: LewFormOption) {
     labelWidth: currentLabelWidth,
     ...item,
     required: getFormItemRequired(item),
+    disabled: item.disabled ? normalizeProp(item.disabled) : defaultDisabledFn,
+    readonly: item.readonly ? normalizeProp(item.readonly) : defaultReadonlyFn,
+    visible: item.visible !== undefined ? normalizeProp(item.visible) : defaultVisibleFn,
   };
-
-  baseProps.disabled = item.disabled
-    ? normalizeProp(item.disabled)
-    : () => Boolean(props.disabled);
-
-  baseProps.readonly = item.readonly
-    ? normalizeProp(item.readonly)
-    : () => Boolean(props.readonly);
-
-  baseProps.visible =
-    item.visible === undefined ? () => true : normalizeProp(item.visible);
 
   itemPropsCache.set(cacheKeyFull, baseProps);
 
+  // LRU 策略：缓存超过 100 条时删除最早的
   if (itemPropsCache.size > 100) {
     const firstKey = itemPropsCache.keys().next().value;
     if (firstKey) {
@@ -281,27 +267,17 @@ function getItemProps(item: LewFormOption) {
   return baseProps;
 }
 
-const debouncedGetForm = debounce(() => {
+const handleChange = debounce(() => {
   emit("change", getForm());
 }, 100);
 
-function handleChange() {
-  debouncedGetForm();
-}
-
+// 合并 watch：当影响 itemProps 缓存的依赖变化时清理缓存
 watch(
-  () => [props.direction, props.size, getLabelWidth.value],
-  () => {
-    itemPropsCache.clear();
-  }
-);
-
-watch(
-  () => componentOptions.value,
+  [() => props.direction, () => props.size, getLabelWidth, componentOptions],
   () => {
     itemPropsCache.clear();
   },
-  { deep: false }
+  { deep: false },
 );
 
 defineExpose({ getForm, setForm, resetError, validate });

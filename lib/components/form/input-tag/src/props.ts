@@ -53,14 +53,6 @@ export const inputTagProps = {
       propName: 'readonly',
     }),
   },
-  allowDuplicates: {
-    type: Boolean,
-    default: false,
-    validator: validators.boolean({
-      componentName: 'LewInputTag',
-      propName: 'allowDuplicates',
-    }),
-  },
   maxLength: {
     type: Number,
     default: 0,

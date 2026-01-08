@@ -410,11 +410,11 @@ onUnmounted(() => {
   }
 
   .lew-button-type-light.lew-button-color-#{$name} {
-    --lew-button-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light) 50%, var(--lew-bgcolor-0));
+    --lew-button-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light) 35%, var(--lew-bgcolor-0));
     --lew-button-color: var(--lew-color-button-#{$name}-light-text);
-    --lew-button-hover-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light-hover) 50%, var(--lew-bgcolor-0));
+    --lew-button-hover-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light-hover) 45%, var(--lew-bgcolor-0));
     --lew-button-hover-color: var(--lew-color-button-#{$name}-light-text-hover);
-    --lew-button-active-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light-active) 50%, var(--lew-bgcolor-0));
+    --lew-button-active-bg: color-mix(in srgb, var(--lew-color-button-#{$name}-light-active) 55%, var(--lew-bgcolor-0));
     --lew-button-active-color: var(--lew-color-button-#{$name}-light-text-active);
 
     // 如果浏览器不支持 color-mix，使用 fallback

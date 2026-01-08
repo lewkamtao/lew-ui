@@ -12,6 +12,8 @@ import DemoTag6 from './DemoTag6.vue'
 import DemoTag6Code from './DemoTag6.vue?raw'
 import DemoTag7 from './DemoTag7.vue'
 import DemoTag7Code from './DemoTag7.vue?raw'
+import DemoTag8 from './DemoTag8.vue'
+import DemoTag8Code from './DemoTag8.vue?raw'
 
 export const demoGroup = [
   DemoTag1,
@@ -21,6 +23,7 @@ export const demoGroup = [
   DemoTag5,
   DemoTag6,
   DemoTag7,
+  DemoTag8,
 ]
 
 export const codeGroup = [
@@ -31,4 +34,5 @@ export const codeGroup = [
   DemoTag5Code,
   DemoTag6Code,
   DemoTag7Code,
+  DemoTag8Code,
 ]

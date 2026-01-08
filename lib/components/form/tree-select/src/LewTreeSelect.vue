@@ -309,8 +309,6 @@ defineExpose({ show, hide })
     height: auto;
     box-sizing: border-box;
     transition: all 0.25s ease;
-    margin-top: -2px;
-    margin-bottom: -2px;
   }
 }
 </style>

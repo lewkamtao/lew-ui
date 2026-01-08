@@ -10,55 +10,79 @@ interface GetDisplayTextParams {
   target: HTMLElement
 }
 
+interface FontStyle {
+  font: string
+  letterSpacing: number
+}
+
 // Constants
 const TOLERANCE_RATIO = 0.98
 const MIN_WIDTH_DIFFERENCE = 2
 const ELLIPSIS = '.....'
 const MIN_VISIBLE_CHARS = 1
 const WIDTH_SAFETY_MARGIN = 12
-const MAX_CACHE_SIZE = 1000
+const MAX_CACHE_SIZE = 500
 
 // Cache for measurement results
 const measureCache = new Map<string, number>()
 
-// Shared measurement span element
-let sharedMeasureSpan: HTMLSpanElement | null = null
+// Shared canvas context for text measurement (faster than DOM)
+let canvasContext: CanvasRenderingContext2D | null = null
 
-// Utility function to measure text width
-function measureText(text: string, style: CSSStyleDeclaration): number {
-  // Use cache for performance
-  const cacheKey = `${text}-${style.fontSize || ''}-${style.fontFamily || ''}`
+// Get or create canvas context
+function getCanvasContext(): CanvasRenderingContext2D {
+  if (!canvasContext) {
+    const canvas = document.createElement('canvas')
+    canvasContext = canvas.getContext('2d')!
+  }
+  return canvasContext
+}
+
+// Extract font style from computed style
+function extractFontStyle(style: CSSStyleDeclaration): FontStyle {
+  const fontWeight = style.fontWeight || 'normal'
+  const fontSize = style.fontSize || '14px'
+  const fontFamily = style.fontFamily || 'sans-serif'
+  const letterSpacing = Number.parseFloat(style.letterSpacing) || 0
+
+  return {
+    font: `${fontWeight} ${fontSize} ${fontFamily}`,
+    letterSpacing,
+  }
+}
+
+// Utility function to measure text width using Canvas API
+function measureText(text: string, fontStyle: FontStyle): number {
+  if (!text)
+    return 0
+
+  // Generate cache key
+  const cacheKey = `${text}|${fontStyle.font}|${fontStyle.letterSpacing}`
   const cachedWidth = measureCache.get(cacheKey)
   if (cachedWidth !== undefined) {
     return cachedWidth
   }
 
-  // Lazy initialization of shared measurement span
-  if (!sharedMeasureSpan) {
-    sharedMeasureSpan = document.createElement('span')
-    sharedMeasureSpan.style.position = 'fixed'
-    sharedMeasureSpan.style.visibility = 'hidden'
-    sharedMeasureSpan.style.whiteSpace = 'nowrap'
-    document.body.appendChild(sharedMeasureSpan)
+  const ctx = getCanvasContext()
+  ctx.font = fontStyle.font
+
+  // Measure base width
+  let width = ctx.measureText(text).width
+
+  // Add letter spacing
+  if (fontStyle.letterSpacing !== 0) {
+    width += fontStyle.letterSpacing * (text.length - 1)
   }
 
-  // Apply styles and set text content
-  sharedMeasureSpan.style.cssText = style.cssText
-  sharedMeasureSpan.style.position = 'fixed'
-  sharedMeasureSpan.style.visibility = 'hidden'
-  sharedMeasureSpan.style.whiteSpace = 'nowrap'
-  sharedMeasureSpan.textContent = text
-
-  const width = sharedMeasureSpan.offsetWidth
-
-  // Cache result with size limit
-  if (measureCache.size > MAX_CACHE_SIZE) {
+  // Cache result with LRU eviction
+  if (measureCache.size >= MAX_CACHE_SIZE) {
     const firstKey = measureCache.keys().next().value
     if (firstKey) {
       measureCache.delete(firstKey)
     }
   }
   measureCache.set(cacheKey, width)
+
   return width
 }
 
@@ -69,23 +93,27 @@ function measureText(text: string, style: CSSStyleDeclaration): number {
  */
 export function getDisplayText(params: GetDisplayTextParams): DisplayTextResult {
   const { text, reserveEnd = 0, target } = params
+
   // Early return conditions
   if (!text || !target) {
-    return { text, isEllipsis: false }
+    return { text: text || '', isEllipsis: false }
   }
-  if (reserveEnd >= text.length) {
+
+  const textLength = text.length
+  if (reserveEnd >= textLength) {
     return { text, isEllipsis: false }
   }
 
   const normalizedReserveEnd = Math.max(0, reserveEnd)
 
-  // Get target element styles and dimensions
+  // Get target element styles and dimensions (cache style extraction)
   const style = window.getComputedStyle(target)
+  const fontStyle = extractFontStyle(style)
   const targetWidth = target.offsetWidth
   const toleratedWidth = targetWidth / TOLERANCE_RATIO
 
   // Measure full text width
-  const fullWidth = measureText(text, style)
+  const fullWidth = measureText(text, fontStyle)
 
   // Check if truncation is needed
   const needsTruncation = fullWidth - targetWidth > MIN_WIDTH_DIFFERENCE
@@ -93,9 +121,13 @@ export function getDisplayText(params: GetDisplayTextParams): DisplayTextResult 
     return { text, isEllipsis: false }
   }
 
+  // Pre-calculate ellipsis width for reuse
+  const ellipsisWidth = measureText(ELLIPSIS, fontStyle)
+
   // Get end text
   const endText = text.slice(-normalizedReserveEnd)
-  const ellipsisWithEndWidth = measureText(ELLIPSIS + endText, style)
+  const endTextWidth = measureText(endText, fontStyle)
+  const ellipsisWithEndWidth = ellipsisWidth + endTextWidth
 
   // If end text with ellipsis exceeds container width
   if (ellipsisWithEndWidth - targetWidth > MIN_WIDTH_DIFFERENCE) {
@@ -105,9 +137,9 @@ export function getDisplayText(params: GetDisplayTextParams): DisplayTextResult 
     let finalEndText = ''
 
     while (left <= right) {
-      const mid = Math.floor((left + right) / 2)
+      const mid = (left + right) >>> 1 // Faster than Math.floor
       const tempEndText = text.slice(-mid)
-      const tempWidth = measureText(ELLIPSIS + tempEndText, style)
+      const tempWidth = ellipsisWidth + measureText(tempEndText, fontStyle)
 
       if (tempWidth <= toleratedWidth + WIDTH_SAFETY_MARGIN) {
         finalEndText = tempEndText
@@ -124,15 +156,18 @@ export function getDisplayText(params: GetDisplayTextParams): DisplayTextResult 
     }
   }
 
+  // Pre-calculate suffix width (ellipsis + endText)
+  const suffixWidth = ellipsisWithEndWidth
+
   // Binary search for appropriate prefix text length
   let left = 0
-  let right = text.length - normalizedReserveEnd
+  let right = textLength - normalizedReserveEnd
   let startText = ''
 
   while (left <= right) {
-    const mid = Math.floor((left + right) / 2)
+    const mid = (left + right) >>> 1 // Faster than Math.floor
     const tempText = text.slice(0, mid)
-    const tempWidth = measureText(tempText + ELLIPSIS + endText, style)
+    const tempWidth = measureText(tempText, fontStyle) + suffixWidth
 
     if (tempWidth + WIDTH_SAFETY_MARGIN <= toleratedWidth) {
       startText = tempText
@@ -155,12 +190,8 @@ export function getDisplayText(params: GetDisplayTextParams): DisplayTextResult 
 }
 
 /**
- * Clear measurement cache and cleanup resources
+ * Clear measurement cache
  */
 export function clearMeasureCache(): void {
   measureCache.clear()
-  if (sharedMeasureSpan && sharedMeasureSpan.parentNode) {
-    sharedMeasureSpan.parentNode.removeChild(sharedMeasureSpan)
-    sharedMeasureSpan = null
-  }
 }

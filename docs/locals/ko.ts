@@ -792,7 +792,6 @@ export default {
         clearable: '지우기 가능 여부',
         placeholder: '플레이스홀더 텍스트',
         readonly: '읽기 전용 여부',
-        allowDuplicates: '중복 허용 여부',
         maxLength: '추가 가능한 태그의 최대 수',
         width: '너비',
       },

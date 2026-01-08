@@ -747,7 +747,6 @@ export default {
         clearable: 'Cancellabile',
         placeholder: 'Testo segnaposto',
         readonly: 'Sola lettura',
-        allowDuplicates: 'Permetti duplicati',
         maxLength: 'Numero massimo di tag',
         width: 'Larghezza',
       },

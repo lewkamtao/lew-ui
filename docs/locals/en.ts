@@ -159,6 +159,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Editable',
+      },
       props: {
         text: 'Tag Text, priority over slot, text-trim effect will be triggered when width is exceeded',
         type: 'Style Type',
@@ -169,9 +172,14 @@ export default {
         round: 'Round',
         oversize: 'More Relaxed Size',
         close: 'Receives a Promise function for closing the tag',
+        editable: 'Editable mode (requires v-model)',
+        placeholder: 'Placeholder text in editable mode',
       },
       emits: {
         close: 'Tag close event callback',
+        change: 'Triggered when content changes in editable mode',
+        focus: 'Triggered when entering edit mode',
+        blur: 'Triggered when exiting edit mode',
       },
     },
     badge: {
@@ -783,7 +791,6 @@ export default {
         clearable: 'Clearable',
         placeholder: 'Placeholder Text',
         readonly: 'Read-only',
-        allowDuplicates: 'Allow Duplicates',
         maxLength: 'Maximum Number of Tags',
         width: 'Width',
       },

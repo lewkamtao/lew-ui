@@ -3,1618 +3,389 @@
   "columns": 3,
   "size": "medium",
   "width": "1128px",
-  "id": "form_20240810_42aeb6115",
+  "id": "form_enterprise_info",
   "options": [
     {
-      "label": "复选框",
-      "as": "checkbox-group",
+      "label": "企业名称",
+      "as": "input",
+      "field": "companyName",
       "props": {
-        "options": [
-          {
-            "label": "唱歌",
-            "value": "1"
+        "placeholder": "请输入企业全称",
+        "clearable": true
+          },
+      "rule": "Yup.string().required('企业名称不能为空')",
+      "gridArea": "auto / 1 / auto / 3"
           },
           {
-            "label": "跳舞",
-            "value": "2"
-          },
-          {
-            "label": "Rap",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          }
-        ]
+      "label": "统一社会信用代码",
+      "as": "input",
+      "field": "creditCode",
+      "props": {
+        "placeholder": "请输入18位信用代码",
+        "clearable": true,
+        "maxLength": 18
       },
-      "id": "checkbox-group_20240810_1b28381",
-      "field": "e5821c2",
-      "gridArea": "auto  / 1 / auto  / 2"
+      "rule": "Yup.string().required('信用代码不能为空').length(18, '信用代码必须为18位')",
+      "gridArea": "auto / 3 / auto / 4"
     },
     {
-      "label": "下拉单选",
+      "label": "企业类型",
       "as": "select",
+      "field": "companyType",
       "props": {
+        "placeholder": "请选择企业类型",
         "clearable": true,
         "options": [
-          {
-            "label": "广东",
-            "value": "1"
-          },
-          {
-            "label": "深圳",
-            "value": "2"
-          },
-          {
-            "label": "杭州",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          },
-          {
-            "label": "北京",
-            "value": "5"
-          }
+          { "label": "有限责任公司", "value": "llc" },
+          { "label": "股份有限公司", "value": "jsc" },
+          { "label": "个人独资企业", "value": "sole" },
+          { "label": "合伙企业", "value": "partnership" },
+          { "label": "外商投资企业", "value": "foreign" },
+          { "label": "国有企业", "value": "state" },
+          { "label": "集体企业", "value": "collective" }
         ]
       },
-      "id": "select_20240810_e0aae03",
-      "field": "5158b04",
-      "gridArea": "auto  / 2 / auto  / 3"
+      "rule": "Yup.string().required('请选择企业类型')",
+      "gridArea": "auto / 1 / auto / 2"
     },
     {
-      "label": "复选框",
-      "as": "checkbox-group",
-      "props": {
-        "options": [
-          {
-            "label": "唱歌",
-            "value": "1"
-          },
-          {
-            "label": "跳舞",
-            "value": "2"
-          },
-          {
-            "label": "Rap",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          }
-        ]
-      },
-      "id": "checkbox-group_20240810_4433755",
-      "field": "aa10eb6",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "选项卡",
-      "as": "tabs",
-      "props": {
-        "options": [
-          {
-            "label": "Beijing",
-            "value": "1"
-          },
-          {
-            "label": "Shanghai",
-            "value": "2"
-          },
-          {
-            "label": "Guangzhou",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "tabs_20240810_cbe2467",
-      "field": "9c38218",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "label": "复选框",
-      "as": "checkbox-group",
-      "props": {
-        "options": [
-          {
-            "label": "唱歌",
-            "value": "1"
-          },
-          {
-            "label": "跳舞",
-            "value": "2"
-          },
-          {
-            "label": "Rap",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          }
-        ]
-      },
-      "id": "checkbox-group_20240810_c2d6c59",
-      "field": "a65bc310",
-      "gridArea": "auto  / 2 / auto  / 3"
-    },
-    {
-      "label": "级联选择",
+      "label": "所属行业",
       "as": "cascader",
+      "field": "industry",
       "props": {
-        "label": "是否同意",
-        "free": true,
+        "placeholder": "请选择所属行业",
+        "clearable": true,
+        "showAllLevels": true,
         "options": [
           {
-            "value": 1,
-            "label": "Asia",
+            "value": "it",
+            "label": "信息技术",
             "children": [
-              {
-                "value": 2,
-                "label": "China",
-                "children": [
-                  {
-                    "value": 3,
-                    "label": "Beijing"
-                  },
-                  {
-                    "value": 4,
-                    "label": "Shanghai"
-                  },
-                  {
-                    "value": 5,
-                    "label": "Hangzhou"
-                  }
+              { "value": "software", "label": "软件开发" },
+              { "value": "internet", "label": "互联网服务" },
+              { "value": "ai", "label": "人工智能" },
+              { "value": "bigdata", "label": "大数据" }
                 ]
               },
               {
-                "value": 6,
-                "label": "Japan",
+            "value": "finance",
+            "label": "金融业",
                 "children": [
-                  {
-                    "value": 7,
-                    "label": "Tokyo"
-                  },
-                  {
-                    "value": 8,
-                    "label": "Osaka"
-                  },
-                  {
-                    "value": 9,
-                    "label": "Kyoto"
-                  }
+              { "value": "bank", "label": "银行" },
+              { "value": "insurance", "label": "保险" },
+              { "value": "securities", "label": "证券" },
+              { "value": "fund", "label": "基金" }
                 ]
               },
               {
-                "value": 10,
-                "label": "Korea",
+            "value": "manufacture",
+            "label": "制造业",
                 "children": [
-                  {
-                    "value": 11,
-                    "label": "Seoul"
-                  },
-                  {
-                    "value": 12,
-                    "label": "Busan"
-                  },
-                  {
-                    "value": 13,
-                    "label": "Taegu"
-                  }
+              { "value": "electronics", "label": "电子设备" },
+              { "value": "machinery", "label": "机械设备" },
+              { "value": "automobile", "label": "汽车制造" },
+              { "value": "textile", "label": "纺织服装" }
+            ]
+          },
+          {
+            "value": "trade",
+            "label": "贸易业",
+            "children": [
+              { "value": "wholesale", "label": "批发业" },
+              { "value": "retail", "label": "零售业" },
+              { "value": "import_export", "label": "进出口贸易" }
+                ]
+              },
+              {
+            "value": "service",
+            "label": "服务业",
+                "children": [
+              { "value": "consulting", "label": "咨询服务" },
+              { "value": "advertising", "label": "广告传媒" },
+              { "value": "education", "label": "教育培训" },
+              { "value": "medical", "label": "医疗健康" }
                 ]
               }
             ]
           },
-          {
-            "value": 14,
-            "label": "Europe",
-            "children": [
-              {
-                "value": 15,
-                "label": "France",
-                "children": [
-                  {
-                    "value": 16,
-                    "label": "Paris"
+      "gridArea": "auto / 2 / auto / 3"
                   },
                   {
-                    "value": 17,
-                    "label": "Marseille"
-                  },
-                  {
-                    "value": 18,
-                    "label": "Lyon"
-                  }
-                ]
-              },
-              {
-                "value": 19,
-                "label": "UK",
-                "children": [
-                  {
-                    "value": 20,
-                    "label": "London"
-                  },
-                  {
-                    "value": 21,
-                    "label": "Birmingham"
-                  },
-                  {
-                    "value": 22,
-                    "label": "Manchester"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": 23,
-            "label": "North America",
-            "children": [
-              {
-                "value": 24,
-                "label": "US",
-                "children": [
-                  {
-                    "value": 25,
-                    "label": "New York"
-                  },
-                  {
-                    "value": 26,
-                    "label": "Los Angeles"
-                  },
-                  {
-                    "value": 27,
-                    "label": "Washington"
-                  }
-                ]
-              },
-              {
-                "value": 28,
-                "label": "Canada",
-                "children": [
-                  {
-                    "value": 29,
-                    "label": "Toronto"
-                  },
-                  {
-                    "value": 30,
-                    "label": "Montreal"
-                  },
-                  {
-                    "value": 31,
-                    "label": "Ottawa"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "id": "cascader_20240810_15d9e011",
-      "field": "3f89ef12",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "级联选择",
-      "as": "cascader",
+      "label": "经营状态",
+      "as": "select",
+      "field": "businessStatus",
       "props": {
-        "label": "是否同意",
-        "free": true,
+        "placeholder": "请选择经营状态",
+        "clearable": true,
         "options": [
-          {
-            "value": 1,
-            "label": "Asia",
-            "children": [
-              {
-                "value": 2,
-                "label": "China",
-                "children": [
-                  {
-                    "value": 3,
-                    "label": "Beijing"
-                  },
-                  {
-                    "value": 4,
-                    "label": "Shanghai"
-                  },
-                  {
-                    "value": 5,
-                    "label": "Hangzhou"
-                  }
+          { "label": "正常营业", "value": "active" },
+          { "label": "停业整顿", "value": "suspended" },
+          { "label": "注销", "value": "cancelled" },
+          { "label": "吊销", "value": "revoked" }
                 ]
               },
-              {
-                "value": 6,
-                "label": "Japan",
-                "children": [
-                  {
-                    "value": 7,
-                    "label": "Tokyo"
+      "gridArea": "auto / 3 / auto / 4"
                   },
                   {
-                    "value": 8,
-                    "label": "Osaka"
-                  },
-                  {
-                    "value": 9,
-                    "label": "Kyoto"
-                  }
-                ]
-              },
-              {
-                "value": 10,
-                "label": "Korea",
-                "children": [
-                  {
-                    "value": 11,
-                    "label": "Seoul"
-                  },
-                  {
-                    "value": 12,
-                    "label": "Busan"
-                  },
-                  {
-                    "value": 13,
-                    "label": "Taegu"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": 14,
-            "label": "Europe",
-            "children": [
-              {
-                "value": 15,
-                "label": "France",
-                "children": [
-                  {
-                    "value": 16,
-                    "label": "Paris"
-                  },
-                  {
-                    "value": 17,
-                    "label": "Marseille"
-                  },
-                  {
-                    "value": 18,
-                    "label": "Lyon"
-                  }
-                ]
-              },
-              {
-                "value": 19,
-                "label": "UK",
-                "children": [
-                  {
-                    "value": 20,
-                    "label": "London"
-                  },
-                  {
-                    "value": 21,
-                    "label": "Birmingham"
-                  },
-                  {
-                    "value": 22,
-                    "label": "Manchester"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": 23,
-            "label": "North America",
-            "children": [
-              {
-                "value": 24,
-                "label": "US",
-                "children": [
-                  {
-                    "value": 25,
-                    "label": "New York"
-                  },
-                  {
-                    "value": 26,
-                    "label": "Los Angeles"
-                  },
-                  {
-                    "value": 27,
-                    "label": "Washington"
-                  }
-                ]
-              },
-              {
-                "value": 28,
-                "label": "Canada",
-                "children": [
-                  {
-                    "value": 29,
-                    "label": "Toronto"
-                  },
-                  {
-                    "value": 30,
-                    "label": "Montreal"
-                  },
-                  {
-                    "value": 31,
-                    "label": "Ottawa"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+      "label": "注册资本",
+      "as": "input-number",
+      "field": "registeredCapital",
+      "props": {
+        "placeholder": "请输入注册资本",
+        "min": 0,
+        "max": 999999999
       },
-      "id": "cascader_20240810_d3ef9113",
-      "field": "67375f14",
-      "gridArea": "auto  / 1 / auto  / 2"
+      "tips": "单位：万元人民币",
+      "gridArea": "auto / 1 / auto / 2"
     },
     {
-      "label": "日期范围",
+      "label": "成立日期",
+      "as": "date-picker",
+      "field": "establishDate",
+      "props": {
+        "placeholder": "请选择成立日期",
+        "clearable": true
+          },
+      "rule": "Yup.string().required('请选择成立日期')",
+      "gridArea": "auto / 2 / auto / 3"
+    },
+    {
+      "label": "营业期限",
       "as": "date-range-picker",
+      "field": "businessPeriod",
       "props": {
-        "options": [
-          {
-            "label": "Beijing",
-            "value": "1"
-          },
-          {
-            "label": "Shanghai",
-            "value": "2"
-          },
-          {
-            "label": "Guangzhou",
-            "value": "3"
-          }
-        ]
+        "startPlaceholder": "开始日期",
+        "endPlaceholder": "结束日期",
+        "clearable": true
       },
-      "id": "date-range-picker_20240810_6cd68715",
-      "field": "17da9a16",
-      "gridArea": "auto  / 2 / auto  / 3"
+      "gridArea": "auto / 3 / auto / 4"
     },
     {
-      "label": "日期",
-      "as": "date-picker",
-      "props": {
-        "options": [
-          {
-            "label": "Beijing",
-            "value": "1"
-          },
-          {
-            "label": "Shanghai",
-            "value": "2"
-          },
-          {
-            "label": "Guangzhou",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "date-picker_20240810_8666a517",
-      "field": "b282ae18",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "日期",
-      "as": "date-picker",
-      "props": {
-        "options": [
-          {
-            "label": "Beijing",
-            "value": "1"
-          },
-          {
-            "label": "Shanghai",
-            "value": "2"
-          },
-          {
-            "label": "Guangzhou",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "date-picker_20240810_248d6019",
-      "field": "75255b20",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "label": "单选框",
+      "label": "企业规模",
       "as": "radio-group",
+      "field": "companyScale",
       "props": {
         "options": [
-          {
-            "label": "男",
-            "value": "1"
-          },
-          {
-            "label": "女",
-            "value": "2"
-          },
-          {
-            "label": "不公开",
-            "value": "3"
-          }
+          { "label": "微型企业", "value": "micro" },
+          { "label": "小型企业", "value": "small" },
+          { "label": "中型企业", "value": "medium" },
+          { "label": "大型企业", "value": "large" }
         ]
       },
-      "id": "radio-group_20240810_34b9dc21",
-      "field": "2e32be22",
-      "gridArea": "auto  / 2 / auto  / 3"
+      "gridArea": "auto / 1 / auto / 2"
     },
     {
-      "label": "复选框",
-      "as": "checkbox-group",
-      "props": {
-        "options": [
-          {
-            "label": "唱歌",
-            "value": "1"
-          },
-          {
-            "label": "跳舞",
-            "value": "2"
-          },
-          {
-            "label": "Rap",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          }
-        ]
-      },
-      "id": "checkbox-group_20240810_4890f823",
-      "field": "09fe2a24",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "文本域",
-      "as": "textarea",
-      "props": {
-        "clearable": true,
-        "showCount": true,
-        "maxLength": 300
-      },
-      "id": "textarea_20240810_76b10c25",
-      "field": "fbaa5b26",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "label": "单选框",
-      "as": "radio-group",
-      "props": {
-        "options": [
-          {
-            "label": "男",
-            "value": "1"
-          },
-          {
-            "label": "女",
-            "value": "2"
-          },
-          {
-            "label": "不公开",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "radio-group_20240810_2c3bb729",
-      "field": "3fd14b30",
-      "gridArea": "auto  / 2 / auto  / 3"
-    },
-    {
-      "label": "文本域",
-      "as": "textarea",
-      "props": {
-        "clearable": true,
-        "showCount": true,
-        "maxLength": 300
-      },
-      "id": "textarea_20240810_c5e1b331",
-      "field": "31b94b32",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "下拉单选",
+      "label": "员工人数",
       "as": "select",
+      "field": "employeeCount",
       "props": {
+        "placeholder": "请选择员工规模",
         "clearable": true,
         "options": [
-          {
-            "label": "广东",
-            "value": "1"
-          },
-          {
-            "label": "深圳",
-            "value": "2"
-          },
-          {
-            "label": "杭州",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          },
-          {
-            "label": "北京",
-            "value": "5"
-          }
+          { "label": "1-50人", "value": "1-50" },
+          { "label": "51-100人", "value": "51-100" },
+          { "label": "101-500人", "value": "101-500" },
+          { "label": "501-1000人", "value": "501-1000" },
+          { "label": "1000人以上", "value": "1000+" }
         ]
       },
-      "id": "select_20240810_09e36533",
-      "field": "cafe2734",
-      "gridArea": "auto  / 1 / auto  / 2"
+      "gridArea": "auto / 2 / auto / 3"
     },
     {
-      "field": "5ed9c336",
-      "label": "下拉多选",
-      "as": "select-multiple",
-      "props": {
-        "clearable": true,
-        "options": [
-          {
-            "label": "广东",
-            "value": "1"
-          },
-          {
-            "label": "深圳",
-            "value": "2"
-          },
-          {
-            "label": "杭州",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          },
-          {
-            "label": "北京",
-            "value": "5"
-          }
-        ]
-      },
-      "id": "select-multiple_20240810_0d7efd35",
-      "gridArea": "auto  / 2 / auto  / 3"
-    },
-    {
-      "field": "897eb038",
-      "label": "下拉多选",
-      "as": "select-multiple",
-      "props": {
-        "clearable": true,
-        "options": [
-          {
-            "label": "广东",
-            "value": "1"
-          },
-          {
-            "label": "深圳",
-            "value": "2"
-          },
-          {
-            "label": "杭州",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          },
-          {
-            "label": "北京",
-            "value": "5"
-          }
-        ]
-      },
-      "id": "select-multiple_20240810_c7cdd137",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "选项卡",
-      "as": "tabs",
-      "props": {
-        "options": [
-          {
-            "label": "Beijing",
-            "value": "1"
-          },
-          {
-            "label": "Shanghai",
-            "value": "2"
-          },
-          {
-            "label": "Guangzhou",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "tabs_20240810_6b212439",
-      "field": "8c2cda40",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "label": "复选框",
-      "as": "checkbox-group",
-      "props": {
-        "options": [
-          {
-            "label": "唱歌",
-            "value": "1"
-          },
-          {
-            "label": "跳舞",
-            "value": "2"
-          },
-          {
-            "label": "Rap",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          }
-        ]
-      },
-      "id": "checkbox-group_20240810_4f5c0741",
-      "field": "ac534042",
-      "gridArea": "auto  / 2 / auto  / 3"
-    },
-    {
-      "label": "级联选择",
-      "as": "cascader",
-      "props": {
-        "label": "是否同意",
-        "free": true,
-        "options": [
-          {
-            "value": 1,
-            "label": "Asia",
-            "children": [
-              {
-                "value": 2,
-                "label": "China",
-                "children": [
-                  {
-                    "value": 3,
-                    "label": "Beijing"
-                  },
-                  {
-                    "value": 4,
-                    "label": "Shanghai"
-                  },
-                  {
-                    "value": 5,
-                    "label": "Hangzhou"
-                  }
-                ]
-              },
-              {
-                "value": 6,
-                "label": "Japan",
-                "children": [
-                  {
-                    "value": 7,
-                    "label": "Tokyo"
-                  },
-                  {
-                    "value": 8,
-                    "label": "Osaka"
-                  },
-                  {
-                    "value": 9,
-                    "label": "Kyoto"
-                  }
-                ]
-              },
-              {
-                "value": 10,
-                "label": "Korea",
-                "children": [
-                  {
-                    "value": 11,
-                    "label": "Seoul"
-                  },
-                  {
-                    "value": 12,
-                    "label": "Busan"
-                  },
-                  {
-                    "value": 13,
-                    "label": "Taegu"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": 14,
-            "label": "Europe",
-            "children": [
-              {
-                "value": 15,
-                "label": "France",
-                "children": [
-                  {
-                    "value": 16,
-                    "label": "Paris"
-                  },
-                  {
-                    "value": 17,
-                    "label": "Marseille"
-                  },
-                  {
-                    "value": 18,
-                    "label": "Lyon"
-                  }
-                ]
-              },
-              {
-                "value": 19,
-                "label": "UK",
-                "children": [
-                  {
-                    "value": 20,
-                    "label": "London"
-                  },
-                  {
-                    "value": 21,
-                    "label": "Birmingham"
-                  },
-                  {
-                    "value": 22,
-                    "label": "Manchester"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": 23,
-            "label": "North America",
-            "children": [
-              {
-                "value": 24,
-                "label": "US",
-                "children": [
-                  {
-                    "value": 25,
-                    "label": "New York"
-                  },
-                  {
-                    "value": 26,
-                    "label": "Los Angeles"
-                  },
-                  {
-                    "value": 27,
-                    "label": "Washington"
-                  }
-                ]
-              },
-              {
-                "value": 28,
-                "label": "Canada",
-                "children": [
-                  {
-                    "value": 29,
-                    "label": "Toronto"
-                  },
-                  {
-                    "value": 30,
-                    "label": "Montreal"
-                  },
-                  {
-                    "value": 31,
-                    "label": "Ottawa"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "id": "cascader_20240810_ac8d3845",
-      "field": "8012ac46",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "开关",
+      "label": "是否上市",
       "as": "switch",
-      "props": {
-      },
-      "id": "switch_20240810_4c561647",
-      "field": "fcc18c48",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "label": "数字输入",
-      "as": "input-number",
+      "field": "isListed",
       "props": {},
-      "id": "input-number_20240810_1dd18a59",
-      "field": "29989360",
-      "gridArea": "auto  / 2 / auto  / 3"
+      "gridArea": "auto / 3 / auto / 4"
     },
     {
-      "label": "日期范围",
-      "as": "date-range-picker",
+      "label": "法定代表人",
+      "as": "input",
+      "field": "legalRepresentative",
       "props": {
-        "options": [
-          {
-            "label": "Beijing",
-            "value": "1"
+        "placeholder": "请输入法定代表人姓名",
+        "clearable": true
           },
-          {
-            "label": "Shanghai",
-            "value": "2"
-          },
-          {
-            "label": "Guangzhou",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "date-range-picker_20240810_59964461",
-      "field": "195b0562",
-      "gridArea": "auto  / 3 / auto  / 4"
+      "rule": "Yup.string().required('法定代表人不能为空')",
+      "gridArea": "auto / 1 / auto / 2"
     },
     {
-      "label": "级联选择",
+      "label": "联系电话",
+      "as": "input",
+      "field": "contactPhone",
+      "props": {
+        "placeholder": "请输入联系电话",
+        "clearable": true
+      },
+      "rule": "Yup.string().matches(/^1[3-9]\\d{9}$/, '请输入正确的手机号码')",
+      "gridArea": "auto / 2 / auto / 3"
+                  },
+                  {
+      "label": "电子邮箱",
+      "as": "input",
+      "field": "email",
+      "props": {
+        "placeholder": "请输入企业邮箱",
+        "clearable": true
+          },
+      "rule": "Yup.string().email('请输入正确的邮箱格式')",
+      "gridArea": "auto / 3 / auto / 4"
+    },
+    {
+      "label": "企业官网",
+      "as": "input",
+      "field": "website",
+      "props": {
+        "placeholder": "请输入企业官网地址",
+        "clearable": true
+      },
+      "gridArea": "auto / 1 / auto / 2"
+    },
+    {
+      "label": "传真号码",
+      "as": "input",
+      "field": "fax",
+      "props": {
+        "placeholder": "请输入传真号码",
+        "clearable": true
+      },
+      "gridArea": "auto / 2 / auto / 3"
+    },
+    {
+      "label": "邮政编码",
+      "as": "input",
+      "field": "postalCode",
+      "props": {
+        "placeholder": "请输入邮政编码",
+        "clearable": true,
+        "maxLength": 6
+      },
+      "gridArea": "auto / 3 / auto / 4"
+    },
+    {
+      "label": "所在地区",
       "as": "cascader",
+      "field": "region",
       "props": {
-        "label": "是否同意",
-        "free": true,
+        "placeholder": "请选择所在地区",
+        "clearable": true,
+        "showAllLevels": true,
         "options": [
           {
-            "value": 1,
-            "label": "Asia",
+            "value": "beijing",
+            "label": "北京市",
             "children": [
-              {
-                "value": 2,
-                "label": "China",
-                "children": [
-                  {
-                    "value": 3,
-                    "label": "Beijing"
-                  },
-                  {
-                    "value": 4,
-                    "label": "Shanghai"
-                  },
-                  {
-                    "value": 5,
-                    "label": "Hangzhou"
-                  }
+              { "value": "chaoyang", "label": "朝阳区" },
+              { "value": "haidian", "label": "海淀区" },
+              { "value": "dongcheng", "label": "东城区" },
+              { "value": "xicheng", "label": "西城区" }
                 ]
               },
               {
-                "value": 6,
-                "label": "Japan",
+            "value": "shanghai",
+            "label": "上海市",
                 "children": [
-                  {
-                    "value": 7,
-                    "label": "Tokyo"
-                  },
-                  {
-                    "value": 8,
-                    "label": "Osaka"
-                  },
-                  {
-                    "value": 9,
-                    "label": "Kyoto"
-                  }
+              { "value": "pudong", "label": "浦东新区" },
+              { "value": "huangpu", "label": "黄浦区" },
+              { "value": "xuhui", "label": "徐汇区" },
+              { "value": "jing_an", "label": "静安区" }
                 ]
               },
               {
-                "value": 10,
-                "label": "Korea",
+            "value": "guangdong",
+            "label": "广东省",
                 "children": [
-                  {
-                    "value": 11,
-                    "label": "Seoul"
-                  },
-                  {
-                    "value": 12,
-                    "label": "Busan"
-                  },
-                  {
-                    "value": 13,
-                    "label": "Taegu"
-                  }
+              { "value": "guangzhou", "label": "广州市" },
+              { "value": "shenzhen", "label": "深圳市" },
+              { "value": "dongguan", "label": "东莞市" },
+              { "value": "foshan", "label": "佛山市" }
+            ]
+          },
+          {
+            "value": "zhejiang",
+            "label": "浙江省",
+            "children": [
+              { "value": "hangzhou", "label": "杭州市" },
+              { "value": "ningbo", "label": "宁波市" },
+              { "value": "wenzhou", "label": "温州市" },
+              { "value": "jiaxing", "label": "嘉兴市" }
+                ]
+              },
+              {
+            "value": "jiangsu",
+            "label": "江苏省",
+                "children": [
+              { "value": "nanjing", "label": "南京市" },
+              { "value": "suzhou", "label": "苏州市" },
+              { "value": "wuxi", "label": "无锡市" },
+              { "value": "changzhou", "label": "常州市" }
                 ]
               }
             ]
           },
-          {
-            "value": 14,
-            "label": "Europe",
-            "children": [
-              {
-                "value": 15,
-                "label": "France",
-                "children": [
-                  {
-                    "value": 16,
-                    "label": "Paris"
-                  },
-                  {
-                    "value": 17,
-                    "label": "Marseille"
-                  },
-                  {
-                    "value": 18,
-                    "label": "Lyon"
-                  }
-                ]
-              },
-              {
-                "value": 19,
-                "label": "UK",
-                "children": [
-                  {
-                    "value": 20,
-                    "label": "London"
-                  },
-                  {
-                    "value": 21,
-                    "label": "Birmingham"
-                  },
-                  {
-                    "value": 22,
-                    "label": "Manchester"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": 23,
-            "label": "North America",
-            "children": [
-              {
-                "value": 24,
-                "label": "US",
-                "children": [
-                  {
-                    "value": 25,
-                    "label": "New York"
-                  },
-                  {
-                    "value": 26,
-                    "label": "Los Angeles"
-                  },
-                  {
-                    "value": 27,
-                    "label": "Washington"
-                  }
-                ]
-              },
-              {
-                "value": 28,
-                "label": "Canada",
-                "children": [
-                  {
-                    "value": 29,
-                    "label": "Toronto"
-                  },
-                  {
-                    "value": 30,
-                    "label": "Montreal"
-                  },
-                  {
-                    "value": 31,
-                    "label": "Ottawa"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "id": "cascader_20240810_8f375867",
-      "field": "d58c8568",
-      "gridArea": "auto  / 1 / auto  / 2"
+      "rule": "Yup.string().required('请选择所在地区')",
+      "gridArea": "auto / 1 / auto / 2"
     },
     {
-      "label": "选项卡",
-      "as": "tabs",
+      "label": "详细地址",
+      "as": "input",
+      "field": "address",
       "props": {
-        "options": [
-          {
-            "label": "Beijing",
-            "value": "1"
+        "placeholder": "请输入详细地址（街道、门牌号等）",
+        "clearable": true
           },
-          {
-            "label": "Shanghai",
-            "value": "2"
-          },
-          {
-            "label": "Guangzhou",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "tabs_20240810_c5e3b569",
-      "field": "db4c4370",
-      "gridArea": "auto  / 2 / auto  / 3"
+      "rule": "Yup.string().required('详细地址不能为空')",
+      "gridArea": "auto / 2 / auto / 4"
     },
     {
-      "label": "复选框",
+      "label": "企业资质",
       "as": "checkbox-group",
+      "field": "qualifications",
       "props": {
         "options": [
-          {
-            "label": "唱歌",
-            "value": "1"
-          },
-          {
-            "label": "跳舞",
-            "value": "2"
-          },
-          {
-            "label": "Rap",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          }
+          { "label": "高新技术企业", "value": "hightech" },
+          { "label": "ISO9001认证", "value": "iso9001" },
+          { "label": "ISO14001认证", "value": "iso14001" },
+          { "label": "AAA信用等级", "value": "aaa_credit" }
         ]
       },
-      "id": "checkbox-group_20240810_96577d71",
-      "field": "81f2c372",
-      "gridArea": "auto  / 3 / auto  / 4"
+      "gridArea": "auto / 1 / auto / 3"
     },
     {
-      "label": "单选框",
+      "label": "纳税类型",
       "as": "radio-group",
+      "field": "taxType",
       "props": {
         "options": [
-          {
-            "label": "男",
-            "value": "1"
-          },
-          {
-            "label": "女",
-            "value": "2"
-          },
-          {
-            "label": "不公开",
-            "value": "3"
-          }
+          { "label": "一般纳税人", "value": "general" },
+          { "label": "小规模纳税人", "value": "small" }
         ]
       },
-      "id": "radio-group_20240810_74c62c73",
-      "field": "dd8c6474",
-      "gridArea": "auto  / 1 / auto  / 2"
+      "gridArea": "auto / 3 / auto / 4"
     },
     {
-      "label": "文本域",
+      "label": "主营业务",
       "as": "textarea",
+      "field": "mainBusiness",
       "props": {
+        "placeholder": "请简要描述企业主营业务范围",
         "clearable": true,
         "showCount": true,
-        "maxLength": 300
+        "maxLength": 500
       },
-      "id": "textarea_20240810_4f677975",
-      "field": "38dc5176",
-      "gridArea": "auto  / 2 / auto  / 3"
+      "gridArea": "auto / 1 / auto / 4"
     },
     {
-      "label": "下拉单选",
-      "as": "select",
+      "label": "企业简介",
+      "as": "textarea",
+      "field": "companyProfile",
       "props": {
+        "placeholder": "请输入企业简介（公司发展历程、核心优势等）",
         "clearable": true,
-        "options": [
-          {
-            "label": "广东",
-            "value": "1"
-          },
-          {
-            "label": "深圳",
-            "value": "2"
-          },
-          {
-            "label": "杭州",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          },
-          {
-            "label": "北京",
-            "value": "5"
-          }
-        ]
+        "showCount": true,
+        "maxLength": 1000
       },
-      "id": "select_20240810_852d2b77",
-      "field": "a446a678",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "field": "7cfc3282",
-      "label": "下拉多选",
-      "as": "select-multiple",
-      "props": {
-        "clearable": true,
-        "options": [
-          {
-            "label": "广东",
-            "value": "1"
-          },
-          {
-            "label": "深圳",
-            "value": "2"
-          },
-          {
-            "label": "杭州",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          },
-          {
-            "label": "北京",
-            "value": "5"
-          }
-        ]
-      },
-      "id": "select-multiple_20240810_9e1d4181",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "label": "输入框",
-      "as": "input",
-      "props": {
-        "type": "text",
-        "align": "left"
-      },
-      "id": "input_20240810_1d31fd83",
-      "field": "1f23ec84",
-      "gridArea": "auto  / 2 / auto  / 3"
-    },
-    {
-      "label": "占位盒子",
-      "as": "",
-      "id": "_20240810_7b812989",
-      "field": "c2423990",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "数字输入",
-      "as": "input-number",
-      "props": {},
-      "id": "input-number_20240810_f2b68891",
-      "field": "a77c5192",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "label": "数字输入",
-      "as": "input-number",
-      "props": {},
-      "id": "input-number_20240810_34331893",
-      "field": "019c2194",
-      "gridArea": "auto  / 2 / auto  / 3"
-    },
-    {
-      "label": "级联选择",
-      "as": "cascader",
-      "props": {
-        "label": "是否同意",
-        "free": true,
-        "options": [
-          {
-            "value": 1,
-            "label": "Asia",
-            "children": [
-              {
-                "value": 2,
-                "label": "China",
-                "children": [
-                  {
-                    "value": 3,
-                    "label": "Beijing"
-                  },
-                  {
-                    "value": 4,
-                    "label": "Shanghai"
-                  },
-                  {
-                    "value": 5,
-                    "label": "Hangzhou"
-                  }
-                ]
-              },
-              {
-                "value": 6,
-                "label": "Japan",
-                "children": [
-                  {
-                    "value": 7,
-                    "label": "Tokyo"
-                  },
-                  {
-                    "value": 8,
-                    "label": "Osaka"
-                  },
-                  {
-                    "value": 9,
-                    "label": "Kyoto"
-                  }
-                ]
-              },
-              {
-                "value": 10,
-                "label": "Korea",
-                "children": [
-                  {
-                    "value": 11,
-                    "label": "Seoul"
-                  },
-                  {
-                    "value": 12,
-                    "label": "Busan"
-                  },
-                  {
-                    "value": 13,
-                    "label": "Taegu"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": 14,
-            "label": "Europe",
-            "children": [
-              {
-                "value": 15,
-                "label": "France",
-                "children": [
-                  {
-                    "value": 16,
-                    "label": "Paris"
-                  },
-                  {
-                    "value": 17,
-                    "label": "Marseille"
-                  },
-                  {
-                    "value": 18,
-                    "label": "Lyon"
-                  }
-                ]
-              },
-              {
-                "value": 19,
-                "label": "UK",
-                "children": [
-                  {
-                    "value": 20,
-                    "label": "London"
-                  },
-                  {
-                    "value": 21,
-                    "label": "Birmingham"
-                  },
-                  {
-                    "value": 22,
-                    "label": "Manchester"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": 23,
-            "label": "North America",
-            "children": [
-              {
-                "value": 24,
-                "label": "US",
-                "children": [
-                  {
-                    "value": 25,
-                    "label": "New York"
-                  },
-                  {
-                    "value": 26,
-                    "label": "Los Angeles"
-                  },
-                  {
-                    "value": 27,
-                    "label": "Washington"
-                  }
-                ]
-              },
-              {
-                "value": 28,
-                "label": "Canada",
-                "children": [
-                  {
-                    "value": 29,
-                    "label": "Toronto"
-                  },
-                  {
-                    "value": 30,
-                    "label": "Montreal"
-                  },
-                  {
-                    "value": 31,
-                    "label": "Ottawa"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "id": "cascader_20240810_e1f7a195",
-      "field": "55990796",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "日期范围",
-      "as": "date-range-picker",
-      "props": {
-        "options": [
-          {
-            "label": "Beijing",
-            "value": "1"
-          },
-          {
-            "label": "Shanghai",
-            "value": "2"
-          },
-          {
-            "label": "Guangzhou",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "date-range-picker_20240810_22df1197",
-      "field": "244f6e98",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "label": "复选框",
-      "as": "checkbox-group",
-      "props": {
-        "options": [
-          {
-            "label": "唱歌",
-            "value": "1"
-          },
-          {
-            "label": "跳舞",
-            "value": "2"
-          },
-          {
-            "label": "Rap",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          }
-        ]
-      },
-      "id": "checkbox-group_20240810_81ce0d99",
-      "field": "9e0ad0100",
-      "gridArea": "auto  / 2 / auto  / 3"
-    },
-    {
-      "label": "单选框",
-      "as": "radio-group",
-      "props": {
-        "options": [
-          {
-            "label": "男",
-            "value": "1"
-          },
-          {
-            "label": "女",
-            "value": "2"
-          },
-          {
-            "label": "不公开",
-            "value": "3"
-          }
-        ]
-      },
-      "id": "radio-group_20240810_b355f7101",
-      "field": "4c6d60102",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "下拉单选",
-      "as": "select",
-      "props": {
-        "clearable": true,
-        "options": [
-          {
-            "label": "广东",
-            "value": "1"
-          },
-          {
-            "label": "深圳",
-            "value": "2"
-          },
-          {
-            "label": "杭州",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          },
-          {
-            "label": "北京",
-            "value": "5"
-          }
-        ]
-      },
-      "id": "select_20240810_42ba12105",
-      "field": "ab094f106",
-      "gridArea": "auto  / 1 / auto  / 2"
-    },
-    {
-      "field": "a488e9108",
-      "label": "下拉多选",
-      "as": "select-multiple",
-      "props": {
-        "clearable": true,
-        "options": [
-          {
-            "label": "广东",
-            "value": "1"
-          },
-          {
-            "label": "深圳",
-            "value": "2"
-          },
-          {
-            "label": "杭州",
-            "value": "3"
-          },
-          {
-            "label": "上海",
-            "value": "4"
-          },
-          {
-            "label": "北京",
-            "value": "5"
-          }
-        ]
-      },
-      "id": "select-multiple_20240810_8fcd72107",
-      "gridArea": "auto  / 2 / auto  / 3"
-    },
-    {
-      "label": "输入框",
-      "as": "input",
-      "props": {
-        "type": "text",
-        "align": "left"
-      },
-      "id": "input_20240810_4017c2111",
-      "field": "f2b102112",
-      "gridArea": "auto  / 3 / auto  / 4"
-    },
-    {
-      "label": "占位盒子",
-      "as": "",
-      "id": "_20240810_84a426113",
-      "field": "eff5b3114",
-      "gridArea": "auto  / 1 / auto  / 2"
+      "gridArea": "auto / 1 / auto / 4"
     }
   ]
 }

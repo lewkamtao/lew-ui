@@ -348,9 +348,8 @@ defineExpose({ init, getValue })
     .lew-date-item-selected:hover {
       .lew-date-label {
         .lew-date-value {
-          background: var(--lew-color-datepicker-primary-selected-bg-hover);
-          color: var(--lew-color-datepicker-primary-selected-text-hover);
-          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
         }
       }
     }

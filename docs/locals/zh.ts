@@ -155,6 +155,9 @@ export default {
       demo7: {
         title: '插槽',
       },
+      demo8: {
+        title: '可编辑',
+      },
       props: {
         text: '标签文本，优先级大于插槽，超出宽度会触发 text-trim 效果',
         type: '样式类型',
@@ -165,9 +168,14 @@ export default {
         round: '是否圆角',
         oversize: '更宽松的尺寸',
         close: '接收一个 Promise 函数，用于关闭标签',
+        editable: '是否可编辑（需配合 v-model 使用）',
+        placeholder: '可编辑模式下的占位文本',
       },
       emits: {
         close: '关闭标签事件回调',
+        change: '可编辑模式下内容变更时触发',
+        focus: '进入编辑状态时触发',
+        blur: '退出编辑状态时触发',
       },
     },
     badge: {
@@ -783,7 +791,6 @@ export default {
         clearable: '是否可清空',
         placeholder: '占位提示文本',
         readonly: '是否只读',
-        allowDuplicates: '是否允许重复',
         maxLength: '允许添加标签的最大数量',
         width: '宽度',
       },

@@ -7,7 +7,7 @@ alwaysApply: false
 ## 1. 组件基础信息
 
 - **组件名称**：LewTag
-- **核心用途**：用于显示标签、标记、分类等场景，支持多种样式变体、尺寸、颜色和关闭功能
+- **核心用途**：用于显示标签、标记、分类等场景，支持多种样式变体、尺寸、颜色、关闭功能和可编辑功能
 - **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
 - **基础特性**：
   - 支持三种类型：填充（fill）、浅色（light）、幽灵（ghost）
@@ -18,6 +18,7 @@ alwaysApply: false
   - 支持圆角（round）和超大尺寸（oversize）
   - 支持禁用状态（disabled）
   - 支持左侧和右侧插槽（left、right）
+  - 支持可编辑模式（editable + v-model）
 
 ## 2. 快速开始
 
@@ -28,6 +29,7 @@ alwaysApply: false
 - **关闭功能**：通过 `closeable` 或 `close` 属性显示关闭按钮
 - **异步确认**：通过 `close` 函数可以实现异步关闭确认逻辑
 - **文本显示**：通过 `text` prop 或默认插槽显示标签文本
+- **可编辑模式**：通过 `v-model` + `editable` 属性启用可编辑功能，点击标签可进入编辑状态
 
 ## 3. 详细 API 说明
 
@@ -36,6 +38,8 @@ alwaysApply: false
 | 属性名 | 类型 | 默认值 | 可选值 | 说明 |
 |--------|------|--------|--------|------|
 | text | `string` | - | 任意字符串 | 标签文本内容，如果设置了插槽内容，插槽优先 |
+| editable | `boolean` | `false` | `true` / `false` | 是否启用可编辑模式（需配合 v-model 使用） |
+| placeholder | `string` | `''` | 任意字符串 | 可编辑模式下的占位文本 |
 | type | `LewTagType` | `'light'` | `'fill'` / `'light'` / `'ghost'` | 标签类型：填充、浅色、幽灵 |
 | color | `LewColor` | `'primary'` | 所有主题色和状态色 | 标签颜色 |
 | size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 标签尺寸 |
@@ -54,6 +58,9 @@ alwaysApply: false
 | 事件名 | 参数 | 说明 |
 |--------|------|------|
 | close | - | 关闭按钮点击时触发（当 `close` 函数返回 `true` 或未设置 `close` 函数时） |
+| change | `value: string` | 可编辑模式下内容变更时触发 |
+| focus | - | 可编辑模式下进入编辑状态时触发 |
+| blur | - | 可编辑模式下退出编辑状态时触发 |
 
 ### 3.4 插槽
 
@@ -247,7 +254,43 @@ const onClose = () => {
 </template>
 ```
 
-### 问题7：关闭按钮加载状态一直显示
+### 问题7：可编辑模式不生效
+
+**现象**：设置了 `editable={true}`，但点击标签无法进入编辑状态。
+
+**原因**：
+- 未同时使用 `v-model` 绑定值
+- 标签处于 `disabled` 状态
+
+**修复方案**：
+1. 确认同时使用 `v-model` 和 `editable`：
+```vue
+<template>
+  <!-- ✅ 正确：同时使用 v-model 和 editable -->
+  <lew-tag v-model="tagValue" editable />
+  
+  <!-- ❌ 错误：只设置 editable，没有 v-model -->
+  <lew-tag editable>标签</lew-tag>
+  
+  <!-- ❌ 错误：只设置 v-model，没有 editable -->
+  <lew-tag v-model="tagValue" />
+</template>
+<script setup>
+const tagValue = ref('可编辑标签')
+</script>
+```
+2. 确认标签未禁用：
+```vue
+<template>
+  <!-- ✅ 正确：未禁用，可以编辑 -->
+  <lew-tag v-model="tagValue" editable />
+  
+  <!-- ❌ 错误：禁用状态下无法编辑 -->
+  <lew-tag v-model="tagValue" editable disabled />
+</template>
+```
+
+### 问题8：关闭按钮加载状态一直显示
 
 **现象**：点击关闭按钮后，加载图标一直显示，不消失。
 
@@ -278,6 +321,9 @@ const handleClose = async () => {
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
+| 1.2.2 | 优化可编辑模式：添加默认透明边框防止宽度抖动、边框颜色根据标签颜色自适应 | 2026-01-08 |
+| 1.2.1 | 优化可编辑模式：hover 边框更细更深、聚焦时隐藏关闭按钮避免误触、输入框宽度自适应文本 | 2026-01-08 |
+| 1.2.0 | 新增可编辑模式：支持 v-model + editable 属性，点击标签可进入编辑状态，支持 placeholder、change、focus、blur 事件 | 2026-01-08 |
 | 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（ref, computed），移除注释，优化样式（添加 scoped，移除未使用的 CSS class） | 2024-01-XX |
 | 1.0.0 | 初始版本 | - |
 
@@ -290,3 +336,5 @@ const handleClose = async () => {
 - ✅ 使用 `round` 可以创建圆角标签，适合现代风格的界面设计
 - ✅ 通过 `oversize` 可以增加标签内边距，适合需要突出显示的标签
 - ✅ 结合 `disabled` 可以实现完善的交互反馈，提升用户体验
+- ✅ 使用 `v-model` + `editable` 可以创建可编辑标签，适合标签管理、分类编辑等场景
+- ✅ 可编辑模式下按 Enter 保存，按 Escape 取消编辑
