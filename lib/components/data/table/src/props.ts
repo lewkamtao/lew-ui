@@ -97,6 +97,14 @@ export const tableProps = {
       propName: 'rowKey',
     }),
   },
+  focusable: {
+    type: Boolean,
+    default: true,
+    validator: validators.boolean({
+      componentName: 'LewTable',
+      propName: 'focusable',
+    }),
+  },
 }
 
 export type LewTableProps = ExtractPublicPropTypes<typeof tableProps>

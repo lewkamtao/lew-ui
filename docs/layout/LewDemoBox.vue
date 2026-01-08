@@ -1,39 +1,45 @@
 <script setup lang="ts">
-import { renderDescription } from 'docs/lib/utils'
-import docsLocale from 'docs/locals'
-import { LewCollapseTransition } from 'lew-ui'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { Check, ChevronDown, ChevronUp, Copy, ExternalLink } from 'lucide-vue-next'
-import LewCodeHighlighter from './LewCodeHighlighter.vue'
+import { renderDescription } from "docs/lib/utils";
+import docsLocale from "docs/locals";
+import { LewCollapseTransition } from "lew-ui";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import {
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  ExternalLink,
+} from "lucide-vue-next";
+import LewCodeHighlighter from "./LewCodeHighlighter.vue";
 
 const props = defineProps({
   title: {
     type: String,
-    default: '',
+    default: "",
   },
   tag: {
     type: String,
-    default: '',
+    default: "",
   },
   tipsContent: {
     type: String,
-    default: '',
+    default: "",
   },
   tipsType: {
     type: String,
-    default: 'info',
+    default: "info",
   },
   tipsTitle: {
     type: String,
-    default: '',
+    default: "",
   },
   description: {
     type: String,
-    default: '',
+    default: "",
   },
   code: {
     type: String,
-    default: '',
+    default: "",
   },
   demoIndex: {
     type: Number,
@@ -41,61 +47,60 @@ const props = defineProps({
   },
   componentName: {
     type: String,
-    default: '',
+    default: "",
   },
-})
+});
 
-const router = useRouter()
+const router = useRouter();
 
 // 生成独立 demo 页面的完整 URL（用于新标签页打开）
 function getStandaloneDemoUrl() {
   if (props.demoIndex >= 0 && props.componentName) {
     // 将组件名转为首字母大写的格式（如 input -> Input）
     const componentPath = props.componentName
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join('')
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("");
 
-    const path = `/${componentPath}/demo_${props.demoIndex + 1}`
+    const path = `/${componentPath}/demo_${props.demoIndex + 1}`;
     // 使用 router.resolve 获取完整 URL（包含 hash）
-    return router.resolve(path).href
+    return router.resolve(path).href;
   }
-  return '#'
+  return "#";
 }
 
-const isShowCode = ref(false)
-const isCopied = ref(false)
+const isShowCode = ref(false);
+const isCopied = ref(false);
 
 const checkHasContent = computed(() => (text: string) => {
-  if (text && text.indexOf('components.') !== 0) {
-    return true
+  if (text && text.indexOf("components.") !== 0) {
+    return true;
   }
-  return false
-})
+  return false;
+});
 
 // 复制代码功能
 async function copyCode(code: string) {
   try {
-    await navigator.clipboard.writeText(code)
-    isCopied.value = true
-    LewMessage.success(docsLocale.t('base.copySuccess'))
+    await navigator.clipboard.writeText(code);
+    isCopied.value = true;
+    LewMessage.success(docsLocale.t("base.copySuccess"));
     setTimeout(() => {
-      isCopied.value = false
-    }, 2000)
-  }
-  catch (err) {
-    console.error('复制失败:', err)
+      isCopied.value = false;
+    }, 2000);
+  } catch (err) {
+    console.error("复制失败:", err);
     // 降级方案：使用传统的复制方法
-    const textArea = document.createElement('textarea')
-    textArea.value = code
-    document.body.appendChild(textArea)
-    textArea.select()
-    document.execCommand('copy')
-    document.body.removeChild(textArea)
-    isCopied.value = true
+    const textArea = document.createElement("textarea");
+    textArea.value = code;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    isCopied.value = true;
     setTimeout(() => {
-      isCopied.value = false
-    }, 2000)
+      isCopied.value = false;
+    }, 2000);
   }
 }
 </script>
@@ -139,17 +144,15 @@ async function copyCode(code: string) {
       <div class="demo-cp lew-scrollbar">
         <slot />
       </div>
-      <LewCollapseTransition>
-        <div v-show="isShowCode && code" class="hl-pre">
-          <div class="copy-btn" @click="copyCode(code)">
-            <Check v-if="isCopied" :size="16" class="copy-icon success" />
-            <Copy v-else :size="16" class="copy-icon" />
-          </div>
-          <div class="pre-box lew-scrollbar">
-            <LewCodeHighlighter :code="code" lang="vue" />
-          </div>
+      <div v-if="isShowCode && code" class="hl-pre">
+        <div class="copy-btn" @click="copyCode(code)">
+          <Check v-if="isCopied" :size="16" class="copy-icon success" />
+          <Copy v-else :size="16" class="copy-icon" />
         </div>
-      </LewCollapseTransition>
+        <div class="pre-box lew-scrollbar">
+          <LewCodeHighlighter :code="code" lang="vue" />
+        </div>
+      </div>
       <div class="show-bar" @click="isShowCode = !isShowCode">
         <div class="icon">
           <ChevronDown v-if="!isShowCode" :size="16" />

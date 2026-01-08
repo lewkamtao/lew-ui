@@ -50,6 +50,10 @@ const selectionState = shallowReactive({
   selectedRowsMap: {} as Record<string, boolean>,
 })
 
+const focusState = shallowReactive({
+  focusedRowsMap: {} as Record<string, boolean>,
+})
+
 const dragState = shallowReactive({
   dragIndex: -1,
   targetIndex: -1,
@@ -68,6 +72,7 @@ const dataState = shallowReactive({
   trPositionsMap: {} as Record<string, any>,
   trHeightMap: {} as Record<string, number | undefined>,
   isInitializing: true,
+  isRowHeightReady: false,
 })
 
 const tooltipComponent = shallowRef<any>(null)
@@ -130,10 +135,13 @@ const getEmptyProps = computed(() => ({
 }))
 
 function getRowClass(index: number, row: any) {
+  const isFocused = props.focusable && !props.checkable && focusState.focusedRowsMap[row[_rowKey]]
+
   return {
     'lew-table-tr-hover': hoverRowIndex.value === index && !dragState.isDragging,
     'lew-table-tr-dragging': dragState.dragIndex === index,
     'lew-table-tr-selected': selectionState.selectedRowsMap[row[_rowKey]],
+    'lew-table-tr-focused': isFocused,
   }
 }
 
@@ -394,6 +402,26 @@ function toggleRowSelection(row: any) {
   updateAllCheckedState()
 }
 
+function toggleRowFocus(row: any) {
+  // 当 checkable 启用时，focusable 不起作用
+  if (!props.focusable || props.checkable)
+    return
+
+  const rowKey = row[_rowKey]
+  const isFocused = focusState.focusedRowsMap[rowKey]
+  // 直接点击切换聚焦状态，支持多选
+  focusState.focusedRowsMap = { ...focusState.focusedRowsMap, [rowKey]: !isFocused }
+}
+
+function handleRowClick(row: any) {
+  if (props.checkable) {
+    toggleRowSelection(row)
+  }
+  else if (props.focusable) {
+    toggleRowFocus(row)
+  }
+}
+
 function updateSelectedKeys(newKeys: any) {
   if (props.multiple) {
     const newMap: Record<string, boolean> = {}
@@ -550,81 +578,101 @@ function updateScrollState() {
   }
 }
 
+// 核心行高计算逻辑（同步执行）
+function doComputeRowHeight() {
+  const newTrHeightMap: Record<string, number | undefined> = {}
+  const newTrPositionsMap: Record<string, any> = {}
+  const mainRefs = trRefMap.value
+  const leftRefs = fixedLeftTrRefMap.value
+  const rightRefs = fixedRightTrRefMap.value
+
+  const elementsToMeasure: Array<{ rowId: string, elements: HTMLElement[] }> = []
+
+  // 第一步：重置所有行高为 auto 以便测量真实高度
+  for (const row of dataState.dataSource) {
+    const rowId = row._lew_table_tr_id
+    const elements: HTMLElement[] = []
+
+    const mainEl = mainRefs[rowId]
+    const leftEl = leftRefs[rowId]
+    const rightEl = rightRefs[rowId]
+
+    if (mainEl) {
+      mainEl.style.height = 'auto'
+      mainEl.style.minHeight = 'auto'
+      elements.push(mainEl)
+    }
+    if (leftEl) {
+      leftEl.style.height = 'auto'
+      leftEl.style.minHeight = 'auto'
+      elements.push(leftEl)
+    }
+    if (rightEl) {
+      rightEl.style.height = 'auto'
+      rightEl.style.minHeight = 'auto'
+      elements.push(rightEl)
+    }
+
+    if (elements.length > 0) {
+      elementsToMeasure.push({ rowId, elements })
+    }
+  }
+
+  // 第二步：测量并立即应用统一高度到 DOM
+  for (const { rowId, elements } of elementsToMeasure) {
+    let maxHeight = 0
+    let referenceElement: HTMLElement | null = null
+
+    for (const el of elements) {
+      const height = el.getBoundingClientRect().height
+      if (height > maxHeight) {
+        maxHeight = height
+        referenceElement = el
+      }
+    }
+
+    if (maxHeight > 0) {
+      newTrHeightMap[rowId] = maxHeight
+      // 立即将统一高度应用到所有相关元素，避免闪烁
+      const heightPx = `${maxHeight}px`
+      for (const el of elements) {
+        el.style.height = heightPx
+        el.style.minHeight = heightPx
+      }
+
+      if (referenceElement) {
+        const rect = referenceElement.getBoundingClientRect()
+        newTrPositionsMap[rowId] = {
+          top: rect.top,
+          bottom: rect.bottom,
+          height: maxHeight,
+          middle: rect.top + maxHeight / 2,
+        }
+      }
+    }
+  }
+
+  dataState.trHeightMap = newTrHeightMap
+  dataState.trPositionsMap = newTrPositionsMap
+  rowHeightCache.clear()
+}
+
+// 异步计算行高（使用 RAF，用于后续更新）
 function computeTableRowHeight() {
   if (rowHeightRAF) {
     cancelAnimationFrame(rowHeightRAF)
   }
 
   rowHeightRAF = requestAnimationFrame(() => {
-    const newTrHeightMap: Record<string, number | undefined> = {}
-    const newTrPositionsMap: Record<string, any> = {}
-    const mainRefs = trRefMap.value
-    const leftRefs = fixedLeftTrRefMap.value
-    const rightRefs = fixedRightTrRefMap.value
-
-    const elementsToMeasure: Array<{ rowId: string, elements: HTMLElement[] }> = []
-
-    for (const row of dataState.dataSource) {
-      const rowId = row._lew_table_tr_id
-      const elements: HTMLElement[] = []
-
-      const mainEl = mainRefs[rowId]
-      const leftEl = leftRefs[rowId]
-      const rightEl = rightRefs[rowId]
-
-      if (mainEl) {
-        mainEl.style.height = 'auto'
-        mainEl.style.minHeight = 'auto'
-        elements.push(mainEl)
-      }
-      if (leftEl) {
-        leftEl.style.height = 'auto'
-        leftEl.style.minHeight = 'auto'
-        elements.push(leftEl)
-      }
-      if (rightEl) {
-        rightEl.style.height = 'auto'
-        rightEl.style.minHeight = 'auto'
-        elements.push(rightEl)
-      }
-
-      if (elements.length > 0) {
-        elementsToMeasure.push({ rowId, elements })
-      }
-    }
-
-    for (const { rowId, elements } of elementsToMeasure) {
-      let maxHeight = 0
-      let referenceElement: HTMLElement | null = null
-
-      for (const el of elements) {
-        const height = el.getBoundingClientRect().height
-        if (height > maxHeight) {
-          maxHeight = height
-          referenceElement = el
-        }
-      }
-
-      if (maxHeight > 0) {
-        newTrHeightMap[rowId] = maxHeight
-
-        if (referenceElement) {
-          const rect = referenceElement.getBoundingClientRect()
-          newTrPositionsMap[rowId] = {
-            top: rect.top,
-            bottom: rect.bottom,
-            height: maxHeight,
-            middle: rect.top + maxHeight / 2,
-          }
-        }
-      }
-    }
-
-    dataState.trHeightMap = newTrHeightMap
-    dataState.trPositionsMap = newTrPositionsMap
-    rowHeightCache.clear()
+    doComputeRowHeight()
     rowHeightRAF = null
   })
+}
+
+// 同步计算行高并标记就绪（用于初始化）
+function computeTableRowHeightSync() {
+  doComputeRowHeight()
+  dataState.isRowHeightReady = true
 }
 
 const handleTableResize = throttle(() => {
@@ -683,7 +731,8 @@ function init() {
 
     nextTick(() => {
       dataState.isInitializing = false
-      computeTableRowHeight()
+      // 使用同步计算避免闪烁
+      computeTableRowHeightSync()
     })
   })
 }
@@ -968,6 +1017,7 @@ watch(
     clearRenderCache()
     dataState.trHeightMap = {}
     dataState.trPositionsMap = {}
+    dataState.isRowHeightReady = false
     rowHeightCache.clear()
     columnStyleCache.clear()
 
@@ -984,7 +1034,8 @@ watch(
       selectionState.selectedRowsMap = newMap
       updateAllCheckedState()
       initDragState()
-      computeTableRowHeight()
+      // 使用同步计算避免闪烁
+      nextTick(computeTableRowHeightSync)
     })
   },
   { deep: true },
@@ -1011,13 +1062,15 @@ watch(
   () => {
     dataState.trHeightMap = {}
     dataState.trPositionsMap = {}
+    dataState.isRowHeightReady = false
     rowHeightCache.clear()
     columnStyleCache.clear()
 
     nextTick(() => {
       updateScrollState()
       handleTableResize()
-      setTimeout(computeTableRowHeight, 50)
+      // 使用同步计算避免闪烁
+      nextTick(computeTableRowHeightSync)
       if (props.checkable) {
         updateSelectedKeys(selectedKeys.value)
       }
@@ -1147,6 +1200,7 @@ watch(
       <div
         v-if="dataState.dataSource.length > 0"
         class="lew-table-body"
+        :class="{ 'lew-table-body-ready': dataState.isRowHeightReady }"
         :style="`width: ${totalColumnWidth}px`"
       >
         <div v-if="hasFixedLeft" class="lew-table-fixed-left">
@@ -1160,7 +1214,7 @@ watch(
               height: getRowHeight(row),
               minHeight: getRowHeight(row),
             }"
-            @click="toggleRowSelection(row)"
+            @click="handleRowClick(row)"
             @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
@@ -1228,7 +1282,7 @@ watch(
               height: getRowHeight(row),
               minHeight: getRowHeight(row),
             }"
-            @click="toggleRowSelection(row)"
+            @click="handleRowClick(row)"
             @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
@@ -1271,6 +1325,7 @@ watch(
               minHeight: getRowHeight(row),
             }"
             :class="getRowClass(i, row)"
+            @click="handleRowClick(row)"
             @mouseenter.stop="hoverRowIndex = i"
           >
             <LewFlex
@@ -1404,6 +1459,11 @@ watch(
   .lew-table-body {
     display: flex;
     align-items: flex-start;
+  }
+
+  // 行高计算完成前隐藏表格体，避免闪烁
+  .lew-table-body:not(.lew-table-body-ready) {
+    opacity: 0;
   }
 
   .lew-table-fixed-left {
@@ -1541,7 +1601,12 @@ watch(
   }
 
   .lew-table-tr-selected {
-    background-color: var(--lew-table-tr-selected);
+    background-color: var(--lew-color-primary-light);
+  }
+
+  .lew-table-tr-focused {
+    // 使用更淡的黄色高亮，醒目但不刺眼
+    background-color: rgba(255, 200, 50, 0.15);
   }
 
   .lew-table-empty {

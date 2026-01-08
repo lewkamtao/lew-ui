@@ -18,7 +18,6 @@ const isTagMarkedForDeletion = ref<boolean>(false);
 const autoWidthDelay = ref<boolean>(false);
 const editingIndex = ref<number>(-1);
 const selectedTagIndex = ref<number>(-1);
-const originalTagValue = ref<string>("");
 
 let originalKeydownHandler: ((event: KeyboardEvent) => void) | null = null;
 
@@ -170,7 +169,9 @@ function openInput() {
     Array.isArray(modelValue.value) &&
     modelValue.value.length >= props.maxLength
   ) {
-    LewMessage.warning(locale.t("inputTag.maxLength", { maxLength: props.maxLength }));
+    LewMessage.warning(
+      locale.t("inputTag.maxLength", { maxLength: props.maxLength })
+    );
     return;
   }
   isInputActive.value = true;
@@ -182,21 +183,9 @@ function openInput() {
   attachKeydownListener();
 }
 
-// 检查输入值是否重复
-function isDuplicateTag(value: string): boolean {
-  return Array.isArray(modelValue.value) && modelValue.value.includes(value.trim());
-}
-
-// 尝试添加标签（带重复检测）
+// 尝试添加标签
 function tryAddTag(): boolean {
   if (!inputValue.value || inputValue.value.trim() === "") return false;
-
-  if (isDuplicateTag(inputValue.value)) {
-    LewMessage.warning(locale.t("inputTag.duplicate"));
-    inputValue.value = "";
-    return false;
-  }
-
   addTag();
   return true;
 }
@@ -207,7 +196,9 @@ function addTag() {
   if (props.maxLength > 0 && _value.length >= props.maxLength) {
     inputValue.value = "";
     isInputActive.value = false;
-    LewMessage.warning(locale.t("inputTag.maxLength", { maxLength: props.maxLength }));
+    LewMessage.warning(
+      locale.t("inputTag.maxLength", { maxLength: props.maxLength })
+    );
     return;
   }
   _value.push(inputValue.value);
@@ -219,7 +210,11 @@ function addTag() {
 }
 
 function delTag(index: number) {
-  if (!Array.isArray(modelValue.value) || index < 0 || index >= modelValue.value.length) {
+  if (
+    !Array.isArray(modelValue.value) ||
+    index < 0 ||
+    index >= modelValue.value.length
+  ) {
     return;
   }
   const removedTag = modelValue.value[index];
@@ -248,19 +243,6 @@ function handleTagChange(index: number, newValue: string) {
     return;
   }
 
-  // 检查是否重复
-  const isDuplicate = modelValue.value.some(
-    (item, idx) => idx !== index && item === trimmedValue
-  );
-  if (isDuplicate) {
-    LewMessage.warning(locale.t("inputTag.duplicate"));
-    // 恢复原值
-    const newArray = [...modelValue.value];
-    newArray[index] = originalTagValue.value;
-    modelValue.value = newArray;
-    return;
-  }
-
   // 更新值
   const newArray = [...modelValue.value];
   newArray[index] = trimmedValue;
@@ -272,10 +254,6 @@ function handleTagFocus(index: number) {
   editingIndex.value = index;
   selectedTagIndex.value = -1;
   isTagMarkedForDeletion.value = false;
-  // 保存编辑前的原值，用于重复检测时恢复
-  if (Array.isArray(modelValue.value) && index >= 0 && index < modelValue.value.length) {
-    originalTagValue.value = modelValue.value[index];
-  }
 }
 
 function handleTagBlur() {
@@ -335,11 +313,15 @@ const shouldShowIcon = computed(
 );
 
 const shouldShowClearIcon = computed(
-  () => (modelValue.value || []).length > 0 && props.clearable && !props.readonly
+  () =>
+    (modelValue.value || []).length > 0 && props.clearable && !props.readonly
 );
 
 const isTagMarked = computed(() => (index: number) => {
-  return isTagMarkedForDeletion.value && index === (modelValue.value || []).length - 1;
+  return (
+    isTagMarkedForDeletion.value &&
+    index === (modelValue.value || []).length - 1
+  );
 });
 
 const isTagSelected = computed(() => (index: number) => {
@@ -365,7 +347,8 @@ onUnmounted(() => {
       <LewTag
         v-for="(item, index) in modelValue"
         :key="`${index}-${item}`"
-        :model-value="item"
+        :model-value="readonly || disabled ? undefined : item"
+        :text="readonly || disabled ? item : undefined"
         type="light"
         class="lew-input-tag-item"
         :class="{
@@ -391,7 +374,9 @@ onUnmounted(() => {
         :size="size"
         :readonly="!isInputActive"
         :placeholder="
-          (modelValue || []).length === 0 ? locale.t('inputTag.placeholder') : ' '
+          (modelValue || []).length === 0
+            ? locale.t('inputTag.placeholder')
+            : ' '
         "
         @input="isTagMarkedForDeletion = false"
         @focus="onFocus"
