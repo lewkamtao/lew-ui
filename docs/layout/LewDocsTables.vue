@@ -15,6 +15,7 @@ const props = defineProps({
 })
 
 const route = useRoute()
+const router = useRouter()
 
 function getComponentName() {
   const { path } = useRoute()
@@ -65,8 +66,22 @@ function getColumns({
           'div',
           {
             style: {
-              fontFamily:
-                'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+              fontFamily: [
+                'Inter',
+                'Roboto',
+                '-apple-system',
+                'BlinkMacSystemFont',
+                '"Segoe UI"',
+                '"PingFang SC"',
+                '"Hiragino Sans GB"',
+                '"Microsoft YaHei"',
+                '"Noto Sans CJK SC"',
+                '"Noto Sans KR"',
+                '"Noto Sans JP"',
+                'Helvetica',
+                'Arial',
+                'sans-serif',
+              ].join(', '),
             },
           },
           docsLocale.t(
@@ -103,7 +118,13 @@ function getColumns({
         width: 200,
         field: 'type',
         customRender: ({ row }: any) => {
-          const { typeValues, typeGhost, type, typePopKeys } = row
+          const {
+            typeValues,
+            typeGhost,
+            type,
+            typePopKeys,
+            typeComponents,
+          } = row
           if (typeGhost) {
             return h(
               LewTag,
@@ -146,6 +167,43 @@ function getColumns({
                 },
               )
             })
+            return h(
+              LewFlex,
+              {
+                x: 'start',
+                y: 'center',
+                gap: '5px',
+                wrap: true,
+              },
+              {
+                default: () => tags,
+              },
+            )
+          }
+          else if ((typeComponents || []).length > 0) {
+            const tags = typeComponents.map(
+              (item: { name: string, path: string }) => {
+                return h(
+                  LewTag,
+                  {
+                    style: {
+                      cursor: 'pointer',
+                      textDecoration: 'underline dotted',
+                    },
+                    type: 'light',
+                    size: 'small',
+                    color: 'indigo',
+                    onClick: () => {
+                      const url = router.resolve(item.path).href
+                      window.open(url, '_blank')
+                    },
+                  },
+                  {
+                    default: () => item.name,
+                  },
+                )
+              },
+            )
             return h(
               LewFlex,
               {

@@ -174,10 +174,7 @@ const options = computed(() => {
           label: 'Select',
           value: '/Select',
         },
-        {
-          label: 'SelectMultiple',
-          value: '/SelectMultiple',
-        },
+
         {
           label: 'DatePicker',
           value: '/DatePicker',
@@ -194,6 +191,10 @@ const options = computed(() => {
           label: 'TreeSelect',
           value: '/TreeSelect',
         },
+        // {
+        //   label: 'TreeSelectMultiple',
+        //   value: '/TreeSelectMultiple',
+        // },
         {
           label: 'InputTable',
           value: '/InputTable',
@@ -353,11 +354,7 @@ const options = computed(() => {
     </div>
     <div class="app-main lew-scrollbar">
       <div id="component-main" class="component-main lew-scrollbar">
-        <router-view v-slot="{ Component }">
-          <keep-alive>
-            <Component :is="Component" />
-          </keep-alive>
-        </router-view>
+        <router-view />
       </div>
       <div class="component-nav">
         <LewRightNav />

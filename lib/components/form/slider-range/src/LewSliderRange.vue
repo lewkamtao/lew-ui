@@ -496,7 +496,7 @@ const tooltipContent = computed(() => {
     height: var(--lew-slider-track-line-height);
     border-radius: var(--lew-slider-track-line-height);
     background: var(--lew-form-bgcolor);
-    transition: all var(--lew-form-transition-ease);
+    transition: background-color var(--lew-form-transition-ease);
 
     .lew-slider-track-line-range {
       position: absolute;
@@ -556,8 +556,8 @@ const tooltipContent = computed(() => {
     border: var(--lew-color-primary) solid 2px;
     background: var(--lew-bgcolor-0);
     transition:
-      transform var(--lew-form-transition-ease),
-      border-width 0.1s ease;
+      transform var(--lew-form-transition-bezier),
+      border-width var(--lew-form-transition-ease);
     cursor: pointer;
     box-sizing: border-box;
     z-index: 3;

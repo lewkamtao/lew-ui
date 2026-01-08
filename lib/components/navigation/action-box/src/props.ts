@@ -40,10 +40,12 @@ export const actionBoxProps = {
   },
   dropdownLabel: {
     type: null,
+    typePopKeys: ['LewComponentSource'],
     default: 'More',
   },
   dropdownIcon: {
     type: null,
+    typePopKeys: ['LewComponentSource'],
   },
   iconOnly: {
     type: Boolean,

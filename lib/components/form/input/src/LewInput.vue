@@ -2,25 +2,27 @@
 import type { LewContextMenusOption } from 'lew-ui'
 import { useMagicKeys } from '@vueuse/core'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { inputEmits } from './emits'
 import { inputProps } from './props'
 
+// Props & Emits
 const props = defineProps(inputProps)
 const emit = defineEmits(inputEmits)
-const { enter } = useMagicKeys()
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
-}
 
+// Models
 const modelValue = defineModel<string | undefined>({ required: true })
 const prefixValue = defineModel<string | undefined>('prefixValue')
 const suffixValue = defineModel<string | undefined>('suffixValue')
 
-const lewInputRef = ref()
-const lewInputCountRef = ref()
+// Constants
+const COPY_SUCCESS_DELAY = 2000
+
+// Refs
+const lewInputRef = ref<HTMLInputElement>()
+const lewInputCountRef = ref<HTMLElement>()
 const isCopy = ref(false)
 const _type = ref(props.type)
 const isFocus = ref(false)
@@ -31,69 +33,94 @@ const state = reactive({
 
 let timer: NodeJS.Timeout | null = null
 
-watch(
-  () => props.type,
-  (v) => {
-    if (v === 'password') {
-      _type.value = 'password'
-    }
-  },
-)
-
-function clear() {
-  modelValue.value = undefined
-  emit('clear')
-  emit('change', undefined)
+// Initialize tooltip directive
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
-const toFocus = () => lewInputRef.value?.focus()
-const toBlur = () => lewInputRef.value?.blur()
-
-function showPasswordFn() {
-  _type.value = _type.value === 'text' ? 'password' : 'text'
-}
-
-function focus(e: FocusEvent) {
-  if (props.selectByFocus) {
-    (e.currentTarget as HTMLInputElement)?.select()
-  }
-  emit('focus', e)
-  isFocus.value = true
-}
-
-function blur(e: FocusEvent) {
-  emit('blur', e)
-  isFocus.value = false
-}
-
-function handleInput(event: Event) {
-  const target = event.target as HTMLInputElement
-  emit('input', target.value)
-}
-
-function handleChange(event: Event) {
-  const target = event.target as HTMLInputElement
-  emit('change', target.value)
-}
-
+// Computed
 const getIconSize = computed(
   () =>
     ({
-      small: 13,
-      medium: 14,
+      small: 14,
+      medium: 15,
       large: 16,
     }[props.size]),
 )
 
-const getInputStyle = computed(() => {
-  const { clearable, showCount } = props
-  const countWidth = lewInputCountRef.value?.offsetWidth || 0
+// 右侧图标显示状态计算
+const showCloseIcon = computed(() => {
+  return props.clearable && modelValue.value && !props.readonly
+})
+
+const showPasswordIcon = computed(() => {
+  return props.showPassword && props.type === 'password'
+})
+
+const showCopyIcon = computed(() => {
+  return (
+    props.copyable
+    && props.readonly
+    && modelValue.value
+    && !props.suffix
+    && !showCloseIcon.value
+    && !showPasswordIcon.value
+  )
+})
+
+const rightIconCount = computed(() => {
+  let count = 0
+  if (showCloseIcon.value)
+    count++
+  if (showPasswordIcon.value)
+    count++
+  if (showCopyIcon.value)
+    count++
+  return count
+})
+
+const getInputViewStyle = computed(() => {
   return {
-    width: `calc(100% - ${clearable ? 20 + countWidth + (showCount ? 12 : 0) : 0}px)`,
+    width: props.autoWidth ? 'auto' : any2px(props.width),
   }
 })
 
-const getType = computed(() => (props.type === 'password' ? _type.value : props.type))
+const getPrefixesDropdownStyle = computed(() => {
+  return {
+    fontSize: `var(--lew-form-font-size-${props.size})`,
+  }
+})
+
+const getSuffixDropdownStyle = computed(() => {
+  return {
+    fontSize: `var(--lew-form-font-size-${props.size})`,
+  }
+})
+
+const getInputBoxStyle = computed(() => {
+  return {
+    minWidth: any2px(props.minWidth),
+  }
+})
+
+const getInputStyle = computed(() => {
+  const { showCount } = props
+  const countWidth = lewInputCountRef.value?.offsetWidth || 0
+  // 每个图标大约占 20px（图标本身 + gap），如果有多个图标需要累加
+  const iconWidth = rightIconCount.value * 20
+  // 如果有 count，需要额外空间（12px 间距）
+  const countSpace = showCount && modelValue.value ? countWidth + 12 : 0
+  // 如果有图标或 count，需要额外空间（10px 右侧 padding）
+  const rightSpace = rightIconCount.value > 0 || countSpace > 0 ? 10 : 0
+  return {
+    width: `calc(100% - ${iconWidth + countSpace + rightSpace}px)`,
+  }
+})
+
+const getType = computed(() =>
+  props.type === 'password' ? _type.value : props.type,
+)
 
 const getInputClassNames = computed(() => {
   const { size, readonly, disabled, align, autoWidth } = props
@@ -106,53 +133,18 @@ const getInputClassNames = computed(() => {
   })
 })
 
-function prefixesChange(item: LewContextMenusOption) {
-  prefixValue.value = item.value
-}
-
-function suffixChange(item: LewContextMenusOption) {
-  suffixValue.value = item.value
-}
-
 const getPrefixesLabel = computed(() => {
-  return props.prefixesOptions.find(e => e.value === prefixValue.value)?.label || ''
+  return (
+    props.prefixesOptions.find(e => e.value === prefixValue.value)?.label
+    || ''
+  )
 })
 
 const getSuffixLabel = computed(() => {
-  return props.suffixOptions.find(e => e.value === suffixValue.value)?.label || ''
+  return (
+    props.suffixOptions.find(e => e.value === suffixValue.value)?.label || ''
+  )
 })
-
-function copy() {
-  const textarea = document.createElement('textarea')
-  textarea.style.cssText = 'position:fixed;top:-200vh;'
-  textarea.value = modelValue.value as string
-
-  document.body.appendChild(textarea)
-  textarea.select()
-
-  if (document.execCommand('copy')) {
-    LewMessage.success(locale.t('input.copySuccess'))
-    isCopy.value = true
-    timer = setTimeout(() => {
-      isCopy.value = false
-    }, 2000)
-  }
-  else {
-    LewMessage.error(locale.t('input.copyFailed'))
-  }
-
-  document.body.removeChild(textarea)
-}
-
-if (props.okByEnter) {
-  watch(enter, (v) => {
-    if (v && isFocus.value) {
-      // 失焦
-      lewInputRef.value?.blur()
-      emit('ok', modelValue.value)
-    }
-  })
-}
 
 const computedPrefixesOptions = computed(() => {
   return props.prefixesOptions.map((e) => {
@@ -176,19 +168,113 @@ const computedSuffixOptions = computed(() => {
   })
 })
 
+// Methods
+function clear() {
+  modelValue.value = undefined
+  emit('clear')
+  emit('change', undefined)
+}
+
+function focus() {
+  lewInputRef.value?.focus()
+}
+
+function blur() {
+  lewInputRef.value?.blur()
+}
+
+function showPasswordFn() {
+  _type.value = _type.value === 'text' ? 'password' : 'text'
+}
+
+function _focus(e: FocusEvent) {
+  if (props.selectByFocus) {
+    (e.currentTarget as HTMLInputElement)?.select()
+  }
+  emit('focus', e)
+  isFocus.value = true
+}
+
+function _blur(e: FocusEvent) {
+  emit('blur', e)
+  isFocus.value = false
+}
+
+function handleInput(event: Event) {
+  const target = event.target as HTMLInputElement
+  emit('input', target.value)
+}
+
+function handleChange(event: Event) {
+  const target = event.target as HTMLInputElement
+  emit('change', target.value)
+}
+
+function prefixesChange(item: LewContextMenusOption) {
+  prefixValue.value = item.value
+}
+
+function suffixChange(item: LewContextMenusOption) {
+  suffixValue.value = item.value
+}
+
+function copy() {
+  const textarea = document.createElement('textarea')
+  textarea.style.cssText = 'position:fixed;top:-200vh;'
+  textarea.value = modelValue.value as string
+
+  document.body.appendChild(textarea)
+  textarea.select()
+
+  if (document.execCommand('copy')) {
+    LewMessage.success(locale.t('input.copySuccess'))
+    isCopy.value = true
+    timer = setTimeout(() => {
+      isCopy.value = false
+    }, COPY_SUCCESS_DELAY)
+  }
+  else {
+    LewMessage.error(locale.t('input.copyFailed'))
+  }
+
+  document.body.removeChild(textarea)
+}
+
+// Watchers
+watch(
+  () => props.type,
+  (v) => {
+    if (v === 'password') {
+      _type.value = 'password'
+    }
+  },
+)
+
+if (props.okByEnter) {
+  const { enter } = useMagicKeys()
+  watch(enter, (v) => {
+    if (v && isFocus.value) {
+      lewInputRef.value?.blur()
+      emit('ok', modelValue.value)
+    }
+  })
+}
+
+// Lifecycle
 onUnmounted(() => {
   if (timer)
     clearTimeout(timer)
 })
 
-defineExpose({ toFocus, toBlur })
+// Expose
+defineExpose({ focus, blur })
 </script>
 
 <template>
   <div
     class="lew-input-view"
     :class="getInputClassNames"
-    :style="{ width: autoWidth ? 'auto' : any2px(width) }"
+    :style="getInputViewStyle"
   >
     <div
       v-if="prefixes"
@@ -202,7 +288,7 @@ defineExpose({ toFocus, toBlur })
         {{ prefixValue }}
       </div>
       <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-        <CommonIcon :size="getIconSize" :type="prefixValue as string" />
+        <CommonIcon :size="getIconSize" :type="prefixValue" />
       </div>
       <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
         <LewDropdown
@@ -218,37 +304,24 @@ defineExpose({ toFocus, toBlur })
             x="start"
             class="lew-input-prefixes-dropdown"
             :class="{
-              'lew-input-prefixes-dropdown-open': state.prefixesDropdown === 'show',
+              'lew-input-prefixes-dropdown-open':
+                state.prefixesDropdown === 'show',
             }"
-            :style="{
-              fontSize: `var(--lew-form-font-size-${size})`,
-            }"
+            :style="getPrefixesDropdownStyle"
           >
             <div>
               {{ getPrefixesLabel }}
             </div>
-            <CommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <CommonIcon
+              :size="getIconSize"
+              type="chevron-down"
+              class="icon-select"
+            />
           </LewFlex>
         </LewDropdown>
       </div>
     </div>
-    <div
-      v-if="copyable && readonly && modelValue && !suffix"
-      class="lew-input-copy-btn"
-      @click="copy"
-    >
-      <CommonIcon
-        :size="getIconSize"
-        :type="isCopy ? 'check' : 'copy'"
-        :class="{ 'lew-input-copy-btn-check': isCopy }"
-      />
-    </div>
-    <div
-      class="lew-input-box"
-      :style="{
-        minWidth: any2px(minWidth),
-      }"
-    >
+    <div class="lew-input-box" :style="getInputBoxStyle">
       <input
         ref="lewInputRef"
         v-model="modelValue"
@@ -262,49 +335,65 @@ defineExpose({ toFocus, toBlur })
         :maxlength="maxLength"
         @input="handleInput"
         @change="handleChange"
-        @blur="blur"
-        @focus="focus"
+        @blur="_blur"
+        @focus="_focus"
       >
       <label v-if="autoWidth" class="lew-input-auto-width">
         {{ modelValue }}
       </label>
       <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear" />
-      <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
+      <div
+        v-if="
+          showCloseIcon ||
+            showPasswordIcon ||
+            showCopyIcon ||
+            (modelValue && showCount)
+        "
+        class="lew-input-controls"
+      >
         <div
           v-if="modelValue && showCount"
           ref="lewInputCountRef"
           class="lew-input-count"
-          :class="{
-            'lew-input-count-clearable': clearable && modelValue,
-          }"
         >
           {{ typeof modelValue === "string" ? modelValue.length : 0
           }}{{ maxLength ? ` / ${maxLength}` : "" }}
         </div>
-        <div
-          v-if="showPassword && type === 'password'"
-          class="lew-input-show-password"
-          @mousedown.prevent=""
-          @click="showPasswordFn"
-        >
-          <CommonIcon v-show="_type === 'text'" :size="getIconSize" type="eye" />
-          <CommonIcon v-show="_type === 'password'" :size="getIconSize" type="eye_off" />
-        </div>
-        <transition name="lew-form-icon-ani">
+        <CloseIcon
+          v-if="showCloseIcon"
+          :size="size"
+          class="lew-form-icon-close"
+          @click.stop="clear"
+        />
+        <template v-if="showPasswordIcon">
           <CommonIcon
-            v-if="clearable && modelValue && !readonly"
-            class="lew-form-icon-close"
-            :class="{
-              'lew-form-icon-close-focus': isFocus,
-            }"
+            v-show="_type === 'text'"
             :size="getIconSize"
-            type="close"
+            type="eye"
+            class="lew-input-icon-action"
             @mousedown.prevent=""
-            @click="clear"
+            @click="showPasswordFn"
           />
-        </transition>
+          <CommonIcon
+            v-show="_type === 'password'"
+            :size="getIconSize"
+            type="eye_off"
+            class="lew-input-icon-action"
+            @mousedown.prevent=""
+            @click="showPasswordFn"
+          />
+        </template>
+        <CommonIcon
+          v-if="showCopyIcon"
+          :size="getIconSize"
+          :type="isCopy ? 'check' : 'copy'"
+          class="lew-input-icon-action"
+          :class="{ 'lew-input-copy-btn-check': isCopy }"
+          @click.stop="copy"
+        />
       </div>
     </div>
+
     <div
       v-if="suffix"
       v-tooltip="{
@@ -335,12 +424,14 @@ defineExpose({ toFocus, toBlur })
             :class="{
               'lew-input-suffix-dropdown-open': state.suffixDropdown === 'show',
             }"
-            :style="{
-              fontSize: `var(--lew-form-font-size-${size})`,
-            }"
+            :style="getSuffixDropdownStyle"
           >
             <div>{{ getSuffixLabel }}</div>
-            <CommonIcon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <CommonIcon
+              :size="getIconSize"
+              type="chevron-down"
+              class="icon-select"
+            />
           </LewFlex>
         </LewDropdown>
       </div>
@@ -361,7 +452,9 @@ defineExpose({ toFocus, toBlur })
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-form-box-shadow);
-  transition: all var(--lew-form-transition-ease);
+  transition:
+    background-color var(--lew-form-transition-ease),
+    border-color var(--lew-form-transition-ease);
 
   .lew-input-box {
     position: relative;
@@ -378,20 +471,41 @@ defineExpose({ toFocus, toBlur })
     }
   }
 
-  .lew-input-copy-btn {
+  // 右侧控制容器（合并了 count 和图标）
+  .lew-input-controls {
     position: absolute;
     top: 50%;
-    z-index: 2;
+    right: 14px;
+    z-index: 9;
     display: flex;
     align-items: center;
-    pointer-events: all;
-    opacity: var(--lew-form-icon-opacity);
-    cursor: pointer;
+    gap: 4px;
     transform: translateY(-50%);
-  }
+    // 覆盖父元素的 pointer-events: none，确保按钮可点击
+    pointer-events: auto;
+    .lew-form-icon-close {
+      margin-right: -4px;
+    }
 
-  .lew-input-copy-btn:hover {
-    opacity: var(--lew-form-icon-opacity-hover);
+    .lew-input-count {
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      opacity: var(--lew-form-icon-opacity);
+      transition: transform 0.25s;
+    }
+
+    .lew-input-icon-action {
+      opacity: var(--lew-form-icon-opacity);
+      cursor: pointer;
+      transition: opacity var(--lew-form-transition-ease);
+    }
+
+    .lew-input-icon-action:hover {
+      opacity: var(--lew-form-icon-opacity-hover);
+    }
   }
 
   .lew-input-prefixes,
@@ -403,7 +517,7 @@ defineExpose({ toFocus, toBlur })
     user-select: none;
 
     .icon-select {
-      transition: all var(--lew-form-transition-bezier);
+      transition: transform var(--lew-form-transition-bezier);
     }
 
     .icon-select-up {
@@ -419,7 +533,7 @@ defineExpose({ toFocus, toBlur })
     height: 100%;
     background: var(--lew-bgcolor-4);
     content: '';
-    transition: all var(--lew-form-transition-ease);
+    transition: background-color var(--lew-form-transition-ease);
   }
 
   .lew-input-suffix::before {
@@ -430,7 +544,7 @@ defineExpose({ toFocus, toBlur })
     height: 100%;
     background: var(--lew-bgcolor-4);
     content: '';
-    transition: all var(--lew-form-transition-ease);
+    transition: background-color var(--lew-form-transition-ease);
   }
 
   .lew-input-prefixes-dropdown,
@@ -476,39 +590,6 @@ defineExpose({ toFocus, toBlur })
 
   .lew-input::placeholder {
     color: rgb(165, 165, 165);
-  }
-
-  .lew-input-controls {
-    z-index: 9;
-    display: inline-flex;
-    align-items: center;
-
-    > div {
-      display: inline-flex;
-      white-space: nowrap;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .lew-input-count {
-      z-index: 2;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      opacity: var(--lew-form-icon-opacity);
-      transition: transform 0.25s;
-    }
-
-    .lew-input-show-password {
-      opacity: var(--lew-form-icon-opacity);
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-
-    .lew-input-show-password:hover {
-      opacity: var(--lew-form-icon-opacity-hover);
-    }
   }
 }
 
@@ -573,10 +654,6 @@ defineExpose({ toFocus, toBlur })
     line-height: var(--lew-form-input-line-height-small);
   }
 
-  .lew-input-copy-btn {
-    right: 10px;
-  }
-
   .lew-input-prefixes,
   .lew-input-suffix {
     padding: 0px 7px;
@@ -592,10 +669,6 @@ defineExpose({ toFocus, toBlur })
 
     .lew-input-count {
       font-size: 12px;
-    }
-
-    .lew-input-count-clearable {
-      transform: translateX(-18px);
     }
   }
 
@@ -626,10 +699,6 @@ defineExpose({ toFocus, toBlur })
     line-height: var(--lew-form-input-line-height-medium);
   }
 
-  .lew-input-copy-btn {
-    right: 12px;
-  }
-
   .lew-input-prefixes,
   .lew-input-suffix {
     padding: 0px 9px;
@@ -645,10 +714,6 @@ defineExpose({ toFocus, toBlur })
 
     .lew-input-count {
       font-size: 13px;
-    }
-
-    .lew-input-count-clearable {
-      transform: translateX(-18px);
     }
   }
 
@@ -679,10 +744,6 @@ defineExpose({ toFocus, toBlur })
     line-height: var(--lew-form-input-line-height-large);
   }
 
-  .lew-input-copy-btn {
-    right: 14px;
-  }
-
   .lew-input-prefixes,
   .lew-input-suffix {
     padding: 0px 12px;
@@ -698,10 +759,6 @@ defineExpose({ toFocus, toBlur })
 
     .lew-input-count {
       font-size: 14px;
-    }
-
-    .lew-input-count-clearable {
-      transform: translateX(-18px);
     }
   }
 

@@ -114,21 +114,15 @@ function createFunctionalComponent(component: any): Component {
     name: getUniqueId(),
     setup(props, ctx) {
       return () => {
-        try {
-          // 根据函数签名调用不同的参数
-          if (component.length >= 2) {
-            return component(props, ctx)
-          }
-          else if (component.length === 1) {
-            return component(props)
-          }
-          else {
-            return component()
-          }
+        // 根据函数签名调用不同的参数
+        if (component.length >= 2) {
+          return component(props, ctx)
         }
-        catch (error) {
-          console.warn('[formatComponent] 函数式组件执行出错:', error)
-          return null
+        else if (component.length === 1) {
+          return component(props)
+        }
+        else {
+          return component()
         }
       }
     },
@@ -200,28 +194,22 @@ export function isValidComponent(componentSource: LewComponentSource): boolean {
  */
 export function formatComponent(componentSource: LewComponentSource): Component | undefined {
   const componentType = detectComponentType(componentSource)
-  try {
-    switch (componentType) {
-      case ComponentType.VNode:
-        return createVNodeComponent(componentSource as VNode)
+  switch (componentType) {
+    case ComponentType.VNode:
+      return createVNodeComponent(componentSource as VNode)
 
-      case ComponentType.Text:
-        return createTextComponent(String(componentSource))
+    case ComponentType.Text:
+      return createTextComponent(String(componentSource))
 
-      case ComponentType.FunctionalComponent:
-        return createFunctionalComponent(componentSource as (...args: any[]) => any)
+    case ComponentType.FunctionalComponent:
+      return createFunctionalComponent(componentSource as (...args: any[]) => any)
 
-      case ComponentType.ComponentOptions:
-      case ComponentType.ComponentInstance:
-        return createOptionsComponent(componentSource as Record<string, any>)
+    case ComponentType.ComponentOptions:
+    case ComponentType.ComponentInstance:
+      return createOptionsComponent(componentSource as Record<string, any>)
 
-      case ComponentType.Unknown:
-      default:
-        return undefined
-    }
-  }
-  catch (error) {
-    console.error('[formatComponent] 组件格式化失败:', error, componentSource)
-    return undefined
+    case ComponentType.Unknown:
+    default:
+      return undefined
   }
 }

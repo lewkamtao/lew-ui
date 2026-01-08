@@ -1,5 +1,3 @@
-export const textTrimEmits = {
-  click: (event: MouseEvent) => event,
-  mouseenter: () => true,
-  mouseleave: () => true,
-} as const
+export const textTrimEmits = {} as const
+
+export type LewTextTrimEmits = typeof textTrimEmits

@@ -15,11 +15,12 @@ const options = ref([
   {
     field: 'tags',
     label: 'Product Tags',
-    as: 'select-multiple',
+    as: 'select',
     rule: Yup.array()
       .min(2, 'Please select at least 2 tags')
       .required('Please select tags'),
     props: {
+      multiple: true,
       clearable: true,
       initMethodId: 'tagsMethod',
     },

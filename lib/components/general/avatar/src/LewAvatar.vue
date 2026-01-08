@@ -1,81 +1,20 @@
 <script setup lang="ts">
+// 1. 第三方库导入
 import { useImage } from '@vueuse/core'
+
+// 2. 组件导入
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, parseDimension } from 'lew-ui/utils'
-import { computed } from 'vue'
+
+// 3. 工具函数导入
+import { any2px } from 'lew-ui/utils'
+
+// 4. 组件配置导入
 import { avatarProps } from './props'
 
+// Props
 const props = defineProps(avatarProps)
 
-// Constants
-const BORDER_RADIUS_MAP: Record<string, string> = {
-  circle: '50%',
-  sharp: '0',
-  square: 'var(--lew-border-radius-small)',
-}
-
-const STATUS_PLACEMENT_CONFIG_CIRCLE: Record<string, Record<string, string>> = {
-  'top-left': {
-    top: '-0.05rem',
-    left: '-0.05rem',
-    bottom: 'auto',
-    right: 'auto',
-  },
-  'top-right': {
-    top: '-0.05rem',
-    left: 'auto',
-    bottom: 'auto',
-    right: '-0.05rem',
-  },
-  'bottom-left': {
-    top: 'auto',
-    left: '-0.05rem',
-    bottom: '-0.05rem',
-    right: 'auto',
-  },
-  'bottom-right': {
-    top: 'auto',
-    left: 'auto',
-    bottom: '-0.05rem',
-    right: '-0.05rem',
-  },
-}
-
-const STATUS_PLACEMENT_CONFIG_SQUARE: Record<string, Record<string, string>> = {
-  'top-left': {
-    top: '-0.25rem',
-    left: '-0.25rem',
-    bottom: 'auto',
-    right: 'auto',
-  },
-  'top-right': {
-    top: '-0.25rem',
-    left: 'auto',
-    bottom: 'auto',
-    right: '-0.25rem',
-  },
-  'bottom-left': {
-    top: 'auto',
-    left: '-0.25rem',
-    bottom: '-0.25rem',
-    right: 'auto',
-  },
-  'bottom-right': {
-    top: 'auto',
-    left: 'auto',
-    bottom: '-0.25rem',
-    right: '-0.25rem',
-  },
-}
-
-const STATUS_COLOR_CONFIG: Record<string, string> = {
-  online: 'var(--lew-color-success)',
-  busy: 'var(--lew-color-error)',
-  offline: 'var(--lew-color-normal-dark)',
-  processing: 'var(--lew-color-info)',
-  away: 'var(--lew-color-warning)',
-}
-
+// Composables
 const imageOptions = ref({
   src: props.src,
 })
@@ -85,26 +24,34 @@ watch(
   (newVal: string) => {
     imageOptions.value.src = newVal
   },
+  { immediate: true },
 )
 
-// Image handling
 const { isLoading, error } = useImage(imageOptions)
 
-const avatarStyleObject = computed(() => ({
+// 常量
+const BORDER_RADIUS_MAP: Record<string, string> = {
+  circle: '50%',
+  sharp: '0',
+  square: 'var(--lew-border-radius-small)',
+}
+
+// 计算属性
+const avatarStyle = computed(() => ({
   width: any2px(props.size),
   height: any2px(props.size),
 }))
 
-const avatarBoxStyleObject = computed(() => ({
+const avatarBoxStyle = computed(() => ({
   borderRadius: BORDER_RADIUS_MAP[props.shape],
 }))
 
-const imageStyleObject = computed(() => ({
+const imageStyle = computed(() => ({
   objectFit: props.objectFit,
   objectPosition: props.objectPosition,
 }))
 
-const textStyleObject = computed(() => {
+const textStyle = computed(() => {
   const size
     = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
   return {
@@ -127,69 +74,70 @@ const altText = computed(() => {
   return result.length > 2 ? result.charAt(0) : result
 })
 
-const dotStyleObject = computed(() => {
-  const { status, statusPlacement, shape, size } = props
-  if (!status)
+const statusDotClass = computed(() => {
+  if (!props.status)
+    return ''
+  return `lew-avatar-status-dot lew-avatar-status-dot--${props.shape}-${props.statusPlacement} lew-avatar-status-dot--${props.status}`
+})
+
+const statusDotStyle = computed(() => {
+  if (!props.status)
     return {}
-  const statusPlacementConfig
-    = shape === 'circle'
-      ? STATUS_PLACEMENT_CONFIG_CIRCLE
-      : STATUS_PLACEMENT_CONFIG_SQUARE
+
+  const sizeValue
+    = typeof props.size === 'number' ? props.size : Number.parseFloat(props.size)
+  const dotSize = sizeValue * 0.2
+
   return {
-    ...statusPlacementConfig[statusPlacement],
-    backgroundColor: STATUS_COLOR_CONFIG[status],
-    position: 'absolute',
-    content: '',
-    width: any2px(parseDimension(size) * 0.2),
-    height: any2px(parseDimension(size) * 0.2),
-    borderRadius: '50%',
-    zIndex: 19,
-    border: 'var(--lew-form-border-width) var(--lew-color-white) solid',
+    width: any2px(dotSize),
+    height: any2px(dotSize),
   }
 })
 
-const getIconSize = computed(() => {
+const iconSize = computed(() => {
   const { size } = props
   return typeof size === 'number' ? size * 0.5 : Number.parseInt(size) * 0.5
 })
+
+const showSkeleton = computed(() => isLoading.value || props.loading)
+const showImage = computed(
+  () => props.src && !error.value && !showSkeleton.value,
+)
+const showAltText = computed(
+  () => !props.src && props.alt && !showSkeleton.value,
+)
+const showIcon = computed(
+  () => !props.src && !props.alt && !showSkeleton.value,
+)
+const showFallback = computed(() => error.value && !showSkeleton.value)
 </script>
 
 <template>
-  <div class="lew-avatar" :style="avatarStyleObject">
-    <div class="lew-avatar-box" :style="avatarBoxStyleObject">
-      <div v-if="isLoading || loading" class="skeletons" />
-      <template v-else-if="src">
-        <img
-          v-if="!error"
-          :alt="alt"
-          :src="src"
-          lazy
-          :style="imageStyleObject"
-        >
-        <div v-else-if="alt" class="lew-avatar-text" :style="textStyleObject">
-          {{ altText }}
-        </div>
-        <CommonIcon
-          v-else
-          class="lew-avatar-user-icon"
-          :size="getIconSize"
-          type="user"
-        />
-      </template>
-      <template v-else-if="alt">
-        <div class="lew-avatar-text" :style="textStyleObject">
-          {{ altText }}
-        </div>
-      </template>
-      <template v-else>
-        <CommonIcon
-          class="lew-avatar-user-icon"
-          :size="getIconSize"
-          type="user"
-        />
-      </template>
+  <div class="lew-avatar" :style="avatarStyle">
+    <div class="lew-avatar-box" :style="avatarBoxStyle">
+      <div v-if="showSkeleton" class="skeletons" />
+      <img
+        v-else-if="showImage"
+        :alt="props.alt"
+        :src="props.src"
+        loading="lazy"
+        :style="imageStyle"
+      >
+      <div
+        v-else-if="showAltText || (showFallback && props.alt)"
+        class="lew-avatar-text"
+        :style="textStyle"
+      >
+        {{ altText }}
+      </div>
+      <CommonIcon
+        v-else-if="showIcon || showFallback"
+        class="lew-avatar-user-icon"
+        :size="iconSize"
+        type="user"
+      />
     </div>
-    <i v-if="status" :style="dotStyleObject" />
+    <i v-if="props.status" :class="statusDotClass" :style="statusDotStyle" />
   </div>
 </template>
 
@@ -202,42 +150,39 @@ const getIconSize = computed(() => {
   .lew-avatar-box {
     width: 100%;
     height: 100%;
-    border-radius: var(--lew-border-radius-small);
     overflow: hidden;
+    box-sizing: border-box;
     background-color: var(--lew-bgcolor-2);
     border: var(--lew-pop-border);
-    box-sizing: border-box;
+    border-radius: var(--lew-border-radius-small);
   }
 
   .lew-avatar-text {
     width: 100%;
     height: 100%;
     background-color: var(--lew-bgcolor-2);
-    animation: img-enter 0.1s ease;
-    animation-fill-mode: forwards;
     opacity: 0;
+    animation: fade-in 0.2s ease forwards;
   }
 
   img {
     width: 100%;
     height: 100%;
     background-color: var(--lew-bgcolor-2);
-    animation: img-enter 0.1s ease;
-    animation-fill-mode: forwards;
     opacity: 0;
+    animation: fade-in 0.2s ease forwards;
   }
 
   .lew-avatar-user-icon {
     position: absolute;
-    left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
-    animation: img-enter 0.1s ease;
-    animation-fill-mode: forwards;
+    left: 50%;
     opacity: 0;
+    animation: fade-in 0.2s ease forwards;
+    transform: translate(-50%, -50%);
   }
 
-  @keyframes img-enter {
+  @keyframes fade-in {
     0% {
       opacity: 0;
     }
@@ -245,6 +190,78 @@ const getIconSize = computed(() => {
     100% {
       opacity: 1;
     }
+  }
+
+  // Status dot (使用 class 而非 computed style，性能更好)
+  .lew-avatar-status-dot {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 19;
+    border: var(--lew-form-border-width) var(--lew-color-white) solid;
+    content: '';
+  }
+
+  // Status colors (静态配置，使用 CSS class)
+  .lew-avatar-status-dot--online {
+    background-color: var(--lew-color-success);
+  }
+
+  .lew-avatar-status-dot--busy {
+    background-color: var(--lew-color-error);
+  }
+
+  .lew-avatar-status-dot--offline {
+    background-color: var(--lew-color-normal-dark);
+  }
+
+  .lew-avatar-status-dot--processing {
+    background-color: var(--lew-color-info);
+  }
+
+  .lew-avatar-status-dot--away {
+    background-color: var(--lew-color-warning);
+  }
+
+  // Circle shape positioning
+  .lew-avatar-status-dot--circle-top-left {
+    top: -0.05rem;
+    left: -0.05rem;
+  }
+
+  .lew-avatar-status-dot--circle-top-right {
+    top: -0.05rem;
+    right: -0.05rem;
+  }
+
+  .lew-avatar-status-dot--circle-bottom-left {
+    bottom: -0.05rem;
+    left: -0.05rem;
+  }
+
+  .lew-avatar-status-dot--circle-bottom-right {
+    bottom: -0.05rem;
+    right: -0.05rem;
+  }
+
+  // Square shape positioning
+  .lew-avatar-status-dot--square-top-left {
+    top: -0.25rem;
+    left: -0.25rem;
+  }
+
+  .lew-avatar-status-dot--square-top-right {
+    top: -0.25rem;
+    right: -0.25rem;
+  }
+
+  .lew-avatar-status-dot--square-bottom-left {
+    bottom: -0.25rem;
+    left: -0.25rem;
+  }
+
+  .lew-avatar-status-dot--square-bottom-right {
+    bottom: -0.25rem;
+    right: -0.25rem;
   }
 }
 </style>

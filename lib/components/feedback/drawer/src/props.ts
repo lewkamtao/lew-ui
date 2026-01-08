@@ -4,17 +4,6 @@ import type { LewDrawerPosition } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDrawerPositionList } from 'lew-ui/validators'
 
-export const drawerModel = {
-  visible: {
-    type: Boolean,
-    default: false,
-    validator: validators.boolean({
-      componentName: 'LewDrawer',
-      propName: 'visible',
-    }),
-  },
-}
-
 export const drawerProps = {
   title: {
     type: String,
@@ -85,6 +74,22 @@ export const drawerProps = {
     validator: validators.object({
       componentName: 'LewDrawer',
       propName: 'closeButtonProps',
+    }),
+  },
+  hideOkButton: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewModal',
+      propName: 'hideOkButton',
+    }),
+  },
+  hideCloseButton: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewModal',
+      propName: 'hideCloseButton',
     }),
   },
   zIndex: {

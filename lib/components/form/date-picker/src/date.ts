@@ -32,24 +32,28 @@ export function getMonthDate(year?: number, month?: number): RetType {
     const date: number = i + 1 - preMonthDayCount
     let showDate: number = date
     let thisMonth: number = month
+    let thisYear: number = year as number
 
     if (date <= 0) {
       thisMonth = month - 1
       showDate = lastDateOfLastMonth + date
+      if (thisMonth === 0) {
+        thisMonth = 12
+        thisYear -= 1
+      }
     }
     else if (date > lastDate) {
       thisMonth = month + 1
       showDate -= lastDate
+      if (thisMonth === 13) {
+        thisMonth = 1
+        thisYear += 1
+      }
     }
-
-    if (thisMonth === 13)
-      thisMonth = 1
-    if (thisMonth === 0)
-      thisMonth = 12
 
     ret.push({
       date,
-      year: year as number,
+      year: thisYear,
       month: thisMonth,
       showDate,
     })

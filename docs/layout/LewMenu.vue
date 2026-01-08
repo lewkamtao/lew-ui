@@ -1,16 +1,6 @@
 <script setup lang="ts">
+import { LewBadge } from 'lew-ui'
 import { useRoute, useRouter } from 'vue-router'
-
-defineProps({
-  group: {
-    type: Array as PropType<Group[]>,
-    default() {
-      return []
-    },
-  },
-})
-const route = useRoute()
-const router = useRouter()
 
 interface Item {
   name: string
@@ -24,6 +14,13 @@ interface Group {
   title: string
   items: Item[]
 }
+
+defineProps<{
+  group: Group[]
+}>()
+
+const route = useRoute()
+const router = useRouter()
 
 function toPath(item: Item) {
   router.push(item.path)
@@ -102,8 +99,8 @@ function toPath(item: Item) {
       display: flex;
       align-items: center;
       position: relative;
-      height: 36px;
-      line-height: 36px;
+      height: 34px;
+      line-height: 34px;
       padding-left: 20px;
       box-sizing: border-box;
       list-style: none;
@@ -128,18 +125,20 @@ function toPath(item: Item) {
         opacity: 1;
       }
     }
-    .item:hover {
+    .item:hover:not(.active) {
       color: var(--lew-text-color-0);
       background: var(--lew-bgcolor-2);
     }
 
     .active {
-      color: var(--lew-color-white);
-      background: var(--lew-color-primary);
+      color: var(--lew-color-primary);
+      background: var(--lew-color-primary-light);
     }
-    .active:hover {
-      color: var(--lew-color-white);
-      background: var(--lew-color-primary);
+
+    // 选中项 hover 时保持选中背景色，移除 hover 效果
+    .item.active:hover {
+      color: var(--lew-color-primary);
+      background: var(--lew-color-primary-light);
     }
   }
 

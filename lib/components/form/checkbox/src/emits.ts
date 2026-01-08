@@ -1,5 +1,5 @@
 export const checkboxEmits = {
-  change: (value: boolean) => value,
+  change: (value: boolean) => typeof value === 'boolean',
 } as const
 
 export const checkboxGroupEmits = {

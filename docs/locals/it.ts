@@ -32,6 +32,7 @@ export default {
     feedback: 'Feedback',
     close: 'Chiudi',
     showCode: 'Mostra codice',
+    copySuccess: 'Copia completata con successo!',
   },
   components: {
     image: {
@@ -117,6 +118,7 @@ export default {
         text: 'Testo pulsante',
         type: 'Tipo',
         size: 'Dimensione',
+        width: 'Larghezza',
         singleIcon: 'Mostra solo icona',
         color: 'Colore',
         round: 'Bordi arrotondati',
@@ -160,6 +162,10 @@ export default {
         disabled: 'Disabilitato',
         round: 'Bordi arrotondati',
         oversize: 'Dimensione più ampia',
+        close: 'Funzione Promise per chiudere il tag',
+      },
+      emits: {
+        close: 'Callback chiusura tag',
       },
     },
     badge: {
@@ -236,6 +242,9 @@ export default {
         delay: 'Ritardo [mostra, nascondi] tooltip in ms',
         reserveEnd: 'Caratteri da preservare alla fine (ellissi al centro)',
       },
+      emits: {
+        click: 'Attivato al click sul testo',
+      },
     },
     flex: {
       name: 'Layout Flex',
@@ -296,7 +305,7 @@ export default {
         bottom: 'Distanza dal bordo inferiore (pixel)',
         valveHeight: 'Altezza soglia per mostrare il pulsante (pixel)',
       },
-      events: {
+      emits: {
         click: 'Callback click torna su',
       },
     },
@@ -320,10 +329,15 @@ export default {
         options: 'Array di configurazione dei passi',
         status: 'Stato attuale dei passi',
         minWidth: 'Larghezza minima del passo',
+        canClickItem: 'Consenti clic sugli elementi dei passi',
+        canCrossSteps: 'Consenti salto tra passi',
       },
       options: {
         title: 'Titolo del passo',
         description: 'Descrizione del passo',
+      },
+      emits: {
+        change: 'Attivato al cambio di passo',
       },
     },
     menu: {
@@ -345,6 +359,9 @@ export default {
         disabled: 'Voce disabilitata',
         icon: 'Icona voce menu',
         tagProps: 'Proprietà badge',
+      },
+      emits: {
+        change: 'Attivato al cambio voce',
       },
     },
     menuTree: {
@@ -384,6 +401,11 @@ export default {
         disabled: 'Voce disabilitata',
         isLeaf: 'Nodo foglia',
       },
+      emits: {
+        change: 'Attivato al cambio voce',
+        expand: 'Attivato all\'espansione',
+        collapse: 'Attivato alla compressione',
+      },
     },
     dropdown: {
       'name': 'Menu a discesa',
@@ -405,7 +427,7 @@ export default {
         checkable: 'Selezionabile',
       },
       'options(LewContextMenusOption[])': contextMenu,
-      'events': {
+      'emits': {
         show: 'Callback apertura menu',
         hide: 'Callback chiusura menu',
         change: 'Callback selezione voce',
@@ -432,7 +454,7 @@ export default {
         value: 'Valore voce',
         active: 'Voce attiva',
       },
-      events: {
+      emits: {
         change: 'Callback cambio voce',
       },
     },
@@ -454,6 +476,7 @@ export default {
       'props': {
         options: 'Configurazione menu',
         disabled: 'Menu disabilitato',
+        trigger: 'Modalità attivazione',
       },
       'options(LewContextMenusOption[])': contextMenu,
     },
@@ -509,7 +532,7 @@ export default {
         outputFormat: 'Formattazione output',
         inputFormat: 'Formattazione input',
       },
-      events: {
+      emits: {
         mounted: 'Callback montaggio campo',
       },
       methods: {
@@ -577,7 +600,7 @@ export default {
         suffixTooltip: 'Tooltip suffisso',
         okByEnter: 'Conferma con Invio',
       },
-      events: {
+      emits: {
         change: 'Callback cambio valore',
         focus: 'Callback focus',
         blur: 'Callback blur',
@@ -623,6 +646,10 @@ export default {
       },
       model: {
         modelValue: 'Valore legato',
+      },
+      emits: {
+        change: 'Callback cambio valore',
+        input: 'Callback input',
       },
     },
     textarea: {
@@ -674,7 +701,7 @@ export default {
         selectByFocus: 'Seleziona tutto al focus',
         okByEnter: 'Conferma con Invio (Shift+Invio per nuova riga)',
       },
-      events: {
+      emits: {
         change: 'Callback cambio valore',
         focus: 'Callback focus',
         blur: 'Callback blur',
@@ -720,11 +747,10 @@ export default {
         clearable: 'Cancellabile',
         placeholder: 'Testo segnaposto',
         readonly: 'Sola lettura',
-        allowDuplicates: 'Permetti duplicati',
         maxLength: 'Numero massimo di tag',
         width: 'Larghezza',
       },
-      events: {
+      emits: {
         change: 'Callback cambio valore',
         clear: 'Callback cancellazione',
         add: 'Callback aggiunta tag',
@@ -784,10 +810,13 @@ export default {
         iconable: 'Permetti icone',
         certain: 'Stato certo',
       },
-      'events(Checkbox)': {
+      'emits(Checkbox)': {
         change: 'Callback cambio valore',
       },
-      'events(CheckboxGroup)': {
+      'emits(CheckboxGroup)': {
+        change: 'Callback cambio valore',
+      },
+      'emits': {
         change: 'Callback cambio valore',
       },
       'options': {
@@ -836,7 +865,7 @@ export default {
         value: 'Valore',
         disabled: 'Disabilitato',
       },
-      'events': {
+      'emits': {
         change: 'Callback cambio valore',
       },
     },
@@ -859,6 +888,9 @@ export default {
       demo5: {
         title: 'Arrotondato',
       },
+      demo6: {
+        title: 'Opzioni disabilitate',
+      },
       model: {
         modelValue: 'Valore legato',
       },
@@ -875,6 +907,9 @@ export default {
       options: {
         label: 'Etichetta',
         value: 'Valore',
+      },
+      emits: {
+        change: 'Attivato al cambio scheda',
       },
     },
     select: {
@@ -910,6 +945,20 @@ export default {
       demo10: {
         title: 'Cache ricerca',
       },
+      demo11: {
+        title: 'Larghezza automatica',
+        description:
+          'Usa ```autoWidth``` per calcolare automaticamente la larghezza; ```popoverWidth``` imposta la larghezza del popover',
+      },
+      demo12: {
+        title: 'Multipla',
+      },
+      demo13: {
+        title: 'Ricerca multipla',
+      },
+      demo14: {
+        title: 'Gruppi multipli',
+      },
       model: {
         modelValue: 'Valore legato',
       },
@@ -931,13 +980,16 @@ export default {
         disabled: 'Disabilitato',
         showCheckIcon: 'Mostra icona spunta',
         initMethod: 'Metodo inizializzazione opzioni',
+        initMethodId: 'ID metodo inizializzazione',
         enableSearchCache: 'Abilita cache ricerca',
+        multiple: 'Selezione multipla',
       },
-      events: {
+      emits: {
         change: 'Callback cambio valore',
         clear: 'Callback cancellazione',
         blur: 'Callback blur',
         focus: 'Callback focus',
+        delete: 'Callback eliminazione opzione',
       },
       options: {
         label: 'Etichetta',
@@ -1005,7 +1057,7 @@ export default {
       model: {
         modelValue: 'Valore legato',
       },
-      events: {
+      emits: {
         change: 'Cambio valore',
         blur: 'Perdita focus',
         focus: 'Acquisizione focus',
@@ -1054,7 +1106,7 @@ export default {
         disabled: 'Disabilitato',
         presets: 'Valori preimpostati',
       },
-      events: {
+      emits: {
         change: 'Cambio valore',
         focus: 'Acquisizione focus',
         blur: 'Perdita focus',
@@ -1089,7 +1141,7 @@ export default {
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
       },
-      events: {
+      emits: {
         change: 'Cambio valore',
         focus: 'Acquisizione focus',
         blur: 'Perdita focus',
@@ -1128,9 +1180,65 @@ export default {
         description:
           'Utilizza ```initMethod``` per inizializzare i dati a cascata e restituire un oggetto ```Promise```',
       },
+      demo10: {
+        title: 'Multipla',
+      },
+      demo11: {
+        title: 'Selezione a qualsiasi livello',
+      },
+      demo12: {
+        title: 'Modalità rigorosa',
+      },
       model: {
         modelValue: 'Valore legato',
       },
+      props: {
+        width: 'Larghezza',
+        options: 'Opzioni',
+        placeholder: 'Testo segnaposto',
+        disabled: 'Disabilitato',
+        clearable: 'Cancellabile',
+        showAllLevels: 'Mostra tutti i livelli',
+        multiple: 'Selezione multipla',
+        free: 'Selezione libera',
+        size: 'Dimensione',
+        trigger: 'Modalità attivazione',
+        loadMethod: 'Metodo caricamento',
+        readonly: 'Sola lettura',
+        initMethod: 'Metodo inizializzazione opzioni',
+        initMethodId: 'ID metodo inizializzazione',
+        onlyLeafSelectable: 'Selezionabili solo le foglie',
+      },
+      options: {
+        label: 'Etichetta',
+        value: 'Valore',
+        isLeaf: 'È nodo foglia',
+        children: 'Figli',
+        disabled: 'Disabilitato',
+      },
+      emits: {
+        change: 'Cambio valore',
+        clear: 'Cancellazione',
+        delete: 'Eliminazione opzione',
+      },
+    },
+    cascaderMultiple: {
+      name: 'Selettore a Cascata Multiplo',
+      description: 'Selettore multilivello con supporto multi-selezione',
+      demo1: { title: 'Uso base' },
+      demo2: { title: 'Modalità libera' },
+      demo3: { title: 'Mostra solo ultimo livello' },
+      demo4: { title: 'Caricamento asincrono' },
+      demo5: { title: 'Cancellabile' },
+      demo6: { title: 'Sola lettura' },
+      demo7: { title: 'Disabilitato' },
+      demo8: { title: 'Opzioni disabilitate' },
+      demo9: {
+        title: 'Metodo inizializzazione opzioni',
+        description:
+          'Usa ```initMethod``` per inizializzare i dati e restituire un ```Promise```',
+      },
+      model: { modelValue: 'Valore legato' },
       props: {
         width: 'Larghezza',
         options: 'Opzioni',
@@ -1192,6 +1300,15 @@ export default {
         description:
           'Utilizza ```initMethod``` per inizializzare i dati ad albero e restituire un oggetto ```Promise```',
       },
+      demo12: {
+        title: 'Selezione multipla',
+      },
+      demo13: {
+        title: 'Selezione a qualsiasi livello',
+      },
+      demo14: {
+        title: 'Modalità rigorosa',
+      },
       model: {
         modelValue: 'Valore legato',
       },
@@ -1218,10 +1335,15 @@ export default {
         labelField: 'Campo etichetta nodo',
         disabledField: 'Campo disabilitazione nodo',
         initMethod: 'Metodo inizializzazione albero',
+        initMethodId: 'ID metodo inizializzazione',
         loadMethod: 'Metodo caricamento asincrono',
       },
       slots: {
         handle: 'Nome slot',
+      },
+      emits: {
+        change: 'Cambio valore',
+        clear: 'Cancellazione',
       },
     },
     inputTable: {
@@ -1254,6 +1376,9 @@ export default {
         uniqueField: 'Campo univoco',
         sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento',
       },
+      emits: {
+        change: 'Cambio valore',
+      },
     },
     switch: {
       name: 'Interruttore',
@@ -1284,7 +1409,7 @@ export default {
         request: 'Richiesta',
         loading: 'Caricamento',
       },
-      events: {
+      emits: {
         change: 'Nome evento',
       },
     },
@@ -1314,6 +1439,7 @@ export default {
       },
       props: {
         size: 'Dimensione',
+        width: 'Larghezza',
         min: 'Minimo',
         max: 'Massimo',
         step: 'Passo',
@@ -1321,6 +1447,9 @@ export default {
         disabled: 'Disabilitato',
         options: 'Opzioni',
         formatTooltip: 'Formatta tooltip',
+      },
+      emits: {
+        change: 'Nome evento',
       },
     },
     sliderRange: {
@@ -1349,6 +1478,7 @@ export default {
       },
       props: {
         size: 'Dimensione',
+        width: 'Larghezza',
         min: 'Minimo',
         max: 'Massimo',
         step: 'Passo',
@@ -1356,6 +1486,9 @@ export default {
         disabled: 'Disabilitato',
         options: 'Opzioni',
         formatTooltip: 'Formatta tooltip',
+      },
+      emits: {
+        change: 'Nome evento',
       },
     },
     rate: {
@@ -1382,6 +1515,9 @@ export default {
         tips: 'Suggerimenti',
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
+      },
+      emits: {
+        change: 'Nome evento',
       },
     },
     colorPicker: {
@@ -1411,6 +1547,9 @@ export default {
         placeholder: 'Segnaposto',
         disabled: 'Disabilitato',
         readonly: 'Sola lettura',
+      },
+      emits: {
+        change: 'Nome evento',
       },
     },
     upload: {
@@ -1452,6 +1591,11 @@ export default {
         tips: 'Suggerimenti',
         uploadHelper: 'Assistente caricamento',
         viewMode: 'Modalità visualizzazione',
+        beforeDelete: 'Hook prima della cancellazione',
+      },
+      emits: {
+        change: 'Cambio valore',
+        delete: 'Eliminazione file',
       },
     },
     table: {
@@ -1522,6 +1666,11 @@ export default {
         x: 'Asse X',
         customRender: 'Rendering personalizzato',
       },
+      emits: {
+        sortChange: 'Attivato al cambio ordinamento',
+        selectChange: 'Attivato al cambio selezione',
+        dragSort: 'Attivato durante l\'ordinamento drag & drop',
+      },
     },
     pagination: {
       name: 'Paginazione',
@@ -1545,7 +1694,7 @@ export default {
         pageSizeOptions: 'Opzioni dimensione pagina',
         visiblePagesCount: 'Pagine visibili',
       },
-      events: {
+      emits: {
         change: 'Nome evento',
       },
     },
@@ -1601,6 +1750,7 @@ export default {
         initMethod: 'Metodo inizializzazione albero',
         loadMethod: 'Metodo caricamento asincrono nodi',
         isSelect: 'È selezionato',
+        onlyLeafSelectable: 'Selezionabili solo le foglie',
       },
       slots: {
         handle: 'Nome slot',
@@ -1611,6 +1761,12 @@ export default {
         isLeaf: 'È nodo foglia',
         children: 'Figli',
         disabled: 'Disabilitato',
+      },
+      emits: {
+        change: 'Cambio valore',
+        expand: 'Espansione nodo',
+        loadStart: 'Inizio caricamento',
+        loadEnd: 'Fine caricamento',
       },
     },
     collapse: {
@@ -1639,6 +1795,12 @@ export default {
         collapseKey: 'Chiave di collasso',
         title: 'Titolo',
         radius: 'Raggio',
+      },
+      'emits': {
+        change: 'Attivato su espansione/compressione pannello',
+      },
+      'emits(CollapseItem)': {
+        change: 'Attivato su espansione/compressione elemento',
       },
     },
     desc: {
@@ -1720,7 +1882,7 @@ export default {
       demo3: {
         title: 'Simulazione richiesta',
       },
-      events: {
+      emits: {
         close: 'Attivato alla chiusura',
       },
       props: {
@@ -1787,9 +1949,14 @@ export default {
         closeOnClickOverlay: 'Chiudi cliccando sul overlay',
         closeByEsc: 'Chiudi con tasto ESC',
         hideFooter: 'Nascondi piè di pagina',
+        hideOkButton: 'Nascondi pulsante OK',
+        hideCloseButton: 'Nascondi pulsante Chiudi',
         okButtonProps: 'Proprietà pulsante OK',
         closeButtonProps: 'Proprietà pulsante Chiudi',
         zIndex: 'z-index',
+      },
+      emits: {
+        close: 'Attivato alla chiusura',
       },
     },
     dialog: {
@@ -1808,11 +1975,18 @@ export default {
       demo4: {
         title: 'Chiudi con ESC',
       },
+      demo5: {
+        title: 'Nascondi icona',
+      },
+      demo6: {
+        title: 'Icona personalizzata',
+      },
       props: {
         type: 'Tipo',
         width: 'Larghezza',
         trigger: 'Trigger',
         title: 'Titolo',
+        content: 'Contenuto',
         okText: 'Testo pulsante OK',
         cancelText: 'Testo pulsante Annulla',
         ok: 'Callback conferma',
@@ -1820,8 +1994,10 @@ export default {
         closeOnClickOverlay: 'Chiudi cliccando sul overlay',
         closeByEsc: 'Chiudi con tasto ESC',
         transformOrigin: 'Origine trasformazione',
+        icon: 'Icona personalizzata',
+        hideIcon: 'Nascondi icona',
       },
-      events: {
+      emits: {
         ok: 'Scatta al click su OK',
         cancel: 'Scatta al click su Annulla',
       },
@@ -1851,6 +2027,8 @@ export default {
         top: 'Distanza dall\'alto',
         maxHeight: 'Altezza massima',
         hideFooter: 'Nascondi footer',
+        hideOkButton: 'Nascondi pulsante OK',
+        hideCloseButton: 'Nascondi pulsante Chiudi',
         closeByEsc: 'Chiudi con ESC',
         okButtonProps: 'Proprietà OK',
         closeOnClickOverlay: 'Chiudi al click overlay',
@@ -1868,6 +2046,15 @@ export default {
       demo2: {
         title: 'Modalità trigger',
       },
+      demo3: {
+        title: 'Nascondi icona',
+      },
+      demo4: {
+        title: 'Icona personalizzata',
+      },
+      demo5: {
+        title: 'Contenuto personalizzato',
+      },
       props: {
         type: 'Tipo',
         width: 'Larghezza',
@@ -1879,6 +2066,8 @@ export default {
         cancelText: 'Testo Annulla',
         ok: 'Callback OK',
         cancel: 'Callback Annulla',
+        icon: 'Icona personalizzata',
+        hideIcon: 'Nascondi icona',
       },
     },
     popover: {
@@ -1903,16 +2092,23 @@ export default {
       props: {
         trigger: 'Trigger',
         placement: 'Posizione',
+        delay: 'Ritardo',
         disabled: 'Disabilitato',
         loading: 'Caricamento',
+        clickOutsideToHide: 'Chiudi cliccando all\'esterno',
         hideOnClick: 'Nascondi al click',
         offset: 'Offset',
+        triggerWidth: 'Larghezza popover',
         popoverBodyClassName: 'Classe corpo popover',
         triggerTarget: 'Target trigger',
       },
       slots: {
         'trigger': 'Slot trigger',
         'popover-body': 'Slot corpo popover',
+      },
+      emits: {
+        show: 'Attivato alla visualizzazione',
+        hide: 'Attivato alla chiusura',
       },
     },
     tooltip: {
@@ -1931,7 +2127,7 @@ export default {
         title: 'Supporto HTML',
       },
       props: {
-        tips: 'Contenuto tooltip',
+        content: 'Contenuto tooltip',
         placement: 'Posizione',
         trigger: 'Trigger',
         allowHTML: 'Consenti HTML',
@@ -2018,6 +2214,9 @@ export default {
         icon: 'Icona pulsante azione',
         onClick: 'Evento click pulsante azione',
         customRender: 'Contenuto rendering personalizzato',
+      },
+      emits: {
+        click: 'Attivato al click sul pulsante',
       },
     },
   },

@@ -9,7 +9,6 @@ import DemoTreeSelect4Code from './DemoTreeSelect4.vue?raw'
 import DemoTreeSelect5 from './DemoTreeSelect5.vue'
 import DemoTreeSelect5Code from './DemoTreeSelect5.vue?raw'
 import DemoTreeSelect6 from './DemoTreeSelect6.vue'
-
 import DemoTreeSelect6Code from './DemoTreeSelect6.vue?raw'
 import DemoTreeSelect7 from './DemoTreeSelect7.vue'
 import DemoTreeSelect7Code from './DemoTreeSelect7.vue?raw'
@@ -21,6 +20,12 @@ import DemoTreeSelect10 from './DemoTreeSelect10.vue'
 import DemoTreeSelect10Code from './DemoTreeSelect10.vue?raw'
 import DemoTreeSelect11 from './DemoTreeSelect11.vue'
 import DemoTreeSelect11Code from './DemoTreeSelect11.vue?raw'
+import DemoTreeSelect12 from './DemoTreeSelect12.vue'
+import DemoTreeSelect12Code from './DemoTreeSelect12.vue?raw'
+import DemoTreeSelect13 from './DemoTreeSelect13.vue'
+import DemoTreeSelect13Code from './DemoTreeSelect13.vue?raw'
+import DemoTreeSelect14 from './DemoTreeSelect14.vue'
+import DemoTreeSelect14Code from './DemoTreeSelect14.vue?raw'
 
 export const demoGroup = [
   DemoTreeSelect1,
@@ -34,6 +39,9 @@ export const demoGroup = [
   DemoTreeSelect9,
   DemoTreeSelect10,
   DemoTreeSelect11,
+  DemoTreeSelect12,
+  DemoTreeSelect13,
+  DemoTreeSelect14,
 ]
 
 export const codeGroup = [
@@ -48,4 +56,7 @@ export const codeGroup = [
   DemoTreeSelect9Code,
   DemoTreeSelect10Code,
   DemoTreeSelect11Code,
+  DemoTreeSelect12Code,
+  DemoTreeSelect13Code,
+  DemoTreeSelect14Code,
 ]

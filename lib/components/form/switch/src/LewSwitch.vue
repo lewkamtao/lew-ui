@@ -19,14 +19,16 @@ async function handleClick() {
     _loading.value = true
     const isSuccess = await props.request()
     if (isSuccess) {
-      const newValue = !modelValue.value
+      const currentValue = modelValue.value ?? false
+      const newValue = !currentValue
       modelValue.value = newValue
       emit('change', newValue)
     }
     _loading.value = false
   }
   else {
-    const newValue = !modelValue.value
+    const currentValue = modelValue.value ?? false
+    const newValue = !currentValue
     modelValue.value = newValue
     emit('change', newValue)
   }
@@ -119,7 +121,7 @@ const getSwitchStyle = computed(() => {
   height: var(--lew-switch-height);
   background: var(--lew-switch-bgcolor);
   border-radius: var(--lew-border-radius-small);
-  transition: all var(--lew-form-transition-ease);
+  transition: background-color var(--lew-form-transition-ease);
   box-shadow: var(--lew-form-box-shadow);
   flex-shrink: 0;
 
@@ -131,7 +133,10 @@ const getSwitchStyle = computed(() => {
     height: var(--lew-switch-dot-height);
     border-radius: 4px;
     background: var(--lew-color-white);
-    transition: all var(--lew-form-transition-ease);
+    transition:
+      transform var(--lew-form-transition-ease),
+      background-color var(--lew-form-transition-ease),
+      width var(--lew-form-transition-ease);
     transform: var(--lew-switch-dot-transform);
   }
 
@@ -147,7 +152,7 @@ const getSwitchStyle = computed(() => {
   }
 
   input:checked + .lew-switch-dot {
-    background: #fff;
+    background: var(--lew-color-switch-primary-dot-color);
     transform: translate(19px, 4px);
   }
 
@@ -171,9 +176,15 @@ const getSwitchStyle = computed(() => {
 
   .lew-switch-dot::after {
     border: var(--lew-form-border-width) solid rgba(0, 0, 0, 0);
-    border-left: 2px solid var(--lew-color-primary);
+    border-left: 2px solid var(--lew-color-switch-primary-loading-off);
     width: 10px;
     height: 10px;
+  }
+}
+
+.lew-switch-loading.lew-switch-checked {
+  .lew-switch-dot::after {
+    border-left: 2px solid var(--lew-color-switch-primary-loading-on);
   }
 }
 
@@ -197,15 +208,15 @@ const getSwitchStyle = computed(() => {
 }
 
 .lew-switch.lew-switch-checked {
-  background: var(--lew-color-primary);
+  background: var(--lew-color-switch-primary-checked-bg);
 }
 
 .lew-switch.lew-switch-checked:hover {
-  background: var(--lew-color-primary);
+  background: var(--lew-color-switch-primary-checked-bg-hover);
 }
 
 .lew-switch.lew-switch-checked:active {
-  background: var(--lew-color-primary);
+  background: var(--lew-color-switch-primary-checked-bg-active);
 
   .lew-switch-dot {
     width: var(--lew-switch-dot-width-active);

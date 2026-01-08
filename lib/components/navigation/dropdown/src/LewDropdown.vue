@@ -5,8 +5,7 @@ import LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vu
 import { dropdownEmits } from './emits'
 import { dropdownProps } from './props'
 
-defineProps(dropdownProps)
-
+const props = defineProps(dropdownProps)
 const emit = defineEmits(dropdownEmits)
 
 const lewPopoverRef = ref<InstanceType<typeof LewPopover>>()
@@ -23,7 +22,6 @@ function change(e: LewContextMenusOption) {
   emit('change', e)
 }
 
-// Expose methods
 defineExpose({
   show,
   hide,
@@ -34,8 +32,8 @@ defineExpose({
   <LewPopover
     ref="lewPopoverRef"
     popover-body-class-name="lew-dropdown-popover-body"
-    :trigger="trigger"
-    :placement="placement"
+    :trigger="props.trigger"
+    :placement="props.placement"
   >
     <template #trigger>
       <slot />
@@ -43,8 +41,8 @@ defineExpose({
     <template #popover-body>
       <LewContextMenu
         :dropdown-instance="lewPopoverRef"
-        :checkable="checkable"
-        :options="options"
+        :checkable="props.checkable"
+        :options="props.options"
         @change="change"
       />
     </template>

@@ -4,20 +4,6 @@ import type { LewMenuTreeOption } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
-export const menuTreeModel = {
-  modelValue: {
-    type: String,
-  },
-  expandKeys: {
-    type: Array as PropType<string[]>,
-    default: () => [],
-  },
-  collapsed: {
-    type: Boolean,
-    default: false,
-  },
-}
-
 export const menuTreeProps = {
   options: {
     type: Array as PropType<LewMenuTreeOption[]>,

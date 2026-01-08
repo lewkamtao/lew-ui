@@ -119,6 +119,9 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
         drop_console: true,
         drop_debugger: true,
       },
+      format: {
+        comments: false, // 移除所有注释
+      },
     },
   }
 

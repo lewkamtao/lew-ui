@@ -1,0 +1,185 @@
+{
+  "components": [
+    {
+      "text": "# File an Invoice\n\nAdd your invoice details below.",
+      "type": "text",
+      "id": "Field_1ue2kvc",
+      "layout": {
+        "row": "Row_1ix1rji"
+      }
+    },
+    {
+      "label": "Text field",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_01ci37f",
+        "columns": null
+      },
+      "id": "Field_0hdxt7r",
+      "key": "textfield_3lko2f"
+    },
+    {
+      "label": "Text area",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_01ci37f",
+        "columns": null
+      },
+      "id": "Field_1jcgc43",
+      "key": "textarea_xip4om"
+    },
+    {
+      "label": "Invoice Number",
+      "description": "An invoice number in the format: C-123.",
+      "key": "invoiceNumber",
+      "type": "textfield",
+      "validate": {
+        "pattern": "^C-[0-9]+$"
+      },
+      "id": "Field_0hsyo4z",
+      "layout": {
+        "row": "Row_01ci37f",
+        "columns": 6
+      },
+      "readonly": "=false",
+      "properties": {}
+    },
+    {
+      "label": "Creditor",
+      "key": "creditor",
+      "type": "textfield",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_0fu13je",
+      "layout": {
+        "row": "Row_01ci37f",
+        "columns": 4
+      }
+    },
+    {
+      "computeOn": "change",
+      "type": "expression",
+      "layout": {
+        "row": "Row_1lczg8g",
+        "columns": null
+      },
+      "id": "Field_0scvd6k",
+      "key": "expression_mz2rwc"
+    },
+    {
+      "label": "Radio group",
+      "values": [
+        {
+          "label": "Value",
+          "value": "value"
+        }
+      ],
+      "type": "radio",
+      "layout": {
+        "row": "Row_1lczg8g",
+        "columns": null
+      },
+      "id": "Field_1ibxnmq",
+      "key": "radio_8ykn38"
+    },
+    {
+      "label": "Checkbox group",
+      "values": [
+        {
+          "label": "Value",
+          "value": "value"
+        }
+      ],
+      "type": "checklist",
+      "layout": {
+        "row": "Row_0cc0a8i",
+        "columns": null
+      },
+      "id": "Field_0jyusu8",
+      "key": "checklist_voipq"
+    },
+    {
+      "label": "Submit",
+      "action": "submit",
+      "key": "submit",
+      "type": "button",
+      "id": "Field_0k9rume",
+      "layout": {
+        "row": "Row_0cc0a8i",
+        "columns": 2
+      }
+    },
+    {
+      "label": "Radio group",
+      "values": [
+        {
+          "label": "Value",
+          "value": "value"
+        }
+      ],
+      "type": "radio",
+      "layout": {
+        "row": "Row_0cc0a8i",
+        "columns": null
+      },
+      "id": "Field_1tgqzza",
+      "key": "radio_rl29s"
+    },
+    {
+      "label": "Checkbox group",
+      "values": [
+        {
+          "label": "Value",
+          "value": "value"
+        }
+      ],
+      "type": "checklist",
+      "layout": {
+        "row": "Row_0vio4ou",
+        "columns": null
+      },
+      "id": "Field_0k0nl90",
+      "key": "checklist_bspdud"
+    },
+    {
+      "label": "Tag list",
+      "values": [
+        {
+          "label": "Value",
+          "value": "value"
+        }
+      ],
+      "type": "taglist",
+      "layout": {
+        "row": "Row_1mqa1q2",
+        "columns": null
+      },
+      "id": "Field_1dqwnin",
+      "key": "taglist_wqn5p"
+    },
+    {
+      "label": "Checkbox group",
+      "values": [
+        {
+          "label": "Value",
+          "value": "value"
+        }
+      ],
+      "type": "checklist",
+      "layout": {
+        "row": "Row_1mqa1q2",
+        "columns": null
+      },
+      "id": "Field_02fbt2j",
+      "key": "checklist_nir89b"
+    }
+  ],
+  "schemaVersion": 19,
+  "exporter": {
+    "name": "form-js (https://demo.bpmn.io)",
+    "version": "1.17.0"
+  },
+  "type": "default",
+  "id": "Form_18wq7uz"
+}

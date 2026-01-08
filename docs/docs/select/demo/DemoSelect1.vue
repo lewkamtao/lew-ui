@@ -3,7 +3,7 @@ import type { LewSelectOption } from 'lew-ui'
 
 const options = ref<LewSelectOption[]>([
   {
-    label: 'StandardStandardStandardStandardStandard Delivery',
+    label: 'Standard Delivery',
     value: 'standard',
   },
   { label: 'Express Delivery', value: 'express' },
@@ -11,7 +11,7 @@ const options = ref<LewSelectOption[]>([
   { label: 'Same Day Delivery', value: 'sameDay' },
 ])
 
-const value = ref('')
+const value = ref()
 </script>
 
 <template>
@@ -19,6 +19,7 @@ const value = ref('')
     v-model="value"
     width="300px"
     clearable
+    searchable
     placeholder="Select delivery method"
     :options="options"
   />

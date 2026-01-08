@@ -1,20 +1,42 @@
 <script lang="ts" setup>
+// 1. 类型导入
 import type { LewSelectOption } from 'lew-ui/types'
+
+// 2. 组件导入
 import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+
+// 3. 工具函数导入
 import { object2class } from 'lew-ui/utils'
-import { toRaw } from 'vue'
+
+// 4. 组件配置导入
 import { paginationEmits } from './emits'
 import { paginationProps } from './props'
 
+// Props & Emits
 const props = defineProps(paginationProps)
 const emit = defineEmits(paginationEmits)
 
+// v-model
 const total: Ref<number> = defineModel('total', { default: 0 })
 const currentPage: Ref<number> = defineModel('currentPage', { default: 1 })
 const pageSize: Ref<number> = defineModel('pageSize', { default: 10 })
 
-const getPageSizeOptions = computed(() => {
+// 响应式状态
+const state = reactive({
+  toPage: undefined as string | undefined,
+  visiblePagesCount: props.visiblePagesCount,
+})
+
+// 图标尺寸映射（用于 computed）
+const iconSizeMap: Record<string, number> = {
+  small: 16,
+  medium: 18,
+  large: 20,
+}
+
+// 计算属性
+const getPageSizeOptions = (computed(() => {
   if (Array.isArray(props.pageSizeOptions)) {
     if (
       typeof props.pageSizeOptions[0] === 'string'
@@ -28,13 +50,10 @@ const getPageSizeOptions = computed(() => {
     return props.pageSizeOptions
   }
   return []
-})
+}) as unknown) as LewSelectOption[]
 
-const state = reactive({
-  toPage: undefined,
-  pageSize: pageSize.value,
-  visiblePagesCount: props.visiblePagesCount,
-})
+// 图标尺寸（使用映射对象优化，避免 switch）
+const getIconSize = computed(() => iconSizeMap[props.size] || 18)
 
 onMounted(() => {
   // Ensure that the number of visible pages is at least 5 and at most 12.
@@ -42,33 +61,36 @@ onMounted(() => {
   state.visiblePagesCount = Math.min(state.visiblePagesCount, 12)
 })
 
-const totalPages = computed(() => Math.ceil(total.value / state.pageSize))
+const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
 
 const visiblePages = computed(() => {
   const _currentPage = currentPage.value
-  const totalPages = Math.ceil(total.value / state.pageSize)
+  const _totalPages = Math.ceil(total.value / pageSize.value)
+  const _visibleCount = state.visiblePagesCount
 
-  let startPage = _currentPage - Math.floor(state.visiblePagesCount / 2)
-  if (_currentPage < state.visiblePagesCount / 2 + 2) {
+  let startPage = _currentPage - Math.floor(_visibleCount / 2)
+  if (_currentPage < _visibleCount / 2 + 2) {
     startPage = 1
   }
 
   if (startPage < 1) {
     startPage = 1
   }
-  let endPage = startPage + state.visiblePagesCount - 1
-  if (endPage > totalPages) {
-    endPage = totalPages
-    startPage = endPage - state.visiblePagesCount + 1
+
+  let endPage = startPage + _visibleCount - 1
+  if (endPage > _totalPages) {
+    endPage = _totalPages
+    startPage = endPage - _visibleCount + 1
     if (startPage < 1) {
       startPage = 1
     }
   }
-  const visiblePages = []
+
+  const pages: number[] = []
   for (let i = startPage; i <= endPage; i++) {
-    visiblePages.push(i)
+    pages.push(i)
   }
-  return visiblePages
+  return pages
 })
 
 function changePage(page: number) {
@@ -79,18 +101,17 @@ function changePage(page: number) {
   }
 
   currentPage.value = page
-  pageSize.value = state.pageSize
   emit(
     'change',
     toRaw({
-      currentPage: currentPage.value,
-      pageSize: state.pageSize,
+      currentPage: page,
+      pageSize: pageSize.value,
     }),
   )
 }
 
 // 是否显示省略号
-const startEllipsis = computed(() => visiblePages.value[0] > 2 + 1)
+const startEllipsis = computed(() => visiblePages.value[0] > 3)
 const endEllipsis = computed(
   () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2,
 )
@@ -118,18 +139,23 @@ const showSecondLastPage = computed(() => {
 })
 
 function checkPageSize(value: any) {
-  state.pageSize = value
+  pageSize.value = value
+  // 切换 pageSize 后，需要重新计算当前页是否超出范围
+  const newTotalPages = Math.ceil(total.value / value)
+  if (currentPage.value > newTotalPages) {
+    currentPage.value = newTotalPages || 1
+  }
   changePage(currentPage.value)
 }
 
 function checkPageNum(value: any) {
   const page = Number(value)
   state.toPage = undefined
-  if (page > totalPages.value || page < 1) {
+  if (page > totalPages.value || page < 1 || Number.isNaN(page)) {
     return
   }
   currentPage.value = page
-  changePage(value)
+  changePage(page)
 }
 
 const getPaginationClassName = computed(() => {
@@ -137,20 +163,6 @@ const getPaginationClassName = computed(() => {
   return object2class('lew-pagination', {
     size,
   })
-})
-
-const getIconSize = computed(() => {
-  const { size } = props
-  switch (size) {
-    case 'small':
-      return 16
-    case 'medium':
-      return 18
-    case 'large':
-      return 20
-    default:
-      return 18
-  }
 })
 </script>
 
@@ -230,12 +242,12 @@ const getIconSize = computed(() => {
         </LewButton>
       </LewFlex>
       <LewSelect
-        v-model="state.pageSize"
+        v-model="pageSize"
         auto-width
         popover-width="150px"
         :size="size"
         :show-check-icon="false"
-        :options="getPageSizeOptions as LewSelectOption[]"
+        :options="getPageSizeOptions"
         @change="checkPageSize"
       />
       <LewInput
@@ -276,21 +288,47 @@ const getIconSize = computed(() => {
     border-radius: var(--lew-border-radius-small);
     text-align: center;
     cursor: pointer;
+    background: transparent;
+    color: var(--lew-text-color-1);
+    // 只过渡需要的属性，避免使用 transition: all
+    transition:
+      background-color var(--lew-form-transition-ease),
+      color var(--lew-form-transition-ease),
+      transform var(--lew-form-transition-bezier);
   }
 
-  .lew-pagination-page-btn:hover {
-    background-color: var(--lew-color-primary-light);
+  // 普通状态的 hover（使用 :not() 避免与 active 状态冲突）
+  .lew-pagination-page-btn:hover:not(.active) {
+    background-color: var(--lew-color-pagination-primary-hover-bg);
+    color: var(--lew-color-pagination-primary-hover-text);
+  }
+
+  .lew-pagination-page-btn:active:not(.active) {
+    transform: scale(0.9);
+  }
+
+  // 激活状态
+  .lew-pagination-page-btn.active {
+    background-color: var(--lew-color-pagination-primary-active-bg);
+    color: var(--lew-color-pagination-primary-active-text);
+  }
+
+  // 激活状态的 hover（优先级更高，使用组合选择器）
+  .lew-pagination-page-btn.active:hover {
+    background-color: var(--lew-color-pagination-primary-active-bg-hover);
+    color: var(--lew-color-pagination-primary-active-text-hover);
+  }
+
+  // 激活状态的 active
+  .lew-pagination-page-btn.active:active {
+    background-color: var(--lew-color-pagination-primary-active-bg-active);
+    color: var(--lew-color-pagination-primary-active-text-active);
   }
 
   .lew-pagination-page-box {
     width: auto;
     position: relative;
     height: 100%;
-
-    .active {
-      background-color: var(--lew-color-primary);
-      color: var(--lew-color-white);
-    }
   }
 
   .lew-pagination-page-label {
@@ -298,6 +336,7 @@ const getIconSize = computed(() => {
     padding: 0px 5px;
   }
 }
+
 .lew-pagination-size-small {
   .lew-pagination-page-box {
     :deep() {
@@ -307,6 +346,7 @@ const getIconSize = computed(() => {
       }
     }
   }
+
   .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-small) - 6px);
     min-width: calc(var(--lew-form-item-height-small) - 6px);
@@ -314,6 +354,7 @@ const getIconSize = computed(() => {
     padding: 0px 4px;
   }
 }
+
 .lew-pagination-size-medium {
   .lew-pagination-page-box {
     :deep() {
@@ -323,6 +364,7 @@ const getIconSize = computed(() => {
       }
     }
   }
+
   .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-medium) - 8px);
     min-width: calc(var(--lew-form-item-height-medium) - 8px);
@@ -330,6 +372,7 @@ const getIconSize = computed(() => {
     padding: 0px 6px;
   }
 }
+
 .lew-pagination-size-large {
   .lew-pagination-page-box {
     :deep() {
@@ -339,6 +382,7 @@ const getIconSize = computed(() => {
       }
     }
   }
+
   .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-large) - 10px);
     min-width: calc(var(--lew-form-item-height-large) - 10px);

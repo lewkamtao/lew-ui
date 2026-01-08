@@ -146,7 +146,7 @@ const options = ref([
   },
 ])
 
-const value = ref('')
+const value = ref([])
 </script>
 
 <template>

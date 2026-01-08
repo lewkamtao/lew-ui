@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { LewMenuOption } from 'lew-ui'
 import { LewTag } from 'lew-ui'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
@@ -6,21 +6,23 @@ import { toRaw } from 'vue'
 import { menuEmits } from './emits'
 import { menuProps } from './props'
 
-defineProps(menuProps)
-
+const props = defineProps(menuProps)
 const emit = defineEmits(menuEmits)
 
-const modelValue = defineModel()
+const modelValue = defineModel<string>('modelValue', {
+  required: false,
+  default: '',
+})
 
 function select(item: LewMenuOption) {
-  modelValue.value = item.value
+  modelValue.value = item.value || ''
   emit('change', toRaw(item))
 }
 </script>
 
 <template>
   <div class="lew-menu">
-    <template v-for="item in options" :key="item.label">
+    <template v-for="item in props.options" :key="item.label">
       <div class="lew-menu-item">
         <RenderComponent
           :render-fn="item.label"
@@ -42,13 +44,15 @@ function select(item: LewMenuOption) {
         <div
           class="lew-menu-item lew-menu-item-child"
           :class="{
-            'lew-menu-item-last': item.children && index === item.children.length - 1,
+            'lew-menu-item-last':
+              item.children && index === item.children.length - 1,
             'lew-menu-item-active': cItem.value === modelValue,
           }"
           @click="select(cItem)"
         >
           <RenderComponent :render-fn="cItem.icon" class="lew-menu-icon" />
           <RenderComponent
+            class="lew-menu-item-text"
             :render-fn="cItem.label"
             type="text-trim"
             :component-props="{
@@ -71,10 +75,19 @@ function select(item: LewMenuOption) {
 
 <style lang="scss" scoped>
 .lew-menu {
+  --lew-menu-item-bg: var(--lew-color-menu-primary-item-bg);
+  --lew-menu-item-bg-hover: var(--lew-color-menu-primary-item-bg-hover);
+  --lew-menu-item-text: var(--lew-color-menu-primary-item-text);
+  --lew-menu-item-text-hover: var(--lew-color-menu-primary-item-text-hover);
+  --lew-menu-item-selected-bg: var(--lew-color-menu-primary-item-selected-bg);
+  --lew-menu-item-selected-text: var(--lew-color-menu-primary-item-selected-text);
+  --lew-menu-item-icon: var(--lew-color-menu-primary-item-icon);
+  --lew-menu-item-icon-hover: var(--lew-color-menu-primary-item-icon-hover);
+  --lew-menu-item-icon-selected: var(--lew-color-menu-primary-item-icon-selected);
+
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  border-radius: 4px;
+  border-radius: var(--lew-border-radius-small);
   padding: 2px 6px;
   margin: 0px 3px;
   box-decoration-break: clone;
@@ -96,35 +109,39 @@ function select(item: LewMenuOption) {
   }
 
   .lew-menu-item-child {
-    color: var(--lew-text-color-1);
+    color: var(--lew-menu-item-text);
     font-size: 14px;
     height: 36px;
     line-height: 36px;
     cursor: pointer;
     border-radius: var(--lew-border-radius-small);
-    transition:
-      background-color 0.25s,
-      color 0.25s;
+    background-color: var(--lew-menu-item-bg);
+
+    :deep(.lew-menu-icon) {
+      flex-shrink: 0;
+      color: var(--lew-menu-item-icon);
+    }
   }
 
-  :deep(.lew-menu-icon) {
-    flex-shrink: 0;
+  .lew-menu-item-child:hover:not(.lew-menu-item-active) {
+    background-color: var(--lew-menu-item-bg-hover);
+    color: var(--lew-menu-item-text-hover);
+
+    :deep(.lew-menu-icon) {
+      color: var(--lew-menu-item-icon-hover);
+    }
   }
 
-  .lew-menu-item-child:hover {
-    background-color: var(--lew-form-bgcolor-hover);
-    color: var(--lew-text-color-1);
-  }
+  .lew-menu-item-child.lew-menu-item-active {
+    background-color: var(--lew-menu-item-selected-bg);
 
-  .lew-menu-item-active {
-    background-color: var(--lew-color-primary-light);
-    color: var(--lew-color-primary-dark);
-    font-weight: bold;
-  }
+    .lew-menu-item-text {
+      color: var(--lew-menu-item-selected-text);
+    }
 
-  .lew-menu-item-active:hover {
-    background-color: var(--lew-color-primary-light);
-    color: var(--lew-color-primary-dark);
+    :deep(.lew-menu-icon) {
+      color: var(--lew-menu-item-selected-text);
+    }
   }
 
   .lew-menu-item-last {

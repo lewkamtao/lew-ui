@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { LewCollapseModelValue } from 'lew-ui/types'
 import type { Ref } from 'vue'
-import { LewFlex, LewTextTrim } from 'lew-ui'
+import { LewFlex } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px } from 'lew-ui/utils'
 import { inject, ref, toRaw, watch } from 'vue'
@@ -82,7 +82,9 @@ setModelValue()
           }"
           type="chevron-right"
         />
-        <LewTextTrim :style="{ width: 'calc(100% - 50px)' }" :text="props.title" />
+        <div class="lew-collapse-item-title-text" :title="props.title">
+          {{ props.title }}
+        </div>
       </template>
     </LewFlex>
     <LewCollapseTransition>
@@ -95,7 +97,7 @@ setModelValue()
 
 <style scoped lang="scss">
 .lew-collapse-item {
-  border-bottom: 1px solid var(--lew-bgcolor-4);
+  border-bottom: var(--lew-table-border);
 
   .lew-collapse-item-title {
     cursor: pointer;
@@ -103,6 +105,13 @@ setModelValue()
     box-sizing: border-box;
     transition: all 0.15s;
     user-select: none;
+
+    .lew-collapse-item-title-text {
+      width: calc(100% - 50px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   .lew-collapse-item-main {

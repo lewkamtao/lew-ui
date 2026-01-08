@@ -31,6 +31,12 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  // 独立 demo 页面路由（动态路由，不使用 Main 布局，纯 demo 页面）
+  {
+    path: '/:componentName/demo_:demoIndex',
+    name: 'StandaloneDemo',
+    component: () => import('../views/LewStandaloneDemo.vue'),
+  },
   {
     path: '/Playground',
     name: 'Playground',

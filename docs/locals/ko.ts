@@ -32,6 +32,7 @@ export default {
     feedback: '피드백',
     close: '닫기',
     showCode: '코드 보기',
+    copySuccess: '복사 성공!',
   },
   components: {
     image: {
@@ -117,6 +118,7 @@ export default {
         text: '버튼 텍스트',
         type: '유형',
         size: '크기',
+        width: '너비',
         singleIcon: '아이콘만 표시 여부',
         color: '색상',
         round: '둥근 모서리 여부',
@@ -159,6 +161,10 @@ export default {
         disabled: '비활성화 여부',
         round: '둥근 모서리 여부',
         oversize: '더 여유로운 크기',
+        close: '태그를 닫기 위한 Promise 함수를 받습니다',
+      },
+      emits: {
+        close: '태그 닫기 이벤트 콜백',
       },
     },
     badge: {
@@ -238,6 +244,9 @@ export default {
         reserveEnd:
           '끝부분 문자 보존 수, 텍스트가 넘칠 때 중간에 생략 부호를 표시하고 시작과 지정된 수의 끝 문자 보존',
       },
+      emits: {
+        click: '텍스트 클릭 시 트리거',
+      },
     },
     flex: {
       name: '플렉스 레이아웃 Flex',
@@ -300,7 +309,7 @@ export default {
         valveHeight:
           '페이지 스크롤 높이 임계값, 이 값을 초과하면 맨 위로 버튼이 표시됨, 단위는 픽셀.',
       },
-      events: {
+      emits: {
         click: '맨 위로 이동 이벤트 콜백',
       },
     },
@@ -324,10 +333,15 @@ export default {
         options: '단계 구성 항목 배열',
         status: '단계의 현재 상태',
         minWidth: '최소 단계 너비',
+        canClickItem: '단계 항목을 클릭하여 전환할 수 있는지 여부',
+        canCrossSteps: '단계 간 전환할 수 있는지 여부',
       },
       options: {
         title: '단계 제목',
         description: '단계 설명',
+      },
+      emits: {
+        change: '단계 전환 시 트리거',
       },
     },
     menu: {
@@ -349,6 +363,9 @@ export default {
         disabled: '메뉴 항목 비활성화 여부',
         icon: '메뉴 항목 아이콘',
         tagProps: '메뉴 항목 태그 Props',
+      },
+      emits: {
+        change: '메뉴 항목 전환 시 트리거',
       },
     },
     menuTree: {
@@ -389,6 +406,11 @@ export default {
         disabled: '메뉴 항목 비활성화 여부',
         isLeaf: '리프 노드 여부',
       },
+      emits: {
+        change: '메뉴 항목 전환 시 트리거',
+        expand: '메뉴 항목 펼침 시 트리거',
+        collapse: '메뉴 항목 접힘 시 트리거',
+      },
     },
     dropdown: {
       'name': '드롭다운 메뉴 Dropdown',
@@ -411,7 +433,7 @@ export default {
         checkable: '선택 가능 여부',
       },
       'options(LewContextMenusOption[])': contextMenu,
-      'events': {
+      'emits': {
         show: '메뉴 표시 이벤트 콜백',
         hide: '메뉴 숨김 이벤트 콜백',
         change: '메뉴 항목 선택 이벤트 콜백',
@@ -438,7 +460,7 @@ export default {
         value: '브레드크럼 항목 값',
         active: '현재 선택 항목 여부',
       },
-      events: {
+      emits: {
         change: '브레드크럼 항목 변경 시 트리거',
       },
     },
@@ -460,6 +482,7 @@ export default {
       'props': {
         options: '우클릭 메뉴 구성',
         disabled: '우클릭 메뉴 비활성화 여부',
+        trigger: '트리거 방식',
       },
       'options(LewContextMenusOption[])': contextMenu,
     },
@@ -492,6 +515,9 @@ export default {
         icon: '작업 버튼 아이콘',
         onClick: '작업 버튼 클릭 이벤트',
         customRender: '사용자 정의 렌더링 내용',
+      },
+      emits: {
+        click: '작업 버튼 클릭 시 트리거',
       },
     },
     form: {
@@ -546,7 +572,7 @@ export default {
         outputFormat: '출력 시 형식화 메서드',
         inputFormat: '입력 시 형식화 메서드',
       },
-      events: {
+      emits: {
         mounted: '폼 항목 마운트 시 트리거',
       },
       methods: {
@@ -618,13 +644,13 @@ export default {
         suffixTooltip: '입력 상자 접미사의 툴팁 텍스트',
         okByEnter: '엔터 키로 입력 확인 허용 여부',
       },
-      events: {
-        change: '입력 상자 값 변경 시 트리거',
-        focus: '입력 상자 포커스 획득 시 트리거',
-        blur: '입력 상자 포커스 상실 시 트리거',
-        input: '입력 상자 내용 입력 시 트리거',
-        clear: '입력 상자 지우기 시 트리거',
-        ok: '입력 상자 확인 시 트리거',
+      emits: {
+        change: '값 변경 시 트리거',
+        focus: '포커스 획득 시 트리거',
+        blur: '포커스 상실 시 트리거',
+        input: '내용 입력 시 트리거',
+        clear: '지우기 시 트리거',
+        ok: '확인 시 트리거',
       },
       model: {
         modelValue: '입력 상자 바인딩 값',
@@ -664,6 +690,10 @@ export default {
       },
       model: {
         modelValue: '바인딩 값',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
+        input: '내용 입력 시 트리거',
       },
     },
     textarea: {
@@ -716,7 +746,7 @@ export default {
         selectByFocus: '포커스 시 전체 텍스트 선택 여부',
         okByEnter: '엔터 키로 확인 활성화 여부(활성화 시 Shift+Enter로 줄바꿈)',
       },
-      events: {
+      emits: {
         change: '값 변경 시 트리거',
         focus: '포커스 획득 시 트리거',
         blur: '포커스 상실 시 트리거',
@@ -762,11 +792,10 @@ export default {
         clearable: '지우기 가능 여부',
         placeholder: '플레이스홀더 텍스트',
         readonly: '읽기 전용 여부',
-        allowDuplicates: '중복 허용 여부',
         maxLength: '추가 가능한 태그의 최대 수',
         width: '너비',
       },
-      events: {
+      emits: {
         change: '값 변경 시 트리거',
         clear: '지우기 시 트리거',
         add: '태그 추가 시 트리거',
@@ -826,10 +855,13 @@ export default {
         iconable: '아이콘 사용 가능 여부',
         certain: '확정 상태',
       },
-      'events(Checkbox)': {
+      'emits(Checkbox)': {
         change: '값 변경 시 트리거',
       },
-      'events(CheckboxGroup)': {
+      'emits(CheckboxGroup)': {
+        change: '값 변경 시 트리거',
+      },
+      'emits': {
         change: '값 변경 시 트리거',
       },
       'options': {
@@ -878,7 +910,7 @@ export default {
         value: '값',
         disabled: '비활성화',
       },
-      'events': {
+      'emits': {
         change: '값 변경 시 트리거',
       },
     },
@@ -901,6 +933,9 @@ export default {
       demo5: {
         title: '둥근 모양',
       },
+      demo6: {
+        title: '비활성화 옵션',
+      },
       model: {
         modelValue: '바인딩 값',
       },
@@ -917,6 +952,9 @@ export default {
       options: {
         label: '제목',
         value: '값',
+      },
+      emits: {
+        change: '탭 전환 시 트리거',
       },
     },
     select: {
@@ -952,6 +990,20 @@ export default {
       demo10: {
         title: '검색 캐시 활성화',
       },
+      demo11: {
+        title: '자동 너비 조정',
+        description:
+          '```autoWidth``` 속성을 사용하여 드롭다운 상자의 너비를 자동으로 계산하고, ```popoverWidth``` 속성으로 팝업 너비를 설정합니다',
+      },
+      demo12: {
+        title: '다중 선택',
+      },
+      demo13: {
+        title: '다중 선택 검색',
+      },
+      demo14: {
+        title: '다중 선택 그룹화',
+      },
       model: {
         modelValue: '바인딩 값',
       },
@@ -973,13 +1025,16 @@ export default {
         disabled: '비활성화 상태',
         showCheckIcon: '체크 아이콘 표시 여부',
         initMethod: '옵션 초기화 방법',
+        initMethodId: '초기화 방법 ID',
         enableSearchCache: '검색 캐시 활성화 여부',
+        multiple: '다중 선택 여부',
       },
-      events: {
+      emits: {
         change: '값 변경 시 트리거',
         clear: '지우기 시 트리거',
         blur: '포커스 상실 시 트리거',
         focus: '포커스 획득 시 트리거',
+        delete: '옵션 삭제 시 트리거',
       },
       options: { label: '제목', value: '값', disabled: '비활성화' },
       slots: {
@@ -1044,11 +1099,7 @@ export default {
       model: {
         modelValue: '바인딩 값',
       },
-      events: {
-        change: '값 변경',
-        blur: '포커스 상실',
-        focus: '포커스 획득',
-      },
+      emits: { change: '값 변경', blur: '포커스 상실', focus: '포커스 획득' },
       options: { label: '라벨', value: '값', disabled: '비활성화' },
       slots: {
         item: '사용자 정의 옵션 내용',
@@ -1090,11 +1141,11 @@ export default {
         disabled: '비활성화',
         presets: '프리셋 값',
       },
-      events: {
-        change: '값 변경',
-        focus: '포커스 획득',
-        blur: '포커스 상실',
-        clear: '지우기',
+      emits: {
+        change: '값 변경 시 트리거',
+        focus: '포커스 획득 시 트리거',
+        blur: '포커스 상실 시 트리거',
+        clear: '지우기 시 트리거',
       },
     },
     dateRangePicker: {
@@ -1124,17 +1175,92 @@ export default {
         readonly: '읽기 전용',
         disabled: '비활성화',
       },
-      events: {
-        change: '값 변경',
-        focus: '포커스 획득',
-        blur: '포커스 상실',
-        clear: '지우기',
+      emits: {
+        change: '값 변경 시 트리거',
+        focus: '포커스 획득 시 트리거',
+        blur: '포커스 상실 시 트리거',
+        clear: '지우기 시 트리거',
       },
     },
     cascader: {
       name: '계층형 선택기 Cascader',
       description:
         '다층 데이터를 처리하는 선택기로 분류 선택을 더 명확하게 합니다',
+      demo1: {
+        title: '기본 사용법',
+      },
+      demo2: {
+        title: '자유 모드',
+      },
+      demo3: {
+        title: '마지막 계층만 표시',
+      },
+      demo4: {
+        title: '비동기 로딩',
+      },
+      demo5: {
+        title: '지우기 가능',
+      },
+      demo6: {
+        title: '읽기 전용',
+      },
+      demo7: {
+        title: '비활성화',
+      },
+      demo8: {
+        title: '옵션 비활성화',
+      },
+      demo9: {
+        title: '옵션 초기화 방법',
+        description:
+          '```initMethod``` 방법을 사용하여 계층형 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
+      },
+      demo10: {
+        title: '다중 선택',
+      },
+      demo11: {
+        title: '임의 계층 선택',
+      },
+      demo12: {
+        title: '엄격 모드',
+      },
+      model: {
+        modelValue: '바인딩 값',
+      },
+      props: {
+        width: '너비',
+        options: '옵션',
+        placeholder: '플레이스홀더 텍스트',
+        disabled: '비활성화',
+        clearable: '지우기 가능 여부',
+        showAllLevels: '모든 계층 표시',
+        multiple: '다중 선택 여부',
+        free: '자유 선택',
+        size: '크기',
+        trigger: '트리거 방식',
+        loadMethod: '로딩 방법',
+        readonly: '읽기 전용',
+        initMethod: '옵션 초기화 방법',
+        initMethodId: '초기화 방법 ID',
+        onlyLeafSelectable: '리프 노드만 선택 가능 여부',
+      },
+      options: {
+        label: '라벨',
+        value: '값',
+        isLeaf: '리프 노드 여부',
+        children: '자식 노드',
+        disabled: '비활성화',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
+        clear: '지우기 시 트리거',
+        delete: '옵션 삭제 시 트리거',
+      },
+    },
+
+    cascaderMultiple: {
+      name: '다중 계층형 선택기 CascaderMultiple',
+      description: '다중 선택을 지원하는 다층 데이터 선택기로 분류 선택을 더 명확하게 합니다',
       demo1: {
         title: '기본 사용법',
       },
@@ -1229,6 +1355,15 @@ export default {
         description:
           '```initMethod``` 방법을 사용하여 트리 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
       },
+      demo12: {
+        title: '다중 선택',
+      },
+      demo13: {
+        title: '임의 계층 선택',
+      },
+      demo14: {
+        title: '엄격 모드',
+      },
       model: {
         modelValue: '바인딩 값',
       },
@@ -1254,11 +1389,16 @@ export default {
         labelField: '노드 라벨 필드',
         disabledField: '노드 비활성화 필드',
         initMethod: '트리 노드 초기화 메서드',
+        initMethodId: '초기화 방법 ID',
         loadMethod: '자식 노드 데이터 비동기 로드 메서드',
         width: '너비',
       },
       slots: {
         handle: '슬롯 이름',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
+        clear: '지우기 시 트리거',
       },
     },
     inputTable: {
@@ -1291,6 +1431,9 @@ export default {
         uniqueField: '고유 필드',
         sortTooltipCustomRender: '정렬 툴팁 커스텀 렌더링',
       },
+      emits: {
+        change: '값 변경 시 트리거',
+      },
     },
     switch: {
       name: '스위치 Switch',
@@ -1321,8 +1464,8 @@ export default {
         request: '요청',
         loading: '로딩 중',
       },
-      events: {
-        change: '이벤트 이름',
+      emits: {
+        change: '값 변경 시 트리거',
       },
     },
     slider: {
@@ -1352,6 +1495,7 @@ export default {
       },
       props: {
         size: '크기',
+        width: '너비',
         min: '최소값',
         max: '최대값',
         step: '단계 크기',
@@ -1359,6 +1503,9 @@ export default {
         disabled: '비활성화',
         options: '옵션',
         formatTooltip: '툴팁 형식 지정',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
       },
     },
     sliderRange: {
@@ -1388,6 +1535,7 @@ export default {
       },
       props: {
         size: '크기',
+        width: '너비',
         min: '최소값',
         max: '최대값',
         step: '단계 크기',
@@ -1395,6 +1543,9 @@ export default {
         disabled: '비활성화',
         options: '옵션',
         formatTooltip: '툴팁 형식 지정',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
       },
     },
     rate: {
@@ -1422,6 +1573,9 @@ export default {
         tips: '툴팁',
         readonly: '읽기 전용',
         disabled: '비활성화',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
       },
     },
     colorPicker: {
@@ -1451,6 +1605,9 @@ export default {
         placeholder: '플레이스홀더',
         disabled: '비활성화',
         readonly: '읽기 전용',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
       },
     },
     upload: {
@@ -1492,6 +1649,11 @@ export default {
         tips: '도움말',
         uploadHelper: '업로드 도우미',
         viewMode: '보기 모드',
+        beforeDelete: '삭제 전 훅 함수',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
+        delete: '파일 삭제 시 트리거',
       },
     },
     table: {
@@ -1563,6 +1725,11 @@ export default {
         x: 'X축',
         customRender: '사용자 정의 렌더링',
       },
+      emits: {
+        sortChange: '정렬 변경 시 트리거',
+        selectChange: '선택 변경 시 트리거',
+        dragSort: '드래그 정렬 시 트리거',
+      },
     },
     pagination: {
       name: '페이지네이션 Pagination',
@@ -1587,8 +1754,8 @@ export default {
         pageSizeOptions: '페이지 크기 옵션',
         visiblePagesCount: '표시할 페이지 수',
       },
-      events: {
-        change: '이벤트 이름',
+      emits: {
+        change: '페이지 변경 시 트리거',
       },
     },
     magicNumber: {
@@ -1644,6 +1811,7 @@ export default {
         initMethod: '트리 노드 초기화 메서드',
         loadMethod: '자식 노드 데이터 비동기 로드 메서드',
         isSelect: '선택 여부',
+        onlyLeafSelectable: '리프 노드만 선택 가능 여부',
       },
       slots: {
         handle: '슬롯 이름',
@@ -1654,6 +1822,12 @@ export default {
         isLeaf: '리프 노드 여부',
         children: '자식 노드',
         disabled: '비활성화',
+      },
+      emits: {
+        change: '값 변경 시 트리거',
+        expand: '노드 펼침 시 트리거',
+        loadStart: '로딩 시작 시 트리거',
+        loadEnd: '로딩 종료 시 트리거',
       },
     },
     collapse: {
@@ -1682,6 +1856,12 @@ export default {
         collapseKey: '접기 키',
         title: '제목',
         radius: '반경',
+      },
+      'emits': {
+        change: '접이식 패널 펼침/접힘 시 트리거',
+      },
+      'emits(CollapseItem)': {
+        change: '접이식 항목 펼침/접힘 시 트리거',
       },
     },
     desc: {
@@ -1761,7 +1941,7 @@ export default {
       demo3: {
         title: '요청 시뮬레이션',
       },
-      events: {
+      emits: {
         close: '닫힐 때 트리거',
       },
       props: {
@@ -1829,9 +2009,14 @@ export default {
         closeOnClickOverlay: '마스크 클릭 시 닫을지 여부',
         closeByEsc: 'ESC 키를 눌러 닫을지 여부',
         hideFooter: '푸터 숨기기 여부',
+        hideOkButton: '확인 버튼 숨기기 여부',
+        hideCloseButton: '닫기 버튼 숨기기 여부',
         okButtonProps: '확인 버튼 속성',
         closeButtonProps: '닫기 버튼 속성',
         zIndex: '계층',
+      },
+      emits: {
+        close: '닫힐 때 트리거',
       },
     },
     dialog: {
@@ -1850,11 +2035,18 @@ export default {
       demo4: {
         title: 'ESC로 닫기',
       },
+      demo5: {
+        title: '아이콘 숨기기',
+      },
+      demo6: {
+        title: '사용자 정의 아이콘',
+      },
       props: {
         type: '유형',
         width: '너비',
         trigger: '트리거 방식',
         title: '제목',
+        content: '내용',
         okText: '확인 버튼 텍스트',
         cancelText: '취소 버튼 텍스트',
         ok: '확인 콜백',
@@ -1862,8 +2054,10 @@ export default {
         closeOnClickOverlay: '마스크 클릭 시 닫을지 여부',
         closeByEsc: 'ESC 키를 눌러 닫을지 여부',
         transformOrigin: '애니메이션 원점',
+        icon: '사용자 정의 아이콘',
+        hideIcon: '아이콘 숨기기 여부',
       },
-      events: {
+      emits: {
         ok: '확인 버튼 클릭 시 트리거',
         cancel: '취소 버튼 클릭 시 트리거',
       },
@@ -1892,6 +2086,8 @@ export default {
         width: '너비',
         top: '상단으로부터의 거리',
         hideFooter: '푸터 숨김 여부',
+        hideOkButton: '확인 버튼 숨기기 여부',
+        hideCloseButton: '닫기 버튼 숨기기 여부',
         closeByEsc: 'ESC 키로 닫기 가능 여부',
         okButtonProps: '확인 버튼 속성',
         closeButtonProps: '닫기 버튼 속성',
@@ -1909,6 +2105,15 @@ export default {
       demo2: {
         title: '트리거 방식',
       },
+      demo3: {
+        title: '아이콘 숨기기',
+      },
+      demo4: {
+        title: '사용자 정의 아이콘',
+      },
+      demo5: {
+        title: '사용자 정의 내용',
+      },
       props: {
         type: '유형',
         width: '너비',
@@ -1920,6 +2125,8 @@ export default {
         cancel: '취소 콜백',
         okText: '확인 버튼 텍스트',
         cancelText: '취소 버튼 텍스트',
+        icon: '사용자 정의 아이콘',
+        hideIcon: '아이콘 숨기기 여부',
       },
     },
     popover: {
@@ -1944,16 +2151,23 @@ export default {
       props: {
         trigger: '트리거 방식',
         placement: '위치',
+        delay: '지연 시간',
         disabled: '비활성화 여부',
         loading: '로딩 중 여부',
+        clickOutsideToHide: '팝오버 영역 밖 클릭 시 닫을지 여부',
         hideOnClick: '팝오버 영역 밖 클릭 시 자동 닫기',
         offset: '오프셋',
+        triggerWidth: '팝업 너비',
         popoverBodyClassName: '팝오버 내용 클래스 이름',
         triggerTarget: '트리거 대상',
       },
       slots: {
         'trigger': '트리거 슬롯',
         'popover-body': '팝오버 내용 슬롯',
+      },
+      emits: {
+        show: '표시 시 트리거',
+        hide: '숨김 시 트리거',
       },
     },
     tooltip: {
@@ -1972,7 +2186,7 @@ export default {
         title: 'HTML 지원',
       },
       props: {
-        tips: '팁 내용',
+        content: '팁 내용',
         placement: '위치',
         trigger: '트리거 방식',
         allowHTML: 'HTML 지원 여부',

@@ -1,6 +1,7 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { LewSize } from 'lew-ui'
 import { LewDateRange, LewPopover, LewTooltip, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { dateRangePickerEmits } from './emits'
@@ -9,18 +10,16 @@ import { dateRangePickerProps } from './props'
 const props = defineProps(dateRangePickerProps)
 const emit = defineEmits(dateRangePickerEmits)
 
-const modelValue = defineModel<DateRange | undefined>({ required: true })
-
-// 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
-}
-
-// 定义日期范围对象类型
 interface DateRange {
   start?: string
   end?: string
+}
+
+const modelValue = defineModel<DateRange | undefined>({ required: true })
+
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
 const visible = ref(false)
@@ -156,7 +155,10 @@ defineExpose({ show, hide })
               opacity: visible ? 0.6 : 1,
             }"
           >
-            <div v-if="!modelValue?.start" class="lew-date-range-picker-placeholder">
+            <div
+              v-if="!modelValue?.start"
+              class="lew-date-range-picker-placeholder"
+            >
               {{
                 placeholderStart
                   ? placeholderStart
@@ -172,14 +174,20 @@ defineExpose({ show, hide })
             <div class="lew-date-range-picker-mid">
               <CommonIcon :size="14" type="minus" />
             </div>
-            <div v-if="!modelValue?.end" class="lew-date-range-picker-placeholder">
+            <div
+              v-if="!modelValue?.end"
+              class="lew-date-range-picker-placeholder"
+            >
               {{
                 placeholderEnd
                   ? placeholderEnd
                   : locale.t("dateRangePicker.placeholderEnd")
               }}
             </div>
-            <div v-else class="lew-date-range-picker-dateValue lew-date-range-picker-end">
+            <div
+              v-else
+              class="lew-date-range-picker-dateValue lew-date-range-picker-end"
+            >
               {{ modelValue.end }}
             </div>
             <CommonIcon
@@ -191,18 +199,12 @@ defineExpose({ show, hide })
               type="calendar"
             />
           </lew-flex>
-          <transition name="lew-form-icon-ani">
-            <CommonIcon
-              v-if="clearable && checkClear && !readonly"
-              :size="getIconSize"
-              type="close"
-              class="lew-form-icon-close lew-date-range-picker-form-icon-close"
-              :class="{
-                'lew-form-icon-close-focus': visible,
-              }"
-              @click.stop="clearHandle"
-            />
-          </transition>
+          <CloseIcon
+            v-if="clearable && checkClear && !readonly"
+            :size="size"
+            class="lew-form-icon-close"
+            @click.stop="clearHandle"
+          />
         </div>
       </div>
     </template>
@@ -238,7 +240,9 @@ defineExpose({ show, hide })
     border-radius: var(--lew-border-radius-small);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition: all var(--lew-form-transition-ease);
+    transition:
+      background-color var(--lew-form-transition-ease),
+      border-color var(--lew-form-transition-ease);
     cursor: pointer;
     user-select: none;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -253,19 +257,25 @@ defineExpose({ show, hide })
     .lew-date-range-picker-icon-calendar {
       position: absolute;
       top: 50%;
-      right: 12px;
+      right: 14px;
       transform: translateY(-50%);
-      transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
     }
 
     .lew-date-range-picker-icon-calendar-hide {
       opacity: 0;
-      transform: translateY(-50%) translateX(100%);
+    }
+
+    .lew-form-icon-close {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      z-index: 9;
+      transform: translateY(-50%);
     }
 
     .lew-date-range-picker-placeholder {
-      color: rgb(165, 165, 165);
+      color: var(--lew-text-color-5);
     }
   }
 

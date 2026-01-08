@@ -1,0 +1,180 @@
+---
+alwaysApply: false
+---
+
+# LewCascader 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewCascader
+- **核心用途**：级联选择器，用于从多级关联数据中选择值，支持单选、多选、懒加载等多种场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持静态数据源和动态懒加载两种数据加载方式
+  - 支持单选和多选模式
+  - 支持仅叶子节点可选和任意节点可选两种选择策略
+  - 支持虚拟滚动，优化大数据量性能
+  - 支持自由选择模式（不限制父子关系）
+  - 支持显示完整路径或仅显示最后一级标签
+  - 支持异步加载子节点数据
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **单选模式**：用户点击输入框，弹出级联选择面板，逐级选择后显示完整路径
+- **多选模式**：支持通过复选框选择多个值，显示为标签列表
+- **懒加载模式**：点击父节点时异步加载子节点数据，显示加载状态
+- **仅叶子节点可选**：只有最底层节点可以被选中，中间节点仅用于展开
+- **自由选择模式**：允许选择任意节点，不受父子关系限制
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewCascaderOption[]` | - | 数组 | 级联数据源，树形结构 |
+| width | `Property.Width` | `'100%'` | 支持 CSS 宽度值 | 组件宽度 |
+| placeholder | `string` | - | 任意字符串 | 输入框占位符 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| clearable | `boolean` | `true` | `true` / `false` | 是否显示清除按钮 |
+| free | `boolean` | `false` | `true` / `false` | 是否启用自由选择模式（不限制父子关系） |
+| size | `LewSize` | `'medium'` | `'mini'` / `'small'` / `'medium'` / `'large'` | 组件尺寸 |
+| trigger | `LewTrigger` | `'click'` | `'click'` / `'hover'` | 触发方式 |
+| loadMethod | `Function` | `null` | `(params?: { value: string, label: string, level: number }) => Promise<LewCascaderOption[]>` | 懒加载方法，返回子节点数据 |
+| loadMethodId | `string` | - | 任意字符串 | 懒加载方法 ID（用于表单引擎） |
+| initMethod | `Function` | `null` | `() => Promise<LewCascaderOption[]>` | 初始化方法，返回根节点数据 |
+| initMethodId | `string` | - | 任意字符串 | 初始化方法 ID（用于表单引擎） |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| onlyLeafSelectable | `boolean` | `true` | `true` / `false` | 是否仅叶子节点可选 |
+| multiple | `boolean` | `false` | `true` / `false` | 是否多选 |
+| showAllLevels | `boolean` | `true` | `true` / `false` | 是否显示完整路径（多选模式下仅显示最后一级） |
+
+### 3.2 方法
+
+| 方法名 | 触发条件 | 参数 | 返回值 | 说明 |
+|--------|----------|------|--------|------|
+| show | 手动调用 | - | `Promise<void>` | 显示级联选择面板 |
+| hide | 手动调用 | - | `void` | 隐藏级联选择面板 |
+| getSelected | 手动调用 | - | `LewCascaderOption \| Array<{ key: string, disabled?: boolean, isLeaf: boolean }>` | 获取当前选中的项（单选返回对象，多选返回数组） |
+
+### 3.3 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 选中值发生变化时 | `(value: string \| string[] \| undefined, items: LewCascaderOption \| LewCascaderOption[] \| undefined)` | 值变化事件，单选时 value 为 string，多选时为 string[] |
+| clear | 点击清除按钮时 | - | 清除事件 |
+| delete | 多选模式下删除标签时 | `(value: string[], deletedItem: string)` | 删除事件，value 为剩余值数组，deletedItem 为被删除的值 |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| header | 级联选择面板头部内容 | `<template #header>自定义头部</template>` |
+
+### 3.5 v-model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `string \| string[] \| undefined` | 绑定值，单选时为 string，多选时为 string[] |
+
+### 3.6 类型定义
+
+**LewCascaderOption**：
+```typescript
+interface LewCascaderOption {
+  label: string          // 显示文本
+  key: string            // 唯一标识（通常等于 value）
+  value: string          // 值
+  level?: number         // 层级（从 0 开始）
+  labelPaths?: string[]  // 从根到当前节点的标签路径
+  valuePaths?: string[]  // 从根到当前节点的值路径
+  isLeaf?: boolean       // 是否为叶子节点
+  loading?: boolean      // 是否正在加载子节点
+  disabled?: boolean     // 是否禁用
+  parentLabelPaths?: string[]  // 父节点的标签路径
+  parentValuePaths?: string[] // 父节点的值路径
+  children?: LewCascaderOption[]  // 子节点数组
+}
+```
+
+## 4. 注意事项
+
+⚠️ **数据格式要求**：`options` 数组中的每个节点必须包含 `label`、`value` 和 `key` 字段，`key` 通常等于 `value`，用于唯一标识节点
+
+⚠️ **懒加载使用**：当使用 `loadMethod` 进行懒加载时，必须同时提供 `initMethod` 或 `options` 来初始化根节点数据，否则组件无法正常工作
+
+⚠️ **多选模式限制**：在 `multiple=true` 且 `onlyLeafSelectable=true` 时，只有叶子节点会被选中，即使父节点被勾选，最终值也只包含叶子节点
+
+⚠️ **性能优化**：组件内部使用虚拟滚动处理大量数据，但建议单级节点数量不超过 1000 个，过多数据可能影响渲染性能
+
+⚠️ **自由选择模式**：`free=true` 时，选择逻辑不受树形结构限制，但不会自动处理父子节点的关联关系，需要手动管理选中状态
+
+✅ **推荐实践**：对于静态数据，直接使用 `options` 属性；对于动态数据，使用 `initMethod` + `loadMethod` 组合实现懒加载
+
+## 5. 常见问题与修复方案
+
+### Q1: 选中值后显示为空或不正确
+
+**现象**：选择节点后，输入框显示为空或显示错误的值
+
+**原因**：
+- 数据源中的 `value` 与选中值不匹配
+- `key` 字段缺失或与 `value` 不一致
+- 多选模式下 `onlyLeafSelectable=true` 时，选中了非叶子节点
+
+**修复方案**：
+1. 确保数据源中每个节点都有唯一的 `value` 和 `key`
+2. 检查 `modelValue` 的值是否在数据源中存在
+3. 多选模式下，确保只选择叶子节点，或设置 `onlyLeafSelectable=false`
+
+### Q2: 懒加载不生效
+
+**现象**：点击父节点时，子节点没有加载或一直显示加载状态
+
+**原因**：
+- `loadMethod` 返回的数据格式不正确
+- `loadMethod` 抛出异常未处理
+- 未提供 `initMethod` 或 `options` 初始化根节点
+
+**修复方案**：
+1. 确保 `loadMethod` 返回 `Promise<LewCascaderOption[]>` 格式的数据
+2. 检查 `loadMethod` 的错误处理，确保不会抛出未捕获的异常
+3. 提供 `initMethod` 或 `options` 来初始化根节点数据
+4. 检查网络请求是否成功，查看浏览器控制台错误信息
+
+### Q3: 多选模式下选中状态不正确
+
+**现象**：多选模式下，勾选父节点后，子节点没有自动选中，或反之
+
+**原因**：
+- `free=true` 时，组件不会自动处理父子节点关联
+- 树形选择逻辑未正确初始化
+
+**修复方案**：
+1. 如果不需要自由选择，设置 `free=false` 让组件自动处理父子关联
+2. 确保 `options` 数据格式正确，包含完整的 `children` 结构
+3. 检查 `onlyLeafSelectable` 设置是否符合预期
+
+### Q4: 性能问题，滚动卡顿
+
+**现象**：数据量大时，滚动选择面板出现卡顿
+
+**原因**：
+- 单级节点数量过多（超过 1000 个）
+- 数据嵌套层级过深
+- 频繁触发重新渲染
+
+**修复方案**：
+1. 使用懒加载，按需加载子节点数据
+2. 优化数据结构，减少不必要的字段
+3. 考虑分页或搜索功能，减少单次渲染的数据量
+4. 检查是否有不必要的 watch 或 computed 导致频繁更新
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化组件规范和性能：修复导入路径、优化代码结构、改进类型定义、优化 watch 性能、恢复 lodash 依赖使用 | 2024-12-19 |
+| 1.0.0 | 初始版本 | - |

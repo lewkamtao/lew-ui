@@ -1,106 +1,86 @@
 <script setup lang="ts">
+// 1. 第三方库导入
 import { watchDebounced } from '@vueuse/core'
+// 2. 组件导入
 import { LewLoading } from 'lew-ui'
+
+// 3. 工具函数导入
 import { any2px } from 'lew-ui/utils'
+
 import tippy from 'tippy.js'
+
+// 4. 组件配置导入
 import { popoverEmits } from './emits'
 import { popoverProps } from './props'
 
+// Props & Emits
 const props = defineProps(popoverProps)
 const emit = defineEmits(popoverEmits)
 
-// 获取app
+// Composables
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('loading')) {
   app.use(LewLoading)
 }
 
-const triggerRef = ref()
-const bodyRef = ref()
-let instance: any
+// 响应式状态
+const triggerRef = ref<HTMLElement | null>(null)
+const bodyRef = ref<HTMLElement | null>(null)
+let instance: any = null
+
+// 常量
 const watchOptions = { debounce: 250, maxWait: 1000 }
 
-// 方向
-watchDebounced(
-  () => props.placement,
-  (value: string) => {
-    instance?.setProps({
-      placement: value,
-    })
-  },
-  watchOptions,
-)
+// Slots 检测
+const slots = useSlots()
+const hasTrigger = computed(() => !!slots.trigger)
 
-// 禁用
-watchDebounced(
-  () => props.disabled,
-  (value: boolean) => {
-    if (value) {
-      instance?.disable()
-    }
-    else {
-      instance?.enable()
-    }
-  },
-  watchOptions,
-)
+// 计算属性
+const triggerStyle = computed(() => {
+  const style: Record<string, string> = {}
+  if (props.triggerWidth) {
+    style.width = any2px(props.triggerWidth)
+  }
+  if (hasTrigger.value) {
+    style.display = 'inline-block'
+  }
+  return style
+})
 
-// trigger
-watchDebounced(
-  () => props.trigger,
-  (value: string) => {
-    instance?.setProps({
-      trigger: value,
-    })
-  },
-  watchOptions,
-)
+const popoverBodyStyle = computed(() => ({
+  borderRadius: 'var(--lew-border-radius-small)',
+  overflow: props.loading ? 'hidden' : '',
+}))
 
-// trigger
-watchDebounced(
-  () => props.triggerTarget,
-  (value: Element | string) => {
-    instance?.setProps({
-      triggerTarget: value,
-    })
-  },
-  watchOptions,
-)
-// offset
-watchDebounced(
-  () => props.offset,
-  (value: number[]) => {
-    instance?.setProps({
-      offset: value,
-    })
-  },
-  watchOptions,
-)
+// 方法
 function initTippy() {
-  if (instance) {
+  if (instance || !triggerRef.value || !bodyRef.value) {
     return
   }
 
-  let { placement, triggerTarget, offset, trigger, disabled }: any = props
-  if (trigger === 'hover') {
-    trigger = 'mouseenter'
+  const { placement, offset, trigger, disabled } = props
+  let tippyTrigger: string = trigger
+
+  // 转换 trigger 值
+  if (tippyTrigger === 'hover') {
+    tippyTrigger = 'mouseenter'
   }
-  if (!trigger) {
-    trigger = 'mouseenter'
+  if (!tippyTrigger) {
+    tippyTrigger = 'mouseenter'
   }
-  instance = tippy(triggerRef.value, {
+
+  instance = tippy(triggerRef.value as Element, {
     theme: 'light',
-    trigger,
-    triggerTarget,
-    content: bodyRef.value,
+    trigger: tippyTrigger,
+    content: bodyRef.value as Element,
     animation: 'shift-away-subtle',
     interactive: true,
-    hideOnClick: trigger !== 'mouseenter' ? props.hideOnClick : (false as any),
+    hideOnClick: tippyTrigger !== 'mouseenter' ? props.hideOnClick : false,
     placement,
     duration: [250, 250],
     arrow: false,
     offset,
-    delay: trigger === 'mouseenter' ? [120, 120] : undefined,
+    delay: tippyTrigger === 'mouseenter' ? props.delay : undefined,
     appendTo: () => document.body,
     allowHTML: true,
     maxWidth: 'none',
@@ -118,12 +98,70 @@ function initTippy() {
   })
 
   instance?.popper.children[0].setAttribute('data-lew', 'popover')
+
   // 判断入参
   if (disabled && instance) {
     instance?.disable()
   }
 }
 
+function show() {
+  instance?.show()
+}
+
+function hide() {
+  instance?.hide()
+}
+
+function refresh() {
+  instance?.setProps({})
+}
+
+// 监听器
+watchDebounced(
+  () => props.placement,
+  (value: string) => {
+    instance?.setProps({
+      placement: value,
+    })
+  },
+  watchOptions,
+)
+
+watchDebounced(
+  () => props.disabled,
+  (value: boolean) => {
+    if (value) {
+      instance?.disable()
+    }
+    else {
+      instance?.enable()
+    }
+  },
+  watchOptions,
+)
+
+watchDebounced(
+  () => props.trigger,
+  (value: string) => {
+    instance?.setProps({
+      trigger: value,
+    })
+  },
+  watchOptions,
+)
+
+watchDebounced(
+  () => props.offset,
+  (value: number[]) => {
+    instance?.setProps({
+      offset: value,
+    })
+  },
+  watchOptions,
+)
+
+// 生命周期
 onActivated(() => {
   initTippy()
 })
@@ -138,36 +176,18 @@ onDeactivated(() => {
   instance = null
 })
 
-function show() {
-  instance?.show()
-}
-
-function hide() {
-  instance?.hide()
-}
-
-function refresh() {
-  instance?.setProps({})
-}
-
 onUnmounted(() => {
   instance?.hide()
   instance?.destroy()
 })
 
+// 暴露方法
 defineExpose({ show, hide, refresh })
 </script>
 
 <template>
   <div class="lew-popover">
-    <div
-      ref="triggerRef"
-      class="lew-popover-trigger"
-      :style="{
-        width: any2px(triggerWidth),
-        display: $slots.trigger ? 'inline-block' : '',
-      }"
-    >
+    <div ref="triggerRef" class="lew-popover-trigger" :style="triggerStyle">
       <slot name="trigger" />
     </div>
     <div
@@ -178,22 +198,23 @@ defineExpose({ show, hide, refresh })
       }"
       class="lew-popover-body"
       :class="popoverBodyClassName"
-      :style="{
-        borderRadius: 'var(--lew-border-radius-small)',
-        overflow: loading ? 'hidden' : '',
-      }"
+      :style="popoverBodyStyle"
     >
       <slot name="popover-body" :show="show" :hide="hide" />
     </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .lew-popover {
   font-size: 0;
 
-  * {
-    font-size: 14px;
+  .lew-popover-trigger {
+    font-size: 0;
+
+    > * {
+      font-size: 14px;
+    }
   }
 }
 

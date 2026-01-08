@@ -76,7 +76,7 @@ export const checkboxProps = {
       propName: 'certain',
     }),
   },
-}
+} as const
 
 export const checkboxGroupProps = {
   options: {
@@ -126,7 +126,7 @@ export const checkboxGroupProps = {
     type: Boolean,
     validator: validators.boolean({
       componentName: 'LewCheckboxGroup',
-      propName: 'round',
+      propName: 'block',
     }),
   },
   round: {
@@ -145,7 +145,7 @@ export const checkboxGroupProps = {
       propName: 'iconable',
     }),
   },
-}
+} as const
 
 export type LewCheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
 export type LewCheckboxGroupProps = ExtractPublicPropTypes<typeof checkboxGroupProps>

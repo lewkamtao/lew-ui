@@ -6,7 +6,7 @@ import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 export const cascaderProps = {
   options: {
     type: Array as PropType<LewCascaderOption[]>,
-    typePopKey: ['LewCascaderOption'],
+    typePopKeys: ['LewCascaderOption'],
     validator: validators.array({
       componentName: 'LewCascader',
       propName: 'options',
@@ -42,22 +42,6 @@ export const cascaderProps = {
     validator: validators.boolean({
       componentName: 'LewCascader',
       propName: 'clearable',
-    }),
-  },
-  showAllLevels: {
-    type: Boolean,
-    default: true,
-    validator: validators.boolean({
-      componentName: 'LewCascader',
-      propName: 'showAllLevels',
-    }),
-  },
-  multiple: {
-    type: Boolean,
-    default: false,
-    validator: validators.boolean({
-      componentName: 'LewCascader',
-      propName: 'multiple',
     }),
   },
   free: {
@@ -127,6 +111,30 @@ export const cascaderProps = {
       propName: 'readonly',
     }),
   },
-}
+  onlyLeafSelectable: {
+    type: Boolean,
+    default: true,
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'onlyLeafSelectable',
+    }),
+  },
+  multiple: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'multiple',
+    }),
+  },
+  showAllLevels: {
+    type: Boolean,
+    default: true,
+    validator: validators.boolean({
+      componentName: 'LewCascader',
+      propName: 'showAllLevels',
+    }),
+  },
+} as const
 
 export type LewCascaderProps = ExtractPublicPropTypes<typeof cascaderProps>

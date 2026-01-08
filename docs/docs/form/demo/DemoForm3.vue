@@ -106,12 +106,13 @@ const options = ref([
   {
     field: 'permissions',
     label: 'Permissions',
-    as: 'select-multiple',
+    as: 'select',
     rule: Yup.array()
       .min(1, 'Select at least one permission')
       .required('Please select permissions'),
     props: {
       clearable: true,
+      multiple: true,
       placeholder: 'Select permissions',
       options: [
         { label: 'Read', value: 'read' },

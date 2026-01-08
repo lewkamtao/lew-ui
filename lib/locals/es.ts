@@ -55,6 +55,18 @@ export default {
     Fri: 'Vie',
     Sat: 'Sáb',
     Sun: 'Dom',
+    Jan: 'Ene',
+    Feb: 'Feb',
+    Mar: 'Mar',
+    Apr: 'Abr',
+    May: 'May',
+    Jun: 'Jun',
+    Jul: 'Jul',
+    Aug: 'Ago',
+    Sep: 'Sep',
+    Oct: 'Oct',
+    Nov: 'Nov',
+    Dec: 'Dic',
     placeholder: 'Seleccionar fecha',
   },
   dateRangePicker: {
@@ -92,6 +104,9 @@ export default {
     cancelText: 'Cancelar',
     okText: 'Aceptar',
   },
+  colorPicker: {
+    placeholder: 'Por favor, introduzca',
+  },
   upload: {
     dropActive: 'Suelte para comenzar la carga',
     click: 'Haga clic para cargar, ',
@@ -100,9 +115,19 @@ export default {
     accept: 'Admite la carga de {accept}',
     limit: 'Se pueden cargar un máximo de {limit} archivos',
     maxFileSize: 'Cada archivo no debe exceder {maxFileSize}',
+    pending: 'Pendiente',
+    success: 'Carga exitosa',
+    fail: 'Error en la carga',
+    uploading: 'Cargando',
+    complete: 'Cargado',
+    wrong_type: 'Formato inválido',
+    wrong_size: 'El tamaño del archivo excede el límite',
   },
   pagination: {
     pageSize: '{pageSize} por página',
     jumpTo: 'Ir a',
+  },
+  empty: {
+    title: 'Sin datos',
   },
 }

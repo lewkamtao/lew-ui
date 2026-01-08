@@ -71,12 +71,13 @@ const options = ref([
   {
     field: 'features',
     label: 'Features',
-    as: 'select-multiple',
+    as: 'select',
     rule: Yup.array()
       .min(1, 'Please select at least one core feature')
       .required('Please select the main features'),
     props: {
       clearable: true,
+      multiple: true,
       options: [
         { label: 'Responsive Design', value: '1' },
         { label: 'Elegant API', value: '2' },
@@ -190,9 +191,6 @@ const options = ref([
 const formRef = ref()
 
 onMounted(() => {
-  setTimeout(() => {
-    sprs()
-  }, 1000)
   formRef.value.setForm({
     componentName: 'Lew UI',
     componentDescription:
@@ -214,49 +212,6 @@ onMounted(() => {
     },
   })
 })
-function randomInRange(min: number, max: number) {
-  return Math.random() * (max - min) + min
-}
-function sprs() {
-  const duration = 5 * 1000
-  const animationEnd = Date.now() + duration
-  const defaults = {
-    startVelocity: 30,
-    spread: 360,
-    ticks: 50,
-    zIndex: 999,
-  }
-
-  const interval: any = setInterval(() => {
-    const timeLeft = animationEnd - Date.now()
-
-    if (timeLeft <= 0) {
-      return clearInterval(interval)
-    }
-
-    const particleCount = 50 * (timeLeft / duration)
-
-    // @ts-expect-error confetti
-    confetti({
-      ...defaults,
-      particleCount,
-      origin: {
-        x: randomInRange(0.1, 0.3),
-        y: Math.random() - 0.2,
-      },
-    })
-
-    // @ts-expect-error confetti
-    confetti({
-      ...defaults,
-      particleCount,
-      origin: {
-        x: randomInRange(0.7, 0.9),
-        y: Math.random() - 0.2,
-      },
-    })
-  }, 250)
-}
 
 const router = useRouter()
 const v = ref('')
@@ -415,23 +370,23 @@ onUnmounted(() => {
       <lew-flex direction="x" gap="40">
         <lew-flex class="item" width="350px" direction="y" x="end" gap="40">
           <lew-flex direction="y" x="end" gap="0px">
-            <lew-title :size="16" :bold="200">
+            <lew-title size="16px" :bold="200">
               Lew Design 16px
             </lew-title>
-            <lew-title :size="24" :bold="400">
+            <lew-title size="24px" :bold="400">
               Lew Design 24px
             </lew-title>
-            <lew-title :size="32" :bold="600">
+            <lew-title size="32px" :bold="600">
               Lew Design 32px
             </lew-title>
-            <lew-title :size="40" :bold="800">
+            <lew-title size="40px" :bold="800">
               Lew Design 40px
             </lew-title>
           </lew-flex>
           <lew-flex style="width: 500px" x="end" gap="20px">
-            <lew-avatar size="40" shape="circle" />
-            <lew-avatar alt="Larry Page" size="40" shape="circle" />
-            <lew-avatar alt="Tim Cook" size="40" shape="circle" />
+            <lew-avatar size="40px" shape="circle" />
+            <lew-avatar alt="Larry Page" size="40px" shape="circle" />
+            <lew-avatar alt="Tim Cook" size="40px" shape="circle" />
             <lew-avatar
               shape="circle"
               status="online"

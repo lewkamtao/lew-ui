@@ -110,13 +110,19 @@ const options = [
     ],
   },
 ]
+
+function change(e: any, item: any) {
+  console.log(e, item)
+}
 </script>
 
 <template>
   <lew-cascader
     v-model="v"
+    clearable
     width="300px"
     :options="options"
     placeholder="Explore high-end tech products"
+    @change="change"
   />
 </template>

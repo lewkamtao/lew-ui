@@ -5,7 +5,7 @@ import { has } from 'lodash-es'
  * 查找树中所有节点的值
  * @param tree 树数据
  * @param keyField 键字段名
- * @returns 所有节点值的数组
+ * @returns 所有节点值的数组（字符串类型）
  */
 function findAllNodes(tree: LewTreeDataSource[] = [], keyField = 'key') {
   // 使用Set避免重复值
@@ -13,7 +13,8 @@ function findAllNodes(tree: LewTreeDataSource[] = [], keyField = 'key') {
 
   // 使用递归方式遍历树
   const traverse = (node: any) => {
-    nodes.add(node[keyField])
+    // 确保 key 是字符串类型
+    nodes.add(String(node[keyField]))
     if (node.children?.length > 0) {
       node.children.forEach((child: any) => traverse(child))
     }
@@ -29,14 +30,15 @@ function findAllNodes(tree: LewTreeDataSource[] = [], keyField = 'key') {
  * 查找树中所有叶子节点的值
  * @param tree 树数据
  * @param keyField 键字段名
- * @returns 所有叶子节点值的数组
+ * @returns 所有叶子节点值的数组（字符串类型）
  */
 function findLeafNodes(tree: LewTreeDataSource[] = [], keyField = 'key') {
   const leafNodes = new Set()
 
   const traverse = (node: any) => {
     if (!node.children?.length) {
-      leafNodes.add(node[keyField])
+      // 确保 key 是字符串类型
+      leafNodes.add(String(node[keyField]))
     }
     else {
       node.children.forEach((child: any) => traverse(child))
@@ -67,7 +69,8 @@ export function formatTree({
 }): LewTreeDataSource[] {
   return dataSource.map((node: LewTreeDataSource, index: number) => {
     const { children, ...rest }: any = node
-    const key = rest[keyField]
+    // 确保 key 始终是字符串类型
+    const key = String(rest[keyField])
     const label = rest[labelField]
 
     // 优化：使用扩展运算符创建新数组，避免修改原数组
@@ -85,7 +88,7 @@ export function formatTree({
       keyPaths,
       labelPaths,
       isLeaf,
-      parentKey: parent?.[keyField] ?? null,
+      parentKey: parent?.[keyField] ? String(parent[keyField]) : null,
       level: parentKeyPaths.length,
       parentKeyPaths,
       parentLabelPaths,

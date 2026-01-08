@@ -4,129 +4,121 @@ import type { CSSProperties } from 'vue'
 import { useDebounceFn, useMouse, useResizeObserver } from '@vueuse/core'
 import { escape } from 'lodash-es'
 import tippy, { roundArrow } from 'tippy.js'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { textTrimEmits } from './emits'
 import { textTrimProps } from './props'
 import { clearMeasureCache, getDisplayText } from './text-trim'
 
-// Types
-interface TextTrimEmits {
-  click: [event: MouseEvent]
-  mouseenter: []
-  mouseleave: []
-}
-
-// Props & Emits
 const props = defineProps(textTrimProps)
-const emit = defineEmits<TextTrimEmits>()
+const _emit = defineEmits(textTrimEmits)
 
-// Refs
 const lewTextTrimRef = ref<HTMLDivElement>()
 const lewTextTrimPopRef = ref<HTMLDivElement>()
-
-// Reactive state
 const displayText = ref('')
 const isEllipsisByTextTrim = ref(false)
+const isEllipsis = ref(false)
 
-// Instance
 let tippyInstance: Instance | null = null
 
-// Computed
+// 缓存上一次计算的输入，避免重复计算
+let lastCalculateInput = { text: '', reserveEnd: 0, width: 0 }
+
+// 在组件顶层调用 useMouse，避免每次 showTippy 时重复创建
+const { x: mouseX, y: mouseY } = useMouse()
+
+// 使用 shallowRef 避免深度响应式
+const hasEllipsis = computed(() => isEllipsis.value || isEllipsisByTextTrim.value)
+
+const textTrimClass = computed(() => ({
+  'lew-text-trim-wrapper': true,
+  'lew-text-trim-wrapper--line-clamp': props.lineClamp,
+  'lew-text-trim-wrapper--single-line': !props.lineClamp,
+  'lew-text-trim-wrapper--ellipsis': hasEllipsis.value,
+  [`lew-text-trim-wrapper--align-${props.textAlign}`]:
+    props.textAlign && props.textAlign !== 'left',
+}))
+
 const textTrimStyle = computed((): CSSProperties | string => {
   if (props.lineClamp) {
-    return `display: -webkit-box;-webkit-line-clamp: ${props.lineClamp};-webkit-box-orient: vertical;`
+    return `-webkit-line-clamp: ${props.lineClamp};`
   }
   return {
     textOverflow: (props.reserveEnd || 0) > 0 ? '' : 'ellipsis',
-    whiteSpace: 'nowrap',
-    textAlign: props.textAlign,
   }
 })
 
-// Methods
+function checkEllipsis(): boolean {
+  const element = lewTextTrimRef.value
+  if (!element)
+    return false
+
+  if (props.lineClamp) {
+    return element.offsetHeight < element.scrollHeight
+  }
+  return element.offsetWidth < element.scrollWidth
+}
+
 function initTippy(): void {
   const element = lewTextTrimRef.value
   if (!element)
     return
 
-  const { placement, allowHTML, text, offset } = props
-  let isEllipsis = false
-
-  if (props.lineClamp) {
-    isEllipsis = element.offsetHeight < element.scrollHeight
-  }
-  else {
-    isEllipsis = element.offsetWidth < element.scrollWidth
+  // 如果 tippy 已存在，直接显示
+  if (tippyInstance) {
+    showTippy()
+    return
   }
 
-  // Handle overflow state
-  if (isEllipsis || isEllipsisByTextTrim.value) {
-    element.style.cursor = 'pointer'
+  // 计算是否需要省略
+  isEllipsis.value = checkEllipsis()
 
-    // Initialize tippy if not already created
-    if (!tippyInstance) {
-      tippyInstance = tippy(element, {
-        theme: 'light',
-        delay: props.delay,
-        duration: [250, 250],
-        content: text ? sanitizeHtml(String(text)) : lewTextTrimPopRef.value,
-        animation: 'scale-subtle',
-        hideOnClick: false,
-        interactive: true,
-        appendTo: () => document.body,
-        placement,
-        offset,
-        allowHTML,
-        arrow: roundArrow,
-        maxWidth: 250,
-      })
-      tippyInstance?.popper.children[0].setAttribute('data-lew', 'tooltip')
-      showTippy()
-    }
-  }
-  else {
-    element.style.cursor = ''
-    destroyTippy()
+  if (hasEllipsis.value) {
+    const { placement, allowHTML, text, offset } = props
+
+    tippyInstance = tippy(element, {
+      theme: 'light',
+      delay: props.delay,
+      duration: [250, 250],
+      content: text ? escape(String(text)) : lewTextTrimPopRef.value,
+      animation: 'scale-subtle',
+      hideOnClick: false,
+      interactive: true,
+      appendTo: () => document.body,
+      placement,
+      offset,
+      allowHTML,
+      arrow: roundArrow,
+      maxWidth: 250,
+    })
+    tippyInstance?.popper.children[0].setAttribute('data-lew', 'tooltip')
+    showTippy()
   }
 }
 
 function showTippy(): void {
-  const { x, y } = useMouse()
+  if (!tippyInstance)
+    return
 
-  if (props.delay && Array.isArray(props.delay) && props.delay[0] > 0) {
+  const { delay } = props
+  if (delay && Array.isArray(delay) && delay[0] > 0) {
     setTimeout(() => {
-      try {
-        const element = lewTextTrimRef.value
-        if (!element)
-          return
+      const element = lewTextTrimRef.value
+      if (!element)
+        return
 
-        const rect = element.getBoundingClientRect()
-        // Check if mouse is within element bounds
-        if (
-          x.value >= rect.left
-          && x.value <= rect.right
-          && y.value >= rect.top
-          && y.value <= rect.bottom
-        ) {
-          tippyInstance?.show()
-        }
+      const rect = element.getBoundingClientRect()
+      if (
+        mouseX.value >= rect.left
+        && mouseX.value <= rect.right
+        && mouseY.value >= rect.top
+        && mouseY.value <= rect.bottom
+      ) {
+        tippyInstance?.show()
       }
-      catch (error) {
-        console.error('Error showing tooltip:', error)
-      }
-    }, props.delay[0])
+    }, delay[0])
   }
   else {
-    try {
-      tippyInstance?.show()
-    }
-    catch (error) {
-      console.error('Error showing tooltip:', error)
-    }
+    tippyInstance?.show()
   }
-}
-
-function sanitizeHtml(html: string): string {
-  return escape(html)
 }
 
 function destroyTippy(): void {
@@ -137,43 +129,49 @@ function destroyTippy(): void {
 }
 
 function calculateDisplayText(): void {
-  const { text, reserveEnd } = props
-  if (lewTextTrimRef.value) {
-    const result = getDisplayText({
-      text: String(text || ''),
-      reserveEnd: reserveEnd || 0,
-      target: lewTextTrimRef.value,
-    })
-    displayText.value = result.text
-    isEllipsisByTextTrim.value = result.isEllipsis
+  const element = lewTextTrimRef.value
+  if (!element)
+    return
+
+  const { text, reserveEnd = 0 } = props
+  const textStr = String(text || '')
+  const currentWidth = element.offsetWidth
+
+  // 输入未变化时跳过计算
+  if (
+    lastCalculateInput.text === textStr
+    && lastCalculateInput.reserveEnd === reserveEnd
+    && lastCalculateInput.width === currentWidth
+  ) {
+    return
+  }
+
+  // 更新缓存
+  lastCalculateInput = { text: textStr, reserveEnd, width: currentWidth }
+
+  const result = getDisplayText({
+    text: textStr,
+    reserveEnd,
+    target: element,
+  })
+  displayText.value = result.text
+  isEllipsisByTextTrim.value = result.isEllipsis
+
+  // 文本变化后重新检查省略状态，如果不再省略则销毁 tippy
+  isEllipsis.value = checkEllipsis()
+  if (!hasEllipsis.value) {
+    destroyTippy()
   }
 }
 
-function initCalculateDisplayText(): void {
-  requestAnimationFrame(calculateDisplayText)
-}
-
-const debouncedCalculate = useDebounceFn(calculateDisplayText, 250)
-
-// Event handlers
-function handleClick(event: MouseEvent): void {
-  emit('click', event)
-}
+const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
 
 function handleMouseEnter(): void {
-  emit('mouseenter')
   initTippy()
 }
 
-function handleMouseLeave(): void {
-  emit('mouseleave')
-}
-
-// Lifecycle hooks
 onMounted(() => {
-  initCalculateDisplayText()
-
-  // Use ResizeObserver only in client environment
+  requestAnimationFrame(calculateDisplayText)
   useResizeObserver(lewTextTrimRef, debouncedCalculate)
 })
 
@@ -182,20 +180,26 @@ onUnmounted(() => {
   clearMeasureCache()
 })
 
-// Watchers
-watch(() => [props.text, props.reserveEnd], calculateDisplayText, { flush: 'post' })
+watch(
+  () => [props.text, props.reserveEnd],
+  () => {
+    // 文本变化时先销毁旧的 tippy，清除缓存，再重新计算
+    destroyTippy()
+    lastCalculateInput = { text: '', reserveEnd: 0, width: 0 }
+    calculateDisplayText()
+  },
+  { flush: 'post' },
+)
 </script>
 
 <template>
   <div
     ref="lewTextTrimRef"
-    class="lew-text-trim-wrapper"
+    :class="textTrimClass"
     :style="textTrimStyle"
-    @click="handleClick"
     @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
   >
-    <template v-if="text">
+    <template v-if="props.text">
       {{ displayText }}
     </template>
     <slot v-else />
@@ -209,6 +213,34 @@ watch(() => [props.text, props.reserveEnd], calculateDisplayText, { flush: 'post
 .lew-text-trim-wrapper {
   width: 100%;
   overflow: hidden;
+
+  &--single-line {
+    white-space: nowrap;
+  }
+
+  &--line-clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+
+  &--align-center {
+    text-align: center;
+  }
+
+  &--align-end,
+  &--align-right {
+    text-align: right;
+  }
+
+  &--align-start,
+  &--align-left {
+    text-align: left;
+  }
+
+  &--ellipsis {
+    cursor: pointer;
+  }
+
   .lew-text-trim-pop {
     position: fixed;
     opacity: 0;

@@ -20,7 +20,7 @@ defineProps({
 <style lang="scss" scoped>
 .popover-body {
   box-sizing: border-box;
-  max-width: 500px;
+  max-width: 800px;
   border-radius: var(--lew-border-radius-small);
   overflow: hidden;
 }

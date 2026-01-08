@@ -31,13 +31,15 @@ const maxSizeFontSizeMap: Record<string, number> = {
   medium: 12,
   large: 14,
 }
-const uploadIconFontSizeMap: ComputedRef<Record<string, number>> = computed(() => {
-  return {
-    small: props.viewMode === 'list' ? 28 : 22,
-    medium: props.viewMode === 'list' ? 30 : 24,
-    large: props.viewMode === 'list' ? 32 : 26,
-  }
-})
+const uploadIconFontSizeMap: ComputedRef<Record<string, number>> = computed(
+  () => {
+    return {
+      small: props.viewMode === 'list' ? 28 : 22,
+      medium: props.viewMode === 'list' ? 30 : 24,
+      large: props.viewMode === 'list' ? 32 : 26,
+    }
+  },
+)
 const uploadPaddingMap: ComputedRef<Record<string, string>> = computed(() => {
   return {
     small: props.viewMode === 'list' ? '10px 8px' : '14px',
@@ -93,10 +95,13 @@ function addImageToList(files: any) {
       file: item,
     }
 
-    modelValue.value = [fileItem, ...cloneDeep(modelValue.value || [])]
-    emit('change', modelValue.value)
-
+    const _value: LewUploadFileItem[] = [
+      fileItem,
+      ...cloneDeep(modelValue.value || []),
+    ]
+    modelValue.value = _value
     nextTick(() => {
+      emit('change', _value)
       // 如果配置了uploadHelper且文件格式和大小都符合要求，则开始上传
       if (status === 'pending' && isFunction(_uploadHelper.value)) {
         setFileItem({
@@ -120,7 +125,9 @@ function addImageToList(files: any) {
 
 async function deleteFile(key: string) {
   const fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e: LewUploadFileItem) => e.key === key)
+  const index = (fileList || []).findIndex(
+    (e: LewUploadFileItem) => e.key === key,
+  )
   if (index >= 0) {
     const { status } = fileList[index]
     const fileItem = fileList[index]
@@ -130,20 +137,17 @@ async function deleteFile(key: string) {
       fileList.splice(index, 1)
       modelValue.value = fileList
       emit('delete', key)
+      nextTick(() => {
+        emit('change', fileList)
+      })
       return
     }
 
     // 调用删除前的回调函数
     if (props.beforeDelete && isFunction(props.beforeDelete)) {
-      try {
-        const shouldDelete = await props.beforeDelete(fileItem)
-        if (!shouldDelete) {
-          return // 用户取消删除
-        }
-      }
-      catch (error) {
-        console.error('[LewUpload] beforeDelete callback error:', error)
-        return // 出错时不删除
+      const shouldDelete = await props.beforeDelete(fileItem)
+      if (!shouldDelete) {
+        return // 用户取消删除
       }
     }
 
@@ -151,6 +155,9 @@ async function deleteFile(key: string) {
     fileList.splice(index, 1)
     modelValue.value = fileList
     emit('delete', key)
+    nextTick(() => {
+      emit('change', fileList)
+    })
   }
 }
 
@@ -255,7 +262,9 @@ onMounted(() => {
 function setFileItem(item: LewUploadFileItem) {
   const { key, percent } = item
   const fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e: LewUploadFileItem) => e.key === key)
+  const index = (fileList || []).findIndex(
+    (e: LewUploadFileItem) => e.key === key,
+  )
   let _percent = percent || 0
   if (index >= 0) {
     if (percent) {
@@ -271,6 +280,9 @@ function setFileItem(item: LewUploadFileItem) {
     fileList[index] = { ...fileList[index], ...item, percent: _percent }
   }
   modelValue.value = fileList
+  nextTick(() => {
+    emit('change', fileList)
+  })
 }
 
 const getUploadLabelClass = computed(() => {
@@ -308,9 +320,7 @@ const getTips = computed(() => {
     class="lew-upload-wrapper"
     :direction="viewMode === 'list' ? 'y' : 'x'"
     gap="10"
-    :style="{
-      width: viewMode === 'list' ? '100%' : 'auto',
-    }"
+    :width="viewMode === 'list' ? '100%' : 'auto'"
   >
     <LewUploadByCard
       v-if="viewMode === 'card'"

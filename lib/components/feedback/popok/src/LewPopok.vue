@@ -1,19 +1,41 @@
 <script setup lang="ts">
+// 1. 类型导入
 import type { LewColor } from 'lew-ui'
-import { LewButton, LewPopover, locale } from 'lew-ui'
+
+// 2. 组件导入
+import { LewButton, LewFlex, LewPopover, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 
+// 3. 工具函数导入
 import { any2px } from 'lew-ui/utils'
+
+// 4. 组件配置导入
 import { popokButtonProps } from './props'
 
+// Props
 const props = defineProps(popokButtonProps)
 
+// 响应式状态
 const lewPopoverRef = ref()
 const okLoading = ref(false)
 const cancelLoading = ref(false)
 const okRef = ref()
 
+// 计算属性
+const popokBodyStyle = computed(() => ({
+  width: any2px(props.width),
+}))
+
+const cancelButtonText = computed(() => {
+  return props.cancelText || locale.t('popok.cancelText')
+})
+
+const okButtonText = computed(() => {
+  return props.okText || locale.t('popok.okText')
+})
+
+// 方法
 async function handleAction(action: 'ok' | 'cancel') {
   const actionFunction = props[action]
   const loadingRef = action === 'ok' ? okLoading : cancelLoading
@@ -28,17 +50,24 @@ async function handleAction(action: 'ok' | 'cancel') {
   }
 }
 
-const ok = () => handleAction('ok')
-const cancel = () => handleAction('cancel')
+function ok() {
+  handleAction('ok')
+}
+
+function cancel() {
+  handleAction('cancel')
+}
 
 function hide() {
   lewPopoverRef.value.hide()
 }
 
+// 生命周期
 onMounted(() => {
   nextTick(() => {
-    if (okRef.value)
-      okRef.value.focus()
+    if (okRef.value) {
+      okRef.value.$el.focus()
+    }
   })
 })
 </script>
@@ -54,16 +83,11 @@ onMounted(() => {
       <slot />
     </template>
     <template #popover-body>
-      <div
-        class="lew-popok-body"
-        :style="{
-          width: any2px(width),
-        }"
-      >
+      <div class="lew-popok-body" :style="popokBodyStyle">
         <LewFlex direction="y" gap="20px" class="lew-popok-box" @click.stop>
           <LewFlex y="start">
             <div v-if="!hideIcon" class="lew-popok-box-left">
-              <CommonIcon v-if="!icon" :type :size="24" />
+              <CommonIcon v-if="!icon" :type="type" :size="24" />
               <RenderComponent v-else :render-fn="icon" />
             </div>
             <div class="lew-popok-box-right">
@@ -77,7 +101,7 @@ onMounted(() => {
           </LewFlex>
           <div class="lew-popok-box-footer">
             <LewButton
-              :text="cancelText || locale.t('popok.cancelText')"
+              :text="cancelButtonText"
               color="gray"
               type="light"
               size="small"
@@ -86,7 +110,7 @@ onMounted(() => {
             />
             <LewButton
               ref="okRef"
-              :text="okText || locale.t('popok.okText')"
+              :text="okButtonText"
               type="fill"
               size="small"
               :color="type as LewColor"

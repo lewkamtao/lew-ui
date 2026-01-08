@@ -55,6 +55,18 @@ export default {
     Fri: '금',
     Sat: '토',
     Sun: '일',
+    Jan: '1월',
+    Feb: '2월',
+    Mar: '3월',
+    Apr: '4월',
+    May: '5월',
+    Jun: '6월',
+    Jul: '7월',
+    Aug: '8월',
+    Sep: '9월',
+    Oct: '10월',
+    Nov: '11월',
+    Dec: '12월',
     placeholder: '날짜 선택',
   },
   dateRangePicker: {
@@ -92,6 +104,9 @@ export default {
     cancelText: '취소',
     okText: '확인',
   },
+  colorPicker: {
+    placeholder: '입력해주세요',
+  },
   upload: {
     dropActive: '파일을 놓으면 업로드가 시작됩니다',
     click: '클릭하여 업로드',
@@ -100,9 +115,19 @@ export default {
     accept: '{accept} 파일 업로드 가능',
     limit: '최대 {limit}개의 파일을 업로드할 수 있습니다',
     maxFileSize: '파일당 {maxFileSize} 이하여야 합니다',
+    pending: '대기 중',
+    success: '업로드 성공',
+    fail: '업로드 실패',
+    uploading: '업로드 중',
+    complete: '완료',
+    wrong_type: '잘못된 형식',
+    wrong_size: '파일 크기 제한 초과',
   },
   pagination: {
     pageSize: '페이지당 {pageSize}개',
     jumpTo: '이동',
+  },
+  empty: {
+    title: '데이터 없음',
   },
 }

@@ -66,10 +66,18 @@ export const popoverProps = {
   },
   offset: {
     type: Array as unknown as PropType<LewOffset>,
-    default: (): LewOffset => [0, 8],
+    default: [0, 8],
     validator: validators.array({
       componentName: 'LewPopover',
       propName: 'offset',
+    }),
+  },
+  delay: {
+    type: Array as unknown as PropType<[number, number]>,
+    default: [120, 120],
+    validator: validators.array({
+      componentName: 'LewPopover',
+      propName: 'delay',
     }),
   },
   popoverBodyClassName: {
@@ -78,14 +86,6 @@ export const popoverProps = {
     validator: validators.string({
       componentName: 'LewPopover',
       propName: 'popoverBodyClassName',
-    }),
-  },
-  triggerTarget: {
-    type: Object as PropType<Element>,
-    default: null,
-    validator: validators.object({
-      componentName: 'LewPopover',
-      propName: 'triggerTarget',
     }),
   },
 }

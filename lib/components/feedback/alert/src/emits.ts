@@ -1,3 +1,1 @@
-export const alertEmits = {
-  close: () => true,
-} as const
+export const alertEmits = {} as const

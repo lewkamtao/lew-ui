@@ -14,13 +14,11 @@ import {
   LewRadioGroup,
   LewRate,
   LewSelect,
-  LewSelectMultiple,
   LewSlider,
   LewSliderRange,
   LewSwitch,
   LewTabs,
   LewTextarea,
-  LewTextTrim,
   LewTooltip,
   LewTreeSelect,
   LewUpload,
@@ -46,7 +44,6 @@ const asMap: Record<LewFormItemAs, Component> = {
   'radio-group': LewRadioGroup,
   'checkbox': LewCheckbox,
   'select': LewSelect,
-  'select-multiple': LewSelectMultiple,
   'date-picker': LewDatePicker,
   'date-range-picker': LewDateRangePicker,
   'tabs': LewTabs,
@@ -62,7 +59,6 @@ const asMap: Record<LewFormItemAs, Component> = {
   'tree-select': LewTreeSelect,
 }
 
-// 自动注册 tooltip 指令
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip'))
   app.use(LewTooltip)
@@ -74,104 +70,104 @@ const getFormItemClassNames = computed(() =>
   }),
 )
 
-const formItemRef = ref()
+const formItemRef = ref<HTMLElement | null>(null)
 const modelValue: Ref<any> = defineModel({ default: undefined })
 const ignoreValidate = ref(false)
 const errMsg = ref('')
+const itemWidth = ref<number | null>(null)
 
 // 设置是否忽略校验
 function setIgnoreValidate(val: boolean) {
   ignoreValidate.value = val
 }
 
-// 简化校验逻辑
 function validate() {
+  if (ignoreValidate.value) {
+    return
+  }
+
   if (!props.required && !modelValue.value) {
     errMsg.value = ''
     return
   }
 
-  // 检查是否有有效的 schema 和 field
   if (!formSchema.value || !props.field) {
     errMsg.value = ''
     return
   }
 
-  // 检查 schema 是否有 validateAt 方法
   if (typeof formSchema.value.validateAt !== 'function') {
     errMsg.value = ''
     return
   }
 
-  // 检查 field 是否存在于 schema 中
-  try {
-    // 尝试获取 schema 中的字段定义来检查是否存在
-    const fieldExists = formSchema.value.fields && formSchema.value.fields[props.field]
-    if (!fieldExists && !formSchema.value.fields) {
-      // 如果没有 fields 属性，尝试直接验证，如果失败则忽略
-      formSchema.value
-        .validateAt(props.field, formData.value)
-        .then(() => (errMsg.value = ''))
-        .catch((e: any) => {
-          // 如果是路径不存在的错误，忽略验证
-          if (e.message && e.message.includes('does not contain the path')) {
-            errMsg.value = ''
-          }
-          else {
-            errMsg.value = e.message
-          }
-        })
-    }
-    else if (fieldExists) {
-      // 字段存在，正常验证
-      formSchema.value
-        .validateAt(props.field, formData.value)
-        .then(() => (errMsg.value = ''))
-        .catch((e: any) => (errMsg.value = e.message))
-    }
-    else {
-      // 字段不存在，清除错误信息
+  const schema = formSchema.value
+  const field = props.field
+  const data = formData.value
+
+  schema
+    .validateAt(field, data)
+    .then(() => {
       errMsg.value = ''
-    }
-  }
-  catch {
-    // 如果验证过程中出现任何错误，清除错误信息
-    errMsg.value = ''
-  }
+    })
+    .catch((e: any) => {
+      if (e.message && e.message.includes('does not contain the path')) {
+        errMsg.value = ''
+      }
+      else {
+        errMsg.value = e.message || ''
+      }
+    })
 }
 
-// 防抖校验 - 统一使用一个防抖函数
-const debouncedValidate = debounce(() => {
+const debouncedValidate = debounce(validate, 120)
+
+function setError(msg: any) {
+  errMsg.value = msg || ''
+}
+
+function change(val: any) {
   if (!ignoreValidate.value) {
-    validate()
+    debouncedValidate()
   }
   else {
     ignoreValidate.value = false
   }
-}, 120)
-
-function setError(msg: any) {
-  errMsg.value = msg
-}
-
-function change(val: any) {
-  debouncedValidate()
   emit('change', { value: val, field: props.field, label: props.label })
 }
 
-watch(() => modelValue.value, debouncedValidate, { deep: true })
+watch(
+  () => modelValue.value,
+  () => {
+    debouncedValidate()
+  },
+)
+
+function updateItemWidth() {
+  if (formItemRef.value && props.direction === 'x') {
+    itemWidth.value = (formItemRef.value as HTMLElement).offsetWidth
+  }
+}
 
 const getFormItemMainStyle = computed(() => {
-  if (!formItemRef.value)
-    return {}
-  const { direction, labelWidth, between } = props
-  const { offsetWidth } = formItemRef.value
+  if (props.direction !== 'x') {
+    return {
+      width: '100%',
+      justifyContent: 'flex-start',
+    }
+  }
+
+  if (itemWidth.value === null) {
+    nextTick(updateItemWidth)
+    return {
+      width: '100%',
+      justifyContent: props.between ? 'flex-end' : 'flex-start',
+    }
+  }
+
   return {
-    width:
-      direction === 'x'
-        ? `calc(${offsetWidth}px - ${any2px(labelWidth)} - 10px)`
-        : '100%',
-    justifyContent: direction === 'x' && between ? 'flex-end' : 'flex-start',
+    width: `calc(${itemWidth.value}px - ${any2px(props.labelWidth)} - 10px)`,
+    justifyContent: props.between ? 'flex-end' : 'flex-start',
   }
 })
 
@@ -179,22 +175,61 @@ const getDynamicProps = computed(() => {
   if (typeof props.props === 'function') {
     return props.props(formData.value)
   }
-  return props.props
+  return props.props || {}
 })
 
-function runFunc(func: (formData: Record<string, any>) => any) {
-  if (typeof func === 'function') {
-    return func(formData.value)
+const isVisible = computed(() => {
+  if (typeof props.visible === 'function') {
+    return props.visible(formData.value)
   }
-  return func
-}
+  return props.visible !== false
+})
+
+const isDisabled = computed(() => {
+  if (typeof props.disabled === 'function') {
+    return props.disabled(formData.value)
+  }
+  return Boolean(props.disabled)
+})
+
+const isReadonly = computed(() => {
+  if (typeof props.readonly === 'function') {
+    return props.readonly(formData.value)
+  }
+  return Boolean(props.readonly)
+})
+
+watch(
+  () => [props.direction, props.labelWidth, props.between],
+  () => {
+    if (props.direction === 'x') {
+      nextTick(updateItemWidth)
+    }
+  },
+)
+
+watch(
+  () => formData.value,
+  () => {
+    if (props.direction === 'x') {
+      nextTick(updateItemWidth)
+    }
+  },
+  { deep: true },
+)
+
+onMounted(() => {
+  if (props.direction === 'x') {
+    nextTick(updateItemWidth)
+  }
+})
 
 defineExpose({ validate, setError, setIgnoreValidate })
 </script>
 
 <template>
   <div
-    v-if="runFunc(visible)"
+    v-if="isVisible"
     ref="formItemRef"
     class="lew-form-item"
     :class="getFormItemClassNames"
@@ -203,11 +238,14 @@ defineExpose({ validate, setError, setIgnoreValidate })
     }"
   >
     <div
-      :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
+      :style="direction === 'x' ? { width: any2px(labelWidth) } : {}"
       class="lew-label-box-wrapper"
     >
       <div v-if="as" class="lew-label-box">
-        <RequiredIcon v-if="required && label" :size="requiredIconSizeMap[size]" />
+        <RequiredIcon
+          v-if="required && label"
+          :size="requiredIconSizeMap[size]"
+        />
         {{ label }}
         <CommonIcon
           v-if="tips"
@@ -230,8 +268,8 @@ defineExpose({ validate, setError, setIgnoreValidate })
         v-model="modelValue"
         v-bind="{
           size,
-          readonly: runFunc(readonly),
-          disabled: runFunc(disabled),
+          readonly: isReadonly,
+          disabled: isDisabled,
           ...getDynamicProps,
           width:
             as && ['input-number', 'tabs', 'button'].includes(as)
@@ -242,12 +280,9 @@ defineExpose({ validate, setError, setIgnoreValidate })
         @change="change"
       />
       <transition name="lew-slide-fade">
-        <LewTextTrim
-          v-if="errMsg"
-          style="width: 100%"
-          :text="errMsg"
-          class="lew-error-message"
-        />
+        <div v-if="errMsg" class="lew-error-message">
+          {{ errMsg }}
+        </div>
       </transition>
     </div>
   </div>
@@ -353,10 +388,15 @@ defineExpose({ validate, setError, setIgnoreValidate })
     position: absolute;
     left: 0px;
     bottom: 0px;
+    width: 100%;
     font-size: 12px;
     transition: all 0.1s;
     transform: translateY(calc(100% + 2px));
     color: var(--lew-color-error-dark);
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.5;
   }
 }
 

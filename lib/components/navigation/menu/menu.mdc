@@ -1,0 +1,221 @@
+---
+alwaysApply: false
+---
+
+# LewMenu 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewMenu
+- **核心用途**：用于显示简单的菜单列表，支持两级菜单结构、选中状态、图标、标签等功能，适用于侧边栏菜单、导航菜单等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持两级菜单结构（父级和子级）
+  - 支持选中状态（modelValue）
+  - 支持图标显示（icon）
+  - 支持标签显示（tagProps）
+  - 支持文本截断（自动使用 LewTextTrim）
+  - 使用 CSS 变量实现主题定制，支持暗色模式自动适配
+  - 符合组件库规范：规范的代码结构、导出格式和样式系统
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `options` 配置菜单项，自动渲染两级菜单结构
+- **选中状态**：通过 `v-model` 控制当前选中的菜单项
+- **图标和标签**：支持在菜单项中显示图标和标签
+- **文本截断**：菜单项文本超出宽度时自动截断并显示提示框
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewMenuOption[]` | - | 必填 | 菜单项配置数组，每个项包含 `label`（标签）、`value`（值）、`icon`（图标，可选）、`children`（子菜单，可选）、`tagProps`（标签属性，可选）等 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| modelValue | `string` | `''` | 当前选中的菜单项 value，使用 v-model 绑定 |
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| change | `item: LewMenuOption` | 点击子菜单项时触发，返回点击的菜单项 |
+
+### 3.4 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **菜单结构**：组件支持两级菜单结构，父级菜单项只显示标签，子级菜单项可以点击
+- ⚠️ **选中状态**：只有子级菜单项可以选中，父级菜单项不能选中
+- ⚠️ **点击事件**：只有子级菜单项会触发 `change` 事件，父级菜单项不会触发
+- ⚠️ **文本截断**：菜单项文本会自动使用 `LewTextTrim` 组件处理，超出宽度时显示省略号和提示框
+- ⚠️ **图标显示**：子级菜单项支持显示图标，通过 `icon` 属性配置
+- ⚠️ **标签显示**：菜单项支持显示标签，通过 `tagProps` 属性配置
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：菜单不显示
+
+**现象**：设置了 `options`，但菜单没有显示。
+
+**原因**：
+- `options` 配置不正确
+- 组件未正确导入
+
+**修复方案**：
+1. 确认 `options` 配置正确：
+```vue
+<template>
+  <!-- ✅ 正确：options 为数组，包含 label 和 value -->
+  <lew-menu
+    v-model="selectedValue"
+    :options="[
+      {
+        label: '菜单1',
+        value: 'menu1',
+        children: [
+          { label: '子菜单1', value: 'submenu1', icon: 'home' },
+          { label: '子菜单2', value: 'submenu2' },
+        ],
+      },
+    ]"
+  />
+  
+  <!-- ❌ 错误：options 不是数组或缺少必要属性 -->
+  <lew-menu :options="{}" />
+</template>
+```
+
+### 问题2：无法选中菜单项
+
+**现象**：点击菜单项无法选中。
+
+**原因**：
+- 点击的是父级菜单项（只能选中子级）
+- `v-model` 未正确绑定
+
+**修复方案**：
+1. 确认点击的是子级菜单项：
+```vue
+<template>
+  <!-- ✅ 正确：点击子级菜单项 -->
+  <lew-menu
+    v-model="selectedValue"
+    :options="menuOptions"
+  />
+</template>
+```
+2. 确认 `v-model` 正确绑定
+
+### 问题3：change 事件不触发
+
+**现象**：点击菜单项没有触发 `change` 事件。
+
+**原因**：
+- 点击的是父级菜单项（只有子级会触发）
+- 事件监听未正确绑定
+
+**修复方案**：
+1. 确认点击的是子级菜单项并监听 `change` 事件：
+```vue
+<template>
+  <!-- ✅ 正确：监听 change 事件 -->
+  <lew-menu
+    v-model="selectedValue"
+    :options="menuOptions"
+    @change="handleChange"
+  />
+</template>
+
+<script setup>
+function handleChange(item) {
+  console.log('选中:', item)
+}
+</script>
+```
+
+### 问题4：图标不显示
+
+**现象**：设置了 `icon`，但图标没有显示。
+
+**原因**：
+- `icon` 配置不正确
+- 图标组件未正确导入
+
+**修复方案**：
+1. 确认 `icon` 配置正确（只支持子级菜单项）：
+```vue
+<template>
+  <!-- ✅ 正确：子级菜单项设置 icon -->
+  <lew-menu
+    v-model="selectedValue"
+    :options="[
+      {
+        label: '菜单1',
+        value: 'menu1',
+        children: [
+          { label: '子菜单1', value: 'submenu1', icon: 'home' },
+        ],
+      },
+    ]"
+  />
+</template>
+```
+
+### 问题5：标签不显示
+
+**现象**：设置了 `tagProps`，但标签没有显示。
+
+**原因**：
+- `tagProps` 配置不正确
+- 标签组件未正确导入
+
+**修复方案**：
+1. 确认 `tagProps` 配置正确：
+```vue
+<template>
+  <!-- ✅ 正确：设置 tagProps -->
+  <lew-menu
+    v-model="selectedValue"
+    :options="[
+      {
+        label: '菜单1',
+        value: 'menu1',
+        tagProps: { text: 'New', type: 'light', color: 'red' },
+        children: [
+          {
+            label: '子菜单1',
+            value: 'submenu1',
+            tagProps: { text: 'Hot', type: 'light', color: 'orange' },
+          },
+        ],
+      },
+    ]"
+  />
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 规范化代码结构：创建 model.ts 文件分离 v-model 定义；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构（使用 defineModel API）；优化样式系统（使用 CSS 变量和全局过渡变量，移除注释） | 2024-12-19 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `v-model` 可以方便地控制当前选中的菜单项，支持双向绑定
+- ✅ 通过 `icon` 可以在子级菜单项中显示图标，提升视觉效果
+- ✅ 使用 `tagProps` 可以在菜单项中显示标签，用于显示新功能、热门等标识
+- ✅ 组件自动处理文本截断，长文本会自动显示省略号和提示框
+- ✅ 通过 CSS 变量可以轻松定制组件样式，实现主题定制
+- ✅ 组件支持两级菜单结构，适合简单的导航场景

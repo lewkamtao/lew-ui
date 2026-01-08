@@ -113,7 +113,7 @@ export const validSelectMultipleValueLayout: LewSelectMultipleValueLayout[] = ['
 
 export const validStepsStatusList: LewStepsStatus[] = ['pending', 'loading', 'done', 'error', 'warning']
 
-export const validFormItemAsList: LewFormItemAs[] = ['input', 'textarea', 'input-tag', 'checkbox-group', 'radio-group', 'checkbox', 'select', 'select-multiple', 'date-picker', 'date-range-picker', 'tabs', 'cascader', 'switch', 'button', 'upload', 'input-number', 'slider', 'slider-range', 'color-picker', 'rate', 'tree-select']
+export const validFormItemAsList: LewFormItemAs[] = ['input', 'textarea', 'input-tag', 'checkbox-group', 'radio-group', 'checkbox', 'select', 'date-picker', 'date-range-picker', 'tabs', 'cascader', 'switch', 'button', 'upload', 'input-number', 'slider', 'slider-range', 'color-picker', 'rate', 'tree-select']
 
 export const validInputTypeList: LewInputType[] = ['text', 'password']
 export const validInputPrefixesTypeList: LewInputPrefixesType[] = ['icon', 'select', 'text']

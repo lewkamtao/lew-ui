@@ -1,4 +1,6 @@
 export const tagEmits = {
   close: () => true,
-  click: (event: MouseEvent) => event,
+  change: (_value: string) => true,
+  blur: () => true,
+  focus: () => true,
 } as const

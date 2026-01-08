@@ -1,0 +1,190 @@
+/* =========================================================
+ * reset.scss
+ * ---------------------------------------------------------
+ * Business Project Reset
+ * - Includes font defaults
+ * - Google M3 Roboto font
+ * - Practical & stable
+ * ======================================================= */
+
+/* ---------- Google M3 Font (Roboto) ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+/* ---------- Box model ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ---------- Root ---------- */
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Body ---------- */
+body {
+  margin: 0;
+  color: #1f2329;
+
+  font-size: 14px;
+
+  /* Google M3 font stack */
+  font-family:
+    'Roboto',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    'Noto Sans CJK SC',
+    sans-serif;
+  line-height: 1.5;
+  background-color: #ffffff;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Code font ---------- */
+code,
+pre,
+kbd,
+samp {
+  font-family: 'Roboto Mono', 'SF Mono', Monaco, Consolas, monospace;
+}
+
+/* ---------- Typography ---------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+p,
+pre {
+  margin: 0;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+small {
+  font-size: 0.875em;
+}
+
+/* ---------- Lists ---------- */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- Links ---------- */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Media ---------- */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+/* ---------- Table ---------- */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ---------- Form Elements ---------- */
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ---------- Native appearance ---------- */
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  -webkit-appearance: none;
+}
+
+input[type='search'] {
+  outline-offset: -2px;
+  -webkit-appearance: none;
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* ---------- Accessibility ---------- */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Page layout ---------- */
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+/* ---------- Disabled semantics ---------- */
+[disabled],
+.is-disabled,
+[aria-disabled='true'] {
+  cursor: not-allowed;
+}

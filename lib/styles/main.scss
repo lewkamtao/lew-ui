@@ -107,52 +107,6 @@ button {
   }
 }
 
-/* 表单图标动画 */
-.lew-form-icon-ani-enter-from,
-.lew-form-icon-ani-leave-to {
-  margin-right: -10px;
-  opacity: 0 !important;
-}
-
-.lew-form-icon-ani-enter-active,
-.lew-form-icon-ani-leave-active {
-  transition: all var(--lew-form-transition-bezier);
-}
-
-/* 表单清除图标 */
-.lew-form-icon-close {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  z-index: 9;
-  padding: 2px;
-  border-radius: 50%;
-  transform: translate(0, -50%);
-  cursor: pointer;
-  opacity: var(--lew-form-icon-opacity);
-  transition: all 0.2s;
-
-  &:hover {
-    background-color: var(--lew-bgcolor-0);
-    opacity: var(--lew-form-icon-opacity-hover);
-  }
-
-  &:active {
-    opacity: var(--lew-form-icon-opacity-active);
-  }
-}
-
-.lew-form-icon-close-focus {
-  &:hover {
-    background-color: var(--lew-bgcolor-4);
-    opacity: var(--lew-form-icon-opacity-hover);
-  }
-
-  &:active {
-    opacity: var(--lew-form-icon-opacity-active);
-  }
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;
@@ -161,4 +115,25 @@ button {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* lew-form-icon-close transition animation */
+.lew-form-icon-close {
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Transition for enter/leave */
+.lew-form-icon-close-enter-active,
+.lew-form-icon-close-leave-active {
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lew-form-icon-close-enter-from,
+.lew-form-icon-close-leave-to {
+  opacity: 0;
+}
+
+.lew-form-icon-close-enter-to,
+.lew-form-icon-close-leave-from {
+  opacity: 1;
 }

@@ -32,6 +32,10 @@ export default {
     feedback: 'Feedback',
     close: 'Close',
     showCode: 'Show Code',
+    copySuccess: 'Copy successful!',
+    back: 'Back',
+    backToHome: 'Back to Home',
+    loading: 'Loading...',
   },
   components: {
     image: {
@@ -117,6 +121,7 @@ export default {
         text: 'Button Text',
         type: 'Type',
         size: 'Size',
+        width: 'Width',
         singleIcon: 'Show Icon Only',
         color: 'Color',
         round: 'Round',
@@ -124,6 +129,9 @@ export default {
         loading: 'Show Loading Status',
         disabled: 'Disabled Status',
         request: 'Request',
+      },
+      emits: {
+        click: 'Triggered when the button is clicked (not triggered when disabled or loading)',
       },
     },
     tag: {
@@ -151,6 +159,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Editable',
+      },
       props: {
         text: 'Tag Text, priority over slot, text-trim effect will be triggered when width is exceeded',
         type: 'Style Type',
@@ -160,6 +171,15 @@ export default {
         disabled: 'Disabled',
         round: 'Round',
         oversize: 'More Relaxed Size',
+        close: 'Receives a Promise function for closing the tag',
+        editable: 'Editable mode (requires v-model)',
+        placeholder: 'Placeholder text in editable mode',
+      },
+      emits: {
+        close: 'Tag close event callback',
+        change: 'Triggered when content changes in editable mode',
+        focus: 'Triggered when entering edit mode',
+        blur: 'Triggered when exiting edit mode',
       },
     },
     badge: {
@@ -242,6 +262,9 @@ export default {
         reserveEnd:
           'Number of characters to retain at the end, will show ellipsis in the middle when text overflows, retaining the beginning and specified number of ending characters',
       },
+      emits: {
+        click: 'Triggered when text is clicked',
+      },
     },
     flex: {
       name: 'Flex Layout',
@@ -307,7 +330,7 @@ export default {
         valveHeight:
           'Set the threshold of the page scroll height, the back to top button will be displayed when the scroll height exceeds this value, unit: pixel.',
       },
-      events: {
+      emits: {
         click: 'Back to top event callback',
       },
     },
@@ -331,10 +354,15 @@ export default {
         options: 'Array of step configuration items',
         status: 'Current status of the steps',
         minWidth: 'Minimum step width',
+        canClickItem: 'Whether to allow clicking step items to switch',
+        canCrossSteps: 'Whether to allow cross-step switching',
       },
       options: {
         title: 'Step title',
         description: 'Step description',
+      },
+      emits: {
+        change: 'Triggered when step changes',
       },
     },
     menu: {
@@ -356,6 +384,9 @@ export default {
         disabled: 'Disable the menu item',
         icon: 'Icon of the menu item',
         tagProps: 'Menu item tag Props',
+      },
+      emits: {
+        change: 'Triggered when menu item changes',
       },
     },
     menuTree: {
@@ -398,6 +429,11 @@ export default {
         disabled: 'Disable the menu item',
         isLeaf: 'Is it a leaf node',
       },
+      emits: {
+        change: 'Triggered when menu item changes',
+        expand: 'Triggered when menu item expands',
+        collapse: 'Triggered when menu item collapses',
+      },
     },
     dropdown: {
       'name': 'Dropdown Menu',
@@ -419,7 +455,7 @@ export default {
         checkable: 'Selectable',
       },
       'options(LewContextMenusOption[])': contextMenu,
-      'events': {
+      'emits': {
         show: 'Menu show event callback',
         hide: 'Menu hide event callback',
         change: 'Menu item selection event callback',
@@ -446,7 +482,7 @@ export default {
         value: 'Value of the breadcrumb item',
         active: 'Is it the current selected item',
       },
-      events: {
+      emits: {
         change: 'Triggered when the breadcrumb item changes',
       },
     },
@@ -468,6 +504,7 @@ export default {
       'props': {
         options: 'Right-click menu configuration',
         disabled: 'Disable right-click menu',
+        trigger: 'Trigger method',
       },
       'options(LewContextMenusOption[])': contextMenu,
     },
@@ -533,7 +570,7 @@ export default {
         outputFormat: 'Formatting method for output parameters',
         inputFormat: 'Formatting method for input parameters',
       },
-      events: {
+      emits: {
         mounted: 'Triggered when the form item is mounted',
       },
       methods: {
@@ -605,7 +642,7 @@ export default {
         suffixTooltip: 'Tooltip Text for the Input Box Suffix',
         okByEnter: 'Allow Confirmation by Enter Key',
       },
-      events: {
+      emits: {
         change: 'Triggered when the input box value changes',
         focus: 'Triggered when the input box gains focus',
         blur: 'Triggered when the input box loses focus',
@@ -652,6 +689,10 @@ export default {
       },
       model: {
         modelValue: 'Bound Value',
+      },
+      emits: {
+        change: 'Triggered when value changes',
+        input: 'Triggered when inputting',
       },
     },
     textarea: {
@@ -704,7 +745,7 @@ export default {
         okByEnter:
           'Enable Confirmation by Enter Key (Shift+Enter for newline when enabled)',
       },
-      events: {
+      emits: {
         change: 'Triggered when the value changes',
         focus: 'Triggered when gaining focus',
         blur: 'Triggered when losing focus',
@@ -750,11 +791,10 @@ export default {
         clearable: 'Clearable',
         placeholder: 'Placeholder Text',
         readonly: 'Read-only',
-        allowDuplicates: 'Allow Duplicates',
         maxLength: 'Maximum Number of Tags',
         width: 'Width',
       },
-      events: {
+      emits: {
         change: 'Triggered when the value changes',
         clear: 'Triggered when clearing',
         add: 'Triggered when adding a tag',
@@ -814,10 +854,13 @@ export default {
         iconable: 'Enable Icon',
         certain: 'Certain Status',
       },
-      'events(Checkbox)': {
+      'emits(Checkbox)': {
         change: 'Triggered when the value changes',
       },
-      'events(CheckboxGroup)': {
+      'emits(CheckboxGroup)': {
+        change: 'Triggered when the value changes',
+      },
+      'emits': {
         change: 'Triggered when the value changes',
       },
       'options': {
@@ -865,7 +908,7 @@ export default {
         value: 'Value',
         disabled: 'Disable',
       },
-      'events': {
+      'emits': {
         change: 'Triggered when the value changes',
       },
     },
@@ -888,6 +931,9 @@ export default {
       demo5: {
         title: 'Round',
       },
+      demo6: {
+        title: 'Disabled Option',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -904,6 +950,9 @@ export default {
       options: {
         label: 'Title',
         value: 'Value',
+      },
+      emits: {
+        change: 'Triggered when tab changes',
       },
     },
     select: {
@@ -939,6 +988,20 @@ export default {
       demo10: {
         title: 'Enable Search Cache',
       },
+      demo11: {
+        title: 'Adaptive Width',
+        description:
+          'Use ```autoWidth``` property to automatically calculate the dropdown width, ```popoverWidth``` property to set the popover width',
+      },
+      demo12: {
+        title: 'Multiple Selection',
+      },
+      demo13: {
+        title: 'Multiple Selection Search',
+      },
+      demo14: {
+        title: 'Multiple Selection Group',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -960,13 +1023,16 @@ export default {
         disabled: 'Disabled',
         showCheckIcon: 'Show Check Icon',
         initMethod: 'Initialize Options Method',
+        initMethodId: 'Initialize Method ID',
         enableSearchCache: 'Enable Search Cache',
+        multiple: 'Multiple Selection',
       },
-      events: {
+      emits: {
         change: 'Triggered when the value changes',
         clear: 'Triggered when cleared',
         blur: 'Triggered when losing focus',
         focus: 'Triggered when gaining focus',
+        delete: 'Triggered when deleting an option',
       },
       options: { label: 'Label', value: 'Value', disabled: 'Disabled' },
       slots: {
@@ -1031,7 +1097,7 @@ export default {
       model: {
         modelValue: 'Bound Value',
       },
-      events: { change: 'Value Change', blur: 'Blur', focus: 'Focus' },
+      emits: { change: 'Value Change', blur: 'Blur', focus: 'Focus' },
       options: { label: 'Label', value: 'Value', disabled: 'Disabled' },
       slots: {
         item: 'Custom Option Content',
@@ -1073,7 +1139,7 @@ export default {
         disabled: 'Disabled',
         presets: 'Presets',
       },
-      events: {
+      emits: {
         change: 'Value Change',
         focus: 'Focus',
         blur: 'Blur',
@@ -1108,7 +1174,7 @@ export default {
         readonly: 'Read-only',
         disabled: 'Disabled',
       },
-      events: {
+      emits: {
         change: 'Value Change',
         focus: 'Focus',
         blur: 'Blur',
@@ -1119,6 +1185,82 @@ export default {
       name: 'Cascader',
       description:
         'Selector for handling multi-level data, making category selection clearer',
+      demo1: {
+        title: 'Basic Usage',
+      },
+      demo2: {
+        title: 'Free Mode',
+      },
+      demo3: {
+        title: 'Show Only Last Level',
+      },
+      demo4: {
+        title: 'Asynchronous Loading',
+      },
+      demo5: {
+        title: 'Clearable',
+      },
+      demo6: {
+        title: 'Read-only',
+      },
+      demo7: {
+        title: 'Disabled',
+      },
+      demo8: {
+        title: 'Disabled Options',
+      },
+      demo9: {
+        title: 'Initialize Options Method',
+        description:
+          'Use the ```initMethod``` method to initialize cascader data and return a ```Promise``` object',
+      },
+      demo10: {
+        title: 'Multiple Selection',
+      },
+      demo11: {
+        title: 'Select Any Level',
+      },
+      demo12: {
+        title: 'Strict Mode',
+      },
+      model: {
+        modelValue: 'Bound Value',
+      },
+      props: {
+        width: 'Width',
+        options: 'Options',
+        placeholder: 'Placeholder Text',
+        disabled: 'Disabled',
+        clearable: 'Clearable',
+        showAllLevels: 'Show All Levels',
+        multiple: 'Multiple Selection',
+        free: 'Free Selection',
+        size: 'Size',
+        trigger: 'Trigger Method',
+        loadMethod: 'Load Method',
+        readonly: 'Read-only',
+        initMethod: 'Initialize Options Method',
+        initMethodId: 'Initialize Method ID',
+        onlyLeafSelectable: 'Whether only leaf nodes can be selected',
+      },
+      options: {
+        label: 'Label',
+        value: 'Value',
+        isLeaf: 'Is Leaf Node',
+        children: 'Children',
+        disabled: 'Disabled',
+      },
+      emits: {
+        change: 'Triggered when value changes',
+        clear: 'Triggered when cleared',
+        delete: 'Triggered when deleting an option',
+      },
+    },
+
+    cascaderMultiple: {
+      name: 'Cascader Multiple',
+      description:
+        'Multi-select multi-level data selector, making category selection clearer',
       demo1: {
         title: 'Basic Usage',
       },
@@ -1174,6 +1316,7 @@ export default {
         disabled: 'Disabled',
       },
     },
+
     treeSelect: {
       name: 'Tree Select',
       description:
@@ -1213,6 +1356,15 @@ export default {
         description:
           'Use the ```initMethod``` method to initialize tree data and return a ```Promise``` object',
       },
+      demo12: {
+        title: 'Multiple Selection',
+      },
+      demo13: {
+        title: 'Select Any Level',
+      },
+      demo14: {
+        title: 'Strict Mode',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -1239,10 +1391,15 @@ export default {
         labelField: 'Node Label Field',
         disabledField: 'Disabled Node Field',
         initMethod: 'Initialize Tree Nodes Method',
+        initMethodId: 'Initialize Method ID',
         loadMethod: 'Asynchronous Load Child Nodes Method',
       },
       slots: {
         handle: 'Slot Name',
+      },
+      emits: {
+        change: 'Triggered when value changes',
+        clear: 'Triggered when cleared',
       },
     },
     inputTable: {
@@ -1275,6 +1432,9 @@ export default {
         uniqueField: 'Unique Field',
         sortTooltipCustomRender: 'Sort Tooltip Custom Render',
       },
+      emits: {
+        change: 'Triggered when value changes',
+      },
     },
     switch: {
       name: 'Switch',
@@ -1305,7 +1465,7 @@ export default {
         request: 'Request',
         loading: 'Loading',
       },
-      events: {
+      emits: {
         change: 'Event Name',
       },
     },
@@ -1336,6 +1496,7 @@ export default {
       },
       props: {
         size: 'Size',
+        width: 'Width',
         min: 'Minimum Value',
         max: 'Maximum Value',
         step: 'Step Length',
@@ -1343,6 +1504,9 @@ export default {
         disabled: 'Disabled',
         options: 'Options',
         formatTooltip: 'Format Tooltip',
+      },
+      emits: {
+        change: 'Triggered when value changes',
       },
     },
     sliderRange: {
@@ -1372,6 +1536,7 @@ export default {
       },
       props: {
         size: 'Size',
+        width: 'Width',
         min: 'Minimum Value',
         max: 'Maximum Value',
         step: 'Step Length',
@@ -1379,6 +1544,9 @@ export default {
         disabled: 'Disabled',
         options: 'Options',
         formatTooltip: 'Format Tooltip',
+      },
+      emits: {
+        change: 'Triggered when value changes',
       },
     },
     rate: {
@@ -1406,6 +1574,9 @@ export default {
         tips: 'Tips',
         readonly: 'Read-only',
         disabled: 'Disabled',
+      },
+      emits: {
+        change: 'Triggered when value changes',
       },
     },
     colorPicker: {
@@ -1436,6 +1607,9 @@ export default {
         placeholder: 'Placeholder',
         disabled: 'Disabled',
         readonly: 'Read-only',
+      },
+      emits: {
+        change: 'Triggered when value changes',
       },
     },
     upload: {
@@ -1477,6 +1651,11 @@ export default {
         tips: 'Tips',
         uploadHelper: 'Upload Helper',
         viewMode: 'View Mode',
+        beforeDelete: 'Hook function before deletion',
+      },
+      emits: {
+        change: 'Triggered when value changes',
+        delete: 'Triggered when deleting a file',
       },
     },
     table: {
@@ -1547,6 +1726,11 @@ export default {
         x: 'X-axis',
         customRender: 'Custom Render',
       },
+      emits: {
+        sortChange: 'Triggered when sort changes',
+        selectChange: 'Triggered when selection changes',
+        dragSort: 'Triggered when drag sorting',
+      },
     },
     pagination: {
       name: 'Pagination',
@@ -1570,7 +1754,7 @@ export default {
         pageSizeOptions: 'Page Size Options',
         visiblePagesCount: 'Visible Pages Count',
       },
-      events: {
+      emits: {
         change: 'Change Event',
       },
     },
@@ -1628,6 +1812,7 @@ export default {
         initMethod: 'Initialize Tree Nodes Method',
         loadMethod: 'Asynchronous Load Child Nodes Method',
         isSelect: 'Is Selected',
+        onlyLeafSelectable: 'Whether only leaf nodes can be selected',
       },
       slots: {
         handle: 'Slot Name',
@@ -1638,6 +1823,12 @@ export default {
         isLeaf: 'Is Leaf Node',
         children: 'Children',
         disabled: 'Disabled',
+      },
+      emits: {
+        change: 'Triggered when value changes',
+        expand: 'Triggered when node expands',
+        loadStart: 'Triggered when loading starts',
+        loadEnd: 'Triggered when loading ends',
       },
     },
     collapse: {
@@ -1666,6 +1857,12 @@ export default {
         collapseKey: 'Collapse Key',
         title: 'Title',
         radius: 'Radius',
+      },
+      'emits': {
+        change: 'Triggered when collapse panel expands/collapses',
+      },
+      'emits(CollapseItem)': {
+        change: 'Triggered when collapse item expands/collapses',
       },
     },
     desc: {
@@ -1747,7 +1944,7 @@ export default {
       demo3: {
         title: 'Simulate Request',
       },
-      events: {
+      emits: {
         close: 'Triggered when closed',
       },
       props: {
@@ -1816,9 +2013,14 @@ export default {
         closeOnClickOverlay: 'Close on Click Overlay',
         closeByEsc: 'Close by ESC',
         hideFooter: 'Hide Footer',
+        hideOkButton: 'Hide OK Button',
+        hideCloseButton: 'Hide Close Button',
         okButtonProps: 'OK Button Props',
         closeButtonProps: 'Close Button Props',
         zIndex: 'Z Index',
+      },
+      emits: {
+        close: 'Triggered when closed',
       },
     },
     dialog: {
@@ -1837,11 +2039,18 @@ export default {
       demo4: {
         title: 'Customized content',
       },
+      demo5: {
+        title: 'Hide Icon',
+      },
+      demo6: {
+        title: 'Custom Icon',
+      },
       props: {
         type: 'Type',
         width: 'Width',
         trigger: 'Trigger',
         title: 'Title',
+        content: 'Content',
         okText: 'OK Text',
         cancelText: 'Cancel Text',
         ok: 'OK Callback',
@@ -1849,8 +2058,10 @@ export default {
         closeOnClickOverlay: 'Close on Click Overlay',
         closeByEsc: 'Close by ESC',
         transformOrigin: 'Transform Origin',
+        icon: 'Custom Icon',
+        hideIcon: 'Hide Icon',
       },
-      events: {
+      emits: {
         ok: 'Triggered when OK button is clicked',
         cancel: 'Triggered when Cancel button is clicked',
       },
@@ -1879,6 +2090,8 @@ export default {
         width: 'Width',
         top: 'Top',
         hideFooter: 'Hide Footer',
+        hideOkButton: 'Hide OK Button',
+        hideCloseButton: 'Hide Close Button',
         closeByEsc: 'Close by ESC',
         okButtonProps: 'OK Button Props',
         closeButtonProps: 'Close Button Props',
@@ -1897,6 +2110,15 @@ export default {
       demo2: {
         title: 'Trigger Method',
       },
+      demo3: {
+        title: 'Hide Icon',
+      },
+      demo4: {
+        title: 'Custom Icon',
+      },
+      demo5: {
+        title: 'Custom Content',
+      },
       props: {
         type: 'Type',
         width: 'Width',
@@ -1904,10 +2126,12 @@ export default {
         title: 'Title',
         content: 'Content',
         placement: 'Placement',
-        ok: 'OK Callback',
-        cancel: 'Cancel Callback',
         okText: 'OK Text',
         cancelText: 'Cancel Text',
+        ok: 'OK Callback',
+        cancel: 'Cancel Callback',
+        icon: 'Custom Icon',
+        hideIcon: 'Hide Icon',
       },
     },
     popover: {
@@ -1930,18 +2154,25 @@ export default {
         title: 'Disabled',
       },
       props: {
-        placement: 'Popover display position',
         trigger: 'Trigger method',
+        placement: 'Popover display position',
+        delay: 'Delay time',
         disabled: 'Disabled',
         loading: 'Loading',
+        clickOutsideToHide: 'Whether to close when clicking outside popover layer',
         hideOnClick: 'Hide on Click',
         offset: 'Offset',
+        triggerWidth: 'Popup width',
         popoverBodyClassName: 'Popover Body Class Name',
         triggerTarget: 'Trigger Target',
       },
       slots: {
         'trigger': 'Trigger Slot',
         'popover-body': 'Popover Body Slot',
+      },
+      emits: {
+        show: 'Triggered when showing',
+        hide: 'Triggered when hiding',
       },
     },
     tooltip: {
@@ -1960,7 +2191,7 @@ export default {
         title: 'Dark mode',
       },
       props: {
-        tips: 'Tips',
+        content: 'Tooltip content',
         placement: 'Placement',
         trigger: 'Trigger',
         allowHTML: 'Allow HTML',
@@ -2045,6 +2276,9 @@ export default {
         icon: 'Action button icon',
         onClick: 'Action button click event',
         customRender: 'Custom render content',
+      },
+      emits: {
+        click: 'Triggered when action button is clicked',
       },
     },
   },

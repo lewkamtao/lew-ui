@@ -222,19 +222,25 @@ defineExpose({ init })
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: rgba($color: #19c175, $alpha: 0.8);
+      background: var(--lew-color-success);
       left: 50%;
       transform: translateX(-50%);
       bottom: 2px;
-      box-shadow: 0px 0px 12px #0e7346;
+      z-index: 10;
+      opacity: 1;
+      border: 1.5px solid var(--lew-bgcolor-0);
+      box-shadow:
+        0px 0px 8px var(--lew-color-success-light),
+        0px 0px 3px rgba(0, 0, 0, 0.15),
+        inset 0px 0px 2px rgba(255, 255, 255, 0.2);
     }
 
     .lew-month-item:hover {
       .lew-month-label {
         .lew-month-value {
-          background-color: var(--lew-color-primary-light);
-          color: var(--lew-color-primary-dark);
-          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+          background-color: color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0));
+          color: var(--lew-color-primary);
+          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
       }
     }
@@ -250,9 +256,9 @@ defineExpose({ init })
     .lew-month-item-selected {
       .lew-month-label {
         .lew-month-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
+          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
       }
     }
@@ -260,9 +266,9 @@ defineExpose({ init })
     .lew-month-item-selected:active {
       .lew-month-label {
         .lew-month-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          background: var(--lew-color-datepicker-primary-selected-bg-active);
+          color: var(--lew-color-datepicker-primary-selected-text-active);
+          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
       }
     }
@@ -270,9 +276,8 @@ defineExpose({ init })
     .lew-month-item-selected:hover {
       .lew-month-label {
         .lew-month-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
         }
       }
     }

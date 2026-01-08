@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px } from 'lew-ui/utils'
 
@@ -38,9 +39,11 @@ function onClose() {
           {{ content }}
         </div>
       </div>
-      <div class="lew-notification-close-icon" @click="onClose">
-        <CommonIcon type="close" :size="16" />
-      </div>
+      <CloseIcon
+        size="medium"
+        class="lew-notification-close-icon"
+        @click="onClose"
+      />
     </div>
     <div
       v-if="showProgress"
@@ -104,29 +107,9 @@ function onClose() {
 
     .lew-notification-close-icon {
       position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
       top: 10px;
       right: 10px;
-      padding: 2px;
-      border-radius: 50%;
-      box-sizing: border-box;
-      cursor: pointer;
-      user-select: none;
-      color: var(--lew-text-color-5);
-
-      &:hover {
-        color: var(--lew-text-color-2);
-        background: var(--lew-bgcolor-3);
-      }
-
-      &:active {
-        color: var(--lew-text-color-0);
-        background: var(--lew-bgcolor-5);
-      }
+      z-index: 9;
     }
   }
 

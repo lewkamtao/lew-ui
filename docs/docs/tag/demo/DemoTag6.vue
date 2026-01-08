@@ -1,9 +1,24 @@
 <script setup lang="ts">
-const tags = ['Javascript', 'Typescript', 'Vue', 'React', 'Angular', 'Node.js', 'Python']
+import { ref } from 'vue'
 
-function close() {
+const tags = ref([
+  'Javascript',
+  'Typescript',
+  'Vue',
+  'React',
+  'Angular',
+  'Node.js',
+  'Python',
+])
+
+function close(tag: string) {
   return new Promise((resolve) => {
     setTimeout(() => {
+      // 关闭后隐藏该标签
+      const idx = tags.value.indexOf(tag)
+      if (idx !== -1) {
+        tags.value.splice(idx, 1)
+      }
       resolve(true)
     }, 1000)
   })
@@ -12,7 +27,7 @@ function close() {
 
 <template>
   <lew-flex>
-    <lew-tag v-for="tag in tags" :key="tag" :close="close">
+    <lew-tag v-for="tag in tags" :key="tag" :close="() => close(tag)">
       {{ tag }}
     </lew-tag>
   </lew-flex>

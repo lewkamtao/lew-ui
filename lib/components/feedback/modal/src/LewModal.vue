@@ -1,13 +1,19 @@
-<script lang="ts" setup name="Modal">
-import type { Ref } from 'vue'
+<script setup lang="ts">
+// 1. 第三方库导入
 import { onClickOutside, useMagicKeys } from '@vueuse/core'
-import { LewButton, LewFlex, LewTextTrim, locale } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { useDOMCreate } from 'lew-ui/hooks'
-import { any2px, getUniqueId } from 'lew-ui/utils'
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import { modalEmits } from './emits'
 
+// 2. 组件导入
+import { LewButton, LewFlex, locale } from 'lew-ui'
+import CloseButton from 'lew-ui/_components/CloseButton.vue'
+
+// 3. Hooks 导入
+import { useDOMCreate } from 'lew-ui/hooks'
+
+// 4. 工具函数导入
+import { any2px, getUniqueId } from 'lew-ui/utils'
+
+// 5. 组件配置导入
+import { modalEmits } from './emits'
 import { modalProps } from './props'
 
 // Props & Emits
@@ -18,17 +24,20 @@ const emit = defineEmits(modalEmits)
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-modal')
 
-// Models
-const visible: Ref<boolean | undefined> = defineModel('visible')
+// v-model
+const visible = defineModel<boolean>('visible', { default: false })
 
-// Refs
+// 响应式状态
 const modalBodyRef = ref<HTMLElement | null>(null)
-
-// Constants
-const modalId = `lew-modal-${getUniqueId()}`
 const recomputeTrigger = ref<number>(0)
 
-// 计算当前 modal 是否在顶层
+// 常量
+const modalId = `lew-modal-${getUniqueId()}`
+
+// Slots 检测
+const slots = useSlots()
+
+// 计算属性
 const isTopModal = computed(() => {
   // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
   void recomputeTrigger.value
@@ -68,37 +77,27 @@ const isTopModal = computed(() => {
   return openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId
 })
 
-// 强制重新计算顶层状态的函数
+const modalStyle = computed(() => {
+  const { width, top } = props
+  return {
+    width: any2px(width),
+    top: any2px(top),
+  }
+})
+
+const modalBodyMainStyle = computed(() => ({
+  maxHeight: any2px(props.maxHeight),
+}))
+
+// 方法
 function forceRecomputeTopModal() {
   recomputeTrigger.value++
 }
 
-// 监听 modalBodyRef 变化，确保在 DOM 更新后重新计算顶层状态
-watch(
-  modalBodyRef,
-  async (newVal) => {
-    if (newVal && visible.value) {
-      await nextTick()
-      forceRecomputeTopModal()
-    }
-  },
-  { immediate: true },
-)
-
-// 监听 visible 变化，确保状态正确更新
-watch(visible, async (newVal) => {
-  await nextTick()
-  // modal 状态变化时，强制重新计算
-  forceRecomputeTopModal()
-
-  // 控制全局检查定时器
-  if (newVal) {
-    startGlobalCheck()
-  }
-  else {
-    stopGlobalCheck()
-  }
-})
+function handleClose(): void {
+  visible.value = false
+  emit('close')
+}
 
 // 监听全局 modal 状态变化（通过定时器检查）
 let globalCheckTimer: ReturnType<typeof setInterval> | null = null
@@ -122,14 +121,30 @@ function stopGlobalCheck() {
   }
 }
 
-onMounted(() => {
-  if (visible.value) {
+// 监听器
+watch(
+  modalBodyRef,
+  async (newVal) => {
+    if (newVal && visible.value) {
+      await nextTick()
+      forceRecomputeTopModal()
+    }
+  },
+  { immediate: true },
+)
+
+watch(visible, async (newVal) => {
+  await nextTick()
+  // modal 状态变化时，强制重新计算
+  forceRecomputeTopModal()
+
+  // 控制全局检查定时器
+  if (newVal) {
     startGlobalCheck()
   }
-})
-
-onUnmounted(() => {
-  stopGlobalCheck()
+  else {
+    stopGlobalCheck()
+  }
 })
 
 onClickOutside(modalBodyRef, (e: any) => {
@@ -141,30 +156,25 @@ onClickOutside(modalBodyRef, (e: any) => {
   }
 })
 
-// Computed
-const getModalStyle = computed(() => {
-  const { width, top } = props
-  return {
-    width: any2px(width),
-    top: any2px(top),
-  }
-})
-
-// Methods
-function handleClose(): void {
-  visible.value = false
-  emit('close')
-}
-
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (!visible.value || !v || !isTopModal.value) {
       return
     }
-
     visible.value = false
   })
 }
+
+// 生命周期
+onMounted(() => {
+  if (visible.value) {
+    startGlobalCheck()
+  }
+})
+
+onUnmounted(() => {
+  stopGlobalCheck()
+})
 </script>
 
 <template>
@@ -175,8 +185,8 @@ if (props.closeByEsc) {
       </transition>
       <transition name="lew-modal">
         <div v-if="visible" :style="{ zIndex: props.zIndex }" class="lew-modal">
-          <div ref="modalBodyRef" :style="getModalStyle" class="lew-modal-body">
-            <div v-if="$slots.header" class="lew-modal-header-slot">
+          <div ref="modalBodyRef" :style="modalStyle" class="lew-modal-body">
+            <div v-if="slots.header" class="lew-modal-header-slot">
               <slot name="header" />
             </div>
             <LewFlex
@@ -185,26 +195,24 @@ if (props.closeByEsc) {
               y="center"
               class="lew-modal-header"
             >
-              <LewTextTrim class="lew-modal-title" :text="props.title" />
-              <LewButton
-                type="light"
+              <div
+                class="lew-modal-title"
+                :title="props.title"
+              >
+                {{ props.title }}
+              </div>
+              <CloseButton
+                size="large"
                 color="gray"
                 round
-                single-icon
-                size="small"
                 class="lew-modal-icon-close"
                 @click="handleClose"
-              >
-                <CommonIcon :size="14" type="close" />
-              </LewButton>
+              />
             </LewFlex>
-            <div
-              class="lew-modal-body-main lew-scrollbar"
-              :style="{ maxHeight: any2px(props.maxHeight) }"
-            >
+            <div class="lew-modal-body-main lew-scrollbar" :style="modalBodyMainStyle">
               <slot />
             </div>
-            <div v-if="$slots.footer" class="lew-modal-footer-slot">
+            <div v-if="slots.footer" class="lew-modal-footer-slot">
               <slot name="footer" />
             </div>
             <LewFlex
@@ -214,6 +222,7 @@ if (props.closeByEsc) {
               class="lew-modal-footer"
             >
               <LewButton
+                v-if="!props.hideCloseButton"
                 v-bind="{
                   size: 'small',
                   type: 'light',
@@ -223,6 +232,7 @@ if (props.closeByEsc) {
                 }"
               />
               <LewButton
+                v-if="!props.hideOkButton"
                 v-bind="{
                   size: 'small',
                   text: locale.t('modal.okText'),
@@ -262,6 +272,7 @@ if (props.closeByEsc) {
     position: relative;
     border-radius: var(--lew-border-radius-large);
     background-color: var(--lew-modal-body-bgcolor);
+    border: var(--lew-modal-border);
     overflow: hidden;
 
     .lew-modal-body-main {
@@ -275,15 +286,18 @@ if (props.closeByEsc) {
       .lew-modal-title {
         font-size: 16px;
         font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+        min-width: 0;
       }
 
       .lew-modal-icon-close {
         position: absolute;
-        width: auto;
-        height: auto;
-        padding: 5px;
         top: 10px;
         right: 10px;
+        z-index: 9;
       }
     }
 
@@ -313,7 +327,9 @@ if (props.closeByEsc) {
 
 .lew-modal-enter-active,
 .lew-modal-leave-active {
-  transition: all var(--lew-form-transition-bezier);
+  transition:
+    opacity var(--lew-form-transition-ease),
+    transform var(--lew-form-transition-bezier);
 }
 
 .lew-modal-leave-to,

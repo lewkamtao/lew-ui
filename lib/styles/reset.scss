@@ -1,18 +1,22 @@
-body,
-dl,
-dt,
-dd,
-pre,
-form,
-fieldset,
-input,
-p,
-blockquote,
-th,
-td,
-a,
-button,
-select,
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 h1,
 h2,
 h3,
@@ -20,73 +24,113 @@ h4,
 h5,
 h6 {
   margin: 0;
-  padding: 0;
+  font-weight: inherit;
+  font-size: inherit;
 }
 
-/* 表单元素样式 */
-select {
-  font-size: 14px;
+p {
+  margin: 0;
 }
 
-/* 表格样式 */
-table {
-  border-collapse: collapse;
+b,
+strong {
+  font-weight: bolder;
 }
 
-caption,
-th {
-  text-align: left;
+small {
+  font-size: 0.875em;
 }
 
-table caption {
-  margin-left: -var(--lew-border-width);
-}
-
-/* 图片和字段集样式 */
-fieldset,
-img {
-  border: 0 none;
-}
-
-fieldset {
+ul,
+ol {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
-fieldset p {
-  margin: 0;
-  padding: 0 0 0 8px;
-}
-
-legend {
-  display: none;
-}
-
-/* 列表样式 */
-ol,
-ul {
-  list-style-position: outside;
-  list-style-image: none;
-}
-
-/* 引用样式 */
-q::before,
-q::after,
-blockquote::before,
-blockquote::after {
-  content: '';
-}
-
-/* 链接样式 */
 a {
+  color: inherit;
   text-decoration: none;
 }
 
-/* 输入框自动填充样式 */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+img,
+svg,
+video,
+canvas,
+audio,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  -webkit-appearance: none;
+}
+
+input[type='search'] {
+  outline-offset: -2px;
+  -webkit-appearance: none;
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.lew-table-wrapper table,
+.lew-table {
+  border-collapse: collapse;
+}
+
+.lew-table-wrapper caption,
+.lew-table-wrapper th {
+  text-align: left;
+}
+
+.lew-input-view input:-webkit-autofill,
+.lew-input-view input:-webkit-autofill:hover,
+.lew-input-view input:-webkit-autofill:focus,
+.lew-input-view input:-webkit-autofill:active,
+.lew-textarea-view textarea:-webkit-autofill,
+.lew-textarea-view textarea:-webkit-autofill:hover,
+.lew-textarea-view textarea:-webkit-autofill:focus,
+.lew-textarea-view textarea:-webkit-autofill:active {
   transition:
     color 9999999s ease-out,
     background-color 9999999s ease-out;

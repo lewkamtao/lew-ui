@@ -3,13 +3,6 @@ import type { LewPlacement, LewTrigger } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validPlacementList, validTriggerList } from 'lew-ui/validators'
 
-export const dropdownModel = {
-  selectedKeys: {
-    type: Array as PropType<string[]>,
-    default: () => [],
-  },
-}
-
 export const dropdownProps = {
   trigger: {
     type: String as PropType<LewTrigger>,

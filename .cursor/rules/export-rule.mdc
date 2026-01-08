@@ -1,0 +1,626 @@
+---
+description: 本文是 Vue 组件库实现按需引入与 Tree-shaking 的核心指南，围绕「支持按需导入、兼容 Tree-shaking、完善类型导出」三大核心目标，制定了一套标准化的组件导出、入口配置、构建优化流程，确保用户项目仅打包所需组件代码，减小最终体积。 内容涵盖组件级 / 主入口级导出规范（明确允许与禁止的导出方式）、TypeScript 类型导出细节、package.json 关键配置、Vite 构建优化方案，同时明确副作用规避技巧与 Tree-shaking 验证方法，配套开发检查清单与测试命令，助力构建轻量、高效、易用的 Vue 组件库。 总结 核心要求：组件采用具名导出，类型单独用export type导出，主入口按功能分组排序，禁止默认对象导出与 CommonJS 格式，保障 Tree-shaking 有效性； 配置关键：package.json 需设置type: module、合理配置exports与sideEffects，Vite 构建需外部化 peer 依赖、开启 Tree-shaking 优化并生成类型声明； 避坑要点：规避顶层执行代码、全局对象修改等副作用，CSS 文件单独标记副作用，通过测试项目验证按需引入效果，确保打包体积最优。
+alwaysApply: false
+---
+
+# 导出规范（Tree-shaking）
+
+> **重要性**：⭐⭐⭐⭐⭐  
+> 正确的导出规范是实现按需引入和 tree-shaking 的关键。
+
+## 核心目标
+
+### 1. 支持按需引入
+用户可以只导入需要的组件，不会打包未使用的代码。
+
+```typescript
+// ✅ 只打包 Button
+import { LewButton } from 'lew-ui'
+
+// ✅ 只打包 Button 和 Input
+import { LewButton, LewInput } from 'lew-ui'
+
+// ❌ 应该避免（但要支持）
+import LewUI from 'lew-ui'
+```
+
+### 2. Tree-shaking 友好
+- 使用 ES Module 格式导出
+- 避免副作用（side effects）
+- 每个导出项都是独立的
+
+### 3. 类型支持
+- 完整的 TypeScript 类型导出
+- 类型与运行时代码同步
+
+## 组件导出规范
+
+### 组件 index.ts 标准格式
+
+#### 单组件导出
+
+```typescript
+// lib/components/general/button/index.ts
+
+import LewButton from './src/LewButton.vue'
+import type { ButtonProps } from './src/props'
+
+// ✅ 具名导出组件
+export { LewButton }
+
+// ✅ 具名导出类型（type 关键字必需）
+export type { ButtonProps }
+
+// ✅ 默认导出（方便直接导入）
+export default LewButton
+```
+
+#### 复合组件导出
+
+```typescript
+// lib/components/form/checkbox/index.ts
+
+import LewCheckbox from './src/LewCheckbox.vue'
+import LewCheckboxGroup from './src/LewCheckboxGroup.vue'
+import type { CheckboxProps, CheckboxGroupProps } from './src/props'
+
+// ✅ 导出所有组件
+export { LewCheckbox, LewCheckboxGroup }
+
+// ✅ 导出所有类型
+export type { CheckboxProps, CheckboxGroupProps }
+
+// ✅ 默认导出主组件
+export default LewCheckbox
+```
+
+#### 带工具函数的组件
+
+```typescript
+// lib/components/feedback/message/index.ts
+
+import LewMessage from './src/LewMessage.vue'
+import { createMessage } from './src/api'
+import type { MessageProps, MessageOptions } from './src/types'
+
+// ✅ 导出组件
+export { LewMessage }
+
+// ✅ 导出 API 函数
+export { createMessage }
+
+// ✅ 导出类型
+export type { MessageProps, MessageOptions }
+
+// ✅ 默认导出主组件
+export default LewMessage
+```
+
+### ❌ 禁止的导出方式
+
+```typescript
+// ❌ 不要使用 export default { ... } 导出对象
+export default {
+  LewButton,
+  LewInput
+}
+
+// ❌ 不要使用 module.exports (CommonJS)
+module.exports = LewButton
+
+// ❌ 不要混合导出类型和值（会破坏 tree-shaking）
+export { type ButtonProps, LewButton }  // 类型和值分开导出
+
+// ❌ 不要导出未定义的内容
+export { LewButtonInternal }  // 如果这是内部组件，不应导出
+
+// ❌ 不要使用 export * from（除非明确知道导出内容）
+export * from './src/props'  // 可能导出不需要的内容
+```
+
+## 主入口导出规范
+
+### lib/index.ts 结构
+
+```typescript
+// lib/index.ts
+
+// ===========================
+// 1. 组件导出（按字母顺序）
+// ===========================
+
+// General 通用组件
+export { LewButton } from './components/general/button'
+export { LewIcon } from './components/general/icon'
+export { LewTag } from './components/general/tag'
+
+// Form 表单组件
+export { LewInput } from './components/form/input'
+export { LewInputNumber } from './components/form/input-number'
+export { LewSelect } from './components/form/select'
+export { LewCheckbox, LewCheckboxGroup } from './components/form/checkbox'
+export { LewRadio, LewRadioGroup } from './components/form/radio'
+export { LewSwitch } from './components/form/switch'
+
+// Data 数据展示
+export { LewTable } from './components/data/table'
+export { LewTree } from './components/data/tree'
+export { LewPagination } from './components/data/pagination'
+
+// Feedback 反馈组件
+export { LewModal } from './components/feedback/modal'
+export { LewMessage } from './components/feedback/message'
+export { LewNotification } from './components/feedback/notification'
+export { LewTooltip } from './components/feedback/tooltip'
+
+// Navigation 导航组件
+export { LewMenu, LewMenuItem, LewMenuGroup } from './components/navigation/menu'
+export { LewTabs, LewTabItem } from './components/navigation/tabs'
+export { LewBreadcrumb, LewBreadcrumbItem } from './components/navigation/breadcrumb'
+
+// ===========================
+// 2. 类型导出
+// ===========================
+
+// 组件 Props 类型
+export type { ButtonProps } from './components/general/button'
+export type { InputProps } from './components/form/input'
+export type { SelectProps } from './components/form/select'
+export type { TableProps } from './components/data/table'
+export type { ModalProps } from './components/feedback/modal'
+
+// 公共类型
+export type { 
+  Size, 
+  Color, 
+  Align, 
+  Placement 
+} from './types'
+
+// ===========================
+// 3. 工具函数导出
+// ===========================
+
+export { object2class } from './utils'
+
+// ===========================
+// 4. 组合式函数导出（如有）
+// ===========================
+
+export { useMessage } from './composables/use-message'
+export { useModal } from './composables/use-modal'
+
+// ===========================
+// 5. 版本信息
+// ===========================
+
+export const version = '__VERSION__'  // 构建时替换
+
+// ===========================
+// 6. 安装函数（Vue 插件）
+// ===========================
+
+import type { App } from 'vue'
+
+// 所有组件列表（用于全局注册）
+const components = [
+  LewButton,
+  LewInput,
+  LewSelect,
+  // ... 所有组件
+]
+
+/**
+ * 安装所有组件（Vue 插件）
+ * @param app - Vue 应用实例
+ */
+export function install(app: App): void {
+  components.forEach(component => {
+    if (component.name) {
+      app.component(component.name, component)
+    }
+  })
+}
+
+// ===========================
+// 7. 默认导出（支持 Vue.use()）
+// ===========================
+
+export default {
+  version,
+  install
+}
+```
+
+### 导出分组规范
+
+```typescript
+// ✅ 按功能分组，每组按字母排序
+// General
+export { LewButton } from './components/general/button'
+export { LewIcon } from './components/general/icon'
+
+// Form
+export { LewCheckbox } from './components/form/checkbox'
+export { LewInput } from './components/form/input'
+
+// ❌ 不要混乱排序
+export { LewButton } from './components/general/button'
+export { LewInput } from './components/form/input'
+export { LewIcon } from './components/general/icon'  // 与 Button 不连续
+```
+
+## TypeScript 类型导出
+
+### Props 类型导出
+
+```typescript
+// lib/components/general/button/src/props.ts
+
+import type { PropType, ExtractPropTypes } from 'vue'
+
+export const buttonProps = {
+  size: {
+    type: String as PropType<'mini' | 'small' | 'medium' | 'large'>,
+    default: 'medium'
+  },
+  type: {
+    type: String as PropType<'fill' | 'light' | 'ghost' | 'text'>,
+    default: 'light'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  }
+} as const
+
+// ✅ 导出 Props 类型
+export type ButtonProps = ExtractPropTypes<typeof buttonProps>
+
+// ✅ 导出联合类型（如果需要单独使用）
+export type ButtonSize = 'mini' | 'small' | 'medium' | 'large'
+export type ButtonType = 'fill' | 'light' | 'ghost' | 'text'
+```
+
+### Emits 类型导出
+
+```typescript
+// lib/components/general/button/src/emits.ts
+
+export const buttonEmits = {
+  click: (e: MouseEvent) => true,
+  dblclick: (e: MouseEvent) => true
+}
+
+// ✅ 导出 Emits 类型
+export type ButtonEmits = typeof buttonEmits
+
+// ✅ 或导出为接口
+export interface ButtonEmitsType {
+  (e: 'click', event: MouseEvent): void
+  (e: 'dblclick', event: MouseEvent): void
+}
+```
+
+### 组件实例类型
+
+```typescript
+// lib/components/general/button/src/LewButton.vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { buttonProps } from './props'
+
+const props = defineProps(buttonProps)
+
+// ✅ 导出的方法（通过 defineExpose）
+const focus = () => {
+  // 聚焦逻辑
+}
+
+const blur = () => {
+  // 失焦逻辑
+}
+
+defineExpose({
+  focus,
+  blur
+})
+</script>
+
+// lib/components/general/button/src/types.ts
+import type LewButton from './LewButton.vue'
+
+// ✅ 导出组件实例类型
+export type ButtonInstance = InstanceType<typeof LewButton>
+
+// lib/components/general/button/index.ts
+export type { ButtonInstance } from './src/types'
+```
+
+## Package.json 配置
+
+### 导出配置
+
+```json
+{
+  "name": "lew-ui",
+  "version": "2.7.70",
+  "type": "module",
+  
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    },
+    "./style": "./dist/index.css",
+    "./package.json": "./package.json"
+  },
+  
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ]
+}
+```
+
+### 关键配置说明
+
+#### 1. `"type": "module"`
+声明包使用 ES Module 格式
+
+#### 2. `exports` 字段
+- 定义包的导出入口
+- 支持条件导出（types、import、require）
+- 推荐使用（替代 main/module）
+
+#### 3. `sideEffects`
+- 告诉打包器哪些文件有副作用
+- CSS 文件必须标记为有副作用
+- `false` 表示所有文件都没有副作用（最佳）
+
+```json
+{
+  // ✅ 如果只有样式文件有副作用
+  "sideEffects": ["*.css", "*.scss"],
+  
+  // ✅ 如果完全没有副作用
+  "sideEffects": false,
+  
+  // ❌ 不要遗漏（会导致 tree-shaking 失效）
+}
+```
+
+## Vite 构建配置
+
+### Tree-shaking 优化
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import dts from 'vite-plugin-dts'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    dts({
+      // 生成类型声明文件
+      insertTypesEntry: true,
+      cleanVueFileName: true,
+      skipDiagnostics: false,
+      staticImport: true,
+      rollupTypes: true
+    })
+  ],
+  
+  build: {
+    lib: {
+      entry: './lib/index.ts',
+      name: 'LewUI',
+      formats: ['es', 'umd'],
+      fileName: (format) => {
+        if (format === 'es') return 'index.js'
+        if (format === 'umd') return 'index.umd.cjs'
+        return `index.${format}.js`
+      }
+    },
+    
+    rollupOptions: {
+      // ✅ 外部化 peer dependencies
+      external: ['vue', 'vue-router'],
+      
+      output: {
+        // ✅ 保留原始导出结构
+        preserveModules: false,
+        
+        // ✅ 为外部依赖提供全局变量名
+        globals: {
+          vue: 'Vue',
+          'vue-router': 'VueRouter'
+        },
+        
+        // ✅ 导出方式
+        exports: 'named',
+        
+        // ✅ 压缩
+        compact: true
+      },
+      
+      // ✅ Tree-shaking 配置
+      treeshake: {
+        moduleSideEffects: false,  // 假设模块无副作用
+        propertyReadSideEffects: false,
+        unknownGlobalSideEffects: false
+      }
+    },
+    
+    // ✅ 压缩配置
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,  // 生产环境移除 console
+        drop_debugger: true
+      }
+    }
+  }
+})
+```
+
+## 使用场景
+
+### 场景 1：按需引入组件
+
+```typescript
+// 用户代码
+import { LewButton, LewInput } from 'lew-ui'
+import 'lew-ui/style'
+
+// ✅ 只打包 Button 和 Input 相关代码
+```
+
+### 场景 2：全局注册
+
+```typescript
+// 用户代码（main.ts）
+import { createApp } from 'vue'
+import LewUI from 'lew-ui'
+import 'lew-ui/style'
+
+const app = createApp(App)
+app.use(LewUI)  // 注册所有组件
+
+// ❌ 打包所有组件（但这是用户选择）
+```
+
+### 场景 3：单独导入组件
+
+```typescript
+// 用户代码
+import LewButton from 'lew-ui/components/general/button'
+
+// ⚠️ 不推荐这种方式（但应该支持）
+// 可能需要额外配置 package.json exports
+```
+
+### 场景 4：类型导入
+
+```typescript
+// 用户代码
+import type { ButtonProps, InputProps } from 'lew-ui'
+
+// ✅ 只导入类型，不会打包任何运行时代码
+const buttonConfig: ButtonProps = {
+  size: 'small',
+  type: 'primary'
+}
+```
+
+### 场景 5：工具函数
+
+```typescript
+// 用户代码
+import { object2class } from 'lew-ui'
+
+// ✅ 只打包 object2class 函数
+const className = object2class('my-component', { active: true })
+```
+
+## 避免副作用
+
+### ✅ 无副作用的代码
+
+```typescript
+// ✅ 纯导出（无副作用）
+export { LewButton } from './components/button'
+export type { ButtonProps } from './components/button'
+
+// ✅ 纯函数（无副作用）
+export function formatDate(date: Date): string {
+  return date.toISOString()
+}
+
+// ✅ 常量（无副作用）
+export const VERSION = '2.7.70'
+```
+
+### ❌ 有副作用的代码
+
+```typescript
+// ❌ 顶层执行代码（有副作用）
+console.log('lew-ui loaded')  // 模块加载时执行
+
+// ❌ 修改全局对象（有副作用）
+window.LewUI = { version: '2.7.70' }
+
+// ❌ 自动注册（有副作用）
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(LewUI)
+}
+
+// ✅ 解决方案：将副作用放在函数中，由用户主动调用
+export function install(app: App) {
+  // 注册逻辑
+}
+```
+
+### CSS 导入
+
+```typescript
+// ❌ 不要在 JS 中直接导入 CSS
+import './styles/index.scss'  // 有副作用
+
+// ✅ 让用户手动导入
+// import 'lew-ui/style'
+```
+
+## 检查清单
+
+导出组件时确认：
+- [ ] 使用 ES Module 格式（`export`）
+- [ ] 组件使用具名导出（`export { LewButton }`）
+- [ ] 类型使用 `export type` 导出
+- [ ] 主入口 `lib/index.ts` 导出所有组件
+- [ ] `package.json` 配置了正确的 `exports`
+- [ ] `package.json` 配置了 `sideEffects`
+- [ ] 没有顶层执行的副作用代码
+- [ ] 生成了类型声明文件（`.d.ts`）
+- [ ] Rollup/Vite 配置了 `external`
+- [ ] 构建产物支持 tree-shaking
+
+验证 Tree-shaking：
+- [ ] 创建测试项目只导入一个组件
+- [ ] 构建测试项目
+- [ ] 检查打包体积（应该很小）
+- [ ] 检查打包内容（不应包含未使用的组件）
+
+## 测试命令
+
+```bash
+# 构建库
+pnpm build:lib
+
+# 分析打包体积
+pnpm analyze
+
+# 检查类型
+pnpm typecheck
+
+# 检查导出
+# 创建测试项目验证按需引入
+```
+
+---
+
+**记住**：正确的导出规范让用户项目更轻量，让组件库更受欢迎！

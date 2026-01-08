@@ -10,7 +10,6 @@ import inputTag from './components/input-tag'
 import radioGroup from './components/radio-group'
 import rate from './components/rate'
 import selectScheme from './components/select'
-import selectMultipleScheme from './components/select-multiple'
 import slider from './components/slider'
 import sliderRange from './components/slider-range'
 import _switch from './components/switch'
@@ -20,7 +19,7 @@ import upload from './components/upload'
 
 export const componentsMenusSchema = [
   {
-    label: '输入框',
+    label: 'Input',
     fieldType: '',
     as: 'input',
     schema: inputScheme,
@@ -31,7 +30,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '文本域',
+    label: 'Textarea',
     fieldType: '',
     as: 'textarea',
     schema: textareaScheme,
@@ -42,7 +41,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '数字输入',
+    label: 'Number Input',
     fieldType: '',
     as: 'input-number',
     schema: inputNumberScheme,
@@ -54,7 +53,7 @@ export const componentsMenusSchema = [
   },
 
   {
-    label: '单选框',
+    label: 'Radio Group',
     fieldType: '',
     as: 'radio-group',
     schema: radioGroup,
@@ -63,25 +62,25 @@ export const componentsMenusSchema = [
       direction: 'x',
       iconable: false,
       options: [
-        { label: '选项 A', value: '1' },
-        { label: '选项 B', value: '2' },
-        { label: '选项 C', value: '3' },
-        { label: '选项 D', value: '4' },
+        { label: 'Option A', value: '1' },
+        { label: 'Option B', value: '2' },
+        { label: 'Option C', value: '3' },
+        { label: 'Option D', value: '4' },
       ],
     },
   },
   {
-    label: '选框',
+    label: 'Checkbox',
     fieldType: false,
     as: 'checkbox',
     schema: checkbox,
     props: {
       iconable: false,
-      label: '我同意服务条款',
+      label: 'I agree to the terms of service',
     },
   },
   {
-    label: '复选框',
+    label: 'Checkbox Group',
     fieldType: [],
     as: 'checkbox-group',
     schema: checkboxGroup,
@@ -89,16 +88,16 @@ export const componentsMenusSchema = [
       iconable: false,
       direction: 'x',
       options: [
-        { label: '选项 A', value: '1' },
-        { label: '选项 B', value: '2' },
-        { label: '选项 C', value: '3' },
-        { label: '选项 D', value: '4' },
+        { label: 'Option A', value: '1' },
+        { label: 'Option B', value: '2' },
+        { label: 'Option C', value: '3' },
+        { label: 'Option D', value: '4' },
       ],
     },
   },
 
   {
-    label: '下拉单选',
+    label: 'Select',
     fieldType: '',
     as: 'select',
     schema: selectScheme,
@@ -108,90 +107,69 @@ export const componentsMenusSchema = [
       align: 'left',
       showCheckIcon: true,
       options: [
-        { label: '选项一', value: '1' },
-        { label: '选项二', value: '2' },
-        { label: '选项三', value: '3' },
-        { label: '选项四', value: '4' },
-        { label: '选项五', value: '5' },
+        { label: 'Option 1', value: '1' },
+        { label: 'Option 2', value: '2' },
+        { label: 'Option 3', value: '3' },
+        { label: 'Option 4', value: '4' },
+        { label: 'Option 5', value: '5' },
       ],
     },
   },
   {
-    field: 'select_multiple',
-    fieldType: [],
-    label: '下拉多选',
-    as: 'select-multiple',
-    schema: selectMultipleScheme,
-    props: {
-      clearable: true,
-      valueTextSplit: '、',
-      trigger: 'click',
-      align: 'left',
-      valueLayout: 'text',
-      showCheckIcon: true,
-      options: [
-        { label: '选项 A', value: '1' },
-        { label: '选项 B', value: '2' },
-        { label: '选项 C', value: '3' },
-        { label: '选项 D', value: '4' },
-      ],
-    },
-  },
-  {
-    label: '级联选择',
+    label: 'Cascader',
     fieldType: '',
     as: 'cascader',
     schema: cascader,
     props: {
       clearable: true,
-      label: '请选择',
+      label: 'Please select',
       free: true,
       trigger: 'click',
       options: [
         {
           value: 1,
-          label: '食品',
+          label: 'Food',
           children: [
             {
               value: 2,
-              label: '水果',
+              label: 'Fruits',
               children: [
-                { value: 3, label: '苹果' },
-                { value: 4, label: '香蕉' },
-                { value: 5, label: '橙子' },
+                { value: 3, label: 'Apple' },
+                { value: 4, label: 'Banana' },
+                { value: 5, label: 'Orange' },
               ],
             },
             {
               value: 6,
-              label: '蔬菜',
+              label: 'Vegetables',
               children: [
-                { value: 7, label: '西红柿' },
-                { value: 8, label: '黄瓜' },
-                { value: 9, label: '胡萝卜' },
+                { value: 7, label: 'Tomato' },
+                { value: 8, label: 'Cucumber' },
+                { value: 9, label: 'Carrot' },
               ],
             },
           ],
         },
         {
           value: 10,
-          label: '饮料',
+          label: 'Drinks',
           children: [
             {
               value: 11,
-              label: '碳酸饮料',
+              label: 'Soda',
               children: [
-                { value: 12, label: '可乐' },
-                { value: 13, label: '雪碧' },
-                { value: 14, label: '芬达' },
+                { value: 12, label: 'Cola' },
+                { value: 13, label: 'Sprite' },
+                { value: 14, label: 'Fanta' },
               ],
             },
             {
               value: 15,
-              label: '果汁',
+              label: 'Juice',
               children: [
-                { value: 16, label: '橙汁' },
-                { value: 17, label: '苹果汁' },
-                { value: 18, label: '葡萄汁' },
+                { value: 16, label: 'Orange Juice' },
+                { value: 17, label: 'Apple Juice' },
+                { value: 18, label: 'Grape Juice' },
               ],
             },
           ],
@@ -200,22 +178,22 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '选项卡',
+    label: 'Tabs',
     fieldType: '',
     as: 'tabs',
     schema: tabsScheme,
     props: {
       options: [
-        { label: '选项一', value: '1' },
-        { label: '选项二', value: '2' },
-        { label: '选项三', value: '3' },
-        { label: '选项四', value: '4' },
+        { label: 'Tab 1', value: '1' },
+        { label: 'Tab 2', value: '2' },
+        { label: 'Tab 3', value: '3' },
+        { label: 'Tab 4', value: '4' },
       ],
       type: 'block',
     },
   },
   {
-    label: '评分',
+    label: 'Rate',
     fieldType: '',
     as: 'rate',
     schema: rate,
@@ -224,7 +202,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '日期',
+    label: 'Date',
     fieldType: '',
     as: 'date-picker',
     schema: datePicker,
@@ -233,7 +211,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '日期范围',
+    label: 'Date Range',
     fieldType: '',
     as: 'date-range-picker',
     schema: datePickerRange,
@@ -242,7 +220,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '标签输入框',
+    label: 'Input Tag',
     fieldType: [],
     as: 'input-tag',
     schema: inputTag,
@@ -251,7 +229,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '开关',
+    label: 'Switch',
     fieldType: false,
     as: 'switch',
     schema: _switch,
@@ -260,7 +238,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '上传',
+    label: 'Upload',
     fieldType: [],
     as: 'upload',
     schema: upload,
@@ -269,7 +247,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '滑块',
+    label: 'Slider',
     fieldType: '',
     as: 'slider',
     schema: slider,
@@ -288,7 +266,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '范围滑块',
+    label: 'Slider Range',
     fieldType: [],
     as: 'slider-range',
     schema: sliderRange,
@@ -307,7 +285,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '颜色选择器',
+    label: 'Color Picker',
     fieldType: '',
     as: 'color-picker',
     schema: colorPicker,
@@ -316,7 +294,7 @@ export const componentsMenusSchema = [
     },
   },
   {
-    label: '占位盒子',
+    label: 'Placeholder Box',
     as: '',
   },
 ]

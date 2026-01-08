@@ -221,16 +221,10 @@ getInitialLocale().then((locale) => {
 <template>
   <lew-flex mode="between" class="Header">
     <lew-flex id="logo" class="logo" x="start" @click="goHome">
-      <img
-        src="../assets/images/logo.png"
-        alt="logo"
-        srcset=""
-        width="30"
-        height="30"
-      >
+      <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30">
       <span style="margin-left: 10px"> Lew UI</span>
       <lew-tag type="light" size="small" style="margin-left: 10px">
-        Beta {{ version }}
+        v{{ version }}
       </lew-tag>
     </lew-flex>
     <lew-flex gap="15px" x="center" class="menu">
@@ -325,10 +319,6 @@ getInitialLocale().then((locale) => {
     .menu-item-icon {
       width: 30px;
       padding: 0px;
-    }
-
-    .menu-item:nth-child(5) {
-      margin-right: 50px;
     }
 
     a:hover,

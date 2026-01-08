@@ -6,8 +6,6 @@ import validators, { validSizeList, validXAlignmentList } from 'lew-ui/validator
 export const inputNumberModel = {
   modelValue: {
     type: Number,
-    default: undefined,
-    description: '输入框的数值',
   },
 }
 
@@ -36,7 +34,6 @@ export const inputNumberProps = {
   },
   disabled: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInputNumber',
       propName: 'disabled',
@@ -62,7 +59,6 @@ export const inputNumberProps = {
   },
   readonly: {
     type: Boolean,
-    default: false,
     validator: validators.boolean({
       componentName: 'LewInputNumber',
       propName: 'readonly',

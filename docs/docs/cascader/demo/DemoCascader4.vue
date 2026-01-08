@@ -15,7 +15,9 @@ function loadMethod(item?: any) {
     // item 不存在的时候 是第一层加载
     axios
       .get({
-        url: `/common/region/${levelMap[_typeKey] || 'province'}/${item ? item.value : 0}`,
+        url: `/common/region/${levelMap[_typeKey] || 'province'}/${
+          item ? item.value : 0
+        }`,
       })
       .then((res: any) => {
         const { data, success } = res
@@ -35,11 +37,11 @@ function loadMethod(item?: any) {
 function change(item: any) {
   console.log(item)
 }
-const v = ref()
+const v = ref('')
 </script>
 
 <template>
   <div style="width: 300px">
-    <lew-cascader v-model="v" free :load-method="loadMethod" @change="change" />
+    <lew-cascader v-model="v" :load-method="loadMethod" @change="change" />
   </div>
 </template>

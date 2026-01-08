@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
 import type { LewUploadFileItem } from 'lew-ui/types'
-import { LewFlex, LewImage, LewTag, LewTextTrim, LewTooltip, locale } from 'lew-ui'
+import { LewFlex, LewImage, LewTag, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import {
   any2px,
@@ -170,14 +170,16 @@ const getStatusText = computed(() => (item: LewUploadFileItem) => {
           </LewFlex>
           <LewFlex mode="between" gap="5px" y="center">
             <LewFlex y="center" x="start" gap="5px">
-              <LewTextTrim
-                :text="getFileName(item)"
+              <div
+                :title="getFileName(item)"
                 :style="{
                   width: `calc(100% - 30px)`,
                   fontSize: `${any2px(fileNameFontSizeMap[size])}`,
                 }"
                 class="lew-upload-file-name"
-              />
+              >
+                {{ getFileName(item) }}
+              </div>
             </LewFlex>
           </LewFlex>
           <LewFlex
@@ -292,6 +294,9 @@ const getStatusText = computed(() => (item: LewUploadFileItem) => {
     .lew-upload-file-name {
       width: 100%;
       color: var(--lew-text-color-2);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .lew-upload-progress {
       position: relative;

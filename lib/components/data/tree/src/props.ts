@@ -64,7 +64,7 @@ export const treeProps = {
   },
   free: {
     type: Boolean,
-    default: true,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewTree',
       propName: 'free',
@@ -123,6 +123,14 @@ export const treeProps = {
     validator: validators.boolean({
       componentName: 'LewTree',
       propName: 'isSelect',
+    }),
+  },
+  onlyLeafSelectable: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewTree',
+      propName: 'onlyLeafSelectable',
     }),
   },
 }

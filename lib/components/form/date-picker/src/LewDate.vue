@@ -54,7 +54,9 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
     const v = `${dateState.year}-${dateState.month}-${item.showDate}`
     if (dateValue.value) {
       const currentDate = dayjs(v)
-      const selectedDate = dayjs(dateValue.value, props.valueFormat)
+      // dateValue.value 在 select 函数中已经被格式化为 YYYY-MM-DD 格式
+      // 所以直接使用 dayjs 解析，不需要指定格式
+      const selectedDate = dayjs(dateValue.value)
       selected = currentDate.isSame(selectedDate, 'day')
     }
   }
@@ -184,8 +186,8 @@ defineExpose({ init, getValue })
         :class="lewDateItemClassNames(item)"
         @click="select(item)"
       >
+        <i v-if="checkToday(item)" class="lew-date-item-today" />
         <div class="lew-date-label">
-          <i v-if="checkToday(item)" class="lew-date-item-today" />
           <div class="lew-date-value">
             {{ item.showDate }}
           </div>
@@ -260,7 +262,7 @@ defineExpose({ init, getValue })
         justify-content: center;
         font-size: 14px;
         width: 100%;
-        height: 24px;
+        height: 28px;
         box-sizing: border-box;
         transition: all 0.1s ease;
 
@@ -268,9 +270,9 @@ defineExpose({ init, getValue })
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 24px;
-          height: 24px;
-          line-height: 24px;
+          width: 28px;
+          height: 28px;
+          line-height: 28px;
           border-radius: 50%;
           transition: all 0.1s ease;
           border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -284,7 +286,7 @@ defineExpose({ init, getValue })
 
     .lew-date-item-unselect {
       pointer-events: none;
-      color: var(--lew-text-color-6);
+      color: var(--lew-text-color-5);
     }
 
     .lew-date-item-today {
@@ -292,19 +294,25 @@ defineExpose({ init, getValue })
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: rgba($color: #19c175, $alpha: 0.8);
+      background: var(--lew-color-success);
       left: 50%;
       transform: translateX(-50%);
-      bottom: 0px;
-      box-shadow: 0px 0px 12px #0e7346;
+      top: 2px;
+      z-index: 10;
+      opacity: 1;
+      border: 1.5px solid var(--lew-bgcolor-0);
+      box-shadow:
+        0px 0px 8px var(--lew-color-success-light),
+        0px 0px 3px rgba(0, 0, 0, 0.15),
+        inset 0px 0px 2px rgba(255, 255, 255, 0.2);
     }
 
     .lew-date-item:hover {
       .lew-date-label {
         .lew-date-value {
-          background-color: var(--lew-color-primary-light);
-          color: var(--lew-color-primary-dark);
-          border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+          background-color: color-mix(in srgb, var(--lew-color-primary-light) 50%, var(--lew-bgcolor-0));
+          color: var(--lew-color-primary);
+          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
       }
     }
@@ -320,9 +328,9 @@ defineExpose({ init, getValue })
     .lew-date-item-selected {
       .lew-date-label {
         .lew-date-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
+          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
       }
     }
@@ -330,9 +338,9 @@ defineExpose({ init, getValue })
     .lew-date-item-selected:active {
       .lew-date-label {
         .lew-date-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          background: var(--lew-color-datepicker-primary-selected-bg-active);
+          color: var(--lew-color-datepicker-primary-selected-text-active);
+          border: var(--lew-form-border-width) var(--lew-color-primary) solid;
         }
       }
     }
@@ -340,9 +348,8 @@ defineExpose({ init, getValue })
     .lew-date-item-selected:hover {
       .lew-date-label {
         .lew-date-value {
-          background: var(--lew-color-primary);
-          color: var(--lew-color-white);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          background: var(--lew-color-datepicker-primary-selected-bg);
+          color: var(--lew-color-datepicker-primary-selected-text);
         }
       }
     }

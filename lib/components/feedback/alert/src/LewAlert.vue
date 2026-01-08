@@ -1,53 +1,51 @@
 <script setup lang="ts">
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { object2class } from 'lew-ui/utils'
-import { computed } from 'vue'
-import { alertEmits } from './emits'
-import { alertProps } from './props'
+// 1. 组件导入
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
 
-const props = defineProps(alertProps)
-const emit = defineEmits(alertEmits)
+// 2. 工具函数导入
+import { object2class } from "lew-ui/utils";
 
-// Computed
+// 3. 组件配置导入
+import { alertProps } from "./props";
+
+// Props & Emits
+const props = defineProps(alertProps);
+
+// Slots 检测
+const slots = useSlots();
+const hasTitle = computed(() => !!slots.title || !!props.title);
+const hasContent = computed(() => !!slots.content || !!props.content);
+const hasFooter = computed(() => !!slots.footer);
+
+// 计算属性
 const alertClassName = computed(() => {
-  const { type } = props
-  return object2class('lew-alert', { type })
-})
-
-// Methods
-function handleClose(): void {
-  emit('close')
-}
+  const { type } = props;
+  return object2class("lew-alert", { type });
+});
 </script>
 
 <template>
   <div class="lew-alert" :class="alertClassName">
     <CommonIcon dark :size="18" :type="props.type" />
     <div class="lew-alert-message">
-      <div v-if="$slots.title" class="lew-alert-title">
-        <slot name="title" />
-      </div>
-      <div v-else-if="props.title" class="lew-alert-title">
-        {{ props.title }}
-      </div>
-
-      <div v-if="$slots.content" class="lew-alert-content">
-        <slot name="content" />
-      </div>
-      <div v-else-if="props.content" class="lew-alert-content">
-        {{ props.content }}
+      <div v-if="hasTitle" class="lew-alert-title">
+        <slot v-if="slots.title" name="title" />
+        <template v-else>
+          {{ props.title }}
+        </template>
       </div>
 
-      <div v-if="$slots.footer" class="lew-alert-footer">
+      <div v-if="hasContent" class="lew-alert-content">
+        <slot v-if="slots.content" name="content" />
+        <template v-else>
+          {{ props.content }}
+        </template>
+      </div>
+
+      <div v-if="hasFooter" class="lew-alert-footer">
         <slot name="footer" />
       </div>
     </div>
-    <CommonIcon
-      v-if="props.closeable"
-      class="lew-form-icon-close lew-alert-close-icon"
-      type="close"
-      @click="handleClose"
-    />
   </div>
 </template>
 
@@ -66,7 +64,7 @@ function handleClose(): void {
   border-radius: var(--lew-border-radius-small);
 
   .lew-alert-message {
-    width: calc(100% - 30px);
+    width: 100%;
     margin-left: 12px;
 
     .lew-alert-title {
@@ -89,36 +87,30 @@ function handleClose(): void {
       margin-top: 8px;
     }
   }
-
-  .lew-alert-close-icon {
-    top: 11px;
-    right: 11px;
-    transform: none;
-  }
 }
 
 .lew-alert-type-normal {
-  color: var(--lew-color-normal-dark);
-  background-color: var(--lew-color-normal-light);
+  color: var(--lew-color-alert-normal-text);
+  background-color: var(--lew-color-alert-normal-bg);
 }
 
 .lew-alert-type-success {
-  color: var(--lew-color-success-dark);
-  background-color: var(--lew-color-success-light);
+  color: var(--lew-color-alert-success-text);
+  background-color: var(--lew-color-alert-success-bg);
 }
 
 .lew-alert-type-warning {
-  color: var(--lew-color-warning-dark);
-  background-color: var(--lew-color-warning-light);
+  color: var(--lew-color-alert-warning-text);
+  background-color: var(--lew-color-alert-warning-bg);
 }
 
 .lew-alert-type-error {
-  color: var(--lew-color-error-dark);
-  background-color: var(--lew-color-error-light);
+  color: var(--lew-color-alert-error-text);
+  background-color: var(--lew-color-alert-error-bg);
 }
 
 .lew-alert-type-info {
-  color: var(--lew-color-info-dark);
-  background-color: var(--lew-color-info-light);
+  color: var(--lew-color-alert-info-text);
+  background-color: var(--lew-color-alert-info-bg);
 }
 </style>

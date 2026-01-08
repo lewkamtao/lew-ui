@@ -55,6 +55,18 @@ export default {
     Fri: 'Ven',
     Sat: 'Sab',
     Sun: 'Dom',
+    Jan: 'Gen',
+    Feb: 'Feb',
+    Mar: 'Mar',
+    Apr: 'Apr',
+    May: 'Mag',
+    Jun: 'Giu',
+    Jul: 'Lug',
+    Aug: 'Ago',
+    Sep: 'Set',
+    Oct: 'Ott',
+    Nov: 'Nov',
+    Dec: 'Dic',
     placeholder: 'Seleziona data',
   },
   dateRangePicker: {
@@ -92,6 +104,9 @@ export default {
     cancelText: 'Annulla',
     okText: 'OK',
   },
+  colorPicker: {
+    placeholder: 'Inserisci',
+  },
   upload: {
     dropActive: 'Rilascia per iniziare il caricamento',
     click: 'Clicca per caricare, ',
@@ -100,9 +115,19 @@ export default {
     accept: 'Supporta il caricamento di {accept}',
     limit: 'È possibile caricare un massimo di {limit} file',
     maxFileSize: 'Ogni file non deve superare {maxFileSize}',
+    pending: 'In attesa',
+    success: 'Caricamento riuscito',
+    fail: 'Caricamento fallito',
+    uploading: 'Caricamento in corso',
+    complete: 'Caricato',
+    wrong_type: 'Formato non valido',
+    wrong_size: 'Dimensione del file supera il limite',
   },
   pagination: {
     pageSize: '{pageSize} per pagina',
     jumpTo: 'Vai a',
+  },
+  empty: {
+    title: 'Nessun dato',
   },
 }

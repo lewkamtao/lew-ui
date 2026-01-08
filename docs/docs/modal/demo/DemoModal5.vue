@@ -136,7 +136,6 @@ function close2() {
   width: 100%;
   padding: 0px;
   box-sizing: border-box;
-  font-family: 'Noto Sans', sans-serif;
 }
 
 .product-container {

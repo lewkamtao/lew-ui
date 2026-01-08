@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { schools } from 'docs/lib/data'
 
-const value = ref([])
+const value = ref()
 
 function initMethod() {
   return new Promise((resolve) => {

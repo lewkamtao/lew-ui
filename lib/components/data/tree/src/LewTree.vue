@@ -1,44 +1,80 @@
 <script setup lang="ts">
 import type { LewTreeDataSource } from 'lew-ui/types'
+import type { TreeContext } from './types'
+import { useDebounceFn } from '@vueuse/core'
 import { LewFlex, LewMessage, locale } from 'lew-ui'
+import { useTreeSelection } from 'lew-ui/hooks'
 import { any2px, numFormat } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { treeEmits } from './emits'
 import LewTreeItem from './LewTreeItem.vue'
 import { treeProps } from './props'
 import transformTree from './transformTree'
+import { TREE_INJECTION_KEY } from './types'
 
 const props = defineProps(treeProps)
 const emit = defineEmits(treeEmits)
-const modelValue = defineModel()
-const expandKeys = defineModel('expandKeys', { required: false, default: [] })
-const _dataSource: any = ref<LewTreeDataSource[]>([])
+const modelValue = defineModel<string | string[]>()
+const expandKeys = defineModel<string[]>('expandKeys', { required: false, default: [] })
+const dataSource = ref<LewTreeDataSource[]>([])
 const loading = ref<boolean>(false)
 const keyword = ref<string>('')
 const lastSearchKeyword = ref<string>('')
-const searchTimer = ref<NodeJS.Timeout | null>(null)
-const DEBOUNCE_TIME = 250
 const cacheDataSource = ref<LewTreeDataSource[]>([])
 
-provide('lew-tree', {
-  modelValue,
-  expandKeys,
+// 使用 useTreeSelection Hook 管理选中和半选状态
+let isInternalUpdate = false // 标记是否为内部更新，避免循环触发
+const {
+  selectedKeys,
+  init: initTreeSelection,
+  isSelected,
+  isIndeterminate,
+  toggleKey,
+  addKey,
+  removeKey,
+  findItemsByValues,
+} = useTreeSelection()
+
+// 创建类型安全的 context
+const treeContext: TreeContext = {
+  // 只读配置
   multiple: props.multiple,
   checkable: props.checkable,
   expandAll: props.expandAll,
   free: props.free,
   showLine: props.showLine,
-  loadMethod: props.loadMethod,
+  onlyLeafSelectable: props.onlyLeafSelectable,
   keyField: props.keyField,
   labelField: props.labelField,
+
+  // 状态 refs
+  modelValue,
+  expandKeys,
+  dataSource,
   cacheDataSource,
-  _dataSource,
-})
+
+  // 方法
+  loadMethod: props.loadMethod,
+
+  // Tree Selection - 只在多选且非 free 模式下提供
+  treeSelection:
+    props.multiple && !props.free
+      ? {
+          isSelected: isSelected.value,
+          isIndeterminate: isIndeterminate.value,
+          toggleKey,
+          addKey,
+          removeKey,
+        }
+      : undefined,
+}
+
+provide(TREE_INJECTION_KEY, treeContext)
 
 const getResultText = computed(() => {
-  return _dataSource.value.length > 0
+  return dataSource.value.length > 0
     ? locale.t('tree.resultCount', {
-        num: numFormat(_dataSource.value.length),
+        num: numFormat(dataSource.value.length),
       })
     : ''
 })
@@ -55,7 +91,14 @@ function renderMenuTreeItem(item: LewTreeDataSource, level: number = 0): any {
       isLeaf: isLeaf !== undefined ? isLeaf : (children || []).length === 0,
       disabled,
       extend: item,
-      onChange: () => emit('change', cloneDeep({ extend: item, key, value: key })),
+      onChange: () => {
+        // 使用 nextTick 确保 modelValue 已更新
+        nextTick(() => {
+          // 在多选模式下发出完整的 modelValue，单选模式发出单个值
+          const value = props.multiple ? modelValue.value : key
+          emit('change', cloneDeep({ extend: item, key, value }))
+        })
+      },
       onExpand: () => emit('expand', cloneDeep({ extend: item, key, value: key })),
     },
     () =>
@@ -65,9 +108,44 @@ function renderMenuTreeItem(item: LewTreeDataSource, level: number = 0): any {
   )
 }
 
+// 更新 modelValue 的函数
+function updateModelValue() {
+  isInternalUpdate = true
+
+  if (!props.multiple) {
+    // 单选模式：直接使用 selectedKeys 的第一个值
+    modelValue.value = selectedKeys.value[0] || undefined
+  }
+  else if (props.onlyLeafSelectable) {
+    // 多选模式 + 只能选择叶子节点：过滤出叶子节点
+    const items = findItemsByValues(selectedKeys.value).filter(
+      (item: any) => item.isLeaf,
+    )
+    modelValue.value = items.map((item: any) => item.key)
+  }
+  else {
+    // 多选模式：使用所有选中的 keys
+    modelValue.value = cloneDeep(selectedKeys.value)
+  }
+
+  nextTick(() => {
+    isInternalUpdate = false
+  })
+}
+
+// 初始化树结构和选中状态
+function initTreeStructure() {
+  if (dataSource.value.length > 0 && props.multiple && !props.free) {
+    const currentKeys
+      = modelValue.value && Array.isArray(modelValue.value) ? modelValue.value : []
+    initTreeSelection({ tree: dataSource.value, keys: currentKeys })
+  }
+}
+
 async function init(searchKeyword = '') {
   if (searchKeyword === '' && cacheDataSource.value.length > 0) {
-    _dataSource.value = cacheDataSource.value
+    dataSource.value = cacheDataSource.value
+    initTreeStructure() // 初始化选中状态
     emit('loadEnd', getResultText.value)
     return
   }
@@ -80,10 +158,10 @@ async function init(searchKeyword = '') {
   // 记录当前搜索的关键词
   lastSearchKeyword.value = searchKeyword
 
-  const { dataSource, initMethod, keyField, labelField, free } = props
+  const { dataSource: propsDataSource, initMethod, keyField, labelField, free } = props
   const { status, result, error } = (await transformTree({
     initMethod,
-    dataSource,
+    dataSource: propsDataSource,
     keyField,
     labelField,
     free,
@@ -97,42 +175,82 @@ async function init(searchKeyword = '') {
   }
 
   if (status === 'success') {
-    _dataSource.value = result
+    dataSource.value = result
     if (searchKeyword === '' && cacheDataSource.value.length === 0) {
       cacheDataSource.value = cloneDeep(result)
     }
+    // 初始化选中状态
+    initTreeStructure()
   }
   else {
     LewMessage.error(error.message)
   }
-  expandKeys.value = cloneDeep(expandKeys.value)
-  modelValue.value = cloneDeep(modelValue.value)
   loading.value = false
   emit('loadEnd', getResultText.value)
 }
 
 function reset() {
-  _dataSource.value = cloneDeep(cacheDataSource.value)
+  // 重置数据源
+  dataSource.value = cloneDeep(cacheDataSource.value)
+
+  // 重置选中状态
+  if (props.multiple && !props.free) {
+    initTreeSelection({ keys: [] })
+  }
+  else {
+    modelValue.value = props.multiple ? [] : undefined
+  }
+
+  // 重置搜索关键词
+  keyword.value = ''
+  lastSearchKeyword.value = ''
+
   emit('loadEnd', getResultText.value)
 }
 
-function search(keyword: string) {
-  // 清除之前的定时器
-  if (searchTimer.value !== null) {
-    clearTimeout(searchTimer.value)
-  }
+// 使用 useDebounceFn 进行防抖搜索
+const search = useDebounceFn((keyword: string) => {
+  init(keyword)
+}, 250)
 
-  // 设置新的定时器
-  searchTimer.value = setTimeout(() => {
-    init(keyword)
-    searchTimer.value = null
-  }, DEBOUNCE_TIME)
-}
+// 监听 selectedKeys 变化，同步到 modelValue
+// 注意：数组的变化会自动触发 watch，不需要 deep: true
+watch(selectedKeys, () => {
+  if (!isInternalUpdate && props.multiple && !props.free) {
+    updateModelValue()
+  }
+})
+
+// 监听外部 modelValue 变化，同步到 Hook
+watch(
+  () => modelValue.value,
+  (newValue) => {
+    if (isInternalUpdate) {
+      return
+    }
+    if (props.multiple && !props.free && dataSource.value.length > 0) {
+      const keys = Array.isArray(newValue) ? newValue : []
+      initTreeSelection({ keys })
+    }
+  },
+  { immediate: false, deep: true },
+)
+
+// 监听 multiple 变化，确保多选模式下 modelValue 始终是数组
+watch(
+  () => props.multiple,
+  (isMultiple) => {
+    if (isMultiple && !Array.isArray(modelValue.value)) {
+      modelValue.value = modelValue.value ? [modelValue.value as string] : []
+    }
+  },
+  { immediate: true },
+)
 
 defineExpose({
   search,
   reset,
-  getTree: () => _dataSource.value,
+  getTree: () => dataSource.value,
 })
 
 onMounted(() => {
@@ -163,7 +281,7 @@ onMounted(() => {
         {{ getResultText }}
       </div>
     </LewFlex>
-    <template v-if="_dataSource && _dataSource.length === 0">
+    <template v-if="dataSource && dataSource.length === 0">
       <slot v-if="$slots.empty" name="empty" />
       <LewFlex v-else direction="y" x="center" class="lew-not-found">
         <lew-empty :title="locale.t('tree.noResult')" />
@@ -178,7 +296,7 @@ onMounted(() => {
       :class="{ 'lew-tree-line': showLine }"
       :style="{ height: any2px(height) }"
     >
-      <template v-for="item in _dataSource" :key="item.key">
+      <template v-for="item in dataSource" :key="item.key">
         <component :is="renderMenuTreeItem(item)" />
       </template>
     </LewFlex>
@@ -189,10 +307,9 @@ onMounted(() => {
 .lew-tree {
   width: 100%;
   box-sizing: border-box;
-  transition: width 0.2s;
-  box-sizing: border-box;
   overflow-y: auto;
   padding-right: 5px;
+  transition: width 0.2s;
 }
 
 .lew-result-count {

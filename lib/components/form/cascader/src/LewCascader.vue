@@ -1,58 +1,86 @@
 <script setup lang="ts">
 import type { LewCascaderOption } from 'lew-ui/types'
-import {
-  LewButton,
-  LewCheckbox,
-  LewFlex,
-  LewPopover,
-  LewTextTrim,
-  LewTooltip,
-  locale,
-} from 'lew-ui'
+import type { CascaderNodeCache } from './cascader'
+import { LewCheckbox, LewPopover, LewTooltip } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import CommonInput from 'lew-ui/_components/CommonInput.vue'
+import { useTreeSelection } from 'lew-ui/hooks'
 import { any2px, object2class } from 'lew-ui/utils'
-import { cloneDeep, isFunction } from 'lodash-es'
+import { cloneDeep, isEqual, isFunction } from 'lodash-es'
 import { VirtList } from 'vue-virt-list'
+import {
+  createCascaderCache,
+  findAndAddChildrenByValue,
+  findChildrenByValue,
+  findObjectByValue,
+  formatTree,
+} from './cascader'
 import { cascaderEmits } from './emits'
 import { cascaderProps } from './props'
 
+// Props and Emits
 const props = defineProps(cascaderProps)
 
 const emit = defineEmits(cascaderEmits)
 
-const cascaderValue: Ref<string | undefined> = defineModel({ required: true })
-
-// 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+// Constants
+const VIRT_LIST_STYLE = {
+  padding: '6px 6px 2px 6px',
+  boxSizing: 'border-box' as const,
 }
 
-// Refs
-const lewCascaderRef = ref()
+const ITEM_HEIGHT = 34
+
+// 虚拟列表启用阈值，超过此数量时启用虚拟滚动以优化性能
+const VIRTUAL_LIST_THRESHOLD = 30
+
+const modelValue = defineModel<string | string[] | undefined>()
+
+// Template refs
 const lewPopoverRef = ref()
 
-// Reactive状态
-const state = reactive({
+// State interface
+interface State {
+  visible: boolean
+  loading: boolean
+  initLoading: boolean
+  okLoading: boolean
+  backupValue: string | string[] | undefined
+  optionsGroup: LewCascaderOption[][]
+  optionsTree: LewCascaderOption[]
+  activeValues: string[]
+}
+
+// Reactive state
+const state = reactive<State>({
   visible: false,
   loading: false,
   initLoading: true,
   okLoading: false,
-  optionsGroup: [] as LewCascaderOption[][], // 分组
-  optionsTree: [] as any, // 树
-  activeLabels: [] as string[], // 激活
-  tobeLabels: [] as string[], // 待确认
-  tobeItem: {} as LewCascaderOption,
-  keyword: '',
+  backupValue: undefined,
+  optionsGroup: [],
+  optionsTree: [],
+  activeValues: [],
 })
 
-// 创建一个对象来存储已加载的数据
+// Cache
+const loadedDataCache = new Map<string, LewCascaderOption[]>()
+const nodeCache: CascaderNodeCache = createCascaderCache()
 const loadedData = reactive<Record<string, LewCascaderOption[]>>({})
 
-// Inject
+// Form methods injection
 const formMethods: any = inject('formMethods', {})
 
-// Computed属性
+// Internal update flag
+let isInternalUpdate = false
+
+// Computed properties
+
+// 预计算每列是否启用虚拟列表，避免模板中重复计算
+const useVirtualListMap = computed(() =>
+  state.optionsGroup.map(options => options.length > VIRTUAL_LIST_THRESHOLD),
+)
+
 const _loadMethod = computed(() => {
   if (isFunction(props.loadMethod)) {
     return props.loadMethod
@@ -73,425 +101,455 @@ const _initMethod = computed(() => {
   return false
 })
 
-// 函数定义
-// 格式化 获取 path
-function formatTree(
-  tree: LewCascaderOption[],
-  parentValuePaths: string[] = [],
-  parentLabelPaths: string[] = [],
-): LewCascaderOption[] {
-  return tree.map((node: LewCascaderOption) => {
-    const { value, label, children = [] } = node
-    const valuePaths: string[] = [...parentValuePaths, value]
-    const labelPaths: string[] = [...parentLabelPaths, label]
-    const level = valuePaths.length - 1
-    const _node = {
-      ...node,
-      valuePaths,
-      labelPaths,
-      level,
-      parentValuePaths,
-      parentLabelPaths,
-    }
-    if ((children || []).length > 0) {
-      return {
-        ..._node,
-        children: formatTree(children, valuePaths, labelPaths),
-      }
-    }
-    return _node
-  }) as LewCascaderOption[]
-}
-
-// 通过值获取对象
-function findObjectByValue(treeList: LewCascaderOption[], value: string) {
-  for (let i = 0; i < treeList.length; i++) {
-    const tree = treeList[i]
-    if (tree.value === value) {
-      return tree
-    }
-    if (tree.children) {
-      const foundObject: LewCascaderOption = findObjectByValue(
-        tree.children,
-        value,
-      ) as LewCascaderOption
-      if (foundObject) {
-        return foundObject
-      }
-    }
-  }
-  return null
-}
-// 通过值添加子集
-function findAndAddChildrenByValue(
-  tree: LewCascaderOption[],
-  value: string,
-  children: LewCascaderOption[],
-): LewCascaderOption[] {
-  for (const node of tree) {
-    if (node.value === value) {
-      if (!node.children) {
-        node.children = []
-      }
-      node.children = children
-      return tree
-    }
-    if (node.children && node.children.length > 0) {
-      const result = findAndAddChildrenByValue(node.children, value, children)
-      if (result && result.length > 0) {
-        return tree
-      }
-    }
-  }
-  return []
-}
-// 通过值查找子集
-function findChildrenByValue(
-  tree: LewCascaderOption[],
-  value: string,
-): LewCascaderOption[] {
-  for (const node of tree) {
-    if (node.value === value) {
-      return node.children || []
-    }
-
-    if (node.children && node.children.length > 0) {
-      const result = findChildrenByValue(node.children, value)
-      if (result && result.length > 0) {
-        return result
-      }
-    }
-  }
-
-  return []
-}
-
-// 初始化
-async function init() {
-  let _tree: LewCascaderOption[] = []
-
-  // 如果有初始化方法，优先使用
-  if (_initMethod.value) {
-    try {
-      const newOptions = await _initMethod.value()
-      _tree = newOptions || []
-    }
-    catch (error) {
-      console.error('[LewCascader] initMethod failed', error)
-      _tree = []
-    }
-  }
-  else if (_loadMethod.value && !state.loading) {
-    state.loading = true
-    _tree = (await _loadMethod.value()) || []
-    state.loading = false
-  }
-  else if (props.options && props.options.length > 0) {
-    _tree
-      = ((props.options
-        && props.options.map((e: LewCascaderOption) => {
-          return {
-            ...e,
-            isLeaf: !e.children || (e.children && e.children.length === 0), // 没有孩子
-          }
-        })) as LewCascaderOption[]) || []
-  }
-  const __tree: LewCascaderOption[] = formatTree(_tree)
-  state.optionsGroup = [__tree]
-  state.optionsTree = __tree
-  state.initLoading = false
-}
-
-init()
-
-// 监听 options 变化
-watch(
-  () => props.options,
-  (newOptions) => {
-    if (!_initMethod.value) {
-      // 只有在没有使用 initMethod 时才响应 options 的变化
-      const _tree
-        = ((newOptions
-          && newOptions.map((e: LewCascaderOption) => {
-            return {
-              ...e,
-              isLeaf: !e.children || (e.children && e.children.length === 0),
-            }
-          })) as LewCascaderOption[]) || []
-      const __tree: LewCascaderOption[] = formatTree(_tree)
-      state.optionsGroup = [__tree]
-      state.optionsTree = __tree
-    }
-  },
-  {
-    deep: true,
-  },
-)
-
-const virtListRefs = ref<any[]>([])
-
-// 选择
-async function selectItem(item: LewCascaderOption, level: number) {
-  if (!item.isLeaf && item.labelPaths !== state.activeLabels) {
-    state.optionsGroup = state.optionsGroup.slice(0, level + 1)
-    if (_loadMethod.value && !item.isLeaf) {
-      if (loadedData[item.value]) {
-        // 如果数据已经加载过，直接使用缓存的数据
-        const _options = loadedData[item.value]
-        state.optionsGroup.push(_options)
-      }
-      else {
-        item.loading = true
-        state.okLoading = true
-        const new_options
-          = (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
-        const _tree = findAndAddChildrenByValue(
-          cloneDeep(state.optionsTree),
-          cloneDeep(item.value),
-          new_options,
-        )
-        state.optionsTree = formatTree(_tree)
-        const _options = findChildrenByValue(state.optionsTree, item.value)
-        state.optionsGroup.push(_options)
-        // 将新加载的数据存储到对象中
-        loadedData[item.value] = _options
-        item.loading = false
-        state.okLoading = false
-      }
-    }
-    else if (!item.isLeaf) {
-      const _options
-        = (item.children
-          && item.children.map((e) => {
-            return {
-              ...e,
-              isLeaf: !e.children || (e.children && e.children.length === 0), // 没有孩子
-            }
-          }))
-          || []
-      state.optionsGroup.push(_options)
-    }
-  }
-  if (item.labelPaths === state.activeLabels) {
-    state.activeLabels = item.parentLabelPaths as string[]
-    if (level < state.optionsGroup.length - 1) {
-      state.optionsGroup.pop()
-    }
-  }
-  else {
-    state.activeLabels = item.labelPaths as string[]
-  }
-  state.tobeItem = { ...item, children: undefined }
-  if (props.free) {
-    checkItem(item)
-  }
-  else if (item.isLeaf) {
-    checkItem(item)
-    ok()
-  }
-}
-
-// 检查Item
-function checkItem(item: LewCascaderOption) {
-  if (props.showAllLevels) {
-    if (state.tobeLabels === item.labelPaths) {
-      state.tobeLabels = item.parentLabelPaths as string[]
-    }
-    else {
-      state.tobeLabels = item.labelPaths as string[]
-    }
-  }
-  else if (state.tobeLabels[0] === (item.label as string)) {
-    state.tobeLabels = [] as string[]
-  }
-  else {
-    state.tobeLabels = [item.label] as any
-  }
-}
-
-async function show() {
-  lewPopoverRef.value.show()
-}
-
-function hide() {
-  lewPopoverRef.value.hide()
-}
-
-function clearHandle() {
-  cascaderValue.value = undefined as any
-  state.tobeLabels = []
-  state.activeLabels = []
-  hide()
-  init()
-  emit('clear')
-  emit('change', undefined)
-}
-
-const getValueStyle = computed(() => {
-  const { size } = props
-
-  const widthMap = {
-    small: 'calc(100% - 24px)',
-    medium: 'calc(100% - 24px)',
-    large: 'calc(100% - 24px)',
-  }
-  return {
-    width: widthMap[size],
-    padding: `var(--lew-form-input-padding-${size})`,
-    fontSize: `var(--lew-form-font-size-${size})`,
-    lineHeight: `calc(var(--lew-form-item-height-${size}) - (var(--lew-form-border-width) * 2))`,
-    opacity: state.visible ? 0.4 : 1,
-  }
-})
-
-// 展示
-function showHandle() {
-  state.visible = true
-}
-
-// 隐藏
-function hideHandle() {
-  state.visible = false
-}
-
-// 数据相关的计算属性
-const getLabel = computed(() => {
-  const item = findObjectByValue(state.optionsTree, cascaderValue.value as string)
-  return item?.labelPaths || []
-})
-
-const getDisplayText = computed(() => {
-  if (!getLabel.value || getLabel.value.length === 0) {
-    return props.placeholder ? props.placeholder : locale.t('cascader.placeholder')
-  }
-
-  if (props.showAllLevels) {
-    return getLabel.value.join(' / ')
-  }
-  else {
-    return getLabel.value[getLabel.value.length - 1]
-  }
-})
-
-// 显示控制的计算属性
-const shouldShowValue = computed(() => getLabel.value && getLabel.value.length > 0)
-const shouldShowPlaceholder = computed(
-  () => !getLabel.value || (getLabel.value && getLabel.value.length === 0),
-)
-const shouldShowClearIcon = computed(
-  () => props.clearable && getLabel.value && getLabel.value.length > 0 && !props.readonly,
-)
-const shouldShowSelectIcon = computed(
-  () => !(props.clearable && getLabel.value && getLabel.value.length > 0),
-)
-
-// 样式相关的计算属性
 const getCascaderWidth = computed(() => {
-  const _hasChildOptions = state.optionsGroup.filter(e => e && e.length > 0).length
-  if (_hasChildOptions > 1) {
-    return _hasChildOptions * 200
-  }
-  return _hasChildOptions * 200
-})
-
-const getCascaderStyle = computed(() => {
-  const { size } = props
-  return {
-    height: `var(--lew-form-item-height-${size})`,
-  }
+  const validGroups = state.optionsGroup.filter(group => group?.length > 0).length
+  return Math.max(validGroups, 1) * 200
 })
 
 const getCascaderBodyStyle = computed(() => ({
   width: `${getCascaderWidth.value}px`,
 }))
 
-const getOptionsBoxStyle = computed(() => ({
-  height: props.free ? 'calc(100% - 48px)' : '100%',
-}))
-
-const getVirtListStyle = computed(() => ({
-  padding: '6px 6px 2px 6px',
-  boxSizing: 'border-box',
-}))
-
-const getItemPaddingStyle = computed(() => ({
-  height: '38px',
-}))
-
-const getLabelClass = computed(() => ({
-  'lew-cascader-label-free': props.free,
-}))
-
-const getCascaderClassName = computed(() => {
-  let { clearable, disabled, readonly } = props
-  clearable = clearable ? !!cascaderValue.value : false
-  const focus = state.visible
-
-  return object2class('lew-cascader', {
-    clearable,
-    disabled,
-    readonly,
-    focus,
-    'init-loading': state.initLoading,
-  })
-})
-
 const getBodyClassName = computed(() => {
   const { size, disabled } = props
   return object2class('lew-cascader-body', { size, disabled })
 })
 
-// 获取图标大小
-const getIconSize = computed(() => {
-  const size: Record<string, number> = {
-    small: 14,
-    medium: 15,
-    large: 16,
+const formatItems = computed(() => {
+  if (!modelValue.value) {
+    return props.multiple ? [] : ''
   }
-  return size[props.size]
+
+  if (!props.multiple && modelValue.value) {
+    const result = findObjectByValue(
+      state.optionsTree,
+      modelValue.value as string,
+      nodeCache,
+    )
+    if (!result) {
+      return ''
+    }
+    const { label, labelPaths }: any = result
+    return props.showAllLevels ? labelPaths.join(' / ') : label
+  }
+
+  if (!modelValue.value || !Array.isArray(modelValue.value)) {
+    return []
+  }
+
+  return modelValue.value.map((value: string) => {
+    const result = findObjectByValue(state.optionsTree, value, nodeCache)
+    if (!result) {
+      return {
+        value,
+        label: value,
+      }
+    }
+    const { label, labelPaths }: any = result
+    return {
+      value,
+      label: props.multiple ? label : labelPaths.join(' / '),
+    }
+  })
 })
 
-// 样式函数
+// Tree Selection Hook
+const {
+  selectedKeys,
+  init: initTreeSelection,
+  isSelected,
+  isIndeterminate,
+  removeKey,
+  toggleKey,
+  findItemsByValues,
+} = useTreeSelection()
+
+// Methods
+function updateTreeStructure() {
+  if (state.optionsTree.length > 0 && !props.free) {
+    const currentKeys
+      = modelValue.value && Array.isArray(modelValue.value) ? modelValue.value : []
+    initTreeSelection({ tree: state.optionsTree, keys: currentKeys })
+  }
+}
+
+function updateModelValue() {
+  isInternalUpdate = true
+  let _value: string | string[] | undefined
+  let _items: LewCascaderOption | LewCascaderOption[] | undefined
+
+  if (props.onlyLeafSelectable) {
+    const foundItems = findItemsByValues(selectedKeys.value).filter(
+      item => item.isLeaf,
+    )
+    _value = foundItems.map(item => item.key)
+    _items = foundItems.map((item) => {
+      const node = findObjectByValue(state.optionsTree, item.key, nodeCache)
+      return (
+        node || ({ value: item.key, label: item.key, isLeaf: true } as LewCascaderOption)
+      )
+    })
+  }
+  else {
+    _value = cloneDeep(selectedKeys.value)
+    const foundItems = findItemsByValues(selectedKeys.value)
+    _items = foundItems.map((item) => {
+      const node = findObjectByValue(state.optionsTree, item.key, nodeCache)
+      return (
+        node
+        || ({ value: item.key, label: item.key, isLeaf: item.isLeaf } as LewCascaderOption)
+      )
+    })
+  }
+  modelValue.value = _value
+  emit('change', _value, props.multiple ? _items : (_items as LewCascaderOption[])?.[0])
+
+  nextTick(() => {
+    isInternalUpdate = false
+  })
+}
+
 function getItemClass(templateProps: any) {
+  const isSelected
+    = (Array.isArray(modelValue.value) && modelValue.value.includes(templateProps.value))
+      || modelValue.value === templateProps.value
   return {
     'lew-cascader-item-disabled': templateProps.disabled,
-    'lew-cascader-item-hover': state.activeLabels.includes(templateProps.label),
-    'lew-cascader-item-active': props.free
-      ? state.activeLabels.includes(templateProps.label)
-      && state.tobeLabels.includes(templateProps.label)
-      : state.activeLabels.includes(templateProps.label),
-    'lew-cascader-item-tobe': state.tobeLabels.includes(templateProps.label),
-    'lew-cascader-item-selected':
-      getLabel.value
-      && getLabel.value.includes(templateProps.label)
-      && state.tobeLabels.includes(templateProps.label),
+    'lew-cascader-item-active':
+      state.activeValues?.includes(templateProps.value) || isSelected,
+    'lew-cascader-item-selected': isSelected,
   }
 }
 
 function getItemWrapperStyle(oIndex: number, oItem: any) {
-  return {
+  const style = {
     zIndex: 20 - oIndex,
     borderRadius: `0 ${
       oIndex === state.optionsGroup.length - 1 ? 'var(--lew-border-radius-small)' : '0'
     } 0 0`,
     transform: oItem.length > 0 ? `translateX(${200 * oIndex}px)` : '',
   }
+  return style
 }
 
-function ok() {
-  const item = findObjectByValue(state.optionsTree, state.tobeItem.value)
-  cascaderValue.value = state.tobeItem.value
-  emit('change', cloneDeep(item))
-  setTimeout(() => {
-    hide()
-  }, 100)
+async function init() {
+  let _tree: LewCascaderOption[] = []
+  try {
+    if (_initMethod.value) {
+      const newOptions = await _initMethod.value()
+      _tree = newOptions || []
+    }
+    else if (_loadMethod.value && !state.loading) {
+      state.loading = true
+      _tree = (await _loadMethod.value()) || []
+      state.loading = false
+    }
+    else if (props.options?.length) {
+      _tree = props.options.map((e: LewCascaderOption) => ({
+        ...e,
+        isLeaf: !e.children?.length,
+      }))
+    }
+    nodeCache.clear()
+    loadedDataCache.clear()
+    const formattedTree = formatTree(_tree)
+    state.optionsGroup = [formattedTree]
+    state.optionsTree = formattedTree
+
+    if (formattedTree.length > 0 && !props.free) {
+      initTreeSelection({
+        tree: formattedTree,
+        keys: modelValue.value as string[],
+      })
+    }
+  }
+  catch (error) {
+    console.error('[LewCascader] Initialization failed:', error)
+    state.optionsGroup = []
+    state.optionsTree = []
+  }
+  finally {
+    state.initLoading = false
+    state.loading = false
+  }
 }
 
-function close() {
-  hide()
+function changeCheck(item: LewCascaderOption) {
+  if (item.disabled) {
+    return
+  }
+
+  const itemValue = item.value
+  if (props.free) {
+    let _value: string[] | undefined = modelValue.value as string[] | undefined
+    const isSelected = modelValue.value?.includes(itemValue)
+    if (isSelected) {
+      _value = ((modelValue.value as string[]) || []).filter(
+        (value: string) => value !== itemValue,
+      )
+    }
+    else {
+      _value = [...(modelValue.value || []), itemValue]
+    }
+    const foundItems = findItemsByValues(_value)
+    const _items = foundItems.map((foundItem) => {
+      const node = findObjectByValue(state.optionsTree, foundItem.key, nodeCache)
+      return (
+        node
+        || ({
+          value: foundItem.key,
+          label: foundItem.key,
+          isLeaf: foundItem.isLeaf,
+        } as LewCascaderOption)
+      )
+    })
+
+    modelValue.value = _value
+    emit('change', _value, _items)
+  }
+  else {
+    toggleKey(itemValue)
+    updateModelValue()
+  }
+  nextTick(() => {
+    if (lewPopoverRef.value) {
+      lewPopoverRef.value.refresh()
+    }
+  })
 }
 
-defineExpose({ show, hide })
+function getSelected() {
+  if (props.multiple) {
+    return findItemsByValues(modelValue.value as string[])
+  }
+  else {
+    return findObjectByValue(state.optionsTree, modelValue.value as string, nodeCache)
+  }
+}
+
+async function selectItem(item: LewCascaderOption, level: number) {
+  if (item.disabled)
+    return
+  if (!item.isLeaf && !isEqual(item.valuePaths, state.activeValues)) {
+    state.optionsGroup = state.optionsGroup.slice(0, level + 1)
+    if (_loadMethod.value && !item.isLeaf) {
+      if (loadedDataCache.has(item.value)) {
+        const _options = loadedDataCache.get(item.value)!
+        state.optionsGroup.push(_options)
+      }
+      else if (loadedData[item.value]) {
+        const _options = loadedData[item.value]
+        state.optionsGroup.push(_options)
+        loadedDataCache.set(item.value, _options)
+      }
+      else {
+        item.loading = true
+        state.okLoading = true
+        const loadParam = {
+          value: item.value,
+          label: item.label,
+          level,
+        }
+        const new_options = (await _loadMethod.value(loadParam)) || []
+        const formattedNewOptions = formatTree(
+          new_options,
+          item.valuePaths,
+          item.labelPaths,
+        )
+        findAndAddChildrenByValue(
+          state.optionsTree,
+          item.value,
+          formattedNewOptions,
+          nodeCache,
+        )
+
+        if (!props.free) {
+          updateTreeStructure()
+          nextTick(() => {
+            updateModelValue()
+          })
+        }
+
+        const _options = findChildrenByValue(state.optionsTree, item.value, nodeCache)
+        state.optionsGroup.push(_options)
+        loadedDataCache.set(item.value, _options)
+        loadedData[item.value] = _options
+        item.loading = false
+        state.okLoading = false
+      }
+    }
+    else if (!item.isLeaf && item.children) {
+      const _options = item.children.map(e => ({
+        ...e,
+        isLeaf: !e.children?.length,
+      }))
+      state.optionsGroup.push(_options)
+    }
+  }
+
+  if (!props.multiple) {
+    modelValue.value = item.value
+
+    emit('change', item.value, toRaw(item))
+
+    if (props.onlyLeafSelectable && item.isLeaf) {
+      nextTick(() => {
+        hide()
+      })
+    }
+  }
+
+  if (item.isLeaf)
+    return
+
+  if (isEqual(item.valuePaths, state.activeValues)) {
+    state.activeValues = (item.parentValuePaths as string[]) || []
+    if (level < state.optionsGroup.length - 1) {
+      state.optionsGroup.pop()
+    }
+  }
+  else {
+    state.activeValues = (item.valuePaths as string[]) || []
+  }
+}
+
+function clearHandle() {
+  Object.assign(state, {
+    activeValues: [],
+    visible: false,
+  })
+
+  initTreeSelection({ keys: [] })
+
+  isInternalUpdate = true
+  modelValue.value = undefined
+  emit('change', undefined, undefined)
+  emit('clear')
+
+  nextTick(() => {
+    isInternalUpdate = false
+  })
+}
+
+function deleteTag(value: string) {
+  removeKey(value)
+  updateModelValue()
+  emit('delete', modelValue.value as string[], value)
+}
+
+function showHandle() {
+  state.backupValue = modelValue.value
+  state.visible = true
+}
+
+function hideHandle() {
+  if (props.onlyLeafSelectable && modelValue.value && !props.multiple) {
+    const selectedNodes = findObjectByValue(
+      state.optionsTree,
+      modelValue.value as string,
+      nodeCache,
+    )
+    if (!selectedNodes) {
+      modelValue.value = state.backupValue
+      return
+    }
+    const isLeaf = selectedNodes.isLeaf
+    if (!isLeaf) {
+      modelValue.value = state.backupValue
+      return
+    }
+  }
+  state.visible = false
+}
+
+async function show() {
+  try {
+    await lewPopoverRef.value?.show()
+  }
+  catch (error) {
+    console.warn('[LewCascader] Failed to show cascader popover:', error)
+  }
+}
+
+function hide() {
+  try {
+    lewPopoverRef.value?.hide()
+  }
+  catch (error) {
+    console.warn('[LewCascader] Failed to hide cascader popover:', error)
+  }
+}
+
+// Watchers
+watch(
+  () => props.options,
+  (newOptions) => {
+    if (!_initMethod.value && newOptions?.length) {
+      const _tree = newOptions.map((e: LewCascaderOption) => ({
+        ...e,
+        isLeaf: !e.children?.length,
+      }))
+      nodeCache.clear()
+      loadedDataCache.clear()
+      const formattedTree = formatTree(_tree)
+      state.optionsGroup = [formattedTree]
+      state.optionsTree = formattedTree
+
+      if (formattedTree.length > 0) {
+        if (
+          modelValue.value
+          && Array.isArray(modelValue.value)
+          && modelValue.value.length > 0
+          && !props.free
+        ) {
+          initTreeSelection({ tree: formattedTree, keys: modelValue.value })
+        }
+      }
+    }
+  },
+  {
+    deep: true,
+    flush: 'post',
+  },
+)
+
+watch(
+  () => modelValue.value,
+  (newValue) => {
+    if (isInternalUpdate) {
+      return
+    }
+    if (newValue && Array.isArray(newValue) && !props.free) {
+      initTreeSelection({ keys: newValue })
+    }
+  },
+  {
+    immediate: false,
+    deep: false,
+  },
+)
+
+// Lifecycle
+onBeforeUnmount(() => {
+  nodeCache.clear()
+  loadedDataCache.clear()
+})
+
+// Global app configuration
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
+}
+
+// Initialize
+init()
+
+// Expose methods
+defineExpose({
+  show,
+  hide,
+  getSelected,
+})
 </script>
 
 <template>
@@ -508,49 +566,21 @@ defineExpose({ show, hide })
     @hide="hideHandle"
   >
     <template #trigger>
-      <div
-        ref="lewCascaderRef"
-        class="lew-cascader"
-        :class="getCascaderClassName"
-        :style="getCascaderStyle"
-      >
-        <div v-if="state.initLoading" class="lew-icon-loading-box">
-          <CommonIcon :size="getIconSize" :loading="state.initLoading" type="loading" />
-        </div>
-
-        <transition v-else name="lew-form-icon-ani">
-          <CommonIcon
-            v-if="shouldShowSelectIcon"
-            :size="getIconSize"
-            type="chevron-down"
-            class="icon-select"
-          />
-        </transition>
-
-        <transition name="lew-form-icon-ani">
-          <CommonIcon
-            v-if="shouldShowClearIcon"
-            :size="getIconSize"
-            type="close"
-            class="lew-form-icon-close"
-            :class="{
-              'lew-form-icon-close-focus': state.visible,
-            }"
-            @click.stop="clearHandle"
-          />
-        </transition>
-
-        <div v-show="shouldShowValue" class="lew-cascader-value" :style="getValueStyle">
-          <LewTextTrim :text="getDisplayText" />
-        </div>
-        <div
-          v-show="shouldShowPlaceholder"
-          class="lew-cascader-placeholder"
-          :style="getValueStyle"
-        >
-          {{ getDisplayText }}
-        </div>
-      </div>
+      <CommonInput
+        v-model="modelValue"
+        :multiple
+        :loading="state.initLoading"
+        :clearable="clearable"
+        :readonly
+        :disabled="disabled || state.initLoading"
+        :size
+        :placeholder
+        :width="any2px(width)"
+        :focus="state.visible"
+        :format-items
+        @clear="clearHandle"
+        @delete="deleteTag"
+      />
     </template>
     <template #popover-body>
       <div
@@ -560,75 +590,109 @@ defineExpose({ show, hide })
       >
         <slot name="header" />
         <transition name="fade">
-          <div
-            v-if="state.optionsGroup.length > 0"
-            class="lew-cascader-options-box"
-            :style="getOptionsBoxStyle"
-          >
+          <div v-if="state.optionsGroup.length > 0" class="lew-cascader-options-box">
             <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
               <div
                 class="lew-cascader-item-wrapper"
                 :style="getItemWrapperStyle(oIndex, oItem)"
               >
                 <VirtList
-                  :key="oItem[0]?.parentValuePaths?.join('-') || 'root'"
-                  :ref="(el: any) => (virtListRefs[oIndex] = el)
-                  "
+                  v-if="useVirtualListMap[oIndex]"
+                  :key="oItem?.[0]?.parentValuePaths?.join('-') || 'root'"
                   class="lew-scrollbar-hover"
                   :list="oItem"
-                  :min-size="38"
+                  :min-size="ITEM_HEIGHT"
                   :buffer="5"
                   item-key="value"
-                  :style="getVirtListStyle"
+                  :style="VIRT_LIST_STYLE"
                 >
                   <template #default="{ itemData: templateProps }">
-                    <div class="lew-cascader-item-padding" :style="getItemPaddingStyle">
-                      <div
-                        class="lew-cascader-item"
-                        :class="getItemClass(templateProps)"
-                        @click="selectItem(templateProps, oIndex)"
-                      >
-                        <LewCheckbox
-                          v-if="free"
-                          class="lew-cascader-checkbox"
-                          :checked="state.tobeLabels.includes(templateProps.label)"
-                        />
-                        <LewTextTrim
-                          class="lew-cascader-label"
-                          :class="getLabelClass"
-                          :text="templateProps.label"
-                          :delay="[500, 0]"
-                        />
-                        <CommonIcon
-                          v-if="templateProps.loading"
-                          :size="14"
-                          loading
-                          class="lew-cascader-loading-icon"
-                          type="loader"
-                        />
-                        <CommonIcon
-                          v-else-if="!templateProps.isLeaf"
-                          :size="16"
-                          class="lew-cascader-icon"
-                          type="chevron-right"
-                        />
+                    <div
+                      class="lew-cascader-item"
+                      :class="getItemClass(templateProps)"
+                      :style="{ height: `${ITEM_HEIGHT}px` }"
+                      @click="selectItem(templateProps, oIndex)"
+                    >
+                      <LewCheckbox
+                        v-if="props.multiple"
+                        :key="templateProps.value"
+                        class="lew-cascader-checkbox"
+                        :checked="
+                          props.free
+                            ? modelValue?.includes(templateProps.value)
+                            : isSelected(templateProps.value)
+                        "
+                        :certain="!props.free && isIndeterminate(templateProps.value)"
+                        :disabled="templateProps.disabled"
+                        @change="changeCheck(templateProps)"
+                      />
+                      <div :title="templateProps.label" class="lew-cascader-label">
+                        {{ templateProps.label }}
                       </div>
+                      <CommonIcon
+                        v-show="templateProps.loading"
+                        :size="14"
+                        loading
+                        class="lew-cascader-loading-icon"
+                        type="loader"
+                      />
+                      <CommonIcon
+                        v-show="!templateProps.loading && !templateProps.isLeaf"
+                        :size="16"
+                        class="lew-cascader-icon"
+                        type="chevron-right"
+                      />
                     </div>
                   </template>
                 </VirtList>
+                <div
+                  v-else
+                  class="lew-cascader-options-list lew-scrollbar-hover"
+                  :style="VIRT_LIST_STYLE"
+                >
+                  <template v-for="item in oItem" :key="item.value">
+                    <div
+                      class="lew-cascader-item"
+                      :class="getItemClass(item)"
+                      :style="{ height: `${ITEM_HEIGHT}px` }"
+                      @click="selectItem(item, oIndex)"
+                    >
+                      <LewCheckbox
+                        v-if="props.multiple"
+                        :key="item.value"
+                        class="lew-cascader-checkbox"
+                        :checked="
+                          props.free
+                            ? modelValue?.includes(item.value)
+                            : isSelected(item.value)
+                        "
+                        :certain="!props.free && isIndeterminate(item.value)"
+                        :disabled="item.disabled"
+                        @change="changeCheck(item)"
+                      />
+                      <div :title="item.label" class="lew-cascader-label">
+                        {{ item.label }}
+                      </div>
+                      <CommonIcon
+                        v-show="item.loading"
+                        :size="14"
+                        loading
+                        class="lew-cascader-loading-icon"
+                        type="loader"
+                      />
+                      <CommonIcon
+                        v-show="!item.loading && !item.isLeaf"
+                        :size="16"
+                        class="lew-cascader-icon"
+                        type="chevron-right"
+                      />
+                    </div>
+                  </template>
+                </div>
               </div>
             </template>
           </div>
         </transition>
-
-        <LewFlex v-if="free" x="end" gap="5px" class="lew-cascader-control">
-          <LewButton color="gray" type="text" size="small" @click="close">
-            {{ locale.t("cascader.closeText") }}
-          </LewButton>
-          <LewButton :disabled="state.okLoading" size="small" @click="ok()">
-            {{ locale.t("cascader.okText") }}
-          </LewButton>
-        </LewFlex>
       </div>
     </template>
   </LewPopover>
@@ -641,188 +705,17 @@ defineExpose({ show, hide })
   > div {
     width: 100%;
   }
-
-  .lew-cascader {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    box-sizing: border-box;
-    border-radius: var(--lew-border-radius-small);
-    background-color: var(--lew-form-bgcolor);
-    transition: all var(--lew-form-transition-ease);
-    box-sizing: border-box;
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-    box-shadow: var(--lew-form-box-shadow);
-
-    .icon-select {
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      transform: translateY(-50%) rotate(0deg);
-      transition: all var(--lew-form-transition-bezier);
-    }
-
-    .lew-icon-loading-box {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      transform: translateY(-50%);
-    }
-
-    .icon-select {
-      opacity: var(--lew-form-icon-opacity);
-    }
-
-    .icon-select-hide {
-      opacity: 0;
-      transform: translate(100%, -50%);
-    }
-
-    .lew-cascader-placeholder {
-      color: rgb(165, 165, 165);
-    }
-
-    .lew-cascader-placeholder,
-    .lew-cascader-value {
-      display: inline-flex;
-      align-items: center;
-      box-sizing: border-box;
-      transition: all var(--lew-form-transition-bezier);
-      gap: 2px;
-      overflow: hidden;
-      height: 100%;
-
-      span {
-        display: inline-flex;
-        gap: 2px;
-        align-items: center;
-
-        svg {
-          opacity: 0.4;
-        }
-      }
-    }
-  }
-
-  .lew-cascader-align-left {
-    text-align: left;
-  }
-
-  .lew-cascader-align-center {
-    text-align: center;
-  }
-
-  .lew-cascader-align-right {
-    text-align: right;
-  }
-
-  .lew-cascader-placeholder {
-    color: rgb(165, 165, 165);
-  }
-
-  .lew-cascader:hover {
-    background-color: var(--lew-form-bgcolor-hover);
-  }
-
-  .lew-cascader:active {
-    background-color: var(--lew-form-bgcolor-active);
-  }
-
-  .lew-cascader-focus {
-    background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-
-    .icon-select {
-      transform: translateY(-50%) rotate(180deg);
-      color: var(--lew-text-color-1);
-    }
-
-    .icon-select-hide {
-      opacity: 0;
-      transform: translate(100%, -50%) rotate(180deg);
-    }
-  }
-
-  .lew-cascader-focus:hover {
-    background-color: var(--lew-form-bgcolor-focus);
-  }
-
-  .lew-cascader-disabled {
-    opacity: var(--lew-disabled-opacity);
-    pointer-events: none;
-  }
-
-  .lew-cascader-readonly {
-    pointer-events: none;
-
-    :deep(.lew-text-trim-wrapper) {
-      user-select: text;
-      cursor: text;
-    }
-  }
-
-  .lew-cascader-disabled:hover {
-    background-color: var(--lew-form-bgcolor);
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  }
-
-  .lew-cascader-init-loading {
-    pointer-events: none;
-    cursor: wait;
-
-    .lew-cascader-placeholder,
-    .lew-cascader-value {
-      cursor: wait;
-    }
-  }
 }
 
-.lew-cascader-item:hover {
-  .lew-checkbox:deep(.lew-checkbox-icon-box) {
-    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-
-    background: var(--lew-form-bgcolor);
-  }
-}
-
-.lew-cascader-item-tobe:hover {
-  .lew-checkbox:deep(.lew-checkbox-icon-box) {
-    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-    background: var(--lew-checkbox-color);
-
-    .icon-checkbox {
-      transform: translate(-50%, -50%) scale(0.7);
-      opacity: 1;
-    }
-  }
-}
-
-.lew-cascader-item-selected:hover {
-  .lew-checkbox:deep(.lew-checkbox-icon-box) {
-    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-    background: var(--lew-checkbox-color);
-
-    .icon-checkbox {
-      transform: translate(-50%, -50%) scale(0.7);
-      opacity: 1;
-    }
-  }
-}
-</style>
-
-<style lang="scss">
 .lew-cascader-body {
   width: 100%;
   box-sizing: border-box;
   min-width: 200px;
   height: 320px;
   overflow: hidden;
-  transition: all var(--lew-form-transition-bezier);
+  transition:
+    width var(--lew-form-transition-bezier),
+    height var(--lew-form-transition-bezier);
   user-select: none;
 
   .not-found {
@@ -840,26 +733,39 @@ defineExpose({ show, hide })
     position: relative;
     display: flex;
     box-sizing: border-box;
+    height: 100%;
 
     .lew-cascader-item-wrapper {
       position: absolute;
       overflow: hidden;
       height: 100%;
       width: 200px;
-      border-right: var(--lew-pop-border);
       box-sizing: border-box;
-      gap: 4px;
     }
 
-    .lew-cascader-item-wrapper:last-child {
-      border-right: 0px var(--lew-form-border-color) solid;
+    .lew-cascader-options-list {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .lew-cascader-item-wrapper::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background-color: var(--lew-pop-border-color);
+    }
+
+    .lew-cascader-item-wrapper:last-child::after {
+      display: none;
     }
 
     .lew-cascader-item {
       position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
       width: 100%;
       font-size: 14px;
       overflow: hidden;
@@ -869,14 +775,19 @@ defineExpose({ show, hide })
       color: var(--lew-text-color-1);
       box-sizing: border-box;
       border-radius: var(--lew-border-radius-small);
-      height: 34px;
       flex-shrink: 0;
+      padding: 0px 12px;
+
+      .lew-cascader-checkbox {
+        flex-shrink: 0;
+        margin-right: 8px;
+      }
 
       .lew-cascader-icon {
         position: absolute;
         right: 2px;
         top: 10px;
-        opacity: 0.4;
+        color: var(--lew-text-color-1);
       }
 
       .lew-cascader-loading-icon {
@@ -885,28 +796,17 @@ defineExpose({ show, hide })
         top: 8.5px;
       }
 
-      .lew-cascader-checkbox {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-
       .lew-cascader-label {
         position: relative;
         z-index: 5;
-        width: 100%;
+        flex: 1;
+        min-width: 0;
         user-select: none;
         font-size: 14px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         box-sizing: border-box;
-        padding: 0px 12px;
-      }
-
-      .lew-cascader-label-free {
-        padding: 0px 14px 0px 38px;
       }
     }
 
@@ -935,7 +835,25 @@ defineExpose({ show, hide })
 
     .lew-cascader-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-hover);
+      background-color: var(--lew-form-bgcolor);
+
+      // 多选模式下，hover item 时 checkbox 也显示 hover 效果
+      .lew-cascader-checkbox:deep(.lew-checkbox-icon-box) {
+        border: var(--lew-form-border-width) var(--lew-checkbox-icon-border-hover) solid;
+        background: var(--lew-checkbox-icon-bg-hover);
+      }
+
+      // checked 状态的 hover 效果
+      .lew-cascader-checkbox.lew-checkbox-checked:deep(.lew-checkbox-icon-box) {
+        border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+        background: var(--lew-checkbox-checked-icon-bg-hover);
+      }
+
+      // certain（半选）状态的 hover 效果
+      .lew-cascader-checkbox.lew-checkbox-certain:deep(.lew-checkbox-icon-box) {
+        border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+        background: var(--lew-checkbox-checked-icon-bg-hover);
+      }
     }
 
     .lew-cascader-slot-item {
@@ -944,20 +862,11 @@ defineExpose({ show, hide })
 
     .lew-cascader-slot-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-hover);
-    }
-
-    .lew-cascader-item-hover {
-      background-color: var(--lew-pop-bgcolor-hover);
-
-      .icon-check {
-        margin-right: 10px;
-      }
+      background-color: var(--lew-form-bgcolor);
     }
 
     .lew-cascader-item-active {
-      color: var(--lew-checkbox-color);
-      font-weight: bold;
+      background-color: var(--lew-form-bgcolor);
 
       .lew-cascader-icon {
         opacity: 1;
@@ -968,16 +877,19 @@ defineExpose({ show, hide })
       }
     }
 
-    .lew-cascader-item-active:hover {
-      color: var(--lew-checkbox-color);
-      font-weight: bold;
+    .lew-cascader-item-selected {
+      color: var(--lew-color-primary);
     }
-  }
 
-  .lew-cascader-control {
-    border-top: var(--lew-pop-border);
-    height: 48px;
-    padding-right: 10px;
+    .lew-cascader-item-selected:hover {
+      color: var(--lew-color-primary);
+
+      // 多选模式下，hover selected item 时 checkbox 也显示 hover 效果
+      .lew-cascader-checkbox:deep(.lew-checkbox-icon-box) {
+        border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+        background: var(--lew-checkbox-checked-icon-bg-hover);
+      }
+    }
   }
 }
 </style>

@@ -1,0 +1,545 @@
+---
+description: 本文是 Vue 组件库保障稳定性、轻量化与可维护性的核心指南，围绕「最小化依赖、依赖隔离、版本稳定性」三大原则，制定了一套严谨的依赖管理与组件耦合控制方案，避免冗余依赖与混乱组件关系，确保组件库体积最优、运行稳定。 内容涵盖依赖分类（核心依赖 / 开发依赖）、依赖使用规范（推荐 / 避免 / 谨慎引入的场景）、组件间依赖边界、公共代码管理策略、Peer Dependencies 配置与依赖更新流程，配套完整的评估清单与检查要点，助力构建低耦合、轻量高效的 Vue 组件库。 总结 依赖管理：优先复用现有依赖，简单功能自行实现，新依赖需通过体积、质量、必要性评估，核心依赖锁定大版本，仅将 Vue 列为 Peer Dependencies； 耦合控制：组件仅允许依赖公共组件 / 工具 / 类型，禁止业务组件互依赖、循环依赖与深层跨模块导入，公共代码统一归类到指定目录； 实施要点：通过打包配置外部化 peer 依赖、内部化其他依赖，定期审查过期依赖与安全漏洞，更新依赖前需完成测试验证，确保组件库稳定无冲突。
+alwaysApply: false
+---
+
+# 依赖与耦合控制
+
+> **重要性**：⭐⭐⭐⭐  
+> 合理的依赖管理确保组件库的稳定性、可维护性和最小体积。
+
+## 核心原则
+
+### 1. 最小化依赖
+- 能自己实现的简单功能不引入新依赖
+- 优先使用项目已有的依赖
+- 避免为单一功能引入大型库
+
+### 2. 依赖隔离
+- 组件之间低耦合
+- 公共依赖统一管理
+- 避免循环依赖
+
+### 3. 版本稳定性
+- 核心依赖锁定大版本
+- 定期更新但谨慎测试
+- 避免使用 beta/alpha 版本（生产环境）
+
+## 依赖分类
+
+### 核心依赖（已确认）
+
+```json
+{
+  "dependencies": {
+    // Vue 生态 - 核心必需
+    "vue": "^3.5.3",
+    "@vueuse/core": "^13.5.0",
+    "vue-router": "^4.0.13",
+    "vue-i18n": "^11.1.0",
+    
+    // 工具库 - 已集成
+    "lodash-es": "^4.17.21",
+    "dayjs": "^1.11.13",
+    "axios": "^1.6.7",
+    
+    // UI 相关
+    "lucide-vue-next": "^0.534.0",  // 图标库
+    "tippy.js": "^6.3.7",           // 提示工具
+    "vue-virt-list": "^1.5.11",     // 虚拟列表
+    "vuedraggable": "^4.1.0",       // 拖拽
+    
+    // 特定功能
+    "expr-eval": "^2.0.2",          // 表达式计算
+    "yup": "^1.2.0",                // 表单验证
+    "shiki-code-block-vue": "0.0.6-beta.1", // 代码高亮
+    "loading-masker": "^1.0.0"      // 加载遮罩
+  }
+}
+```
+
+### 开发依赖
+
+```json
+{
+  "devDependencies": {
+    // 构建工具
+    "vite": "^7.0.2",
+    "typescript": "^5.8.3",
+    "vue-tsc": "^3.0.1",
+    
+    // 代码质量
+    "@antfu/eslint-config": "^5.0.0",
+    "eslint": "^9.31.0",
+    "stylelint": "16.2.1",
+    
+    // 类型定义
+    "@types/node": "^22.16.0",
+    "@types/lodash-es": "^4.17.12"
+  }
+}
+```
+
+## 使用规范
+
+### ✅ 推荐使用（已有依赖）
+
+#### 1. @vueuse/core - Vue 组合式工具
+
+```typescript
+// ✅ 使用 VueUse 提供的组合式函数
+import { 
+  useDebounce,
+  useThrottle,
+  useEventListener,
+  useResizeObserver,
+  useIntersectionObserver,
+  useMouse,
+  useScroll,
+  useLocalStorage
+} from '@vueuse/core'
+
+// 示例：防抖
+const debouncedValue = useDebounce(input, 300)
+
+// 示例：监听窗口大小
+const { width, height } = useWindowSize()
+```
+
+#### 2. lodash-es - 工具函数
+
+```typescript
+// ✅ 使用具名导入（tree-shaking 友好）
+import { debounce, throttle, cloneDeep, merge, pick, omit } from 'lodash-es'
+
+// ❌ 不要导入整个 lodash
+// import _ from 'lodash'
+
+// 示例：深拷贝
+const cloned = cloneDeep(originalObject)
+
+// 示例：合并对象
+const merged = merge({}, defaults, userConfig)
+```
+
+#### 3. dayjs - 日期处理
+
+```typescript
+// ✅ 日期格式化和计算
+import dayjs from 'dayjs'
+
+// 示例：格式化日期
+const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss')
+
+// 示例：日期计算
+const tomorrow = dayjs().add(1, 'day')
+```
+
+#### 4. lucide-vue-next - 图标
+
+```typescript
+// ✅ 使用 lucide 图标（已集成到 CommonIcon）
+import { Check, X, ChevronDown, Search } from 'lucide-vue-next'
+
+// 通常通过 CommonIcon 组件使用
+<CommonIcon type="check" />
+```
+
+#### 5. tippy.js - 提示工具
+
+```typescript
+// ✅ 用于 Tooltip、Popover 等组件
+import tippy from 'tippy.js'
+
+// 示例：创建提示
+tippy(element, {
+  content: 'Tooltip content',
+  placement: 'top'
+})
+```
+
+### ❌ 避免引入新依赖
+
+#### 场景 1：简单工具函数
+
+```typescript
+// ❌ 不要为简单功能引入新库
+// import isEmail from 'is-email-validator'
+
+// ✅ 自己实现简单的工具函数
+export function isEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+// ❌ 不要引入整个 lodash 只用一个函数
+// import kebabCase from 'lodash/kebabCase'
+
+// ✅ 简单的功能自己实现
+export function kebabCase(str: string): string {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase()
+}
+```
+
+#### 场景 2：CSS 解决方案
+
+```typescript
+// ❌ 不需要引入 classnames 库
+// import classNames from 'classnames'
+
+// ✅ 使用项目内置的 object2class
+import { object2class } from 'lew-ui/utils'
+
+const className = object2class('lew-button', {
+  size: 'small',
+  type: 'primary',
+  disabled: true
+})
+```
+
+#### 场景 3：动画库
+
+```typescript
+// ❌ 不要引入重量级动画库
+// import anime from 'animejs'
+// import gsap from 'gsap'
+
+// ✅ 使用 CSS transition/animation
+// ✅ 或使用 Vue 的 <Transition> 组件
+<Transition name="fade">
+  <div v-if="show">Content</div>
+</Transition>
+
+// ✅ 简单的 JS 动画自己实现
+function animate(element, from, to, duration) {
+  // 简单的动画逻辑
+}
+```
+
+### 🔶 谨慎引入（需评估）
+
+需要引入新依赖时，必须评估：
+
+```markdown
+## 新依赖评估清单
+
+### 基本信息
+- 包名：xxx
+- 版本：x.x.x
+- 体积：xx KB (gzipped)
+- 依赖数：xx
+- 周下载量：xxx
+- 最后更新：xxxx-xx-xx
+
+### 必要性评估
+- [ ] 是否可以用现有依赖实现？
+- [ ] 是否可以自己实现（工作量评估）？
+- [ ] 是否有更轻量的替代方案？
+- [ ] 项目内有多个组件会用到？
+
+### 质量评估
+- [ ] GitHub Stars > 1000
+- [ ] 活跃维护（最近 6 个月有更新）
+- [ ] 有 TypeScript 类型定义
+- [ ] 无严重安全漏洞
+- [ ] 许可证兼容（MIT/Apache/BSD）
+
+### 影响评估
+- [ ] 体积增加 < 10KB (gzipped)
+- [ ] 不会引入冲突依赖
+- [ ] 支持 tree-shaking
+- [ ] 不影响现有功能
+
+### 决策
+- [ ] 批准引入
+- [ ] 寻找替代方案
+- [ ] 自己实现
+```
+
+## 组件间依赖
+
+### 允许的依赖关系
+
+```typescript
+// ✅ 组件可以依赖公共组件
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+
+// ✅ 组件可以使用工具函数
+import { object2class } from 'lew-ui/utils'
+
+// ✅ 组件可以使用全局类型
+import type { Size, Color } from 'lew-ui/types'
+
+// ✅ 复合组件之间的依赖（父子关系）
+// LewCheckboxGroup 可以导入 LewCheckbox
+import LewCheckbox from './LewCheckbox.vue'
+```
+
+### 禁止的依赖关系
+
+```typescript
+// ❌ 禁止组件直接依赖其他业务组件
+// import LewButton from '../button/src/LewButton.vue'
+// 应该由用户自己组合
+
+// ❌ 禁止循环依赖
+// ComponentA 导入 ComponentB，同时 ComponentB 导入 ComponentA
+
+// ❌ 禁止跨模块的深层导入
+// import { helper } from '../../data/table/src/utils'
+// 应该提取到公共 utils
+
+// ❌ 禁止依赖未导出的内部实现
+// import { _internalHelper } from 'lew-ui/_internal'
+```
+
+## 公共代码管理
+
+### 目录结构
+
+```
+lib/
+├── _components/      # 内部公共组件（不对外导出）
+│   ├── CommonIcon.vue
+│   └── CommonLoading.vue
+├── _utils/          # 内部工具函数（不对外导出）
+│   └── internal-helper.ts
+├── utils/           # 对外公共工具
+│   ├── object2class.ts
+│   └── index.ts
+├── types/           # 公共类型定义
+│   ├── common.ts
+│   └── index.ts
+└── components/      # 组件
+    └── ...
+```
+
+### 公共组件规范
+
+```typescript
+// lib/_components/CommonIcon.vue
+// ✅ 内部公共组件（所有组件共用）
+<script setup lang="ts">
+import { computed } from 'vue'
+import * as Icons from 'lucide-vue-next'
+
+const props = defineProps<{
+  type: string
+  size?: number
+  color?: string
+}>()
+
+const IconComponent = computed(() => {
+  return Icons[props.type] || Icons.HelpCircle
+})
+</script>
+
+<template>
+  <component
+    :is="IconComponent"
+    :size="size"
+    :color="color"
+  />
+</template>
+```
+
+### 公共工具函数
+
+```typescript
+// lib/utils/object2class.ts
+/**
+ * 将对象转换为 BEM 类名
+ * @param base - 基础类名（如 'lew-button'）
+ * @param modifiers - 修饰符对象
+ * @returns 类名字符串
+ */
+export function object2class(
+  base: string,
+  modifiers: Record<string, any>
+): string {
+  const classes = [base]
+  
+  for (const [key, value] of Object.entries(modifiers)) {
+    if (value === true) {
+      // boolean: lew-button-loading
+      classes.push(`${base}-${key}`)
+    } else if (value && value !== false) {
+      // string/number: lew-button-size-small
+      classes.push(`${base}-${key}-${value}`)
+    }
+  }
+  
+  return classes.join(' ')
+}
+
+// 使用示例
+object2class('lew-button', {
+  size: 'small',      // -> lew-button-size-small
+  type: 'primary',    // -> lew-button-type-primary
+  loading: true,      // -> lew-button-loading
+  disabled: false     // -> 不生成
+})
+// 结果: 'lew-button lew-button-size-small lew-button-type-primary lew-button-loading'
+```
+
+### 公共类型定义
+
+```typescript
+// lib/types/common.ts
+/**
+ * 组件通用尺寸
+ */
+export type Size = 'mini' | 'small' | 'medium' | 'large'
+
+/**
+ * 主题色
+ */
+export type Color = 
+  | 'primary' 
+  | 'success' 
+  | 'warning' 
+  | 'error' 
+  | 'info'
+
+/**
+ * 对齐方式
+ */
+export type Align = 'left' | 'center' | 'right'
+
+/**
+ * 位置
+ */
+export type Placement = 
+  | 'top' 
+  | 'top-start' 
+  | 'top-end'
+  | 'bottom' 
+  | 'bottom-start' 
+  | 'bottom-end'
+  | 'left' 
+  | 'left-start' 
+  | 'left-end'
+  | 'right' 
+  | 'right-start' 
+  | 'right-end'
+
+// 导出所有类型
+// lib/types/index.ts
+export * from './common'
+```
+
+## Peer Dependencies
+
+### 配置规范
+
+```json
+{
+  "peerDependencies": {
+    "vue": "^3.5.3"
+  }
+}
+```
+
+### 说明
+- **peerDependencies**：要求用户项目必须安装的依赖
+- lew-ui 只将 Vue 作为 peer dependency
+- 其他依赖都打包到组件库中
+
+## 依赖更新策略
+
+### 定期审查
+
+```bash
+# 检查过期依赖
+pnpm outdated
+
+# 检查安全漏洞
+pnpm audit
+
+# 更新补丁版本（安全）
+pnpm update
+
+# 更新次要版本（谨慎）
+pnpm update --latest
+```
+
+### 更新流程
+
+1. **评估影响**：查看 CHANGELOG 了解变更
+2. **本地测试**：更新后运行完整测试
+3. **类型检查**：确保没有类型错误
+4. **构建验证**：确保构建成功
+5. **文档更新**：如有 breaking change 更新文档
+6. **发布说明**：在 CHANGELOG 中记录依赖更新
+
+### 版本锁定策略
+
+```json
+{
+  "dependencies": {
+    // ✅ 核心依赖：锁定主版本
+    "vue": "^3.5.3",
+    "vue-router": "^4.0.13",
+    
+    // ✅ 工具库：允许小版本更新
+    "lodash-es": "^4.17.21",
+    "dayjs": "^1.11.13",
+    
+    // 🔶 beta/实验性：锁定精确版本
+    "shiki-code-block-vue": "0.0.6-beta.1"
+  }
+}
+```
+
+## 打包策略
+
+### 外部化配置
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  build: {
+    lib: {
+      entry: './lib/index.ts',
+      name: 'LewUI'
+    },
+    rollupOptions: {
+      // 外部化 peer dependencies
+      external: ['vue', 'vue-router'],
+      
+      // 内部化其他依赖（打包到库中）
+      output: {
+        globals: {
+          vue: 'Vue',
+          'vue-router': 'VueRouter'
+        }
+      }
+    }
+  }
+})
+```
+
+## 检查清单
+
+引入新依赖前确认：
+- [ ] 已评估必要性（不能用现有方案）
+- [ ] 已评估体积影响（< 10KB gzipped）
+- [ ] 包质量良好（Stars > 1000，活跃维护）
+- [ ] 有完整的 TypeScript 类型
+- [ ] 支持 tree-shaking
+- [ ] 许可证兼容
+- [ ] 无安全漏洞
+- [ ] 不会引入依赖冲突
+
+修改组件时确认：
+- [ ] 没有引入不必要的依赖
+- [ ] 优先使用项目已有依赖
+- [ ] 没有创建循环依赖
+- [ ] 公共代码放在正确的位置
+- [ ] 工具函数有明确的文档
+
+---
+
+**记住**：每个依赖都是负担，保持精简才能保持高性能！

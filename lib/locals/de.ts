@@ -56,6 +56,18 @@ export default {
     Fri: 'Fr',
     Sat: 'Sa',
     Sun: 'So',
+    Jan: 'Jan',
+    Feb: 'Feb',
+    Mar: 'Mär',
+    Apr: 'Apr',
+    May: 'Mai',
+    Jun: 'Jun',
+    Jul: 'Jul',
+    Aug: 'Aug',
+    Sep: 'Sep',
+    Oct: 'Okt',
+    Nov: 'Nov',
+    Dec: 'Dez',
     placeholder: 'Datum auswählen',
   },
   dateRangePicker: {
@@ -93,6 +105,9 @@ export default {
     cancelText: 'Abbrechen',
     okText: 'OK',
   },
+  colorPicker: {
+    placeholder: 'Bitte eingeben',
+  },
   upload: {
     dropActive: 'Loslassen, um mit dem Upload zu beginnen',
     click: 'Klicken zum Hochladen, ',
@@ -101,9 +116,19 @@ export default {
     accept: 'Unterstützt {accept}',
     limit: 'Maximal {limit} Dateien',
     maxFileSize: 'Einzelne Datei nicht größer als {maxFileSize}',
+    pending: 'Ausstehend',
+    success: 'Erfolgreich hochgeladen',
+    fail: 'Upload fehlgeschlagen',
+    uploading: 'Wird hochgeladen',
+    complete: 'Hochgeladen',
+    wrong_type: 'Ungültiges Format',
+    wrong_size: 'Dateigröße überschreitet das Limit',
   },
   pagination: {
     pageSize: '{pageSize} pro Seite',
     jumpTo: 'Springen zu',
+  },
+  empty: {
+    title: 'Keine Daten',
   },
 }

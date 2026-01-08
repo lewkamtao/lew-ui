@@ -60,10 +60,11 @@ const options = ref([
   {
     field: 'tags',
     label: 'Tags',
-    as: 'select-multiple',
+    as: 'select',
     rule: Yup.array().min(1, 'Select at least one tag').required('Please select tags'),
     props: {
       clearable: true,
+      multiple: true,
       placeholder: 'Select tags',
       options: [
         { label: 'Important', value: 'important' },

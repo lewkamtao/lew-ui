@@ -1,6 +1,7 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import dayjs from 'dayjs'
 import { LewPopover, LewTooltip, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { datePickerEmits } from './emits'
@@ -9,10 +10,9 @@ import LewPanel from './LewPanel.vue'
 import { datePickerProps } from './props'
 
 const props = defineProps(datePickerProps)
-
 const emit = defineEmits(datePickerEmits)
 
-const modelValue: Ref<string | undefined> = defineModel({ required: true })
+const modelValue = defineModel<string | undefined>({ required: true })
 
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -107,13 +107,17 @@ const getDatePickerInputStyle = computed(() => {
 })
 
 const getDisplayPlaceholder = computed(() => {
-  return props.placeholder ? props.placeholder : locale.t('datePicker.placeholder')
+  return props.placeholder
+    ? props.placeholder
+    : locale.t('datePicker.placeholder')
 })
 
 const shouldShowClearIcon = computed(
   () => modelValue.value && props.clearable && !props.readonly,
 )
-const shouldShowCalendarIcon = computed(() => !(modelValue.value && props.clearable))
+const shouldShowCalendarIcon = computed(
+  () => !(modelValue.value && props.clearable),
+)
 
 function show() {
   lewPopoverRef.value.show()
@@ -266,18 +270,12 @@ defineExpose({ show, hide })
             }"
             type="calendar"
           />
-          <transition name="lew-form-icon-ani">
-            <CommonIcon
-              v-if="shouldShowClearIcon"
-              :size="getIconSize"
-              type="close"
-              class="lew-form-icon-close lew-date-picker-icon-close"
-              :class="{
-                'lew-form-icon-close-focus': visible,
-              }"
-              @click.stop="clearHandle"
-            />
-          </transition>
+          <CloseIcon
+            v-if="shouldShowClearIcon"
+            :size="size"
+            class="lew-form-icon-close"
+            @click.stop="clearHandle"
+          />
         </div>
       </div>
     </template>
@@ -338,7 +336,9 @@ defineExpose({ show, hide })
     border-radius: var(--lew-border-radius-small);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition: all var(--lew-form-transition-ease);
+    transition:
+      background-color var(--lew-form-transition-ease),
+      border-color var(--lew-form-transition-ease);
     cursor: pointer;
     user-select: none;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -347,15 +347,21 @@ defineExpose({ show, hide })
     .lew-date-picker-icon-calendar {
       position: absolute;
       top: 50%;
-      right: 12px;
+      right: 14px;
       transform: translateY(-50%);
-      transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
     }
 
     .lew-date-picker-icon-calendar-hide {
       opacity: 0;
-      transform: translateY(-50%) translateX(100%);
+    }
+
+    .lew-form-icon-close {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      z-index: 9;
+      transform: translateY(-50%);
     }
 
     .lew-date-picker-input {
@@ -371,12 +377,12 @@ defineExpose({ show, hide })
     }
 
     .lew-date-picker-input::placeholder {
-      color: rgb(165, 165, 165);
+      color: var(--lew-text-color-5);
       letter-spacing: 0;
     }
 
     .lew-date-picker-placeholder {
-      color: rgb(165, 165, 165);
+      color: var(--lew-text-color-5);
     }
   }
 
@@ -428,8 +434,8 @@ defineExpose({ show, hide })
   }
 
   .lew-date-picker-presets-item-active {
-    background-color: var(--lew-color-primary) !important;
-    color: var(--lew-color-white);
+    background-color: var(--lew-color-datepicker-primary-selected-bg) !important;
+    color: var(--lew-color-datepicker-primary-selected-text);
   }
 }
 

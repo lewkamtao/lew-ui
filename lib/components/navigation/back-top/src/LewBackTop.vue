@@ -1,11 +1,13 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { CSSProperties } from 'vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useEventListener } from 'lew-ui/hooks'
 import { throttle } from 'lodash-es'
+import { backTopEmits } from './emits'
 import { backTopProps } from './props'
 
 const props = defineProps(backTopProps)
+const _emit = defineEmits(backTopEmits)
 
 const dom = shallowRef<HTMLElement>()
 const showBackTop = ref(false)
@@ -41,7 +43,6 @@ function scrollToTop(): void {
     const elapsed = currentTime - startTime
     const progress = Math.min(elapsed / duration, 1)
 
-    // Easing function for smooth animation
     const easeInOutCubic
       = progress < 0.5
         ? 4 * progress * progress * progress
@@ -113,7 +114,9 @@ onMounted(() => {
   user-select: none;
   cursor: pointer;
   color: var(--lew-color-primary);
-  transition: var(--lew-form-transition-bezier);
+  transition:
+    transform var(--lew-form-transition-bezier),
+    opacity var(--lew-form-transition-ease);
 
   &:hover {
     transform: translateY(-2px);
@@ -126,7 +129,7 @@ onMounted(() => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: var(--lew-form-transition-bezier);
+  transition: opacity var(--lew-form-transition-ease);
 }
 
 .fade-enter-from,

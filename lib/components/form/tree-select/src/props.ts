@@ -5,7 +5,7 @@ import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 
 export const treeSelectModel = {
   modelValue: {
-    type: String,
+    type: [String, Array],
     default: undefined,
   },
 }
@@ -14,8 +14,6 @@ export const treeSelectProps = {
   dataSource: {
     type: Array as PropType<LewTreeDataSource[]>,
     typePopKeys: ['LewTreeDataSource'],
-    required: true,
-
     validator: validators.array({
       componentName: 'LewTreeSelect',
       propName: 'dataSource',
@@ -70,12 +68,28 @@ export const treeSelectProps = {
       propName: 'clearable',
     }),
   },
-  checkable: {
+  multiple: {
     type: Boolean,
     default: false,
     validator: validators.boolean({
       componentName: 'LewTreeSelect',
+      propName: 'multiple',
+    }),
+  },
+  checkable: {
+    type: Boolean,
+    default: true,
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
       propName: 'checkable',
+    }),
+  },
+  onlyLeafSelectable: {
+    type: Boolean,
+    default: true,
+    validator: validators.boolean({
+      componentName: 'LewTreeSelect',
+      propName: 'onlyLeafSelectable',
     }),
   },
   showAllLevels: {
@@ -86,14 +100,7 @@ export const treeSelectProps = {
       propName: 'showAllLevels',
     }),
   },
-  showCheckIcon: {
-    type: Boolean,
-    default: true,
-    validator: validators.boolean({
-      componentName: 'LewTreeSelect',
-      propName: 'showCheckIcon',
-    }),
-  },
+
   showLine: {
     type: Boolean,
     default: false,
@@ -136,7 +143,7 @@ export const treeSelectProps = {
   },
   free: {
     type: Boolean,
-    default: true,
+    default: false,
     validator: validators.boolean({
       componentName: 'LewTreeSelect',
       propName: 'free',

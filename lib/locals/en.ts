@@ -55,6 +55,18 @@ export default {
     Fri: 'Fri',
     Sat: 'Sat',
     Sun: 'Sun',
+    Jan: 'Jan',
+    Feb: 'Feb',
+    Mar: 'Mar',
+    Apr: 'Apr',
+    May: 'May',
+    Jun: 'Jun',
+    Jul: 'Jul',
+    Aug: 'Aug',
+    Sep: 'Sep',
+    Oct: 'Oct',
+    Nov: 'Nov',
+    Dec: 'Dec',
     placeholder: 'Select date',
   },
   dateRangePicker: {
@@ -84,6 +96,17 @@ export default {
     closeText: 'Close',
     okText: 'OK',
   },
+  dialog: {
+    cancelText: 'Cancel',
+    okText: 'OK',
+  },
+  popok: {
+    cancelText: 'Cancel',
+    okText: 'OK',
+  },
+  colorPicker: {
+    placeholder: 'Please input',
+  },
   upload: {
     dropActive: 'Release to start uploading',
     click: 'Click to upload, ',
@@ -92,17 +115,19 @@ export default {
     accept: 'Support uploading {accept}',
     limit: 'Maximum {limit} files can be uploaded',
     maxFileSize: 'Single file should not exceed {maxFileSize}',
+    pending: 'Pending',
+    success: 'Upload successful',
+    fail: 'Upload failed',
+    uploading: 'Uploading',
+    complete: 'Uploaded',
+    wrong_type: 'Invalid format',
+    wrong_size: 'File size exceeds limit',
   },
   pagination: {
     pageSize: '{pageSize} items/page',
     jumpTo: 'Jump to',
   },
-  dialog: {
-    cancelText: 'Cancel',
-    okText: 'OK',
-  },
-  popok: {
-    cancelText: 'Cancel',
-    okText: 'OK',
+  empty: {
+    title: 'No data',
   },
 }

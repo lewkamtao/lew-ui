@@ -116,10 +116,11 @@ const options = ref([
   {
     field: 'select_multiple',
     label: '多选选择器',
-    as: 'select-multiple',
+    as: 'select',
     gridArea: 'auto / 2 / auto / 3',
     rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
+      multiple: true,
       change: (e: any) => {
         console.log(e)
       },

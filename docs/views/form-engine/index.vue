@@ -557,6 +557,7 @@ onMounted(() => {
       cursor: move;
       font-size: 12px;
       color: var(--lew-text-color-5);
+      white-space: nowrap;
 
       img {
         width: 100%;

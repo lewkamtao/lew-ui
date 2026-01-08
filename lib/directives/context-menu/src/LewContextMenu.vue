@@ -8,6 +8,7 @@ import _LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.v
 import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'
+import { createApp, h } from 'vue'
 import { initLewContextMenu } from '../index'
 import { contextMenuEmits } from './emits'
 import { contextMenuProps } from './props'
@@ -45,21 +46,17 @@ function clickItem(item: LewContextMenusOption) {
   const instance = props.dropdownInstance || window.LewContextMenu?.instance || null
 
   if (isFunction(item.onClick)) {
-    try {
-      const proxyItem = createItemProxy(item)
-      const proxyOptions = new Proxy(_options.value, {
-        get(target, prop, receiver) {
-          return Reflect.get(target, prop, receiver)
-        },
-      })
+    const proxyItem = createItemProxy(item)
+    const proxyOptions = new Proxy(_options.value, {
+      get(target, prop, receiver) {
+        return Reflect.get(target, prop, receiver)
+      },
+    })
 
-      item.onClick?.(proxyItem, proxyOptions, instance)
-    }
-    catch (error) {
-      console.error('[LewContextMenu] Error in onClick handler:', error)
-    }
+    item.onClick?.(proxyItem, proxyOptions, instance)
   }
-  else {
+
+  if (item.hideMenuOnClick || item.hideMenuOnClick === undefined) {
     instance?.hide()
   }
 
@@ -79,7 +76,7 @@ const TIPPY_CONFIG = {
   allowHTML: true,
   hideOnClick: false,
   zIndex: 2001,
-}
+} as const
 
 const uniqueId = getUniqueId()
 const subMenuInstances = new Map<number, { app: any, tippy: TippyInstance }>()
@@ -116,52 +113,41 @@ function initTippy() {
       return
     }
 
-    try {
-      if (!window.LewContextMenu) {
-        initLewContextMenu()
-      }
-
-      const { element: menuDom, app } = createSubMenu(option.children)
-
-      const tippyInstances = tippy(el as Element, {
-        ...TIPPY_CONFIG,
-        content: menuDom,
-      })
-
-      const tippyInstance = Array.isArray(tippyInstances)
-        ? tippyInstances[0]
-        : tippyInstances
-
-      subMenuInstances.set(index, { app, tippy: tippyInstance })
-      window.LewContextMenu.menuInstance[`${uniqueId}-${index}`] = tippyInstance
-
-      const popperElement = tippyInstance.popper?.children?.[0] as HTMLElement
-      popperElement?.setAttribute('data-lew', 'popover')
+    if (!window.LewContextMenu) {
+      initLewContextMenu()
     }
-    catch (error) {
-      console.error('[LewContextMenu] Failed to initialize submenu:', error)
-    }
+
+    const { element: menuDom, app } = createSubMenu(option.children)
+
+    const tippyInstances = tippy(el as Element, {
+      ...TIPPY_CONFIG,
+      content: menuDom,
+    })
+
+    const tippyInstance = Array.isArray(tippyInstances)
+      ? tippyInstances[0]
+      : tippyInstances
+
+    subMenuInstances.set(index, { app, tippy: tippyInstance })
+    window.LewContextMenu.menuInstance[`${uniqueId}-${index}`] = tippyInstance
+
+    const popperElement = tippyInstance.popper?.children?.[0] as HTMLElement
+    popperElement?.setAttribute('data-lew', 'popover')
   })
 }
 
 function cleanup() {
   subMenuInstances.forEach(({ app, tippy }, index) => {
-    try {
-      app?.unmount?.()
-      tippy?.destroy?.()
+    app?.unmount?.()
+    tippy?.destroy?.()
 
-      const key = `${uniqueId}-${index}`
-      if (window.LewContextMenu?.menuInstance?.[key]) {
-        delete window.LewContextMenu.menuInstance[key]
-      }
-    }
-    catch (error) {
-      console.warn('[LewContextMenu] Failed to cleanup submenu instance:', error)
+    const key = `${uniqueId}-${index}`
+    if (window.LewContextMenu?.menuInstance?.[key]) {
+      delete window.LewContextMenu.menuInstance[key]
     }
   })
 
   subMenuInstances.clear()
-  // WeakMap 会自动垃圾回收，无需手动清理
 }
 
 onMounted(() => {
@@ -258,10 +244,11 @@ onBeforeUnmount(() => {
       cursor: pointer;
       color: var(--lew-text-color-1);
       box-sizing: border-box;
-      border-radius: calc(var(--lew-border-radius-small) - 1px);
+      border-radius: var(--lew-border-radius-small);
       padding: 0px 5px;
       animation: enterAni 0.3s cubic-bezier(0.3, 1.3, 0.3, 1) forwards;
       opacity: 0;
+      transition: all var(--lew-form-transition-bezier);
 
       @keyframes enterAni {
         0% {

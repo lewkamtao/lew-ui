@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
 import { LewTooltip, locale } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
 import { throttle } from 'lodash-es'
 import { textareaEmits } from './emits'
@@ -49,8 +49,12 @@ function clear(): void {
   emit('change', undefined)
 }
 
-function toFocus() {
+function focus() {
   lewTextareaRef.value?.focus()
+}
+
+function blur() {
+  lewTextareaRef.value?.blur()
 }
 
 const getTextareaClassNames = computed(() => {
@@ -62,14 +66,14 @@ const getTextareaClassNames = computed(() => {
   })
 })
 
-function focus(e: any) {
+function _focus(e: any) {
   if (props.selectByFocus) {
     e?.currentTarget?.select()
   }
   state.isFocus = true
 }
 
-function blur() {
+function _blur() {
   state.isFocus = false
 }
 
@@ -82,15 +86,6 @@ function handleChange(event: Event) {
   const target = event.target as HTMLTextAreaElement
   emit('change', target.value)
 }
-
-const getIconSize = computed(() => {
-  const size: Record<string, number> = {
-    small: 12,
-    medium: 14,
-    large: 16,
-  }
-  return size[props.size]
-})
 
 const getTextareaStyle: any = computed(() => {
   const {
@@ -140,7 +135,7 @@ if (props.okByEnter) {
   })
 }
 
-defineExpose({ toFocus })
+defineExpose({ focus, blur })
 </script>
 
 <template>
@@ -160,8 +155,8 @@ defineExpose({ toFocus })
       :maxlength="maxLength"
       :disabled="disabled"
       :readonly="readonly"
-      @focus="focus"
-      @blur="blur"
+      @focus="_focus"
+      @blur="_blur"
       @input="handleInput"
       @change="handleChange"
     />
@@ -169,20 +164,12 @@ defineExpose({ toFocus })
     <div v-if="modelValue && showCount" class="lew-textarea-count">
       {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : "" }}
     </div>
-    <transition name="lew-form-icon-ani">
-      <CommonIcon
-        v-if="clearable && modelValue && !readonly"
-        :size="getIconSize"
-        type="close"
-        class="lew-form-icon-close"
-        :class="{
-          'lew-form-icon-close-focus': state.isFocus,
-        }"
-        style="top: 14px"
-        @click="clear"
-        @mousedown.prevent=""
-      />
-    </transition>
+    <CloseIcon
+      v-if="clearable && modelValue && !readonly"
+      :size="size"
+      class="lew-form-icon-close"
+      @click.stop="clear"
+    />
   </div>
 </template>
 
@@ -230,10 +217,15 @@ defineExpose({ toFocus })
     padding: 0px 4px;
     z-index: 2;
     user-select: none;
-    transition: all var(--lew-form-transition-ease);
+    transition: opacity var(--lew-form-transition-ease);
   }
   .lew-textarea-count:hover {
     opacity: 0.2;
+  }
+
+  .lew-form-icon-close {
+    position: absolute;
+    right: 10px;
   }
 }
 
@@ -249,6 +241,9 @@ defineExpose({ toFocus })
     font-size: 12px;
     line-height: 18px;
   }
+  .lew-form-icon-close {
+    top: 5px;
+  }
 }
 
 .lew-textarea-view-size-medium {
@@ -263,6 +258,9 @@ defineExpose({ toFocus })
     font-size: 13px;
     line-height: 20px;
   }
+  .lew-form-icon-close {
+    top: 6px;
+  }
 }
 
 .lew-textarea-view-size-large {
@@ -276,6 +274,9 @@ defineExpose({ toFocus })
   .lew-textarea-count {
     font-size: 14px;
     line-height: 22px;
+  }
+  .lew-form-icon-close {
+    top: 7px;
   }
 }
 

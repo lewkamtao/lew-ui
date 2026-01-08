@@ -46,7 +46,9 @@ function initActiveItemStyle(index: number) {
     && activeRef?.offsetLeft >= 0
   ) {
     tabsRef.value.scrollLeft
-      = activeRef?.offsetLeft - tabsRef.value.clientWidth / 2 + activeRef?.offsetWidth / 2
+      = activeRef?.offsetLeft
+        - tabsRef.value.clientWidth / 2
+        + activeRef?.offsetWidth / 2
   }
 
   state.activeItemStyle = {
@@ -61,7 +63,9 @@ watch(
   () => {
     nextTick(() => {
       setTimeout(() => {
-        const index = props.options.findIndex(e => tabsValue.value === e.value)
+        const index = props.options.findIndex(
+          e => tabsValue.value === e.value,
+        )
         initActiveItemStyle(index)
       }, 250)
     })
@@ -176,9 +180,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :style="getTabsStyle" class="lew-tabs-wrapper" :class="getTabsWrapperClassName">
+  <div
+    :style="getTabsStyle"
+    class="lew-tabs-wrapper"
+    :class="getTabsWrapperClassName"
+  >
     <div :style="getTabsStyle" class="lew-tabs" :class="getTabsClassName">
-      <div ref="tabsRef" class="lew-tabs-main hidden-scrollbar" @scroll="tabsScroll">
+      <div
+        ref="tabsRef"
+        class="lew-tabs-main hidden-scrollbar"
+        @scroll="tabsScroll"
+      >
         <div
           v-if="tabsValue"
           :style="state.activeItemStyle"
@@ -300,23 +312,24 @@ onUnmounted(() => {
     cursor: pointer;
     flex-shrink: 0;
     height: calc(100% - 6px);
-    transition: all var(--lew-form-transition-ease);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
   }
 
-  .lew-tabs-item:hover {
-    background-color: var(--lew-form-bgcolor-hover);
+  .lew-tabs-item:hover:not(.lew-tabs-item-active) {
+    background-color: var(--lew-tabs-hover-bgcolor, var(--lew-form-bgcolor-hover));
+    color: var(--lew-tabs-hover-text-color, var(--lew-text-color-1));
   }
 
   .lew-tabs-item-active {
     background-color: rgba(0, 0, 0, 0);
+    color: var(--lew-tabs-active-text-color, var(--lew-text-color-1));
   }
 
   .lew-tabs-item-active:hover {
     background-color: rgba(0, 0, 0, 0);
-  }
-
-  .lew-tabs-item-active:hover {
-    opacity: 1;
+    color: var(--lew-tabs-active-text-color, var(--lew-text-color-1));
   }
 
   .lew-tabs-item-disabled {
@@ -337,7 +350,10 @@ onUnmounted(() => {
   }
 
   .lew-tabs-item-isInit {
-    transition: all var(--lew-form-transition-bezier);
+    transition:
+      transform var(--lew-form-transition-bezier),
+      width var(--lew-form-transition-bezier),
+      background-color var(--lew-form-transition-ease);
   }
 }
 
@@ -384,17 +400,21 @@ onUnmounted(() => {
       padding-bottom: 5px;
     }
 
-    .lew-tabs-item:hover {
-      background: var(--lew-bgcolor-2);
+    .lew-tabs-item:hover:not(.lew-tabs-item-active) {
+      background: var(--lew-tabs-hover-bgcolor, var(--lew-form-bgcolor-hover));
     }
 
     .lew-tabs-item-active {
       background: transparent;
+      color: var(--lew-tabs-line-active-text-color, var(--lew-color-primary));
     }
 
     .lew-tabs-item-active:hover {
-      transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
       background: transparent;
+      color: var(--lew-tabs-line-active-text-color, var(--lew-color-primary));
+      transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
     }
 
     .lew-tabs-item-animation-active {
@@ -403,7 +423,7 @@ onUnmounted(() => {
       bottom: 1px;
       left: 0px;
       z-index: 9;
-      height: 2.5px;
+      height: 2px;
       border-radius: 0px;
       background: var(--lew-color-primary);
       transform: translateX(3px);
@@ -414,7 +434,7 @@ onUnmounted(() => {
 .lew-tabs-type-line:after {
   position: absolute;
   content: '';
-  bottom: 0px;
+  bottom: 2px;
   left: 3px;
   height: 2px;
   background-color: var(--lew-form-bgcolor-hover);

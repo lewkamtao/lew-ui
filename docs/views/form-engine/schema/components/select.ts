@@ -29,6 +29,11 @@ export default [
     },
   },
   {
+    label: '是否多选',
+    as: 'switch',
+    field: 'multiple',
+  },
+  {
     label: '是否可搜索',
     as: 'switch',
     field: 'searchable',

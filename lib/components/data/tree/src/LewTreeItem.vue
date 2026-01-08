@@ -2,125 +2,76 @@
 import { LewCheckbox, LewCollapseTransition, LewMessage } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { findAllChildrenKeys, findNodeByKey, insertChildByKey } from 'lew-ui/utils'
+import { insertChildByKey } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { treeItemProps } from './props'
 import transformTree, { formatTree } from './transformTree'
-
 import { treeItemEmits } from './treeItemEmits'
+import { TREE_INJECTION_KEY } from './types'
 
 const props = defineProps(treeItemProps)
 const emit = defineEmits(treeItemEmits)
 
+// 使用类型安全的 inject
+const treeContext = inject(TREE_INJECTION_KEY)!
 const {
   modelValue,
   expandKeys,
+  dataSource,
+  cacheDataSource,
   multiple,
   checkable,
   expandAll,
-  _dataSource,
   loadMethod,
   keyField,
   labelField,
   free,
-  cacheDataSource,
-}: any = inject('lew-tree')
+  treeSelection,
+} = treeContext
 
 const loading = ref(false)
 const loaded = ref(false)
 
-function areSomeChildrenSelected(node: any): boolean {
-  if (!node.children || node.children.length === 0)
-    return false
-
-  const childKeys = findAllChildrenKeys(node)
-  return (
-    childKeys.some(key => modelValue.value.includes(key))
-    && !childKeys.every(key => modelValue.value.includes(key))
-  )
-}
-
 function select() {
-  if (props.disabled)
+  if (props.disabled || !props.__key)
     return
-  // 创建一个变量来存储最终的绑定值
-  let newModelValue = cloneDeep(modelValue.value)
+
+  const nodeKey = props.__key
 
   if (multiple) {
-    const index = newModelValue.indexOf(props.__key)
     if (free) {
+      // free 模式：简单的切换选中状态，不级联
+      // 确保始终使用数组
+      const currentValue = modelValue.value
+      const newModelValue = Array.isArray(currentValue)
+        ? [...currentValue]
+        : []
+      const index = newModelValue.indexOf(nodeKey)
       if (index > -1) {
         newModelValue.splice(index, 1)
       }
       else {
-        newModelValue.push(props.__key)
+        newModelValue.push(nodeKey)
       }
+      modelValue.value = newModelValue
     }
     else {
-      if (index > -1) {
-        newModelValue.splice(index, 1)
-        if (props.extend && props.extend.children && props.extend.children.length > 0) {
-          const childKeys = findAllChildrenKeys(props.extend)
-          newModelValue = newModelValue.filter(
-            (key: string | number) => !childKeys.includes(key),
-          )
-        }
-        if (
-          props.extend
-          && props.extend.parentKeyPaths
-          && props.extend.parentKeyPaths.length > 0
-        ) {
-          props.extend.parentKeyPaths.forEach((parentKey: string | number) => {
-            const parentIndex = newModelValue.indexOf(parentKey)
-            if (parentIndex > -1) {
-              newModelValue.splice(parentIndex, 1)
-            }
-          })
-        }
-      }
-      else {
-        newModelValue.push(props.__key)
-        if (props.extend && props.extend.children && props.extend.children.length > 0) {
-          const childKeys = findAllChildrenKeys(props.extend)
-          childKeys.forEach((key: string | number) => {
-            if (!newModelValue.includes(key)) {
-              newModelValue.push(key)
-            }
-          })
-        }
-      }
-      if (props.extend && props.extend.parentKey && props.extend.parentKeyPaths) {
-        const parentKey = props.extend.parentKey
-        const parentNode = findNodeByKey(parentKey, _dataSource.value)
-        const siblingKeys = (parentNode?.children || []).map((e: any) => e.key)
-        if (
-          siblingKeys.length > 0
-          && siblingKeys.every((key: string | number) => newModelValue.includes(key))
-        ) {
-          if (!newModelValue.includes(parentKey)) {
-            newModelValue.push(parentKey)
-          }
-        }
-        else {
-          newModelValue = newModelValue.filter(
-            (key: string | number) => key !== parentKey,
-          )
-        }
-      }
+      // 使用 Hook 的 toggleKey，自动处理级联和半选状态
+      treeSelection?.toggleKey(nodeKey)
     }
   }
   else {
-    newModelValue = props.__key
+    // 单选模式：直接设置值
+    modelValue.value = nodeKey
   }
 
-  // 最终结果赋值给modelValue
-  modelValue.value = newModelValue
   emit('change')
 }
 
 async function expand() {
-  if (!props.isLeaf) {
-    const index = expandKeys.value.indexOf(props.__key)
+  if (!props.isLeaf && props.__key) {
+    const nodeKey = props.__key
+    const index = expandKeys.value.indexOf(nodeKey)
     if (index > -1) {
       expandKeys.value.splice(index, 1)
     }
@@ -130,8 +81,8 @@ async function expand() {
         = ((await loadMethod(
           cloneDeep({
             ...props,
-            key: props.__key,
-            value: props.__key,
+            key: nodeKey,
+            value: nodeKey,
             extend: props.extend,
           }) as any,
         )) as any) || []
@@ -144,18 +95,18 @@ async function expand() {
       })) as any
       if (status === 'success') {
         loaded.value = true
-        insertChildByKey(_dataSource.value, props.__key as string | number, result)
+        insertChildByKey(dataSource.value, nodeKey as string | number, result)
 
-        _dataSource.value = formatTree({
-          dataSource: _dataSource.value,
+        dataSource.value = formatTree({
+          dataSource: dataSource.value,
           keyField,
           labelField,
           free,
         })
 
-        cacheDataSource.value = cloneDeep(_dataSource.value)
+        cacheDataSource.value = cloneDeep(dataSource.value)
 
-        expandKeys.value = [...(expandKeys.value as (string | number)[]), props.__key]
+        expandKeys.value = [...expandKeys.value, nodeKey]
       }
       else {
         loaded.value = false
@@ -164,7 +115,7 @@ async function expand() {
       loading.value = false
     }
     else {
-      expandKeys.value.push(props.__key)
+      expandKeys.value.push(nodeKey)
     }
   }
   expandKeys.value = cloneDeep(expandKeys.value)
@@ -173,20 +124,31 @@ async function expand() {
 
 // 计算节点的选中状态
 const isNodeSelected = computed(() => {
+  if (!props.__key)
+    return false
+
   if (multiple) {
-    return modelValue.value.includes(props.__key)
+    if (free) {
+      // free 模式：直接查看 modelValue
+      return modelValue.value?.includes(props.__key) || false
+    }
+    else {
+      // 使用 Hook 的 isSelected 方法
+      return treeSelection?.isSelected(props.__key) || false
+    }
   }
   else {
     return modelValue.value === props.__key
   }
 })
 
-// 计算节点的部分选中状态
+// 计算节点的半选状态
 const isNodePartiallySelected = computed(() => {
-  if (!multiple || free)
+  if (!multiple || free || !props.__key)
     return false
 
-  return props.extend && areSomeChildrenSelected(props.extend)
+  // 使用 Hook 的 isIndeterminate 方法
+  return treeSelection?.isIndeterminate(props.__key) || false
 })
 </script>
 
@@ -195,7 +157,9 @@ const isNodePartiallySelected = computed(() => {
     class="lew-tree-item"
     :class="{
       'lew-tree-item-expand-all': expandAll,
-      'lew-tree-item-expand': (expandKeys || []).includes(__key),
+      'lew-tree-item-expand': __key
+        ? (expandKeys || []).includes(__key)
+        : false,
       'lew-tree-item-certain': isNodePartiallySelected,
       'lew-tree-item-selected': isNodeSelected,
       'lew-tree-item-leaf': isLeaf,
@@ -248,7 +212,12 @@ const isNodePartiallySelected = computed(() => {
   </div>
   <LewCollapseTransition v-if="!isLeaf">
     <div
-      v-if="((expandKeys || []).length > 0 && expandKeys.includes(__key)) || expandAll"
+      v-if="
+        ((expandKeys || []).length > 0 &&
+          __key &&
+          expandKeys.includes(__key)) ||
+          expandAll
+      "
       class="lew-tree-item-main"
     >
       <slot />
@@ -269,15 +238,16 @@ const isNodePartiallySelected = computed(() => {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all var(--lew-form-transition-bezier);
+    transition: transform var(--lew-form-transition-bezier);
     width: 14px;
     height: 14px;
     padding: 4px;
+    box-sizing: content-box;
     border-radius: var(--lew-border-radius-small);
     margin-left: 5px;
     .lew-tree-chevron-right-icon {
       transform: rotate(0deg);
-      transition: all var(--lew-form-transition-bezier);
+      transition: transform var(--lew-form-transition-bezier);
     }
   }
   .lew-tree-chevron-right:hover {
@@ -285,14 +255,13 @@ const isNodePartiallySelected = computed(() => {
   }
   .lew-tree-item-label {
     position: relative;
-    padding: 4px 10px 4px 8px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    border-radius: calc(var(--lew-border-radius-small) - 1px);
-    cursor: pointer;
+    padding: 4px 10px 4px 8px;
     width: 100%;
     box-sizing: border-box;
+    border-radius: calc(var(--lew-border-radius-small) - 1px);
+    cursor: pointer;
   }
 
   .lew-tree-item-label::after {
@@ -311,24 +280,23 @@ const isNodePartiallySelected = computed(() => {
     background-color: var(--lew-pop-bgcolor-hover);
     user-select: none;
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
-      border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-
-      background: var(--lew-form-bgcolor);
+      border: var(--lew-form-border-width) var(--lew-checkbox-icon-border-hover) solid;
+      background: var(--lew-checkbox-icon-bg-hover);
     }
   }
 }
 .lew-tree-item-selected {
   .lew-tree-item-label {
     color: var(--lew-color-primary);
-    font-weight: 600;
   }
   .lew-tree-item-label:hover {
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
-      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-      background: var(--lew-checkbox-color);
+      border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+      background: var(--lew-checkbox-checked-icon-bg-hover);
       .icon-checkbox {
         transform: translate(-50%, -50%) scale(0.7);
         opacity: 1;
+        color: var(--lew-checkbox-checked-icon-color-hover);
       }
     }
   }
@@ -337,8 +305,11 @@ const isNodePartiallySelected = computed(() => {
 .lew-tree-item-certain {
   .lew-tree-item-label:hover {
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
-      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-      background: var(--lew-checkbox-color);
+      border: var(--lew-form-border-width) var(--lew-checkbox-checked-icon-border-hover) solid;
+      background: var(--lew-checkbox-checked-icon-bg-hover);
+      .lew-checkbox-icon-certain {
+        background-color: var(--lew-checkbox-checked-icon-color-hover);
+      }
     }
   }
 }

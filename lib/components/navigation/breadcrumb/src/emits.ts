@@ -1,3 +1,7 @@
+import type { LewBreadcrumbOption } from 'lew-ui/types'
+
 export const breadcrumbEmits = {
-  change: (item: any, index: number) => [item, index],
+  change: (item: LewBreadcrumbOption, index: number) => [item, index],
 } as const
+
+export type LewBreadcrumbEmits = typeof breadcrumbEmits

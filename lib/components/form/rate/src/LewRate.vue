@@ -128,7 +128,9 @@ const getTips = computed(() => (index: number) => {
         }"
         class="lew-rate-star"
         :fill="
-          Number(tobeValue) >= i ? 'var(--lew-color-yellow)' : 'var(--lew-form-bgcolor)'
+          Number(tobeValue) >= i
+            ? 'var(--lew-color-yellow)'
+            : 'var(--lew-form-bgcolor)'
         "
         type="star"
         :stroke-width="0"
@@ -141,12 +143,14 @@ const getTips = computed(() => (index: number) => {
 <style lang="scss" scoped>
 .lew-rate-icon {
   position: relative;
-  transition: all var(--lew-form-transition-ease);
+  transition:
+    transform var(--lew-form-transition-bezier),
+    fill var(--lew-form-transition-ease);
   cursor: pointer;
 
   .lew-rate-star {
     position: absolute;
-    transition: all var(--lew-form-transition-ease);
+    transition: fill var(--lew-form-transition-ease);
   }
 }
 

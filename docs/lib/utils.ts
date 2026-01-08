@@ -158,3 +158,110 @@ export function renderDescription(text: string) {
   // 将数组转换为 VNode，使用 span 作为容器
   return h('span', {}, parts)
 }
+
+/**
+ * 组件分类映射表
+ * 根据组件名映射到对应的分类目录
+ */
+const componentCategoryMap: Record<string, string> = {
+  // general
+  'avatar': 'general',
+  'badge': 'general',
+  'button': 'general',
+  'flex': 'general',
+  'image': 'general',
+  'mark': 'general',
+  'tag': 'general',
+  'title': 'general',
+  'text-trim': 'general',
+  // form
+  'cascader': 'form',
+  'checkbox': 'form',
+  'color-picker': 'form',
+  'date-picker': 'form',
+  'date-range-picker': 'form',
+  'form': 'form',
+  'input': 'form',
+  'input-number': 'form',
+  'input-table': 'form',
+  'input-tag': 'form',
+  'radio': 'form',
+  'rate': 'form',
+  'select': 'form',
+  'slider': 'form',
+  'slider-range': 'form',
+  'switch': 'form',
+  'tabs': 'form',
+  'textarea': 'form',
+  'tree-select': 'form',
+  'upload': 'form',
+  // data
+  'collapse': 'data',
+  'desc': 'data',
+  'expand': 'data',
+  'pagination': 'data',
+  'table': 'data',
+  'tree': 'data',
+  // feedback
+  'alert': 'feedback',
+  'drawer': 'feedback',
+  'empty': 'feedback',
+  'modal': 'feedback',
+  'popok': 'feedback',
+  'popover': 'feedback',
+  // navigation
+  'action-box': 'navigation',
+  'back-top': 'navigation',
+  'breadcrumb': 'navigation',
+  'dropdown': 'navigation',
+  'menu': 'navigation',
+  'menu-tree': 'navigation',
+  'steps': 'navigation',
+}
+
+/**
+ * 将驼峰命名转换为连字符命名
+ * @param name - 组件名（如 'textTrim', 'inputNumber'）
+ * @returns 连字符命名（如 'text-trim', 'input-number'）
+ */
+function camelToKebab(name: string): string {
+  return name
+    .replace(/([A-Z])/g, '-$1')
+    .toLowerCase()
+    .replace(/^-/, '')
+}
+
+/**
+ * 根据组件名获取 mdc 文件路径
+ * @param componentName - 组件名（如 'collapse', 'input-number', 'textTrim'）
+ * @returns mdc 文件路径，如果找不到返回 null
+ */
+export function getMdcPath(componentName: string): string | null {
+  if (!componentName)
+    return null
+
+  // 将组件名转换为小写
+  const normalizedName = componentName.toLowerCase()
+
+  // 先尝试直接查找（已经是连字符命名的情况）
+  let category = componentCategoryMap[normalizedName]
+
+  // 如果找不到，尝试将驼峰命名转换为连字符命名后再查找
+  if (!category) {
+    const kebabName = camelToKebab(componentName)
+    category = componentCategoryMap[kebabName]
+  }
+
+  // 确定最终的文件名（使用连字符命名）
+  const finalName = category ? camelToKebab(componentName) : normalizedName
+
+  if (!category) {
+    // 如果找不到，尝试所有分类
+    const categories = ['general', 'form', 'data', 'feedback', 'navigation']
+    // 返回第一个可能的路径（让组件尝试加载）
+    return `../../lib/components/${categories[0]}/${finalName}/${finalName}.mdc`
+  }
+
+  // 返回完整的相对路径
+  return `../../lib/components/${category}/${finalName}/${finalName}.mdc`
+}

@@ -32,7 +32,7 @@ export type LewBreadcrumbSeparator = 'shoulder' | 'sprit'
 
 export type LewUploadStatus = 'success' | 'fail' | 'uploading' | 'complete' | 'wrong_type' | 'wrong_size' | 'pending'
 
-export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group' | 'radio-group' | 'checkbox' | 'select' | 'select-multiple' | 'date-picker' | 'date-range-picker' | 'tabs' | 'cascader' | 'switch' | 'button' | 'upload' | 'input-number' | 'slider' | 'slider-range' | 'color-picker' | 'rate' | 'tree-select'
+export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group' | 'radio-group' | 'checkbox' | 'select' | 'date-picker' | 'date-range-picker' | 'tabs' | 'cascader' | 'switch' | 'button' | 'upload' | 'input-number' | 'slider' | 'slider-range' | 'color-picker' | 'rate' | 'tree-select'
 
 export type LewSelectMultipleValueLayout = 'tag' | 'text'
 
@@ -99,6 +99,7 @@ export interface LewContextMenusOption {
   isDividerLine?: boolean
   level?: number
   children?: LewContextMenusOption[]
+  hideMenuOnClick?: boolean
   onClick?: (item: LewContextMenusOption, options: LewContextMenusOption[], instance: any) => void
   [key: string]: any
 }
@@ -221,6 +222,7 @@ export interface LewDatePickerPresetsOption {
 
 export interface LewCascaderOption {
   label: string
+  key: string
   value: string
   level?: number
   labelPaths?: string[]

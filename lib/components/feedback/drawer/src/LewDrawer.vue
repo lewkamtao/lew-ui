@@ -1,14 +1,19 @@
-<script lang="ts" setup>
-import type { LewDrawerPosition } from 'lew-ui/types'
-import type { Ref } from 'vue'
+<script setup lang="ts">
+// 1. 第三方库导入
 import { onClickOutside, useMagicKeys } from '@vueuse/core'
-import { LewButton, LewFlex, locale } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { useDOMCreate } from 'lew-ui/hooks'
-import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import { drawerEmits } from './emits'
 
+// 3. 组件导入
+import { LewButton, LewFlex, locale } from 'lew-ui'
+import CloseButton from 'lew-ui/_components/CloseButton.vue'
+
+// 4. Hooks 导入
+import { useDOMCreate } from 'lew-ui/hooks'
+
+// 5. 工具函数导入
+import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
+
+// 6. 组件配置导入
+import { drawerEmits } from './emits'
 import { drawerProps } from './props'
 
 // Props & Emits
@@ -19,21 +24,20 @@ const emit = defineEmits(drawerEmits)
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-drawer')
 
-// Models
-const visible: Ref<boolean | undefined> = defineModel('visible')
+// v-model
+const visible = defineModel<boolean>('visible', { default: false })
 
-// Refs
+// 响应式状态
 const drawerBodyRef = ref<HTMLElement | null>(null)
 
-// Constants
+// 常量
 const drawerId = `lew-drawer-${getUniqueId()}`
-const recomputeTrigger = ref<number>(0)
 
-// 计算当前 drawer 是否在顶层
+// Slots 检测
+const slots = useSlots()
+
+// 计算属性
 const isTopDrawer = computed(() => {
-  // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
-  void recomputeTrigger.value
-
   if (!visible.value) {
     return false
   }
@@ -69,73 +73,57 @@ const isTopDrawer = computed(() => {
   return openDrawers.length > 0 && openDrawers[openDrawers.length - 1]?.id === drawerId
 })
 
-// 强制重新计算顶层状态的函数
-function forceRecomputeTopDrawer() {
-  recomputeTrigger.value++
+// 计算属性
+const drawerStyle = computed(() => {
+  const { position, width, height, zIndex } = props
+  const styleParts: string[] = []
+
+  switch (position) {
+    case 'left':
+    case 'right':
+      styleParts.push(`width:${any2px(width)}`)
+      styleParts.push('height:100vh')
+      break
+    case 'top':
+    case 'bottom':
+      styleParts.push('width:100vw')
+      styleParts.push(`height:${any2px(height)}`)
+      break
+    default:
+      styleParts.push('width:30%')
+      styleParts.push('height:100%')
+  }
+
+  styleParts.push(`z-index:${zIndex}`)
+  return styleParts.join(';')
+})
+
+const drawerBodyClass = computed(() => {
+  return [
+    object2class('lew-drawer-body', {
+      position: props.position,
+    }),
+    visible.value ? 'lew-drawer-body-show' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+})
+
+// 方法
+function handleClose(): void {
+  visible.value = false
+  emit('close')
 }
 
-// 监听 drawerBodyRef 变化，确保在 DOM 更新后重新计算顶层状态
-watch(
-  drawerBodyRef,
-  async (newVal: HTMLElement | null) => {
-    if (newVal && visible.value) {
-      await nextTick()
-      forceRecomputeTopDrawer()
-    }
-  },
-  { immediate: true },
-)
-
-// 监听 visible 变化，确保状态正确更新
-watch(visible, async (newVal: boolean | undefined) => {
+// 监听器
+watch(visible, async () => {
   await nextTick()
-  // drawer 状态变化时，强制重新计算
-  forceRecomputeTopDrawer()
-
-  // 控制全局检查定时器
-  if (newVal) {
-    startGlobalCheck()
-  }
-  else {
-    stopGlobalCheck()
-  }
-})
-
-// 监听全局 drawer 状态变化（通过定时器检查）
-let globalCheckTimer: ReturnType<typeof setInterval> | null = null
-
-function startGlobalCheck() {
-  if (globalCheckTimer) {
-    clearInterval(globalCheckTimer)
-  }
-
-  globalCheckTimer = setInterval(() => {
-    if (visible.value) {
-      forceRecomputeTopDrawer()
-    }
-  }, 100) // 每100ms检查一次
-}
-
-function stopGlobalCheck() {
-  if (globalCheckTimer) {
-    clearInterval(globalCheckTimer)
-    globalCheckTimer = null
-  }
-}
-
-onMounted(() => {
-  if (visible.value) {
-    startGlobalCheck()
-  }
-})
-
-onUnmounted(() => {
-  stopGlobalCheck()
 })
 
 onClickOutside(drawerBodyRef, (e: any) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { parentElement } = e?.target as Element
+    const target = e?.target as Element | undefined
+    const parentElement = target?.parentElement
     if (parentElement?.id === drawerId) {
       visible.value = false
     }
@@ -147,34 +135,8 @@ if (props.closeByEsc) {
     if (!visible.value || !v || !isTopDrawer.value) {
       return
     }
-
     visible.value = false
   })
-}
-
-// Methods
-function getStyle(
-  position: LewDrawerPosition,
-  width: number | string,
-  height: number | string,
-): string {
-  switch (position) {
-    case 'left':
-      return `width:${any2px(width)};height:100vh`
-    case 'right':
-      return `width:${any2px(width)};height:100vh`
-    case 'top':
-      return `width:100vw;height:${any2px(height)}`
-    case 'bottom':
-      return `width:100vw;height:${any2px(height)}`
-    default:
-      return 'width:30%;height:100%'
-  }
-}
-
-function handleClose(): void {
-  visible.value = false
-  emit('close')
 }
 </script>
 
@@ -186,15 +148,11 @@ function handleClose(): void {
       </transition>
       <div
         ref="drawerBodyRef"
-        :style="`${getStyle(props.position, props.width, props.height)}; z-index:${
-          props.zIndex
-        }`"
+        :style="drawerStyle"
         class="lew-drawer-body"
-        :class="`${object2class('lew-drawer-body', { position: props.position })} ${
-          visible ? 'lew-drawer-body-show' : ''
-        }`"
+        :class="drawerBodyClass"
       >
-        <div v-if="$slots.header" class="lew-drawer-header-slot">
+        <div v-if="slots.header" class="lew-drawer-header-slot">
           <slot name="header" />
         </div>
         <LewFlex
@@ -206,22 +164,18 @@ function handleClose(): void {
           <div class="lew-drawer-title">
             {{ props.title }}
           </div>
-          <LewButton
-            type="light"
+          <CloseButton
+            size="large"
             color="gray"
             round
-            single-icon
-            size="small"
             class="lew-drawer-icon-close"
             @click="handleClose"
-          >
-            <CommonIcon :size="14" type="close" />
-          </LewButton>
+          />
         </LewFlex>
         <div class="lew-drawer-body-slot">
           <slot />
         </div>
-        <div v-if="$slots.footer" class="lew-drawer-footer-slot">
+        <div v-if="slots.footer" class="lew-drawer-footer-slot">
           <slot name="footer" />
         </div>
         <LewFlex
@@ -231,6 +185,7 @@ function handleClose(): void {
           class="lew-drawer-footer"
         >
           <LewButton
+            v-if="!props.hideCloseButton"
             v-bind="{
               size: 'small',
               text: locale.t('drawer.closeText'),
@@ -241,6 +196,7 @@ function handleClose(): void {
             }"
           />
           <LewButton
+            v-if="!props.hideOkButton"
             v-bind="{
               size: 'small',
               text: locale.t('drawer.okText'),
@@ -285,11 +241,9 @@ function handleClose(): void {
 
       .lew-drawer-icon-close {
         position: absolute;
-        width: auto;
-        height: auto;
-        padding: 5px;
         top: 10px;
         right: 10px;
+        z-index: 9;
       }
     }
   }
@@ -317,34 +271,46 @@ function handleClose(): void {
   .lew-drawer-body-position-right {
     right: 0;
     top: 0;
+    border-left: var(--lew-drawer-border-color) 1px solid;
+  }
+
+  .lew-drawer-body-position-right:not(.lew-drawer-body-show) {
     transform: translateX(100%);
   }
 
   .lew-drawer-body-position-top {
     left: 0;
     top: 0;
+    border-bottom: var(--lew-drawer-border-color) 1px solid;
+  }
+
+  .lew-drawer-body-position-top:not(.lew-drawer-body-show) {
     transform: translateY(-100%);
   }
 
   .lew-drawer-body-position-left {
     left: 0;
     top: 0;
+    border-right: var(--lew-drawer-border-color) 1px solid;
+  }
+
+  .lew-drawer-body-position-left:not(.lew-drawer-body-show) {
     transform: translateX(-100%);
   }
 
   .lew-drawer-body-position-bottom {
     left: 0;
     bottom: 0;
-    transform: translateY(100%);
+    border-top: var(--lew-drawer-border-color) 1px solid;
   }
 
-  .lew-drawer-body-show {
-    transform: translate(0, 0);
+  .lew-drawer-body-position-bottom:not(.lew-drawer-body-show) {
+    transform: translateY(100%);
   }
 
   .lew-drawer-mask-enter-active,
   .lew-drawer-mask-leave-active {
-    transition: all var(--lew-form-transition-ease);
+    transition: opacity var(--lew-form-transition-ease);
   }
 
   .lew-drawer-mask-enter-from,

@@ -1,0 +1,805 @@
+---
+description: 本文是 Vue 组件库样式系统的核心指南，围绕「CSS 变量驱动、主题可定制、暗色模式支持、组件样式隔离」四大原则，制定了一套完整的样式系统规范，确保组件库样式的一致性、可维护性与可扩展性。 内容涵盖颜色系统（9 级色阶、基础颜色、语义颜色）、CSS 变量命名与使用规范、暗色模式实现、组件样式编写规范、样式扩展与定制方案，同时明确样式 API 变更规范与避坑要点，配套完整的开发检查清单，助力构建统一、灵活、易维护的 Vue 组件库样式体系。 总结 核心原则：使用 CSS 变量实现主题定制，支持亮色/暗色模式自动切换，组件样式通过变量隔离，遵循统一的命名规范； 颜色系统：采用 9 级色阶（1-9）定义颜色，支持基础颜色和语义颜色映射，通过 mixin 自动生成组件级颜色变量； 使用规范：组件必须使用 CSS 变量而非硬编码颜色，遵循命名规范（--lew-{category}-{name}），支持通过覆盖变量实现主题定制。
+alwaysApply: false
+---
+# 样式系统规范
+
+> **重要性**：⭐⭐⭐⭐⭐  
+> 统一的样式系统是组件库视觉一致性的基础。
+
+## 核心原则
+
+### 1. CSS 变量驱动
+所有颜色、尺寸、间距等样式值必须通过 CSS 变量定义，禁止硬编码。
+
+### 2. 主题可定制
+通过覆盖 CSS 变量实现主题定制，无需修改组件源码。
+
+### 3. 暗色模式支持
+所有组件必须同时支持亮色和暗色模式，通过 `.lew-dark` 类切换。
+
+### 4. 组件样式隔离
+组件样式通过 scoped 或 CSS 变量隔离，避免样式污染。
+
+## 颜色系统
+
+### 颜色色阶
+
+组件库采用 **9 级色阶**（1-9）定义颜色，从浅到深：
+
+- **1-3**：浅色背景（light 变体）
+- **4-5**：中等深度
+- **6**：主色（primary color）
+- **7-9**：深色（hover、active、dark 变体）
+
+### 基础颜色
+
+基础颜色定义在 `lib/styles/color/_foundation.scss`：
+
+```scss
+$colors: (
+  'blue': (
+    '1': #f7f9ff,
+    '2': #e3ebff,
+    '3': #d0ddff,
+    '4': #b8c9ff,
+    '5': #9bb6ff,
+    '6': #1a73e8,  // 主色
+    '7': #1558c0,
+    '8': #0f3f99,
+    '9': #08295f,
+  ),
+  // ... 其他颜色
+);
+```
+
+**支持的基础颜色**：
+- `blue`、`gray`、`red`、`green`、`yellow`
+- `indigo`、`purple`、`pink`、`orange`
+- `cyan`、`teal`、`mint`、`brown`
+- `black`、`white`
+
+### 语义颜色
+
+语义颜色映射到基础颜色，定义在 `lib/styles/color/_semantic.scss`：
+
+```scss
+$semantic-colors: (
+  'primary': 'blue',
+  'success': 'green',
+  'error': 'red',
+  'danger': 'red',
+  'warning': 'orange',
+  'info': 'blue',
+  'normal': 'gray',
+);
+```
+
+**使用建议**：
+- 优先使用语义颜色（`primary`、`success`、`error` 等）
+- 需要特定颜色时使用基础颜色（`blue`、`green` 等）
+
+### 颜色变量生成
+
+颜色系统通过 mixin 自动生成 CSS 变量，支持以下变体：
+
+#### 基础颜色变量
+
+```scss
+// 主色
+--lew-color-{color-name}: {color-6}
+--lew-color-{color-name}-hover: {color-7}
+--lew-color-{color-name}-active: {color-8}
+
+// 浅色背景
+--lew-color-{color-name}-light: {color-1}
+--lew-color-{color-name}-light-hover: {color-2}
+--lew-color-{color-name}-light-active: {color-3}
+
+// 文本颜色
+--lew-color-{color-name}-light-text: {color-8}
+--lew-color-{color-name}-ghost-text: {color-6}
+--lew-color-{color-name}-text-text: {color-6}
+
+// 深色
+--lew-color-{color-name}-dark: {color-6}
+```
+
+#### 组件级颜色变量
+
+不同组件有专门的颜色变量，例如：
+
+**Button 颜色变量**：
+```scss
+--lew-color-button-{color-name}-fill: {color-6}
+--lew-color-button-{color-name}-fill-hover: {color-7}
+--lew-color-button-{color-name}-light: {color-1}
+--lew-color-button-{color-name}-light-text: {color-8}
+--lew-color-button-{color-name}-ghost-text: {color-6}
+```
+
+**Tag 颜色变量**：
+```scss
+--lew-color-tag-{color-name}-fill: {color-6}
+--lew-color-tag-{color-name}-fill-text: #fff
+--lew-color-tag-{color-name}-light: {color-1}
+--lew-color-tag-{color-name}-ghost-text: {color-6}
+```
+
+**Checkbox/Radio/Switch 颜色变量**：
+```scss
+--lew-color-checkbox-{color-name}-icon-border: {color-6}
+--lew-color-checkbox-{color-name}-checked-icon-bg: {color-6}
+--lew-color-radio-{color-name}-checked-icon-bg: {color-6}
+--lew-color-switch-{color-name}-checked-bg: {color-6}
+```
+
+### 暗色模式
+
+暗色模式颜色定义在 `lib/styles/color/_dark.scss`，通过 `.lew-dark` 类切换：
+
+```scss
+.lew-dark {
+  // 暗色模式下的颜色变量
+  --lew-color-primary: {dark-color-6};
+  // ...
+}
+```
+
+**实现要点**：
+- 亮色和暗色使用不同的颜色映射
+- 通过 `.lew-dark` 类作用域切换
+- 所有组件自动适配暗色模式
+
+## CSS 变量系统
+
+### 命名规范
+
+CSS 变量遵循统一的命名规范：
+
+```
+--lew-{category}-{name}[-{modifier}]
+```
+
+**命名规则**：
+- 前缀：`--lew-`（固定）
+- 分类：`color`、`bgcolor`、`text-color`、`form`、`border` 等
+- 名称：语义化名称（如 `primary`、`button`、`input`）
+- 修饰符：`hover`、`active`、`focus`、`disabled` 等状态
+
+**示例**：
+```scss
+--lew-color-primary          // 颜色：主色
+--lew-bgcolor-0              // 背景色：基础背景
+--lew-text-color-0            // 文本色：基础文本
+--lew-form-bgcolor            // 表单：背景色
+--lew-form-bgcolor-hover      // 表单：悬停背景色
+--lew-border-radius-small      // 边框：小圆角
+```
+
+### 全局变量
+
+全局变量定义在 `lib/styles/var.scss`，包括：
+
+#### 背景色变量
+
+```scss
+--lew-bgcolor-0 到 --lew-bgcolor-9  // 10 级背景色
+```
+
+#### 文本色变量
+
+```scss
+--lew-text-color-0 到 --lew-text-color-9  // 10 级文本色
+```
+
+#### 表单变量
+
+```scss
+--lew-form-bgcolor              // 表单背景
+--lew-form-bgcolor-hover        // 悬停背景
+--lew-form-bgcolor-active       // 激活背景
+--lew-form-bgcolor-focus        // 聚焦背景
+--lew-form-border-color         // 边框颜色
+--lew-form-border-color-focus   // 聚焦边框
+--lew-form-item-height-{size}   // 尺寸高度（mini/small/medium/large）
+--lew-form-input-padding-{size} // 内边距
+--lew-form-font-size-{size}     // 字体大小
+```
+
+#### 边框变量
+
+```scss
+--lew-border-radius-mini    // 4px
+--lew-border-radius-small   // 8px
+--lew-border-radius-medium  // 12px
+--lew-border-radius-large   // 16px
+```
+
+#### 过渡动画变量
+
+组件库提供两种过渡动画变量，用于不同场景：
+
+```scss
+--lew-form-transition-ease: 0.2s ease;  // 用于色彩变化（颜色、背景色、边框色、透明度等）
+--lew-form-transition-bezier: 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);  // 用于尺寸/位置变化（宽度、高度、transform、位置等）
+```
+
+**使用规范**：
+
+1. **色彩变化使用 `--lew-form-transition-ease`**：
+   - `background-color`、`color`、`border-color`
+   - `opacity`、`box-shadow`（阴影颜色变化）
+   - 所有颜色相关的属性变化
+
+2. **尺寸/位置变化使用 `--lew-form-transition-bezier`**：
+   - `width`、`height`、`transform`
+   - `top`、`left`、`right`、`bottom`
+   - `scale`、`translate`、`rotate` 等 transform 属性
+   - 所有几何属性变化
+
+3. **禁止使用 `transition: all`**：
+   - 必须明确指定需要过渡的属性
+   - 避免性能问题和闪烁问题
+
+**示例**：
+
+```scss
+// ✅ 正确：色彩变化
+.lew-button {
+  transition: background-color var(--lew-form-transition-ease),
+              color var(--lew-form-transition-ease),
+              border-color var(--lew-form-transition-ease);
+}
+
+// ✅ 正确：尺寸/位置变化
+.lew-modal {
+  transition: transform var(--lew-form-transition-bezier),
+              width var(--lew-form-transition-bezier),
+              height var(--lew-form-transition-bezier);
+}
+
+// ✅ 正确：混合使用
+.lew-component {
+  transition: background-color var(--lew-form-transition-ease),
+              color var(--lew-form-transition-ease),
+              transform var(--lew-form-transition-bezier);
+}
+
+// ❌ 错误：使用 all
+.lew-component {
+  transition: all var(--lew-form-transition-ease);  // ❌
+}
+
+// ❌ 错误：色彩变化使用 bezier
+.lew-button {
+  transition: background-color var(--lew-form-transition-bezier);  // ❌ 会导致闪烁
+}
+```
+
+#### 其他变量
+
+```scss
+--lew-disabled-opacity      // 禁用透明度
+--lew-box-shadow            // 阴影
+```
+
+### 组件变量
+
+组件可以定义自己的 CSS 变量，命名规范：
+
+```scss
+--lew-{component-name}-{property}[-{modifier}]
+```
+
+**示例**（Button 组件）：
+```scss
+.lew-button {
+  --lew-button-bg: transparent;
+  --lew-button-color: var(--lew-color-primary);
+  --lew-button-hover-bg: var(--lew-color-primary-light);
+  --lew-button-active-bg: var(--lew-color-primary-light-active);
+}
+```
+
+## 组件样式编写规范
+
+### 1. 使用 CSS 变量
+
+#### ✅ 正确方式
+
+```vue
+<style lang="scss" scoped>
+.lew-button {
+  background: var(--lew-button-bg);
+  color: var(--lew-button-color);
+  border-radius: var(--lew-border-radius-small);
+  
+  &:hover {
+    background: var(--lew-button-hover-bg);
+  }
+}
+</style>
+```
+
+#### ❌ 错误方式
+
+```vue
+<style lang="scss" scoped>
+.lew-button {
+  background: #1a73e8;  // ❌ 硬编码颜色
+  color: #fff;         // ❌ 硬编码颜色
+  border-radius: 8px;  // ❌ 硬编码尺寸
+}
+</style>
+```
+
+### 2. 颜色变量使用
+
+#### 基础颜色变量
+
+```vue
+<template>
+  <div :style="{ color: `var(--lew-color-${color})` }">
+    <!-- 使用基础颜色变量 -->
+  </div>
+</template>
+```
+
+#### 组件级颜色变量
+
+```vue
+<style lang="scss" scoped>
+.lew-tag {
+  background: var(--lew-color-tag-primary-fill);
+  color: var(--lew-color-tag-primary-fill-text);
+}
+</style>
+```
+
+### 3. 动态颜色处理
+
+组件中需要根据 props 动态设置颜色时：
+
+```vue
+<script setup lang="ts">
+import type { CSSProperties } from 'vue'
+import { getColorType } from 'lew-ui/utils'
+
+const props = defineProps({
+  color: {
+    type: String,
+    default: 'blue'
+  }
+})
+
+const style = computed((): CSSProperties => {
+  const resolvedColor = getColorType(props.color) || 'blue'
+  
+  return {
+    '--component-color': `var(--lew-color-${resolvedColor})`,
+    '--component-bg': `var(--lew-color-${resolvedColor}-light)`,
+  }
+})
+</script>
+
+<template>
+  <div :style="style" class="lew-component">
+    <slot />
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.lew-component {
+  color: var(--component-color);
+  background: var(--component-bg);
+}
+</style>
+```
+
+### 4. 暗色模式适配
+
+组件样式自动适配暗色模式，无需额外处理：
+
+```scss
+.lew-component {
+  background: var(--lew-bgcolor-0);  // 自动适配暗色
+  color: var(--lew-text-color-0);    // 自动适配暗色
+}
+```
+
+如需特殊处理，使用 `.lew-dark` 作用域：
+
+```scss
+.lew-component {
+  background: var(--lew-bgcolor-0);
+  
+  .lew-dark & {
+    // 暗色模式特殊处理
+    background: var(--lew-bgcolor-1);
+  }
+}
+```
+
+### 5. 样式隔离
+
+#### Scoped 样式
+
+```vue
+<style lang="scss" scoped>
+.lew-component {
+  // 组件样式
+}
+</style>
+```
+
+#### CSS 变量作用域
+
+```vue
+<template>
+  <div class="lew-component" :style="componentStyle">
+    <slot />
+  </div>
+</template>
+
+<script setup lang="ts">
+const componentStyle = {
+  '--component-bg': 'var(--lew-bgcolor-0)',
+  '--component-color': 'var(--lew-text-color-0)',
+}
+</script>
+
+<style lang="scss" scoped>
+.lew-component {
+  background: var(--component-bg);
+  color: var(--component-color);
+}
+</style>
+```
+
+## 样式扩展规范
+
+### 新增颜色
+
+如需新增颜色，修改 `lib/styles/color/_foundation.scss`：
+
+```scss
+$colors: (
+  // ... 现有颜色
+  'new-color': (
+    '1': #f0f0f0,
+    '2': #e0e0e0,
+    // ... 9 级色阶
+    '6': #main-color,
+    // ...
+  ),
+);
+```
+
+同时更新暗色模式颜色（`lib/styles/color/_dark.scss`）。
+
+### 新增组件颜色变量
+
+如需为组件新增颜色变量，在 `lib/styles/color.scss` 中添加 mixin：
+
+```scss
+@mixin export-new-component-colors-light($color-name, $color-map) {
+  --lew-color-new-component-#{$color-name}-bg: #{get-color-value($color-map, '6')};
+  --lew-color-new-component-#{$color-name}-text: #fff;
+}
+
+@mixin export-new-component-colors-dark($color-name, $color-map) {
+  --lew-color-new-component-#{$color-name}-bg: #{get-color-value($color-map, '4')};
+  --lew-color-new-component-#{$color-name}-text: #{get-color-value($color-map, '7')};
+}
+```
+
+在 `export-colors` mixin 中调用：
+
+```scss
+@mixin export-colors($colors-map, $is-dark: false) {
+  // ...
+  @if $is-dark {
+    @include export-new-component-colors-dark($name, $color-map);
+  } @else {
+    @include export-new-component-colors-light($name, $color-map);
+  }
+}
+```
+
+### 新增全局变量
+
+在 `lib/styles/var.scss` 中添加：
+
+```scss
+:root {
+  // ... 现有变量
+  --lew-new-variable: value;
+}
+
+.lew-dark {
+  // ... 现有变量
+  --lew-new-variable: dark-value;
+}
+```
+
+## 样式 API 变更规范
+
+### CSS 变量变更
+
+遵循「向后兼容优先」原则：
+
+#### ✅ 允许（Minor/Patch）
+
+```scss
+// 1. 新增 CSS 变量
+--lew-component-new-property: value;  // ✅
+
+// 2. 扩展变量值范围（不改变默认值）
+--lew-component-size: small | medium | large | xlarge;  // ✅ 新增 xlarge
+```
+
+#### ❌ 禁止（Breaking）
+
+```scss
+// 1. 删除 CSS 变量
+// --lew-component-bg  // ❌
+
+// 2. 重命名 CSS 变量
+--lew-comp-background  // ❌ --lew-component-bg -> --lew-comp-background
+
+// 3. 改变变量默认值（导致视觉变化）
+--lew-component-height: 40px;  // ❌ 原来是 32px
+```
+
+### 类名变更
+
+#### ✅ 允许（Minor）
+
+```scss
+// 1. 新增 modifier 类
+.lew-component--new-modifier { }  // ✅
+
+// 2. 新增 element 类
+.lew-component__new-element { }  // ✅
+```
+
+#### ❌ 禁止（Breaking）
+
+```scss
+// 1. 删除类名
+// .lew-component-old-class  // ❌
+
+// 2. 重命名类名
+.lew-comp-new-class  // ❌ .lew-component-old-class -> .lew-comp-new-class
+
+// 3. 改变类名样式效果
+.lew-component--primary {
+  background: blue;  // ❌ 原来是 green
+}
+```
+
+## 常见问题与修复
+
+### 问题1：颜色不生效
+
+**现象**：设置了 `color` 属性，但颜色没有变化。
+
+**原因**：
+- 颜色值不在有效列表中
+- CSS 变量未正确定义
+- 样式被其他样式覆盖
+
+**修复方案**：
+1. 确认颜色值正确（使用 `getColorType` 工具函数）
+2. 检查 CSS 变量是否已定义
+3. 使用浏览器开发者工具检查变量值
+
+### 问题2：暗色模式不生效
+
+**现象**：添加了 `.lew-dark` 类，但组件样式没有切换。
+
+**原因**：
+- `.lew-dark` 类作用域不正确
+- 使用了硬编码颜色而非 CSS 变量
+- CSS 变量未定义暗色模式值
+
+**修复方案**：
+1. 确保 `.lew-dark` 类在根元素或父元素上
+2. 检查组件是否使用 CSS 变量
+3. 确认暗色模式变量已定义
+
+### 问题3：样式被覆盖
+
+**现象**：组件样式被外部样式覆盖。
+
+**原因**：
+- 样式优先级不够
+- 未使用 scoped 样式
+- CSS 变量作用域不正确
+
+**修复方案**：
+1. 使用 scoped 样式
+2. 提高选择器优先级（如 `.lew-component.lew-component`）
+3. 使用 CSS 变量而非直接样式值
+
+### 问题4：hover 状态闪烁
+
+**现象**：鼠标悬浮时背景色或颜色闪烁，过渡效果不稳定。
+
+**原因**：
+- 使用了 `transition: all`，导致所有属性都过渡，性能开销大
+- 选择器优先级冲突，导致状态切换不稳定
+- 普通状态和选中状态的 hover 规则冲突
+
+**修复方案**：
+
+1. **避免使用 `transition: all`**，只过渡需要的属性：
+
+```scss
+// ❌ 错误：过渡所有属性，性能差且可能闪烁
+.lew-component {
+  transition: all var(--lew-form-transition-bezier);
+}
+
+// ✅ 正确：只过渡需要的属性
+.lew-component {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+```
+
+2. **使用精确的选择器避免状态冲突**：
+
+```scss
+// ❌ 错误：普通状态和选中状态的 hover 可能冲突
+.lew-component:hover {
+  background-color: var(--lew-component-bg-hover);
+}
+
+.lew-component-active:hover {
+  background-color: var(--lew-component-selected-bg-hover);
+}
+
+// ✅ 正确：使用 :not() 和组合选择器明确优先级
+.lew-component:hover:not(.lew-component-active) {
+  background-color: var(--lew-component-bg-hover);
+}
+
+.lew-component.lew-component-active:hover {
+  background-color: var(--lew-component-selected-bg-hover);
+}
+```
+
+3. **使用固定的过渡时间**（可选，根据实际情况）：
+
+```scss
+// ✅ 使用固定的过渡时间，避免 CSS 变量计算导致的延迟
+.lew-component {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+// 或者使用全局变量（如果变量值稳定）
+.lew-component {
+  transition: background-color var(--lew-form-transition-bezier),
+    color var(--lew-form-transition-bezier);
+}
+```
+
+**完整示例**：
+
+```scss
+.lew-menu-item-child {
+  background-color: var(--lew-menu-item-bg);
+  color: var(--lew-menu-item-text);
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  // 普通状态的 hover
+  &:hover:not(.lew-menu-item-active) {
+    background-color: var(--lew-menu-item-bg-hover);
+    color: var(--lew-menu-item-text-hover);
+  }
+}
+
+.lew-menu-item-child.lew-menu-item-active {
+  background-color: var(--lew-menu-item-selected-bg);
+  color: var(--lew-menu-item-selected-text);
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  // 选中状态的 hover（优先级更高）
+  &:hover {
+    background-color: var(--lew-menu-item-selected-bg-hover);
+    color: var(--lew-menu-item-selected-text-hover);
+  }
+}
+```
+
+## 检查清单
+
+开发组件样式前确认：
+- [ ] 所有颜色使用 CSS 变量，无硬编码
+- [ ] 支持暗色模式（通过 CSS 变量自动适配）
+- [ ] 遵循 CSS 变量命名规范（`--lew-{category}-{name}`）
+- [ ] 组件变量命名规范（`--lew-{component}-{property}`）
+- [ ] 使用 scoped 样式避免污染
+- [ ] 动态颜色使用 `getColorType` 工具函数
+- [ ] 所有尺寸使用全局变量（如 `--lew-border-radius-small`）
+- [ ] 过渡动画只过渡需要的属性，避免使用 `transition: all`
+- [ ] hover 状态使用精确选择器，避免状态冲突导致闪烁
+- [ ] 在亮色和暗色模式下测试样式
+- [ ] 检查样式是否被外部样式覆盖
+
+修改样式系统前确认：
+- [ ] 是否改变了现有 CSS 变量的默认值？
+- [ ] 是否删除/重命名了 CSS 变量或类名？
+- [ ] 是否更新了暗色模式变量？
+- [ ] 是否更新了相关文档？
+- [ ] 是否需要标记为 deprecated？
+- [ ] 版本号是否正确递增？
+
+## 最佳实践
+
+### 1. 颜色选择
+
+```vue
+<!-- ✅ 优先使用语义颜色 -->
+<lew-button color="primary">按钮</lew-button>
+<lew-button color="success">按钮</lew-button>
+
+<!-- ✅ 需要特定颜色时使用基础颜色 -->
+<lew-button color="blue">按钮</lew-button>
+<lew-button color="purple">按钮</lew-button>
+```
+
+### 2. 变量引用
+
+```scss
+// ✅ 直接引用全局变量
+.lew-component {
+  background: var(--lew-bgcolor-0);
+  color: var(--lew-text-color-0);
+}
+
+// ✅ 通过组件变量引用（便于定制）
+.lew-component {
+  --component-bg: var(--lew-bgcolor-0);
+  background: var(--component-bg);
+}
+```
+
+### 3. 状态处理
+
+```scss
+// ✅ 使用变量修饰符
+.lew-component {
+  background: var(--lew-component-bg);
+  
+  &:hover {
+    background: var(--lew-component-bg-hover);
+  }
+  
+  &:active {
+    background: var(--lew-component-bg-active);
+  }
+  
+  &[disabled] {
+    opacity: var(--lew-disabled-opacity);
+  }
+}
+```
+
+### 4. 主题定制
+
+用户可以通过覆盖 CSS 变量实现主题定制：
+
+```css
+/* 用户项目中的样式 */
+:root {
+  --lew-color-primary: #custom-color;
+  --lew-border-radius-small: 10px;
+}
+```
+
+---
+
+**记住**：样式系统是组件库视觉一致性的基础，遵循规范确保长期可维护性！
+

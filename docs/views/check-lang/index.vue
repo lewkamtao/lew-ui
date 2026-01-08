@@ -2,7 +2,17 @@
 import type { Language } from '../../locals/index'
 import { useDark } from '@vueuse/core'
 import { messages } from 'docs/locals/index'
-import { de as compDE, en as compEN, es as compES, fr as compFR, it as compIT, ja as compJA, ko as compKO, pt as compPT, zh as compZH } from 'lew-ui/locals/index'
+import {
+  de as compDE,
+  en as compEN,
+  es as compES,
+  fr as compFR,
+  it as compIT,
+  ja as compJA,
+  ko as compKO,
+  pt as compPT,
+  zh as compZH,
+} from 'lew-ui/locals/index'
 
 const docs_langs = messages
 
@@ -298,7 +308,6 @@ async function copyAllDifferences() {
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 
   .lang-header {
     margin-bottom: 36px;
@@ -554,7 +563,6 @@ async function copyAllDifferences() {
       .diff-item {
         padding: 16px 20px;
         border-bottom: var(--lew-border-1);
-        font-family: 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         font-size: 13px;
         line-height: 1.6;
         white-space: pre-wrap;

@@ -67,30 +67,48 @@ export function any2px(value: number | string | undefined): string {
   const autoRegex = /^auto$/i
   const calcRegex = /^calc\((.+)\)$/
   const percentRegex = /^-?\d+(\.\d+)?%$/
+  const cssUnitRegex = /^-?\d+(\.\d+)?(px|em|rem|vh|vw|vmin|vmax|ch|ex|cm|mm|in|pt|pc)$/i
   const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
   const numericRegex = /^-?\d+(\.\d+)?$/
 
   const _value = String(value)
 
+  // 1. calc() 表达式
   if (_value.startsWith('calc')) {
     return _value
   }
 
+  // 2. 纯数字（无单位）
   if (numericRegex.test(_value)) {
     return `${value}px`
   }
+
+  // 3. auto 关键字
   if (autoRegex.test(_value)) {
     return _value
   }
+
+  // 4. 百分比
   if (percentRegex.test(_value)) {
     return _value
   }
+
+  // 5. calc() 表达式（完整匹配）
   if (calcRegex.test(_value)) {
     return _value
   }
+
+  // 6. CSS 单位（px, em, rem, vh, vw, vmin, vmax 等）
+  if (cssUnitRegex.test(_value)) {
+    return _value
+  }
+
+  // 7. 仅数字 + 可选 px
   if (pixelRegex.test(_value)) {
     return `${_value}`
   }
+
+  // 8. 尝试解析为数字
   const numValue = Number.parseFloat(_value)
   if (!Number.isNaN(numValue)) {
     return `${numValue}px`
@@ -99,11 +117,35 @@ export function any2px(value: number | string | undefined): string {
   return ''
 }
 
-export function getUniqueId() {
-  // 生成 UUID v4
-  const uuid = crypto.randomUUID()
-  // 取前6位
-  return uuid.substring(0, 8)
+// 先定义一个模块级别的变量来存储最后一个时间戳和计数器
+let lastTimestamp: number = 0
+let counter: number = 0
+
+export function getUniqueId(): string {
+  const letters = 'abcdefghijklmnopqrstuvwxyz'
+  const firstChar = letters[Math.floor(Math.random() * letters.length)]
+
+  // 当前时间戳（毫秒）- 使用普通数字而非BigInt
+  const timestamp = Date.now()
+
+  // 如果同一毫秒生成多个 ID，则自增计数器，避免重复
+  if (timestamp === lastTimestamp) {
+    counter++
+  }
+  else {
+    counter = 0 // 使用0而非0n
+    lastTimestamp = timestamp
+  }
+
+  // 合并时间戳和计数器，再加上少量随机数
+  const random = Math.floor(Math.random() * 1000) // 0~999
+  // 使用普通数字运算而非BigInt
+  const uniqueNumber = timestamp * 1000 + counter + random
+
+  // 转为 Base36 压缩，截取后 7 位
+  const rest = uniqueNumber.toString(36).slice(-7).padStart(7, '0')
+
+  return firstChar + rest
 }
 
 export function formatFormByMap(formMap: any) {

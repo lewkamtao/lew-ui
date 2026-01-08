@@ -1,25 +1,30 @@
 <script setup lang="ts">
+// 1. 类型导入
 import type { LewCollapseModelValue } from 'lew-ui/types'
+
+// 2. 工具函数导入
 import { any2px } from 'lew-ui/utils'
-import { computed, provide, toRaw, watch } from 'vue'
+
+// 3. 组件配置导入
 import { collapseEmits } from './emits'
 import { collapseProps } from './props'
 
+// Props & Emits
 const props = defineProps(collapseProps)
-
 const emit = defineEmits(collapseEmits)
 
+// v-model
 const modelValue = defineModel<LewCollapseModelValue>()
 
 // Provide/Inject
 provide('expandKeys', modelValue)
 
-// Computed
+// 计算属性
 const collapseStyle = computed(() => ({
   width: any2px(props.width),
 }))
 
-// Watch for changes and emit
+// 监听器
 watch(
   modelValue,
   (newValue) => {

@@ -65,9 +65,6 @@ function close() {
 }
 
 .lew-drawer-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 50px;
   font-size: 18px;
   font-weight: bolder;

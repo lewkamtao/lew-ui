@@ -224,13 +224,14 @@ const options = ref([
   {
     field: 'interests',
     label: 'Interests & Hobbies',
-    as: 'select-multiple',
+    as: 'select',
     rule: Yup.array()
       .min(1, 'Select at least one interest')
       .max(5, 'Maximum 5 interests allowed')
       .required('Please select your interests'),
     props: {
       clearable: true,
+      multiple: true,
       placeholder: 'Select your interests',
       options: [
         { label: 'Technology', value: 'tech' },

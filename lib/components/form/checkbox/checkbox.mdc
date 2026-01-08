@@ -1,0 +1,181 @@
+---
+alwaysApply: false
+---
+
+# LewCheckbox 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewCheckbox / LewCheckboxGroup
+- **核心用途**：复选框组件，用于单个或多个选项的选择，支持单选和多选场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持单个复选框和复选框组两种使用方式
+  - 支持多种尺寸（mini、small、medium、large）
+  - 支持块级显示和圆角样式
+  - 支持禁用和只读状态
+  - 支持不确定状态（certain）
+  - 支持自定义图标显示
+  - 支持水平和垂直方向布局（复选框组）
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **单个复选框**：显示一个可勾选的复选框，带有可选的标签文本
+- **复选框组**：显示多个复选框，支持批量选择和统一管理
+- **块级模式**：复选框以块级元素显示，带有背景和边框
+- **不确定状态**：显示一个短横线表示部分选中或不确定状态
+- **禁用/只读**：禁用状态下无法交互，只读状态下显示但不可修改
+
+## 3. 详细 API 说明
+
+### 3.1 LewCheckbox Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| label | `string` | - | 任意字符串 | 复选框标签文本 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| checked | `boolean` | `false` | `true` / `false` | 是否选中（受控模式） |
+| size | `LewSize` | `'medium'` | `'mini'` / `'small'` / `'medium'` / `'large'` | 复选框尺寸 |
+| block | `boolean` | `false` | `true` / `false` | 是否块级显示 |
+| round | `boolean` | `false` | `true` / `false` | 是否圆角样式 |
+| iconable | `boolean` | `true` | `true` / `false` | 是否显示图标框 |
+| certain | `boolean` | `false` | `true` / `false` | 是否显示不确定状态（短横线） |
+
+### 3.2 LewCheckboxGroup Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewCheckboxOption[]` | - | 数组（必填） | 复选框选项数组 |
+| disabled | `boolean` | - | `true` / `false` | 是否禁用所有选项 |
+| readonly | `boolean` | - | `true` / `false` | 是否只读所有选项 |
+| size | `LewSize` | `'medium'` | `'mini'` / `'small'` / `'medium'` / `'large'` | 复选框尺寸 |
+| direction | `LewDirection` | `'x'` | `'x'` / `'y'` | 布局方向（水平/垂直） |
+| block | `boolean` | - | `true` / `false` | 是否块级显示 |
+| round | `boolean` | `false` | `true` / `false` | 是否圆角样式 |
+| iconable | `boolean` | `true` | `true` / `false` | 是否显示图标框 |
+
+### 3.3 方法
+
+该组件暂不支持此功能。
+
+### 3.4 事件
+
+#### LewCheckbox 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 选中状态发生变化时 | `(value: boolean)` | 值变化事件 |
+
+#### LewCheckboxGroup 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 选中值发生变化时 | `(value: string[], item: LewCheckboxOption)` | 值变化事件，value 为所有选中值的数组，item 为当前操作的选项 |
+
+### 3.5 插槽
+
+该组件暂不支持此功能。
+
+### 3.6 v-model
+
+#### LewCheckbox
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `boolean` | 绑定值，表示是否选中 |
+
+#### LewCheckboxGroup
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `string[]` | 绑定值，表示所有选中项的 value 数组 |
+
+### 3.7 类型定义
+
+**LewCheckboxOption**：
+```typescript
+interface LewCheckboxOption {
+  label: string      // 显示文本
+  value: string      // 选项值
+  disabled?: boolean // 是否禁用该选项
+}
+```
+
+## 4. 注意事项
+
+⚠️ **受控与非受控模式**：`checked` 属性用于受控模式，`v-model` 用于非受控模式。两者可以同时使用，`checked` 优先级更高
+
+⚠️ **复选框组必填项**：`LewCheckboxGroup` 的 `options` 属性是必填的，必须提供选项数组才能正常显示
+
+⚠️ **块级模式限制**：当 `block=true` 且 `iconable=false` 时，复选框会以块级按钮样式显示，不显示图标框
+
+⚠️ **不确定状态**：`certain=true` 时，复选框会显示一个短横线而不是对勾，通常用于表示部分选中或不确定状态
+
+⚠️ **禁用与只读区别**：`disabled` 状态下复选框会显示禁用样式（透明度降低），`readonly` 状态下样式正常但无法交互
+
+✅ **推荐实践**：单个复选框使用 `v-model` 进行双向绑定，复选框组使用 `v-model` 绑定数组值
+
+## 5. 常见问题与修复方案
+
+### Q1: 复选框状态不更新
+
+**现象**：点击复选框后，选中状态没有变化或显示不正确
+
+**原因**：
+- 同时使用了 `checked` 和 `v-model`，但 `checked` 没有响应式更新
+- `readonly` 或 `disabled` 属性阻止了交互
+- 父组件没有正确处理 `v-model` 更新
+
+**修复方案**：
+1. 如果使用受控模式，确保 `checked` 属性是响应式的，并在 `change` 事件中更新
+2. 检查是否设置了 `disabled` 或 `readonly` 属性
+3. 确保父组件正确处理 `v-model` 的更新，使用 `v-model` 时不要同时使用 `checked`
+
+### Q2: 复选框组选中值不正确
+
+**现象**：复选框组中选中多个选项后，`v-model` 绑定的数组值不正确
+
+**原因**：
+- `options` 中的 `value` 类型不一致（字符串和数字混用）
+- 数组引用问题导致响应式失效
+
+**修复方案**：
+1. 确保 `options` 中所有项的 `value` 类型一致（建议统一使用字符串）
+2. 使用 `v-model` 时，确保初始值是响应式数组：`const selected = ref<string[]>([])`
+3. 检查是否有其他地方直接修改了数组引用
+
+### Q3: 不确定状态不显示
+
+**现象**：设置了 `certain=true` 但没有显示短横线
+
+**原因**：
+- `iconable=false` 且 `block=true` 时，图标框不显示
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确保 `iconable=true` 或 `block=false`，让图标框能够显示
+2. 检查是否有自定义样式覆盖了 `.lew-checkbox-icon-certain` 的样式
+3. 确认 `certain` 属性正确传递到组件
+
+### Q4: 块级模式样式异常
+
+**现象**：设置 `block=true` 后，复选框样式显示不正确
+
+**原因**：
+- `iconable` 和 `block` 的组合使用不当
+- 尺寸设置与块级模式不匹配
+
+**修复方案**：
+1. 理解 `block` 模式：`block=true` 时，复选框会以块级按钮样式显示
+2. 当 `iconable=false` 且 `block=true` 时，会隐藏图标框，只显示标签
+3. 调整 `size` 属性以适应块级显示的高度要求
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化组件规范和性能：移除不必要的 cloneDeep（boolean 值）、优化代码顺序、添加 as const 确保类型推断、修复 props.ts 中的错误 | 2024-12-19 |
+| 1.0.0 | 初始版本 | - |
