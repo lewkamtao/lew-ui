@@ -12,11 +12,11 @@
       "props": {
         "placeholder": "请输入企业全称",
         "clearable": true
-          },
+      },
       "rule": "Yup.string().required('企业名称不能为空')",
       "gridArea": "auto / 1 / auto / 3"
-          },
-          {
+    },
+    {
       "label": "统一社会信用代码",
       "as": "input",
       "field": "creditCode",
@@ -65,22 +65,22 @@
               { "value": "internet", "label": "互联网服务" },
               { "value": "ai", "label": "人工智能" },
               { "value": "bigdata", "label": "大数据" }
-                ]
-              },
-              {
+            ]
+          },
+          {
             "value": "finance",
             "label": "金融业",
-                "children": [
+            "children": [
               { "value": "bank", "label": "银行" },
               { "value": "insurance", "label": "保险" },
               { "value": "securities", "label": "证券" },
               { "value": "fund", "label": "基金" }
-                ]
-              },
-              {
+            ]
+          },
+          {
             "value": "manufacture",
             "label": "制造业",
-                "children": [
+            "children": [
               { "value": "electronics", "label": "电子设备" },
               { "value": "machinery", "label": "机械设备" },
               { "value": "automobile", "label": "汽车制造" },
@@ -94,23 +94,23 @@
               { "value": "wholesale", "label": "批发业" },
               { "value": "retail", "label": "零售业" },
               { "value": "import_export", "label": "进出口贸易" }
-                ]
-              },
-              {
+            ]
+          },
+          {
             "value": "service",
             "label": "服务业",
-                "children": [
+            "children": [
               { "value": "consulting", "label": "咨询服务" },
               { "value": "advertising", "label": "广告传媒" },
               { "value": "education", "label": "教育培训" },
               { "value": "medical", "label": "医疗健康" }
-                ]
-              }
             ]
-          },
+          }
+        ]
+      },
       "gridArea": "auto / 2 / auto / 3"
-                  },
-                  {
+    },
+    {
       "label": "经营状态",
       "as": "select",
       "field": "businessStatus",
@@ -122,11 +122,11 @@
           { "label": "停业整顿", "value": "suspended" },
           { "label": "注销", "value": "cancelled" },
           { "label": "吊销", "value": "revoked" }
-                ]
-              },
+        ]
+      },
       "gridArea": "auto / 3 / auto / 4"
-                  },
-                  {
+    },
+    {
       "label": "注册资本",
       "as": "input-number",
       "field": "registeredCapital",
@@ -145,7 +145,7 @@
       "props": {
         "placeholder": "请选择成立日期",
         "clearable": true
-          },
+      },
       "rule": "Yup.string().required('请选择成立日期')",
       "gridArea": "auto / 2 / auto / 3"
     },
@@ -205,7 +205,7 @@
       "props": {
         "placeholder": "请输入法定代表人姓名",
         "clearable": true
-          },
+      },
       "rule": "Yup.string().required('法定代表人不能为空')",
       "gridArea": "auto / 1 / auto / 2"
     },
@@ -219,15 +219,15 @@
       },
       "rule": "Yup.string().matches(/^1[3-9]\\d{9}$/, '请输入正确的手机号码')",
       "gridArea": "auto / 2 / auto / 3"
-                  },
-                  {
+    },
+    {
       "label": "电子邮箱",
       "as": "input",
       "field": "email",
       "props": {
         "placeholder": "请输入企业邮箱",
         "clearable": true
-          },
+      },
       "rule": "Yup.string().email('请输入正确的邮箱格式')",
       "gridArea": "auto / 3 / auto / 4"
     },
@@ -279,22 +279,22 @@
               { "value": "haidian", "label": "海淀区" },
               { "value": "dongcheng", "label": "东城区" },
               { "value": "xicheng", "label": "西城区" }
-                ]
-              },
-              {
+            ]
+          },
+          {
             "value": "shanghai",
             "label": "上海市",
-                "children": [
+            "children": [
               { "value": "pudong", "label": "浦东新区" },
               { "value": "huangpu", "label": "黄浦区" },
               { "value": "xuhui", "label": "徐汇区" },
               { "value": "jing_an", "label": "静安区" }
-                ]
-              },
-              {
+            ]
+          },
+          {
             "value": "guangdong",
             "label": "广东省",
-                "children": [
+            "children": [
               { "value": "guangzhou", "label": "广州市" },
               { "value": "shenzhen", "label": "深圳市" },
               { "value": "dongguan", "label": "东莞市" },
@@ -309,20 +309,20 @@
               { "value": "ningbo", "label": "宁波市" },
               { "value": "wenzhou", "label": "温州市" },
               { "value": "jiaxing", "label": "嘉兴市" }
-                ]
-              },
-              {
+            ]
+          },
+          {
             "value": "jiangsu",
             "label": "江苏省",
-                "children": [
+            "children": [
               { "value": "nanjing", "label": "南京市" },
               { "value": "suzhou", "label": "苏州市" },
               { "value": "wuxi", "label": "无锡市" },
               { "value": "changzhou", "label": "常州市" }
-                ]
-              }
             ]
-          },
+          }
+        ]
+      },
       "rule": "Yup.string().required('请选择所在地区')",
       "gridArea": "auto / 1 / auto / 2"
     },
@@ -333,7 +333,7 @@
       "props": {
         "placeholder": "请输入详细地址（街道、门牌号等）",
         "clearable": true
-          },
+      },
       "rule": "Yup.string().required('详细地址不能为空')",
       "gridArea": "auto / 2 / auto / 4"
     },

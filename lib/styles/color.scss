@@ -315,6 +315,21 @@
   --lew-color-badge-#{$color-name}-text: #{get-color-value($color-map, '8')};
 }
 
+// ============================================
+// Alert 组件主题颜色变量
+// 生成变量格式：--lew-color-alert-{color-name}-*
+// 例如：--lew-color-alert-success-bg, --lew-color-alert-success-text
+// ============================================
+@mixin export-alert-colors-light($color-name, $color-map) {
+  --lew-color-alert-#{$color-name}-bg: #{get-color-value($color-map, '2')};
+  --lew-color-alert-#{$color-name}-text: #{get-color-value($color-map, '9')};
+}
+
+@mixin export-alert-colors-dark($color-name, $color-map) {
+  --lew-color-alert-#{$color-name}-bg: #{get-color-value($color-map, '3')};
+  --lew-color-alert-#{$color-name}-text: #{get-color-value($color-map, '7')};
+}
+
 @mixin export-menu-colors-light($color-name, $color-map) {
   --lew-color-menu-#{$color-name}-item-bg: transparent;
   --lew-color-menu-#{$color-name}-item-bg-hover: var(--lew-form-bgcolor-hover);
@@ -363,6 +378,7 @@
       @include export-inputtag-colors-dark($name, $color-map);
       @include export-badge-colors-dark($name, $color-map);
       @include export-menu-colors-dark($name, $color-map);
+      @include export-alert-colors-dark($name, $color-map);
     } @else {
       @include export-base-colors-light($name, $color-map);
       @include export-button-colors-light($name, $color-map);
@@ -376,6 +392,7 @@
       @include export-inputtag-colors-light($name, $color-map);
       @include export-badge-colors-light($name, $color-map);
       @include export-menu-colors-light($name, $color-map);
+      @include export-alert-colors-light($name, $color-map);
     }
   }
 }
@@ -399,6 +416,7 @@
       @include export-inputtag-colors-dark($semantic-name, $color-map);
       @include export-badge-colors-dark($semantic-name, $color-map);
       @include export-menu-colors-dark($semantic-name, $color-map);
+      @include export-alert-colors-dark($semantic-name, $color-map);
     } @else {
       @include export-base-colors-light($semantic-name, $color-map);
       @include export-button-colors-light($semantic-name, $color-map);
@@ -412,6 +430,7 @@
       @include export-inputtag-colors-light($semantic-name, $color-map);
       @include export-badge-colors-light($semantic-name, $color-map);
       @include export-menu-colors-light($semantic-name, $color-map);
+      @include export-alert-colors-light($semantic-name, $color-map);
     }
   }
 }

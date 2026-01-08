@@ -3,9 +3,12 @@
  * ---------------------------------------------------------
  * Business Project Reset
  * - Includes font defaults
- * - Google Font friendly
+ * - Google M3 Roboto font
  * - Practical & stable
  * ======================================================= */
+
+/* ---------- Google M3 Font (Roboto) ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 /* ---------- Box model ---------- */
 *,
@@ -27,10 +30,9 @@ body {
 
   font-size: 14px;
 
-  /* Google-style cross-platform font stack */
+  /* Google M3 font stack */
   font-family:
-    Inter,
-    Roboto,
+    'Roboto',
     -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
@@ -38,10 +40,6 @@ body {
     'Hiragino Sans GB',
     'Microsoft YaHei',
     'Noto Sans CJK SC',
-    'Noto Sans KR',
-    'Noto Sans JP',
-    Helvetica,
-    Arial,
     sans-serif;
   line-height: 1.5;
   background-color: #ffffff;
@@ -49,6 +47,14 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Code font ---------- */
+code,
+pre,
+kbd,
+samp {
+  font-family: 'Roboto Mono', 'SF Mono', Monaco, Consolas, monospace;
 }
 
 /* ---------- Typography ---------- */

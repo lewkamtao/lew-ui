@@ -140,9 +140,9 @@ async function handleClose(): Promise<void> {
   }
 }
 
-// 监听 modelValue 变化，更新输入框宽度
+// 监听 modelValue、text、placeholder 变化，更新输入框宽度
 watch(
-  () => modelValue.value,
+  [() => modelValue.value, () => props.text, () => props.placeholder],
   () => {
     if (hasModelValue.value) {
       nextTick(updateInputWidth);

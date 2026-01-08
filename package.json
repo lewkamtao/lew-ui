@@ -67,6 +67,7 @@
     "terser": "^5.44.0",
     "tippy.js": "^6.3.7",
     "ts-morph": "^26.0.0",
+    "vfonts": "^0.0.3",
     "vue-i18n": "^11.1.0",
     "vue-router": "^4.0.13",
     "vue-virt-list": "^1.5.11",

@@ -1,27 +1,27 @@
 <script setup lang="ts">
 // 1. 组件导入
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
 
 // 2. 工具函数导入
-import { object2class } from 'lew-ui/utils'
+import { object2class } from "lew-ui/utils";
 
 // 3. 组件配置导入
-import { alertProps } from './props'
+import { alertProps } from "./props";
 
 // Props & Emits
-const props = defineProps(alertProps)
+const props = defineProps(alertProps);
 
 // Slots 检测
-const slots = useSlots()
-const hasTitle = computed(() => !!slots.title || !!props.title)
-const hasContent = computed(() => !!slots.content || !!props.content)
-const hasFooter = computed(() => !!slots.footer)
+const slots = useSlots();
+const hasTitle = computed(() => !!slots.title || !!props.title);
+const hasContent = computed(() => !!slots.content || !!props.content);
+const hasFooter = computed(() => !!slots.footer);
 
 // 计算属性
 const alertClassName = computed(() => {
-  const { type } = props
-  return object2class('lew-alert', { type })
-})
+  const { type } = props;
+  return object2class("lew-alert", { type });
+});
 </script>
 
 <template>
@@ -90,27 +90,27 @@ const alertClassName = computed(() => {
 }
 
 .lew-alert-type-normal {
-  color: var(--lew-color-normal-dark);
-  background-color: var(--lew-color-normal-light);
+  color: var(--lew-color-alert-normal-text);
+  background-color: var(--lew-color-alert-normal-bg);
 }
 
 .lew-alert-type-success {
-  color: var(--lew-color-success-dark);
-  background-color: var(--lew-color-success-light);
+  color: var(--lew-color-alert-success-text);
+  background-color: var(--lew-color-alert-success-bg);
 }
 
 .lew-alert-type-warning {
-  color: var(--lew-color-warning-dark);
-  background-color: var(--lew-color-warning-light);
+  color: var(--lew-color-alert-warning-text);
+  background-color: var(--lew-color-alert-warning-bg);
 }
 
 .lew-alert-type-error {
-  color: var(--lew-color-error-dark);
-  background-color: var(--lew-color-error-light);
+  color: var(--lew-color-alert-error-text);
+  background-color: var(--lew-color-alert-error-bg);
 }
 
 .lew-alert-type-info {
-  color: var(--lew-color-info-dark);
-  background-color: var(--lew-color-info-light);
+  color: var(--lew-color-alert-info-text);
+  background-color: var(--lew-color-alert-info-bg);
 }
 </style>

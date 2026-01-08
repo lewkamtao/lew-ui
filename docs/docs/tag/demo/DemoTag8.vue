@@ -19,7 +19,9 @@ const tagLarge = ref('Large')
   <lew-flex direction="y" gap="20px">
     <!-- 语义颜色 -->
     <lew-flex direction="y" gap="8px">
-      <lew-text size="13px" bold>语义颜色</lew-text>
+      <lew-text size="13px" bold>
+        语义颜色
+      </lew-text>
       <lew-flex gap="10px" wrap>
         <lew-tag v-model="tagPrimary" editable color="primary" />
         <lew-tag v-model="tagSuccess" editable color="success" />
@@ -29,7 +31,9 @@ const tagLarge = ref('Large')
 
     <!-- 不同类型 -->
     <lew-flex direction="y" gap="8px">
-      <lew-text size="13px" bold>标签类型</lew-text>
+      <lew-text size="13px" bold>
+        标签类型
+      </lew-text>
       <lew-flex gap="10px" wrap>
         <lew-tag v-model="tagLight" editable color="blue" type="light" />
         <lew-tag v-model="tagFill" editable color="blue" type="fill" />
@@ -39,7 +43,9 @@ const tagLarge = ref('Large')
 
     <!-- 不同尺寸 -->
     <lew-flex direction="y" gap="8px">
-      <lew-text size="13px" bold>标签尺寸</lew-text>
+      <lew-text size="13px" bold>
+        标签尺寸
+      </lew-text>
       <lew-flex gap="10px" wrap x="start">
         <lew-tag v-model="tagSmall" editable color="green" size="small" />
         <lew-tag v-model="tagMedium" editable color="green" size="medium" />
