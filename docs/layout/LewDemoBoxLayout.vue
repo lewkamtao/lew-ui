@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import docsLocale from 'docs/locals'
-import { any2px, object2class } from 'lew-ui/utils'
-import { throttle } from 'lodash-es'
-import LewDemoBox from './LewDemoBox.vue'
+import docsLocale from "docs/locals";
+import { any2px, object2class } from "lew-ui/utils";
+import { throttle } from "lodash-es";
+import LewDemoBox from "./LewDemoBox.vue";
 
 const props = defineProps({
   demoGroup: {
@@ -19,86 +19,86 @@ const props = defineProps({
   },
   gap: {
     type: String,
-    default: '30px',
+    default: "30px",
   },
   width: {
     type: String,
-    default: '100%',
+    default: "100%",
   },
   componentName: {
     type: String,
-    default: '',
+    default: "",
   },
   // 每个 demo 加载的延迟间隔（毫秒）
   loadDelay: {
     type: Number,
     default: 50,
   },
-})
+});
 
 // 响应式窗口宽度
-const windowWidth = ref(window.innerWidth)
+const windowWidth = ref(window.innerWidth);
 
 // 已加载的 demo 索引集合
-const loadedIndices = ref<Set<number>>(new Set())
+const loadedIndices = ref<Set<number>>(new Set());
 
 // 加载定时器
-let loadTimer: ReturnType<typeof setTimeout> | null = null
+let loadTimer: ReturnType<typeof setTimeout> | null = null;
 
 // 按顺序延迟加载 demo
 function startSequentialLoading() {
-  const totalDemos = props.demoGroup.length
-  let currentIndex = 0
+  const totalDemos = props.demoGroup.length;
+  let currentIndex = 0;
 
   // 立即加载第一个
   if (totalDemos > 0) {
-    loadedIndices.value.add(0)
-    currentIndex = 1
+    loadedIndices.value.add(0);
+    currentIndex = 1;
   }
 
   // 延迟加载后续 demo
   function loadNext() {
     if (currentIndex >= totalDemos) {
-      loadTimer = null
-      return
+      loadTimer = null;
+      return;
     }
 
-    loadedIndices.value = new Set([...loadedIndices.value, currentIndex])
-    currentIndex++
+    loadedIndices.value = new Set([...loadedIndices.value, currentIndex]);
+    currentIndex++;
 
-    loadTimer = setTimeout(loadNext, props.loadDelay)
+    loadTimer = setTimeout(loadNext, props.loadDelay);
   }
 
   if (currentIndex < totalDemos) {
-    loadTimer = setTimeout(loadNext, props.loadDelay)
+    loadTimer = setTimeout(loadNext, props.loadDelay);
   }
 }
 
 // 检查某个 demo 是否已加载
 const isDemoLoaded = computed(() => (index: number) => {
-  return loadedIndices.value.has(index)
-})
+  return loadedIndices.value.has(index);
+});
 
 // 监听窗口大小变化
 onMounted(() => {
   const handleResize = throttle(() => {
-    windowWidth.value = window.innerWidth
-  }, 200)
+    windowWidth.value = window.innerWidth;
+  }, 200);
 
-  window.addEventListener('resize', handleResize)
+  window.addEventListener("resize", handleResize);
 
   // 开始顺序加载
-  startSequentialLoading()
+  startSequentialLoading();
 
   onUnmounted(() => {
-    window.removeEventListener('resize', handleResize)
+    window.removeEventListener("resize", handleResize);
     // 清理定时器
     if (loadTimer) {
-      clearTimeout(loadTimer)
-      loadTimer = null
+      clearTimeout(loadTimer);
+      loadTimer = null;
     }
-  })
-})
+  });
+});
 
 // 监听 demoGroup 变化，重新开始加载
 watch(
@@ -106,88 +106,80 @@ watch(
   () => {
     // 清理之前的定时器
     if (loadTimer) {
-      clearTimeout(loadTimer)
-      loadTimer = null
+      clearTimeout(loadTimer);
+      loadTimer = null;
     }
     // 重置加载状态
-    loadedIndices.value = new Set()
+    loadedIndices.value = new Set();
     // 重新开始加载
-    startSequentialLoading()
-  },
-)
+    startSequentialLoading();
+  }
+);
 
 // 根据窗口宽度动态计算列数
 const dynamicColumns = computed(() => {
-  return windowWidth.value < 1600 ? 1 : props.columns
-})
+  return windowWidth.value < 1600 ? 1 : props.columns;
+});
 
 // 计算属性
 const getLayoutStyle = computed(() => {
-  const { width, gap } = props
-  const columns = dynamicColumns.value
-  const columnWidth = `calc((100% - ${any2px(gap)} * ${
-    columns - 1
-  }) / ${columns})`
+  const { width, gap } = props;
+  const columns = dynamicColumns.value;
+  const columnWidth = `calc((100% - ${any2px(gap)} * ${columns - 1}) / ${columns})`;
   return {
-    'width': any2px(width),
-    'gap': any2px(gap),
-    '--column-width': columnWidth,
-  }
-})
+    width: any2px(width),
+    gap: any2px(gap),
+    "--column-width": columnWidth,
+  };
+});
 
 const getLayoutClassNames = computed(() => {
-  return object2class('lew-demo-box-layout', {})
-})
+  return object2class("lew-demo-box-layout", {});
+});
 
 // 将demoGroup和codeGroup按列数分组
 const groupedData = computed(() => {
-  const { demoGroup, codeGroup } = props
-  const columns = dynamicColumns.value
-  const result = []
+  const { demoGroup, codeGroup } = props;
+  const columns = dynamicColumns.value;
+  const result = [];
 
   for (let i = 0; i < columns; i++) {
     const columnData = {
       demos: [] as any[],
       codes: [] as string[],
       indices: [] as number[],
-    }
+    };
 
     for (let j = i; j < demoGroup.length; j += columns) {
-      columnData.demos.push(demoGroup[j])
-      columnData.codes.push(codeGroup[j] || '')
-      columnData.indices.push(j)
+      columnData.demos.push(demoGroup[j]);
+      columnData.codes.push(codeGroup[j] || "");
+      columnData.indices.push(j);
     }
 
-    result.push(columnData)
+    result.push(columnData);
   }
 
-  return result
-})
+  return result;
+});
 
 // 获取demo项配置
 function getDemoItemConfig(index: number) {
   return {
     title: props.componentName
       ? docsLocale.t(`components.${props.componentName}.demo${index + 1}.title`)
-      : '',
+      : "",
     description: props.componentName
-      ? docsLocale.t(
-          `components.${props.componentName}.demo${index + 1}.description`,
-        )
-      : '',
-    code: props.codeGroup[index] || '',
+      ? docsLocale.t(`components.${props.componentName}.demo${index + 1}.description`)
+      : "",
+    code: props.codeGroup[index] || "",
     demoIndex: index,
     componentName: props.componentName,
-  }
+  };
 }
 </script>
 
 <template>
-  <div
-    class="lew-demo-box-layout"
-    :style="getLayoutStyle"
-    :class="getLayoutClassNames"
-  >
+  <div class="lew-demo-box-layout" :style="getLayoutStyle" :class="getLayoutClassNames">
     <div
       v-for="(column, columnIndex) in groupedData"
       :key="columnIndex"
@@ -201,14 +193,10 @@ function getDemoItemConfig(index: number) {
         <LewDemoBox
           v-if="isDemoLoaded(column.indices[itemIndex])"
           :title="getDemoItemConfig(column.indices[itemIndex]).title"
-          :description="
-            getDemoItemConfig(column.indices[itemIndex]).description
-          "
+          :description="getDemoItemConfig(column.indices[itemIndex]).description"
           :code="getDemoItemConfig(column.indices[itemIndex]).code"
           :demo-index="getDemoItemConfig(column.indices[itemIndex]).demoIndex"
-          :component-name="
-            getDemoItemConfig(column.indices[itemIndex]).componentName
-          "
+          :component-name="getDemoItemConfig(column.indices[itemIndex]).componentName"
         >
           <component :is="item" />
         </LewDemoBox>
@@ -236,7 +224,6 @@ function getDemoItemConfig(index: number) {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    overflow: hidden;
 
     &:not(:last-child) {
       margin-right: v-bind(gap);
@@ -245,7 +232,6 @@ function getDemoItemConfig(index: number) {
     :deep(.demo-box) {
       width: 100%;
       min-width: 0;
-      overflow: hidden;
     }
   }
 

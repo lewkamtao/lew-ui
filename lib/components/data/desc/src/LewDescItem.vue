@@ -1,100 +1,96 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
-import { LewTextTrim, LewTooltip } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { tipsIconSizeMap } from 'lew-ui/components/form/form/src/props'
-import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
-import { isString } from 'lodash-es'
-import { computed, getCurrentInstance, ref } from 'vue'
-import { descItemProps, lewDescSizePaddingMap } from './props'
+import type { LewSize } from "lew-ui";
+import { LewTextTrim, LewTooltip } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import { tipsIconSizeMap } from "lew-ui/components/form/form/src/props";
+import { any2px, object2class, retrieveNestedFieldValue } from "lew-ui/utils";
+import { isString } from "lodash-es";
+import { computed, getCurrentInstance, ref } from "vue";
+import { descItemProps, lewDescSizePaddingMap } from "./props";
 
-const props = defineProps(descItemProps)
+const props = defineProps(descItemProps);
 
 // Register tooltip directive
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive("tooltip")) {
+  app.use(LewTooltip);
 }
 
 // Refs
-const descItemRef = ref<HTMLElement>()
+const descItemRef = ref<HTMLElement>();
 
 // Constants
 const GAP_X_MAP: Record<LewSize, number> = {
   small: 10,
   medium: 14,
   large: 16,
-}
+};
 
 const GAP_Y_MAP: Record<LewSize, number> = {
   small: 8,
   medium: 10,
   large: 12,
-}
+};
 
 // Computed
 const getDescItemClassNames = computed(() => {
-  const { direction, size, bordered } = props
-  return object2class('lew-desc-item', { direction, size, bordered })
-})
+  const { direction, size, bordered } = props;
+  return object2class("lew-desc-item", { direction, size, bordered });
+});
 
 const getGap = computed(() => {
-  const { size, direction } = props
-  return direction === 'x' ? GAP_X_MAP[size] : GAP_Y_MAP[size]
-})
+  const { size, direction } = props;
+  return direction === "x" ? GAP_X_MAP[size] : GAP_Y_MAP[size];
+});
 
 const getPadding = computed(() => {
-  const { bordered, size } = props
+  const { bordered, size } = props;
   return bordered
-    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(
-      lewDescSizePaddingMap[size],
-    )}`
-    : 0
-})
+    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(lewDescSizePaddingMap[size])}`
+    : 0;
+});
 
 const getDescItemStyle = computed(() => {
-  const { bordered, gridArea } = props
+  const { bordered, gridArea } = props;
   return {
     gap: bordered ? 0 : any2px(getGap.value),
     gridArea: gridArea || undefined,
-  }
-})
+  };
+});
 
 const getLabelBoxStyle = computed(() => {
-  const { labelX } = props
+  const { labelX } = props;
   return {
-    justifyContent: labelX === 'center' ? labelX : `flex-${labelX}`,
+    justifyContent: labelX === "center" ? labelX : `flex-${labelX}`,
     padding: getPadding.value,
-  }
-})
+  };
+});
 
 const getDescItemMainStyle = computed(() => {
-  const { direction, labelWidth, valueX } = props
+  const { direction, labelWidth, valueX } = props;
   return {
     width:
-      direction === 'x'
-        ? `calc(${descItemRef.value?.offsetWidth || 0}px - ${any2px(
-          labelWidth,
-        )} - 10px)`
-        : '100%',
-    justifyContent: valueX === 'center' ? valueX : `flex-${valueX}`,
+      direction === "x"
+        ? `calc(${descItemRef.value?.offsetWidth || 0}px - ${any2px(labelWidth)} - 10px)`
+        : "100%",
+    justifyContent: valueX === "center" ? valueX : `flex-${valueX}`,
     padding: getPadding.value,
-  }
-})
+  };
+});
 
 const getLabelBoxWidth = computed(() => {
-  const { direction, labelWidth } = props
-  return direction === 'x' ? any2px(labelWidth) : '100%'
-})
+  const { direction, labelWidth } = props;
+  return direction === "x" ? any2px(labelWidth) : "100%";
+});
 
 // Methods
 function showTextAndEmpty(): string {
-  const text = retrieveNestedFieldValue(props.dataSource, props.field!)
-  if (text === null || text === undefined || text === '') {
-    return '-'
+  const text = retrieveNestedFieldValue(props.dataSource, props.field!);
+  if (text === null || text === undefined || text === "") {
+    return "-";
   }
-  return isString(text) ? text : JSON.stringify(text)
+  return isString(text) ? text : JSON.stringify(text);
 }
 </script>
 
@@ -130,11 +126,7 @@ function showTextAndEmpty(): string {
         :render-fn="customRender({ field: field!, label: label!, dataSource })"
       />
       <template v-else-if="type === 'text-trim'">
-        <LewTextTrim
-          :x="valueX"
-          style="width: 100%"
-          :text="showTextAndEmpty()"
-        />
+        <LewTextTrim :x="valueX" style="width: 100%" :text="showTextAndEmpty()" />
       </template>
       <template v-else>
         {{ showTextAndEmpty() }}
@@ -167,7 +159,6 @@ function showTextAndEmpty(): string {
       .lew-label-tips-icon {
         cursor: pointer;
         flex-shrink: 0;
-        margin-top: 1px;
       }
     }
   }

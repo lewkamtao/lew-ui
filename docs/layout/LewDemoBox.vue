@@ -1,44 +1,38 @@
 <script setup lang="ts">
-import { renderDescription } from 'docs/lib/utils'
-import docsLocale from 'docs/locals'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import {
-  Check,
-  ChevronDown,
-  ChevronUp,
-  Copy,
-  ExternalLink,
-} from 'lucide-vue-next'
-import LewCodeHighlighter from './LewCodeHighlighter.vue'
+import { renderDescription } from "docs/lib/utils";
+import docsLocale from "docs/locals";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import { Check, Code2, Copy, ExternalLink } from "lucide-vue-next";
+import LewCodeHighlighter from "./LewCodeHighlighter.vue";
 
 const props = defineProps({
   title: {
     type: String,
-    default: '',
+    default: "",
   },
   tag: {
     type: String,
-    default: '',
+    default: "",
   },
   tipsContent: {
     type: String,
-    default: '',
+    default: "",
   },
   tipsType: {
     type: String,
-    default: 'info',
+    default: "info",
   },
   tipsTitle: {
     type: String,
-    default: '',
+    default: "",
   },
   description: {
     type: String,
-    default: '',
+    default: "",
   },
   code: {
     type: String,
-    default: '',
+    default: "",
   },
   demoIndex: {
     type: Number,
@@ -46,123 +40,180 @@ const props = defineProps({
   },
   componentName: {
     type: String,
-    default: '',
+    default: "",
   },
-})
+});
 
-const router = useRouter()
+const router = useRouter();
 
-// 生成独立 demo 页面的完整 URL（用于新标签页打开）
 function getStandaloneDemoUrl() {
   if (props.demoIndex >= 0 && props.componentName) {
-    // 将组件名转为首字母大写的格式（如 input -> Input）
     const componentPath = props.componentName
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join('')
-
-    const path = `/${componentPath}/demo_${props.demoIndex + 1}`
-    // 使用 router.resolve 获取完整 URL（包含 hash）
-    return router.resolve(path).href
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("");
+    const path = `/${componentPath}/demo_${props.demoIndex + 1}`;
+    return router.resolve(path).href;
   }
-  return '#'
+  return "#";
 }
 
-const isShowCode = ref(false)
-const isCopied = ref(false)
+// 状态
+const isShowCode = ref(false);
+const isCodeLoading = ref(false);
+const isCodeRendering = ref(false);
+const isCopied = ref(false);
 
-const checkHasContent = computed(() => (text: string) => {
-  if (text && text.indexOf('components.') !== 0) {
-    return true
+// 最小 loading 时间
+const MIN_LOADING_TIME = 300;
+
+let codeMountedResolve: (() => void) | null = null;
+
+function onCodeMounted() {
+  if (codeMountedResolve) {
+    codeMountedResolve();
+    codeMountedResolve = null;
   }
-  return false
-})
+}
 
-// 复制代码功能
+async function toggleCodeDisplay() {
+  if (isShowCode.value) {
+    isShowCode.value = false;
+    // 延迟清理，等待动画完成
+    setTimeout(() => {
+      if (!isShowCode.value) {
+        isCodeRendering.value = false;
+      }
+    }, 350);
+  } else {
+    isCodeLoading.value = true;
+    isCodeRendering.value = true;
+
+    const minLoadingPromise = new Promise<void>((resolve) =>
+      setTimeout(resolve, MIN_LOADING_TIME)
+    );
+    const codeMountedPromise = new Promise<void>((resolve) => {
+      codeMountedResolve = resolve;
+    });
+
+    await Promise.all([minLoadingPromise, codeMountedPromise]);
+
+    isCodeLoading.value = false;
+    isShowCode.value = true;
+  }
+}
+
+const checkHasContent = computed(() => (text: string) =>
+  text && text.indexOf("components.") !== 0
+);
+
 async function copyCode(code: string) {
   try {
-    await navigator.clipboard.writeText(code)
-    isCopied.value = true
-    LewMessage.success(docsLocale.t('base.copySuccess'))
-    setTimeout(() => {
-      isCopied.value = false
-    }, 2000)
+    await navigator.clipboard.writeText(code);
+    isCopied.value = true;
+    LewMessage.success(docsLocale.t("base.copySuccess"));
+  } catch {
+    const textArea = document.createElement("textarea");
+    textArea.value = code;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    isCopied.value = true;
   }
-  catch (err) {
-    console.error('复制失败:', err)
-    // 降级方案：使用传统的复制方法
-    const textArea = document.createElement('textarea')
-    textArea.value = code
-    document.body.appendChild(textArea)
-    textArea.select()
-    document.execCommand('copy')
-    document.body.removeChild(textArea)
-    isCopied.value = true
-    setTimeout(() => {
-      isCopied.value = false
-    }, 2000)
-  }
+  setTimeout(() => {
+    isCopied.value = false;
+  }, 2000);
 }
 </script>
 
 <template>
   <div class="demo-box">
-    <lew-title :id="title" size="18px" class="demo-docs-title">
-      {{ title }}
-      <lew-tag
-        v-if="checkHasContent(tag)"
-        type="light"
-        color="blue"
-        style="margin: 2px 0px 0px 5px"
-      >
+    <!-- 标题区域 -->
+    <div class="demo-header">
+      <lew-title :id="title" size="18px" class="demo-title">
+        {{ title }}
+      </lew-title>
+      <lew-tag v-if="checkHasContent(tag)" type="light" color="blue" size="small">
         {{ tag }}
       </lew-tag>
-      <a
-        v-if="demoIndex >= 0 && componentName"
-        class="demo-external-link"
-        :href="getStandaloneDemoUrl()"
-        target="_blank"
-        rel="noopener noreferrer"
-        @click.stop
-      >
-        <ExternalLink :size="14" />
-      </a>
-    </lew-title>
+    </div>
+
+    <!-- 提示信息 -->
     <lew-alert
       v-if="checkHasContent(tipsContent)"
       :type="checkHasContent(tipsType) ? tipsType : 'info'"
       :title="tipsTitle"
       :content="tipsContent"
+      class="demo-alert"
     />
-    <div class="desc">
-      <RenderComponent
-        v-if="checkHasContent(description)"
-        :render-fn="renderDescription(description)"
-      />
+
+    <!-- 描述区域 -->
+    <div v-if="checkHasContent(description)" class="demo-desc">
+      <RenderComponent :render-fn="renderDescription(description)" />
     </div>
-    <div class="demo-item">
-      <div class="demo-cp lew-scrollbar">
+
+    <!-- Demo 卡片 -->
+    <div class="demo-card">
+      <!-- 右上角工具按钮 -->
+      <div class="card-actions">
+        <!-- 展开代码按钮 -->
+        <button
+          v-if="code"
+          class="action-btn"
+          :class="{ 'action-btn--active': isShowCode }"
+          :disabled="isCodeLoading"
+          :title="isShowCode ? docsLocale.t('base.close') : docsLocale.t('base.showCode')"
+          @click="toggleCodeDisplay"
+        >
+          <Code2 :size="15" />
+        </button>
+
+        <!-- 新窗口打开 -->
+        <a
+          v-if="demoIndex >= 0 && componentName"
+          class="action-btn"
+          :href="getStandaloneDemoUrl()"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="在新窗口打开"
+        >
+          <ExternalLink :size="15" />
+        </a>
+      </div>
+
+      <!-- Demo 内容区域 -->
+      <div class="demo-content lew-scrollbar">
         <slot />
       </div>
-      <div v-if="isShowCode && code" class="hl-pre">
-        <div class="copy-btn" @click="copyCode(code)">
-          <Check v-if="isCopied" :size="16" class="copy-icon success" />
-          <Copy v-else :size="16" class="copy-icon" />
-        </div>
-        <div class="pre-box lew-scrollbar">
-          <LewCodeHighlighter :code="code" lang="vue" />
-        </div>
+
+      <!-- Loading 进度条 - 在代码块上方 -->
+      <div v-if="isCodeLoading" class="code-loading">
+        <div class="code-loading-bar" />
       </div>
-      <div class="show-bar" @click="isShowCode = !isShowCode">
-        <div class="icon">
-          <ChevronDown v-if="!isShowCode" :size="16" />
-          <ChevronUp v-else :size="16" />
+
+      <!-- 代码区域 - 使用 grid 动画实现平滑展开 -->
+      <div
+        v-if="isCodeRendering && code"
+        class="code-wrapper"
+        :class="{ 'code-wrapper--expanded': isShowCode }"
+      >
+        <div class="code-inner">
+          <div class="code-container">
+            <!-- 复制按钮 -->
+            <button
+              class="code-copy-btn"
+              :class="{ 'code-copy-btn--copied': isCopied }"
+              @click="copyCode(code)"
+            >
+              <Check v-if="isCopied" :size="14" />
+              <Copy v-else :size="14" />
+            </button>
+            <div class="code-scroll lew-scrollbar">
+              <LewCodeHighlighter :code="code" lang="vue" @vue:mounted="onCodeMounted" />
+            </div>
+          </div>
         </div>
-        {{
-          isShowCode
-            ? docsLocale.t("base.close")
-            : docsLocale.t("base.showCode")
-        }}
       </div>
     </div>
   </div>
@@ -170,142 +221,209 @@ async function copyCode(code: string) {
 
 <style lang="scss" scoped>
 .demo-box {
-  margin: 20px 0px;
+  margin: 32px 0;
+}
 
-  .desc {
-    margin: 20px 0px;
-    color: var(--lew-text-color-5);
+// 标题区域
+.demo-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.demo-title {
+  text-transform: capitalize;
+}
+
+// 提示信息
+.demo-alert {
+  margin-bottom: 12px;
+}
+
+// 描述区域
+.demo-desc {
+  margin-bottom: 16px;
+  color: var(--lew-text-color-5);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+// Demo 卡片
+.demo-card {
+  position: relative;
+  background-color: var(--lew-bgcolor-0);
+  border-radius: var(--lew-border-radius-small);
+  border: 1px solid var(--lew-border-color-2);
+  transition: border-color 0.2s ease;
+  box-shadow: var(--lew-box-shadow);
+
+  &:hover {
+    border-color: var(--lew-border-color-3);
+  }
+}
+
+// 右上角工具按钮
+.card-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: var(--lew-bgcolor-2);
+  border: 1px solid var(--lew-border-color-3);
+  border-radius: var(--lew-border-radius-small);
+  color: var(--lew-text-color-3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--lew-bgcolor-3);
+    color: var(--lew-text-color-1);
+    border-color: var(--lew-border-color-4);
   }
 
-  .demo-item {
-    margin: 10px 0px;
-    background-color: var(--lew-bgcolor-0);
-    border-radius: var(--lew-border-radius-small);
-    box-shadow: var(--lew-box-shadow);
-    overflow: hidden;
+  &:active {
+    transform: scale(0.95);
   }
 
-  .demo-docs-title {
-    text-transform: capitalize;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .demo-external-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--lew-text-color-5);
-    text-decoration: none;
-    transition: color 0.2s ease;
-    cursor: pointer;
-    margin-left: 8px;
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-
-    :deep(svg) {
-      width: 14px;
-      height: 14px;
-      color: inherit;
-      stroke: currentColor;
-      fill: none;
-    }
+  &--active {
+    color: var(--lew-color-primary);
+    border-color: var(--lew-color-primary);
+    background-color: var(--lew-color-primary-light);
 
     &:hover {
-      color: var(--lew-color-primary);
-    }
-
-    &:active {
-      opacity: 0.7;
+      background-color: var(--lew-color-primary-light);
+      border-color: var(--lew-color-primary-dark);
     }
   }
 
-  .hl-pre {
-    position: relative;
-    border-top: var(--lew-border-1);
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
 
-    .pre-box {
-      border-radius: var(--lew-border-radius-small);
-    }
+// Demo 内容区域
+.demo-content {
+  padding: 48px 32px 32px;
+  overflow-x: auto;
+  background-color: var(--lew-bgcolor-0);
+  border-radius: var(--lew-border-radius-small);
+}
 
-    .copy-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      background-color: var(--lew-bgcolor-3);
-      border-radius: var(--lew-border-radius-small);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: 1px solid var(--lew-border-color-1);
+// Loading 进度条
+.code-loading {
+  height: 2px;
+  background-color: var(--lew-bgcolor-3);
+  overflow: hidden;
+  position: relative;
+}
 
-      .copy-icon {
-        color: var(--lew-text-color-5);
-        transition: color 0.2s ease;
+.code-loading-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(
+    90deg,
+    var(--lew-color-primary-light),
+    var(--lew-color-primary),
+    var(--lew-color-primary-light)
+  );
+  animation: loading-slide 1s ease-in-out infinite;
+}
 
-        &.success {
-          color: #10b981;
-        }
-      }
+@keyframes loading-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
 
-      &:hover {
-        background-color: var(--lew-bgcolor-4);
-        border-color: var(--lew-border-color-2);
+// 代码区域
+.code-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
-        .copy-icon:not(.success) {
-          color: var(--lew-text-color-3);
-        }
-      }
+  &--expanded {
+    grid-template-rows: 1fr;
+  }
+}
 
-      &:active {
-        transform: scale(0.95);
-      }
-    }
+.code-inner {
+  overflow: hidden;
+}
+
+.code-container {
+  position: relative;
+  border-top: 1px solid rgba($color: #555, $alpha: 0.45);
+}
+
+.code-scroll {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--lew-bgcolor-2);
+  border: 1px solid var(--lew-border-color-2);
+  border-radius: var(--lew-border-radius-small);
+  color: var(--lew-text-color-5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+
+  .code-container:hover & {
+    opacity: 1;
   }
 
-  .show-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: var(--lew-border-1);
-    width: 100%;
-    height: 35px;
-    font-size: 14px;
-    cursor: pointer;
-    color: #999;
-    background-color: var(--lew-bgcolor-1);
-
-    .icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 10px;
-    }
-  }
-
-  .show-bar:hover {
+  &:hover {
     background-color: var(--lew-bgcolor-3);
     color: var(--lew-text-color-3);
+    border-color: var(--lew-border-color-3);
   }
 
-  .demo-cp {
-    width: 100%;
-    overflow-x: auto;
-    box-sizing: border-box;
-    padding: 30px;
+  &:active {
+    transform: scale(0.95);
   }
 
-  @media (max-width: 767px) {
-    .demo-cp {
-      overflow-x: auto;
-    }
+  &--copied {
+    color: var(--lew-color-success);
+    border-color: var(--lew-color-success-light);
+    background-color: var(--lew-color-success-light);
+    opacity: 1;
+  }
+}
+
+// 响应式
+@media (max-width: 767px) {
+  .demo-content {
+    padding: 40px 20px 20px;
   }
 }
 </style>

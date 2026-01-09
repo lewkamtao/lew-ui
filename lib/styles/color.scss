@@ -526,8 +526,8 @@
 
 @mixin export-form-colors-light() {
   --lew-form-bgcolor: #{get-color-value($bgcolor, '4')};
-  --lew-form-bgcolor-hover: #{get-color-value($bgcolor, '5')};
-  --lew-form-bgcolor-active: #{get-color-value($bgcolor, '6')};
+  --lew-form-bgcolor-hover: #{get-color-value($bgcolor, '6')};
+  --lew-form-bgcolor-active: #{get-color-value($bgcolor, '7')};
   --lew-form-bgcolor-focus: #{get-color-value($bgcolor, '1')};
   --lew-form-border-color: transparent;
   --lew-form-border-color-focus: var(--lew-color-primary);
@@ -538,8 +538,8 @@
 
 @mixin export-form-colors-dark() {
   --lew-form-bgcolor: #{get-color-value(dark.$dark-bgcolor, '3')};
-  --lew-form-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '4')};
-  --lew-form-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-form-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '5')};
+  --lew-form-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '4')};
   --lew-form-bgcolor-focus: #{get-color-value(dark.$dark-bgcolor, '1')};
   --lew-form-border-color: transparent;
   --lew-form-border-color-focus: var(--lew-color-primary);
