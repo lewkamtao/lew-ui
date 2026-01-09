@@ -264,7 +264,7 @@ alwaysApply: false
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
-| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（computed, ref, watch, getCurrentInstance），优化计算属性命名（imageStyleObject → imageStyle），修复模板中的属性绑定（:src, :lazy, :alt） | 2024-01-XX |
+| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（computed, ref, watch, getCurrentInstance），优化计算属性命名（imageStyleObject → imageStyle），修复模板中的属性绑定（:src, :lazy, :alt） | 2025-01-09 |
 | 1.0.0 | 初始版本 | - |
 
 ---

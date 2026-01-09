@@ -1,0 +1,114 @@
+---
+alwaysApply: false
+---
+
+# LewPagination 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewPagination
+- **核心用途**：用于数据分页，支持页码切换和每页条数选择
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持页码快速跳转
+  - 支持每页条数选择
+  - 支持自定义可见页码数量
+  - 支持多种尺寸
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **页码切换**：点击页码或上一页/下一页按钮切换页面
+- **条数选择**：通过下拉框选择每页显示的条数
+- **省略号**：当页码过多时显示省略号
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 分页器尺寸 |
+| pageSizeOptions | `number[] \| LewSelectOption[]` | `[10, 20, 30, 50, 100]` | - | 每页条数选项 |
+| visiblePagesCount | `number` | `5` | 1-21 | 可见页码数量 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| currentPage | `number` | 当前页码（通过 change 事件获取） |
+| pageSize | `number` | 每页条数（通过 change 事件获取） |
+
+### 3.3 方法
+
+该组件暂不支持此功能。
+
+### 3.4 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 页码或条数变化时 | `{ currentPage: number, pageSize: number }` | 分页变化事件 |
+
+### 3.5 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **visiblePagesCount**：设置过大会导致页码显示过长，建议 5-9
+- ⚠️ **pageSizeOptions**：可以传数字数组或完整的选项对象数组
+- ⚠️ **change 事件**：每次页码或条数变化都会触发，包含最新的 currentPage 和 pageSize
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：页码显示不全
+
+**现象**：页码过多时只显示部分。
+
+**原因**：
+- 这是预期行为，通过省略号表示更多页码
+
+**修复方案**：
+调整 `visiblePagesCount` 增加可见页码数：
+```vue
+<lew-pagination :visible-pages-count="9" />
+```
+
+### 问题2：想要自定义每页条数选项
+
+**修复方案**：
+```vue
+<lew-pagination :page-size-options="[5, 10, 15, 20]" />
+
+<!-- 或使用选项对象 -->
+<lew-pagination
+  :page-size-options="[
+    { label: '5条/页', value: 5 },
+    { label: '10条/页', value: 10 }
+  ]"
+/>
+```
+
+### 问题3：如何获取分页数据
+
+**修复方案**：
+```vue
+<script setup>
+const pagination = ref({ currentPage: 1, pageSize: 10 })
+
+const handlePageChange = ({ currentPage, pageSize }) => {
+  pagination.value = { currentPage, pageSize }
+  // 重新请求数据
+  fetchData(currentPage, pageSize)
+}
+</script>
+
+<lew-pagination @change="handlePageChange" />
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

@@ -20,6 +20,7 @@ const state = reactive({
   ),
   hidLine: 'all',
   isInit: false,
+  isFirstRender: true, // 标记首次渲染，用于禁用初始滚动动画
 })
 
 watch(
@@ -45,10 +46,18 @@ function initActiveItemStyle(index: number) {
     tabsRef.value.scrollWidth > tabsRef.value.clientWidth
     && activeRef?.offsetLeft >= 0
   ) {
-    tabsRef.value.scrollLeft
+    const scrollLeft
       = activeRef?.offsetLeft
         - tabsRef.value.clientWidth / 2
         + activeRef?.offsetWidth / 2
+
+    // 首次渲染使用 instant 滚动，后续使用 smooth 滚动
+    if (state.isFirstRender) {
+      tabsRef.value.scrollTo({ left: scrollLeft, behavior: 'instant' })
+    }
+    else {
+      tabsRef.value.scrollLeft = scrollLeft
+    }
   }
 
   state.activeItemStyle = {
@@ -80,6 +89,7 @@ function init() {
   tabsScroll()
   setTimeout(() => {
     state.isInit = true
+    state.isFirstRender = false // 首次渲染完成后，后续滚动使用 smooth 效果
   }, 100)
 }
 

@@ -220,6 +220,29 @@ const componentCategoryMap: Record<string, string> = {
 }
 
 /**
+ * 指令映射表
+ * 指令名 -> 指令目录名
+ */
+const directiveMap: Record<string, string> = {
+  'backtop': 'backtop',
+  'back-top': 'backtop', // 支持 back-top 路由名称
+  'loading': 'loading',
+  'tooltip': 'tooltip',
+  'context-menu': 'context-menu',
+  'contextmenu': 'context-menu', // 支持无连字符版本
+}
+
+/**
+ * 方法映射表
+ * 方法名 -> 方法目录名
+ */
+const methodMap: Record<string, string> = {
+  'dialog': 'dialog',
+  'message': 'message',
+  'notification': 'notification',
+}
+
+/**
  * 将驼峰命名转换为连字符命名
  * @param name - 组件名（如 'textTrim', 'inputNumber'）
  * @returns 连字符命名（如 'text-trim', 'input-number'）
@@ -233,7 +256,7 @@ function camelToKebab(name: string): string {
 
 /**
  * 根据组件名获取 mdc 文件路径
- * @param componentName - 组件名（如 'collapse', 'input-number', 'textTrim'）
+ * @param componentName - 组件名（如 'collapse', 'input-number', 'textTrim', 'dialog', 'loading'）
  * @returns mdc 文件路径，如果找不到返回 null
  */
 export function getMdcPath(componentName: string): string | null {
@@ -242,26 +265,32 @@ export function getMdcPath(componentName: string): string | null {
 
   // 将组件名转换为小写
   const normalizedName = componentName.toLowerCase()
+  const kebabName = camelToKebab(componentName)
 
-  // 先尝试直接查找（已经是连字符命名的情况）
+  // 1. 先检查组件（优先级最高，因为大多数页面都是组件）
   let category = componentCategoryMap[normalizedName]
-
-  // 如果找不到，尝试将驼峰命名转换为连字符命名后再查找
   if (!category) {
-    const kebabName = camelToKebab(componentName)
     category = componentCategoryMap[kebabName]
   }
 
-  // 确定最终的文件名（使用连字符命名）
-  const finalName = category ? camelToKebab(componentName) : normalizedName
-
-  if (!category) {
-    // 如果找不到，尝试所有分类
-    const categories = ['general', 'form', 'data', 'feedback', 'navigation']
-    // 返回第一个可能的路径（让组件尝试加载）
-    return `../../lib/components/${categories[0]}/${finalName}/${finalName}.mdc`
+  if (category) {
+    const finalName = kebabName
+    return `../../lib/components/${category}/${finalName}/${finalName}.mdc`
   }
 
-  // 返回完整的相对路径
-  return `../../lib/components/${category}/${finalName}/${finalName}.mdc`
+  // 2. 再检查是否是方法（dialog, message, notification）
+  const methodName = methodMap[normalizedName] || methodMap[kebabName]
+  if (methodName) {
+    return `../../lib/methods/${methodName}/${methodName}.mdc`
+  }
+
+  // 3. 最后检查是否是指令（loading, tooltip, context-menu）
+  const directiveName = directiveMap[normalizedName] || directiveMap[kebabName]
+  if (directiveName) {
+    return `../../lib/directives/${directiveName}/${directiveName}.mdc`
+  }
+
+  // 4. 都没找到，尝试所有分类
+    const categories = ['general', 'form', 'data', 'feedback', 'navigation']
+  return `../../lib/components/${categories[0]}/${normalizedName}/${normalizedName}.mdc`
 }

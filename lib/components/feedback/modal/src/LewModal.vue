@@ -29,7 +29,6 @@ const visible = defineModel<boolean>('visible', { default: false })
 
 // 响应式状态
 const modalBodyRef = ref<HTMLElement | null>(null)
-const recomputeTrigger = ref<number>(0)
 
 // 常量
 const modalId = `lew-modal-${getUniqueId()}`
@@ -37,11 +36,8 @@ const modalId = `lew-modal-${getUniqueId()}`
 // Slots 检测
 const slots = useSlots()
 
-// 计算属性
-const isTopModal = computed(() => {
-  // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
-  void recomputeTrigger.value
-
+// 方法：检查当前 modal 是否在最顶层（每次调用时重新检查 DOM 状态）
+function checkIsTopModal(): boolean {
   if (!visible.value) {
     return false
   }
@@ -75,7 +71,7 @@ const isTopModal = computed(() => {
 
   // 检查当前 modal 是否是最后一个（顶层）
   return openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId
-})
+}
 
 const modalStyle = computed(() => {
   const { width, top } = props
@@ -90,61 +86,14 @@ const modalBodyMainStyle = computed(() => ({
 }))
 
 // 方法
-function forceRecomputeTopModal() {
-  recomputeTrigger.value++
-}
-
 function handleClose(): void {
   visible.value = false
   emit('close')
 }
 
-// 监听全局 modal 状态变化（通过定时器检查）
-let globalCheckTimer: ReturnType<typeof setInterval> | null = null
-
-function startGlobalCheck() {
-  if (globalCheckTimer) {
-    clearInterval(globalCheckTimer)
-  }
-
-  globalCheckTimer = setInterval(() => {
-    if (visible.value) {
-      forceRecomputeTopModal()
-    }
-  }, 100) // 每100ms检查一次
-}
-
-function stopGlobalCheck() {
-  if (globalCheckTimer) {
-    clearInterval(globalCheckTimer)
-    globalCheckTimer = null
-  }
-}
-
 // 监听器
-watch(
-  modalBodyRef,
-  async (newVal) => {
-    if (newVal && visible.value) {
-      await nextTick()
-      forceRecomputeTopModal()
-    }
-  },
-  { immediate: true },
-)
-
-watch(visible, async (newVal) => {
+watch(visible, async () => {
   await nextTick()
-  // modal 状态变化时，强制重新计算
-  forceRecomputeTopModal()
-
-  // 控制全局检查定时器
-  if (newVal) {
-    startGlobalCheck()
-  }
-  else {
-    stopGlobalCheck()
-  }
 })
 
 onClickOutside(modalBodyRef, (e: any) => {
@@ -157,24 +106,13 @@ onClickOutside(modalBodyRef, (e: any) => {
 })
 
 if (props.closeByEsc) {
-  watch(Escape, (v) => {
-    if (!visible.value || !v || !isTopModal.value) {
+  watch(Escape, (v: boolean) => {
+    if (!visible.value || !v || !checkIsTopModal()) {
       return
     }
     visible.value = false
   })
 }
-
-// 生命周期
-onMounted(() => {
-  if (visible.value) {
-    startGlobalCheck()
-  }
-})
-
-onUnmounted(() => {
-  stopGlobalCheck()
-})
 </script>
 
 <template>

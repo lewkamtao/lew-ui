@@ -1,0 +1,144 @@
+---
+alwaysApply: false
+---
+
+# v-tooltip 指令使用文档
+
+## 1. 指令基础信息
+
+- **指令名称**：v-tooltip
+- **核心用途**：为元素添加提示气泡
+- **适用环境**：Vue 3.4+、TypeScript
+- **基础特性**：
+  - 支持多种触发方式（hover、click）
+  - 支持 12 个方向定位
+  - 支持自定义延迟时间
+  - 支持渲染 Vue 组件作为内容
+
+## 2. 快速开始
+
+### 基本用法
+
+```vue
+<template>
+  <!-- 基础文本提示 -->
+  <button v-tooltip="{ content: '这是提示文本' }">
+    鼠标悬停
+  </button>
+  
+  <!-- 点击触发 -->
+  <button v-tooltip="{ content: '点击显示', trigger: 'click' }">
+    点击我
+  </button>
+</template>
+```
+
+## 3. 详细 API 说明
+
+### 3.1 指令参数
+
+| 参数名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| content | `string \| VNode \| () => VNode` | - | - | 提示内容，支持字符串或渲染函数 |
+| trigger | `LewTrigger` | `'mouseenter'` | `'mouseenter'` / `'hover'` / `'click'` | 触发方式 |
+| placement | `LewPlacement` | `'top'` | 见下方 | 弹出位置 |
+| delay | `[number, number]` | `[120, 120]` | - | 显示/隐藏延迟 [显示延迟, 隐藏延迟]（ms） |
+
+### 3.2 Placement 可选值
+
+```
+'top' | 'top-start' | 'top-end'
+'bottom' | 'bottom-start' | 'bottom-end'
+'left' | 'left-start' | 'left-end'
+'right' | 'right-start' | 'right-end'
+```
+
+### 3.3 使用示例
+
+```vue
+<script setup>
+import { LewTooltip } from 'lew-ui'
+import { h } from 'vue'
+
+// 全局注册（推荐在 main.ts 中）
+app.use(LewTooltip)
+</script>
+
+<template>
+  <!-- 不同方向 -->
+  <button v-tooltip="{ content: '顶部提示', placement: 'top' }">
+    顶部
+  </button>
+  <button v-tooltip="{ content: '底部提示', placement: 'bottom' }">
+    底部
+  </button>
+  
+  <!-- 点击触发 -->
+  <button v-tooltip="{ content: '点击显示', trigger: 'click' }">
+    点击
+  </button>
+  
+  <!-- 自定义延迟 -->
+  <button v-tooltip="{ content: '延迟显示', delay: [500, 100] }">
+    延迟
+  </button>
+  
+  <!-- 渲染函数 -->
+  <button v-tooltip="{ content: () => h('div', { style: 'color: red' }, '红色文字') }">
+    自定义内容
+  </button>
+</template>
+```
+
+## 4. 注意事项
+
+- ⚠️ **空内容**：当 `content` 为空或 `undefined` 时，tooltip 会自动禁用
+- ⚠️ **trigger hover**：`'hover'` 会被自动转换为 `'mouseenter'`
+- ⚠️ **click 模式**：点击触发模式下，点击外部区域会关闭 tooltip
+- ⚠️ **交互内容**：tooltip 内容支持交互（`interactive: true`）
+- ⚠️ **最大宽度**：默认最大宽度 250px
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：Tooltip 不显示
+
+**现象**：绑定了 v-tooltip 但没有提示。
+
+**原因**：
+- content 为空
+- 指令未正确注册
+
+**修复方案**：
+```vue
+<!-- 确保 content 有值 -->
+<button v-tooltip="{ content: tooltip || '默认提示' }">
+  按钮
+</button>
+```
+
+### 问题2：想要更快显示
+
+**现象**：默认延迟太长。
+
+**修复方案**：
+```vue
+<button v-tooltip="{ content: '提示', delay: [0, 100] }">
+  立即显示
+</button>
+```
+
+### 问题3：点击后不消失
+
+**现象**：click 模式下点击 tooltip 内容区域不消失。
+
+**原因**：
+- tooltip 默认开启 interactive，允许在内容上交互
+
+**修复方案**：
+这是预期行为，点击 tooltip 外部区域即可关闭。
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

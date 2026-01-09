@@ -1,0 +1,160 @@
+---
+alwaysApply: false
+---
+
+# LewInput 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewInput
+- **核心用途**：用于文本输入，支持多种输入类型、前后缀、复制、清空等功能
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持多种输入类型（text、password、number、email 等）
+  - 支持前缀/后缀选择器和图标
+  - 支持字符计数和最大长度限制
+  - 支持自动宽度、内容复制、密码显示切换
+  - 支持回车确认和聚焦全选
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础输入**：渲染一个文本输入框，支持 v-model 双向绑定
+- **密码输入**：设置 `type="password"` 和 `showPassword` 显示密码切换按钮
+- **前后缀**：通过 `prefixes` 和 `suffix` 配置前后缀类型和选项
+- **清空功能**：设置 `clearable` 在有内容时显示清空按钮
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| type | `LewInputType` | `'text'` | `'text'` / `'password'` / `'number'` / `'email'` / `'tel'` / `'url'` | 输入框类型 |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 输入框尺寸 |
+| width | `string` | `'100%'` | CSS 宽度值 | 输入框宽度 |
+| placeholder | `string` | 国际化默认值 | - | 占位文本 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| clearable | `boolean` | `false` | `true` / `false` | 是否显示清空按钮 |
+| showPassword | `boolean` | `false` | `true` / `false` | 是否显示密码切换按钮 |
+| maxLength | `number \| string` | - | 正整数 | 最大输入长度 |
+| showCount | `boolean` | `false` | `true` / `false` | 是否显示字符计数 |
+| align | `LewXAlignment` | `'left'` | `'left'` / `'center'` / `'right'` | 文本对齐方式 |
+| minWidth | `number \| string` | `'60px'` | CSS 宽度值 | 最小宽度（autoWidth 时生效） |
+| autoWidth | `boolean` | `false` | `true` / `false` | 是否自动宽度 |
+| selectByFocus | `boolean` | `false` | `true` / `false` | 聚焦时是否全选内容 |
+| copyable | `boolean` | `false` | `true` / `false` | 是否显示复制按钮 |
+| prefixes | `LewInputPrefixesType` | - | `'icon'` / `'select'` / `'text'` | 前缀类型 |
+| prefixesOptions | `LewContextMenusOption[]` | `[]` | - | 前缀选择器选项 |
+| prefixesTooltip | `string` | - | - | 前缀提示文本 |
+| suffix | `LewInputSuffixType` | - | `'icon'` / `'select'` / `'text'` | 后缀类型 |
+| suffixOptions | `LewContextMenusOption[]` | `[]` | - | 后缀选择器选项 |
+| suffixTooltip | `string` | - | - | 后缀提示文本 |
+| okByEnter | `boolean` | `false` | `true` / `false` | 是否回车触发确认事件 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `string \| number` | 输入框绑定值 |
+| prefixValue | `string \| number` | 前缀选择器绑定值 |
+| suffixValue | `string \| number` | 后缀选择器绑定值 |
+
+### 3.3 方法
+
+该组件暂不支持此功能。
+
+### 3.4 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 值变化时（失焦或回车） | `value?: string` | 值变化事件 |
+| input | 输入时 | `value?: string` | 实时输入事件 |
+| ok | 回车确认时 | `value?: string` | 确认事件（需启用 okByEnter） |
+| focus | 聚焦时 | `e: FocusEvent` | 聚焦事件 |
+| blur | 失焦时 | `e: FocusEvent` | 失焦事件 |
+| clear | 清空时 | - | 清空事件 |
+
+### 3.5 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **密码切换按钮**：`showPassword` 仅在 `type="password"` 时生效
+- ⚠️ **字符计数**：`showCount` 需配合 `maxLength` 使用才能显示 "当前/最大" 格式
+- ⚠️ **自动宽度**：`autoWidth` 启用时，输入框宽度会根据内容自动调整，可通过 `minWidth` 设置最小宽度
+- ⚠️ **前后缀选择器**：使用 `prefixes="select"` 或 `suffix="select"` 时，需配合 `prefixesOptions` 或 `suffixOptions` 提供选项
+- ⚠️ **v-model 多值绑定**：支持 `v-model`、`v-model:prefixValue`、`v-model:suffixValue` 三个双向绑定
+- ⚠️ **复制功能**：`copyable` 启用时会在右侧显示复制图标按钮
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：前缀/后缀选择器不显示
+
+**现象**：配置了 `prefixes="select"` 但选择器不显示。
+
+**原因**：
+- 未配置 `prefixesOptions`
+- `prefixesOptions` 为空数组
+
+**修复方案**：
+```vue
+<lew-input
+  v-model="value"
+  v-model:prefixValue="prefix"
+  prefixes="select"
+  :prefixesOptions="[
+    { label: '选项1', value: '1' },
+    { label: '选项2', value: '2' }
+  ]"
+/>
+```
+
+### 问题2：回车事件不触发
+
+**现象**：按回车键没有触发 `ok` 事件。
+
+**原因**：
+- 未启用 `okByEnter` 属性
+
+**修复方案**：
+```vue
+<lew-input
+  v-model="value"
+  ok-by-enter
+  @ok="handleOk"
+/>
+```
+
+### 问题3：自动宽度模式下输入框过窄
+
+**现象**：启用 `autoWidth` 后，空值时输入框非常窄。
+
+**原因**：
+- 未设置 `minWidth` 或设置值过小
+
+**修复方案**：
+```vue
+<lew-input
+  v-model="value"
+  auto-width
+  min-width="120px"
+/>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `selectByFocus` 配合 `copyable` 方便用户快速复制内容
+- ✅ 使用 `align="right"` 配合数字输入场景
+- ✅ 使用前后缀选择器实现带单位选择的输入框
+- ✅ 使用 `maxLength` + `showCount` 提供更好的用户输入反馈

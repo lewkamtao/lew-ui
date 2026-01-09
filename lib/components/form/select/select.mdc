@@ -1,0 +1,189 @@
+---
+alwaysApply: false
+---
+
+# LewSelect 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewSelect
+- **核心用途**：用于下拉选择，支持单选/多选、搜索、远程数据加载等功能
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持单选和多选模式
+  - 支持本地搜索和远程搜索
+  - 支持异步数据初始化
+  - 支持虚拟滚动优化大数据量渲染
+  - 支持清空、禁用、只读状态
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础选择**：渲染一个下拉选择框，点击展开选项列表
+- **多选模式**：设置 `multiple` 后支持选择多个选项，以标签形式展示
+- **搜索功能**：设置 `searchable` 后可在下拉框中搜索选项
+- **远程数据**：通过 `searchMethod` 或 `initMethod` 实现远程数据加载
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewSelectOption[]` | - | - | 选项数据 |
+| defaultValue | `string \| (string \| number)[]` | `''` | - | 默认值 |
+| width | `string` | `'100%'` | CSS 宽度值 | 选择框宽度 |
+| popoverWidth | `string` | `'100%'` | CSS 宽度值 | 下拉框宽度 |
+| autoWidth | `boolean` | `false` | `true` / `false` | 是否自动宽度 |
+| trigger | `LewTrigger` | `'click'` | `'click'` / `'hover'` | 触发方式 |
+| placeholder | `string` | 国际化默认值 | - | 占位文本 |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 尺寸 |
+| multiple | `boolean` | `false` | `true` / `false` | 是否多选 |
+| itemHeight | `number` | `34` | 正整数 | 选项高度（虚拟滚动用） |
+| searchable | `boolean` | `false` | `true` / `false` | 是否可搜索 |
+| searchMethod | `Function` | - | - | 远程搜索方法 |
+| initMethod | `Function` | - | - | 初始化数据方法 |
+| initMethodId | `string` | - | - | 初始化方法唯一标识 |
+| searchDelay | `number` | `250` | 正整数 | 搜索防抖延迟（ms） |
+| clearable | `boolean` | `false` | `true` / `false` | 是否可清空 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| showCheckIcon | `boolean` | `true` | `true` / `false` | 是否显示选中图标 |
+| enableSearchCache | `boolean` | `true` | `true` / `false` | 是否启用搜索缓存 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `string \| number \| (string \| number)[]` | 选择框绑定值，多选时为数组 |
+
+### 3.3 LewSelectOption 类型
+
+| 属性名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| label | `string` | 是 | 选项显示文本 |
+| value | `string \| number` | 是 | 选项值 |
+| disabled | `boolean` | 否 | 是否禁用 |
+
+### 3.4 搜索方法参数（searchMethod）
+
+```typescript
+interface LewSelectSearchMethodParams {
+  keyword: string      // 搜索关键词
+  options: LewSelectOption[]  // 当前选项列表
+}
+```
+
+### 3.5 方法
+
+该组件暂不支持此功能。
+
+### 3.6 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 选中值变化时 | `value?: string \| number \| (string \| number)[]` | 值变化事件 |
+| focus | 下拉框展开时 | - | 聚焦事件 |
+| blur | 下拉框收起时 | - | 失焦事件 |
+| clear | 清空时 | - | 清空事件 |
+| delete | 多选删除标签时 | `{ value: (string \| number)[], item: string \| number }` | 删除事件 |
+
+### 3.7 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **多选值类型**：多选模式下 `modelValue` 必须为数组类型
+- ⚠️ **虚拟滚动**：大数据量时自动启用虚拟滚动，需确保 `itemHeight` 与实际选项高度一致
+- ⚠️ **远程搜索**：使用 `searchMethod` 时需返回 `LewSelectOption[]` 格式的数据
+- ⚠️ **initMethod 执行时机**：组件挂载时自动调用，支持同步和异步返回
+- ⚠️ **搜索缓存**：`enableSearchCache` 启用时会缓存搜索结果，相同关键词不会重复请求
+- ⚠️ **popoverWidth**：默认 `'100%'` 表示与选择框同宽，可设置固定值或 `'auto'`
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：远程搜索不生效
+
+**现象**：配置了 `searchMethod` 但搜索时不调用。
+
+**原因**：
+- 未启用 `searchable` 属性
+- `searchMethod` 函数签名不正确
+
+**修复方案**：
+```vue
+<lew-select
+  v-model="value"
+  searchable
+  :search-method="handleSearch"
+/>
+
+<script setup>
+const handleSearch = async ({ keyword, options }) => {
+  const res = await api.search(keyword)
+  return res.data // 返回 LewSelectOption[]
+}
+</script>
+```
+
+### 问题2：多选时值不是数组
+
+**现象**：多选模式下 `modelValue` 是字符串。
+
+**原因**：
+- 初始值设置为字符串而非数组
+
+**修复方案**：
+```vue
+<script setup>
+// ❌ 错误
+const value = ref('')
+
+// ✅ 正确
+const value = ref([])
+</script>
+```
+
+### 问题3：选项显示空白
+
+**现象**：有值但选择框显示空白。
+
+**原因**：
+- `options` 中没有匹配 `value` 的选项
+- 远程数据未正确加载
+
+**修复方案**：
+1. 确保 `options` 包含当前 `value` 对应的选项
+2. 使用 `initMethod` 初始化时加载当前值的选项：
+```vue
+<lew-select
+  v-model="value"
+  :init-method="loadInitialOption"
+/>
+
+<script setup>
+const loadInitialOption = async () => {
+  if (value.value) {
+    const option = await api.getOptionByValue(value.value)
+    return [option]
+  }
+  return []
+}
+</script>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `searchable` + `searchMethod` 实现服务端搜索
+- ✅ 使用 `initMethod` 配合 `initMethodId` 避免重复初始化
+- ✅ 多选场景下使用 `clearable` 提供一键清空功能
+- ✅ 大数据量时确保 `itemHeight` 正确以优化虚拟滚动性能

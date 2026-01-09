@@ -272,7 +272,7 @@ function handleStepChange(value) {
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
-| 1.1.0 | 规范化代码结构：创建 model.ts 文件分离 v-model 定义；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构；优化 props.ts（移除 model 定义，添加 validator）；使用 defineModel API 实现 v-model 支持 | 2024-12-19 |
+| 1.1.0 | 规范化代码结构：创建 model.ts 文件分离 v-model 定义；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构；优化 props.ts（移除 model 定义，添加 validator）；使用 defineModel API 实现 v-model 支持 | 2025-01-09 |
 | 1.0.0 | 初始版本 | - |
 
 ---

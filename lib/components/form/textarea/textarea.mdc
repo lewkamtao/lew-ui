@@ -1,0 +1,138 @@
+---
+alwaysApply: false
+---
+
+# LewTextarea 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewTextarea
+- **核心用途**：用于多行文本输入，支持自动调整大小、字符计数、清空等功能
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持多种调整大小模式（none、both、horizontal、vertical）
+  - 支持字符计数和最大长度限制
+  - 支持清空按钮和聚焦全选
+  - 支持回车确认事件
+  - 支持自定义宽高和最大最小尺寸
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础输入**：渲染一个多行文本输入框，支持 v-model 双向绑定
+- **可调整大小**：通过 `resize` 属性控制用户是否可以拖拽调整大小
+- **字符计数**：设置 `showCount` 和 `maxLength` 显示字符计数
+- **清空功能**：设置 `clearable` 在有内容时显示清空按钮
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 文本框尺寸 |
+| placeholder | `string` | 国际化默认值 | - | 占位文本 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| clearable | `boolean` | `false` | `true` / `false` | 是否显示清空按钮 |
+| showCount | `boolean` | `false` | `true` / `false` | 是否显示字符计数 |
+| maxLength | `number` | - | 正整数 | 最大输入长度 |
+| resize | `LewTextareaResize` | `'none'` | `'none'` / `'both'` / `'horizontal'` / `'vertical'` | 调整大小模式 |
+| width | `string` | `'100%'` | CSS 宽度值 | 文本框宽度 |
+| height | `string` | `'80px'` | CSS 高度值 | 文本框高度 |
+| minWidth | `string` | `'100%'` | CSS 宽度值 | 最小宽度 |
+| minHeight | `string` | `'80px'` | CSS 高度值 | 最小高度 |
+| maxWidth | `string` | `'auto'` | CSS 宽度值 | 最大宽度 |
+| maxHeight | `string` | `'auto'` | CSS 高度值 | 最大高度 |
+| selectByFocus | `boolean` | `false` | `true` / `false` | 聚焦时是否全选内容 |
+| okByEnter | `boolean` | `false` | `true` / `false` | 是否回车触发确认事件 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `string` | 文本框绑定值 |
+
+### 3.3 方法
+
+该组件暂不支持此功能。
+
+### 3.4 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 值变化时 | `value?: string` | 值变化事件 |
+| input | 输入时 | `value?: string` | 实时输入事件 |
+| ok | 回车确认时 | `value?: string` | 确认事件（需启用 okByEnter） |
+| clear | 清空时 | - | 清空事件 |
+
+### 3.5 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **resize 与尺寸限制**：当 `resize` 不为 `'none'` 时，建议设置 `minWidth`、`minHeight`、`maxWidth`、`maxHeight` 限制调整范围
+- ⚠️ **okByEnter 行为**：启用 `okByEnter` 后，按回车键会触发 `ok` 事件而非换行，使用 Shift+Enter 可以换行
+- ⚠️ **字符计数**：`showCount` 显示当前字符数，配合 `maxLength` 可显示 "当前/最大" 格式
+- ⚠️ **清空按钮位置**：清空按钮显示在文本框右上角
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：无法调整大小
+
+**现象**：想要让用户调整文本框大小，但拖拽角落无效。
+
+**原因**：
+- `resize` 属性默认为 `'none'`
+
+**修复方案**：
+```vue
+<lew-textarea
+  v-model="value"
+  resize="both"
+  min-height="80px"
+  max-height="300px"
+/>
+```
+
+### 问题2：回车无法换行
+
+**现象**：按回车键不换行，触发了事件。
+
+**原因**：
+- 启用了 `okByEnter` 属性
+
+**修复方案**：
+1. 如需换行功能，不要设置 `okByEnter`
+2. 如需保留确认功能，使用 Shift+Enter 换行
+
+### 问题3：字符计数不显示最大值
+
+**现象**：设置了 `showCount` 但只显示当前字符数。
+
+**原因**：
+- 未设置 `maxLength` 属性
+
+**修复方案**：
+```vue
+<lew-textarea
+  v-model="value"
+  show-count
+  :max-length="500"
+/>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `resize="vertical"` 只允许垂直调整，保持宽度一致
+- ✅ 结合 `maxLength` 和 `showCount` 提供输入反馈
+- ✅ 评论、反馈等场景建议设置合适的 `minHeight`

@@ -1,0 +1,148 @@
+---
+alwaysApply: false
+---
+
+# LewTreeSelect 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewTreeSelect
+- **核心用途**：用于树形结构数据的选择，支持单选/多选、搜索、异步加载等功能
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持单选和多选模式
+  - 支持复选框勾选
+  - 支持搜索过滤
+  - 支持异步数据加载
+  - 支持展开全部节点
+  - 支持只允许选择叶子节点
+  - 支持显示连接线
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **树形选择**：点击下拉展开树形结构，选择节点
+- **多选模式**：设置 `multiple` 后可选择多个节点
+- **搜索功能**：设置 `searchable` 后可搜索节点
+- **异步加载**：通过 `loadMethod` 实现子节点懒加载
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| dataSource | `LewTreeDataSource[]` | - | - | 树形数据源 |
+| width | `string` | `'100%'` | CSS 宽度值 | 选择框宽度 |
+| defaultValue | `string` | - | - | 默认值 |
+| placeholder | `string` | 国际化默认值 | - | 占位文本 |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 尺寸 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| clearable | `boolean` | `false` | `true` / `false` | 是否可清空 |
+| multiple | `boolean` | `false` | `true` / `false` | 是否多选 |
+| checkable | `boolean` | `true` | `true` / `false` | 是否显示复选框 |
+| onlyLeafSelectable | `boolean` | `true` | `true` / `false` | 是否只允许选择叶子节点 |
+| showAllLevels | `boolean` | `true` | `true` / `false` | 是否显示完整路径 |
+| showLine | `boolean` | `false` | `true` / `false` | 是否显示连接线 |
+| expandAll | `boolean` | `false` | `true` / `false` | 是否默认展开全部 |
+| searchable | `boolean` | `false` | `true` / `false` | 是否可搜索 |
+| searchDelay | `number` | `250` | 正整数 | 搜索防抖延迟（ms） |
+| free | `boolean` | `false` | `true` / `false` | 是否自由选择（父子不联动） |
+| trigger | `LewTrigger` | `'click'` | `'click'` / `'hover'` | 触发方式 |
+| keyField | `string` | `'key'` | - | 节点唯一标识字段 |
+| labelField | `string` | `'label'` | - | 节点显示文本字段 |
+| disabledField | `string` | `'disabled'` | - | 节点禁用状态字段 |
+| initMethod | `Function` | - | - | 初始化数据方法 |
+| initMethodId | `string` | - | - | 初始化方法唯一标识 |
+| loadMethod | `Function` | - | - | 异步加载子节点方法 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `string \| string[]` | 选中值，多选时为数组 |
+
+### 3.3 方法
+
+该组件暂不支持此功能。
+
+### 3.4 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 选中值变化时 | `value?: string \| string[]` | 值变化事件 |
+| clear | 清空时 | - | 清空事件 |
+
+### 3.5 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **数据格式**：`dataSource` 中每个节点需要有 `key`（或自定义 keyField）和 `label`（或自定义 labelField）
+- ⚠️ **onlyLeafSelectable**：默认只能选择叶子节点，设置为 `false` 可选择任意节点
+- ⚠️ **free 模式**：启用后父子节点选择不联动，各自独立
+- ⚠️ **多选值类型**：多选模式下 `modelValue` 必须为数组
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：无法选择父节点
+
+**现象**：只能选择叶子节点，父节点点击无效。
+
+**原因**：
+- `onlyLeafSelectable` 默认为 `true`
+
+**修复方案**：
+```vue
+<lew-tree-select
+  v-model="value"
+  :data-source="treeData"
+  :only-leaf-selectable="false"
+/>
+```
+
+### 问题2：选中后显示不完整
+
+**现象**：选中深层节点后，显示的文本被截断。
+
+**原因**：
+- 完整路径较长超出显示区域
+
+**修复方案**：
+设置 `showAllLevels={false}` 只显示最后一级：
+```vue
+<lew-tree-select
+  v-model="value"
+  :data-source="treeData"
+  :show-all-levels="false"
+/>
+```
+
+### 问题3：异步加载子节点
+
+**现象**：需要点击展开时才加载子节点数据。
+
+**修复方案**：
+```vue
+<script setup>
+const loadChildren = async (node) => {
+  const children = await api.getChildren(node.key)
+  return children
+}
+</script>
+
+<lew-tree-select
+  v-model="value"
+  :data-source="treeData"
+  :load-method="loadChildren"
+/>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

@@ -36,8 +36,8 @@ const drawerId = `lew-drawer-${getUniqueId()}`
 // Slots 检测
 const slots = useSlots()
 
-// 计算属性
-const isTopDrawer = computed(() => {
+// 方法：检查当前 drawer 是否在最顶层（每次调用时重新检查 DOM 状态）
+function checkIsTopDrawer(): boolean {
   if (!visible.value) {
     return false
   }
@@ -71,7 +71,7 @@ const isTopDrawer = computed(() => {
 
   // 检查当前 drawer 是否是最后一个（顶层）
   return openDrawers.length > 0 && openDrawers[openDrawers.length - 1]?.id === drawerId
-})
+}
 
 // 计算属性
 const drawerStyle = computed(() => {
@@ -132,7 +132,7 @@ onClickOutside(drawerBodyRef, (e: any) => {
 
 if (props.closeByEsc) {
   watch(Escape, (v: boolean) => {
-    if (!visible.value || !v || !isTopDrawer.value) {
+    if (!visible.value || !v || !checkIsTopDrawer()) {
       return
     }
     visible.value = false

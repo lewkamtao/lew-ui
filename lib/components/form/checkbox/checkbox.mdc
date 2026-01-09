@@ -177,5 +177,5 @@ interface LewCheckboxOption {
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
-| 1.1.0 | 优化组件规范和性能：移除不必要的 cloneDeep（boolean 值）、优化代码顺序、添加 as const 确保类型推断、修复 props.ts 中的错误 | 2024-12-19 |
+| 1.1.0 | 优化组件规范和性能：移除不必要的 cloneDeep（boolean 值）、优化代码顺序、添加 as const 确保类型推断、修复 props.ts 中的错误 | 2025-01-09 |
 | 1.0.0 | 初始版本 | - |

@@ -23,6 +23,7 @@ lib/components/
 ```
 button/
 ├── index.ts          # 组件入口，导出组件和类型
+├── button.mdc        # 组件 MDC 文档（必需）
 └── src/
     ├── LewButton.vue # 组件主文件（PascalCase，带 Lew 前缀）
     └── props.ts      # Props 定义
@@ -32,6 +33,7 @@ button/
 ```
 button/
 ├── index.ts          # 组件入口
+├── button.mdc        # 组件 MDC 文档（必需）
 └── src/
     ├── LewButton.vue         # 组件主文件
     ├── props.ts              # Props 定义
@@ -41,6 +43,51 @@ button/
     ├── utils.ts              # 工具函数（组件内部使用）
     └── SubComponent.vue      # 子组件（如 LewButtonGroup）
 ```
+
+## MDC 文档规范（必需）
+
+> **重要性**：⭐⭐⭐⭐⭐  
+> 每个组件必须包含对应的 MDC 文档文件，用于 AI 辅助开发和组件使用指引。
+
+### MDC 文件命名
+- 文件名：`{component-name}.mdc`（kebab-case）
+- 位置：组件目录根级别（与 `index.ts` 同级）
+- 示例：`button/button.mdc`、`date-picker/date-picker.mdc`
+
+### MDC 文档结构
+
+```markdown
+---
+alwaysApply: false
+---
+
+# Lew{ComponentName} 组件使用文档
+
+## 1. 组件基础信息
+- 组件名称、核心用途、适用环境、基础特性（3-5条）
+
+## 2. 快速开始
+- 预期效果说明
+
+## 3. 详细 API 说明
+- Props：表格（属性名、类型、默认值、可选值、说明）
+- 方法：表格（方法名、触发条件、参数、返回值、说明）
+- 事件：表格（事件名、触发条件、回调参数、说明）
+- 插槽：表格（插槽名、说明、使用示例）
+
+## 4. 注意事项
+- 使用限制、边界情况、兼容性问题（至少3条）
+
+## 5. 常见问题与修复方案（FAQ）
+- 每个问题包含：现象、原因、修复方案
+
+## 6. 变更日志
+- 表格（版本、变更内容、日期）
+```
+
+### MDC 文档生成
+- 详细生成规范参见 `.cursor/create-component-mdc.mdc`
+- 修改组件后必须同步更新 MDC 文档的变更日志
 
 ## 自动导入规范
 
@@ -1249,6 +1296,12 @@ import { LewButton } from 'lew-ui'  // 只打包 Button
 - [ ] 类名遵循 BEM 规范
 - [ ] 没有 TypeScript 错误
 - [ ] 没有 ESLint/Stylelint 错误
+
+### MDC 文档（必需）
+- [ ] 组件目录下存在 `{component-name}.mdc` 文件
+- [ ] MDC 文档包含完整的 6 个章节
+- [ ] Props/Events/Slots 等 API 信息与代码保持同步
+- [ ] 修改组件后已更新变更日志
 
 ### v-model 支持（如适用）
 - [ ] 组件内使用 `defineModel` API

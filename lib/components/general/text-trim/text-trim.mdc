@@ -247,8 +247,8 @@ alwaysApply: false
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
-| 1.2.0 | 规范化代码结构：创建 emits.ts 文件保持结构一致性；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构；优化样式系统（添加 CSS 变量 `var(--lew-text-color-0)` 支持暗色模式自动适配） | 2024-12-19 |
-| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（ref, computed, watch, onMounted, onUnmounted），移除所有注释，优化模板中的 prop 引用 | 2024-01-XX |
+| 1.2.0 | 规范化代码结构：创建 emits.ts 文件保持结构一致性；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构；优化样式系统（添加 CSS 变量 `var(--lew-text-color-0)` 支持暗色模式自动适配） | 2025-01-09 |
+| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（ref, computed, watch, onMounted, onUnmounted），移除所有注释，优化模板中的 prop 引用 | 2025-01-09 |
 | 1.0.0 | 初始版本 | - |
 
 ---
