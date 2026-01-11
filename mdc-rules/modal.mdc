@@ -1,0 +1,327 @@
+---
+alwaysApply: false
+---
+
+# LewModal 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewModal
+- **核心用途**：用于显示模态对话框，支持自定义标题、内容、底部按钮，适用于表单提交、信息确认、内容展示等需要用户交互的场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持通过 v-model 控制显示/隐藏
+  - 支持点击遮罩层关闭（`closeOnClickOverlay`）
+  - 支持按 ESC 键关闭（`closeByEsc`，仅关闭最顶层的 modal）
+  - 支持自定义宽度、最大高度、顶部距离
+  - 支持标题、头部插槽、底部插槽自定义
+  - 支持默认的确认/取消按钮，可自定义按钮属性
+  - 使用 Teleport 渲染到指定容器，支持多个 modal 叠加
+  - 自动处理 z-index 和顶层检测，确保 ESC 键只关闭最顶层的 modal
+  - 支持内容区域滚动（当内容超出最大高度时）
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `v-model:visible` 控制 modal 显示/隐藏，modal 从中心滑入
+- **遮罩层**：modal 显示时自动显示半透明遮罩层，点击可关闭（需设置 `closeOnClickOverlay`）
+- **动画效果**：modal 滑入/滑出有平滑的动画过渡，使用 `transform` 和 `opacity` 实现高性能动画
+- **多 modal 支持**：可以同时打开多个 modal，自动处理 z-index，最顶层的 modal 响应 ESC 键
+- **内容区域**：支持通过插槽或 props 自定义头部、内容、底部区域
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| title | `string` | - | 任意字符串（最大长度 100） | 标题文本（当提供 `header` 插槽时，此属性会被忽略） |
+| width | `Property.Width` | `'auto'` | 任意 CSS width 值 | Modal 内容区域宽度 |
+| maxHeight | `Property.MaxHeight \| number` | `'auto'` | 任意 CSS max-height 值或数字 | 内容区域最大高度，超出时显示滚动条 |
+| top | `Property.Top \| number` | `120` | 任意 CSS top 值或数字 | Modal 距离顶部的距离 |
+| hideFooter | `boolean` | `false` | `true` / `false` | 是否隐藏底部区域（包括默认按钮和 `footer` 插槽） |
+| closeByEsc | `boolean` | `false` | `true` / `false` | 是否允许按 ESC 键关闭 modal（仅关闭最顶层的 modal） |
+| closeOnClickOverlay | `boolean` | `false` | `true` / `false` | 是否允许点击遮罩层关闭 modal |
+| okButtonProps | `LewButtonProps` | - | 任意 `LewButtonProps` 对象 | 确认按钮的属性配置 |
+| closeButtonProps | `LewButtonProps` | - | 任意 `LewButtonProps` 对象 | 取消按钮的属性配置 |
+| hideOkButton | `boolean` | `false` | `true` / `false` | 是否隐藏确认按钮 |
+| hideCloseButton | `boolean` | `false` | `true` / `false` | 是否隐藏取消按钮 |
+| zIndex | `number` | `1001` | 非负整数 | Modal 的 z-index 值，用于控制层级 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| close | Modal 关闭时触发 | - | 当通过任何方式关闭 modal 时都会触发（点击关闭按钮、点击遮罩层、按 ESC 键等） |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | Modal 主体内容 | `<template>Modal 内容</template>` |
+| header | 自定义头部区域，优先级高于 `title` prop | `<template #header><lew-flex>自定义头部</lew-flex></template>` |
+| footer | 自定义底部区域，优先级高于默认按钮 | `<template #footer><lew-button>自定义按钮</lew-button></template>` |
+
+**插槽优先级**：
+- `header` 插槽优先级高于 `title` prop，当同时提供时，显示插槽内容
+- `footer` 插槽优先级高于默认按钮，当提供 `footer` 插槽时，默认按钮不会显示
+
+### 3.5 v-model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| visible | `boolean` | `false` | 控制 modal 的显示/隐藏状态 |
+
+**使用示例**：
+```vue
+<template>
+  <lew-modal v-model:visible="modalVisible" title="Modal 标题">
+    Modal 内容
+  </lew-modal>
+</template>
+<script setup>
+const modalVisible = ref(false)
+</script>
+```
+
+## 4. 注意事项
+
+- ⚠️ **Teleport 容器**：组件使用 `teleport` 渲染到 `#lew-modal` 容器，确保应用中存在该容器（通常由 `useDOMCreate` hook 自动创建）
+- ⚠️ **多 modal 层级**：当同时打开多个 modal 时，组件会自动检测最顶层的 modal，只有最顶层的 modal 会响应 ESC 键关闭
+- ⚠️ **顶层检测机制**：组件使用按需检测机制，仅在按下 ESC 键时实时查询 DOM 状态，确保顶层检测的准确性且不影响性能
+- ⚠️ **关闭事件触发**：无论通过何种方式关闭 modal（按钮、遮罩层、ESC 键），都会触发 `close` 事件，但不会自动隐藏组件，需要通过 `v-model` 控制
+- ⚠️ **按钮配置**：`okButtonProps` 和 `closeButtonProps` 可以覆盖默认按钮的属性，但不会覆盖 `size`、`text` 等基础属性
+- ⚠️ **内容滚动**：当内容超出 `maxHeight` 时，内容区域会自动显示滚动条，使用 `lew-scrollbar` 样式类
+- ⚠️ **样式作用域**：组件样式使用 `scoped`，但某些全局样式（如遮罩层）可能需要全局作用域，注意样式冲突
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：Modal 无法显示
+
+**现象**：设置了 `v-model:visible={true}`，但 modal 没有显示。
+
+**原因**：
+- `#lew-modal` 容器不存在
+- z-index 被其他元素覆盖
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确保 `useDOMCreate` hook 已正确调用，创建了 `#lew-modal` 容器：
+```vue
+<script setup>
+// 确保在应用初始化时调用
+import { useDOMCreate } from 'lew-ui/hooks'
+useDOMCreate('lew-modal')
+</script>
+```
+2. 检查 z-index 设置，确保 modal 的 z-index 高于其他元素：
+```vue
+<template>
+  <lew-modal
+    v-model:visible="visible"
+    :z-index="2000"
+    title="Modal"
+  />
+</template>
+```
+
+### 问题2：点击遮罩层无法关闭
+
+**现象**：设置了 `closeOnClickOverlay={true}`，但点击遮罩层无法关闭 modal。
+
+**原因**：
+- `closeOnClickOverlay` 未设置为 `true`
+- 点击事件被其他元素阻止
+- `onClickOutside` 检测逻辑问题
+
+**修复方案**：
+1. 确认 `closeOnClickOverlay` 已设置为 `true`：
+```vue
+<template>
+  <lew-modal
+    v-model:visible="visible"
+    :close-on-click-overlay="true"
+    title="Modal"
+  />
+</template>
+```
+2. 检查是否有其他元素阻止了点击事件传播
+3. 确认点击的是遮罩层区域，而不是 modal 内容区域
+
+### 问题3：ESC 键无法关闭 Modal
+
+**现象**：设置了 `closeByEsc={true}`，但按 ESC 键无法关闭 modal。
+
+**原因**：
+- `closeByEsc` 未设置为 `true`
+- 当前 modal 不是最顶层的 modal
+- 有 Dialog 在 modal 之上
+- 键盘事件被其他元素捕获
+
+**修复方案**：
+1. 确认 `closeByEsc` 已设置为 `true`：
+```vue
+<template>
+  <lew-modal
+    v-model:visible="visible"
+    :close-by-esc="true"
+    title="Modal"
+  />
+</template>
+```
+2. 确认当前 modal 是最顶层的 modal（最后打开的），如果有多个 modal，只有最顶层的会响应 ESC 键
+3. 检查是否有 Dialog 或其他元素在 modal 之上，这些元素会阻止 ESC 键事件
+4. 确保没有其他元素阻止了键盘事件传播
+
+### 问题4：Modal 动画不流畅
+
+**现象**：Modal 打开/关闭时动画卡顿或不流畅。
+
+**原因**：
+- Modal 内容过多，导致渲染耗时
+- CSS 动画属性配置不当
+- 浏览器性能问题
+
+**修复方案**：
+1. 优化 Modal 内容，避免放置过多复杂组件：
+```vue
+<template>
+  <lew-modal v-model:visible="visible" title="Modal">
+    <!-- ✅ 避免在 Modal 中放置大量数据 -->
+    <lew-virtual-list v-if="largeData" :data="largeData" />
+    <!-- 或者使用分页 -->
+    <lew-pagination v-model:current-page="page" />
+  </lew-modal>
+</template>
+```
+2. 确保动画使用 `transform` 和 `opacity` 属性（组件已优化）：
+```scss
+/* 组件内部已使用 transform 和 opacity，无需修改 */
+.lew-modal-leave-to,
+.lew-modal-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+```
+
+### 问题5：多个 Modal 层级混乱
+
+**现象**：同时打开多个 modal 时，层级显示不正确，或 ESC 键关闭了错误的 modal。
+
+**原因**：
+- z-index 设置不当
+- 顶层检测逻辑问题
+- Modal 打开顺序影响层级
+
+**修复方案**：
+1. 确保每个 modal 都有合适的 z-index，后打开的 modal 应该有更高的 z-index：
+```vue
+<template>
+  <lew-modal
+    v-model:visible="modal1"
+    :z-index="1001"
+    title="Modal 1"
+  />
+  <lew-modal
+    v-model:visible="modal2"
+    :z-index="1002"
+    title="Modal 2"
+  />
+</template>
+```
+2. 组件会自动检测最顶层的 modal，确保最后打开的 modal z-index 最高
+3. 如果使用动态 z-index，确保后打开的 modal z-index 递增：
+```vue
+<script setup>
+const modalZIndex = ref(1001)
+function openModal() {
+  modalZIndex.value += 1
+  modalVisible.value = true
+}
+</script>
+```
+
+### 问题6：按钮文本显示不正确
+
+**现象**：确认/取消按钮的文本显示为 key 而不是实际文本。
+
+**原因**：
+- 国际化配置缺失
+- `locale.t()` 无法找到对应的翻译
+
+**修复方案**：
+1. 确保国际化配置中包含 `modal.closeText` 和 `modal.okText`：
+```typescript
+// docs/locals/zh.ts
+export default {
+  components: {
+    modal: {
+      closeText: '取消',
+      okText: '确认',
+    },
+  },
+}
+```
+2. 或者通过 `closeButtonProps` 和 `okButtonProps` 自定义文本：
+```vue
+<template>
+  <lew-modal
+    v-model:visible="visible"
+    :close-button-props="{ text: '关闭' }"
+    :ok-button-props="{ text: '确定' }"
+  />
+</template>
+```
+
+### 问题7：内容区域滚动异常
+
+**现象**：设置了 `maxHeight`，但内容区域没有显示滚动条或滚动异常。
+
+**原因**：
+- `maxHeight` 值设置不当
+- CSS 样式被覆盖
+- 内容高度未超过 `maxHeight`
+
+**修复方案**：
+1. 确认 `maxHeight` 值正确（需要包含单位或使用数字）：
+```vue
+<template>
+  <!-- ✅ 正确：包含单位 -->
+  <lew-modal
+    v-model:visible="visible"
+    :max-height="'500px'"
+    title="Modal"
+  />
+  <!-- ✅ 也可以使用数字，会自动添加 px -->
+  <lew-modal
+    v-model:visible="visible"
+    :max-height="500"
+    title="Modal"
+  />
+</template>
+```
+2. 检查内容高度是否超过 `maxHeight`，只有超出时才会显示滚动条
+3. 确认 `lew-scrollbar` 样式类已正确应用
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.1 | 优化顶层检测机制：移除定时器轮询，改为按需检测（仅在按 ESC 时实时查询 DOM），提升性能并与 Drawer 组件保持一致 | 2025-01-09 |
+| 1.0.0 | 初始版本 | 2025-01-09 |
+
+---
+
+**使用技巧**：
+- ✅ 结合 `v-model:visible` 可以实现受控的 modal 显示，适合在路由变化、表单提交等场景中使用
+- ✅ 使用 `header` 插槽可以完全自定义头部区域，支持复杂的头部布局和交互
+- ✅ 使用 `footer` 插槽可以自定义底部按钮，实现更灵活的底部操作区域
+- ✅ 通过 `closeOnClickOverlay` 和 `closeByEsc` 可以提升用户体验，让用户有多种方式关闭 modal
+- ✅ 多 modal 场景下，合理设置 `zIndex` 可以确保层级正确，避免遮挡问题
+- ✅ 使用 `okButtonProps` 和 `closeButtonProps` 可以自定义按钮样式和行为，实现更灵活的交互
+- ✅ 通过 `maxHeight` 可以控制内容区域的最大高度，避免 modal 过高影响用户体验

@@ -1,0 +1,354 @@
+---
+alwaysApply: false
+---
+
+# LewPopok 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewPopok
+- **核心用途**：用于显示弹出式确认对话框，基于 `LewPopover` 实现，支持自定义图标、标题、内容，适用于删除确认、操作确认等需要用户二次确认的场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持 5 种类型：normal（正常）、error（错误）、warning（警告）、success（成功）、info（信息）
+  - 支持自定义图标、标题、内容（通过 `LewComponentSource` 类型）
+  - 支持确认和取消两个操作按钮
+  - 支持异步操作，按钮显示加载状态
+  - 支持自定义按钮文本（通过 props 或国际化）
+  - 支持多种触发方式（click、hover 等）
+  - 支持自定义弹出位置（12 个位置选项）
+  - 自动聚焦确认按钮，提升键盘操作体验
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `type` 属性设置类型，自动显示对应颜色的图标和按钮
+- **触发方式**：通过 `trigger` 属性控制触发方式（默认 click），通过 `placement` 控制弹出位置
+- **内容自定义**：通过 `title` 和 `content` props 可以传入字符串、VNode、组件或函数，灵活自定义内容
+- **操作处理**：通过 `ok` 和 `cancel` props 传入异步函数，处理确认和取消操作
+- **自动关闭**：当 `ok` 或 `cancel` 函数返回非 `false` 值时，弹窗会自动关闭
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| icon | `LewComponentSource` | - | 字符串 / VNode / 组件 / 函数 | 自定义图标，如果不设置则根据 `type` 显示默认图标 |
+| title | `LewComponentSource` | - | 字符串 / VNode / 组件 / 函数 | 标题内容，必填 |
+| content | `LewComponentSource` | - | 字符串 / VNode / 组件 / 函数 | 内容区域，必填 |
+| hideIcon | `boolean` | `false` | `true` / `false` | 是否隐藏图标 |
+| type | `LewPopokType` | `'error'` | `'normal'` / `'error'` / `'warning'` / `'success'` / `'info'` | 弹窗类型，决定图标和确认按钮颜色 |
+| okText | `string` | - | 任意字符串 | 确认按钮文本，如果不设置则使用国际化默认文本 |
+| cancelText | `string` | - | 任意字符串 | 取消按钮文本，如果不设置则使用国际化默认文本 |
+| ok | `() => Promise<boolean>` | `() => true` | 异步函数 | 确认按钮点击时的处理函数，返回 `false` 时不关闭弹窗 |
+| cancel | `() => Promise<boolean>` | `() => true` | 异步函数 | 取消按钮点击时的处理函数，返回 `false` 时不关闭弹窗 |
+| width | `Property.Width` | `'280px'` | 任意 CSS width 值 | 弹窗内容区域宽度 |
+| trigger | `LewTrigger` | `'click'` | `'hover'` / `'click'` / `'mouseenter'` / `'manual'` | 触发方式 |
+| placement | `LewPlacement` | `'top'` | 12 个位置选项 | 弹窗出现的位置 |
+
+### 3.2 方法
+
+| 方法名 | 说明 | 使用示例 |
+|--------|------|----------|
+| hide | 手动关闭弹窗 | `lewPopokRef.value.hide()` |
+
+**注意**：需要通过 `ref` 获取组件实例才能调用方法。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 触发元素，用于包裹需要触发弹窗的元素 | `<template><lew-button>删除</lew-button></template>` |
+
+### 3.5 类型说明
+
+#### LewPopokType
+
+| 类型值 | 说明 | 适用场景 |
+|--------|------|----------|
+| `'normal'` | 正常类型 | 一般性确认操作 |
+| `'error'` | 错误类型 | 危险操作确认（如删除） |
+| `'warning'` | 警告类型 | 需要谨慎的操作 |
+| `'success'` | 成功类型 | 成功提示确认 |
+| `'info'` | 信息类型 | 信息提示确认 |
+
+#### LewPlacement
+
+支持 12 个位置选项：`'top'` / `'top-start'` / `'top-end'` / `'bottom'` / `'bottom-start'` / `'bottom-end'` / `'left'` / `'left-start'` / `'left-end'` / `'right'` / `'right-start'` / `'right-end'`
+
+#### LewTrigger
+
+| 触发方式 | 说明 |
+|----------|------|
+| `'click'` | 点击触发（默认） |
+| `'hover'` | 鼠标悬停触发 |
+| `'mouseenter'` | 鼠标进入触发 |
+| `'manual'` | 手动控制（通过方法调用） |
+
+## 4. 注意事项
+
+- ⚠️ **必填属性**：`title` 和 `content` 是必填的，必须提供内容才能正常显示
+- ⚠️ **异步操作**：`ok` 和 `cancel` 函数必须是异步函数（返回 Promise），组件会自动处理加载状态
+- ⚠️ **关闭逻辑**：当 `ok` 或 `cancel` 函数返回 `false` 时，弹窗不会自动关闭，可用于验证失败等场景
+- ⚠️ **图标显示**：如果不设置 `icon` prop，会根据 `type` 显示对应的默认图标；如果设置了 `icon`，则显示自定义图标
+- ⚠️ **按钮文本**：如果不设置 `okText` 或 `cancelText`，会使用国际化默认文本（`popok.okText` 和 `popok.cancelText`）
+- ⚠️ **自动聚焦**：组件挂载后会自动聚焦确认按钮，方便键盘操作（Tab 键切换、Enter 键确认）
+- ⚠️ **点击事件阻止**：弹窗内容区域使用 `@click.stop` 阻止事件冒泡，避免点击内容时关闭弹窗
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：弹窗无法显示
+
+**现象**：设置了 `title` 和 `content`，但点击触发元素时弹窗没有显示。
+
+**原因**：
+- `title` 或 `content` 未设置
+- `trigger` 设置不正确
+- `LewPopover` 组件未正确导入
+
+**修复方案**：
+1. 确认 `title` 和 `content` 已正确设置：
+```vue
+<template>
+  <lew-popok
+    title="确认删除"
+    content="删除后无法恢复，请确认"
+  >
+    <lew-button>删除</lew-button>
+  </lew-popok>
+</template>
+```
+2. 检查 `trigger` 设置，确保与预期行为一致：
+```vue
+<template>
+  <!-- ✅ 点击触发 -->
+  <lew-popok trigger="click" title="确认" content="内容">
+    <lew-button>操作</lew-button>
+  </lew-popok>
+  
+  <!-- ✅ 悬停触发 -->
+  <lew-popok trigger="hover" title="确认" content="内容">
+    <lew-button>操作</lew-button>
+  </lew-popok>
+</template>
+```
+
+### 问题2：确认/取消按钮点击后弹窗不关闭
+
+**现象**：点击确认或取消按钮后，弹窗没有关闭。
+
+**原因**：
+- `ok` 或 `cancel` 函数返回了 `false`
+- 函数执行出错
+- 函数不是异步函数
+
+**修复方案**：
+1. 确认函数返回非 `false` 值：
+```vue
+<template>
+  <lew-popok
+    title="确认删除"
+    content="删除后无法恢复"
+    :ok="handleOk"
+  >
+    <lew-button>删除</lew-button>
+  </lew-popok>
+</template>
+<script setup>
+async function handleOk() {
+  // ✅ 返回 true 或 undefined 会关闭弹窗
+  await deleteItem()
+  return true
+}
+
+// ❌ 返回 false 不会关闭弹窗
+async function handleOkWithValidation() {
+  if (!isValid()) {
+    return false  // 验证失败，不关闭弹窗
+  }
+  await deleteItem()
+  return true
+}
+</script>
+```
+2. 确保函数是异步函数：
+```vue
+<script setup>
+// ✅ 正确：异步函数
+async function handleOk() {
+  await doSomething()
+  return true
+}
+
+// ❌ 错误：同步函数
+function handleOk() {
+  doSomething()
+  return true
+}
+</script>
+```
+
+### 问题3：按钮文本显示为 key 而不是实际文本
+
+**现象**：未设置 `okText` 或 `cancelText`，但按钮显示的文本是 `popok.okText` 而不是实际文本。
+
+**原因**：
+- 国际化配置缺失
+- `locale.t()` 无法找到对应的翻译
+
+**修复方案**：
+1. 确保国际化配置中包含 `popok.okText` 和 `popok.cancelText`：
+```typescript
+// docs/locals/zh.ts
+export default {
+  popok: {
+    okText: '确认',
+    cancelText: '取消',
+  },
+}
+```
+2. 或者直接设置 `okText` 和 `cancelText` props：
+```vue
+<template>
+  <lew-popok
+    title="确认删除"
+    content="删除后无法恢复"
+    ok-text="确定"
+    cancel-text="取消"
+  >
+    <lew-button>删除</lew-button>
+  </lew-popok>
+</template>
+```
+
+### 问题4：自定义图标不显示
+
+**现象**：设置了 `icon` prop，但图标没有显示。
+
+**原因**：
+- `icon` 值格式不正确
+- `hideIcon` 设置为 `true`
+- `RenderComponent` 组件问题
+
+**修复方案**：
+1. 确认 `icon` 值格式正确（支持字符串、VNode、组件、函数）：
+```vue
+<template>
+  <!-- ✅ 字符串（图标类型） -->
+  <lew-popok icon="custom-icon" title="确认" content="内容">
+    <lew-button>操作</lew-button>
+  </lew-popok>
+  
+  <!-- ✅ 组件 -->
+  <lew-popok :icon="CustomIcon" title="确认" content="内容">
+    <lew-button>操作</lew-button>
+  </lew-popok>
+  
+  <!-- ✅ 函数 -->
+  <lew-popok :icon="() => h(CustomIcon)" title="确认" content="内容">
+    <lew-button>操作</lew-button>
+  </lew-popok>
+</template>
+```
+2. 确认 `hideIcon` 未设置为 `true`：
+```vue
+<template>
+  <!-- ✅ 显示图标 -->
+  <lew-popok :hide-icon="false" title="确认" content="内容">
+    <lew-button>操作</lew-button>
+  </lew-popok>
+</template>
+```
+
+### 问题5：弹窗位置不符合预期
+
+**现象**：设置了 `placement`，但弹窗出现的位置与预期不符。
+
+**原因**：
+- `placement` 值不正确
+- 触发元素位置导致弹窗被遮挡
+- 空间不足导致自动调整位置
+
+**修复方案**：
+1. 确认 `placement` 值正确（12 个位置选项）：
+```vue
+<template>
+  <!-- ✅ 正确的位置值 -->
+  <lew-popok placement="top" title="确认" content="内容">
+    <lew-button>操作</lew-button>
+  </lew-popok>
+  
+  <lew-popok placement="bottom-start" title="确认" content="内容">
+    <lew-button>操作</lew-button>
+  </lew-popok>
+</template>
+```
+2. 检查触发元素的位置，确保有足够空间显示弹窗
+3. 如果空间不足，`LewPopover` 会自动调整位置，这是预期行为
+
+### 问题6：异步操作加载状态异常
+
+**现象**：点击确认或取消按钮后，加载状态一直显示或没有显示。
+
+**原因**：
+- 函数执行时间过长
+- 函数执行出错
+- 函数不是异步函数
+
+**修复方案**：
+1. 确保函数是异步函数，并在完成后正确返回：
+```vue
+<script setup>
+async function handleOk() {
+  try {
+    // 执行异步操作
+    await deleteItem()
+    return true  // ✅ 成功，关闭弹窗
+  } catch (error) {
+    console.error(error)
+    return false  // ❌ 失败，不关闭弹窗
+  }
+}
+</script>
+```
+2. 如果操作时间较长，考虑添加超时处理：
+```vue
+<script setup>
+async function handleOk() {
+  try {
+    await Promise.race([
+      deleteItem(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Timeout')), 5000)
+      )
+    ])
+    return true
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}
+</script>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| - | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合不同的 `type` 值可以快速适配不同的确认场景，提升用户体验
+- ✅ 使用 `ok` 和 `cancel` 函数可以实现复杂的业务逻辑，如数据验证、异步请求等
+- ✅ 通过返回 `false` 可以阻止弹窗关闭，适合验证失败等场景
+- ✅ 使用自定义 `icon`、`title`、`content` 可以实现高度定制化的确认对话框
+- ✅ 结合 `trigger` 和 `placement` 可以灵活控制弹窗的触发方式和位置
+- ✅ 在删除等危险操作中使用 `type="error"` 可以更好地警示用户

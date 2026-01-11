@@ -1,0 +1,237 @@
+---
+alwaysApply: false
+---
+
+# LewBackTop 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewBackTop
+- **核心用途**：用于提供返回页面顶部的功能，当页面滚动超过指定高度时显示，点击后平滑滚动到页面顶部
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持自定义显示位置（right、bottom）
+  - 支持自定义触发高度（valveHeight）
+  - 支持指定滚动容器（target）
+  - 自动检测滚动位置，超过阈值时显示
+  - 平滑滚动动画（使用 easeInOutCubic 缓动函数）
+  - 使用节流优化滚动事件性能
+  - 支持自定义图标和内容（通过插槽）
+  - 使用 CSS 变量实现主题定制，支持暗色模式自动适配
+  - 符合组件库规范：规范的代码结构、导出格式和样式系统
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **自动显示**：当页面滚动超过 `valveHeight` 指定的高度时，返回顶部按钮自动显示
+- **平滑滚动**：点击按钮后，页面会平滑滚动到顶部，使用缓动动画
+- **自定义位置**：可以通过 `right` 和 `bottom` 属性自定义按钮位置
+- **自定义容器**：可以通过 `target` 属性指定滚动容器（默认是 `document.documentElement`）
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| right | `number` | `40` | 非负整数 | 按钮距离右侧的距离（像素） |
+| bottom | `number` | `40` | 非负整数 | 按钮距离底部的距离（像素） |
+| valveHeight | `number` | `50` | 非负整数 | 触发显示按钮的滚动高度阈值（像素），当滚动超过此高度时显示按钮 |
+| target | `string` | - | CSS 类选择器 | 指定滚动容器的类名，如果不设置则使用 `document.documentElement` |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 自定义按钮内容，默认显示向上箭头图标 | `<template><CommonIcon type="arrow-up" /></template>` |
+
+**插槽优先级**：
+- 当设置了插槽内容时，使用插槽内容
+- 当未设置插槽时，默认显示向上箭头图标（`chevron-up`）
+
+## 4. 注意事项
+
+- ⚠️ **滚动容器**：默认使用 `document.documentElement` 作为滚动容器，如果需要滚动特定容器，请使用 `target` 属性指定容器的类名
+- ⚠️ **target 属性**：`target` 必须是有效的 CSS 类选择器（不需要包含 `.` 前缀），如果找不到对应元素，会在控制台输出警告并使用默认容器
+- ⚠️ **性能优化**：组件使用节流（throttle）优化滚动事件，节流间隔为 100ms，避免频繁触发
+- ⚠️ **动画性能**：滚动动画使用 `requestAnimationFrame` 和缓动函数实现，确保流畅的动画效果
+- ⚠️ **显示时机**：按钮只在滚动超过 `valveHeight` 时显示，滚动回顶部时会自动隐藏
+- ⚠️ **固定定位**：按钮使用 `position: fixed` 定位，始终相对于视口定位
+- ⚠️ **z-index**：按钮的 `z-index` 为 99，确保在大多数内容之上显示
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：按钮不显示
+
+**现象**：页面滚动后，返回顶部按钮没有显示。
+
+**原因**：
+- 滚动高度未超过 `valveHeight` 阈值
+- `target` 指定的容器不存在
+- 滚动事件未正确绑定
+
+**修复方案**：
+1. 确认滚动高度超过阈值：
+```vue
+<template>
+  <!-- ✅ 正确：valveHeight 设置合理 -->
+  <lew-back-top :valve-height="100" />
+  
+  <!-- ❌ 错误：valveHeight 过大，可能永远不显示 -->
+  <lew-back-top :valve-height="999999" />
+</template>
+```
+2. 确认 `target` 容器存在：
+```vue
+<template>
+  <!-- ✅ 正确：容器存在 -->
+  <div class="scroll-container">
+    <div>内容</div>
+  </div>
+  <lew-back-top target="scroll-container" />
+  
+  <!-- ❌ 错误：容器不存在，会使用默认容器 -->
+  <lew-back-top target="non-existent" />
+</template>
+```
+
+### 问题2：按钮位置不正确
+
+**现象**：设置了 `right` 和 `bottom`，但按钮位置不符合预期。
+
+**原因**：
+- `right` 和 `bottom` 值设置不当
+- 按钮被其他元素遮挡
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确认 `right` 和 `bottom` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：right 和 bottom 为有效数值 -->
+  <lew-back-top :right="40" :bottom="40" />
+  
+  <!-- ❌ 错误：值为负数或无效 -->
+  <lew-back-top :right="-100" :bottom="-100" />
+</template>
+```
+2. 检查是否有其他元素遮挡按钮（检查 `z-index`）
+
+### 问题3：滚动动画不流畅
+
+**现象**：点击按钮后，滚动动画不流畅或卡顿。
+
+**原因**：
+- 页面内容过多
+- 浏览器性能问题
+- 动画时长设置不当
+
+**修复方案**：
+1. 组件已内置性能优化（使用 `requestAnimationFrame` 和缓动函数），通常不需要额外优化
+2. 如果仍有性能问题，可以考虑减少页面内容或优化页面性能
+
+### 问题4：自定义容器滚动不生效
+
+**现象**：设置了 `target`，但按钮不响应容器滚动。
+
+**原因**：
+- `target` 指定的容器不存在
+- 容器类名不正确
+- 容器没有滚动条
+
+**修复方案**：
+1. 确认容器存在且有滚动条：
+```vue
+<template>
+  <!-- ✅ 正确：容器存在且有滚动条 -->
+  <div class="scroll-container" style="height: 400px; overflow-y: auto;">
+    <div style="height: 2000px;">内容</div>
+  </div>
+  <lew-back-top target="scroll-container" />
+  
+  <!-- ❌ 错误：容器没有滚动条 -->
+  <div class="scroll-container" style="height: 400px; overflow: hidden;">
+    <div style="height: 2000px;">内容</div>
+  </div>
+  <lew-back-top target="scroll-container" />
+</template>
+```
+2. 确认类名正确（不需要包含 `.` 前缀）：
+```vue
+<template>
+  <!-- ✅ 正确：target 为类名（不含点） -->
+  <div class="my-container">内容</div>
+  <lew-back-top target="my-container" />
+  
+  <!-- ❌ 错误：target 包含点 -->
+  <lew-back-top target=".my-container" />
+</template>
+```
+
+### 问题5：按钮被其他元素遮挡
+
+**现象**：返回顶部按钮被其他元素遮挡，无法点击。
+
+**原因**：
+- 其他元素的 `z-index` 更高
+- 按钮位置与其他元素重叠
+
+**修复方案**：
+1. 调整按钮的 `right` 和 `bottom` 值，避免与其他元素重叠：
+```vue
+<template>
+  <!-- 调整位置避免遮挡 -->
+  <lew-back-top :right="60" :bottom="60" />
+</template>
+```
+2. 如果必须保持位置，可以调整其他元素的 `z-index`（按钮的 `z-index` 为 99）
+
+### 问题6：自定义图标不显示
+
+**现象**：设置了插槽内容，但图标不显示。
+
+**原因**：
+- 插槽内容渲染错误
+- 图标组件未正确导入
+
+**修复方案**：
+1. 确认插槽内容正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的图标组件 -->
+  <lew-back-top>
+    <CommonIcon type="arrow-up" :size="20" />
+  </lew-back-top>
+  
+  <!-- ❌ 错误：图标组件未导入或类型错误 -->
+  <lew-back-top>
+    <InvalidIcon />
+  </lew-back-top>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 规范化代码结构：创建 emits.ts 文件保持结构一致性；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构；优化样式系统（使用 CSS 变量支持暗色模式自动适配） | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `valveHeight` 可以控制按钮显示的时机，适合不同页面高度需求
+- ✅ 通过 `right` 和 `bottom` 可以自定义按钮位置，适配不同的页面布局
+- ✅ 使用 `target` 可以指定滚动容器，适合在特定容器内滚动的场景
+- ✅ 通过插槽可以自定义按钮图标和样式，提升视觉效果
+- ✅ 组件会自动监听滚动事件，响应式更新按钮显示状态
+- ✅ 滚动动画使用缓动函数，提供流畅的用户体验

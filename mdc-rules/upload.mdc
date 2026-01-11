@@ -1,0 +1,148 @@
+---
+alwaysApply: false
+---
+
+# LewUpload 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewUpload
+- **核心用途**：用于文件上传，支持列表和卡片两种展示模式
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持多文件上传
+  - 支持文件类型和大小限制
+  - 支持列表和卡片两种视图模式
+  - 支持自定义上传处理函数
+  - 支持删除前确认
+  - 支持上传进度展示
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **文件选择**：点击上传区域选择文件
+- **上传进度**：显示文件上传进度
+- **文件列表**：已上传文件以列表或卡片形式展示
+- **删除功能**：支持删除已上传的文件
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| accept | `string` | `''` | MIME 类型 | 允许上传的文件类型 |
+| immediate | `boolean` | `true` | `true` / `false` | 是否选择后立即上传 |
+| multiple | `boolean` | `false` | `true` / `false` | 是否允许多文件上传 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| limit | `number` | `1` | 正整数 | 最大上传文件数量 |
+| maxFileSize | `number` | `10485760` | 正整数 | 单个文件最大尺寸（字节），默认 10MB |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 组件尺寸 |
+| tips | `string` | `''` | - | 自定义提示信息 |
+| viewMode | `string` | `'list'` | `'list'` / `'card'` | 文件列表展示模式 |
+| uploadHelper | `Function` | - | - | 自定义上传处理函数 |
+| beforeDelete | `Function` | - | - | 删除前确认函数 |
+
+### 3.2 uploadHelper 函数签名
+
+```typescript
+uploadHelper: () => Promise<LewUploadFileItem[]>
+```
+
+### 3.3 beforeDelete 函数签名
+
+```typescript
+beforeDelete: (fileItem: LewUploadFileItem) => Promise<boolean>
+```
+
+### 3.4 方法
+
+该组件暂不支持此功能。
+
+### 3.5 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 文件列表变化时 | `files: any[]` | 文件变化事件 |
+| delete | 删除文件时 | `file: any` | 删除事件 |
+
+### 3.6 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **uploadHelper 必需**：必须提供 `uploadHelper` 函数处理文件上传
+- ⚠️ **文件大小限制**：默认限制 10MB，可通过 `maxFileSize` 调整
+- ⚠️ **accept 格式**：使用标准 MIME 类型，如 `'image/*'`、`'.pdf,.doc'`
+- ⚠️ **immediate 模式**：设置为 `false` 时只保存文件信息不自动上传
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：文件类型不正确
+
+**现象**：选择文件后提示类型不符。
+
+**原因**：
+- `accept` 配置不正确
+
+**修复方案**：
+```vue
+<!-- 只允许图片 -->
+<lew-upload accept="image/*" />
+
+<!-- 只允许 PDF 和 Word -->
+<lew-upload accept=".pdf,.doc,.docx" />
+
+<!-- 只允许特定 MIME 类型 -->
+<lew-upload accept="application/pdf,application/msword" />
+```
+
+### 问题2：上传后文件不显示
+
+**现象**：上传成功但文件列表为空。
+
+**原因**：
+- `uploadHelper` 返回值格式不正确
+
+**修复方案**：
+```vue
+<script setup>
+const uploadHelper = async () => {
+  // 返回符合 LewUploadFileItem 格式的数组
+  const result = await uploadToServer(files)
+  return result.map(item => ({
+    id: item.id,
+    name: item.name,
+    url: item.url,
+    status: 'success'
+  }))
+}
+</script>
+```
+
+### 问题3：删除前需要确认
+
+**现象**：需要在删除文件前弹出确认框。
+
+**修复方案**：
+```vue
+<script setup>
+const beforeDelete = async (file) => {
+  return await confirm('确定删除该文件吗？')
+}
+</script>
+
+<lew-upload
+  :upload-helper="uploadHelper"
+  :before-delete="beforeDelete"
+/>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

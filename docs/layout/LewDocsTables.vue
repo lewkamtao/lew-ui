@@ -1,76 +1,79 @@
 <script setup lang="ts">
-import allTypes from 'docs/assets/all-types'
-import docsLocale from 'docs/locals'
-import { LewFlex, LewPopover, LewTag, locale } from 'lew-ui'
-import RequiredIcon from 'lew-ui/components/form/form/src/RequiredIcon.vue'
-import LewTypeCode from './LewTypeCode.vue'
+import allTypes from "docs/assets/all-types";
+import { useDemoLoaded } from "docs/composables/useDemoLoaded";
+import docsLocale from "docs/locals";
+import { LewFlex, LewPopover, LewTag, locale } from "lew-ui";
+import RequiredIcon from "lew-ui/components/form/form/src/RequiredIcon.vue";
+import LewTypeCode from "./LewTypeCode.vue";
+
+const { demoAllLoaded } = useDemoLoaded();
 
 const props = defineProps({
   options: {
     type: Object,
     default() {
-      return {}
+      return {};
     },
   },
-})
+});
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 
 function getComponentName() {
-  const { path } = useRoute()
+  const { path } = useRoute();
   return path
-    .replace('/', '')
+    .replace("/", "")
     .replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
-    .replace(/^[A-Z]/, letter => letter.toLowerCase())
+    .replace(/^[A-Z]/, (letter) => letter.toLowerCase());
 }
 
 function getColumns({
   columnsKey,
   title,
 }: {
-  columnsKey: string
-  title: string
+  columnsKey: string;
+  title: string;
 }) {
   let columns: any = [
     {
-      title: 'Name',
+      title: "Name",
       width: 150,
-      field: 'name',
+      field: "name",
       customRender: ({ row }: any) => {
-        const { name } = row
+        const { name } = row;
         return h(
-          'div',
+          "div",
           {
             style: {
-              display: 'flex',
-              alignItems: 'center',
+              display: "flex",
+              alignItems: "center",
             },
           },
           row.required
             ? [
-                h(RequiredIcon, { size: 7, style: { marginRight: '2px' } }),
+                h(RequiredIcon, { size: 7, style: { marginRight: "2px" } }),
                 name,
               ]
-            : name,
-        )
+            : name
+        );
       },
     },
     {
-      title: 'Description',
-      width: ['emits', 'methods'].includes(columnsKey) ? 400 : 200,
-      field: 'description',
+      title: "Description",
+      width: ["emits", "methods"].includes(columnsKey) ? 400 : 200,
+      field: "description",
       customRender: ({ row }: any) => {
-        const { name } = row
+        const { name } = row;
         return h(
-          'div',
+          "div",
           {
             style: {
               fontFamily: [
-                'Inter',
-                'Roboto',
-                '-apple-system',
-                'BlinkMacSystemFont',
+                "Inter",
+                "Roboto",
+                "-apple-system",
+                "BlinkMacSystemFont",
                 '"Segoe UI"',
                 '"PingFang SC"',
                 '"Hiragino Sans GB"',
@@ -78,45 +81,45 @@ function getColumns({
                 '"Noto Sans CJK SC"',
                 '"Noto Sans KR"',
                 '"Noto Sans JP"',
-                'Helvetica',
-                'Arial',
-                'sans-serif',
-              ].join(', '),
+                "Helvetica",
+                "Arial",
+                "sans-serif",
+              ].join(", "),
             },
           },
           docsLocale.t(
             `components.${getComponentName()}.${title.replace(
               /^[A-Z]/,
-              match => match.toLowerCase(),
-            )}.${name}`,
-          ),
-        )
+              (match) => match.toLowerCase()
+            )}.${name}`
+          )
+        );
       },
     },
-  ]
+  ];
 
-  if (columnsKey === 'emits') {
+  if (columnsKey === "emits") {
     columns = [
       ...columns,
       {
-        title: 'Argument',
+        title: "Argument",
         width: 200,
-        field: 'argument',
+        field: "argument",
         customRender: ({ row }: any) => {
-          const { argument } = row
-          return argument
+          const { argument } = row;
+          return argument;
         },
       },
-    ]
+    ];
   }
 
-  if (!['emits', 'methods', 'slots'].includes(columnsKey)) {
+  if (!["emits", "methods", "slots"].includes(columnsKey)) {
     columns = [
       ...columns,
       {
-        title: 'Type',
+        title: "Type",
         width: 200,
-        field: 'type',
+        field: "type",
         customRender: ({ row }: any) => {
           const {
             typeValues,
@@ -124,147 +127,144 @@ function getColumns({
             type,
             typePopKeys,
             typeComponents,
-          } = row
+          } = row;
           if (typeGhost) {
             return h(
               LewTag,
               {
-                type: 'light',
-                size: 'small',
-                color: 'pink',
+                type: "light",
+                size: "small",
+                color: "pink",
               },
               {
                 default: () => typeGhost,
-              },
-            )
-          }
-          else if ((typePopKeys || []).length > 0) {
+              }
+            );
+          } else if ((typePopKeys || []).length > 0) {
             const tags = typePopKeys.map((key: string) => {
-              const typeAlias = allTypes[key as keyof typeof allTypes]
+              const typeAlias = allTypes[key as keyof typeof allTypes];
               return h(
                 LewPopover,
                 {
-                  trigger: 'click',
+                  trigger: "click",
                 },
                 {
-                  'trigger': () =>
+                  trigger: () =>
                     h(
                       LewTag,
                       {
                         style: {
-                          cursor: 'pointer',
-                          textDecoration: 'underline dotted',
+                          cursor: "pointer",
+                          textDecoration: "underline dotted",
                         },
-                        type: 'light',
-                        size: 'small',
-                        color: 'pink',
+                        type: "light",
+                        size: "small",
+                        color: "pink",
                       },
                       {
                         default: () => key,
-                      },
+                      }
                     ),
-                  'popover-body': () => h(LewTypeCode, { code: typeAlias }),
-                },
-              )
-            })
+                  "popover-body": () => h(LewTypeCode, { code: typeAlias }),
+                }
+              );
+            });
             return h(
               LewFlex,
               {
-                x: 'start',
-                y: 'center',
-                gap: '5px',
+                x: "start",
+                y: "center",
+                gap: "5px",
                 wrap: true,
               },
               {
                 default: () => tags,
-              },
-            )
-          }
-          else if ((typeComponents || []).length > 0) {
+              }
+            );
+          } else if ((typeComponents || []).length > 0) {
             const tags = typeComponents.map(
-              (item: { name: string, path: string }) => {
+              (item: { name: string; path: string }) => {
                 return h(
                   LewTag,
                   {
                     style: {
-                      cursor: 'pointer',
-                      textDecoration: 'underline dotted',
+                      cursor: "pointer",
+                      textDecoration: "underline dotted",
                     },
-                    type: 'light',
-                    size: 'small',
-                    color: 'indigo',
+                    type: "light",
+                    size: "small",
+                    color: "indigo",
                     onClick: () => {
-                      const url = router.resolve(item.path).href
-                      window.open(url, '_blank')
+                      const url = router.resolve(item.path).href;
+                      window.open(url, "_blank");
                     },
                   },
                   {
                     default: () => item.name,
-                  },
-                )
-              },
-            )
+                  }
+                );
+              }
+            );
             return h(
               LewFlex,
               {
-                x: 'start',
-                y: 'center',
-                gap: '5px',
+                x: "start",
+                y: "center",
+                gap: "5px",
                 wrap: true,
               },
               {
                 default: () => tags,
-              },
-            )
-          }
-          else {
-            const _types
-              = (typeValues || []).length > 0
+              }
+            );
+          } else {
+            const _types =
+              (typeValues || []).length > 0
                 ? typeValues
-                : (type || '').split('|')
+                : (type || "").split("|");
             const tags = (_types || []).map((text: any) => {
               return h(
                 LewTag,
                 {
-                  type: 'light',
-                  size: 'small',
-                  color: 'cyan',
+                  type: "light",
+                  size: "small",
+                  color: "cyan",
                 },
                 {
                   default: () => text.trim(),
-                },
-              )
-            })
+                }
+              );
+            });
             return h(
               LewFlex,
               {
-                x: 'start',
-                y: 'center',
-                gap: '5px',
+                x: "start",
+                y: "center",
+                gap: "5px",
                 wrap: true,
               },
               {
                 default: () => tags,
-              },
-            )
+              }
+            );
           }
         },
       },
       {
-        title: 'Default',
+        title: "Default",
         width: 100,
-        field: 'default',
+        field: "default",
         customRender: ({ text, row }: any) => {
-          const { name, defaultLocale } = row
+          const { name, defaultLocale } = row;
           return defaultLocale
             ? locale.t(`${getComponentName()}.${name}`)
-            : text || '-'
+            : text || "-";
         },
       },
-    ]
+    ];
   }
 
-  return columns
+  return columns;
 }
 
 const sortValue = computed(() => {
@@ -273,53 +273,70 @@ const sortValue = computed(() => {
       return {
         orderNum: e.orderNum || 9,
         ...e,
-      }
+      };
     })
-    .sort((a: any, b: any) => a.orderNum - b.orderNum)
-})
+    .sort((a: any, b: any) => a.orderNum - b.orderNum);
+});
 
 function getTag(title: string) {
   // 获取用括号包裹的内容
-  const match = title.match(/\((.*?)\)/)
-  return match ? match[1] : ''
+  const match = title.match(/\((.*?)\)/);
+  return match ? match[1] : "";
 }
 
 function getTitle(title: string) {
   // 过滤掉括号
-  return title.replace(/\((.*?)\)/, '')
+  return title.replace(/\((.*?)\)/, "");
 }
 </script>
 
 <template>
-  <LewFlex direction="y" gap="70px" class="docs-wrapper">
+  <Transition name="docs-fade">
     <LewFlex
-      v-for="(item, index) in sortValue"
-      :key="index"
+      v-show="demoAllLoaded"
+      id="docs-wrapper"
       direction="y"
-      x="start"
+      gap="70px"
+      class="docs-wrapper"
     >
-      <lew-title :id="item.title" size="18px" class="demo-docs-title">
-        {{ getTitle(item.title) }}
-        <LewTag
-          v-if="getTag(item.title)"
-          style="margin-left: 5px"
-          type="light"
-          color="orange"
-        >
-          {{ getTag(item.title) }}
-        </LewTag>
-      </lew-title>
-      <lew-table
-        :key="`${item.title}_${docsLocale.t('name')}_${route.path} `"
-        bordered
-        :data-source="item.data"
-        :columns="getColumns(item)"
-      />
+      <LewFlex
+        v-for="(item, index) in sortValue"
+        :key="index"
+        direction="y"
+        x="start"
+      >
+        <lew-title :id="item.title" size="18px" class="demo-docs-title">
+          {{ getTitle(item.title) }}
+          <LewTag
+            v-if="getTag(item.title)"
+            style="margin-left: 5px"
+            type="light"
+            color="orange"
+          >
+            {{ getTag(item.title) }}
+          </LewTag>
+        </lew-title>
+        <lew-table
+          :key="`${item.title}_${docsLocale.t('name')}_${route.path} `"
+          bordered
+          :data-source="item.data"
+          :columns="getColumns(item)"
+        />
+      </LewFlex>
     </LewFlex>
-  </LewFlex>
+  </Transition>
 </template>
 
 <style lang="scss" scoped>
+.docs-fade-enter-active {
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.docs-fade-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
 .demo-docs-title {
   text-transform: capitalize;
   letter-spacing: 0.8px;

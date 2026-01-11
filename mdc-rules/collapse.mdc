@@ -1,0 +1,285 @@
+---
+alwaysApply: false
+---
+
+# LewCollapse 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewCollapse
+- **核心用途**：用于展示可折叠/展开的内容区域，支持手风琴模式和自由模式，适用于 FAQ、详情展示、表单分组等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持手风琴模式（同时只能展开一个）和自由模式（可同时展开多个）
+  - 支持通过 v-model 控制展开/收起状态
+  - 支持数组模式（多个 key）和字符串模式（单个 key）
+  - 支持自定义宽度和圆角
+  - 支持平滑的展开/收起动画
+  - 支持通过 Provide/Inject 机制在父子组件间共享状态
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `LewCollapse` 包裹多个 `LewCollapseItem`，每个 Item 可以独立展开/收起
+- **手风琴模式**：当 `v-model` 绑定字符串时，同时只能展开一个面板
+- **自由模式**：当 `v-model` 绑定数组时，可以同时展开多个面板
+- **状态同步**：通过 v-model 可以控制哪些面板展开，展开状态变化会触发 `change` 事件
+- **动画效果**：展开/收起时有平滑的高度动画过渡
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| width | `Property.Width` | `'100%'` | 任意 CSS width 值 | 组件整体宽度 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 展开/收起状态发生变化时触发 | `(value: string \| string[])` | 返回当前展开的面板 key（字符串或数组） |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 默认插槽，用于放置 `LewCollapseItem` 组件 | `<template><lew-collapse-item>...</lew-collapse-item></template>` |
+
+### 3.5 v-model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| modelValue | `string \| string[]` | - | 展开的面板 key，字符串模式为手风琴模式，数组模式为自由模式 |
+
+**使用示例**：
+```vue
+<!-- 手风琴模式（字符串） -->
+<lew-collapse v-model="activeKey">
+  <lew-collapse-item collapse-key="1">内容1</lew-collapse-item>
+  <lew-collapse-item collapse-key="2">内容2</lew-collapse-item>
+</lew-collapse>
+
+<!-- 自由模式（数组） -->
+<lew-collapse v-model="activeKeys">
+  <lew-collapse-item collapse-key="1">内容1</lew-collapse-item>
+  <lew-collapse-item collapse-key="2">内容2</lew-collapse-item>
+</lew-collapse>
+```
+
+### 3.6 LewCollapseItem Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| collapseKey | `string` | - | 必填，任意字符串 | 面板的唯一标识 key，用于 v-model 控制 |
+| title | `string` | - | 任意字符串 | 面板标题文本 |
+| radius | `Property.BorderRadius` | `'0px'` | 任意 CSS border-radius 值 | 面板圆角大小 |
+
+### 3.7 LewCollapseItem v-model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| modelValue | `boolean` | `false` | 当前面板是否展开 |
+
+**注意**：`LewCollapseItem` 的 `modelValue` 会自动与父组件 `LewCollapse` 的 `modelValue` 同步，无需手动绑定。
+
+## 4. 注意事项
+
+- ⚠️ **collapseKey 唯一性**：每个 `LewCollapseItem` 的 `collapseKey` 必须唯一，不能重复，否则会导致状态同步异常
+- ⚠️ **v-model 模式选择**：使用字符串类型时是手风琴模式（同时只能展开一个），使用数组类型时是自由模式（可同时展开多个），两种模式不能混用
+- ⚠️ **状态同步机制**：组件使用 Provide/Inject 机制在父子组件间共享状态，`LewCollapseItem` 会自动从父组件获取展开状态，无需手动传递
+- ⚠️ **数组模式操作**：在数组模式下，展开/收起操作会自动添加/移除对应的 key，确保数组始终反映当前展开的面板
+- ⚠️ **字符串模式限制**：在字符串模式下，展开新面板会自动收起之前展开的面板，这是手风琴模式的预期行为
+- ⚠️ **初始状态设置**：如果需要在初始化时展开某些面板，需要在 `v-model` 中设置对应的 key（字符串）或包含对应 key 的数组
+- ⚠️ **性能考虑**：当面板数量较多时，建议使用数组模式并控制同时展开的面板数量，避免渲染过多内容影响性能
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：面板无法展开或收起
+
+**现象**：点击面板标题，但面板无法展开或收起，状态没有变化。
+
+**原因**：
+- `collapseKey` 未设置或重复
+- v-model 绑定值类型不正确（字符串和数组混用）
+- Provide/Inject 机制失效
+
+**修复方案**：
+1. 确保每个 `LewCollapseItem` 都有唯一且非空的 `collapseKey`：
+```vue
+<template>
+  <lew-collapse v-model="activeKey">
+    <!-- ✅ 正确：每个 key 唯一 -->
+    <lew-collapse-item collapse-key="panel1">内容1</lew-collapse-item>
+    <lew-collapse-item collapse-key="panel2">内容2</lew-collapse-item>
+  </lew-collapse>
+</template>
+```
+2. 检查 v-model 绑定值的类型，确保与使用模式一致：
+```vue
+<script setup>
+// 手风琴模式：使用字符串
+const activeKey = ref('panel1')
+
+// 自由模式：使用数组
+const activeKeys = ref(['panel1', 'panel2'])
+</script>
+```
+
+### 问题2：手风琴模式下无法同时展开多个面板
+
+**现象**：设置了数组类型的 v-model，但展开新面板时，之前展开的面板会自动收起。
+
+**原因**：
+- v-model 绑定的是字符串类型，导致进入手风琴模式
+- 数组被意外转换为字符串
+
+**修复方案**：
+1. 确保 v-model 绑定的是数组类型：
+```vue
+<template>
+  <!-- ✅ 正确：使用数组实现自由模式 -->
+  <lew-collapse v-model="activeKeys">
+    <lew-collapse-item collapse-key="1">内容1</lew-collapse-item>
+    <lew-collapse-item collapse-key="2">内容2</lew-collapse-item>
+  </lew-collapse>
+</template>
+<script setup>
+const activeKeys = ref<string[]>([]) // ✅ 确保是数组类型
+</script>
+```
+2. 如果确实需要手风琴模式，使用字符串类型：
+```vue
+<script setup>
+const activeKey = ref('') // ✅ 字符串类型，手风琴模式
+</script>
+```
+
+### 问题3：初始状态设置无效
+
+**现象**：设置了初始的 v-model 值，但组件挂载后没有展开对应的面板。
+
+**原因**：
+- 初始值中的 key 与 `collapseKey` 不匹配
+- 数组模式中初始数组为空或 key 不存在
+- 组件挂载时机问题
+
+**修复方案**：
+1. 确保初始值中的 key 与 `collapseKey` 完全匹配：
+```vue
+<template>
+  <lew-collapse v-model="activeKeys">
+    <lew-collapse-item collapse-key="panel1">内容1</lew-collapse-item>
+    <lew-collapse-item collapse-key="panel2">内容2</lew-collapse-item>
+  </lew-collapse>
+</template>
+<script setup>
+// ✅ 正确：初始值中的 key 与 collapseKey 匹配
+const activeKeys = ref(['panel1']) // 初始展开 panel1
+</script>
+```
+2. 如果数据是异步加载的，在数据加载完成后再设置初始值：
+```vue
+<script setup>
+const activeKeys = ref<string[]>([])
+const panels = ref([])
+
+onMounted(async () => {
+  await loadPanels()
+  // 数据加载完成后设置初始展开状态
+  activeKeys.value = ['panel1']
+})
+</script>
+```
+
+### 问题4：change 事件触发时机异常
+
+**现象**：`change` 事件在预期之外触发，或者没有触发。
+
+**原因**：
+- 事件监听器设置不正确
+- 状态变化被其他逻辑覆盖
+- 深度监听配置问题
+
+**修复方案**：
+1. 正确监听 change 事件：
+```vue
+<template>
+  <lew-collapse
+    v-model="activeKeys"
+    @change="handleChange"
+  >
+    <lew-collapse-item collapse-key="1">内容1</lew-collapse-item>
+  </lew-collapse>
+</template>
+<script setup>
+const handleChange = (value: string | string[]) => {
+  console.log('展开状态变化:', value)
+  // 处理状态变化
+}
+</script>
+```
+2. 注意事件参数类型，根据模式判断：
+```vue
+<script setup>
+const handleChange = (value: string | string[]) => {
+  if (Array.isArray(value)) {
+    // 数组模式
+    console.log('当前展开的面板:', value)
+  } else {
+    // 字符串模式（手风琴）
+    console.log('当前展开的面板:', value)
+  }
+}
+</script>
+```
+
+### 问题5：面板内容高度动画不流畅
+
+**现象**：展开/收起时动画卡顿或不流畅。
+
+**原因**：
+- 面板内容过多，导致动画计算耗时
+- CSS 过渡属性配置不当
+- 浏览器性能问题
+
+**修复方案**：
+1. 优化面板内容，避免在折叠面板中放置过多内容：
+```vue
+<template>
+  <lew-collapse-item collapse-key="1" title="面板1">
+    <!-- ✅ 避免在折叠面板中放置大量内容 -->
+    <div>简洁的内容</div>
+    <!-- 复杂内容建议使用懒加载 -->
+  </lew-collapse-item>
+</template>
+```
+2. 对于复杂内容，考虑使用虚拟滚动或分页：
+```vue
+<template>
+  <lew-collapse-item collapse-key="list" title="列表">
+    <!-- 使用虚拟滚动处理大量数据 -->
+    <lew-virtual-list :data="largeData" />
+  </lew-collapse-item>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| - | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 手风琴模式适合 FAQ、帮助文档等场景，确保用户注意力集中在一个内容上
+- ✅ 自由模式适合详情展示、表单分组等场景，允许用户同时查看多个相关内容
+- ✅ 结合 `change` 事件可以实现展开状态的持久化，将状态保存到本地存储或服务器
+- ✅ 使用 `width` 属性可以控制组件宽度，适合在不同布局中使用
+- ✅ 通过动态控制 v-model 可以实现程序化的展开/收起操作，例如"全部展开"、"全部收起"功能

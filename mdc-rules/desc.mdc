@@ -1,0 +1,226 @@
+---
+alwaysApply: false
+---
+
+# LewDesc 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewDesc
+- **核心用途**：用于展示描述列表，支持多列布局、自定义标签宽度、边框样式等功能，适用于详情页、表单展示等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS Grid 的现代浏览器
+- **基础特性**：
+  - 支持多列网格布局（通过 `columns` 属性控制）
+  - 支持水平/垂直两种布局方向
+  - 支持自动计算标签宽度（`labelWidth="auto"`）
+  - 支持边框样式（`bordered`）
+  - 支持自定义标签和值的对齐方式
+  - 支持插槽自定义渲染内容
+  - 支持响应式布局和自定义间距
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `options` 配置描述项，`dataSource` 提供数据源，自动渲染标签和值
+- **多列布局**：通过 `columns` 属性控制每行显示的列数，支持响应式布局
+- **自动宽度**：当 `labelWidth="auto"` 时，组件会自动计算所有标签的最大宽度并统一应用
+- **边框模式**：设置 `bordered={true}` 时，每个描述项会显示边框，间距自动调整为 0
+- **自定义渲染**：通过具名插槽（插槽名为 `options` 中 `field` 的值）可以自定义每个字段的渲染内容
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewDescOption[]` | - | 必填 | 描述项配置数组，每个项包含 `label`（标签）、`field`（字段名）等属性 |
+| dataSource | `Record<string, any>` | `{}` | 任意对象 | 数据源对象，用于提供字段值 |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 组件尺寸，影响内边距和字体大小 |
+| labelX | `Property.TextAlign` | `'start'` | `'start'` / `'center'` / `'end'` | 标签文本对齐方式 |
+| valueX | `Property.TextAlign` | `'start'` | `'start'` / `'center'` / `'end'` | 值文本对齐方式 |
+| gap | `Property.Gap` | `'30px'` | 任意 CSS gap 值 | 描述项之间的间距（边框模式下自动为 0） |
+| width | `Property.Width` | - | 任意 CSS width 值 | 组件整体宽度 |
+| columns | `number` | `1` | 正整数 | 网格布局的列数 |
+| labelWidth | `Property.Width` | `'auto'` | `'auto'` 或任意 CSS width 值 | 标签宽度，`'auto'` 时自动计算最大宽度 |
+| direction | `LewDirection` | `'x'` | `'x'` / `'y'` | 布局方向：`'x'` 水平（标签在左），`'y'` 垂直（标签在上） |
+| bordered | `boolean` | `false` | `true` / `false` | 是否显示边框 |
+| id | `string` | - | 任意字符串 | 组件 ID（内部使用，文档中隐藏） |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| `[field]` | 自定义字段渲染内容，插槽名为 `options` 中对应项的 `field` 值 | `<template #fieldName="{ value, item }">自定义内容</template>` |
+
+**插槽参数说明**：
+- `value`：当前字段的值（从 `dataSource` 中获取）
+- `item`：当前描述项的完整配置对象
+
+## 4. 注意事项
+
+- ⚠️ **options 配置要求**：`options` 数组中的每个项必须包含 `label`（标签文本）和 `field`（字段名），`field` 用于从 `dataSource` 中获取对应的值
+- ⚠️ **自动宽度计算时机**：当 `labelWidth="auto"` 时，组件会在 `onMounted` 和 `size` 变化时重新计算标签宽度，确保所有标签宽度一致
+- ⚠️ **边框模式间距**：当 `bordered={true}` 时，`gap` 属性会被忽略，组件内部会自动将间距设置为 0，边框会紧贴相邻
+- ⚠️ **多列布局限制**：`columns` 属性使用 CSS Grid 的 `grid-template-columns` 实现，建议列数不要过多（建议不超过 4 列），避免在小屏幕上显示异常
+- ⚠️ **数据源字段匹配**：`dataSource` 中的字段名必须与 `options` 中 `field` 的值匹配，否则该字段会显示为空
+- ⚠️ **响应式布局**：组件使用 CSS Grid 布局，在不同屏幕尺寸下可能需要通过媒体查询调整 `columns` 值以实现响应式效果
+- ⚠️ **性能考虑**：组件内部使用 `cloneDeep` 深拷贝 `options`，如果 `options` 数组很大，可能影响性能，建议控制数组大小
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：标签宽度不一致
+
+**现象**：设置了 `labelWidth="auto"`，但不同描述项的标签宽度仍然不一致。
+
+**原因**：
+- 组件在 `onMounted` 时计算宽度，如果此时 DOM 还未完全渲染，可能导致计算不准确
+- `size` 变化后需要等待 DOM 更新才能重新计算
+
+**修复方案**：
+1. 确保 `options` 和 `dataSource` 数据在组件挂载前已经准备好
+2. 如果数据是异步加载的，可以在数据加载完成后再渲染组件：
+```vue
+<template>
+  <lew-desc
+    v-if="dataLoaded"
+    :options="descOptions"
+    :data-source="descData"
+  />
+</template>
+<script setup>
+const dataLoaded = ref(false)
+// 数据加载完成后
+onMounted(async () => {
+  await loadData()
+  dataLoaded.value = true
+})
+</script>
+```
+
+### 问题2：多列布局在小屏幕上显示异常
+
+**现象**：设置了 `columns={3}`，但在小屏幕上内容被挤压，显示不美观。
+
+**原因**：
+- CSS Grid 的固定列数不会自动响应屏幕尺寸
+- 组件最小宽度为 320px，列数过多时每列宽度过小
+
+**修复方案**：
+1. 使用响应式设计，根据屏幕尺寸动态调整 `columns`：
+```vue
+<template>
+  <lew-desc
+    :columns="responsiveColumns"
+    :options="descOptions"
+    :data-source="descData"
+  />
+</template>
+<script setup>
+import { useBreakpoints } from '@vueuse/core'
+const breakpoints = useBreakpoints({
+  sm: 640,
+  md: 768,
+  lg: 1024,
+})
+const responsiveColumns = computed(() => {
+  if (breakpoints.isSmaller('sm')) return 1
+  if (breakpoints.isSmaller('md')) return 2
+  return 3
+})
+</script>
+```
+2. 或者使用 CSS 媒体查询配合动态类名实现响应式
+
+### 问题3：自定义插槽内容不显示
+
+**现象**：定义了具名插槽（如 `<template #fieldName>`），但内容没有显示。
+
+**原因**：
+- 插槽名必须与 `options` 中对应项的 `field` 值完全匹配
+- 插槽作用域变量使用不正确
+
+**修复方案**：
+1. 确认插槽名与 `field` 值一致：
+```vue
+<template>
+  <lew-desc :options="options" :data-source="data">
+    <!-- ✅ 正确：插槽名与 field 值一致 -->
+    <template #userName="{ value, item }">
+      <lew-tag>{{ value }}</lew-tag>
+    </template>
+  </lew-desc>
+</template>
+<script setup>
+const options = [
+  { label: '用户名', field: 'userName' }, // field 值为 'userName'
+]
+</script>
+```
+2. 检查插槽作用域变量是否正确使用，`value` 是字段值，`item` 是配置对象
+
+### 问题4：边框模式下间距异常
+
+**现象**：设置了 `bordered={true}` 和 `gap="30px"`，但边框之间没有间距。
+
+**原因**：
+- 边框模式下，组件内部会自动将 `gap` 设置为 0，这是设计上的考虑
+- 边框本身会紧贴相邻，形成表格样式
+
+**修复方案**：
+1. 这是预期行为，边框模式旨在创建表格样式的描述列表
+2. 如果需要间距，可以考虑不使用边框模式，或者通过自定义 CSS 添加外边距：
+```vue
+<style>
+.lew-desc-bordered :deep(.lew-desc-item) {
+  margin: 10px;
+}
+</style>
+```
+
+### 问题5：自动宽度计算不准确
+
+**现象**：`labelWidth="auto"` 时，计算出的宽度明显偏小或偏大。
+
+**原因**：
+- 计算时机问题：DOM 未完全渲染
+- 边框模式下需要额外计算内边距
+- 字体加载延迟导致文本宽度计算不准确
+
+**修复方案**：
+1. 确保组件挂载时数据已准备好
+2. 如果使用自定义字体，等待字体加载完成：
+```vue
+<script setup>
+onMounted(async () => {
+  if (document.fonts) {
+    await document.fonts.ready
+  }
+  // 此时再渲染组件
+})
+</script>
+```
+3. 如果自动计算不准确，可以手动设置 `labelWidth` 为固定值
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| - | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合 `columns` 和响应式设计可以实现自适应的多列布局，在不同屏幕尺寸下自动调整列数
+- ✅ 使用 `labelWidth="auto"` 可以让所有标签宽度自动对齐，无需手动计算
+- ✅ 通过具名插槽可以灵活自定义每个字段的渲染方式，支持复杂的内容展示（如标签、图标、链接等）
+- ✅ 边框模式适合需要表格样式的场景，可以清晰地分隔不同的描述项
+- ✅ `direction="y"` 垂直布局适合标签较长的场景，可以避免标签和值在同一行时空间不足的问题

@@ -10,26 +10,6 @@
     />
 
     <style>
-      /* ===============================
-       1. GitHub Dark 真实色彩
-    =============================== */
-      :root {
-        --bg: #0d1117;
-        --text-main: #c9d1d9;
-        --text-dim: #8b949e;
-
-        --code-keyword: #ff7b72;
-        --code-string: #a5d6ff;
-        --code-func: #d2a8ff;
-        --code-var: #79c0ff;
-        --code-number: #79c0ff;
-        --code-comment: #8b949e;
-        --code-type: #ff7b72;
-        --code-property: #79c0ff;
-        --code-operator: #c9d1d9;
-        --code-regex: #a5d6ff;
-      }
-
       * {
         box-sizing: border-box;
       }
@@ -39,7 +19,7 @@
         margin: 0;
         width: 100%;
         height: 100%;
-        background: #000;
+        background: #0d1117;
         overflow: hidden;
         font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
         display: flex;
@@ -47,9 +27,7 @@
         justify-content: center;
       }
 
-      /* ===============================
-       2. 背景容器 - 艺术品尺寸 1080*1920
-    =============================== */
+      /* 背景容器 */
       .scene {
         position: relative;
         width: 1080px;
@@ -57,95 +35,162 @@
         max-width: 100vw;
         max-height: 100vh;
         aspect-ratio: 1080 / 1920;
-        background-color: #000;
+        background-color: #0d1117;
         background-image:
-          radial-gradient(circle at 20% 20%, rgba(88, 166, 255, 0.04), transparent 50%),
-          radial-gradient(circle at 80% 30%, rgba(210, 168, 255, 0.035), transparent 50%),
-          radial-gradient(circle at 50% 80%, rgba(255, 123, 114, 0.03), transparent 50%);
+          radial-gradient(ellipse at 30% 20%, rgba(88, 166, 255, 0.06), transparent 50%),
+          radial-gradient(ellipse at 70% 80%, rgba(210, 168, 255, 0.05), transparent 50%);
         box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
       }
 
-      /* ===============================
-       3. 代码层 - 无边界感，自然融合
-    =============================== */
+      .scene::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* 代码层 */
       .code-layer {
         position: absolute;
-        padding: 0;
-        font-size: 16px;
-        line-height: 1.5;
+        line-height: 1.6;
         white-space: pre;
         user-select: none;
         pointer-events: none;
-        color: var(--text-main); /* 默认文本颜色，确保所有文本都有颜色 */
+        background: transparent;
       }
 
-      /* 透明度层级 - 从浅到深 */
-      .code-layer.l0 {
-        opacity: 0.08;
+      .code-layer pre {
+        margin: 0;
+        padding: 0;
+        background: transparent !important;
+        overflow: visible !important;
       }
-      .code-layer.l1 {
+
+      .code-layer code {
+        background: transparent !important;
+        padding: 0;
+        color: #c9d1d9 !important;
+        overflow: visible !important;
+      }
+
+      /* 隐藏所有可能的滚动条 */
+      .code-layer pre::-webkit-scrollbar,
+      .code-layer code::-webkit-scrollbar,
+      .hljs::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+
+      /* 覆盖 highlight.js 默认颜色，确保无黑色 */
+      .code-layer .hljs {
+        color: #c9d1d9 !important;
+        background: transparent !important;
+      }
+      .code-layer .hljs-keyword {
+        color: #ff7b72 !important;
+      }
+      .code-layer .hljs-built_in {
+        color: #ffa657 !important;
+      }
+      .code-layer .hljs-type {
+        color: #ff7b72 !important;
+      }
+      .code-layer .hljs-literal {
+        color: #79c0ff !important;
+      }
+      .code-layer .hljs-number {
+        color: #79c0ff !important;
+      }
+      .code-layer .hljs-operator {
+        color: #c9d1d9 !important;
+      }
+      .code-layer .hljs-punctuation {
+        color: #c9d1d9 !important;
+      }
+      .code-layer .hljs-property {
+        color: #79c0ff !important;
+      }
+      .code-layer .hljs-regexp {
+        color: #a5d6ff !important;
+      }
+      .code-layer .hljs-string {
+        color: #a5d6ff !important;
+      }
+      .code-layer .hljs-char {
+        color: #a5d6ff !important;
+      }
+      .code-layer .hljs-subst {
+        color: #c9d1d9 !important;
+      }
+      .code-layer .hljs-symbol {
+        color: #79c0ff !important;
+      }
+      .code-layer .hljs-variable {
+        color: #ffa657 !important;
+      }
+      .code-layer .hljs-template-variable {
+        color: #ffa657 !important;
+      }
+      .code-layer .hljs-link {
+        color: #a5d6ff !important;
+      }
+      .code-layer .hljs-selector-tag {
+        color: #7ee787 !important;
+      }
+      .code-layer .hljs-selector-id {
+        color: #79c0ff !important;
+      }
+      .code-layer .hljs-selector-class {
+        color: #79c0ff !important;
+      }
+      .code-layer .hljs-comment {
+        color: #8b949e !important;
+      }
+      .code-layer .hljs-doctag {
+        color: #8b949e !important;
+      }
+      .code-layer .hljs-meta {
+        color: #8b949e !important;
+      }
+      .code-layer .hljs-title {
+        color: #d2a8ff !important;
+      }
+      .code-layer .hljs-title.function_ {
+        color: #d2a8ff !important;
+      }
+      .code-layer .hljs-title.class_ {
+        color: #ffa657 !important;
+      }
+      .code-layer .hljs-params {
+        color: #c9d1d9 !important;
+      }
+      .code-layer .hljs-attr {
+        color: #79c0ff !important;
+      }
+      .code-layer .hljs-attribute {
+        color: #79c0ff !important;
+      }
+      .code-layer .hljs-name {
+        color: #7ee787 !important;
+      }
+
+      /* 透明度层级 - 基础样式，具体大小由 JS 随机设置 */
+      .code-layer.depth-1 {
         opacity: 0.1;
       }
-      .code-layer.l2 {
-        opacity: 0.12;
-      }
-      .code-layer.l3 {
+      .code-layer.depth-2 {
         opacity: 0.15;
       }
-      .code-layer.l4 {
-        opacity: 0.18;
-      }
-      .code-layer.l5 {
+      .code-layer.depth-3 {
         opacity: 0.22;
       }
-      .code-layer.l6 {
-        opacity: 0.26;
-      }
-      .code-layer.l7 {
+      .code-layer.depth-4 {
         opacity: 0.3;
       }
-      .code-layer.l8 {
-        opacity: 0.35;
-      }
-      .code-layer.l9 {
+      .code-layer.depth-5 {
         opacity: 0.4;
       }
 
-      /* 代码高亮 - GitHub 暗黑模式真实颜色 */
-      .kw {
-        color: var(--code-keyword);
-      }
-      .fn {
-        color: var(--code-func);
-      }
-      .va {
-        color: var(--code-var);
-      }
-      .st {
-        color: var(--code-string);
-      }
-      .cm {
-        color: var(--code-comment);
-      }
-      .num {
-        color: var(--code-number);
-      }
-      .type {
-        color: var(--code-type);
-      }
-      .prop {
-        color: var(--code-property);
-      }
-      .op {
-        color: var(--code-operator);
-      }
-      .regex {
-        color: var(--code-regex);
-      }
-
-      /* ===============================
-       4. 中央文案 - 大型方法调用
-    =============================== */
+      /* 中央文案 - 无背景，融入代码 */
       .center-text {
         position: absolute;
         inset: 0;
@@ -155,58 +200,73 @@
         z-index: 100;
       }
 
-      .center-text .method-def {
-        font-size: clamp(20px, 3.5vw, 36px);
-        letter-spacing: 0.04em;
-        color: var(--text-main);
-        font-weight: 300;
-        font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
-        text-shadow:
-          0 8px 32px rgba(0, 0, 0, 0.9),
-          0 0 24px rgba(88, 166, 255, 0.25),
-          0 0 12px rgba(210, 168, 255, 0.2);
-        line-height: 1.6;
-        white-space: pre;
-        margin: 0 auto;
+      .center-text pre {
+        margin: 0;
+        padding: 0;
+        background: transparent !important;
       }
 
-      .center-text .method-keyword {
-        color: var(--code-keyword);
+      .center-text code {
+        font-size: clamp(22px, 3.5vw, 32px) !important;
+        line-height: 1.7;
+        background: transparent !important;
+        text-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        color: #c9d1d9 !important;
       }
 
-      .center-text .method-name {
-        color: var(--code-func);
+      /* 中央代码颜色 */
+      .center-text .hljs {
+        color: #c9d1d9 !important;
+        background: transparent !important;
+      }
+      .center-text .hljs-keyword {
+        color: #ff7b72 !important;
+      }
+      .center-text .hljs-built_in {
+        color: #ffa657 !important;
+      }
+      .center-text .hljs-type {
+        color: #ff7b72 !important;
+      }
+      .center-text .hljs-literal {
+        color: #79c0ff !important;
+      }
+      .center-text .hljs-number {
+        color: #79c0ff !important;
+      }
+      .center-text .hljs-property {
+        color: #79c0ff !important;
+      }
+      .center-text .hljs-string {
+        color: #a5d6ff !important;
+      }
+      .center-text .hljs-title {
+        color: #d2a8ff !important;
+      }
+      .center-text .hljs-title.function_ {
+        color: #d2a8ff !important;
+      }
+      .center-text .hljs-title.class_ {
+        color: #ffa657 !important;
+      }
+      .center-text .hljs-params {
+        color: #c9d1d9 !important;
+      }
+      .center-text .hljs-attr {
+        color: #79c0ff !important;
       }
 
-      .center-text .method-param {
-        color: var(--code-var);
-      }
-
-      .center-text .method-type {
-        color: var(--code-type);
-      }
-
-      .center-text .method-operator {
-        color: var(--code-operator);
-      }
-
-      .center-text .method-string {
-        color: var(--code-string);
-      }
-
-      /* ===============================
-       5. 导出按钮
-    =============================== */
+      /* 导出按钮 */
       .export-btn {
         position: fixed;
         top: 20px;
         right: 20px;
         z-index: 1000;
         padding: 12px 24px;
-        background: rgba(13, 17, 23, 0.8);
+        background: rgba(13, 17, 23, 0.9);
         border: 1px solid rgba(201, 209, 217, 0.2);
         border-radius: 8px;
-        color: var(--text-main);
+        color: #c9d1d9;
         font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
         font-size: 14px;
         cursor: pointer;
@@ -221,10 +281,6 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       }
 
-      .export-btn:active {
-        transform: translateY(0);
-      }
-
       .export-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
@@ -236,7 +292,7 @@
     <button class="export-btn" id="exportBtn">导出图片</button>
     <div class="scene" id="scene">
       <div class="center-text">
-        <span id="slogan"></span>
+        <pre><code class="language-typescript" id="slogan"></code></pre>
       </div>
     </div>
 
@@ -247,332 +303,288 @@
       const scene = document.getElementById('scene')
       const sloganEl = document.getElementById('slogan')
 
-      /* ===============================
-       5. 科技和AI主题的代码片段库（短代码，不超过3行）- 纯代码文本
-    =============================== */
-      const codeSnippetsRaw = [
-        `<span class="cm">// AI Model</span>
-<span class="kw">const</span> <span class="va">model</span> = <span class="fn">train</span>(<span class="va">data</span>)`,
+      // 代码片段库 - 纯文本，由 highlight.js 高亮
+      const codeSnippets = [
+        `const model = train(data)`,
 
-        `<span class="kw">function</span> <span class="fn">predict</span>(<span class="va">input</span>: <span class="type">Tensor</span>) {
-  <span class="kw">return</span> <span class="va">model</span>.<span class="fn">forward</span>(<span class="va">input</span>)
+        `function predict(input: Tensor) {
+  return model.forward(input)
 }`,
 
-        `<span class="kw">type</span> <span class="type">NeuralNetwork</span> = {
-  <span class="prop">layers</span>: <span class="type">Layer</span>[],
-  <span class="prop">weights</span>: <span class="type">Matrix</span>
+        `type NeuralNetwork = {
+  layers: Layer[]
+  weights: Matrix
 }`,
 
-        `<span class="kw">async</span> <span class="kw">function</span> <span class="fn">inference</span>(<span class="va">query</span>: <span class="type">string</span>) {
-  <span class="kw">return</span> <span class="kw">await</span> <span class="va">ai</span>.<span class="fn">process</span>(<span class="va">query</span>)
+        `async function inference(query: string) {
+  return await ai.process(query)
 }`,
 
-        `<span class="kw">const</span> <span class="va">gpu</span> = <span class="fn">initGPU</span>()
-<span class="kw">const</span> <span class="va">tensor</span> = <span class="fn">createTensor</span>(<span class="va">data</span>)`,
+        `const gpu = initGPU()
+const tensor = createTensor(data)`,
 
-        `<span class="cm">// Deep Learning</span>
-<span class="kw">class</span> <span class="type">CNN</span> <span class="kw">extends</span> <span class="type">Model</span> {}`,
-
-        `<span class="kw">function</span> <span class="fn">backprop</span>(<span class="va">loss</span>: <span class="type">number</span>) {
-  <span class="kw">return</span> <span class="va">gradient</span>.<span class="fn">compute</span>(<span class="va">loss</span>)
+        `class CNN extends Model {
+  forward(x: Tensor): Tensor
 }`,
 
-        `<span class="kw">type</span> <span class="type">LLM</span> = <span class="type">Transformer</span> & {
-  <span class="prop">tokens</span>: <span class="num">2048</span>
+        `function backprop(loss: number) {
+  return gradient.compute(loss)
 }`,
 
-        `<span class="kw">const</span> <span class="va">prompt</span> = <span class="st">'Generate code'</span>
-<span class="kw">const</span> <span class="va">response</span> = <span class="fn">generate</span>(<span class="va">prompt</span>)`,
-
-        `<span class="kw">interface</span> <span class="type">Agent</span> {
-  <span class="prop">think</span>(): <span class="type">Action</span>
-  <span class="prop">act</span>(): <span class="type">Result</span>
+        `type LLM = Transformer & {
+  tokens: 2048
 }`,
 
-        `<span class="kw">function</span> <span class="fn">embed</span>(<span class="va">text</span>: <span class="type">string</span>): <span class="type">Vector</span> {
-  <span class="kw">return</span> <span class="va">encoder</span>.<span class="fn">encode</span>(<span class="va">text</span>)
+        `const prompt = 'Generate code'
+const response = generate(prompt)`,
+
+        `interface Agent {
+  think(): Action
+  act(): Result
 }`,
 
-        `<span class="cm">// Reinforcement Learning</span>
-<span class="kw">const</span> <span class="va">reward</span> = <span class="fn">computeReward</span>(<span class="va">state</span>, <span class="va">action</span>)`,
-
-        `<span class="kw">type</span> <span class="type">Dataset</span> = <span class="type">Tensor</span>[]
-<span class="kw">const</span> <span class="va">trainSet</span>: <span class="type">Dataset</span> = <span class="fn">loadData</span>()`,
-
-        `<span class="kw">async</span> <span class="kw">function</span> <span class="fn">fineTune</span>(<span class="va">model</span>: <span class="type">Model</span>) {
-  <span class="kw">await</span> <span class="va">model</span>.<span class="fn">train</span>(<span class="va">epochs</span>)
+        `function embed(text: string): Vector {
+  return encoder.encode(text)
 }`,
 
-        `<span class="kw">const</span> <span class="va">loss</span> = <span class="fn">mse</span>(<span class="va">pred</span>, <span class="va">target</span>)
-<span class="kw">const</span> <span class="va">grad</span> = <span class="fn">backward</span>(<span class="va">loss</span>)`,
+        `const reward = computeReward(state, action)`,
 
-        `<span class="kw">class</span> <span class="type">Transformer</span> {
-  <span class="fn">forward</span>(<span class="va">x</span>): <span class="type">Tensor</span> {}
+        `type Dataset = Tensor[]
+const trainSet: Dataset = loadData()`,
+
+        `async function fineTune(model: Model) {
+  await model.train(epochs)
 }`,
 
-        `<span class="cm">// Computer Vision</span>
-<span class="kw">const</span> <span class="va">image</span> = <span class="fn">loadImage</span>(<span class="st">'input.jpg'</span>)
-<span class="kw">const</span> <span class="va">result</span> = <span class="va">cv</span>.<span class="fn">detect</span>(<span class="va">image</span>)`,
+        `const loss = mse(pred, target)
+const grad = backward(loss)`,
 
-        `<span class="kw">function</span> <span class="fn">optimize</span>(<span class="va">params</span>: <span class="type">Params</span>) {
-  <span class="kw">return</span> <span class="va">optimizer</span>.<span class="fn">step</span>(<span class="va">params</span>)
+        `class Transformer {
+  forward(x: Tensor): Tensor
 }`,
 
-        `<span class="kw">type</span> <span class="type">GPT</span> = {
-  <span class="prop">vocab</span>: <span class="num">50000</span>,
-  <span class="prop">context</span>: <span class="num">4096</span>
+        `const image = loadImage('input.jpg')
+const result = cv.detect(image)`,
+
+        `function optimize(params: Params) {
+  return optimizer.step(params)
 }`,
 
-        `<span class="kw">const</span> <span class="va">activation</span> = <span class="fn">relu</span>(<span class="va">x</span>)
-<span class="kw">const</span> <span class="va">output</span> = <span class="fn">softmax</span>(<span class="va">logits</span>)`,
-
-        `<span class="kw">interface</span> <span class="type">API</span> {
-  <span class="prop">endpoint</span>: <span class="type">string</span>
-  <span class="prop">key</span>: <span class="type">string</span>
+        `type GPT = {
+  vocab: 50000
+  context: 4096
 }`,
 
-        `<span class="cm">// NLP Processing</span>
-<span class="kw">const</span> <span class="va">tokens</span> = <span class="fn">tokenize</span>(<span class="va">text</span>)
-<span class="kw">const</span> <span class="va">embeddings</span> = <span class="fn">encode</span>(<span class="va">tokens</span>)`,
+        `const activation = relu(x)
+const output = softmax(logits)`,
 
-        `<span class="kw">function</span> <span class="fn">attention</span>(<span class="va">q</span>, <span class="va">k</span>, <span class="va">v</span>) {
-  <span class="kw">return</span> <span class="fn">softmax</span>((<span class="va">q</span> @ <span class="va">k</span>.<span class="fn">T</span>()) / <span class="fn">sqrt</span>(<span class="va">d</span>)) @ <span class="va">v</span>
+        `interface API {
+  endpoint: string
+  key: string
 }`,
 
-        `<span class="kw">type</span> <span class="type">Robot</span> = <span class="type">Agent</span> & <span class="type">Actuator</span>
-<span class="kw">const</span> <span class="va">robot</span>: <span class="type">Robot</span> = <span class="fn">createRobot</span>()`,
+        `const tokens = tokenize(text)
+const embeddings = encode(tokens)`,
 
-        `<span class="kw">async</span> <span class="kw">function</span> <span class="fn">learn</span>(<span class="va">experience</span>: <span class="type">Memory</span>[]) {
-  <span class="kw">for</span> (<span class="kw">const</span> <span class="va">mem</span> <span class="kw">of</span> <span class="va">experience</span>) {
-    <span class="fn">update</span>(<span class="va">mem</span>)
-  }
+        `function attention(q, k, v) {
+  return softmax(q @ k.T / sqrt(d)) @ v
 }`,
 
-        `<span class="kw">const</span> <span class="va">batch</span> = <span class="fn">sample</span>(<span class="va">dataset</span>, <span class="num">32</span>)
-<span class="kw">const</span> <span class="va">loss</span> = <span class="fn">compute</span>(<span class="va">batch</span>)`,
+        `type Robot = Agent & Actuator
+const robot: Robot = createRobot()`,
 
-        `<span class="kw">class</span> <span class="type">GAN</span> {
-  <span class="fn">generate</span>(<span class="va">noise</span>): <span class="type">Image</span> {}
-  <span class="fn">discriminate</span>(<span class="va">img</span>): <span class="type">boolean</span> {}
+        `const batch = sample(dataset, 32)
+const loss = compute(batch)`,
+
+        `class GAN {
+  generate(noise): Image
+  discriminate(img): boolean
 }`,
 
-        `<span class="cm">// Quantum Computing</span>
-<span class="kw">const</span> <span class="va">qubit</span> = <span class="fn">createQubit</span>()
-<span class="kw">const</span> <span class="va">state</span> = <span class="fn">measure</span>(<span class="va">qubit</span>)`,
+        `const qubit = createQubit()
+const state = measure(qubit)`,
 
-        `<span class="kw">function</span> <span class="fn">cluster</span>(<span class="va">points</span>: <span class="type">Point</span>[]): <span class="type">Cluster</span>[] {
-  <span class="kw">return</span> <span class="fn">kmeans</span>(<span class="va">points</span>, <span class="num">k</span>)
+        `function cluster(points: Point[]) {
+  return kmeans(points, k)
 }`,
 
-        `<span class="kw">type</span> <span class="type">Sensor</span> = <span class="type">Camera</span> | <span class="type">Lidar</span>
-<span class="kw">const</span> <span class="va">sensors</span>: <span class="type">Sensor</span>[] = <span class="fn">init</span>()`,
+        `type Sensor = Camera | Lidar
+const sensors: Sensor[] = init()`,
 
-        `<span class="kw">async</span> <span class="kw">function</span> <span class="fn">recognize</span>(<span class="va">image</span>: <span class="type">Image</span>) {
-  <span class="kw">const</span> <span class="va">features</span> = <span class="kw">await</span> <span class="va">model</span>.<span class="fn">extract</span>(<span class="va">image</span>)
-  <span class="kw">return</span> <span class="fn">classify</span>(<span class="va">features</span>)
+        `const policy = createPolicy(network)
+const action = policy.select(state)`,
+
+        `interface MLModel {
+  predict(x: Input): Output
+  train(data: Dataset): void
 }`,
 
-        `<span class="kw">const</span> <span class="va">policy</span> = <span class="fn">createPolicy</span>(<span class="va">network</span>)
-<span class="kw">const</span> <span class="va">action</span> = <span class="va">policy</span>.<span class="fn">select</span>(<span class="va">state</span>)`,
+        `const layer1 = Dense(128, relu)
+const layer2 = Dense(64, relu)`,
 
-        `<span class="kw">interface</span> <span class="type">MLModel</span> {
-  <span class="prop">predict</span>(<span class="va">x</span>: <span class="type">Input</span>): <span class="type">Output</span>
-  <span class="prop">train</span>(<span class="va">data</span>: <span class="type">Dataset</span>): <span class="type">void</span>
+        `function mutate(genome: Genome) {
+  return genome.evolve(rate)
 }`,
 
-        `<span class="cm">// Neural Architecture</span>
-<span class="kw">const</span> <span class="va">layer1</span> = <span class="fn">Dense</span>(<span class="num">128</span>, <span class="fn">relu</span>)
-<span class="kw">const</span> <span class="va">layer2</span> = <span class="fn">Dense</span>(<span class="num">64</span>, <span class="fn">relu</span>)
-<span class="kw">const</span> <span class="va">output</span> = <span class="fn">Dense</span>(<span class="num">10</span>, <span class="fn">softmax</span>)`,
+        `type Tensor = Float32Array[]
+const x: Tensor = zeros([1, 784])`,
 
-        `<span class="kw">function</span> <span class="fn">mutate</span>(<span class="va">genome</span>: <span class="type">Genome</span>): <span class="type">Genome</span> {
-  <span class="kw">return</span> <span class="va">genome</span>.<span class="fn">evolve</span>(<span class="va">rate</span>)
+        `const encoder = BERT()
+const decoder = GPT()`,
+
+        `class AutoEncoder {
+  encode(x): Latent
+  decode(z): Reconstructed
 }`,
 
-        `<span class="kw">type</span> <span class="type">Tensor</span> = <span class="type">Float32Array</span>[]
-<span class="kw">const</span> <span class="va">x</span>: <span class="type">Tensor</span> = <span class="fn">zeros</span>([<span class="num">1</span>, <span class="num">784</span>])`,
+        `const workers = spawn(8)
+await parallelTrain(workers, data)`,
 
-        `<span class="kw">async</span> <span class="kw">function</span> <span class="fn">process</span>(<span class="va">data</span>: <span class="type">Stream</span>) {
-  <span class="kw">for</span> <span class="kw">await</span> (<span class="kw">const</span> <span class="va">chunk</span> <span class="kw">of</span> <span class="va">data</span>) {
-    <span class="fn">handle</span>(<span class="va">chunk</span>)
-  }
+        `function transform(input: Tensor) {
+  return input.reshape([-1, 784])
 }`,
 
-        `<span class="kw">const</span> <span class="va">encoder</span> = <span class="fn">BERT</span>()
-<span class="kw">const</span> <span class="va">decoder</span> = <span class="fn">GPT</span>()
-<span class="kw">const</span> <span class="va">seq2seq</span> = <span class="fn">connect</span>(<span class="va">encoder</span>, <span class="va">decoder</span>)`,
-
-        `<span class="kw">class</span> <span class="type">AutoEncoder</span> {
-  <span class="fn">encode</span>(<span class="va">x</span>): <span class="type">Latent</span> {}
-  <span class="fn">decode</span>(<span class="va">z</span>): <span class="type">Reconstructed</span> {}
-}`,
-
-        `<span class="cm">// Distributed Training</span>
-<span class="kw">const</span> <span class="va">workers</span> = <span class="fn">spawn</span>(<span class="num">8</span>)
-<span class="kw">await</span> <span class="fn">parallelTrain</span>(<span class="va">workers</span>, <span class="va">data</span>)`,
-
-        `<span class="kw">function</span> <span class="fn">transform</span>(<span class="va">input</span>: <span class="type">Tensor</span>): <span class="type">Tensor</span> {
-  <span class="kw">return</span> <span class="va">input</span>.<span class="fn">reshape</span>([<span class="num">-1</span>, <span class="num">784</span>])
-}`,
-
-        `<span class="kw">type</span> <span class="type">HyperParams</span> = {
-  <span class="prop">lr</span>: <span class="num">0.001</span>,
-  <span class="prop">batch</span>: <span class="num">32</span>,
-  <span class="prop">epochs</span>: <span class="num">100</span>
+        `type HyperParams = {
+  lr: 0.001
+  batch: 32
+  epochs: 100
 }`,
       ]
 
-      /* ===============================
-       6. 创建代码层 - 无重叠布局
-    =============================== */
-      // 存储已放置的代码块位置信息
-      const placedBlocks = []
-
-      // 检测两个矩形是否重叠
-      function checkOverlap(rect1, rect2) {
-        return !(
-          rect1.right < rect2.left ||
-          rect1.left > rect2.right ||
-          rect1.bottom < rect2.top ||
-          rect1.top > rect2.bottom
-        )
-      }
-
-      // 从带HTML标签的代码中提取纯文本
-      function extractTextFromHTML(html) {
-        const temp = document.createElement('div')
-        temp.innerHTML = html
-        return temp.textContent || temp.innerText || ''
-      }
-
-      // 使用highlight.js高亮代码
-      function highlightCode(code, language = 'typescript') {
-        if (typeof hljs !== 'undefined' && hljs.highlight) {
-          try {
-            const result = hljs.highlight(code, { language })
-            return result.value
-          } catch (e) {
-            return code
-          }
+      // 使用 highlight.js 高亮代码
+      function highlightCode(code) {
+        if (typeof hljs !== 'undefined') {
+          return hljs.highlight(code, { language: 'typescript' }).value
         }
         return code
       }
 
-      // 尝试找到一个不重叠的位置
-      function findNonOverlappingPosition(width, height, maxAttempts = 100) {
-        const sceneWidth = 1080
-        const sceneHeight = 1920
-        const padding = 20
+      // 布局配置
+      const SCENE_WIDTH = 1080
+      const SCENE_HEIGHT = 1920
 
-        for (let attempt = 0; attempt < maxAttempts; attempt++) {
-          const left = Math.random() * (sceneWidth - width - padding * 2) + padding
-          const top = Math.random() * (sceneHeight - height - padding * 2) + padding
-
-          const newRect = {
-            left,
-            top,
-            right: left + width,
-            bottom: top + height,
-          }
-
-          // 检查是否与已放置的块重叠
-          let overlaps = false
-          for (const block of placedBlocks) {
-            if (checkOverlap(newRect, block)) {
-              overlaps = true
-              break
-            }
-          }
-
-          if (!overlaps) {
-            placedBlocks.push(newRect)
-            return { left, top }
-          }
-        }
-
-        // 如果找不到，返回一个随机位置（可能重叠，但尽量避开）
-        const left = Math.random() * (sceneWidth - width - padding * 2) + padding
-        const top = Math.random() * (sceneHeight - height - padding * 2) + padding
-        return { left, top }
+      // 中心区域排除（为主文案留空）
+      const CENTER_ZONE = {
+        left: SCENE_WIDTH * 0.1,
+        right: SCENE_WIDTH * 0.9,
+        top: SCENE_HEIGHT * 0.4,
+        bottom: SCENE_HEIGHT * 0.56,
       }
 
-      function createLayer(level) {
-        const div = document.createElement('div')
-        div.className = `code-layer l${level}`
-
-        // 获取原始代码（如果是HTML，先提取文本）
-        const rawCode = codeSnippetsRaw[Math.floor(Math.random() * codeSnippetsRaw.length)]
-        const codeText = rawCode.includes('<span') ? extractTextFromHTML(rawCode) : rawCode
-
-        // 使用highlight.js高亮
-        div.innerHTML = highlightCode(codeText, 'typescript')
-
-        // 随机大小 - 高层级的代码更大，底层更小
-        let size
-        if (level <= 3) {
-          size = Math.random() * 0.25 + 0.75
-        } else if (level <= 6) {
-          size = Math.random() * 0.3 + 0.9
-        } else {
-          size = Math.random() * 0.35 + 1.1
-        }
-
-        // 临时添加到DOM以获取实际尺寸（先设置transform）
-        div.style.transform = `scale(${size})`
-        div.style.visibility = 'hidden'
-        div.style.position = 'absolute'
-        div.style.left = '0'
-        div.style.top = '0'
-        scene.appendChild(div)
-
-        // 获取缩放后的实际尺寸
-        const rect = div.getBoundingClientRect()
-        const scaledWidth = rect.width
-        const scaledHeight = rect.height
-
-        // 从DOM移除（稍后重新添加）
-        scene.removeChild(div)
-
-        // 查找不重叠的位置
-        const position = findNonOverlappingPosition(scaledWidth, scaledHeight)
-        div.style.left = position.left + 'px'
-        div.style.top = position.top + 'px'
-        div.style.visibility = 'visible'
-
-        scene.appendChild(div)
+      // 检查位置是否在中心区域
+      function isInCenterZone(x, y, w, h) {
+        return !(x + w < CENTER_ZONE.left || x > CENTER_ZONE.right || y + h < CENTER_ZONE.top || y > CENTER_ZONE.bottom)
       }
 
-      /* ===============================
-       7. 生成整个背景 - 更多层次
-    =============================== */
-      function generateBackground() {
-        // 清空已放置的块
-        placedBlocks.length = 0
+      // 生成均匀分布的位置
+      function generateGridPositions() {
+        const positions = []
 
-        // 10个层级，数量适中以确保不重叠
-        const layers = [
-          { count: 12, level: 0 },
-          { count: 11, level: 1 },
-          { count: 10, level: 2 },
-          { count: 9, level: 3 },
-          { count: 8, level: 4 },
-          { count: 7, level: 5 },
-          { count: 6, level: 6 },
-          { count: 5, level: 7 },
-          { count: 4, level: 8 },
-          { count: 3, level: 9 },
+        // 定义区域：上部、左侧、右侧、下部
+        const regions = [
+          // 上部区域 (4行 x 4列)
+          ...generateRegion(0, 0, SCENE_WIDTH, SCENE_HEIGHT * 0.36, 4, 4),
+          // 左侧区域 (中间高度)
+          ...generateRegion(0, SCENE_HEIGHT * 0.34, SCENE_WIDTH * 0.22, SCENE_HEIGHT * 0.28, 1, 3),
+          // 右侧区域 (中间高度)
+          ...generateRegion(SCENE_WIDTH * 0.78, SCENE_HEIGHT * 0.34, SCENE_WIDTH * 0.22, SCENE_HEIGHT * 0.28, 1, 3),
+          // 下部上层 (2行 x 4列) - 靠近中央
+          ...generateRegion(0, SCENE_HEIGHT * 0.57, SCENE_WIDTH, SCENE_HEIGHT * 0.16, 4, 2),
+          // 下部下层 (3行 x 4列) - 底部区域
+          ...generateRegion(0, SCENE_HEIGHT * 0.73, SCENE_WIDTH, SCENE_HEIGHT * 0.27, 4, 3),
         ]
 
-        layers.forEach((group) => {
-          for (let i = 0; i < group.count; i++) {
-            createLayer(group.level)
+        return regions.sort(() => Math.random() - 0.5)
+      }
+
+      // 在指定区域内生成网格位置
+      function generateRegion(startX, startY, width, height, cols, rows) {
+        const positions = []
+        const cellW = width / cols
+        const cellH = height / rows
+
+        for (let row = 0; row < rows; row++) {
+          for (let col = 0; col < cols; col++) {
+            const baseX = startX + col * cellW + cellW * 0.1
+            const baseY = startY + row * cellH + cellH * 0.1
+
+            // 随机偏移
+            const offsetX = (Math.random() - 0.5) * cellW * 0.5
+            const offsetY = (Math.random() - 0.5) * cellH * 0.5
+
+            const x = Math.max(20, Math.min(SCENE_WIDTH - 400, baseX + offsetX))
+            const y = Math.max(20, Math.min(SCENE_HEIGHT - 120, baseY + offsetY))
+
+            positions.push({ x, y })
+          }
+        }
+        return positions
+      }
+
+      // 创建代码层 - 随机大小
+      function createCodeLayer(x, y, depth, snippet) {
+        const div = document.createElement('div')
+        div.className = `code-layer depth-${depth}`
+
+        const pre = document.createElement('pre')
+        const code = document.createElement('code')
+        code.className = 'language-typescript hljs'
+        code.innerHTML = highlightCode(snippet)
+
+        pre.appendChild(code)
+        div.appendChild(pre)
+
+        div.style.left = `${x}px`
+        div.style.top = `${y}px`
+
+        // 随机大小变化 - 让代码看起来更有层次感
+        const baseSizes = { 1: 10, 2: 12, 3: 14, 4: 16, 5: 18 }
+        const baseSize = baseSizes[depth] || 14
+        const randomSize = baseSize + (Math.random() - 0.5) * 6 // ±3px 变化
+        div.style.fontSize = `${randomSize}px`
+
+        // 随机轻微旋转 - 让布局更自然
+        const rotation = (Math.random() - 0.5) * 4 // ±2度
+        div.style.transform = `rotate(${rotation}deg)`
+
+        scene.appendChild(div)
+      }
+
+      // 生成背景
+      function generateBackground() {
+        const positions = generateGridPositions()
+        const usedSnippets = new Set()
+
+        // 每个深度层级放置的数量
+        const depthConfig = [
+          { depth: 1, count: 9 },
+          { depth: 2, count: 8 },
+          { depth: 3, count: 7 },
+          { depth: 4, count: 6 },
+          { depth: 5, count: 5 },
+        ]
+
+        let posIndex = 0
+
+        depthConfig.forEach(({ depth, count }) => {
+          for (let i = 0; i < count && posIndex < positions.length; i++) {
+            // 随机选择一个未使用的代码片段
+            let snippetIndex
+            let attempts = 0
+            do {
+              snippetIndex = Math.floor(Math.random() * codeSnippets.length)
+              attempts++
+            } while (usedSnippets.has(snippetIndex) && attempts < 50)
+
+            usedSnippets.add(snippetIndex)
+
+            const pos = positions[posIndex++]
+            createCodeLayer(pos.x, pos.y, depth, codeSnippets[snippetIndex])
           }
         })
       }
 
-      /* ===============================
-       8. 导出图片功能
-    =============================== */
+      // 导出图片功能
       const exportBtn = document.getElementById('exportBtn')
 
       async function exportImage() {
@@ -585,31 +597,20 @@
         exportBtn.textContent = '导出中...'
 
         try {
-          // 临时隐藏导出按钮
           exportBtn.style.display = 'none'
-
-          // 等待一下确保所有元素都已渲染
           await new Promise((resolve) => setTimeout(resolve, 100))
 
-          // 使用2倍尺寸导出 (2160*3840)
           const canvas = await html2canvas(scene, {
             scale: 2,
             backgroundColor: '#0d1117',
             useCORS: true,
-            allowTaint: false,
             logging: false,
-            removeContainer: false,
             foreignObjectRendering: true,
-            ignoreElements: (element) => {
-              // 排除导出按钮
-              return element.id === 'exportBtn'
-            },
+            ignoreElements: (element) => element.id === 'exportBtn',
           })
 
-          // 恢复导出按钮
           exportBtn.style.display = 'block'
 
-          // 创建下载链接
           const link = document.createElement('a')
           link.download = `code-art-${Date.now()}.png`
           link.href = canvas.toDataURL('image/png')
@@ -630,18 +631,13 @@
 
       exportBtn.addEventListener('click', exportImage)
 
-      /* ===============================
-       9. 初始化 - 设置中央函数定义
-    =============================== */
-      // 初始化背景
+      // 初始化
       generateBackground()
 
-      // 设置中央的代码 - 使用highlight.js格式化并添加高亮
-      const code = `type Container = { [key: string]: never }
+      // 设置中央代码
+      const centerCode = `type Container = { [key: string]: never }
 const value: Container = {}`
-
-      sloganEl.className = 'method-def'
-      sloganEl.innerHTML = highlightCode(code.trim(), 'typescript')
+      sloganEl.innerHTML = highlightCode(centerCode)
     </script>
   </body>
 </html>

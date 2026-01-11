@@ -1,0 +1,278 @@
+---
+alwaysApply: false
+---
+
+# LewImage 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewImage
+- **核心用途**：用于显示图片，支持加载状态、错误处理、懒加载等功能，提供完整的图片展示解决方案
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持图片加载状态（骨架屏）
+  - 支持图片加载失败处理（错误图标或自定义插槽）
+  - 支持懒加载（lazy loading）
+  - 支持自定义尺寸（width、height）
+  - 支持图片适配方式（objectFit、objectPosition）
+  - 使用 `@vueuse/core` 的 `useImage` 进行图片加载管理
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **正常显示**：当图片加载成功时，显示图片内容
+- **加载状态**：图片加载过程中显示骨架屏动画
+- **错误处理**：图片加载失败时显示错误图标（可自定义）
+- **懒加载**：设置 `lazy={true}` 时，图片仅在进入视口时加载
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| src | `string` | `''` | 任意有效的图片 URL | 图片地址 |
+| alt | `string` | `''` | 任意字符串 | 图片替代文本（用于无障碍访问） |
+| width | `Property.Width` | `200` | 支持 CSS width 值 | 图片容器宽度，支持数字或带单位的字符串 |
+| height | `Property.Height` | `200` | 支持 CSS height 值 | 图片容器高度，支持数字或带单位的字符串 |
+| objectFit | `LewImageObjectFit` | `'cover'` | `'fill'` / `'contain'` / `'cover'` / `'none'` / `'scale-down'` | 图片在容器中的适配方式（CSS object-fit） |
+| objectPosition | `LewImageObjectPosition` | `'center'` | CSS object-position 值 | 图片在容器中的位置（CSS object-position） |
+| lazy | `boolean` | `false` | `true` / `false` | 是否启用懒加载 |
+| loading | `boolean` | `false` | `true` / `false` | 是否强制显示加载状态（骨架屏） |
+| title | `string` | `''` | 任意字符串 | 图片标题（用于无障碍访问） |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| error | 自定义错误显示内容 | `<template #error><div>加载失败</div></template>` |
+
+**插槽优先级**：
+- 当设置了 `error` 插槽时，使用插槽内容显示错误
+- 当未设置 `error` 插槽时，显示默认的错误图标
+
+## 4. 注意事项
+
+- ⚠️ **加载状态管理**：组件使用 `@vueuse/core` 的 `useImage` 自动管理图片加载状态，无需手动控制
+- ⚠️ **错误处理**：图片加载失败时会自动显示错误图标，可以通过 `error` 插槽自定义错误显示内容
+- ⚠️ **懒加载**：`lazy` 属性使用原生 `loading="lazy"` 属性实现，需要现代浏览器支持
+- ⚠️ **尺寸单位**：`width` 和 `height` 支持所有 CSS 单位（px、rem、%、vw 等），组件内部使用 `any2px` 统一处理
+- ⚠️ **图片适配**：`objectFit` 和 `objectPosition` 用于控制图片在容器中的显示方式，适合裁剪、缩放等场景
+- ⚠️ **加载状态**：`loading` prop 可以强制显示加载状态，即使图片已经加载完成
+- ⚠️ **性能优化**：组件使用 `useImage` 进行图片加载管理，支持自动重试和错误处理
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：图片不显示，一直显示加载状态
+
+**现象**：设置了 `src` 属性，但图片一直显示骨架屏加载动画，图片无法加载。
+
+**原因**：
+- 图片 URL 无效或无法访问
+- 跨域问题导致图片加载失败
+- 网络请求被阻塞
+- `loading` prop 设置为 `true`
+
+**修复方案**：
+1. 检查图片 URL 是否可访问（在浏览器中直接打开 URL 测试）
+2. 如果是跨域问题，确保图片服务器配置了正确的 CORS 头
+3. 检查 `loading` prop 是否设置为 `true`：
+```vue
+<template>
+  <!-- ✅ 正确：不强制显示加载状态 -->
+  <lew-image src="https://example.com/image.jpg" />
+  
+  <!-- ❌ 错误：强制显示加载状态 -->
+  <lew-image src="https://example.com/image.jpg" :loading="true" />
+</template>
+```
+
+### 问题2：图片加载失败不显示错误图标
+
+**现象**：图片加载失败，但没有显示错误图标。
+
+**原因**：
+- 错误图标路径不正确
+- 自定义了 `error` 插槽但内容为空
+- 错误状态判断逻辑问题
+
+**修复方案**：
+1. 确认错误图标路径正确（组件内部使用相对路径 `./image_fail_icon.svg`）
+2. 检查是否设置了空的 `error` 插槽：
+```vue
+<template>
+  <!-- ✅ 正确：使用默认错误图标 -->
+  <lew-image src="invalid-url.jpg" />
+  
+  <!-- ✅ 正确：自定义错误显示 -->
+  <lew-image src="invalid-url.jpg">
+    <template #error>
+      <div>加载失败</div>
+    </template>
+  </lew-image>
+  
+  <!-- ❌ 错误：空的 error 插槽不会显示任何内容 -->
+  <lew-image src="invalid-url.jpg">
+    <template #error></template>
+  </lew-image>
+</template>
+```
+
+### 问题3：懒加载不生效
+
+**现象**：设置了 `lazy={true}`，但图片立即加载，没有懒加载效果。
+
+**原因**：
+- 浏览器不支持原生 `loading="lazy"` 属性
+- 图片在视口内，浏览器会立即加载
+- `lazy` 属性设置不正确
+
+**修复方案**：
+1. 确认浏览器支持懒加载（现代浏览器都支持）
+2. 理解懒加载机制：图片在视口内时会立即加载，只有不在视口内时才会延迟加载
+3. 确认 `lazy` 属性设置正确：
+```vue
+<template>
+  <!-- ✅ 正确：启用懒加载 -->
+  <lew-image src="image.jpg" :lazy="true" />
+  
+  <!-- ❌ 错误：lazy 应该是 boolean 类型 -->
+  <lew-image src="image.jpg" lazy="true" />
+</template>
+```
+
+### 问题4：图片尺寸不符合预期
+
+**现象**：设置了 `width` 和 `height`，但图片显示尺寸不正确。
+
+**原因**：
+- `width` 和 `height` 值格式不正确
+- `objectFit` 设置导致图片缩放方式不符合预期
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确认 `width` 和 `height` 值格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的 CSS 尺寸值 -->
+  <lew-image src="image.jpg" width="300px" height="200px" />
+  <lew-image src="image.jpg" width="300" height="200" />
+  <lew-image src="image.jpg" width="50%" height="50%" />
+</template>
+```
+2. 理解 `objectFit` 的作用：
+```vue
+<template>
+  <!-- cover：覆盖整个容器，可能裁剪图片 -->
+  <lew-image src="image.jpg" object-fit="cover" />
+  
+  <!-- contain：完整显示图片，可能留白 -->
+  <lew-image src="image.jpg" object-fit="contain" />
+</template>
+```
+
+### 问题5：图片位置不正确
+
+**现象**：设置了 `objectPosition`，但图片位置没有变化。
+
+**原因**：
+- `objectPosition` 值格式不正确
+- `objectFit` 设置导致位置属性不生效
+- 容器尺寸与图片尺寸相同，位置属性无效果
+
+**修复方案**：
+1. 确认 `objectPosition` 值格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的 CSS object-position 值 -->
+  <lew-image src="image.jpg" object-position="top left" />
+  <lew-image src="image.jpg" object-position="center" />
+  <lew-image src="image.jpg" object-position="20% 50%" />
+</template>
+```
+2. 确认 `objectFit` 不是 `fill` 或 `none`（这些值下位置属性可能不生效）
+
+### 问题6：加载状态一直显示
+
+**现象**：图片已经加载完成，但加载状态（骨架屏）一直显示。
+
+**原因**：
+- `loading` prop 设置为 `true`
+- `src` 为空或无效
+- 图片加载状态判断逻辑问题
+
+**修复方案**：
+1. 检查 `loading` prop：
+```vue
+<template>
+  <!-- ✅ 正确：不强制显示加载状态 -->
+  <lew-image src="image.jpg" />
+  
+  <!-- ❌ 错误：强制显示加载状态 -->
+  <lew-image src="image.jpg" :loading="true" />
+</template>
+```
+2. 确认 `src` 不为空：
+```vue
+<template>
+  <!-- ✅ 正确：提供有效的图片 URL -->
+  <lew-image src="https://example.com/image.jpg" />
+  
+  <!-- ❌ 错误：src 为空会一直显示加载状态 -->
+  <lew-image src="" />
+</template>
+```
+
+### 问题7：图片显示模糊
+
+**现象**：图片显示模糊，不够清晰。
+
+**原因**：
+- 图片原始分辨率过低
+- `objectFit` 设置导致图片被拉伸
+- 容器尺寸与图片尺寸不匹配
+
+**修复方案**：
+1. 使用高分辨率图片：
+```vue
+<template>
+  <!-- 使用高分辨率图片源 -->
+  <lew-image src="image@2x.jpg" width="300px" height="200px" />
+</template>
+```
+2. 使用合适的 `objectFit` 值：
+```vue
+<template>
+  <!-- contain：保持图片比例，不会拉伸 -->
+  <lew-image src="image.jpg" object-fit="contain" />
+  
+  <!-- cover：可能裁剪，但不会拉伸 -->
+  <lew-image src="image.jpg" object-fit="cover" />
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（computed, ref, watch, getCurrentInstance），优化计算属性命名（imageStyleObject → imageStyle），修复模板中的属性绑定（:src, :lazy, :alt） | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `lazy` 属性可以实现图片懒加载，提升页面加载性能
+- ✅ 通过 `error` 插槽可以自定义错误显示，提供更好的用户体验
+- ✅ 使用 `objectFit` 和 `objectPosition` 可以精确控制图片显示区域，适合裁剪、缩放等场景
+- ✅ 结合 `loading` prop 可以实现优雅的图片加载体验，在异步获取图片 URL 时先设置 `loading={true}`
+- ✅ 使用 `any2px` 工具函数统一处理尺寸值，支持多种单位格式
+- ✅ 通过 `useImage` 自动管理图片加载状态，无需手动控制加载和错误状态

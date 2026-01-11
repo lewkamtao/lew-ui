@@ -1,0 +1,192 @@
+---
+alwaysApply: false
+---
+
+# LewMessage 方法使用文档
+
+## 1. 方法基础信息
+
+- **方法名称**：LewMessage
+- **核心用途**：命令式调用全局消息提示
+- **适用环境**：Vue 3.4+、TypeScript
+- **基础特性**：
+  - 支持 6 种类型（normal、success、warning、error、info、loading）
+  - 支持自定义显示时长
+  - 支持通过 ID 更新/关闭指定消息
+  - 支持异步请求封装
+
+## 2. 快速开始
+
+### 基本用法
+
+```typescript
+import { LewMessage } from 'lew-ui'
+
+// 简单调用
+LewMessage.success('操作成功')
+LewMessage.error('操作失败')
+
+// 配置选项
+LewMessage.warning({
+  content: '警告信息',
+  duration: 5000
+})
+
+// loading 消息
+LewMessage.loading({
+  id: 'loading-1',
+  content: '加载中...',
+  duration: 0 // 不自动关闭
+})
+
+// 关闭指定消息
+LewMessage.close({ id: 'loading-1' })
+```
+
+## 3. 详细 API 说明
+
+### 3.1 方法类型
+
+| 方法 | 说明 |
+|------|------|
+| `LewMessage.normal(options)` | 普通消息 |
+| `LewMessage.success(options)` | 成功消息 |
+| `LewMessage.warning(options)` | 警告消息 |
+| `LewMessage.error(options)` | 错误消息 |
+| `LewMessage.info(options)` | 信息消息 |
+| `LewMessage.loading(options)` | 加载消息 |
+| `LewMessage.close({ id })` | 关闭指定消息 |
+| `LewMessage.request(options, asyncFn)` | 异步请求封装 |
+
+### 3.2 Options 参数
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| content | `string` | - | 消息内容（必需） |
+| id | `string` | - | 消息唯一标识，用于更新或关闭 |
+| duration | `number` | `3000` | 显示时长（ms），0 表示不自动关闭 |
+
+### 3.3 request 方法
+
+```typescript
+interface LewMessageRequestOptions {
+  loadingMessage: string // 加载中的提示文本
+}
+
+interface LewMessageRequestResult {
+  content?: string       // 结果消息
+  duration?: number      // 显示时长
+  type?: 'success' | 'warning' | 'error' | 'info'  // 消息类型
+}
+
+LewMessage.request(
+  { loadingMessage: '提交中...' },
+  async () => {
+    await api.submit()
+    return { content: '提交成功', type: 'success' }
+  }
+)
+```
+
+### 3.4 使用示例
+
+```typescript
+import { LewMessage } from 'lew-ui'
+
+// 简单字符串
+LewMessage.success('保存成功')
+
+// 带 ID 的消息（可更新）
+LewMessage.loading({
+  id: 'save',
+  content: '保存中...',
+  duration: 0
+})
+
+// 更新同 ID 的消息
+LewMessage.success({
+  id: 'save',
+  content: '保存成功'
+})
+
+// 手动关闭
+LewMessage.close({ id: 'save' })
+
+// 异步请求封装
+LewMessage.request(
+  { loadingMessage: '正在提交...' },
+  async () => {
+    const result = await api.submit()
+    if (result.success) {
+      return { content: '提交成功', type: 'success' }
+    }
+    throw { content: '提交失败' }
+  }
+)
+```
+
+## 4. 注意事项
+
+- ⚠️ **ID 机制**：相同 ID 的消息会更新而非创建新消息
+- ⚠️ **duration: 0**：设置为 0 时消息不会自动关闭，需手动调用 `close`
+- ⚠️ **request 错误处理**：异步函数抛出错误时会自动显示 error 消息
+- ⚠️ **消息堆叠**：多条消息会从上到下依次排列
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：消息一闪而过
+
+**现象**：消息显示后立即消失。
+
+**原因**：
+- duration 设置过短
+
+**修复方案**：
+```typescript
+LewMessage.success({
+  content: '消息内容',
+  duration: 5000 // 5秒
+})
+```
+
+### 问题2：loading 消息不消失
+
+**现象**：loading 消息一直显示。
+
+**原因**：
+- duration 设置为 0 但没有手动关闭
+
+**修复方案**：
+```typescript
+// 确保异步操作完成后关闭
+LewMessage.loading({
+  id: 'loading',
+  content: '加载中...',
+  duration: 0
+})
+
+try {
+  await api.fetch()
+  LewMessage.success({ id: 'loading', content: '加载成功' })
+} catch {
+  LewMessage.error({ id: 'loading', content: '加载失败' })
+}
+```
+
+### 问题3：想要更新消息内容
+
+**现象**：需要动态更新消息文本。
+
+**修复方案**：
+```typescript
+// 使用相同的 ID 发送新消息即可更新
+LewMessage.loading({ id: 'progress', content: '0%', duration: 0 })
+LewMessage.loading({ id: 'progress', content: '50%', duration: 0 })
+LewMessage.success({ id: 'progress', content: '100% 完成' })
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

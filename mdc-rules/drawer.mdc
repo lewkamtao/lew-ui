@@ -1,0 +1,294 @@
+---
+alwaysApply: false
+---
+
+# LewDrawer 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewDrawer
+- **核心用途**：用于从屏幕边缘滑出抽屉面板，支持四个方向（上、下、左、右），适用于侧边栏、设置面板、详情展示等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持四个方向的抽屉：left（左）、right（右）、top（上）、bottom（下）
+  - 支持通过 v-model 控制显示/隐藏
+  - 支持点击遮罩层关闭（`closeOnClickOverlay`）
+  - 支持按 ESC 键关闭（`closeByEsc`）
+  - 支持自定义宽度和高度
+  - 支持标题、头部插槽、底部插槽自定义
+  - 支持默认的确认/取消按钮，可自定义按钮属性
+  - 使用 Teleport 渲染到指定容器，支持多个抽屉叠加
+  - 自动处理 z-index 和顶层检测，确保 ESC 键只关闭最顶层的抽屉
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `v-model:visible` 控制抽屉显示/隐藏，抽屉从指定方向滑入
+- **遮罩层**：抽屉显示时自动显示半透明遮罩层，点击可关闭（需设置 `closeOnClickOverlay`）
+- **动画效果**：抽屉滑入/滑出有平滑的动画过渡，使用 `transform` 实现高性能动画
+- **多抽屉支持**：可以同时打开多个抽屉，自动处理 z-index，最顶层的抽屉响应 ESC 键
+- **内容区域**：支持通过插槽或 props 自定义头部、内容、底部区域
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| title | `string` | - | 任意字符串 | 抽屉标题文本（当提供 `header` 插槽时，此属性会被忽略） |
+| position | `LewDrawerPosition` | `'right'` | `'left'` / `'right'` / `'top'` / `'bottom'` | 抽屉出现的位置 |
+| width | `Property.Width` | `'500px'` | 任意 CSS width 值 | 抽屉宽度（当 `position` 为 `left` 或 `right` 时生效） |
+| height | `Property.Height` | `'500px'` | 任意 CSS height 值 | 抽屉高度（当 `position` 为 `top` 或 `bottom` 时生效） |
+| closeOnClickOverlay | `boolean` | `false` | `true` / `false` | 是否允许点击遮罩层关闭抽屉 |
+| closeByEsc | `boolean` | `false` | `true` / `false` | 是否允许按 ESC 键关闭抽屉（仅关闭最顶层的抽屉） |
+| hideFooter | `boolean` | `false` | `true` / `false` | 是否隐藏底部区域（包括默认按钮和 `footer` 插槽） |
+| hideOkButton | `boolean` | `false` | `true` / `false` | 是否隐藏确认按钮 |
+| hideCloseButton | `boolean` | `false` | `true` / `false` | 是否隐藏取消按钮 |
+| okButtonProps | `LewButtonProps` | - | 任意 `LewButtonProps` 对象 | 确认按钮的属性配置 |
+| closeButtonProps | `LewButtonProps` | - | 任意 `LewButtonProps` 对象 | 取消按钮的属性配置 |
+| zIndex | `number` | `1001` | 非负整数 | 抽屉的 z-index 值，用于控制层级 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| close | 抽屉关闭时触发 | - | 当通过任何方式关闭抽屉时都会触发（点击关闭按钮、点击遮罩层、按 ESC 键等） |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 抽屉主体内容 | `<template>抽屉内容</template>` |
+| header | 自定义头部区域，优先级高于 `title` prop | `<template #header><lew-flex>自定义头部</lew-flex></template>` |
+| footer | 自定义底部区域，优先级高于默认按钮 | `<template #footer><lew-button>自定义按钮</lew-button></template>` |
+
+**插槽优先级**：
+- `header` 插槽优先级高于 `title` prop，当同时提供时，显示插槽内容
+- `footer` 插槽优先级高于默认按钮，当提供 `footer` 插槽时，默认按钮不会显示
+
+### 3.5 v-model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| visible | `boolean` | `false` | 控制抽屉的显示/隐藏状态 |
+
+**使用示例**：
+```vue
+<template>
+  <lew-drawer v-model:visible="drawerVisible" title="抽屉标题">
+    抽屉内容
+  </lew-drawer>
+</template>
+<script setup>
+const drawerVisible = ref(false)
+</script>
+```
+
+## 4. 注意事项
+
+- ⚠️ **Teleport 容器**：组件使用 `teleport` 渲染到 `#lew-drawer` 容器，确保应用中存在该容器（通常由 `useDOMCreate` hook 自动创建）
+- ⚠️ **多抽屉层级**：当同时打开多个抽屉时，组件会自动检测最顶层的抽屉，只有最顶层的抽屉会响应 ESC 键关闭
+- ⚠️ **位置与尺寸**：`width` 在 `left`/`right` 位置时生效，`height` 在 `top`/`bottom` 位置时生效，其他位置会使用默认值
+- ⚠️ **关闭事件触发**：无论通过何种方式关闭抽屉（按钮、遮罩层、ESC 键），都会触发 `close` 事件，但不会自动隐藏组件，需要通过 `v-model` 控制
+- ⚠️ **按钮配置**：`okButtonProps` 和 `closeButtonProps` 可以覆盖默认按钮的属性，但不会覆盖 `size`、`text` 等基础属性
+- ⚠️ **性能考虑**：抽屉使用 `transform` 实现动画，性能较好，但避免在抽屉内容中放置过多复杂组件
+- ⚠️ **样式作用域**：组件样式使用 `scoped`，但某些全局样式（如遮罩层）可能需要全局作用域，注意样式冲突
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：抽屉无法显示
+
+**现象**：设置了 `v-model:visible={true}`，但抽屉没有显示。
+
+**原因**：
+- `#lew-drawer` 容器不存在
+- z-index 被其他元素覆盖
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确保 `useDOMCreate` hook 已正确调用，创建了 `#lew-drawer` 容器：
+```vue
+<script setup>
+// 确保在应用初始化时调用
+import { useDOMCreate } from 'lew-ui/hooks'
+useDOMCreate('lew-drawer')
+</script>
+```
+2. 检查 z-index 设置，确保抽屉的 z-index 高于其他元素：
+```vue
+<template>
+  <lew-drawer
+    v-model:visible="visible"
+    :z-index="2000"
+    title="抽屉"
+  />
+</template>
+```
+
+### 问题2：点击遮罩层无法关闭
+
+**现象**：设置了 `closeOnClickOverlay={true}`，但点击遮罩层无法关闭抽屉。
+
+**原因**：
+- `closeOnClickOverlay` 未设置为 `true`
+- 点击事件被其他元素阻止
+- `onClickOutside` 检测逻辑问题
+
+**修复方案**：
+1. 确认 `closeOnClickOverlay` 已设置为 `true`：
+```vue
+<template>
+  <lew-drawer
+    v-model:visible="visible"
+    :close-on-click-overlay="true"
+    title="抽屉"
+  />
+</template>
+```
+2. 检查是否有其他元素阻止了点击事件传播
+3. 确认点击的是遮罩层区域，而不是抽屉内容区域
+
+### 问题3：ESC 键无法关闭抽屉
+
+**现象**：设置了 `closeByEsc={true}`，但按 ESC 键无法关闭抽屉。
+
+**原因**：
+- `closeByEsc` 未设置为 `true`
+- 当前抽屉不是最顶层的抽屉
+- 有 Dialog 在抽屉之上
+- 键盘事件被其他元素捕获
+
+**修复方案**：
+1. 确认 `closeByEsc` 已设置为 `true`：
+```vue
+<template>
+  <lew-drawer
+    v-model:visible="visible"
+    :close-by-esc="true"
+    title="抽屉"
+  />
+</template>
+```
+2. 确认当前抽屉是最顶层的抽屉（最后打开的），如果有多个抽屉，只有最顶层的会响应 ESC 键
+3. 检查是否有 Dialog 或其他元素在抽屉之上，这些元素会阻止 ESC 键事件
+4. 确保没有其他元素阻止了键盘事件传播
+
+### 问题4：抽屉动画不流畅
+
+**现象**：抽屉打开/关闭时动画卡顿或不流畅。
+
+**原因**：
+- 抽屉内容过多，导致渲染耗时
+- CSS 动画属性配置不当
+- 浏览器性能问题
+
+**修复方案**：
+1. 优化抽屉内容，避免放置过多复杂组件：
+```vue
+<template>
+  <lew-drawer v-model:visible="visible" title="抽屉">
+    <!-- ✅ 避免在抽屉中放置大量数据 -->
+    <lew-virtual-list v-if="largeData" :data="largeData" />
+    <!-- 或者使用分页 -->
+    <lew-pagination v-model:current-page="page" />
+  </lew-drawer>
+</template>
+```
+2. 确保动画使用 `transform` 属性（组件已优化）：
+```scss
+/* 组件内部已使用 transform，无需修改 */
+.lew-drawer-body-position-right:not(.lew-drawer-body-show) {
+  transform: translateX(100%);
+}
+```
+
+### 问题5：多个抽屉层级混乱
+
+**现象**：同时打开多个抽屉时，层级显示不正确，或 ESC 键关闭了错误的抽屉。
+
+**原因**：
+- z-index 设置不当
+- 顶层检测逻辑问题
+- 抽屉打开顺序影响层级
+
+**修复方案**：
+1. 确保每个抽屉都有合适的 z-index，后打开的抽屉应该有更高的 z-index：
+```vue
+<template>
+  <lew-drawer
+    v-model:visible="drawer1"
+    :z-index="1001"
+    title="抽屉1"
+  />
+  <lew-drawer
+    v-model:visible="drawer2"
+    :z-index="1002"
+    title="抽屉2"
+  />
+</template>
+```
+2. 组件会自动检测最顶层的抽屉，确保最后打开的抽屉 z-index 最高
+3. 如果使用动态 z-index，确保后打开的抽屉 z-index 递增：
+```vue
+<script setup>
+const drawerZIndex = ref(1001)
+function openDrawer() {
+  drawerZIndex.value += 1
+  drawerVisible.value = true
+}
+</script>
+```
+
+### 问题6：按钮文本显示不正确
+
+**现象**：确认/取消按钮的文本显示为 key 而不是实际文本。
+
+**原因**：
+- 国际化配置缺失
+- `locale.t()` 无法找到对应的翻译
+
+**修复方案**：
+1. 确保国际化配置中包含 `drawer.closeText` 和 `drawer.okText`：
+```typescript
+// docs/locals/zh.ts
+export default {
+  components: {
+    drawer: {
+      closeText: '取消',
+      okText: '确认',
+    },
+  },
+}
+```
+2. 或者通过 `closeButtonProps` 和 `okButtonProps` 自定义文本：
+```vue
+<template>
+  <lew-drawer
+    v-model:visible="visible"
+    :close-button-props="{ text: '关闭' }"
+    :ok-button-props="{ text: '确定' }"
+  />
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.1 | 修复多层级 Drawer 按 ESC 键无法关闭的问题：将 `isTopDrawer` 从计算属性改为方法，确保每次按 ESC 时重新检查 DOM 状态 | 2025-01-09 |
+| 1.0.0 | 初始版本 | 2025-01-09 |
+
+---
+
+**使用技巧**：
+- ✅ 结合 `v-model:visible` 可以实现受控的抽屉显示，适合在路由变化、表单提交等场景中使用
+- ✅ 使用 `header` 插槽可以完全自定义头部区域，支持复杂的头部布局和交互
+- ✅ 使用 `footer` 插槽可以自定义底部按钮，实现更灵活的底部操作区域
+- ✅ 通过 `closeOnClickOverlay` 和 `closeByEsc` 可以提升用户体验，让用户有多种方式关闭抽屉
+- ✅ 多抽屉场景下，合理设置 `zIndex` 可以确保层级正确，避免遮挡问题
+- ✅ 使用 `okButtonProps` 和 `closeButtonProps` 可以自定义按钮样式和行为，实现更灵活的交互

@@ -1,0 +1,158 @@
+---
+alwaysApply: false
+---
+
+# LewRadio 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewRadio / LewRadioGroup
+- **核心用途**：用于单选操作，支持单个单选框和单选框组两种使用方式
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持单个单选框和单选框组
+  - 支持水平和垂直排列
+  - 支持圆形和方形样式
+  - 支持禁用和只读状态
+  - 支持是否显示选中图标
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **单个单选框**：使用 `LewRadio` 渲染单个可选项
+- **单选框组**：使用 `LewRadioGroup` 配合 `options` 渲染一组互斥的选项
+- **选中状态**：选中后显示选中样式和图标
+- **排列方向**：通过 `direction` 控制水平或垂直排列
+
+## 3. 详细 API 说明
+
+### 3.1 LewRadio Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| checked | `boolean` | `false` | `true` / `false` | 是否选中 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| label | `string` | `''` | - | 单选框标签文本 |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 尺寸 |
+| round | `boolean` | `true` | `true` / `false` | 是否圆形样式 |
+| iconable | `boolean` | `true` | `true` / `false` | 是否显示选中图标 |
+| block | `boolean` | `false` | `true` / `false` | 是否块级显示 |
+
+### 3.2 LewRadioGroup Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewRadioOption[]` | `[]` | - | 选项数据（必需） |
+| direction | `LewDirection` | `'x'` | `'x'` / `'y'` | 排列方向 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用整组 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读整组 |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 尺寸 |
+| round | `boolean` | `true` | `true` / `false` | 是否圆形样式 |
+| iconable | `boolean` | `true` | `true` / `false` | 是否显示选中图标 |
+| block | `boolean` | `false` | `true` / `false` | 是否块级显示 |
+
+### 3.3 LewRadioOption 类型
+
+| 属性名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| label | `string` | 是 | 选项显示文本 |
+| value | `string \| number` | 是 | 选项值 |
+| disabled | `boolean` | 否 | 是否禁用此选项 |
+
+### 3.4 Model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `string \| number` | 单选框组绑定值 |
+
+### 3.5 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 选中值变化时 | `value?: string` | 值变化事件 |
+
+### 3.6 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **options 必需**：`LewRadioGroup` 的 `options` 是必需属性
+- ⚠️ **value 唯一性**：`options` 中每个选项的 `value` 必须唯一
+- ⚠️ **round 样式**：设置 `round={false}` 时显示方形选框样式
+- ⚠️ **iconable**：设置 `iconable={false}` 时不显示选中图标，仅通过背景色区分
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：选中状态不生效
+
+**现象**：点击单选框后选中状态不变化。
+
+**原因**：
+- 使用 `LewRadioGroup` 时未绑定 `v-model`
+- 使用 `LewRadio` 时未正确处理 `checked` 属性
+
+**修复方案**：
+```vue
+<!-- 使用 LewRadioGroup -->
+<lew-radio-group
+  v-model="selectedValue"
+  :options="options"
+/>
+
+<!-- 使用单个 LewRadio -->
+<lew-radio
+  :checked="value === 'option1'"
+  label="选项1"
+  @change="value = 'option1'"
+/>
+```
+
+### 问题2：部分选项需要禁用
+
+**现象**：需要禁用某些选项但保持其他选项可用。
+
+**原因**：
+- 需要在 options 中设置单独的 disabled
+
+**修复方案**：
+```vue
+<script setup>
+const options = [
+  { label: '选项1', value: '1' },
+  { label: '选项2', value: '2', disabled: true },
+  { label: '选项3', value: '3' }
+]
+</script>
+```
+
+### 问题3：想要垂直排列
+
+**现象**：单选框组默认水平排列，需要垂直排列。
+
+**原因**：
+- `direction` 默认为 `'x'`
+
+**修复方案**：
+```vue
+<lew-radio-group
+  v-model="value"
+  :options="options"
+  direction="y"
+/>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |
+
+---
+
+**使用技巧**：
+- ✅ 选项较多时使用 `direction="y"` 垂直排列
+- ✅ 卡片选择场景使用 `block` 配合 `round={false}`
+- ✅ 简洁界面使用 `iconable={false}` 隐藏选中图标

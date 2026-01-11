@@ -1,0 +1,286 @@
+---
+alwaysApply: false
+---
+
+# LewSteps 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewSteps
+- **核心用途**：用于展示步骤流程，支持自定义步骤状态、点击切换、跨步骤控制等功能，适用于订单流程、表单步骤、进度展示等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持通过 v-model 控制当前步骤
+  - 支持多种状态：pending（进行中）、loading（加载中）、warning（警告）、error（错误）、done（完成）
+  - 支持点击切换步骤（canClickItem）
+  - 支持跨步骤控制（canCrossSteps）
+  - 支持自定义最小宽度（minWidth）
+  - 自动显示步骤进度线和完成状态
+  - 使用 CSS 变量实现主题定制，支持暗色模式自动适配
+  - 符合组件库规范：规范的代码结构、导出格式和样式系统
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `options` 配置步骤项，`v-model` 控制当前步骤，自动显示步骤序号、标题和描述
+- **状态展示**：通过 `status` 属性设置当前步骤的状态，显示对应的图标和颜色
+- **进度线**：自动显示步骤之间的连接线，已完成步骤的进度线会高亮显示
+- **点击切换**：当 `canClickItem` 为 `true` 时，可以点击步骤项切换当前步骤
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewStepsOption[]` | - | 必填 | 步骤项配置数组，每个项包含 `title`（标题）和 `description`（描述） |
+| status | `LewStepsStatus` | `'pending'` | `'pending'` / `'loading'` / `'warning'` / `'error'` / `'done'` | 当前步骤的状态 |
+| minWidth | `Property.Width` | `'300px'` | 任意 CSS width 值 | 每个步骤项的最小宽度 |
+| canClickItem | `boolean` | `true` | `true` / `false` | 是否允许点击步骤项切换步骤 |
+| canCrossSteps | `boolean` | `true` | `true` / `false` | 是否允许跨步骤（当为 `false` 时，只能按顺序切换） |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| modelValue | `number` | `undefined` | 当前步骤的索引（从 1 开始），使用 v-model 绑定 |
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| change | `value: number` | 当前步骤发生变化时触发，返回新的步骤索引 |
+
+### 3.4 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **步骤索引**：`modelValue` 从 1 开始，而不是 0（即第一个步骤的值为 1）
+- ⚠️ **状态显示**：`status` 属性只影响当前步骤（`modelValue` 对应的步骤）的显示状态
+- ⚠️ **跨步骤控制**：当 `canCrossSteps` 为 `false` 时，只能按顺序切换步骤，不能跳过中间步骤
+- ⚠️ **点击切换**：当 `canClickItem` 为 `false` 时，步骤项不可点击，只能通过修改 `v-model` 值来切换
+- ⚠️ **进度线**：已完成步骤（索引小于当前步骤）会自动显示完成状态和进度线高亮
+- ⚠️ **文本截断**：标题和描述会自动使用 `LewTextTrim` 组件进行截断处理，超出宽度时显示省略号
+- ⚠️ **响应式布局**：组件支持横向滚动，当步骤项过多时会自动显示滚动条
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：步骤不显示或显示不正确
+
+**现象**：设置了 `options` 和 `v-model`，但步骤没有显示或显示不正确。
+
+**原因**：
+- `options` 配置不正确
+- `v-model` 值超出范围
+- 组件未正确导入
+
+**修复方案**：
+1. 确认 `options` 配置正确：
+```vue
+<template>
+  <!-- ✅ 正确：options 为数组，包含 title 和 description -->
+  <lew-steps
+    v-model="currentStep"
+    :options="[
+      { title: '步骤1', description: '这是第一步' },
+      { title: '步骤2', description: '这是第二步' },
+      { title: '步骤3', description: '这是第三步' },
+    ]"
+  />
+  
+  <!-- ❌ 错误：options 不是数组或缺少 title -->
+  <lew-steps
+    v-model="currentStep"
+    :options="{}"
+  />
+</template>
+```
+2. 确认 `v-model` 值在有效范围内（1 到 options.length）：
+```vue
+<template>
+  <!-- ✅ 正确：currentStep 在 1-3 之间 -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+  />
+  
+  <!-- ❌ 错误：currentStep 超出范围 -->
+  <lew-steps
+    v-model="10"
+    :options="stepsOptions"
+  />
+</template>
+```
+
+### 问题2：点击步骤无法切换
+
+**现象**：设置了 `canClickItem` 为 `true`，但点击步骤项无法切换。
+
+**原因**：
+- `canClickItem` 设置错误
+- `canCrossSteps` 限制导致无法切换
+- `v-model` 绑定问题
+
+**修复方案**：
+1. 确认 `canClickItem` 设置正确：
+```vue
+<template>
+  <!-- ✅ 正确：canClickItem 为 true -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+    :can-click-item="true"
+  />
+  
+  <!-- ❌ 错误：canClickItem 为 false，无法点击 -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+    :can-click-item="false"
+  />
+</template>
+```
+2. 检查 `canCrossSteps` 限制：
+```vue
+<template>
+  <!-- 如果 canCrossSteps 为 false，只能按顺序切换 -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+    :can-cross-steps="false"
+  />
+</template>
+```
+
+### 问题3：状态图标不显示
+
+**现象**：设置了 `status`，但状态图标没有显示。
+
+**原因**：
+- `status` 值不正确
+- 当前步骤索引不匹配
+
+**修复方案**：
+1. 确认 `status` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：status 为有效值 -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+    status="loading"
+  />
+  
+  <!-- ❌ 错误：status 值无效 -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+    status="invalid"
+  />
+</template>
+```
+2. 确认 `status` 只影响当前步骤（`v-model` 对应的步骤）
+
+### 问题4：进度线不显示或显示不正确
+
+**现象**：已完成步骤的进度线没有高亮显示。
+
+**原因**：
+- 步骤索引计算错误
+- CSS 变量未定义
+
+**修复方案**：
+1. 确认步骤索引正确（从 1 开始）：
+```vue
+<template>
+  <!-- ✅ 正确：currentStep 从 1 开始 -->
+  <lew-steps
+    v-model="1"
+    :options="stepsOptions"
+  />
+  
+  <!-- ❌ 错误：currentStep 从 0 开始 -->
+  <lew-steps
+    v-model="0"
+    :options="stepsOptions"
+  />
+</template>
+```
+2. 检查 CSS 变量是否已定义（组件库会自动处理）
+
+### 问题5：步骤项宽度不合适
+
+**现象**：步骤项宽度太小或太大，影响显示效果。
+
+**原因**：
+- `minWidth` 设置不当
+- 步骤项过多
+
+**修复方案**：
+1. 调整 `minWidth` 值：
+```vue
+<template>
+  <!-- ✅ 正确：minWidth 设置合理 -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+    min-width="200px"
+  />
+  
+  <!-- ❌ 错误：minWidth 过小或过大 -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+    min-width="10px"
+  />
+</template>
+```
+2. 如果步骤项过多，组件会自动显示横向滚动条
+
+### 问题6：change 事件不触发
+
+**现象**：修改 `v-model` 值或点击步骤项时，`change` 事件没有触发。
+
+**原因**：
+- 事件监听未正确绑定
+- `v-model` 值未实际改变
+
+**修复方案**：
+1. 确认事件监听正确绑定：
+```vue
+<template>
+  <!-- ✅ 正确：监听 change 事件 -->
+  <lew-steps
+    v-model="currentStep"
+    :options="stepsOptions"
+    @change="handleStepChange"
+  />
+</template>
+
+<script setup>
+function handleStepChange(value) {
+  console.log('步骤变化:', value)
+}
+</script>
+```
+2. 确认 `v-model` 值实际改变（组件会自动触发 change 事件）
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 规范化代码结构：创建 model.ts 文件分离 v-model 定义；优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构；优化 props.ts（移除 model 定义，添加 validator）；使用 defineModel API 实现 v-model 支持 | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `status` 可以显示当前步骤的状态（加载中、警告、错误等），提升用户体验
+- ✅ 通过 `canClickItem` 和 `canCrossSteps` 可以控制步骤切换的行为，适配不同的业务场景
+- ✅ 使用 `minWidth` 可以控制步骤项的宽度，适配不同的布局需求
+- ✅ 通过 `v-model` 可以方便地控制当前步骤，支持双向绑定
+- ✅ 组件会自动处理步骤的完成状态和进度线显示，无需手动计算
+- ✅ 标题和描述支持文本截断，自动处理长文本显示

@@ -1,0 +1,187 @@
+---
+alwaysApply: false
+---
+
+# LewBreadcrumb 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewBreadcrumb
+- **核心用途**：用于显示页面路径导航，支持自定义分隔符、点击跳转等功能，适用于页面层级导航、文件路径展示等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持自定义分隔符（sprit、shoulder）
+  - 支持点击跳转（通过 `value` 属性）
+  - 支持激活状态（通过 `active` 属性）
+  - 响应式设计，移动端自动适配
+  - 使用 CSS 变量实现主题定制，支持暗色模式自动适配
+  - 符合组件库规范：规范的代码结构、导出格式和样式系统
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `options` 配置面包屑项，自动显示路径导航
+- **分隔符**：通过 `separator` 属性设置分隔符样式（斜线或箭头）
+- **点击跳转**：当面包屑项设置了 `value` 时，点击会触发 `change` 事件
+- **激活状态**：通过 `active` 属性标记当前激活的面包屑项
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewBreadcrumbOption[]` | - | 必填 | 面包屑项配置数组，每个项包含 `label`（标签）、`value`（值，可选）、`active`（激活状态，可选） |
+| separator | `LewBreadcrumbSeparator` | `'sprit'` | `'sprit'` / `'shoulder'` | 分隔符样式，`sprit` 为斜线，`shoulder` 为箭头 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| change | `(item: LewBreadcrumbOption, index: number)` | 点击面包屑项时触发（仅当项设置了 `value` 时），返回点击的项和索引 |
+
+### 3.4 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **点击跳转**：只有设置了 `value` 的面包屑项才能点击，未设置 `value` 的项不会触发 `change` 事件
+- ⚠️ **激活状态**：通过 `active` 属性标记当前激活的面包屑项，激活项会显示不同的样式
+- ⚠️ **分隔符**：最后一个面包屑项不会显示分隔符
+- ⚠️ **响应式**：组件在移动端会自动调整字体大小和内边距，适配小屏幕设备
+- ⚠️ **样式定制**：组件使用 CSS 变量，支持通过覆盖变量实现主题定制
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：面包屑不显示
+
+**现象**：设置了 `options`，但面包屑没有显示。
+
+**原因**：
+- `options` 配置不正确
+- 组件未正确导入
+
+**修复方案**：
+1. 确认 `options` 配置正确：
+```vue
+<template>
+  <!-- ✅ 正确：options 为数组，包含 label -->
+  <lew-breadcrumb
+    :options="[
+      { label: '首页', value: '/' },
+      { label: '分类', value: '/category' },
+      { label: '详情', active: true },
+    ]"
+  />
+  
+  <!-- ❌ 错误：options 不是数组或缺少 label -->
+  <lew-breadcrumb :options="{}" />
+</template>
+```
+
+### 问题2：点击无反应
+
+**现象**：点击面包屑项没有触发 `change` 事件。
+
+**原因**：
+- 面包屑项未设置 `value`
+- 事件监听未正确绑定
+
+**修复方案**：
+1. 确认面包屑项设置了 `value`：
+```vue
+<template>
+  <!-- ✅ 正确：设置了 value，可以点击 -->
+  <lew-breadcrumb
+    :options="[
+      { label: '首页', value: '/' },
+      { label: '分类', value: '/category' },
+    ]"
+    @change="handleChange"
+  />
+  
+  <!-- ❌ 错误：未设置 value，无法点击 -->
+  <lew-breadcrumb
+    :options="[
+      { label: '首页' },
+      { label: '分类' },
+    ]"
+  />
+</template>
+```
+
+### 问题3：分隔符不显示
+
+**现象**：设置了 `separator`，但分隔符没有显示。
+
+**原因**：
+- `separator` 值不正确
+- 最后一个项不显示分隔符
+
+**修复方案**：
+1. 确认 `separator` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：separator 为有效值 -->
+  <lew-breadcrumb
+    :options="breadcrumbOptions"
+    separator="sprit"
+  />
+  <lew-breadcrumb
+    :options="breadcrumbOptions"
+    separator="shoulder"
+  />
+  
+  <!-- ❌ 错误：separator 值无效 -->
+  <lew-breadcrumb
+    :options="breadcrumbOptions"
+    separator="invalid"
+  />
+</template>
+```
+2. 注意：最后一个面包屑项不会显示分隔符（这是正常行为）
+
+### 问题4：激活状态不生效
+
+**现象**：设置了 `active`，但激活样式没有显示。
+
+**原因**：
+- `active` 属性设置错误
+- CSS 变量未定义
+
+**修复方案**：
+1. 确认 `active` 属性正确设置：
+```vue
+<template>
+  <!-- ✅ 正确：active 为 true -->
+  <lew-breadcrumb
+    :options="[
+      { label: '首页', value: '/' },
+      { label: '分类', value: '/category' },
+      { label: '详情', active: true },
+    ]"
+  />
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 规范化代码结构：优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件代码结构；优化样式系统（使用 CSS 变量和全局过渡变量） | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `separator` 可以切换分隔符样式，适配不同的设计需求
+- ✅ 通过 `value` 属性可以实现点击跳转功能，提升用户体验
+- ✅ 使用 `active` 属性可以标记当前激活的面包屑项，清晰展示当前位置
+- ✅ 组件支持响应式设计，自动适配移动端设备
+- ✅ 通过 CSS 变量可以轻松定制组件样式，实现主题定制

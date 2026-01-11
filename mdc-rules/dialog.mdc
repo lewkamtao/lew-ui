@@ -1,0 +1,176 @@
+---
+alwaysApply: false
+---
+
+# LewDialog 方法使用文档
+
+## 1. 方法基础信息
+
+- **方法名称**：LewDialog
+- **核心用途**：命令式调用对话框，用于确认、提示等场景
+- **适用环境**：Vue 3.4+、TypeScript
+- **基础特性**：
+  - 支持 5 种类型（normal、success、warning、error、info）
+  - 支持自定义标题、内容、图标
+  - 支持异步确认/取消回调
+  - 支持点击遮罩层关闭
+  - 支持 ESC 键关闭
+
+## 2. 快速开始
+
+### 基本用法
+
+```typescript
+import { LewDialog } from 'lew-ui'
+
+// 普通对话框
+LewDialog.normal({
+  title: '提示',
+  content: '这是一条普通消息'
+})
+
+// 成功对话框
+LewDialog.success({
+  title: '成功',
+  content: '操作成功！'
+})
+
+// 确认对话框
+LewDialog.warning({
+  title: '确认删除',
+  content: '确定要删除这条数据吗？',
+  ok: async () => {
+    await api.delete()
+    return true // 返回 true 关闭对话框
+  },
+  cancel: async () => {
+    return true // 返回 true 关闭对话框
+  }
+})
+```
+
+## 3. 详细 API 说明
+
+### 3.1 方法类型
+
+| 方法 | 说明 |
+|------|------|
+| `LewDialog.normal(options)` | 普通对话框 |
+| `LewDialog.success(options)` | 成功对话框 |
+| `LewDialog.warning(options)` | 警告对话框 |
+| `LewDialog.error(options)` | 错误对话框 |
+| `LewDialog.info(options)` | 信息对话框 |
+
+### 3.2 Options 参数
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| title | `string \| VNode \| () => VNode` | - | 对话框标题 |
+| content | `string \| VNode \| () => VNode` | - | 对话框内容 |
+| icon | `VNode \| () => VNode` | 根据类型自动 | 自定义图标 |
+| hideIcon | `boolean` | `false` | 是否隐藏图标 |
+| okText | `string` | 国际化默认值 | 确认按钮文本 |
+| cancelText | `string` | 国际化默认值 | 取消按钮文本 |
+| ok | `() => Promise<boolean>` | `() => true` | 确认回调，返回 true 关闭 |
+| cancel | `() => Promise<boolean>` | `() => true` | 取消回调，返回 true 关闭 |
+| closeOnClickOverlay | `boolean` | `false` | 点击遮罩层是否关闭 |
+| closeByEsc | `boolean` | `false` | 按 ESC 键是否关闭 |
+
+### 3.3 使用示例
+
+```typescript
+import { LewDialog } from 'lew-ui'
+import { h } from 'vue'
+
+// 异步确认
+LewDialog.warning({
+  title: '确认提交',
+  content: '确定要提交订单吗？',
+  ok: async () => {
+    try {
+      await api.submitOrder()
+      LewMessage.success('提交成功')
+      return true // 关闭对话框
+    } catch {
+      LewMessage.error('提交失败')
+      return false // 不关闭对话框
+    }
+  }
+})
+
+// 自定义内容
+LewDialog.info({
+  title: '详细信息',
+  content: () => h('div', [
+    h('p', '订单号：123456'),
+    h('p', '金额：¥99.00')
+  ])
+})
+
+// 隐藏图标
+LewDialog.normal({
+  title: '纯文本对话框',
+  content: '这是一个没有图标的对话框',
+  hideIcon: true
+})
+```
+
+## 4. 注意事项
+
+- ⚠️ **异步回调**：`ok` 和 `cancel` 返回 `Promise<boolean>`，返回 `true` 才会关闭对话框
+- ⚠️ **loading 状态**：异步回调执行期间，按钮会自动显示 loading 状态
+- ⚠️ **从鼠标位置弹出**：对话框会从当前鼠标位置弹出，增强交互体验
+- ⚠️ **自动销毁**：对话框关闭后会自动从 DOM 中移除
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：对话框不关闭
+
+**现象**：点击确认按钮后对话框没有关闭。
+
+**原因**：
+- `ok` 回调没有返回 `true`
+
+**修复方案**：
+```typescript
+LewDialog.warning({
+  title: '确认',
+  content: '确定吗？',
+  ok: async () => {
+    await doSomething()
+    return true // 必须返回 true
+  }
+})
+```
+
+### 问题2：按钮一直 loading
+
+**现象**：点击确认后按钮一直显示 loading。
+
+**原因**：
+- `ok` 回调中的 Promise 没有 resolve
+
+**修复方案**：
+```typescript
+ok: async () => {
+  try {
+    await api.call()
+    return true
+  } catch {
+    return false // 出错时也要返回值
+  }
+}
+```
+
+### 问题3：想要只有确认按钮
+
+**现象**：想隐藏取消按钮。
+
+**修复方案**：
+目前不支持隐藏按钮，可以使用 `LewMessage` 或 `LewNotification` 替代。
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

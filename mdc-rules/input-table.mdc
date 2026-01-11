@@ -1,0 +1,125 @@
+---
+alwaysApply: false
+---
+
+# LewInputTable 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewInputTable
+- **核心用途**：用于表格形式的数据录入，支持动态添加/删除行
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持动态添加和删除行
+  - 支持多种表单控件类型
+  - 支持行数限制
+  - 支持拖拽排序
+  - 支持唯一值校验
+  - 支持默认值配置
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **表格录入**：以表格形式展示数据，每行包含多个输入项
+- **添加行**：点击添加按钮新增一行数据
+- **删除行**：点击删除按钮移除对应行
+- **拖拽排序**：启用 `sortable` 后可拖拽调整行顺序
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| columns | `LewInputTableColumn[]` | 见下方 | - | 列配置 |
+| size | `LewSize` | `'medium'` | `'small'` / `'medium'` / `'large'` | 尺寸 |
+| width | `string` | `'100%'` | CSS 宽度值 | 表格宽度 |
+| rowKey | `string` | `'id'` | - | 行数据唯一标识字段 |
+| addable | `boolean` | `true` | `true` / `false` | 是否允许添加行 |
+| deletable | `boolean` | `true` | `true` / `false` | 是否允许删除行 |
+| clearable | `boolean` | `true` | `true` / `false` | 是否允许清空 |
+| sortable | `boolean` | `false` | `true` / `false` | 是否允许拖拽排序 |
+| maxRows | `number` | `Infinity` | 正整数 | 最大行数 |
+| minRows | `number` | `1` | 正整数 | 最小行数 |
+| defaultForm | `object` | `{}` | - | 新增行的默认值 |
+| autoUniqueId | `boolean` | `true` | `true` / `false` | 是否自动生成唯一 ID |
+| uniqueField | `string` | `''` | - | 需要唯一校验的字段 |
+| sortTooltipCustomRender | `Function` | - | - | 自定义排序提示渲染 |
+
+### 3.2 LewInputTableColumn 类型
+
+| 属性名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| title | `string` | 是 | 列标题 |
+| field | `string` | 是 | 字段名 |
+| width | `number` | 否 | 列宽度 |
+| as | `string` | 否 | 表单控件类型，同 LewFormItem 的 as |
+
+### 3.3 Model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `any[]` | 表格数据数组 |
+
+### 3.4 方法
+
+该组件暂不支持此功能。
+
+### 3.5 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 数据变化时 | `value?: any` | 数据变化事件 |
+
+### 3.6 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **columns 配置**：至少需要一个列配置
+- ⚠️ **rowKey**：每行数据需要有唯一标识，默认使用 `id` 字段
+- ⚠️ **minRows/maxRows**：可以限制表格的行数范围
+- ⚠️ **uniqueField**：设置后会校验该字段值不能重复
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：添加按钮不显示
+
+**现象**：达到最大行数后添加按钮消失。
+
+**原因**：
+- 当前行数等于 `maxRows`
+
+**修复方案**：
+调整 `maxRows` 或删除部分行。
+
+### 问题2：无法删除到最后一行
+
+**现象**：只剩一行时删除按钮不可用。
+
+**原因**：
+- `minRows` 默认为 1
+
+**修复方案**：
+如需删除全部，设置 `minRows={0}`：
+```vue
+<lew-input-table v-model="data" :min-rows="0" />
+```
+
+### 问题3：新增行时设置默认值
+
+**修复方案**：
+```vue
+<lew-input-table
+  v-model="data"
+  :default-form="{ status: 'active', count: 1 }"
+/>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

@@ -1,0 +1,231 @@
+---
+alwaysApply: false
+---
+
+# LewActionBox 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewActionBox
+- **核心用途**：用于显示操作按钮组，支持自动折叠、自定义渲染、图标模式等功能，适用于表格操作栏、工具栏等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持自动折叠（通过 `dropdownThreshold` 控制显示数量）
+  - 支持自定义渲染（通过 `customRender`）
+  - 支持图标模式（`iconOnly`）
+  - 支持分隔线（`divider`）
+  - 支持自定义下拉菜单标签和图标
+  - 支持水平对齐方式（`x`）
+  - 使用 CSS 变量实现主题定制，支持暗色模式自动适配
+  - 符合组件库规范：规范的代码结构、导出格式和样式系统
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `options` 配置操作项，自动显示为按钮组
+- **自动折叠**：当操作项数量超过 `dropdownThreshold` 时，超出部分自动折叠到下拉菜单
+- **自定义渲染**：通过 `customRender` 可以自定义操作项的渲染方式
+- **图标模式**：通过 `iconOnly` 可以只显示图标，节省空间
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| options | `LewActionBoxOption[]` | - | 必填 | 操作项配置数组，每个项包含 `label`（标签）、`icon`（图标，可选）、`onClick`（点击回调，可选）、`customRender`（自定义渲染，可选）等属性 |
+| x | `LewXAlignment` | `'start'` | `'start'` / `'center'` / `'end'` | 水平对齐方式 |
+| divider | `boolean` | `true` | `true` / `false` | 是否显示分隔线 |
+| dropdownThreshold | `number \| string` | - | 非负整数或字符串 | 下拉菜单阈值，当操作项数量超过此值时，超出部分会折叠到下拉菜单 |
+| dropdownLabel | `LewComponentSource` | `'More'` | 字符串、函数、组件 | 下拉菜单按钮的标签 |
+| dropdownIcon | `LewComponentSource` | - | 字符串、函数、组件 | 下拉菜单按钮的图标 |
+| iconOnly | `boolean` | `false` | `true` / `false` | 是否只显示图标（隐藏标签文本） |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| click | `(option: LewActionBoxOption, event: MouseEvent)` | 点击操作项时触发，返回点击的操作项和鼠标事件 |
+
+### 3.4 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **自动折叠**：当操作项数量超过 `dropdownThreshold` 时，前 `dropdownThreshold` 个操作项会直接显示，其余操作项会折叠到下拉菜单
+- ⚠️ **自定义渲染**：当操作项设置了 `customRender` 时，会使用自定义渲染函数，忽略默认的图标和标签显示
+- ⚠️ **图标模式**：当 `iconOnly` 为 `true` 时，只显示图标，不显示标签文本
+- ⚠️ **分隔线**：分隔线会在操作项之间显示，最后一个操作项后不会显示分隔线
+- ⚠️ **下拉菜单**：只有当有操作项被折叠时，才会显示下拉菜单按钮
+- ⚠️ **点击事件**：点击操作项会触发 `click` 事件，同时也会调用操作项的 `onClick` 回调（如果设置了）
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：操作项不显示
+
+**现象**：设置了 `options`，但操作项没有显示。
+
+**原因**：
+- `options` 配置不正确
+- 组件未正确导入
+
+**修复方案**：
+1. 确认 `options` 配置正确：
+```vue
+<template>
+  <!-- ✅ 正确：options 为数组，包含 label -->
+  <lew-action-box
+    :options="[
+      { label: '编辑', icon: 'edit', onClick: () => console.log('编辑') },
+      { label: '删除', icon: 'delete', onClick: () => console.log('删除') },
+    ]"
+  />
+  
+  <!-- ❌ 错误：options 不是数组或缺少 label -->
+  <lew-action-box :options="{}" />
+</template>
+```
+
+### 问题2：自动折叠不生效
+
+**现象**：设置了 `dropdownThreshold`，但操作项没有折叠。
+
+**原因**：
+- `dropdownThreshold` 值设置不当
+- 操作项数量未超过阈值
+
+**修复方案**：
+1. 确认 `dropdownThreshold` 值正确：
+```vue
+<template>
+  <!-- ✅ 正确：dropdownThreshold 小于操作项数量 -->
+  <lew-action-box
+    :options="menuOptions"
+    :dropdown-threshold="2"
+  />
+  
+  <!-- ❌ 错误：dropdownThreshold 大于等于操作项数量 -->
+  <lew-action-box
+    :options="menuOptions"
+    :dropdown-threshold="10"
+  />
+</template>
+```
+
+### 问题3：自定义渲染不生效
+
+**现象**：设置了 `customRender`，但自定义渲染没有显示。
+
+**原因**：
+- `customRender` 配置不正确
+- 渲染函数返回无效
+
+**修复方案**：
+1. 确认 `customRender` 配置正确：
+```vue
+<template>
+  <lew-action-box :options="menuOptions" />
+</template>
+
+<script setup>
+const menuOptions = [
+  {
+    label: '自定义',
+    customRender: () => h('button', { class: 'custom-btn' }, '自定义按钮'),
+  },
+]
+</script>
+```
+
+### 问题4：图标模式不生效
+
+**现象**：设置了 `iconOnly` 为 `true`，但标签文本仍然显示。
+
+**原因**：
+- `iconOnly` 设置错误
+- 操作项未设置图标
+
+**修复方案**：
+1. 确认 `iconOnly` 设置正确：
+```vue
+<template>
+  <!-- ✅ 正确：iconOnly 为 true，操作项有图标 -->
+  <lew-action-box
+    :options="[
+      { label: '编辑', icon: 'edit' },
+      { label: '删除', icon: 'delete' },
+    ]"
+    :icon-only="true"
+  />
+</template>
+```
+
+### 问题5：分隔线不显示
+
+**现象**：设置了 `divider` 为 `true`，但分隔线没有显示。
+
+**原因**：
+- `divider` 设置错误
+- 只有一个操作项
+
+**修复方案**：
+1. 确认 `divider` 设置正确：
+```vue
+<template>
+  <!-- ✅ 正确：divider 为 true，有多个操作项 -->
+  <lew-action-box
+    :options="menuOptions"
+    :divider="true"
+  />
+</template>
+```
+2. 注意：只有一个操作项时不会显示分隔线
+
+### 问题6：点击事件不触发
+
+**现象**：点击操作项没有触发 `click` 事件。
+
+**原因**：
+- 事件监听未正确绑定
+- 操作项被禁用
+
+**修复方案**：
+1. 确认事件监听正确绑定：
+```vue
+<template>
+  <!-- ✅ 正确：监听 click 事件 -->
+  <lew-action-box
+    :options="menuOptions"
+    @click="handleClick"
+  />
+</template>
+
+<script setup>
+function handleClick(option, event) {
+  console.log('点击了:', option, event)
+}
+</script>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 规范化代码结构：优化 index.ts 导出格式（具名导出、类型导出）；优化 Vue 文件导入顺序和代码结构（移除注释、使用 props. 前缀、添加 emit）；优化样式系统（使用 CSS 变量和全局过渡变量） | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `dropdownThreshold` 可以控制显示的操作项数量，超出部分自动折叠，节省空间
+- ✅ 通过 `customRender` 可以自定义操作项的渲染方式，实现更灵活的 UI 定制
+- ✅ 使用 `iconOnly` 可以只显示图标，适合空间有限的场景
+- ✅ 通过 `x` 可以控制操作项的对齐方式，适配不同的布局需求
+- ✅ 使用 `divider` 可以在操作项之间添加分隔线，提升视觉层次
+- ✅ 通过 `dropdownLabel` 和 `dropdownIcon` 可以自定义下拉菜单按钮的显示内容
