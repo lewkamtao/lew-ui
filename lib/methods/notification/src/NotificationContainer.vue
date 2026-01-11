@@ -1,27 +1,27 @@
 <script lang="ts" setup>
-import { getUniqueId, parseDimension } from "lew-ui/utils";
+import { getUniqueId, parseDimension } from 'lew-ui/utils'
 
-import NotificationItem from "./NotificationItem.vue";
+import NotificationItem from './NotificationItem.vue'
 
 // 通知项类型定义
 interface NotificationItemType {
-  id: string;
-  type: string;
-  title: string;
-  content: string;
-  duration: number;
-  showProgress: boolean;
-  width: number | string;
+  id: string
+  type: string
+  title: string
+  content: string
+  duration: number
+  showProgress: boolean
+  width: number | string
 }
 
 // 响应式状态
-const notifications = ref<NotificationItemType[]>([]);
-const containerWidth = ref(0);
-const isVisible = ref(false);
+const notifications = ref<NotificationItemType[]>([])
+const containerWidth = ref(0)
+const isVisible = ref(false)
 
 // 定时器管理 - 使用 Map 存储每个通知的定时器
-const timers = new Map<string, ReturnType<typeof setTimeout>>();
-let hideTimer: ReturnType<typeof setTimeout> | null = null;
+const timers = new Map<string, ReturnType<typeof setTimeout>>()
+let hideTimer: ReturnType<typeof setTimeout> | null = null
 
 /**
  * 更新容器宽度
@@ -29,8 +29,8 @@ let hideTimer: ReturnType<typeof setTimeout> | null = null;
 function updateContainerWidth(): void {
   containerWidth.value = notifications.value.reduce(
     (max, item) => Math.max(max, parseDimension(item.width)),
-    0
-  );
+    0,
+  )
 }
 
 /**
@@ -38,8 +38,8 @@ function updateContainerWidth(): void {
  */
 function clearHideTimer(): void {
   if (hideTimer) {
-    clearTimeout(hideTimer);
-    hideTimer = null;
+    clearTimeout(hideTimer)
+    hideTimer = null
   }
 }
 
@@ -52,13 +52,13 @@ function add(
   content: string,
   duration: number,
   showProgress: boolean,
-  width: number | string
+  width: number | string,
 ): string {
-  const id = getUniqueId();
+  const id = getUniqueId()
 
   // 显示容器
-  clearHideTimer();
-  isVisible.value = true;
+  clearHideTimer()
+  isVisible.value = true
 
   // 添加通知到列表顶部
   notifications.value.unshift({
@@ -69,20 +69,20 @@ function add(
     duration,
     showProgress,
     width,
-  });
+  })
 
   // 设置自动关闭定时器
   if (duration > 0) {
     const timer = setTimeout(() => {
-      handleClose(id);
-    }, duration);
-    timers.set(id, timer);
+      handleClose(id)
+    }, duration)
+    timers.set(id, timer)
   }
 
   // 更新容器宽度
-  updateContainerWidth();
+  updateContainerWidth()
 
-  return id;
+  return id
 }
 
 /**
@@ -90,40 +90,41 @@ function add(
  */
 function handleClose(id: string): void {
   // 清除该通知的定时器
-  const timer = timers.get(id);
+  const timer = timers.get(id)
   if (timer) {
-    clearTimeout(timer);
-    timers.delete(id);
+    clearTimeout(timer)
+    timers.delete(id)
   }
 
   // 从列表中移除
-  const index = notifications.value.findIndex((item) => item.id === id);
-  if (index === -1) return;
+  const index = notifications.value.findIndex(item => item.id === id)
+  if (index === -1)
+    return
 
-  notifications.value.splice(index, 1);
+  notifications.value.splice(index, 1)
 
   // 更新容器宽度
-  updateContainerWidth();
+  updateContainerWidth()
 
   // 如果没有通知了，延迟隐藏容器
   if (notifications.value.length === 0) {
     hideTimer = setTimeout(() => {
-      isVisible.value = false;
-    }, 300); // 等待离开动画完成
+      isVisible.value = false
+    }, 300) // 等待离开动画完成
   }
 }
 
 // 组件卸载时清理所有定时器
 onUnmounted(() => {
-  timers.forEach((timer) => clearTimeout(timer));
-  timers.clear();
-  clearHideTimer();
-});
+  timers.forEach(timer => clearTimeout(timer))
+  timers.clear()
+  clearHideTimer()
+})
 
 defineExpose({
   add,
   handleClose,
-});
+})
 </script>
 
 <template>
@@ -180,7 +181,8 @@ defineExpose({
 
 // ========== 进入动画 (轻微Q弹) ==========
 .lew-notification-enter-active {
-  transition: opacity 0.25s cubic-bezier(0.22, 1.15, 0.36, 1),
+  transition:
+    opacity 0.25s cubic-bezier(0.22, 1.15, 0.36, 1),
     transform 0.25s cubic-bezier(0.22, 1.15, 0.36, 1);
 }
 
@@ -191,7 +193,8 @@ defineExpose({
 
 // ========== 离开动画 ==========
 .lew-notification-leave-active {
-  transition: opacity 0.2s cubic-bezier(0.4, 0, 1, 1),
+  transition:
+    opacity 0.2s cubic-bezier(0.4, 0, 1, 1),
     transform 0.2s cubic-bezier(0.4, 0, 1, 1);
 }
 

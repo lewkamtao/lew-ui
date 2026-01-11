@@ -1,38 +1,38 @@
 <script setup lang="ts">
-import { renderDescription } from "docs/lib/utils";
-import docsLocale from "docs/locals";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
-import { Check, Code2, Copy, ExternalLink } from "lucide-vue-next";
-import LewCodeHighlighter from "./LewCodeHighlighter.vue";
+import { renderDescription } from 'docs/lib/utils'
+import docsLocale from 'docs/locals'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { Check, Code2, Copy, ExternalLink } from 'lucide-vue-next'
+import LewCodeHighlighter from './LewCodeHighlighter.vue'
 
 const props = defineProps({
   title: {
     type: String,
-    default: "",
+    default: '',
   },
   tag: {
     type: String,
-    default: "",
+    default: '',
   },
   tipsContent: {
     type: String,
-    default: "",
+    default: '',
   },
   tipsType: {
     type: String,
-    default: "info",
+    default: 'info',
   },
   tipsTitle: {
     type: String,
-    default: "",
+    default: '',
   },
   description: {
     type: String,
-    default: "",
+    default: '',
   },
   code: {
     type: String,
-    default: "",
+    default: '',
   },
   demoIndex: {
     type: Number,
@@ -40,90 +40,92 @@ const props = defineProps({
   },
   componentName: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 
-const router = useRouter();
+const router = useRouter()
 
 function getStandaloneDemoUrl() {
   if (props.demoIndex >= 0 && props.componentName) {
     const componentPath = props.componentName
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join("");
-    const path = `/${componentPath}/demo_${props.demoIndex + 1}`;
-    return router.resolve(path).href;
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')
+    const path = `/${componentPath}/demo_${props.demoIndex + 1}`
+    return router.resolve(path).href
   }
-  return "#";
+  return '#'
 }
 
 // 状态
-const isShowCode = ref(false);
-const isCodeLoading = ref(false);
-const isCodeRendering = ref(false);
-const isCopied = ref(false);
+const isShowCode = ref(false)
+const isCodeLoading = ref(false)
+const isCodeRendering = ref(false)
+const isCopied = ref(false)
 
 // 最小 loading 时间
-const MIN_LOADING_TIME = 300;
+const MIN_LOADING_TIME = 300
 
-let codeMountedResolve: (() => void) | null = null;
+let codeMountedResolve: (() => void) | null = null
 
 function onCodeMounted() {
   if (codeMountedResolve) {
-    codeMountedResolve();
-    codeMountedResolve = null;
+    codeMountedResolve()
+    codeMountedResolve = null
   }
 }
 
 async function toggleCodeDisplay() {
   if (isShowCode.value) {
-    isShowCode.value = false;
+    isShowCode.value = false
     // 延迟清理，等待动画完成
     setTimeout(() => {
       if (!isShowCode.value) {
-        isCodeRendering.value = false;
+        isCodeRendering.value = false
       }
-    }, 350);
-  } else {
-    isCodeLoading.value = true;
-    isCodeRendering.value = true;
+    }, 350)
+  }
+  else {
+    isCodeLoading.value = true
+    isCodeRendering.value = true
 
-    const minLoadingPromise = new Promise<void>((resolve) =>
-      setTimeout(resolve, MIN_LOADING_TIME)
-    );
+    const minLoadingPromise = new Promise<void>(resolve =>
+      setTimeout(resolve, MIN_LOADING_TIME),
+    )
     const codeMountedPromise = new Promise<void>((resolve) => {
-      codeMountedResolve = resolve;
-    });
+      codeMountedResolve = resolve
+    })
 
-    await Promise.all([minLoadingPromise, codeMountedPromise]);
+    await Promise.all([minLoadingPromise, codeMountedPromise])
 
-    isCodeLoading.value = false;
-    isShowCode.value = true;
+    isCodeLoading.value = false
+    isShowCode.value = true
   }
 }
 
 const checkHasContent = computed(() => (text: string) =>
-  text && text.indexOf("components.") !== 0
-);
+  text && text.indexOf('components.') !== 0,
+)
 
 async function copyCode(code: string) {
   try {
-    await navigator.clipboard.writeText(code);
-    isCopied.value = true;
-    LewMessage.success(docsLocale.t("base.copySuccess"));
-  } catch {
-    const textArea = document.createElement("textarea");
-    textArea.value = code;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textArea);
-    isCopied.value = true;
+    await navigator.clipboard.writeText(code)
+    isCopied.value = true
+    LewMessage.success(docsLocale.t('base.copySuccess'))
+  }
+  catch {
+    const textArea = document.createElement('textarea')
+    textArea.value = code
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    isCopied.value = true
   }
   setTimeout(() => {
-    isCopied.value = false;
-  }, 2000);
+    isCopied.value = false
+  }, 2000)
 }
 </script>
 
