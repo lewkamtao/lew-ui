@@ -4,14 +4,12 @@ const data = ref({
   title: 'Co-founder of Apple Inc.',
   quote: 'Stay hungry, stay foolish.',
 })
-
-const targetRef = ref<any>(null)
 </script>
 
 <template>
   <lew-popover trigger="click" placement="bottom-start" disabled>
     <template #trigger>
-      <lew-button ref="targetRef" type="ghost">
+      <lew-button type="ghost">
         Disabled
       </lew-button>
     </template>

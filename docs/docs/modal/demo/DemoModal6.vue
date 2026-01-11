@@ -61,7 +61,7 @@ function handleSaveEdit() {
   return new Promise((resolve) => {
     setTimeout(() => {
       // 更新用户数据
-      const index = users.value.findIndex((u) => u.id === selectedUser.value.id)
+      const index = users.value.findIndex(u => u.id === selectedUser.value.id)
       if (index !== -1) {
         users.value[index] = { ...users.value[index], ...editForm.value }
         selectedUser.value = users.value[index]

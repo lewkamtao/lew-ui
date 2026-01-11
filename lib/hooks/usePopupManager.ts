@@ -1,5 +1,5 @@
-import { useMagicKeys } from '@vueuse/core'
 import type { Ref } from 'vue'
+import { useMagicKeys } from '@vueuse/core'
 import { onUnmounted, ref, watch } from 'vue'
 
 /**
@@ -133,7 +133,12 @@ const popupManager = new PopupManager()
  * 弹出层管理器 Hook
  * 用于 Modal 和 Drawer 组件管理 z-index 和 ESC 关闭
  *
- * @param options 配置选项
+ * @param options - 配置选项
+ * @param options.id - 唯一标识
+ * @param options.type - 类型：modal 或 drawer
+ * @param options.visible - 可见性 v-model
+ * @param options.closeByEsc - 是否支持 ESC 关闭
+ * @param options.onClose - 关闭时的自定义回调
  * @returns 管理器方法和响应式 z-index
  */
 export function usePopupManager(options: {

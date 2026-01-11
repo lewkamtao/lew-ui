@@ -1,48 +1,48 @@
 <script setup lang="ts">
 // 1. 第三方库导入
-import { onClickOutside } from "@vueuse/core";
+import { onClickOutside } from '@vueuse/core'
 
 // 2. 组件导入
-import { LewButton, LewFlex, locale } from "lew-ui";
-import CloseButton from "lew-ui/_components/CloseButton.vue";
+import { LewButton, LewFlex, locale } from 'lew-ui'
+import CloseButton from 'lew-ui/_components/CloseButton.vue'
 
 // 3. Hooks 导入
-import { useDOMCreate, usePopupManager } from "lew-ui/hooks";
+import { useDOMCreate, usePopupManager } from 'lew-ui/hooks'
 
 // 4. 工具函数导入
-import { any2px, getUniqueId } from "lew-ui/utils";
+import { any2px, getUniqueId } from 'lew-ui/utils'
 
 // 5. 组件配置导入
-import { modalEmits } from "./emits";
-import { modalProps } from "./props";
+import { modalEmits } from './emits'
+import { modalProps } from './props'
 
 // Props & Emits
-const props = defineProps(modalProps);
-const emit = defineEmits(modalEmits);
+const props = defineProps(modalProps)
+const emit = defineEmits(modalEmits)
 
 // Composables
-useDOMCreate("lew-modal");
+useDOMCreate('lew-modal')
 
 // v-model
-const visible = defineModel<boolean>("visible", { default: false });
+const visible = defineModel<boolean>('visible', { default: false })
 
 // 响应式状态
-const modalBodyRef = ref<HTMLElement | null>(null);
+const modalBodyRef = ref<HTMLElement | null>(null)
 
 // 常量
-const modalId = `lew-modal-${getUniqueId()}`;
+const modalId = `lew-modal-${getUniqueId()}`
 
 // Slots 检测
-const slots: ReturnType<typeof useSlots> = useSlots();
+const slots: ReturnType<typeof useSlots> = useSlots()
 
 // 使用全局弹出层管理器
 const { zIndex: managedZIndex, isTop } = usePopupManager({
   id: modalId,
-  type: "modal",
+  type: 'modal',
   visible,
   closeByEsc: props.closeByEsc,
-  onClose: () => emit("close"),
-});
+  onClose: () => emit('close'),
+})
 
 // 计算最终使用的 z-index
 // 如果用户手动设置了 zIndex（非默认值），则使用用户设置的值
@@ -50,42 +50,42 @@ const { zIndex: managedZIndex, isTop } = usePopupManager({
 const actualZIndex = computed(() => {
   // 默认值为 2001，如果用户传入了其他值，优先使用用户的值
   if (props.zIndex !== 2001) {
-    return props.zIndex;
+    return props.zIndex
   }
-  return managedZIndex.value || props.zIndex;
-});
+  return managedZIndex.value || props.zIndex
+})
 
 const modalStyle = computed(() => {
-  const { width, top } = props;
+  const { width, top } = props
   return {
     width: any2px(width),
     top: any2px(top),
-  };
-});
+  }
+})
 
 const modalBodyMainStyle = computed(() => ({
   maxHeight: any2px(props.maxHeight),
-}));
+}))
 
 // 方法
 function handleClose(): void {
-  visible.value = false;
-  emit("close");
+  visible.value = false
+  emit('close')
 }
 
 // 监听器
 watch(visible, async () => {
-  await nextTick();
-});
+  await nextTick()
+})
 
 onClickOutside(modalBodyRef, (e: any) => {
   if (visible.value && props.closeOnClickOverlay && isTop()) {
-    const { parentElement } = e?.target as Element;
+    const { parentElement } = e?.target as Element
     if (parentElement?.id === modalId) {
-      visible.value = false;
+      visible.value = false
     }
   }
-});
+})
 </script>
 
 <template>
@@ -242,7 +242,8 @@ onClickOutside(modalBodyRef, (e: any) => {
 
 .lew-modal-enter-active,
 .lew-modal-leave-active {
-  transition: opacity var(--lew-form-transition-ease),
+  transition:
+    opacity var(--lew-form-transition-ease),
     transform var(--lew-form-transition-bezier);
 }
 

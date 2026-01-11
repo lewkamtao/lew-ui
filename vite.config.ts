@@ -43,11 +43,11 @@ const OPTIMIZE_DEPS = [
 /** 基础插件 - 所有模式通用 */
 function getBasePlugins() {
   return [
-    vue(),
     AutoImport({
       imports: ['vue', 'vue-router'],
-      dts: true,
+      dts: './auto-imports.d.ts',
     }),
+    vue(),
     checker({
       typescript: true,
       enableBuild: false, // 构建时禁用，提升构建速度

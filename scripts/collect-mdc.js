@@ -21,7 +21,7 @@ const EXCLUDE_DIRS = [
  * 递归获取所有 .mdc 文件
  * @param {string} dir - 当前目录
  * @param {string[]} mdcFiles - 收集的文件列表
- * @returns {string[]}
+ * @returns {string[]} 所有找到的 .mdc 文件路径数组
  */
 function getAllMdcFiles(dir, mdcFiles = []) {
   const entries = fs.readdirSync(dir, { withFileTypes: true })

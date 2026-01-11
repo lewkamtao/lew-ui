@@ -16,6 +16,7 @@ import { formProps } from './props'
 
 const props = defineProps(formProps)
 const emit = defineEmits(formEmits)
+
 const formMap = ref<Record<string, any>>({})
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
@@ -256,7 +257,10 @@ function getItemProps(item: LewFormOption) {
     required: getFormItemRequired(item),
     disabled: item.disabled ? normalizeProp(item.disabled) : defaultDisabledFn,
     readonly: item.readonly ? normalizeProp(item.readonly) : defaultReadonlyFn,
-    visible: item.visible !== undefined ? normalizeProp(item.visible) : defaultVisibleFn,
+    visible:
+      item.visible !== undefined
+        ? normalizeProp(item.visible)
+        : defaultVisibleFn,
   }
 
   itemPropsCache.set(cacheKeyFull, baseProps)

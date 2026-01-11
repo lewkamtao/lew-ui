@@ -2,7 +2,6 @@
 import mvJson from './movie_hot_gaia.json'
 
 const data: any = ref(mvJson)
-const tableRef = ref()
 const columns = [
   {
     type: 'text',
@@ -68,7 +67,6 @@ const selectedKeys = ref('35503077')
     Selected: {{ selectedKeys }}
   </div>
   <lew-table
-    ref="tableRef"
     v-model:selected-keys="selectedKeys"
     checkable
     :data-source="data"
@@ -102,7 +100,7 @@ const selectedKeys = ref('35503077')
       </lew-tag>
     </template>
     <template #has_linewatch="{ row }">
-      <span>{{ row.has_linewatch ? 'Yes' : 'No' }}</span>
+      <span>{{ row.has_linewatch ? "Yes" : "No" }}</span>
     </template>
     <template #actors="{ row }">
       <lew-flex x="start" gap="5px" wrap>
