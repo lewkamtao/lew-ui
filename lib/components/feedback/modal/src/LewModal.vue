@@ -34,7 +34,7 @@ const modalBodyRef = ref<HTMLElement | null>(null)
 const modalId = `lew-modal-${getUniqueId()}`
 
 // Slots 检测
-const slots = useSlots()
+const slots: ReturnType<typeof useSlots> = useSlots()
 
 // 方法：检查当前 modal 是否在最顶层（每次调用时重新检查 DOM 状态）
 function checkIsTopModal(): boolean {

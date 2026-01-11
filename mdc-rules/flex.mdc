@@ -1,0 +1,293 @@
+---
+alwaysApply: false
+---
+
+# LewFlex 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewFlex
+- **核心用途**：用于快速创建 Flexbox 布局，支持方向、对齐方式、间距等常用布局需求，简化 CSS Flexbox 的使用
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持水平（x）和垂直（y）两种方向
+  - 支持灵活的对齐方式配置（x、y 轴独立控制）
+  - 支持快速模式（around、between）用于常见布局场景
+  - 支持换行（wrap）
+  - 支持自定义间距（gap）和宽度（width）
+  - 使用 CSS class 控制静态配置，computed style 控制动态值
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **水平布局**：通过 `direction="x"` 创建水平方向的 Flexbox 布局
+- **垂直布局**：通过 `direction="y"` 创建垂直方向的 Flexbox 布局
+- **对齐方式**：通过 `x` 和 `y` 属性控制主轴和交叉轴的对齐方式
+- **快速模式**：通过 `mode` 属性快速设置 `space-around` 或 `space-between`
+- **间距控制**：通过 `gap` 属性统一控制子元素间距
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| direction | `LewDirection` | `'x'` | `'x'` / `'y'` | Flexbox 方向：x 为水平（row），y 为垂直（column） |
+| x | `LewXAlignment` | `'start'` | `'start'` / `'center'` / `'end'` / `'left'` / `'right'` | 水平方向对齐方式（direction="x" 时控制主轴，direction="y" 时控制交叉轴） |
+| y | `LewYAlignment` | `'center'` | `'start'` / `'center'` / `'end'` / `'top'` / `'bottom'` | 垂直方向对齐方式（direction="x" 时控制交叉轴，direction="y" 时控制主轴），支持 start/top 和 end/bottom 兼容写法 |
+| mode | `'around' \| 'between'` | - | `'around'` / `'between'` | 快速模式：around 为 space-around，between 为 space-between（设置后 x、y 不生效） |
+| wrap | `boolean` | - | `true` / `false` | 是否允许换行 |
+| gap | `string` | `'10px'` | 支持 CSS gap 值 | 子元素间距，支持数字或带单位的字符串 |
+| width | `string` | `''` | 支持 CSS width 值 | 容器宽度，支持数字或带单位的字符串，默认 100% |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | Flex 容器内容 | `<template><div>内容1</div><div>内容2</div></template>` |
+
+## 4. 注意事项
+
+- ⚠️ **mode 优先级**：当设置了 `mode` 属性时，`x` 和 `y` 属性不生效，`mode` 会覆盖对齐方式设置
+- ⚠️ **方向与对齐**：`x` 和 `y` 的对齐方式会根据 `direction` 自动切换：
+  - `direction="x"` 时：`x` 控制主轴（justify-content），`y` 控制交叉轴（align-items）
+  - `direction="y"` 时：`y` 控制主轴（justify-content），`x` 控制交叉轴（align-items）
+- ⚠️ **默认宽度**：组件默认宽度为 `100%`，如需自定义宽度，使用 `width` 属性
+- ⚠️ **间距单位**：`gap` 和 `width` 支持所有 CSS 单位（px、rem、%、vw 等），组件内部使用 `any2px` 统一处理
+- ⚠️ **对齐值兼容**：`x` 支持 `start/left` 和 `end/right` 两种写法，`y` 支持 `start/top` 和 `end/bottom` 两种写法，效果相同
+- ⚠️ **样式优化**：组件使用 CSS class 控制静态配置（方向、对齐、换行），使用 computed style 控制动态值（gap、width），符合性能最佳实践
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：对齐方式不生效
+
+**现象**：设置了 `x` 和 `y` 属性，但对齐方式没有变化。
+
+**原因**：
+- 同时设置了 `mode` 属性，`mode` 会覆盖 `x` 和 `y`
+- 对齐值设置不正确
+- 方向设置导致对齐轴理解错误
+
+**修复方案**：
+1. 确认未设置 `mode` 属性（`mode` 会覆盖 `x` 和 `y`）：
+```vue
+<template>
+  <!-- ✅ 正确：使用 x 和 y 控制对齐 -->
+  <lew-flex x="center" y="center">
+    <div>内容1</div>
+    <div>内容2</div>
+  </lew-flex>
+  
+  <!-- ❌ 错误：mode 会覆盖 x 和 y -->
+  <lew-flex mode="between" x="center" y="center">
+    <div>内容1</div>
+    <div>内容2</div>
+  </lew-flex>
+</template>
+```
+2. 确认对齐值正确：
+```vue
+<template>
+  <lew-flex x="start" y="center">
+    <div>内容</div>
+  </lew-flex>
+</template>
+```
+
+### 问题2：垂直布局时对齐方向相反
+
+**现象**：设置了 `direction="y"`，但 `x` 和 `y` 的对齐效果与预期相反。
+
+**原因**：
+- 在垂直布局下，`x` 和 `y` 的对齐轴会互换
+- 对主轴和交叉轴的理解有误
+
+**修复方案**：
+1. 理解方向与对齐的关系：
+```vue
+<template>
+  <!-- direction="x" 时：x 控制主轴（水平），y 控制交叉轴（垂直） -->
+  <lew-flex direction="x" x="center" y="center">
+    <div>内容</div>
+  </lew-flex>
+  
+  <!-- direction="y" 时：y 控制主轴（垂直），x 控制交叉轴（水平） -->
+  <lew-flex direction="y" x="center" y="center">
+    <div>内容</div>
+  </lew-flex>
+</template>
+```
+
+### 问题3：间距设置无效
+
+**现象**：设置了 `gap` 属性，但子元素之间没有间距。
+
+**原因**：
+- `gap` 值格式不正确
+- 浏览器不支持 CSS gap（较老的浏览器）
+
+**修复方案**：
+1. 确认 `gap` 值格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的 CSS gap 值 -->
+  <lew-flex gap="10px">
+    <div>内容1</div>
+    <div>内容2</div>
+  </lew-flex>
+  
+  <lew-flex gap="20">
+    <div>内容1</div>
+    <div>内容2</div>
+  </lew-flex>
+</template>
+```
+2. 检查浏览器兼容性（CSS gap 需要现代浏览器支持）
+
+### 问题4：宽度设置无效
+
+**现象**：设置了 `width` 属性，但容器宽度没有变化。
+
+**原因**：
+- `width` 值格式不正确
+- 默认宽度 `100%` 被其他样式覆盖
+- 父容器限制
+
+**修复方案**：
+1. 确认 `width` 值格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的 CSS width 值 -->
+  <lew-flex width="500px">
+    <div>内容</div>
+  </lew-flex>
+  
+  <lew-flex width="50%">
+    <div>内容</div>
+  </lew-flex>
+</template>
+```
+2. 检查父容器是否有宽度限制：
+```vue
+<template>
+  <div style="width: 300px">
+    <!-- 父容器宽度限制，flex 宽度不会超过父容器 -->
+    <lew-flex width="500px">
+      <div>内容</div>
+    </lew-flex>
+  </div>
+</template>
+```
+
+### 问题5：换行不生效
+
+**现象**：设置了 `wrap={true}`，但子元素没有换行。
+
+**原因**：
+- 子元素总宽度未超过容器宽度
+- 子元素设置了 `flex-shrink: 0` 或其他样式阻止换行
+
+**修复方案**：
+1. 确认子元素总宽度超过容器：
+```vue
+<template>
+  <!-- ✅ 正确：子元素总宽度超过容器，会换行 -->
+  <lew-flex wrap>
+    <div style="width: 200px">内容1</div>
+    <div style="width: 200px">内容2</div>
+    <div style="width: 200px">内容3</div>
+  </lew-flex>
+</template>
+```
+2. 检查子元素样式是否阻止换行：
+```vue
+<template>
+  <lew-flex wrap>
+    <!-- 确保子元素没有设置 flex-shrink: 0 等阻止换行的样式 -->
+    <div>内容1</div>
+    <div>内容2</div>
+  </lew-flex>
+</template>
+```
+
+### 问题6：mode 与 x/y 冲突
+
+**现象**：同时设置了 `mode` 和 `x`、`y`，但只有 `mode` 生效。
+
+**原因**：
+- `mode` 属性会覆盖 `x` 和 `y` 的设置
+- 这是预期行为，`mode` 优先级更高
+
+**修复方案**：
+1. 这是预期行为，`mode` 会覆盖 `x` 和 `y`：
+```vue
+<template>
+  <!-- ✅ 正确：只使用 mode -->
+  <lew-flex mode="between">
+    <div>内容1</div>
+    <div>内容2</div>
+  </lew-flex>
+  
+  <!-- ✅ 正确：只使用 x 和 y -->
+  <lew-flex x="center" y="center">
+    <div>内容1</div>
+    <div>内容2</div>
+  </lew-flex>
+  
+  <!-- ❌ 不推荐：同时设置 mode 和 x/y，mode 会覆盖 x/y -->
+  <lew-flex mode="between" x="center" y="center">
+    <div>内容1</div>
+    <div>内容2</div>
+  </lew-flex>
+</template>
+```
+
+### 问题7：对齐值不识别
+
+**现象**：使用了 `left`、`right`、`top`、`bottom` 等值，但提示值无效。
+
+**原因**：
+- 这些值是兼容写法，但类型定义可能不包含
+- 应该使用 `start`、`end` 等标准值
+
+**修复方案**：
+1. 使用标准对齐值：
+```vue
+<template>
+  <!-- ✅ 正确：使用标准值 -->
+  <lew-flex x="start" y="center">
+    <div>内容</div>
+  </lew-flex>
+  
+  <!-- ✅ 兼容写法：left/right/top/bottom 在 CSS 中有效，但类型定义可能不包含 -->
+  <lew-flex x="left" y="top">
+    <div>内容</div>
+  </lew-flex>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（computed），移除调试代码，清理注释 | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 使用 `mode="between"` 可以快速实现两端对齐布局，适合导航栏、工具栏等场景
+- ✅ 使用 `mode="around"` 可以快速实现均匀分布布局，适合卡片列表等场景
+- ✅ 结合 `wrap` 可以实现响应式布局，子元素自动换行
+- ✅ 通过 `gap` 统一控制间距，比使用 margin 更简洁高效
+- ✅ 使用 `direction="y"` 可以快速创建垂直布局，适合表单、列表等场景
+- ✅ 通过 `x` 和 `y` 的灵活组合可以实现各种复杂的对齐需求

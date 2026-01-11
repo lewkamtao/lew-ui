@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LewFormItemAs } from "lew-ui/types";
+import type { LewFormItemAs } from 'lew-ui/types'
 import {
   LewButton,
   LewCascader,
@@ -22,206 +22,209 @@ import {
   LewTooltip,
   LewTreeSelect,
   LewUpload,
-} from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px, object2class } from "lew-ui/utils";
-import { debounce } from "lodash-es";
-import { formItemEmits } from "./emits";
-import { formItemProps, requiredIconSizeMap, tipsIconSizeMap } from "./props";
-import RequiredIcon from "./RequiredIcon.vue";
+} from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
+import { debounce } from 'lodash-es'
+import { formItemEmits } from './emits'
+import { formItemProps, requiredIconSizeMap, tipsIconSizeMap } from './props'
+import RequiredIcon from './RequiredIcon.vue'
 
-const props = defineProps(formItemProps);
-const emit = defineEmits(formItemEmits);
+const props = defineProps(formItemProps)
+const emit = defineEmits(formItemEmits)
 
-const formSchema = inject<any>("formSchema", ref(null));
-const formData = inject<Ref<Record<string, any>>>("formData", ref({}));
+const formSchema = inject<any>('formSchema', ref(null))
+const formData = inject<Ref<Record<string, any>>>('formData', ref({}))
 
 const asMap: Record<LewFormItemAs, Component> = {
-  input: LewInput,
-  textarea: LewTextarea,
-  "input-tag": LewInputTag,
-  "checkbox-group": LewCheckboxGroup,
-  "radio-group": LewRadioGroup,
-  checkbox: LewCheckbox,
-  select: LewSelect,
-  "date-picker": LewDatePicker,
-  "date-range-picker": LewDateRangePicker,
-  tabs: LewTabs,
-  cascader: LewCascader,
-  switch: LewSwitch,
-  button: LewButton,
-  upload: LewUpload,
-  "input-number": LewInputNumber,
-  slider: LewSlider,
-  "slider-range": LewSliderRange,
-  "color-picker": LewColorPicker,
-  rate: LewRate,
-  "tree-select": LewTreeSelect,
-};
+  'input': LewInput,
+  'textarea': LewTextarea,
+  'input-tag': LewInputTag,
+  'checkbox-group': LewCheckboxGroup,
+  'radio-group': LewRadioGroup,
+  'checkbox': LewCheckbox,
+  'select': LewSelect,
+  'date-picker': LewDatePicker,
+  'date-range-picker': LewDateRangePicker,
+  'tabs': LewTabs,
+  'cascader': LewCascader,
+  'switch': LewSwitch,
+  'button': LewButton,
+  'upload': LewUpload,
+  'input-number': LewInputNumber,
+  'slider': LewSlider,
+  'slider-range': LewSliderRange,
+  'color-picker': LewColorPicker,
+  'rate': LewRate,
+  'tree-select': LewTreeSelect,
+}
 
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip'))
+  app.use(LewTooltip)
 
 const getFormItemClassNames = computed(() =>
-  object2class("lew-form-item", {
+  object2class('lew-form-item', {
     direction: props.direction,
     size: props.size,
-  })
-);
+  }),
+)
 
-const formItemRef = ref<HTMLElement | null>(null);
-const modelValue: Ref<any> = defineModel({ default: undefined });
-const ignoreValidate = ref(false);
-const errMsg = ref("");
-const itemWidth = ref<number | null>(null);
+const formItemRef = ref<HTMLElement | null>(null)
+const modelValue: Ref<any> = defineModel({ default: undefined })
+const ignoreValidate = ref(false)
+const errMsg = ref('')
+const itemWidth = ref<number | null>(null)
 
 // 设置是否忽略校验
 function setIgnoreValidate(val: boolean) {
-  ignoreValidate.value = val;
+  ignoreValidate.value = val
 }
 
 function validate() {
   if (ignoreValidate.value) {
-    return;
+    return
   }
 
   if (!props.required && !modelValue.value) {
-    errMsg.value = "";
-    return;
+    errMsg.value = ''
+    return
   }
 
   if (!formSchema.value || !props.field) {
-    errMsg.value = "";
-    return;
+    errMsg.value = ''
+    return
   }
 
-  if (typeof formSchema.value.validateAt !== "function") {
-    errMsg.value = "";
-    return;
+  if (typeof formSchema.value.validateAt !== 'function') {
+    errMsg.value = ''
+    return
   }
 
-  const schema = formSchema.value;
-  const field = props.field;
-  const data = formData.value;
+  const schema = formSchema.value
+  const field = props.field
+  const data = formData.value
 
   schema
     .validateAt(field, data)
     .then(() => {
-      errMsg.value = "";
+      errMsg.value = ''
     })
     .catch((e: any) => {
-      if (e.message && e.message.includes("does not contain the path")) {
-        errMsg.value = "";
-      } else {
-        errMsg.value = e.message || "";
+      if (e.message && e.message.includes('does not contain the path')) {
+        errMsg.value = ''
       }
-    });
+      else {
+        errMsg.value = e.message || ''
+      }
+    })
 }
 
-const debouncedValidate = debounce(validate, 120);
+const debouncedValidate = debounce(validate, 120)
 
 function setError(msg: any) {
-  errMsg.value = msg || "";
+  errMsg.value = msg || ''
 }
 
 function change(val: any) {
   if (!ignoreValidate.value) {
-    debouncedValidate();
-  } else {
-    ignoreValidate.value = false;
+    debouncedValidate()
   }
-  emit("change", { value: val, field: props.field, label: props.label });
+  else {
+    ignoreValidate.value = false
+  }
+  emit('change', { value: val, field: props.field, label: props.label })
 }
 
 watch(
   () => modelValue.value,
   () => {
-    debouncedValidate();
-  }
-);
+    debouncedValidate()
+  },
+)
 
 function updateItemWidth() {
-  if (formItemRef.value && props.direction === "x") {
-    itemWidth.value = (formItemRef.value as HTMLElement).offsetWidth;
+  if (formItemRef.value && props.direction === 'x') {
+    itemWidth.value = (formItemRef.value as HTMLElement).offsetWidth
   }
 }
 
 const getFormItemMainStyle = computed(() => {
-  if (props.direction !== "x") {
+  if (props.direction !== 'x') {
     return {
-      width: "100%",
-      justifyContent: "flex-start",
-    };
+      width: '100%',
+      justifyContent: 'flex-start',
+    }
   }
 
   if (itemWidth.value === null) {
-    nextTick(updateItemWidth);
+    nextTick(updateItemWidth)
     return {
-      width: "100%",
-      justifyContent: props.between ? "flex-end" : "flex-start",
-    };
+      width: '100%',
+      justifyContent: props.between ? 'flex-end' : 'flex-start',
+    }
   }
 
   return {
     width: `calc(${itemWidth.value}px - ${any2px(props.labelWidth)} - 10px)`,
-    justifyContent: props.between ? "flex-end" : "flex-start",
-  };
-});
+    justifyContent: props.between ? 'flex-end' : 'flex-start',
+  }
+})
 
 const getDynamicProps = computed(() => {
-  if (typeof props.props === "function") {
-    return props.props(formData.value);
+  if (typeof props.props === 'function') {
+    return props.props(formData.value)
   }
-  return props.props || {};
-});
+  return props.props || {}
+})
 
 const isVisible = computed(() => {
-  if (typeof props.visible === "function") {
-    return props.visible(formData.value);
+  if (typeof props.visible === 'function') {
+    return props.visible(formData.value)
   }
-  return props.visible !== false;
-});
+  return props.visible !== false
+})
 
 const isDisabled = computed(() => {
-  if (typeof props.disabled === "function") {
-    return props.disabled(formData.value);
+  if (typeof props.disabled === 'function') {
+    return props.disabled(formData.value)
   }
-  return Boolean(props.disabled);
-});
+  return Boolean(props.disabled)
+})
 
 const isReadonly = computed(() => {
-  if (typeof props.readonly === "function") {
-    return props.readonly(formData.value);
+  if (typeof props.readonly === 'function') {
+    return props.readonly(formData.value)
   }
-  return Boolean(props.readonly);
-});
+  return Boolean(props.readonly)
+})
 
 watch(
   () => [props.direction, props.labelWidth, props.between],
   () => {
-    if (props.direction === "x") {
-      nextTick(updateItemWidth);
+    if (props.direction === 'x') {
+      nextTick(updateItemWidth)
     }
-  }
-);
+  },
+)
 
 watch(
   () => formData.value,
   () => {
-    if (props.direction === "x") {
-      nextTick(updateItemWidth);
+    if (props.direction === 'x') {
+      nextTick(updateItemWidth)
     }
   },
-  { deep: true }
-);
+  { deep: true },
+)
 
 onMounted(() => {
-  if (props.direction === "x") {
-    nextTick(updateItemWidth);
+  if (props.direction === 'x') {
+    nextTick(updateItemWidth)
   }
-});
+})
 
-defineExpose({ validate, setError, setIgnoreValidate });
+defineExpose({ validate, setError, setIgnoreValidate })
 </script>
 
 <template>

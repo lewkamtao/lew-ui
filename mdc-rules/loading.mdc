@@ -1,0 +1,154 @@
+---
+alwaysApply: false
+---
+
+# v-loading 指令使用文档
+
+## 1. 指令基础信息
+
+- **指令名称**：v-loading
+- **核心用途**：为元素添加加载状态遮罩层
+- **适用环境**：Vue 3.4+、TypeScript
+- **基础特性**：
+  - 支持显示/隐藏加载状态
+  - 支持自定义加载提示文本
+  - 支持自定义图标大小
+  - 自动覆盖目标元素
+
+## 2. 快速开始
+
+### 基本用法
+
+```vue
+<template>
+  <div
+    v-loading="{
+      visible: loading,
+      tip: '加载中...',
+      iconSize: 24
+    }"
+    style="height: 200px;"
+  >
+    内容区域
+  </div>
+</template>
+
+<script setup>
+const loading = ref(true)
+</script>
+```
+
+## 3. 详细 API 说明
+
+### 3.1 指令参数
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| visible | `boolean` | `false` | 是否显示加载状态 |
+| tip | `string` | `''` | 加载提示文本 |
+| iconSize | `number` | `24` | 加载图标大小（像素） |
+
+### 3.2 使用示例
+
+```vue
+<script setup>
+import { LewLoading } from 'lew-ui'
+
+// 全局注册（推荐在 main.ts 中）
+app.use(LewLoading)
+
+const loading = ref(false)
+
+async function fetchData() {
+  loading.value = true
+  try {
+    await api.getData()
+  } finally {
+    loading.value = false
+  }
+}
+</script>
+
+<template>
+  <div
+    v-loading="{
+      visible: loading,
+      tip: '正在加载数据...',
+      iconSize: 32
+    }"
+    class="content-box"
+  >
+    <!-- 内容 -->
+  </div>
+</template>
+```
+
+## 4. 注意事项
+
+- ⚠️ **容器定位**：目标元素需要有定位属性（relative/absolute/fixed），否则遮罩层可能位置不正确
+- ⚠️ **动态更新**：支持动态修改 `visible` 和 `tip`，会自动响应变化
+- ⚠️ **遮罩层级**：遮罩层会覆盖在元素内容之上
+- ⚠️ **图标动画**：加载图标会自动旋转
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：遮罩层位置不正确
+
+**现象**：加载遮罩层没有覆盖在目标元素上。
+
+**原因**：
+- 目标元素没有设置定位属性
+
+**修复方案**：
+```vue
+<div
+  v-loading="{ visible: loading }"
+  style="position: relative; height: 200px;"
+>
+  内容
+</div>
+```
+
+### 问题2：提示文字不显示
+
+**现象**：设置了 tip 但只显示加载图标。
+
+**原因**：
+- tip 值为空字符串
+
+**修复方案**：
+```vue
+<div v-loading="{ visible: loading, tip: '加载中...' }">
+  内容
+</div>
+```
+
+### 问题3：动态更新 tip 无效
+
+**现象**：动态修改 tip 后文字没有变化。
+
+**原因**：
+- 需要确保使用响应式数据
+
+**修复方案**：
+```vue
+<script setup>
+const loadingState = reactive({
+  visible: false,
+  tip: '加载中...'
+})
+
+// 更新 tip
+loadingState.tip = '即将完成...'
+</script>
+
+<template>
+  <div v-loading="loadingState">内容</div>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

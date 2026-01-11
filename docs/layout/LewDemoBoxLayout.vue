@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import docsLocale from "docs/locals";
-import { any2px, object2class } from "lew-ui/utils";
-import { throttle } from "lodash-es";
-import LewDemoBox from "./LewDemoBox.vue";
+import { useDemoLoaded } from 'docs/composables/useDemoLoaded'
+import docsLocale from 'docs/locals'
+import { any2px, object2class } from 'lew-ui/utils'
+import { throttle } from 'lodash-es'
+import LewDemoBox from './LewDemoBox.vue'
 
 const props = defineProps({
   demoGroup: {
@@ -19,201 +20,230 @@ const props = defineProps({
   },
   gap: {
     type: String,
-    default: "30px",
+    default: '30px',
   },
   width: {
     type: String,
-    default: "100%",
+    default: '100%',
   },
   componentName: {
     type: String,
-    default: "",
+    default: '',
   },
   // 每个 demo 加载的延迟间隔（毫秒）
   loadDelay: {
     type: Number,
-    default: 50,
+    default: 20,
   },
-});
+})
+
+const emit = defineEmits<{
+  allLoaded: []
+}>()
+
+const { setLoaded } = useDemoLoaded()
+
+// 是否全部加载完成
+const isAllLoaded = ref(false)
+
+// 同步到全局状态
+watch(isAllLoaded, val => setLoaded(val), { immediate: true })
+
+// 暴露给父组件
+defineExpose({
+  isAllLoaded,
+})
 
 // 响应式窗口宽度
-const windowWidth = ref(window.innerWidth);
+const windowWidth = ref(window.innerWidth)
 
 // 已加载的 demo 索引集合
-const loadedIndices = ref<Set<number>>(new Set());
+const loadedIndices = ref<Set<number>>(new Set())
 
 // 加载定时器
-let loadTimer: ReturnType<typeof setTimeout> | null = null;
+let loadTimer: ReturnType<typeof setTimeout> | null = null
 
 // 按顺序延迟加载 demo
 function startSequentialLoading() {
-  const totalDemos = props.demoGroup.length;
-  let currentIndex = 0;
+  const totalDemos = props.demoGroup.length
+  let currentIndex = 0
+  isAllLoaded.value = false
 
   // 立即加载第一个
   if (totalDemos > 0) {
-    loadedIndices.value.add(0);
-    currentIndex = 1;
+    loadedIndices.value.add(0)
+    currentIndex = 1
+  }
+
+  // 如果只有一个或没有 demo，直接标记完成
+  if (totalDemos <= 1) {
+    isAllLoaded.value = true
+    emit('allLoaded')
+    return
   }
 
   // 延迟加载后续 demo
   function loadNext() {
     if (currentIndex >= totalDemos) {
-      loadTimer = null;
-      return;
+      loadTimer = null
+      isAllLoaded.value = true
+      emit('allLoaded')
+      return
     }
 
-    loadedIndices.value = new Set([...loadedIndices.value, currentIndex]);
-    currentIndex++;
+    loadedIndices.value = new Set([...loadedIndices.value, currentIndex])
+    currentIndex++
 
-    loadTimer = setTimeout(loadNext, props.loadDelay);
+    loadTimer = setTimeout(loadNext, props.loadDelay)
   }
 
   if (currentIndex < totalDemos) {
-    loadTimer = setTimeout(loadNext, props.loadDelay);
+    loadTimer = setTimeout(loadNext, props.loadDelay)
   }
 }
-
-// 检查某个 demo 是否已加载
-const isDemoLoaded = computed(() => (index: number) => {
-  return loadedIndices.value.has(index);
-});
 
 // 监听窗口大小变化
 onMounted(() => {
   const handleResize = throttle(() => {
-    windowWidth.value = window.innerWidth;
-  }, 200);
+    windowWidth.value = window.innerWidth
+  }, 200)
 
-  window.addEventListener("resize", handleResize);
+  window.addEventListener('resize', handleResize)
 
   // 开始顺序加载
-  startSequentialLoading();
+  startSequentialLoading()
 
   onUnmounted(() => {
-    window.removeEventListener("resize", handleResize);
-    // 清理定时器
+    window.removeEventListener('resize', handleResize)
     if (loadTimer) {
-      clearTimeout(loadTimer);
-      loadTimer = null;
+      clearTimeout(loadTimer)
+      loadTimer = null
     }
-  });
-});
+  })
+})
 
 // 监听 demoGroup 变化，重新开始加载
 watch(
   () => props.demoGroup,
   () => {
-    // 清理之前的定时器
     if (loadTimer) {
-      clearTimeout(loadTimer);
-      loadTimer = null;
+      clearTimeout(loadTimer)
+      loadTimer = null
     }
-    // 重置加载状态
-    loadedIndices.value = new Set();
-    // 重新开始加载
-    startSequentialLoading();
-  }
-);
+    loadedIndices.value = new Set()
+    startSequentialLoading()
+  },
+)
 
 // 根据窗口宽度动态计算列数
 const dynamicColumns = computed(() => {
-  return windowWidth.value < 1600 ? 1 : props.columns;
-});
+  return windowWidth.value < 1600 ? 1 : props.columns
+})
 
 // 计算属性
 const getLayoutStyle = computed(() => {
-  const { width, gap } = props;
-  const columns = dynamicColumns.value;
-  const columnWidth = `calc((100% - ${any2px(gap)} * ${columns - 1}) / ${columns})`;
+  const { width, gap } = props
+  const columns = dynamicColumns.value
+  const columnWidth = `calc((100% - ${any2px(gap)} * ${
+    columns - 1
+  }) / ${columns})`
   return {
-    width: any2px(width),
-    gap: any2px(gap),
-    "--column-width": columnWidth,
-  };
-});
+    'width': any2px(width),
+    'gap': any2px(gap),
+    '--column-width': columnWidth,
+  }
+})
 
 const getLayoutClassNames = computed(() => {
-  return object2class("lew-demo-box-layout", {});
-});
+  return object2class('lew-demo-box-layout', {})
+})
 
-// 将demoGroup和codeGroup按列数分组
+// 将demoGroup按列数分组，只包含已加载的 demo
 const groupedData = computed(() => {
-  const { demoGroup, codeGroup } = props;
-  const columns = dynamicColumns.value;
-  const result = [];
+  const { demoGroup } = props
+  const columns = dynamicColumns.value
+  const result = []
 
   for (let i = 0; i < columns; i++) {
     const columnData = {
-      demos: [] as any[],
-      codes: [] as string[],
-      indices: [] as number[],
-    };
-
-    for (let j = i; j < demoGroup.length; j += columns) {
-      columnData.demos.push(demoGroup[j]);
-      columnData.codes.push(codeGroup[j] || "");
-      columnData.indices.push(j);
+      demos: [] as { component: any, index: number }[],
     }
 
-    result.push(columnData);
+    for (let j = i; j < demoGroup.length; j += columns) {
+      // 只添加已加载的 demo
+      if (loadedIndices.value.has(j)) {
+        columnData.demos.push({
+          component: demoGroup[j],
+          index: j,
+        })
+      }
+    }
+
+    result.push(columnData)
   }
 
-  return result;
-});
+  return result
+})
 
 // 获取demo项配置
 function getDemoItemConfig(index: number) {
   return {
     title: props.componentName
       ? docsLocale.t(`components.${props.componentName}.demo${index + 1}.title`)
-      : "",
+      : '',
     description: props.componentName
-      ? docsLocale.t(`components.${props.componentName}.demo${index + 1}.description`)
-      : "",
-    code: props.codeGroup[index] || "",
+      ? docsLocale.t(
+          `components.${props.componentName}.demo${index + 1}.description`,
+        )
+      : '',
+    code: props.codeGroup[index] || '',
     demoIndex: index,
     componentName: props.componentName,
-  };
+  }
 }
 </script>
 
 <template>
-  <div class="lew-demo-box-layout" :style="getLayoutStyle" :class="getLayoutClassNames">
+  <div
+    class="lew-demo-box-layout"
+    :style="getLayoutStyle"
+    :class="getLayoutClassNames"
+  >
     <div
       v-for="(column, columnIndex) in groupedData"
       :key="columnIndex"
       class="demo-column"
     >
-      <template
-        v-for="(item, itemIndex) in column.demos"
-        :key="column.indices[itemIndex]"
-      >
-        <!-- 已加载的 demo -->
+      <TransitionGroup name="demo-fade" appear>
         <LewDemoBox
-          v-if="isDemoLoaded(column.indices[itemIndex])"
-          :title="getDemoItemConfig(column.indices[itemIndex]).title"
-          :description="getDemoItemConfig(column.indices[itemIndex]).description"
-          :code="getDemoItemConfig(column.indices[itemIndex]).code"
-          :demo-index="getDemoItemConfig(column.indices[itemIndex]).demoIndex"
-          :component-name="getDemoItemConfig(column.indices[itemIndex]).componentName"
+          v-for="item in column.demos"
+          :key="item.index"
+          :title="getDemoItemConfig(item.index).title"
+          :description="getDemoItemConfig(item.index).description"
+          :code="getDemoItemConfig(item.index).code"
+          :demo-index="getDemoItemConfig(item.index).demoIndex"
+          :component-name="getDemoItemConfig(item.index).componentName"
         >
-          <component :is="item" />
+          <component :is="item.component" />
         </LewDemoBox>
-        <!-- 加载占位符 -->
-        <div v-else class="demo-skeleton">
-          <div class="skeleton-title" />
-          <div class="skeleton-content">
-            <div class="skeleton-line" />
-            <div class="skeleton-line short" />
-          </div>
-        </div>
-      </template>
+      </TransitionGroup>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+// Demo 过渡动画
+.demo-fade-enter-active {
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+
+.demo-fade-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
 .lew-demo-box-layout {
   display: flex;
   width: 100%;
@@ -232,55 +262,6 @@ function getDemoItemConfig(index: number) {
     :deep(.demo-box) {
       width: 100%;
       min-width: 0;
-    }
-  }
-
-  // 骨架屏样式
-  .demo-skeleton {
-    margin: 20px 0;
-    padding: 20px;
-    background-color: var(--lew-bgcolor-0);
-    border-radius: var(--lew-border-radius-small);
-    box-shadow: var(--lew-box-shadow);
-    animation: skeleton-pulse 1.5s ease-in-out infinite;
-
-    .skeleton-title {
-      width: 120px;
-      height: 20px;
-      background: var(--lew-bgcolor-4);
-      border-radius: 4px;
-      margin-bottom: 20px;
-    }
-
-    .skeleton-content {
-      padding: 20px;
-      background: var(--lew-bgcolor-1);
-      border-radius: var(--lew-border-radius-small);
-
-      .skeleton-line {
-        height: 14px;
-        background: var(--lew-bgcolor-4);
-        border-radius: 4px;
-        margin-bottom: 12px;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        &.short {
-          width: 60%;
-        }
-      }
-    }
-  }
-
-  @keyframes skeleton-pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.6;
     }
   }
 }

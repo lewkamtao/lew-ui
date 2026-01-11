@@ -1,0 +1,244 @@
+---
+alwaysApply: false
+---
+
+# LewDateRangePicker 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewDateRangePicker
+- **核心用途**：用于选择日期范围，支持开始日期和结束日期的选择，适用于日期筛选、报表查询等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持日期范围选择（开始日期和结束日期）
+  - 支持自定义日期格式（valueFormat）
+  - 支持自定义键名（startKey、endKey）
+  - 支持清除功能（clearable）
+  - 支持只读和禁用状态
+  - 支持三种尺寸：mini、small、medium、large
+  - 支持自定义宽度
+  - 双面板设计，方便选择日期范围
+  - 使用 CSS 变量实现主题定制
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **日期范围选择**：点击输入框弹出双面板日期选择器，先选择开始日期，再选择结束日期
+- **格式控制**：通过 `valueFormat` 属性控制日期格式
+- **键名自定义**：通过 `startKey` 和 `endKey` 属性自定义对象键名
+- **清除功能**：设置 `clearable={true}` 时，输入框右侧显示清除图标，点击可清空日期范围
+- **范围高亮**：选择日期范围时，范围内的日期会高亮显示
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| modelValue | `{ start?: string, end?: string } \| undefined` | - | 包含 start 和 end 属性的对象 | 日期范围值，支持 v-model 双向绑定 |
+| startKey | `string` | `'start'` | 任意字符串 | 开始日期的键名 |
+| endKey | `string` | `'end'` | 任意字符串 | 结束日期的键名 |
+| valueFormat | `string` | `'YYYY-MM-DD'` | dayjs 支持的格式字符串 | 日期格式，如 `'YYYY-MM-DD'` 等 |
+| size | `LewSize` | `'medium'` | `'mini'` / `'small'` / `'medium'` / `'large'` | 组件尺寸 |
+| width | `Property.Width` | `'100%'` | CSS width 值 | 组件宽度，支持所有 CSS width 值 |
+| placeholderStart | `string` | - | 任意字符串 | 开始日期输入框占位符文本 |
+| placeholderEnd | `string` | - | 任意字符串 | 结束日期输入框占位符文本 |
+| clearable | `boolean` | `true` | `true` / `false` | 是否显示清除按钮 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| modelValue | `{ start?: string, end?: string } \| undefined` | - | 日期范围值，支持 v-model 双向绑定 |
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| change | `(value?: { start?: string, end?: string })` | 日期范围值改变时触发，传递新的日期范围对象 |
+| clear | `()` | 点击清除按钮时触发 |
+
+### 3.4 方法
+
+| 方法名 | 参数 | 返回值 | 说明 |
+|--------|------|--------|------|
+| show | `()` | `void` | 显示日期范围选择面板 |
+| hide | `()` | `void` | 隐藏日期范围选择面板 |
+
+### 3.5 插槽
+
+该组件暂不支持插槽。
+
+## 4. 注意事项
+
+- ⚠️ **日期范围选择**：组件采用双面板设计，左侧面板显示开始日期所在月份，右侧面板显示结束日期所在月份
+- ⚠️ **选择逻辑**：第一次点击选择开始日期，第二次点击选择结束日期，如果第二次点击的日期早于开始日期，会自动交换开始和结束日期
+- ⚠️ **日期格式**：`valueFormat` 必须符合 dayjs 支持的格式
+- ⚠️ **键名自定义**：`startKey` 和 `endKey` 用于自定义对象键名，默认分别为 `'start'` 和 `'end'`
+- ⚠️ **范围高亮**：选择日期范围时，范围内的日期会显示背景色高亮，开始和结束日期会显示特殊样式
+- ⚠️ **样式定制**：组件使用 CSS 变量（`--lew-form-bgcolor`、`--lew-color-datepicker-primary-selected-bg` 等）实现样式定制，可以通过覆盖 CSS 变量实现更灵活的样式定制
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：日期范围值格式不正确
+
+**现象**：设置了 `valueFormat`，但日期范围值格式不正确。
+
+**原因**：
+- `valueFormat` 格式字符串不正确
+- `modelValue` 对象格式不正确
+
+**修复方案**：
+1. 确认 `valueFormat` 格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用 dayjs 支持的格式 -->
+  <lew-date-range-picker v-model="dateRange" value-format="YYYY-MM-DD" />
+</template>
+```
+2. 确认 `modelValue` 对象格式正确：
+```vue
+<script setup>
+// ✅ 正确：对象包含 start 和 end 属性
+const dateRange = ref({
+  start: '2024-01-01',
+  end: '2024-01-31'
+})
+
+// ❌ 错误：对象格式不正确
+const dateRange = ref({
+  from: '2024-01-01',  // 键名不匹配
+  to: '2024-01-31'
+})
+</script>
+```
+
+### 问题2：键名不匹配
+
+**现象**：设置了自定义 `startKey` 和 `endKey`，但日期范围值不正确。
+
+**原因**：
+- `startKey` 和 `endKey` 与 `modelValue` 对象的键名不匹配
+- 内部转换逻辑有问题
+
+**修复方案**：
+1. 确认 `startKey` 和 `endKey` 与 `modelValue` 对象的键名匹配：
+```vue
+<template>
+  <lew-date-range-picker 
+    v-model="dateRange" 
+    start-key="from" 
+    end-key="to" 
+  />
+</template>
+<script setup>
+// ✅ 正确：键名匹配
+const dateRange = ref({
+  from: '2024-01-01',
+  to: '2024-01-31'
+})
+
+// ❌ 错误：键名不匹配
+const dateRange = ref({
+  start: '2024-01-01',  // 键名不匹配
+  end: '2024-01-31'
+})
+</script>
+```
+
+### 问题3：清除按钮不显示
+
+**现象**：设置了 `clearable={true}`，但清除按钮没有显示。
+
+**原因**：
+- `clearable` 设置为 `false`
+- `readonly` 设置为 `true`（只读状态下不显示清除按钮）
+- `modelValue` 为空（没有值时不显示清除按钮）
+
+**修复方案**：
+1. 确认 `clearable` 和 `readonly` 设置正确：
+```vue
+<template>
+  <!-- ✅ 正确：clearable 为 true，readonly 为 false -->
+  <lew-date-range-picker v-model="dateRange" clearable />
+  
+  <!-- ❌ 错误：readonly 为 true 时不显示清除按钮 -->
+  <lew-date-range-picker v-model="dateRange" clearable readonly />
+</template>
+```
+
+### 问题4：日期范围选择逻辑异常
+
+**现象**：选择日期范围时，开始和结束日期顺序不正确。
+
+**原因**：
+- 第二次点击的日期早于开始日期，组件会自动交换，但可能不符合预期
+- 选择逻辑有问题
+
+**修复方案**：
+1. 了解组件的选择逻辑：
+```vue
+<template>
+  <lew-date-range-picker v-model="dateRange" />
+</template>
+<script setup>
+// 组件选择逻辑：
+// 1. 第一次点击：选择开始日期
+// 2. 第二次点击：选择结束日期
+// 3. 如果第二次点击的日期早于开始日期，会自动交换开始和结束日期
+const dateRange = ref()
+</script>
+```
+
+### 问题5：样式不协调
+
+**现象**：日期范围选择器的样式与其他组件不一致。
+
+**原因**：
+- CSS 变量未正确定义
+- 样式被其他样式覆盖
+
+**修复方案**：
+1. 检查 CSS 变量是否正确定义：
+```css
+/* 确保这些变量已定义 */
+--lew-form-bgcolor
+--lew-form-bgcolor-hover
+--lew-form-bgcolor-focus
+--lew-color-datepicker-primary-selected-bg
+--lew-color-datepicker-primary-selected-text
+--lew-color-primary-light
+```
+2. 使用浏览器开发者工具检查变量值
+
+### 问题6：双面板显示异常
+
+**现象**：双面板日期选择器显示不正确。
+
+**原因**：
+- 面板宽度设置不正确
+- 面板间距设置不正确
+
+**修复方案**：
+1. 检查面板样式：
+```css
+/* 确保面板样式正确 */
+.lew-date-range {
+  display: flex;
+}
+
+.lew-date {
+  width: 260px;
+  padding: 10px;
+}
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化样式：移除硬编码颜色，统一使用 CSS 变量；修复色彩不协调问题；优化代码结构：调整导入顺序，移除手动导入的 Vue API | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |

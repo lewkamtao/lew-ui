@@ -1,0 +1,300 @@
+---
+alwaysApply: false
+---
+
+# LewButton 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewButton
+- **核心用途**：用于触发操作、提交表单、导航等交互场景，支持多种样式变体、尺寸、颜色和状态
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持四种类型：填充（fill）、浅色（light）、幽灵（ghost）、文本（text）
+  - 支持四种尺寸：mini、small、medium、large
+  - 支持所有主题色和状态色（primary、success、error、warning 等）
+  - 支持加载状态（loading）和异步请求（request）
+  - 支持禁用状态（disabled）
+  - 支持圆角（round）和虚线边框（dashed）
+  - 支持单图标按钮（singleIcon）
+  - 支持自定义宽度（width）
+  - 使用 CSS 变量实现主题定制
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础按钮**：通过 `type` 和 `color` 属性控制按钮样式
+- **尺寸控制**：通过 `size` 属性控制按钮大小
+- **加载状态**：通过 `loading` 或 `request` 属性显示加载动画
+- **禁用状态**：通过 `disabled` 属性禁用按钮交互
+- **文本显示**：通过 `text` prop 或默认插槽显示按钮文本
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| text | `string` | - | 任意字符串 | 按钮文本内容，如果设置了插槽内容，插槽优先 |
+| width | `Property.Width` | - | CSS width 值 | 按钮宽度，支持所有 CSS width 值 |
+| type | `LewButtonType` | `'fill'` | `'fill'` / `'light'` / `'ghost'` / `'text'` | 按钮类型：填充、浅色、幽灵、文本 |
+| size | `LewButtonSize` | `'medium'` | `'mini'` / `'small'` / `'medium'` / `'large'` | 按钮尺寸 |
+| singleIcon | `boolean` | `false` | `true` / `false` | 是否为单图标按钮（无文本，仅图标） |
+| color | `LewColor` | `'primary'` | 所有主题色和状态色 | 按钮颜色 |
+| round | `boolean` | `false` | `true` / `false` | 是否显示圆角 |
+| dashed | `boolean` | `false` | `true` / `false` | 是否使用虚线边框（仅 ghost 类型有效） |
+| loading | `boolean` | `false` | `true` / `false` | 是否显示加载状态 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用按钮 |
+| request | `() => Promise<void>` | - | 异步函数 | 点击按钮时执行的异步请求，会自动管理加载状态 |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| click | `(e: MouseEvent)` | 点击按钮时触发（disabled 或 loading 时不触发） |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 按钮内容，可以包含文本和图标 | `<template><CommonIcon type="add" />添加</template>` |
+
+**插槽优先级**：
+- 当设置了插槽内容时，插槽内容优先显示
+- 当未设置插槽时，显示 `text` prop 的内容
+- 如果既无插槽也无 `text`，按钮将不显示文本
+
+## 4. 注意事项
+
+- ⚠️ **加载状态管理**：`loading` prop 和 `request` 函数都会控制加载状态，`request` 函数会自动管理内部加载状态，无需手动设置 `loading`
+- ⚠️ **异步请求**：`request` 属性接受一个返回 `Promise` 的函数，点击按钮时会自动执行，并在请求期间显示加载状态
+- ⚠️ **单图标按钮**：设置 `singleIcon={true}` 时，按钮会变为正方形，仅显示图标，不显示文本
+- ⚠️ **虚线边框**：`dashed` 属性仅在 `type="ghost"` 时有效，其他类型下不显示虚线效果
+- ⚠️ **颜色支持**：`color` 支持所有 `LewColor` 类型，包括主题色（blue、green 等）和状态色（error、success 等）
+- ⚠️ **禁用与加载**：按钮在 `disabled` 或 `loading` 状态下不会触发 `click` 事件
+- ⚠️ **样式定制**：组件使用 CSS 变量（`--lew-button-bg`、`--lew-button-color` 等）实现样式定制，可以通过覆盖 CSS 变量实现更灵活的样式定制
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：异步请求不显示加载状态
+
+**现象**：设置了 `request` 属性，但点击按钮时没有显示加载动画。
+
+**原因**：
+- `request` 函数不是异步函数
+- `request` 函数执行出错
+- 同时设置了 `loading` prop，可能覆盖了内部加载状态
+
+**修复方案**：
+1. 确认 `request` 是异步函数：
+```vue
+<template>
+  <lew-button :request="handleRequest">提交</lew-button>
+</template>
+<script setup>
+// ✅ 正确：返回 Promise
+const handleRequest = async () => {
+  await fetch('/api/submit')
+}
+
+// ❌ 错误：不是异步函数
+const handleRequest = () => {
+  fetch('/api/submit')
+}
+</script>
+```
+2. 添加错误处理：
+```vue
+<script setup>
+const handleRequest = async () => {
+  try {
+    await fetch('/api/submit')
+  } catch (error) {
+    console.error('请求失败:', error)
+  }
+}
+</script>
+```
+
+### 问题2：单图标按钮尺寸不正确
+
+**现象**：设置了 `singleIcon={true}`，但按钮不是正方形。
+
+**原因**：
+- 同时设置了 `text` 或插槽内容
+- CSS 样式被覆盖
+
+**修复方案**：
+1. 确认未设置文本内容：
+```vue
+<template>
+  <!-- ✅ 正确：无文本，仅图标 -->
+  <lew-button single-icon>
+    <CommonIcon type="add" />
+  </lew-button>
+  
+  <!-- ❌ 错误：有文本，singleIcon 不生效 -->
+  <lew-button single-icon text="添加">
+    <CommonIcon type="add" />
+  </lew-button>
+</template>
+```
+
+### 问题3：虚线边框不显示
+
+**现象**：设置了 `dashed={true}`，但没有看到虚线边框。
+
+**原因**：
+- `dashed` 仅在 `type="ghost"` 时有效
+- 其他类型下不显示虚线效果
+
+**修复方案**：
+1. 确认按钮类型为 `ghost`：
+```vue
+<template>
+  <!-- ✅ 正确：ghost 类型支持 dashed -->
+  <lew-button type="ghost" dashed>按钮</lew-button>
+  
+  <!-- ❌ 错误：fill 类型不支持 dashed -->
+  <lew-button type="fill" dashed>按钮</lew-button>
+</template>
+```
+
+### 问题4：点击事件不触发
+
+**现象**：设置了 `@click` 事件，但点击按钮时没有触发。
+
+**原因**：
+- 按钮处于 `disabled` 状态
+- 按钮处于 `loading` 状态
+- 事件处理函数有问题
+
+**修复方案**：
+1. 确认按钮未禁用且未加载：
+```vue
+<template>
+  <!-- ✅ 正确：可以触发 click -->
+  <lew-button @click="handleClick">按钮</lew-button>
+  
+  <!-- ❌ 错误：disabled 状态下不触发 -->
+  <lew-button disabled @click="handleClick">按钮</lew-button>
+  
+  <!-- ❌ 错误：loading 状态下不触发 -->
+  <lew-button loading @click="handleClick">按钮</lew-button>
+</template>
+```
+
+### 问题5：颜色设置无效
+
+**现象**：设置了 `color` 属性，但按钮颜色没有变化。
+
+**原因**：
+- `color` 值不在有效列表中
+- CSS 变量未正确定义
+- 样式被其他样式覆盖
+
+**修复方案**：
+1. 确认 `color` 值正确（支持所有主题色和状态色）：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的颜色值 -->
+  <lew-button color="primary">按钮</lew-button>
+  <lew-button color="success">按钮</lew-button>
+  <lew-button color="error">按钮</lew-button>
+</template>
+```
+2. 检查 CSS 变量是否正确定义：
+```css
+/* 确保这些变量已定义 */
+--lew-color-primary
+--lew-color-success
+--lew-color-error
+```
+
+### 问题6：加载状态与 request 冲突
+
+**现象**：同时设置了 `loading` prop 和 `request` 函数，加载状态显示异常。
+
+**原因**：
+- `loading` prop 和 `request` 函数都会控制加载状态
+- 两者可能产生冲突
+
+**修复方案**：
+1. 优先使用 `request` 函数（会自动管理加载状态）：
+```vue
+<template>
+  <!-- ✅ 正确：使用 request，无需手动设置 loading -->
+  <lew-button :request="handleRequest">提交</lew-button>
+  
+  <!-- ❌ 不推荐：同时设置 loading 和 request -->
+  <lew-button :request="handleRequest" :loading="isLoading">提交</lew-button>
+</template>
+```
+2. 如果只需要手动控制加载状态，使用 `loading` prop：
+```vue
+<template>
+  <lew-button :loading="isLoading" @click="handleClick">提交</lew-button>
+</template>
+<script setup>
+const isLoading = ref(false)
+const handleClick = async () => {
+  isLoading.value = true
+  try {
+    await fetch('/api/submit')
+  } finally {
+    isLoading.value = false
+  }
+}
+</script>
+```
+
+### 问题7：按钮宽度不符合预期
+
+**现象**：设置了 `width` 属性，但按钮宽度没有变化。
+
+**原因**：
+- `width` 值格式不正确
+- CSS 样式被覆盖
+- 单图标按钮的宽度是固定的
+
+**修复方案**：
+1. 确认 `width` 值格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的 CSS width 值 -->
+  <lew-button width="100px">按钮</lew-button>
+  <lew-button width="100%">按钮</lew-button>
+  <lew-button width="200">按钮</lew-button>
+</template>
+```
+2. 注意单图标按钮的宽度是固定的（等于高度）：
+```vue
+<template>
+  <!-- 单图标按钮的宽度由 size 决定，width 不生效 -->
+  <lew-button single-icon width="200px">
+    <CommonIcon type="add" />
+  </lew-button>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化代码结构：调整导入顺序，移除手动导入的 Vue API（computed, ref, useSlots），优化类型定义 | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合 `request` 函数可以实现优雅的异步操作体验，无需手动管理加载状态
+- ✅ 使用 `singleIcon` 可以创建简洁的图标按钮，适合工具栏、操作栏等场景
+- ✅ 通过 `type` 和 `color` 的组合可以快速创建不同风格的按钮，适配不同的设计需求
+- ✅ 使用 `round` 可以创建圆角按钮，适合现代风格的界面设计
+- ✅ 通过 CSS 变量可以灵活定制按钮样式，无需修改组件代码
+- ✅ 结合 `disabled` 和 `loading` 可以实现完善的交互反馈，提升用户体验

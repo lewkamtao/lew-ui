@@ -1,0 +1,383 @@
+---
+alwaysApply: false
+---
+
+# LewPopover 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewPopover
+- **核心用途**：用于显示弹出层内容，基于 `tippy.js` 实现，支持多种触发方式和位置，适用于提示信息、下拉菜单、工具提示等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持多种触发方式：click（点击）、hover（悬停）、mouseenter（鼠标进入）
+  - 支持 12 个位置选项（top、bottom、left、right 及其变体）
+  - 支持自定义偏移量（offset）
+  - 支持延迟显示/隐藏（delay）
+  - 支持加载状态（loading）
+  - 支持禁用状态（disabled）
+  - 支持点击外部关闭（clickOutsideToHide）
+  - 支持点击内容区域关闭（hideOnClick）
+  - 支持交互式内容（interactive）
+  - 使用防抖监听器优化性能
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础展示**：通过 `trigger` 属性控制触发方式，通过 `placement` 控制弹出位置
+- **触发元素**：通过 `trigger` 插槽定义触发元素（如按钮、图标等）
+- **弹出内容**：通过 `popover-body` 插槽定义弹出内容
+- **动画效果**：弹出层有平滑的动画过渡（`shift-away-subtle`）
+- **交互支持**：弹出层内容支持交互（如按钮、表单等），不会在鼠标移入时关闭
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| trigger | `LewTrigger` | `'click'` | `'hover'` / `'click'` | 触发方式，`hover` 会自动转换为 `mouseenter` |
+| triggerWidth | `Property.Width` | `''` | 任意 CSS width 值 | 触发元素的宽度 |
+| placement | `LewPlacement` | `'top'` | 12 个位置选项 | 弹出层出现的位置 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用弹出层 |
+| loading | `boolean` | `false` | `true` / `false` | 是否显示加载状态 |
+| hideOnClick | `boolean` | `true` | `true` / `false` | 点击内容区域是否关闭（仅在非 hover 模式下生效） |
+| clickOutsideToHide | `boolean` | `true` | `true` / `false` | 点击外部区域是否关闭 |
+| offset | `LewOffset` | `[0, 8]` | `[number, number]` | 弹出层相对于触发元素的偏移量 `[x, y]` |
+| delay | `[number, number]` | `[120, 120]` | `[number, number]` | 延迟显示/隐藏时间（毫秒），仅在 hover 模式下生效 |
+| popoverBodyClassName | `string` | `'lew-popover-body'` | 任意字符串 | 弹出层内容区域的额外类名 |
+
+### 3.2 方法
+
+| 方法名 | 说明 | 使用示例 |
+|--------|------|----------|
+| show | 手动显示弹出层 | `lewPopoverRef.value.show()` |
+| hide | 手动隐藏弹出层 | `lewPopoverRef.value.hide()` |
+| refresh | 刷新弹出层位置和内容 | `lewPopoverRef.value.refresh()` |
+
+**注意**：需要通过 `ref` 获取组件实例才能调用方法。
+
+### 3.3 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| show | 弹出层显示时触发 | - | 当弹出层显示时触发 |
+| hide | 弹出层隐藏时触发 | - | 当弹出层隐藏时触发 |
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 插槽参数 | 使用示例 |
+|--------|------|----------|----------|
+| trigger | 触发元素，用于包裹需要触发弹出层的元素 | - | `<template #trigger><lew-button>点击</lew-button></template>` |
+| popover-body | 弹出层内容 | `{ show: () => void, hide: () => void }` | `<template #popover-body="{ show, hide }">内容</template>` |
+
+**插槽参数说明**：
+- `show`：手动显示弹出层的方法
+- `hide`：手动隐藏弹出层的方法
+
+### 3.5 类型说明
+
+#### LewTrigger
+
+| 触发方式 | 说明 | 适用场景 |
+|----------|------|----------|
+| `'click'` | 点击触发（默认） | 下拉菜单、操作面板 |
+| `'hover'` | 鼠标悬停触发（自动转换为 `mouseenter`） | 工具提示、信息提示 |
+
+#### LewPlacement
+
+支持 12 个位置选项：
+- `'top'` / `'top-start'` / `'top-end'`
+- `'bottom'` / `'bottom-start'` / `'bottom-end'`
+- `'left'` / `'left-start'` / `'left-end'`
+- `'right'` / `'right-start'` / `'right-end'`
+
+#### LewOffset
+
+偏移量类型：`[number, number]`，第一个值表示水平偏移，第二个值表示垂直偏移（单位：像素）
+
+## 4. 注意事项
+
+- ⚠️ **tippy.js 依赖**：组件基于 `tippy.js` 实现，确保项目中已安装该依赖
+- ⚠️ **trigger 转换**：`trigger="hover"` 会自动转换为 `mouseenter`，这是 tippy.js 的要求
+- ⚠️ **hideOnClick 限制**：`hideOnClick` 仅在非 hover 模式下生效，hover 模式下点击内容区域不会关闭
+- ⚠️ **delay 限制**：`delay` 仅在 hover 模式下生效，click 模式下无效
+- ⚠️ **loading 状态**：当 `loading={true}` 时，内容区域会显示加载指示器，并隐藏溢出内容
+- ⚠️ **防抖优化**：组件使用 `watchDebounced` 监听 props 变化，避免频繁更新 tippy 实例
+- ⚠️ **生命周期管理**：组件在 `onActivated`、`onMounted` 时初始化，在 `onDeactivated`、`onUnmounted` 时销毁
+- ⚠️ **样式作用域**：组件样式使用 `scoped`，但 tippy.js 生成的弹出层在 `document.body` 中，需要注意样式作用域问题
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：弹出层无法显示
+
+**现象**：设置了 `trigger` 插槽，但点击或悬停时弹出层没有显示。
+
+**原因**：
+- `trigger` 插槽未设置
+- `disabled` 设置为 `true`
+- tippy.js 初始化失败
+- DOM 元素未正确挂载
+
+**修复方案**：
+1. 确认 `trigger` 插槽已正确设置：
+```vue
+<template>
+  <lew-popover>
+    <!-- ✅ 正确：提供了 trigger 插槽 -->
+    <template #trigger>
+      <lew-button>点击</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+```
+2. 确认 `disabled` 未设置为 `true`：
+```vue
+<template>
+  <lew-popover :disabled="false">
+    <template #trigger>
+      <lew-button>点击</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+```
+3. 检查浏览器控制台是否有 tippy.js 相关错误
+
+### 问题2：弹出层位置不正确
+
+**现象**：设置了 `placement`，但弹出层出现的位置与预期不符。
+
+**原因**：
+- `placement` 值不正确
+- 触发元素位置导致弹出层被遮挡
+- 空间不足导致自动调整位置
+
+**修复方案**：
+1. 确认 `placement` 值正确（12 个位置选项）：
+```vue
+<template>
+  <!-- ✅ 正确的位置值 -->
+  <lew-popover placement="top">
+    <template #trigger>
+      <lew-button>点击</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+```
+2. 调整 `offset` 值微调位置：
+```vue
+<template>
+  <lew-popover :offset="[0, 12]" placement="top">
+    <template #trigger>
+      <lew-button>点击</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+```
+3. 如果空间不足，tippy.js 会自动调整位置，这是预期行为
+
+### 问题3：hover 模式下延迟不生效
+
+**现象**：设置了 `delay`，但在 hover 模式下延迟没有生效。
+
+**原因**：
+- `delay` 仅在 hover 模式下生效
+- `trigger` 设置为 `click` 时 `delay` 无效
+
+**修复方案**：
+1. 确认 `trigger` 设置为 `hover`：
+```vue
+<template>
+  <!-- ✅ 正确：hover 模式下 delay 生效 -->
+  <lew-popover trigger="hover" :delay="[200, 100]">
+    <template #trigger>
+      <lew-button>悬停</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+```
+2. `delay` 格式为 `[显示延迟, 隐藏延迟]`（单位：毫秒）
+
+### 问题4：点击内容区域无法关闭
+
+**现象**：设置了 `hideOnClick={true}`，但点击内容区域无法关闭弹出层。
+
+**原因**：
+- `trigger` 设置为 `hover` 时，`hideOnClick` 不生效
+- 内容区域有交互元素阻止了点击事件
+
+**修复方案**：
+1. 确认 `trigger` 不是 `hover`：
+```vue
+<template>
+  <!-- ✅ 正确：click 模式下 hideOnClick 生效 -->
+  <lew-popover trigger="click" :hide-on-click="true">
+    <template #trigger>
+      <lew-button>点击</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+```
+2. 如果需要在 hover 模式下关闭，使用 `hide` 方法：
+```vue
+<template>
+  <lew-popover trigger="hover">
+    <template #trigger>
+      <lew-button>悬停</lew-button>
+    </template>
+    <template #popover-body="{ hide }">
+      <lew-button @click="hide">关闭</lew-button>
+    </template>
+  </lew-popover>
+</template>
+```
+
+### 问题5：弹出层样式被覆盖
+
+**现象**：自定义的弹出层样式没有生效或被其他样式覆盖。
+
+**原因**：
+- tippy.js 生成的弹出层在 `document.body` 中，不在组件作用域内
+- 样式作用域问题
+- CSS 优先级问题
+
+**修复方案**：
+1. 使用全局样式或深度选择器：
+```vue
+<style>
+/* ✅ 全局样式 */
+.lew-popover-body {
+  background-color: #fff;
+  padding: 20px;
+}
+
+/* ✅ 或使用深度选择器 */
+:deep(.lew-popover-body) {
+  background-color: #fff;
+  padding: 20px;
+}
+</style>
+```
+2. 使用 `popoverBodyClassName` 添加自定义类名：
+```vue
+<template>
+  <lew-popover popover-body-class-name="custom-popover">
+    <template #trigger>
+      <lew-button>点击</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+<style>
+.custom-popover {
+  background-color: #fff;
+  padding: 20px;
+}
+</style>
+```
+
+### 问题6：加载状态显示异常
+
+**现象**：设置了 `loading={true}`，但加载指示器没有显示或显示异常。
+
+**原因**：
+- `LewLoading` 指令未正确注册
+- 加载指示器被其他样式覆盖
+
+**修复方案**：
+1. 确认 `LewLoading` 已正确导入和注册（组件内部会自动处理）：
+```vue
+<script setup>
+// 组件内部会自动注册 LewLoading，无需手动处理
+</script>
+```
+2. 检查加载指示器的样式是否被覆盖
+3. 确认 `loading` prop 值正确：
+```vue
+<template>
+  <lew-popover :loading="isLoading">
+    <template #trigger>
+      <lew-button>点击</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+<script setup>
+const isLoading = ref(false)
+</script>
+```
+
+### 问题7：防抖导致更新延迟
+
+**现象**：修改 props（如 `placement`、`trigger`）后，弹出层没有立即更新。
+
+**原因**：
+- 组件使用 `watchDebounced` 监听 props 变化，有 250ms 的防抖延迟
+- 这是性能优化措施，避免频繁更新
+
+**修复方案**：
+1. 这是预期行为，防抖可以避免频繁更新 tippy 实例，提升性能
+2. 如果需要立即更新，可以调用 `refresh()` 方法：
+```vue
+<template>
+  <lew-popover ref="popoverRef" :placement="placement">
+    <template #trigger>
+      <lew-button>点击</lew-button>
+    </template>
+    <template #popover-body>
+      弹出内容
+    </template>
+  </lew-popover>
+</template>
+<script setup>
+const popoverRef = ref()
+const placement = ref('top')
+
+function changePlacement() {
+  placement.value = 'bottom'
+  // 立即刷新
+  nextTick(() => {
+    popoverRef.value?.refresh()
+  })
+}
+</script>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| - | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合不同的 `trigger` 值可以快速适配不同的交互场景，提升用户体验
+- ✅ 使用 `popover-body` 插槽的参数（`show`、`hide`）可以实现复杂的交互逻辑
+- ✅ 通过 `offset` 可以微调弹出层位置，实现精确的定位
+- ✅ 使用 `delay` 可以避免 hover 模式下频繁显示/隐藏，提升用户体验
+- ✅ 结合 `loading` 状态可以实现异步内容加载，提升交互体验
+- ✅ 使用 `disabled` 可以动态控制弹出层的可用性，适合权限控制等场景

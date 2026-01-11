@@ -1,0 +1,282 @@
+---
+alwaysApply: false
+---
+
+# LewBadge 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewBadge
+- **核心用途**：用于显示徽标、标记、通知数量等，支持数字徽标、点状徽标、文本徽标三种模式，适用于消息通知、状态标记、数量提示等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持三种显示模式：数字徽标（`value`）、点状徽标（无 `value`）、文本徽标（`text`）
+  - 支持自定义颜色（通过 `color` 属性，支持所有主题色和状态色）
+  - 支持最大值限制（`max`），超出时显示 `{max}+`
+  - 支持自定义偏移量（`offset`），精确控制徽标位置
+  - 支持处理中状态（`processing`），显示动画效果
+  - 支持文本模式，徽标显示在文本左侧
+  - 使用 CSS 变量传递颜色，支持主题定制
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **数字徽标**：通过 `value` 属性设置数字，显示在右上角（或通过 `offset` 自定义位置）
+- **点状徽标**：不设置 `value` 时显示为小圆点，适用于简单的状态提示
+- **文本徽标**：通过 `text` 属性设置文本，徽标显示在文本左侧
+- **颜色定制**：通过 `color` 属性设置徽标颜色，支持所有主题色和状态色
+- **位置调整**：通过 `offset` 属性可以微调徽标位置，格式为 `[x, y]`（像素）
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| value | `string` | - | 任意字符串 | 徽标显示的值，如果设置为数字字符串，超出 `max` 时会显示 `{max}+` |
+| text | `string` | `''` | 任意字符串 | 文本内容，设置后徽标会显示在文本左侧，且 `offset` 不生效 |
+| color | `LewColor` | `'red'` | 所有主题色和状态色 | 徽标背景颜色 |
+| offset | `LewOffset` | `[0, 0]` | `[number, number]` | 徽标偏移量 `[x, y]`（像素），仅在非文本模式下生效 |
+| max | `number` | `99` | 正整数 | 最大值限制，当 `value` 为数字且超过此值时显示 `{max}+` |
+| processing | `boolean` | `false` | `true` / `false` | 是否显示处理中动画（仅点状徽标有效） |
+
+### 3.2 方法
+
+该组件暂不支持此功能。
+
+### 3.3 事件
+
+该组件暂不支持此功能。
+
+### 3.4 插槽
+
+| 插槽名 | 说明 | 使用示例 |
+|--------|------|----------|
+| default | 自定义内容，当未设置 `text` 时显示 | `<template><lew-button>按钮</lew-button></template>` |
+
+**插槽优先级**：
+- 当设置了 `text` prop 时，插槽内容不会显示
+- 当未设置 `text` 时，显示插槽内容
+
+## 4. 注意事项
+
+- ⚠️ **显示模式**：`value` 和 `text` 可以同时设置，但 `text` 模式下 `offset` 不生效，徽标会固定在文本左侧
+- ⚠️ **最大值限制**：`max` 仅对数字类型的 `value` 生效，如果 `value` 不是数字字符串，不会进行最大值判断
+- ⚠️ **偏移量限制**：`offset` 仅在非文本模式下生效，文本模式下徽标位置固定
+- ⚠️ **处理中动画**：`processing` 仅在点状徽标（无 `value`）时有效，数字徽标不支持此功能
+- ⚠️ **颜色支持**：`color` 支持所有 `LewColor` 类型，包括主题色（blue、green 等）和状态色（error、success 等）
+- ⚠️ **样式定制**：组件使用 CSS 变量（`--badge-bg-color`）传递颜色，可以通过覆盖 CSS 变量实现更灵活的样式定制
+- ⚠️ **性能考虑**：组件使用计算属性优化样式计算，避免不必要的重新渲染
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：最大值限制不生效
+
+**现象**：设置了 `value="100"` 和 `max={99}`，但显示的是 `100` 而不是 `99+`。
+
+**原因**：
+- `value` 不是数字字符串
+- `max` 值设置不当
+- 数值比较逻辑问题
+
+**修复方案**：
+1. 确认 `value` 是数字字符串：
+```vue
+<template>
+  <!-- ✅ 正确：数字字符串 -->
+  <lew-badge value="100" :max="99">按钮</lew-badge>
+  
+  <!-- ❌ 错误：非数字字符串不会触发最大值限制 -->
+  <lew-badge value="abc" :max="99">按钮</lew-badge>
+</template>
+```
+2. 确认 `max` 值正确：
+```vue
+<template>
+  <lew-badge value="100" :max="99">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+</template>
+```
+
+### 问题2：偏移量不生效
+
+**现象**：设置了 `offset={[10, 10]}`，但徽标位置没有变化。
+
+**原因**：
+- 设置了 `text` prop，文本模式下 `offset` 不生效
+- `offset` 格式不正确
+
+**修复方案**：
+1. 确认未设置 `text` prop（文本模式下 `offset` 不生效）：
+```vue
+<template>
+  <!-- ✅ 正确：非文本模式，offset 生效 -->
+  <lew-badge value="5" :offset="[10, 10]">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+  
+  <!-- ❌ 错误：文本模式下 offset 不生效 -->
+  <lew-badge value="5" text="消息" :offset="[10, 10]" />
+</template>
+```
+2. 确认 `offset` 格式正确（数组格式，两个数字）：
+```vue
+<template>
+  <!-- ✅ 正确：数组格式 -->
+  <lew-badge value="5" :offset="[10, 10]">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+</template>
+```
+
+### 问题3：处理中动画不显示
+
+**现象**：设置了 `processing={true}`，但没有看到动画效果。
+
+**原因**：
+- `processing` 仅在点状徽标（无 `value`）时有效
+- 设置了 `value` 时，`processing` 不生效
+
+**修复方案**：
+1. 确认未设置 `value` prop（点状徽标才支持 `processing`）：
+```vue
+<template>
+  <!-- ✅ 正确：点状徽标，processing 生效 -->
+  <lew-badge :processing="true">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+  
+  <!-- ❌ 错误：数字徽标不支持 processing -->
+  <lew-badge value="5" :processing="true">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+</template>
+```
+
+### 问题4：颜色设置无效
+
+**现象**：设置了 `color` 属性，但徽标颜色没有变化。
+
+**原因**：
+- `color` 值不在有效列表中
+- CSS 变量未正确定义
+- 样式被其他样式覆盖
+
+**修复方案**：
+1. 确认 `color` 值正确（支持所有主题色和状态色）：
+```vue
+<template>
+  <!-- ✅ 正确：使用有效的颜色值 -->
+  <lew-badge value="5" color="blue">按钮</lew-badge>
+  <lew-badge value="5" color="success">按钮</lew-badge>
+  <lew-badge value="5" color="error">按钮</lew-badge>
+</template>
+```
+2. 检查 CSS 变量是否正确定义：
+```css
+/* 确保这些变量已定义 */
+--lew-color-blue
+--lew-color-success
+--lew-color-error
+```
+
+### 问题5：文本和插槽同时显示
+
+**现象**：同时设置了 `text` prop 和插槽内容，两者都显示了。
+
+**原因**：
+- `text` 和插槽的显示逻辑问题
+- 模板条件判断不正确
+
+**修复方案**：
+1. 确认使用方式（`text` 和插槽是互斥的）：
+```vue
+<template>
+  <!-- ✅ 正确：只使用 text -->
+  <lew-badge value="5" text="消息" />
+  
+  <!-- ✅ 正确：只使用插槽 -->
+  <lew-badge value="5">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+  
+  <!-- ❌ 错误：同时设置时，text 会显示，插槽不会显示 -->
+  <lew-badge value="5" text="消息">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+</template>
+```
+
+### 问题6：徽标位置不符合预期
+
+**现象**：徽标显示的位置与预期不符，或被其他元素遮挡。
+
+**原因**：
+- 默认定位可能不适合当前布局
+- z-index 设置不当
+- 父元素定位问题
+
+**修复方案**：
+1. 使用 `offset` 调整位置：
+```vue
+<template>
+  <lew-badge value="5" :offset="[5, -5]">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+</template>
+```
+2. 检查父元素的定位设置，确保是 `position: relative`：
+```vue
+<template>
+  <div style="position: relative; display: inline-block">
+    <lew-badge value="5">
+      <lew-button>按钮</lew-button>
+    </lew-badge>
+  </div>
+</template>
+```
+
+### 问题7：最大值显示格式异常
+
+**现象**：设置了 `max={99}`，但显示的是 `99+` 而不是预期的格式。
+
+**原因**：
+- 这是预期行为，当 `value` 超过 `max` 时显示 `{max}+`
+- 如果需要自定义格式，需要修改组件逻辑
+
+**修复方案**：
+1. 这是预期行为，表示数值超过了最大值：
+```vue
+<template>
+  <!-- value="100" 超过 max=99，显示 "99+" -->
+  <lew-badge value="100" :max="99">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+</template>
+```
+2. 如果需要显示实际值，可以调整 `max` 值：
+```vue
+<template>
+  <lew-badge value="100" :max="999">
+    <lew-button>按钮</lew-button>
+  </lew-badge>
+</template>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| - | 初始版本 | - |
+
+---
+
+**使用技巧**：
+- ✅ 结合不同的 `color` 值可以快速适配不同的场景，如红色表示错误、绿色表示成功等
+- ✅ 使用 `offset` 可以精确调整徽标位置，避免遮挡重要内容
+- ✅ 通过 `max` 可以控制数字徽标的显示范围，避免显示过大的数字
+- ✅ 使用 `processing` 可以实现加载状态的视觉反馈，提升用户体验
+- ✅ 文本模式适合需要同时显示徽标和文本的场景，如消息通知等
+- ✅ 通过 CSS 变量可以灵活定制徽标样式，无需修改组件代码

@@ -237,9 +237,9 @@ const directiveMap: Record<string, string> = {
  * 方法名 -> 方法目录名
  */
 const methodMap: Record<string, string> = {
-  'dialog': 'dialog',
-  'message': 'message',
-  'notification': 'notification',
+  dialog: 'dialog',
+  message: 'message',
+  notification: 'notification',
 }
 
 /**
@@ -291,6 +291,6 @@ export function getMdcPath(componentName: string): string | null {
   }
 
   // 4. 都没找到，尝试所有分类
-    const categories = ['general', 'form', 'data', 'feedback', 'navigation']
+  const categories = ['general', 'form', 'data', 'feedback', 'navigation']
   return `../../lib/components/${categories[0]}/${normalizedName}/${normalizedName}.mdc`
 }

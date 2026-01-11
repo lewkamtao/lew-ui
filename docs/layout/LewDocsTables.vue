@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import allTypes from 'docs/assets/all-types'
+import { useDemoLoaded } from 'docs/composables/useDemoLoaded'
 import docsLocale from 'docs/locals'
 import { LewFlex, LewPopover, LewTag, locale } from 'lew-ui'
 import RequiredIcon from 'lew-ui/components/form/form/src/RequiredIcon.vue'
@@ -13,6 +14,8 @@ const props = defineProps({
     },
   },
 })
+
+const { demoAllLoaded } = useDemoLoaded()
 
 const route = useRoute()
 const router = useRouter()
@@ -291,35 +294,54 @@ function getTitle(title: string) {
 </script>
 
 <template>
-  <LewFlex direction="y" gap="70px" class="docs-wrapper">
+  <Transition name="docs-fade">
     <LewFlex
-      v-for="(item, index) in sortValue"
-      :key="index"
+      v-show="demoAllLoaded"
+      id="docs-wrapper"
       direction="y"
-      x="start"
+      gap="70px"
+      class="docs-wrapper"
     >
-      <lew-title :id="item.title" size="18px" class="demo-docs-title">
-        {{ getTitle(item.title) }}
-        <LewTag
-          v-if="getTag(item.title)"
-          style="margin-left: 5px"
-          type="light"
-          color="orange"
-        >
-          {{ getTag(item.title) }}
-        </LewTag>
-      </lew-title>
-      <lew-table
-        :key="`${item.title}_${docsLocale.t('name')}_${route.path} `"
-        bordered
-        :data-source="item.data"
-        :columns="getColumns(item)"
-      />
+      <LewFlex
+        v-for="(item, index) in sortValue"
+        :key="index"
+        direction="y"
+        x="start"
+      >
+        <lew-title :id="item.title" size="18px" class="demo-docs-title">
+          {{ getTitle(item.title) }}
+          <LewTag
+            v-if="getTag(item.title)"
+            style="margin-left: 5px"
+            type="light"
+            color="orange"
+          >
+            {{ getTag(item.title) }}
+          </LewTag>
+        </lew-title>
+        <lew-table
+          :key="`${item.title}_${docsLocale.t('name')}_${route.path} `"
+          bordered
+          :data-source="item.data"
+          :columns="getColumns(item)"
+        />
+      </LewFlex>
     </LewFlex>
-  </LewFlex>
+  </Transition>
 </template>
 
 <style lang="scss" scoped>
+.docs-fade-enter-active {
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+
+.docs-fade-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
 .demo-docs-title {
   text-transform: capitalize;
   letter-spacing: 0.8px;

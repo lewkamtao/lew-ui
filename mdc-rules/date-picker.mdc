@@ -1,0 +1,236 @@
+---
+alwaysApply: false
+---
+
+# LewDatePicker 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewDatePicker
+- **核心用途**：用于选择日期、时间、月份、季度、年份等，支持多种格式和预设选项，适用于表单输入、日期筛选等场景
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持多种类型：date（日期）、date-time（日期时间）、time（时间）、month（月份）、quarter（季度）、year（年份）
+  - 支持自定义日期格式（valueFormat）
+  - 支持预设选项（presets）
+  - 支持清除功能（clearable）
+  - 支持只读和禁用状态
+  - 支持三种尺寸：mini、small、medium、large
+  - 支持自定义宽度
+  - 自动根据 valueFormat 判断面板类型
+  - 使用 CSS 变量实现主题定制
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **基础日期选择**：点击输入框弹出日期选择面板，选择日期后自动填充到输入框
+- **格式控制**：通过 `valueFormat` 属性控制日期格式，组件会自动判断显示对应的面板类型
+- **预设选项**：通过 `presets` 属性可以快速选择常用日期（如今天、昨天、本周等）
+- **清除功能**：设置 `clearable={true}` 时，输入框右侧显示清除图标，点击可清空日期
+- **键盘输入**：支持直接在输入框中输入日期，组件会自动验证和格式化
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| modelValue | `string \| undefined` | - | 符合 valueFormat 格式的字符串 | 日期值，支持 v-model 双向绑定 |
+| valueFormat | `string` | `'YYYY-MM-DD'` | dayjs 支持的格式字符串 | 日期格式，如 `'YYYY-MM-DD'`、`'YYYY-MM-DD HH:mm:ss'` 等 |
+| size | `LewSize` | `'medium'` | `'mini'` / `'small'` / `'medium'` / `'large'` | 组件尺寸 |
+| width | `Property.Width` | `'100%'` | CSS width 值 | 组件宽度，支持所有 CSS width 值 |
+| placeholder | `string` | - | 任意字符串 | 输入框占位符文本 |
+| clearable | `boolean` | `true` | `true` / `false` | 是否显示清除按钮 |
+| readonly | `boolean` | `false` | `true` / `false` | 是否只读 |
+| disabled | `boolean` | `false` | `true` / `false` | 是否禁用 |
+| presets | `LewDatePickerPresetsOption[]` | `[]` | 预设选项数组 | 预设日期选项，用于快速选择常用日期 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| modelValue | `string \| undefined` | - | 日期值，支持 v-model 双向绑定 |
+
+### 3.3 事件
+
+| 事件名 | 参数 | 说明 |
+|--------|------|------|
+| change | `(value?: string)` | 日期值改变时触发，传递新的日期值（格式化后的字符串） |
+| clear | `()` | 点击清除按钮时触发 |
+
+### 3.4 方法
+
+| 方法名 | 参数 | 返回值 | 说明 |
+|--------|------|--------|------|
+| show | `()` | `void` | 显示日期选择面板 |
+| hide | `()` | `void` | 隐藏日期选择面板 |
+
+### 3.5 插槽
+
+该组件暂不支持插槽。
+
+## 4. 注意事项
+
+- ⚠️ **日期格式**：`valueFormat` 必须符合 dayjs 支持的格式，组件会根据格式自动判断显示哪种面板（date、date-time、time、month、quarter、year）
+- ⚠️ **格式判断规则**：
+  - 包含时间部分（HH、mm、ss）且不包含日期部分 → time 面板
+  - 包含时间和日期部分 → date-time 面板
+  - 包含日期和月份部分 → date 面板
+  - 包含季度部分 → quarter 面板
+  - 只包含月份部分 → month 面板
+  - 只包含年份部分 → year 面板
+- ⚠️ **预设选项**：`presets` 数组中的每个选项需要包含 `label`（显示文本）和 `value`（日期值）属性
+- ⚠️ **键盘输入**：支持直接在输入框中输入日期，组件会自动验证格式，如果格式不正确会恢复为之前的值
+- ⚠️ **键盘快捷键**：
+  - `Enter`：确认输入，失去焦点
+  - `Escape`：取消输入，恢复为之前的值
+- ⚠️ **样式定制**：组件使用 CSS 变量（`--lew-form-bgcolor`、`--lew-color-datepicker-primary-selected-bg` 等）实现样式定制，可以通过覆盖 CSS 变量实现更灵活的样式定制
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：日期格式不正确
+
+**现象**：设置了 `valueFormat`，但日期显示格式不正确。
+
+**原因**：
+- `valueFormat` 格式字符串不正确
+- 输入的日期值不符合格式要求
+
+**修复方案**：
+1. 确认 `valueFormat` 格式正确：
+```vue
+<template>
+  <!-- ✅ 正确：使用 dayjs 支持的格式 -->
+  <lew-date-picker v-model="date" value-format="YYYY-MM-DD" />
+  <lew-date-picker v-model="datetime" value-format="YYYY-MM-DD HH:mm:ss" />
+  <lew-date-picker v-model="time" value-format="HH:mm:ss" />
+</template>
+```
+2. 确认输入的日期值符合格式：
+```vue
+<script setup>
+// ✅ 正确：日期值符合格式
+const date = ref('2024-01-15')
+
+// ❌ 错误：日期值不符合格式
+const date = ref('2024/01/15')  // 格式不匹配
+</script>
+```
+
+### 问题2：面板类型不正确
+
+**现象**：设置了 `valueFormat`，但弹出的面板类型不对。
+
+**原因**：
+- `valueFormat` 格式字符串无法正确判断面板类型
+- 格式字符串包含多种类型标识
+
+**修复方案**：
+1. 确认 `valueFormat` 格式明确：
+```vue
+<template>
+  <!-- ✅ 正确：格式明确，可以正确判断面板类型 -->
+  <lew-date-picker v-model="date" value-format="YYYY-MM-DD" />  <!-- date 面板 -->
+  <lew-date-picker v-model="datetime" value-format="YYYY-MM-DD HH:mm:ss" />  <!-- date-time 面板 -->
+  <lew-date-picker v-model="time" value-format="HH:mm:ss" />  <!-- time 面板 -->
+  <lew-date-picker v-model="month" value-format="YYYY-MM" />  <!-- month 面板 -->
+  <lew-date-picker v-model="year" value-format="YYYY" />  <!-- year 面板 -->
+</template>
+```
+
+### 问题3：预设选项不显示
+
+**现象**：设置了 `presets` 属性，但预设选项没有显示。
+
+**原因**：
+- `presets` 数组为空
+- `presets` 数组格式不正确
+
+**修复方案**：
+1. 确认 `presets` 数组格式正确：
+```vue
+<template>
+  <lew-date-picker v-model="date" :presets="presets" />
+</template>
+<script setup>
+import dayjs from 'dayjs'
+
+const presets = [
+  { label: '今天', value: dayjs().format('YYYY-MM-DD') },
+  { label: '昨天', value: dayjs().subtract(1, 'day').format('YYYY-MM-DD') },
+  { label: '本周', value: dayjs().startOf('week').format('YYYY-MM-DD') },
+]
+</script>
+```
+
+### 问题4：清除按钮不显示
+
+**现象**：设置了 `clearable={true}`，但清除按钮没有显示。
+
+**原因**：
+- `clearable` 设置为 `false`
+- `readonly` 设置为 `true`（只读状态下不显示清除按钮）
+- `modelValue` 为空（没有值时不显示清除按钮）
+
+**修复方案**：
+1. 确认 `clearable` 和 `readonly` 设置正确：
+```vue
+<template>
+  <!-- ✅ 正确：clearable 为 true，readonly 为 false -->
+  <lew-date-picker v-model="date" clearable />
+  
+  <!-- ❌ 错误：readonly 为 true 时不显示清除按钮 -->
+  <lew-date-picker v-model="date" clearable readonly />
+</template>
+```
+
+### 问题5：键盘输入无效
+
+**现象**：在输入框中输入日期，但值没有更新。
+
+**原因**：
+- 输入的日期格式不正确
+- 组件无法解析输入的日期
+
+**修复方案**：
+1. 确认输入的日期格式符合 `valueFormat`：
+```vue
+<template>
+  <lew-date-picker v-model="date" value-format="YYYY-MM-DD" />
+</template>
+<script setup>
+// ✅ 正确：输入格式符合 valueFormat
+// 用户输入：2024-01-15
+
+// ❌ 错误：输入格式不符合 valueFormat
+// 用户输入：2024/01/15（格式不匹配）
+</script>
+```
+
+### 问题6：样式不协调
+
+**现象**：日期选择器的样式与其他组件不一致。
+
+**原因**：
+- CSS 变量未正确定义
+- 样式被其他样式覆盖
+
+**修复方案**：
+1. 检查 CSS 变量是否正确定义：
+```css
+/* 确保这些变量已定义 */
+--lew-form-bgcolor
+--lew-form-bgcolor-hover
+--lew-form-bgcolor-focus
+--lew-color-datepicker-primary-selected-bg
+--lew-color-datepicker-primary-selected-text
+```
+2. 使用浏览器开发者工具检查变量值
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化样式：移除硬编码颜色，统一使用 CSS 变量；优化代码结构：调整导入顺序，移除手动导入的 Vue API | 2025-01-09 |
+| 1.0.0 | 初始版本 | - |

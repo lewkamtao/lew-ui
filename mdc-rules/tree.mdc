@@ -1,0 +1,134 @@
+---
+alwaysApply: false
+---
+
+# LewTree 组件使用文档
+
+## 1. 组件基础信息
+
+- **组件名称**：LewTree
+- **核心用途**：用于展示和操作树形结构数据
+- **适用环境**：Vue 3.4+、TypeScript、支持 CSS 变量的现代浏览器
+- **基础特性**：
+  - 支持单选和多选
+  - 支持复选框勾选
+  - 支持搜索过滤
+  - 支持异步加载子节点
+  - 支持展开/收起所有节点
+  - 支持连接线显示
+  - 支持自定义字段映射
+
+## 2. 快速开始
+
+### 预期效果说明
+
+- **树形展示**：以层级结构展示数据
+- **节点展开**：点击箭头展开/收起子节点
+- **节点选择**：点击节点选中，支持单选和多选
+- **搜索过滤**：输入关键词过滤节点
+
+## 3. 详细 API 说明
+
+### 3.1 Props
+
+| 属性名 | 类型 | 默认值 | 可选值 | 说明 |
+|--------|------|--------|--------|------|
+| dataSource | `LewTreeDataSource[]` | - | - | 树形数据源 |
+| height | `string` | `'100%'` | CSS 高度值 | 树组件高度 |
+| multiple | `boolean` | `false` | `true` / `false` | 是否多选 |
+| checkable | `boolean` | `false` | `true` / `false` | 是否显示复选框 |
+| searchable | `boolean` | `false` | `true` / `false` | 是否可搜索 |
+| expandAll | `boolean` | `false` | `true` / `false` | 是否默认展开全部 |
+| free | `boolean` | `false` | `true` / `false` | 是否自由选择（父子不联动） |
+| showLine | `boolean` | `false` | `true` / `false` | 是否显示连接线 |
+| keyField | `string` | `'key'` | - | 节点唯一标识字段 |
+| labelField | `string` | `'label'` | - | 节点显示文本字段 |
+| disabledField | `string` | `'disabled'` | - | 节点禁用状态字段 |
+| onlyLeafSelectable | `boolean` | `false` | `true` / `false` | 是否只允许选择叶子节点 |
+| initMethod | `Function` | - | - | 初始化数据方法 |
+| loadMethod | `Function` | - | - | 异步加载子节点方法 |
+
+### 3.2 Model
+
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| modelValue | `string \| string[]` | 选中的节点 key，多选时为数组 |
+| expandedKeys | `string \| string[]` | 展开的节点 key 数组 |
+
+### 3.3 方法
+
+该组件暂不支持此功能。
+
+### 3.4 事件
+
+| 事件名 | 触发条件 | 回调参数 | 说明 |
+|--------|----------|----------|------|
+| change | 选中节点变化时 | `data: any` | 选中变化事件 |
+| expand | 展开/收起节点时 | `data: any` | 展开变化事件 |
+| loadStart | 开始异步加载时 | - | 加载开始事件 |
+| loadEnd | 异步加载完成时 | `text: string` | 加载完成事件 |
+
+### 3.5 插槽
+
+该组件暂不支持此功能。
+
+## 4. 注意事项
+
+- ⚠️ **dataSource 格式**：每个节点需要 `key`、`label` 字段（或通过 xxxField 自定义）
+- ⚠️ **子节点**：通过 `children` 数组定义子节点
+- ⚠️ **checkable 与 multiple**：`checkable` 显示复选框，`multiple` 允许多选
+- ⚠️ **free 模式**：启用后父子节点选择不联动
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：节点显示不正确
+
+**现象**：节点文本显示为 undefined。
+
+**原因**：
+- 数据字段名与默认配置不匹配
+
+**修复方案**：
+```vue
+<lew-tree
+  :data-source="treeData"
+  key-field="id"
+  label-field="name"
+/>
+```
+
+### 问题2：父子节点选择联动
+
+**现象**：选择父节点时自动选中所有子节点。
+
+**原因**：
+- 这是默认行为，父子节点选择联动
+
+**修复方案**：
+如需取消联动，设置 `free` 为 `true`：
+```vue
+<lew-tree :data-source="treeData" free />
+```
+
+### 问题3：异步加载子节点
+
+**修复方案**：
+```vue
+<script setup>
+const loadChildren = async (node) => {
+  const children = await api.getChildren(node.key)
+  node.children = children
+}
+</script>
+
+<lew-tree
+  :data-source="treeData"
+  :load-method="loadChildren"
+/>
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本 | 2025-01-09 |

@@ -34,7 +34,7 @@ const drawerBodyRef = ref<HTMLElement | null>(null)
 const drawerId = `lew-drawer-${getUniqueId()}`
 
 // Slots 检测
-const slots = useSlots()
+const slots: ReturnType<typeof useSlots> = useSlots()
 
 // 方法：检查当前 drawer 是否在最顶层（每次调用时重新检查 DOM 状态）
 function checkIsTopDrawer(): boolean {

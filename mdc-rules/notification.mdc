@@ -1,0 +1,184 @@
+---
+alwaysApply: false
+---
+
+# LewNotification 方法使用文档
+
+## 1. 方法基础信息
+
+- **方法名称**：LewNotification
+- **核心用途**：命令式调用全局通知提示，支持标题和内容
+- **适用环境**：Vue 3.4+、TypeScript
+- **基础特性**：
+  - 支持 5 种类型（normal、success、warning、error、info）
+  - 支持自定义标题和内容
+  - 支持进度条显示
+  - 支持自定义宽度
+  - 支持手动关闭
+
+## 2. 快速开始
+
+### 基本用法
+
+```typescript
+import { LewNotification } from 'lew-ui'
+
+// 简单调用
+LewNotification.success({
+  title: '成功',
+  content: '数据保存成功！'
+})
+
+// 带进度条
+LewNotification.info({
+  title: '下载中',
+  content: '正在下载文件...',
+  duration: 5000,
+  showProgress: true
+})
+
+// 手动关闭
+const { close } = LewNotification.warning({
+  title: '警告',
+  content: '操作可能有风险',
+  duration: 0 // 不自动关闭
+})
+
+// 稍后关闭
+close()
+```
+
+## 3. 详细 API 说明
+
+### 3.1 方法类型
+
+| 方法 | 说明 |
+|------|------|
+| `LewNotification.normal(options)` | 普通通知 |
+| `LewNotification.success(options)` | 成功通知 |
+| `LewNotification.warning(options)` | 警告通知 |
+| `LewNotification.error(options)` | 错误通知 |
+| `LewNotification.info(options)` | 信息通知 |
+
+### 3.2 Options 参数
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| title | `string` | - | 通知标题（必需） |
+| content | `string` | - | 通知内容 |
+| duration | `number` | `3000` | 显示时长（ms），0 表示不自动关闭 |
+| showProgress | `boolean` | `false` | 是否显示进度条 |
+| width | `number` | `320` | 通知框宽度（像素） |
+
+### 3.3 返回值
+
+| 属性 | 类型 | 说明 |
+|------|------|------|
+| close | `() => void` | 手动关闭通知的方法 |
+
+### 3.4 使用示例
+
+```typescript
+import { LewNotification } from 'lew-ui'
+
+// 基础通知
+LewNotification.success({
+  title: '操作成功',
+  content: '您的数据已保存'
+})
+
+// 带进度条的通知
+LewNotification.info({
+  title: '文件上传',
+  content: '正在上传 photo.jpg...',
+  duration: 10000,
+  showProgress: true
+})
+
+// 自定义宽度
+LewNotification.warning({
+  title: '系统警告',
+  content: '您的账户将在 30 天后过期，请及时续费以避免服务中断。',
+  width: 400
+})
+
+// 手动控制关闭
+const notification = LewNotification.error({
+  title: '连接断开',
+  content: '正在尝试重新连接...',
+  duration: 0
+})
+
+// 重连成功后关闭
+await reconnect()
+notification.close()
+```
+
+## 4. 注意事项
+
+- ⚠️ **位置**：通知默认显示在屏幕右上角
+- ⚠️ **堆叠**：多条通知会从上到下依次堆叠
+- ⚠️ **进度条**：`showProgress` 会显示一个随时间减少的进度条
+- ⚠️ **duration: 0**：设置为 0 时需手动调用 `close()` 关闭
+
+## 5. 常见问题与修复方案（FAQ）
+
+### 问题1：通知太窄，内容显示不全
+
+**现象**：内容较长时被截断。
+
+**原因**：
+- 默认宽度 320px
+
+**修复方案**：
+```typescript
+LewNotification.info({
+  title: '标题',
+  content: '很长的内容...',
+  width: 450
+})
+```
+
+### 问题2：想要显示剩余时间
+
+**现象**：需要让用户知道通知还有多久消失。
+
+**修复方案**：
+```typescript
+LewNotification.info({
+  title: '提示',
+  content: '此消息将在 5 秒后消失',
+  duration: 5000,
+  showProgress: true // 显示进度条
+})
+```
+
+### 问题3：手动关闭不生效
+
+**现象**：调用 `close()` 后通知没有关闭。
+
+**原因**：
+- 可能通知已经自动关闭
+- `close` 引用不正确
+
+**修复方案**：
+```typescript
+// 保存返回值的引用
+const { close } = LewNotification.info({
+  title: '标题',
+  content: '内容',
+  duration: 0
+})
+
+// 在需要时调用
+setTimeout(() => {
+  close()
+}, 5000)
+```
+
+## 6. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.1.0 | 优化动画效果（使用 cubic-bezier、GPU 加速）、修复内存泄漏（定时器清理）、修复布局跳动问题、优化类型定义、新增 destroyNotificationContainer 清理方法 | 2025-01-09 |
+| 1.0.0 | 初始版本 | 2025-01-09 |
