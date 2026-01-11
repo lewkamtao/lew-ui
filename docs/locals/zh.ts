@@ -2054,6 +2054,14 @@ export default {
       demo4: {
         title: '是否允许esc关闭',
       },
+      demo5: {
+        title: '嵌套对话框',
+      },
+      demo6: {
+        title: '对话框和抽屉嵌套',
+        description:
+          '复杂场景下的多层嵌套，支持对话框中打开抽屉、抽屉中打开对话框，最多支持4层嵌套。',
+      },
       model: {
         visible: '是否显示',
       },

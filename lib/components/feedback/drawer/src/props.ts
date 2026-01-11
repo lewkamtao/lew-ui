@@ -92,9 +92,14 @@ export const drawerProps = {
       propName: 'hideCloseButton',
     }),
   },
+  /**
+   * z-index 层级
+   * 默认值 2001 表示使用全局弹出层管理器自动分配层级（从 2001 开始递增）
+   * 如果手动设置其他值，则使用用户指定的值（不推荐，可能导致层级冲突）
+   */
   zIndex: {
     type: Number,
-    default: 1001,
+    default: 2001,
     validator: validators.nonNegativeInteger({
       componentName: 'LewDrawer',
       propName: 'zIndex',

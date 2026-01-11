@@ -2082,6 +2082,14 @@ export default {
       demo4: {
         title: 'Allow ESC to Close',
       },
+      demo5: {
+        title: 'Nested Modal',
+      },
+      demo6: {
+        title: 'Modal and Drawer Nesting',
+        description:
+          'Complex multi-layer nesting scenario, supports opening drawer from modal, modal from drawer, up to 4 levels of nesting.',
+      },
       model: {
         visible: 'Visible',
       },

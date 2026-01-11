@@ -1,7 +1,7 @@
 {
   "name": "lew-ui",
   "type": "module",
-  "version": "2.7.76",
+  "version": "2.7.78",
   "description": "A Component Library for Vue3.js.",
   "author": "lewkamtao",
   "license": "MIT",
@@ -33,7 +33,6 @@
   },
   "scripts": {
     "dev": "vite",
-    "build:tsdown": "tsdown",
     "build:docs": "pnpm lint:fix && pnpm lint:css:fix && node scripts/extract-types.js && node scripts/collect-mdc.js && vue-tsc --noEmit && vite build --mode docs",
     "build:lib": "node ./bump-version.js && vue-tsc --noEmit && vite build --mode lib",
     "analyze": "vite build --mode analyze",
@@ -86,7 +85,6 @@
     "stylelint": "16.2.1",
     "stylelint-config-rational-order": "0.1.2",
     "stylelint-order": "^7.0.0",
-    "tsdown": "^0.14.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "unplugin-auto-import": "^0.17.5",

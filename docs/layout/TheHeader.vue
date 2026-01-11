@@ -1,227 +1,230 @@
 <script setup lang="ts">
-import { useDark } from '@vueuse/core'
-import docsLocale, { getInitialLocale } from 'docs/locals'
-import { setLocale } from 'lew-ui'
-import { Github, Languages, Moon, Settings, Sun } from 'lucide-vue-next'
-import { useRoute, useRouter } from 'vue-router'
-import packageJson from '../../package.json'
+import { useDark } from "@vueuse/core";
+import docsLocale, { getInitialLocale } from "docs/locals";
+import { setLocale } from "lew-ui";
+import { Github, Languages, Moon, Settings, Sun } from "lucide-vue-next";
+import { useRoute, useRouter } from "vue-router";
+import packageJson from "../../package.json";
 
-const version = ref(packageJson.version)
+const version = ref(packageJson.version);
 
 const isDark = useDark({
-  selector: 'html',
-  valueDark: 'lew-dark',
-  valueLight: 'lew-light',
-})
+  selector: "html",
+  valueDark: "lew-dark",
+  valueLight: "lew-light",
+});
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
 function goHome() {
-  if (route.name === 'R-LewHome') {
-    LewMessage.warning('你已经在首页了！')
-  }
-  else {
-    router.push('/')
+  if (route.name === "R-LewHome") {
+    LewMessage.warning("你已经在首页了！");
+  } else {
+    router.push("/");
   }
 }
 
 function goToPage(path: string, isNewTab = false) {
   if (isNewTab) {
-    const URL = router.resolve(path).href
-    window.open(URL, '_blank')
-  }
-  else {
-    router.push(path)
+    const URL = router.resolve(path).href;
+    window.open(URL, "_blank");
+  } else {
+    router.push(path);
   }
 }
 
 function goToGithub() {
-  window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
+  window.open("https://github.com/lewkamtao/Lew-UI", "_blank");
 }
 
 function getLocaleIcon(locale: string) {
-  return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href
+  return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href;
 }
 const localeOptions = ref([
   {
-    label: '简体中文',
-    value: 'zh',
+    label: "简体中文",
+    value: "zh",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('zh'),
-        alt: '简体中文',
+      return h("img", {
+        src: getLocaleIcon("zh"),
+        alt: "简体中文",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
   {
-    label: 'English',
-    value: 'en',
+    label: "English",
+    value: "en",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('us'),
-        alt: 'English',
+      return h("img", {
+        src: getLocaleIcon("us"),
+        alt: "English",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
 
   {
-    label: '日本語',
-    value: 'ja',
+    label: "日本語",
+    value: "ja",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('ja'),
-        alt: '日本語',
+      return h("img", {
+        src: getLocaleIcon("ja"),
+        alt: "日本語",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
   {
-    label: '한국어',
-    value: 'ko',
+    label: "한국어",
+    value: "ko",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('ko'),
-        alt: '한국어',
+      return h("img", {
+        src: getLocaleIcon("ko"),
+        alt: "한국어",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
   {
-    label: 'Español',
-    value: 'es',
+    label: "Español",
+    value: "es",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('es'),
-        alt: 'Español',
+      return h("img", {
+        src: getLocaleIcon("es"),
+        alt: "Español",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
   {
-    label: 'Français',
-    value: 'fr',
+    label: "Français",
+    value: "fr",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('fr'),
-        alt: 'Français',
+      return h("img", {
+        src: getLocaleIcon("fr"),
+        alt: "Français",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
   {
-    label: 'Deutsch',
-    value: 'de',
+    label: "Deutsch",
+    value: "de",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('de'),
-        alt: 'Deutsch',
+      return h("img", {
+        src: getLocaleIcon("de"),
+        alt: "Deutsch",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
   {
-    label: 'Português',
-    value: 'pt',
+    label: "Português",
+    value: "pt",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('br'),
-        alt: 'Português',
+      return h("img", {
+        src: getLocaleIcon("br"),
+        alt: "Português",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
   {
-    label: 'Italiano',
-    value: 'it',
+    label: "Italiano",
+    value: "it",
     checkable: true,
     icon: () => {
-      return h('img', {
-        src: getLocaleIcon('it'),
-        alt: 'Italiano',
+      return h("img", {
+        src: getLocaleIcon("it"),
+        alt: "Italiano",
         width: 16,
         height: 16,
-      })
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
+      changeLanguage(e);
     },
   },
-])
+]);
 
 function changeLanguage(e: any) {
-  const { value } = e
-  setLocale(value)
-  docsLocale.use(value)
+  const { value } = e;
+  setLocale(value);
+  docsLocale.use(value);
   localeOptions.value.forEach((item: any) => {
     if (item.value === e.value) {
-      item.checked = true
+      item.checked = true;
+    } else {
+      item.checked = false;
     }
-    else {
-      item.checked = false
-    }
-  })
+  });
 }
 
 function goToSettings() {
-  const link = router.resolve('/check-lang').href
-  window.open(link, '_blank')
+  const link = router.resolve("/check-lang").href;
+  window.open(link, "_blank");
 }
 
-const isDev = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+const isDev = ["localhost", "127.0.0.1"].includes(window.location.hostname);
 
 // 初始化语言（异步）
 getInitialLocale().then((locale) => {
-  changeLanguage({ value: locale })
-})
+  changeLanguage({ value: locale });
+});
 </script>
 
 <template>
   <lew-flex mode="between" class="Header">
     <lew-flex id="logo" class="logo" x="start" @click="goHome">
-      <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30">
+      <img
+        src="../assets/images/logo.png"
+        alt="logo"
+        srcset=""
+        width="30"
+        height="30"
+      />
       <span style="margin-left: 10px"> Lew UI</span>
       <lew-tag type="light" size="small" style="margin-left: 10px">
         v{{ version }}
@@ -271,7 +274,7 @@ getInitialLocale().then((locale) => {
 <style lang="scss" scoped>
 .Header {
   position: relative;
-  z-index: 1001;
+  z-index: 2001;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -47,7 +47,7 @@ alwaysApply: false
 | closeButtonProps | `LewButtonProps` | - | 任意 `LewButtonProps` 对象 | 取消按钮的属性配置 |
 | hideOkButton | `boolean` | `false` | `true` / `false` | 是否隐藏确认按钮 |
 | hideCloseButton | `boolean` | `false` | `true` / `false` | 是否隐藏取消按钮 |
-| zIndex | `number` | `1001` | 非负整数 | Modal 的 z-index 值，用于控制层级 |
+| zIndex | `number` | `2001` | 非负整数 | Modal 的 z-index 值，用于控制层级 |
 
 ### 3.2 方法
 
@@ -224,7 +224,7 @@ useDOMCreate('lew-modal')
 <template>
   <lew-modal
     v-model:visible="modal1"
-    :z-index="1001"
+    :z-index="2001"
     title="Modal 1"
   />
   <lew-modal
@@ -238,7 +238,7 @@ useDOMCreate('lew-modal')
 3. 如果使用动态 z-index，确保后打开的 modal z-index 递增：
 ```vue
 <script setup>
-const modalZIndex = ref(1001)
+const modalZIndex = ref(2001)
 function openModal() {
   modalZIndex.value += 1
   modalVisible.value = true

@@ -4,7 +4,8 @@ import { useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { useDOMCreate } from 'lew-ui/hooks'
+import { useDOMCreate, usePopupManager } from 'lew-ui/hooks'
+import { getUniqueId } from 'lew-ui/utils'
 import { dialogEmits } from './emits'
 import { dialogProps } from './props'
 
@@ -13,13 +14,25 @@ const emit = defineEmits(dialogEmits)
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
 
+// 生成唯一 ID
+const dialogId = `lew-dialog-${getUniqueId()}`
+
 const visible = ref(false)
 const okLoading = ref(false)
 const cancelLoading = ref(false)
 const okRef = ref()
 
+// 使用全局弹出层管理器
+const { zIndex: managedZIndex, isTop } = usePopupManager({
+  id: dialogId,
+  type: 'modal', // Dialog 本质上是一种 Modal
+  visible,
+  closeByEsc: props.closeByEsc,
+  onClose: () => emit('close'),
+})
+
 function maskClick() {
-  if (props.closeOnClickOverlay) {
+  if (props.closeOnClickOverlay && isTop()) {
     visible.value = false
   }
 }
@@ -57,7 +70,7 @@ const cancel = () => handleAction('cancel')
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
-    if (v && visible.value) {
+    if (v && visible.value && isTop()) {
       visible.value = false
     }
   })
@@ -67,16 +80,17 @@ if (props.closeByEsc) {
 <template>
   <teleport to="#lew-dialog">
     <div
+      :id="dialogId"
       class="lew-dialog-container"
       :style="{
         '--lew-dialog-transform-origin': transformOrigin,
       }"
     >
       <transition name="lew-dialog-mask">
-        <div v-if="visible" class="lew-dialog-mask" />
+        <div v-if="visible" class="lew-dialog-mask" :style="{ zIndex: managedZIndex }" />
       </transition>
       <transition name="lew-dialog">
-        <div v-if="visible" class="lew-dialog" @click="maskClick">
+        <div v-if="visible" class="lew-dialog" :style="{ zIndex: managedZIndex }" @click="maskClick">
           <LewFlex direction="y" gap="20px" class="lew-dialog-box" @click.stop>
             <LewFlex y="start">
               <div v-if="!hideIcon" class="lew-dialog-box-left">
@@ -126,7 +140,6 @@ if (props.closeByEsc) {
   width: 100vw;
   height: 100vh;
   background-color: var(--lew-modal-bgcolor);
-  z-index: 2002;
 }
 
 .lew-dialog {
@@ -138,7 +151,6 @@ if (props.closeByEsc) {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2002;
 
   .lew-dialog-box {
     position: relative;

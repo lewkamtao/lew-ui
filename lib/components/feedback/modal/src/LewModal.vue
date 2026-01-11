@@ -1,128 +1,105 @@
 <script setup lang="ts">
 // 1. 第三方库导入
-import { onClickOutside, useMagicKeys } from '@vueuse/core'
+import { onClickOutside } from "@vueuse/core";
 
 // 2. 组件导入
-import { LewButton, LewFlex, locale } from 'lew-ui'
-import CloseButton from 'lew-ui/_components/CloseButton.vue'
+import { LewButton, LewFlex, locale } from "lew-ui";
+import CloseButton from "lew-ui/_components/CloseButton.vue";
 
 // 3. Hooks 导入
-import { useDOMCreate } from 'lew-ui/hooks'
+import { useDOMCreate, usePopupManager } from "lew-ui/hooks";
 
 // 4. 工具函数导入
-import { any2px, getUniqueId } from 'lew-ui/utils'
+import { any2px, getUniqueId } from "lew-ui/utils";
 
 // 5. 组件配置导入
-import { modalEmits } from './emits'
-import { modalProps } from './props'
+import { modalEmits } from "./emits";
+import { modalProps } from "./props";
 
 // Props & Emits
-const props = defineProps(modalProps)
-const emit = defineEmits(modalEmits)
+const props = defineProps(modalProps);
+const emit = defineEmits(modalEmits);
 
 // Composables
-const { Escape } = useMagicKeys()
-useDOMCreate('lew-modal')
+useDOMCreate("lew-modal");
 
 // v-model
-const visible = defineModel<boolean>('visible', { default: false })
+const visible = defineModel<boolean>("visible", { default: false });
 
 // 响应式状态
-const modalBodyRef = ref<HTMLElement | null>(null)
+const modalBodyRef = ref<HTMLElement | null>(null);
 
 // 常量
-const modalId = `lew-modal-${getUniqueId()}`
+const modalId = `lew-modal-${getUniqueId()}`;
 
 // Slots 检测
-const slots: ReturnType<typeof useSlots> = useSlots()
+const slots: ReturnType<typeof useSlots> = useSlots();
 
-// 方法：检查当前 modal 是否在最顶层（每次调用时重新检查 DOM 状态）
-function checkIsTopModal(): boolean {
-  if (!visible.value) {
-    return false
+// 使用全局弹出层管理器
+const { zIndex: managedZIndex, isTop } = usePopupManager({
+  id: modalId,
+  type: "modal",
+  visible,
+  closeByEsc: props.closeByEsc,
+  onClose: () => emit("close"),
+});
+
+// 计算最终使用的 z-index
+// 如果用户手动设置了 zIndex（非默认值），则使用用户设置的值
+// 否则使用管理器分配的值
+const actualZIndex = computed(() => {
+  // 默认值为 2001，如果用户传入了其他值，优先使用用户的值
+  if (props.zIndex !== 2001) {
+    return props.zIndex;
   }
-
-  const modalEl = document.getElementById(modalId)
-  if (!modalEl) {
-    return false
-  }
-
-  // 检查是否有 dialog 在顶层
-  const dialogEl = document.getElementById('lew-dialog')
-  const hasDialog = dialogEl && dialogEl.children.length > 0
-  if (hasDialog) {
-    return false
-  }
-
-  // 获取所有 modal 元素
-  const modalContainer = modalEl?.parentElement
-  if (!modalContainer) {
-    return false
-  }
-
-  const openModals = Array.from(modalContainer.childNodes)
-    .filter((e): e is Element => e instanceof Element)
-    .filter(e => e.children.length > 0)
-    .filter((e) => {
-      // 只考虑可见的 modal
-      const modalBody = e.querySelector('.lew-modal') as HTMLElement
-      return modalBody && modalBody.style.display !== 'none'
-    })
-
-  // 检查当前 modal 是否是最后一个（顶层）
-  return openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId
-}
+  return managedZIndex.value || props.zIndex;
+});
 
 const modalStyle = computed(() => {
-  const { width, top } = props
+  const { width, top } = props;
   return {
     width: any2px(width),
     top: any2px(top),
-  }
-})
+  };
+});
 
 const modalBodyMainStyle = computed(() => ({
   maxHeight: any2px(props.maxHeight),
-}))
+}));
 
 // 方法
 function handleClose(): void {
-  visible.value = false
-  emit('close')
+  visible.value = false;
+  emit("close");
 }
 
 // 监听器
 watch(visible, async () => {
-  await nextTick()
-})
+  await nextTick();
+});
 
 onClickOutside(modalBodyRef, (e: any) => {
-  if (visible.value && props.closeOnClickOverlay) {
-    const { parentElement } = e?.target as Element
+  if (visible.value && props.closeOnClickOverlay && isTop()) {
+    const { parentElement } = e?.target as Element;
     if (parentElement?.id === modalId) {
-      visible.value = false
+      visible.value = false;
     }
   }
-})
-
-if (props.closeByEsc) {
-  watch(Escape, (v: boolean) => {
-    if (!visible.value || !v || !checkIsTopModal()) {
-      return
-    }
-    visible.value = false
-  })
-}
+});
 </script>
 
 <template>
   <teleport to="#lew-modal">
     <div :id="modalId" class="lew-modal-container">
       <transition name="lew-modal-mask">
-        <div v-if="visible" :style="{ zIndex: props.zIndex }" class="lew-modal-mask" />
+        <div
+          v-if="visible"
+          :style="{ zIndex: actualZIndex }"
+          class="lew-modal-mask"
+        />
       </transition>
       <transition name="lew-modal">
-        <div v-if="visible" :style="{ zIndex: props.zIndex }" class="lew-modal">
+        <div v-if="visible" :style="{ zIndex: actualZIndex }" class="lew-modal">
           <div ref="modalBodyRef" :style="modalStyle" class="lew-modal-body">
             <div v-if="slots.header" class="lew-modal-header-slot">
               <slot name="header" />
@@ -133,10 +110,7 @@ if (props.closeByEsc) {
               y="center"
               class="lew-modal-header"
             >
-              <div
-                class="lew-modal-title"
-                :title="props.title"
-              >
+              <div class="lew-modal-title" :title="props.title">
                 {{ props.title }}
               </div>
               <CloseButton
@@ -147,7 +121,10 @@ if (props.closeByEsc) {
                 @click="handleClose"
               />
             </LewFlex>
-            <div class="lew-modal-body-main lew-scrollbar" :style="modalBodyMainStyle">
+            <div
+              class="lew-modal-body-main lew-scrollbar"
+              :style="modalBodyMainStyle"
+            >
               <slot />
             </div>
             <div v-if="slots.footer" class="lew-modal-footer-slot">
@@ -265,8 +242,7 @@ if (props.closeByEsc) {
 
 .lew-modal-enter-active,
 .lew-modal-leave-active {
-  transition:
-    opacity var(--lew-form-transition-ease),
+  transition: opacity var(--lew-form-transition-ease),
     transform var(--lew-form-transition-bezier);
 }
 
