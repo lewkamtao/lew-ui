@@ -5,3 +5,4 @@ dist-zip
 *.log
 .DS_Store
 .eslintcache
+dist-docs

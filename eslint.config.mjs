@@ -38,5 +38,6 @@ export default antfu({
   },
   ignores: [
     '**/*.md',
+    'dist-docs/**/*',
   ],
 })

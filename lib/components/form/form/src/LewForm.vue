@@ -8,6 +8,7 @@ import {
   retrieveNestedFieldValue,
 } from 'lew-ui/utils'
 import { debounce } from 'lodash-es'
+import { ref } from 'vue'
 import * as Yup from 'yup'
 import { formEmits } from './emits'
 import LewFormItem from './LewFormItem.vue'
@@ -31,11 +32,7 @@ const normalizePropCache = new Map<
 >()
 
 function normalizeProp(
-  value:
-    | string
-    | boolean
-    | ((formData: Record<string, any>) => boolean)
-    | undefined,
+  value: string | boolean | ((formData: Record<string, any>) => boolean) | undefined,
 ) {
   if (value === undefined) {
     return () => false
@@ -104,9 +101,7 @@ const formSchema = computed(() => {
   return schema
 })
 
-const gridTemplateColumns = computed(
-  () => `repeat(${props.columns}, minmax(0, 1fr))`,
-)
+const gridTemplateColumns = computed(() => `repeat(${props.columns}, minmax(0, 1fr))`)
 
 function getForm() {
   const formData = formatFormByMap(toRaw(formMap.value))
@@ -115,11 +110,7 @@ function getForm() {
   for (const item of componentOptions.value) {
     if (item.outputFormat && item.field && result[item.field] !== undefined) {
       const _value = item.outputFormat({ item, value: result[item.field] })
-      if (
-        typeof _value === 'object'
-        && _value !== null
-        && !Array.isArray(_value)
-      ) {
+      if (typeof _value === 'object' && _value !== null && !Array.isArray(_value)) {
         delete result[item.field]
         Object.assign(result, _value)
       }
@@ -239,8 +230,7 @@ const defaultReadonlyFn = () => Boolean(props.readonly)
 const defaultVisibleFn = () => true
 
 function getItemProps(item: LewFormOption) {
-  const fieldKey
-    = item.field || `__index_${componentOptions.value.indexOf(item)}`
+  const fieldKey = item.field || `__index_${componentOptions.value.indexOf(item)}`
   const currentLabelWidth = getLabelWidth.value
   const cacheKeyFull = `${fieldKey}_${props.direction}_${props.size}_${currentLabelWidth}`
 
@@ -257,10 +247,7 @@ function getItemProps(item: LewFormOption) {
     required: getFormItemRequired(item),
     disabled: item.disabled ? normalizeProp(item.disabled) : defaultDisabledFn,
     readonly: item.readonly ? normalizeProp(item.readonly) : defaultReadonlyFn,
-    visible:
-      item.visible !== undefined
-        ? normalizeProp(item.visible)
-        : defaultVisibleFn,
+    visible: item.visible !== undefined ? normalizeProp(item.visible) : defaultVisibleFn,
   }
 
   itemPropsCache.set(cacheKeyFull, baseProps)
