@@ -24,7 +24,7 @@ const emit = defineEmits(tableEmits)
 
 const MIN_DRAG_DISTANCE = 10
 const SCROLL_THRESHOLD = 10
-const THROTTLE_DELAY = 120
+const THROTTLE_DELAY = 20
 const TOOLTIP_THROTTLE_DELAY = 16
 const DRAG_END_DELAY = 250
 const ROW_HEIGHT_THROTTLE_DELAY = 100
