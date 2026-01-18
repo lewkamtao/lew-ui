@@ -46,7 +46,7 @@ alwaysApply: false
 | 属性名 | 类型 | 说明 |
 |--------|------|------|
 | label | `LewComponentSource` | 菜单项标签（支持字符串、函数、组件） |
-| icon | `LewComponentSource` | 菜单项图标（可选，支持字符串、函数、组件） |
+| icon | `LewComponentSource` | 菜单项图标（可选，使用 `h()` 函数渲染 lucide 图标） |
 | value | `string` | 菜单项值（可选） |
 | disabled | `boolean` | 是否禁用（可选） |
 | checkable | `boolean` | 是否可选中（可选） |
@@ -57,7 +57,88 @@ alwaysApply: false
 | hideMenuOnClick | `boolean` | 点击后是否隐藏菜单（可选，默认为 `true`） |
 | onClick | `(item: LewContextMenusOption, options: LewContextMenusOption[], instance: any) => void` | 点击回调函数（可选） |
 
-### 3.3 方法
+### 3.3 Icon 配置规范
+
+组件中的 `icon` 属性使用 `lucide-vue-next` 图标库配合 Vue 的 `h()` 函数渲染。
+
+**标准写法**：
+
+```vue
+<script setup>
+import { h } from 'vue'
+import { 
+  Copy, Clipboard, Scissors, Trash2, 
+  Edit, RefreshCw, FolderOpen, Download 
+} from 'lucide-vue-next'
+import { initLewContextMenu } from 'lew-ui/directives/context-menu'
+
+onMounted(() => {
+  initLewContextMenu()
+})
+
+const menuOptions = [
+  {
+    label: '复制',
+    icon: h(Copy, { size: 14 }),
+    onClick: () => console.log('复制')
+  },
+  {
+    label: '粘贴',
+    icon: h(Clipboard, { size: 14 }),
+    onClick: () => console.log('粘贴')
+  },
+  {
+    label: '剪切',
+    icon: h(Scissors, { size: 14 }),
+    onClick: () => console.log('剪切')
+  },
+  { isDividerLine: true },
+  {
+    label: '编辑',
+    icon: h(Edit, { size: 14 }),
+    children: [
+      { label: '重命名', icon: h(Edit, { size: 14 }), onClick: () => console.log('重命名') },
+      { label: '刷新', icon: h(RefreshCw, { size: 14 }), onClick: () => console.log('刷新') }
+    ]
+  },
+  {
+    label: '文件操作',
+    icon: h(FolderOpen, { size: 14 }),
+    children: [
+      { label: '打开', icon: h(FolderOpen, { size: 14 }), onClick: () => console.log('打开') },
+      { label: '下载', icon: h(Download, { size: 14 }), onClick: () => console.log('下载') }
+    ]
+  },
+  { isDividerLine: true },
+  {
+    label: '删除',
+    icon: h(Trash2, { size: 14 }),
+    onClick: () => console.log('删除')
+  }
+]
+</script>
+
+<template>
+  <div 
+    v-context-menu="{ options: menuOptions, trigger: 'right-click' }"
+    class="context-area"
+  >
+    右键点击此区域
+  </div>
+</template>
+```
+
+**Icon 参数说明**：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| size | `number` | 图标大小，推荐 `14`（小菜单）或 `16`（常规菜单） |
+| color | `string` | 图标颜色，默认继承文本颜色 |
+| strokeWidth | `number` | 线条粗细，默认 `2` |
+
+**图标库参考**：[Lucide Icons](https://lucide.dev/icons/) - 包含 1000+ 图标
+
+### 3.4 方法
 
 #### initLewContextMenu()
 
@@ -226,6 +307,7 @@ const menuOptions = [
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
+| 1.2.0 | 文档更新：新增 Icon 配置规范章节，统一使用 `lucide-vue-next` + `h()` 函数方式配置图标 | 2026-01-18 |
 | 1.1.0 | 规范化代码结构：优化 Vue 文件导入顺序和代码结构；优化 emits.ts（添加类型定义）；优化样式系统（使用 CSS 变量和全局过渡变量）；优化 index.ts 导入顺序 | 2025-01-09 |
 | 1.0.0 | 初始版本 | - |
 

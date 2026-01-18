@@ -1,0 +1,534 @@
+---
+alwaysApply: true
+---
+
+# Lew-UI 样式系统规范
+
+> 本文档是业务系统适配 Lew-UI 组件库色彩和尺寸的完整指南。
+
+## 1. 样式系统架构
+
+### 1.1 文件结构
+
+```
+lib/styles/
+├── index.scss              # 入口文件，按顺序引入所有模块
+├── reset.scss              # CSS 重置，统一浏览器默认样式
+├── main.scss               # 通用工具类（滚动条、骨架屏、动画过渡）
+├── var.scss                # 尺寸变量（圆角、表单尺寸、间距、过渡）
+├── color.scss              # 颜色系统核心（CSS 变量生成、亮/暗模式切换）
+├── tippy.scss              # Tooltip/Popover 弹出层样式
+└── color/
+    ├── _foundation.scss    # 亮色模式基础色板（15种颜色×9级色阶）
+    ├── _dark.scss          # 暗色模式基础色板
+    └── _semantic.scss      # 语义颜色映射（primary/success/error 等）
+```
+
+### 1.2 引入方式
+
+```typescript
+// main.ts 中引入完整样式
+import 'lew-ui/styles'
+```
+
+## 2. 颜色系统
+
+### 2.1 基础色板（15种颜色）
+
+| 颜色名 | 主色值(6级) | 用途说明 |
+|--------|-------------|----------|
+| `blue` | #1a73e8 | 主色调、链接、选中态 |
+| `gray` | #5f6368 | 中性色、边框、禁用态 |
+| `red` | #d93025 | 错误、危险、删除 |
+| `green` | #1e8e3e | 成功、通过、在线 |
+| `yellow` | #f9ab00 | 警告、提醒、星标 |
+| `orange` | #f57c00 | 警告强调、进行中 |
+| `purple` | #9333ea | 高级功能、VIP标识 |
+| `pink` | #e91e63 | 女性化、情感类 |
+| `indigo` | #5c6bc0 | 辅助强调 |
+| `cyan` | #009688 | 信息、辅助 |
+| `teal` | #00897b | 健康、自然 |
+| `mint` | #1fa187 | 清新、环保 |
+| `brown` | #795548 | 稳重、复古 |
+| `black` | #212121 | 强调、标题 |
+| `white` | #ffffff | 背景、卡片 |
+
+### 2.2 9级色阶系统
+
+每种颜色都有 1-9 共9个色阶：
+
+| 色阶 | 亮色模式用途 | 暗色模式用途 |
+|------|-------------|-------------|
+| `1` | 最浅背景色 | 最深背景色 |
+| `2` | 浅色背景、hover背景 | 深色背景 |
+| `3` | 浅色强调 | 中深背景 |
+| `4` | 浅色边框 | 中等背景 |
+| `5` | 中等色 | 较浅背景 |
+| `6` | **主色调（默认使用）** | **主色调** |
+| `7` | hover状态 | hover状态 |
+| `8` | active/pressed状态 | 浅色文本 |
+| `9` | 最深色、文本色 | 最浅色、高亮文本 |
+
+### 2.3 语义颜色映射
+
+```scss
+// 语义颜色 → 基础颜色映射
+$semantic-colors: (
+  'primary': 'blue',    // 主色
+  'success': 'green',   // 成功
+  'error': 'red',       // 错误
+  'danger': 'red',      // 危险（同 error）
+  'warning': 'orange',  // 警告
+  'info': 'blue',       // 信息
+  'normal': 'gray',     // 常规
+);
+```
+
+### 2.4 CSS 变量命名规范
+
+#### 基础颜色变量
+
+```css
+/* 格式：--lew-color-{颜色名}-{状态} */
+--lew-color-primary                  /* 主色 */
+--lew-color-primary-hover            /* hover 状态 */
+--lew-color-primary-active           /* active 状态 */
+--lew-color-primary-light            /* 浅色背景 */
+--lew-color-primary-light-hover      /* 浅色背景 hover */
+--lew-color-primary-light-active     /* 浅色背景 active */
+--lew-color-primary-light-text       /* 浅色背景上的文本 */
+--lew-color-primary-ghost-text       /* ghost类型文本 */
+--lew-color-primary-text-text        /* text类型文本 */
+```
+
+#### 背景色变量（10级）
+
+```css
+/* 亮色模式：0最白 → 9最深 */
+--lew-bgcolor-0   /* #ffffff 纯白背景 */
+--lew-bgcolor-1   /* 卡片背景 */
+--lew-bgcolor-2   /* 次级背景 */
+--lew-bgcolor-3   /* 分割线背景 */
+--lew-bgcolor-4   /* 表单默认背景 */
+--lew-bgcolor-5   /* 轻度强调 */
+--lew-bgcolor-6   /* 中度强调、hover背景 */
+--lew-bgcolor-7   /* 边框色 */
+--lew-bgcolor-8   /* 深色边框 */
+--lew-bgcolor-9   /* 最深背景 */
+```
+
+#### 文本色变量（10级）
+
+```css
+/* 亮色模式：0最深 → 9最浅 */
+--lew-text-color-0   /* 标题、强调文本 */
+--lew-text-color-1   /* 主要文本（常用） */
+--lew-text-color-2   /* 次要文本 */
+--lew-text-color-3   /* 辅助文本 */
+--lew-text-color-4   /* placeholder文本 */
+--lew-text-color-5   /* 禁用文本 */
+--lew-text-color-6   /* 轻度提示 */
+--lew-text-color-7   /* 极浅提示 */
+--lew-text-color-8   /* 近白文本 */
+--lew-text-color-9   /* 白色文本（用于深色背景） */
+```
+
+## 3. 组件专属颜色变量
+
+### 3.1 按钮组件（Button）
+
+```css
+/* 格式：--lew-color-button-{颜色}-{类型}-{状态} */
+/* 类型：fill(填充) / light(浅色) / ghost(幽灵) / text(文本) */
+
+/* 填充按钮 */
+--lew-color-button-primary-fill              /* 背景色 */
+--lew-color-button-primary-fill-hover        /* hover背景 */
+--lew-color-button-primary-fill-active       /* active背景 */
+--lew-color-button-primary-fill-text         /* 文本色 */
+
+/* 浅色按钮 */
+--lew-color-button-primary-light             /* 浅色背景 */
+--lew-color-button-primary-light-hover       /* hover背景 */
+--lew-color-button-primary-light-text        /* 文本色 */
+
+/* 幽灵/文本按钮 */
+--lew-color-button-primary-ghost-text        /* ghost文本色 */
+--lew-color-button-primary-text-text         /* text文本色 */
+```
+
+### 3.2 表单组件
+
+```css
+/* 通用表单变量 */
+--lew-form-bgcolor                /* 默认背景 */
+--lew-form-bgcolor-hover          /* hover背景 */
+--lew-form-bgcolor-active         /* active背景 */
+--lew-form-bgcolor-focus          /* focus背景 */
+--lew-form-border-color           /* 边框色 */
+--lew-form-border-color-focus     /* focus边框（默认主色） */
+--lew-form-border-color-hover     /* hover边框 */
+--lew-form-box-shadow             /* focus阴影 */
+```
+
+### 3.3 表格组件（Table）
+
+```css
+--lew-table-bgcolor               /* 表格主体背景 */
+--lew-table-bgcolor-hover         /* 行hover背景 */
+--lew-table-header-bgcolor        /* 表头背景 */
+--lew-table-header-bgcolor-hover  /* 表头hover */
+--lew-table-tr-hover-bgcolor      /* 行hover背景 */
+--lew-table-tr-selected           /* 选中行背景 */
+--lew-table-tr-focused-bgcolor    /* 聚焦行背景（黄色高亮） */
+--lew-table-border-color          /* 边框色 */
+--lew-table-border                /* 完整边框值 */
+```
+
+### 3.4 弹出层组件（Popover/Tooltip/Modal/Drawer）
+
+```css
+/* 弹出层通用 */
+--lew-pop-bgcolor                 /* 弹出层背景 */
+--lew-pop-bgcolor-hover           /* 选项hover */
+--lew-pop-bgcolor-active          /* 选项active */
+--lew-pop-shadow                  /* 阴影 */
+--lew-pop-border                  /* 边框 */
+
+/* Tooltip */
+--lew-tooltip-bgcolor             /* tooltip背景 */
+--lew-tooltip-box-shadow          /* tooltip阴影 */
+
+/* Modal */
+--lew-modal-bgcolor               /* 遮罩背景（半透明） */
+--lew-modal-body-bgcolor          /* 内容区背景 */
+--lew-modal-border                /* 边框 */
+
+/* Drawer */
+--lew-drawer-bgcolor              /* 遮罩背景 */
+--lew-drawer-body-bgcolor         /* 内容区背景 */
+--lew-drawer-header-border        /* 头部分割线 */
+--lew-drawer-footer-border        /* 底部分割线 */
+```
+
+### 3.5 其他组件变量
+
+```css
+/* Checkbox/Radio/Switch（需替换{color}为具体颜色） */
+--lew-color-checkbox-{color}-checked-icon-bg      /* 选中背景 */
+--lew-color-checkbox-{color}-checked-icon-color   /* 选中图标色 */
+--lew-color-radio-{color}-checked-icon-bg
+--lew-color-switch-{color}-checked-bg
+
+/* Tag */
+--lew-color-tag-{color}-fill                      /* 填充背景 */
+--lew-color-tag-{color}-fill-text                 /* 填充文本 */
+--lew-color-tag-{color}-light                     /* 浅色背景 */
+--lew-color-tag-{color}-light-text                /* 浅色文本 */
+
+/* Badge */
+--lew-color-badge-{color}-bg                      /* 徽标背景 */
+--lew-color-badge-{color}-text                    /* 徽标文本 */
+
+/* Alert */
+--lew-color-alert-{color}-bg                      /* 提示背景 */
+--lew-color-alert-{color}-text                    /* 提示文本 */
+
+/* Menu */
+--lew-color-menu-{color}-item-selected-bg         /* 选中项背景 */
+--lew-color-menu-{color}-item-selected-text       /* 选中项文本 */
+
+/* Pagination */
+--lew-color-pagination-{color}-active-bg          /* 当前页背景 */
+--lew-color-pagination-{color}-active-text        /* 当前页文本 */
+
+/* DatePicker */
+--lew-color-datepicker-{color}-selected-bg        /* 选中日期背景 */
+--lew-color-datepicker-{color}-range-bg           /* 范围选择背景 */
+
+/* Steps */
+--lew-color-steps-{color}-active-bg               /* 当前步骤背景 */
+--lew-color-steps-{color}-succeeded-icon          /* 完成步骤图标 */
+```
+
+## 4. 尺寸系统
+
+### 4.1 圆角（Border Radius）
+
+```css
+--lew-border-radius-mini: 4px;     /* 小型元素（tag、badge） */
+--lew-border-radius-small: 8px;    /* 常规元素（按钮、输入框） */
+--lew-border-radius-medium: 12px;  /* 中型容器（卡片） */
+--lew-border-radius-large: 16px;   /* 大型容器（弹窗） */
+```
+
+### 4.2 表单尺寸
+
+| 尺寸 | 高度 | 字号 | 内边距 | 行高 |
+|------|------|------|--------|------|
+| `mini` | 28px | 12px | 1px 8px | 20px |
+| `small` | 32px | 13px | 2px 10px | 22px |
+| `medium` | 36px | 14px | 4px 12px | 24px |
+| `large` | 40px | 16px | 6px 14px | 26px |
+
+```css
+/* 高度 */
+--lew-form-item-height-mini: 28px;
+--lew-form-item-height-small: 32px;
+--lew-form-item-height-medium: 36px;
+--lew-form-item-height-large: 40px;
+
+/* 字号 */
+--lew-form-font-size-mini: 12px;
+--lew-form-font-size-small: 13px;
+--lew-form-font-size-medium: 14px;
+--lew-form-font-size-large: 16px;
+
+/* 内边距 */
+--lew-form-input-padding-mini: 1px 8px;
+--lew-form-input-padding-small: 2px 10px;
+--lew-form-input-padding-medium: 4px 12px;
+--lew-form-input-padding-large: 6px 14px;
+
+/* 行高 */
+--lew-form-input-line-height-mini: 20px;
+--lew-form-input-line-height-small: 22px;
+--lew-form-input-line-height-medium: 24px;
+--lew-form-input-line-height-large: 26px;
+```
+
+### 4.3 过渡动画
+
+```css
+--lew-form-transition-ease: 0.15s ease;
+--lew-form-transition-bezier: 0.15s cubic-bezier(0.2, 0.9, 0.4, 1);
+```
+
+## 5. 暗色模式适配
+
+### 5.1 切换方式
+
+```html
+<!-- 在根元素添加 .lew-dark 类名 -->
+<html class="lew-dark">
+  <!-- 所有组件自动切换为暗色模式 -->
+</html>
+```
+
+### 5.2 JavaScript 切换
+
+```typescript
+// 切换暗色模式
+function toggleDarkMode(isDark: boolean) {
+  document.documentElement.classList.toggle('lew-dark', isDark)
+}
+
+// 跟随系统偏好
+const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+toggleDarkMode(mediaQuery.matches)
+mediaQuery.addEventListener('change', e => toggleDarkMode(e.matches))
+```
+
+### 5.3 暗色模式色阶反转规则
+
+| 亮色模式 | 暗色模式 | 说明 |
+|----------|----------|------|
+| bgcolor-0 (白) | dark-bgcolor-0 (近黑) | 背景反转 |
+| text-color-0 (黑) | dark-text-color-0 (近白) | 文本反转 |
+| color-6 (主色) | color-6 (保持) | 主色不变 |
+| color-2 (浅背景) | color-3 (深背景) | light类型稍深 |
+| color-8 (深色) | color-8 (浅色) | 高亮文本提亮 |
+
+## 6. 业务系统适配指南
+
+### 6.1 自定义主题色
+
+```css
+/* 在业务系统中覆盖主色 */
+:root {
+  /* 方法1：直接覆盖语义变量 */
+  --lew-color-primary: #6366f1;
+  --lew-color-primary-hover: #4f46e5;
+  --lew-color-primary-active: #4338ca;
+  --lew-color-primary-light: #eef2ff;
+  --lew-color-primary-light-hover: #e0e7ff;
+  --lew-color-primary-light-text: #4338ca;
+}
+
+/* 暗色模式下的覆盖 */
+.lew-dark {
+  --lew-color-primary: #818cf8;
+  --lew-color-primary-hover: #a5b4fc;
+  --lew-color-primary-active: #c7d2fe;
+  --lew-color-primary-light: #1e1b4b;
+  --lew-color-primary-light-text: #a5b4fc;
+}
+```
+
+### 6.2 自定义背景和文本色
+
+```css
+:root {
+  /* 调整整体背景色调 */
+  --lew-bgcolor-0: #fafbfc;
+  --lew-bgcolor-1: #f4f5f7;
+  
+  /* 调整主要文本颜色 */
+  --lew-text-color-1: #24292e;
+}
+```
+
+### 6.3 自定义组件样式
+
+```css
+/* 调整表单样式 */
+:root {
+  --lew-form-bgcolor: #f8f9fa;
+  --lew-form-border-color-focus: var(--lew-color-primary);
+}
+
+/* 调整弹窗样式 */
+:root {
+  --lew-pop-bgcolor: #ffffff;
+  --lew-modal-bgcolor: rgba(0, 0, 0, 0.5);
+}
+
+/* 调整表格样式 */
+:root {
+  --lew-table-header-bgcolor: #f6f8fa;
+  --lew-table-tr-hover-bgcolor: #f1f3f5;
+}
+```
+
+### 6.4 自定义尺寸
+
+```css
+:root {
+  /* 更小的圆角 */
+  --lew-border-radius-small: 4px;
+  --lew-border-radius-medium: 8px;
+  
+  /* 更紧凑的表单 */
+  --lew-form-item-height-medium: 32px;
+  --lew-form-font-size-medium: 13px;
+}
+```
+
+## 7. 工具类
+
+### 7.1 滚动条样式
+
+```html
+<!-- 标准滚动条 -->
+<div class="lew-scrollbar">内容</div>
+
+<!-- hover时显示滚动条 -->
+<div class="lew-scrollbar-hover">内容</div>
+
+<!-- 隐藏滚动条 -->
+<div class="hidden-scrollbar">内容</div>
+```
+
+### 7.2 骨架屏
+
+```html
+<div class="skeletons" style="width: 200px; height: 20px;"></div>
+```
+
+### 7.3 过渡动画
+
+```html
+<Transition name="fade">
+  <div v-if="show">内容</div>
+</Transition>
+```
+
+## 8. 最佳实践
+
+### 8.1 使用语义变量
+
+```css
+/* ✅ 推荐：使用语义变量 */
+.my-button {
+  background: var(--lew-color-primary);
+  color: var(--lew-text-color-9);
+}
+
+/* ❌ 避免：硬编码颜色 */
+.my-button {
+  background: #1a73e8;
+  color: #ffffff;
+}
+```
+
+### 8.2 保持色阶一致性
+
+```css
+/* ✅ 推荐：使用同一色系的不同色阶 */
+.card {
+  background: var(--lew-bgcolor-1);
+  border-color: var(--lew-bgcolor-6);
+}
+
+.card:hover {
+  background: var(--lew-bgcolor-2);
+  border-color: var(--lew-bgcolor-7);
+}
+```
+
+### 8.3 支持暗色模式
+
+```css
+/* ✅ 推荐：只使用CSS变量，自动适配暗色 */
+.my-component {
+  background: var(--lew-bgcolor-0);
+  color: var(--lew-text-color-1);
+  border: var(--lew-border);
+}
+
+/* 无需额外的 .lew-dark 样式 */
+```
+
+### 8.4 组件颜色定制
+
+```vue
+<template>
+  <!-- 使用组件 color prop -->
+  <LewButton color="success">成功</LewButton>
+  <LewTag color="warning">警告</LewTag>
+  <LewSwitch color="purple" />
+</template>
+```
+
+## 9. 变量速查表
+
+### 9.1 常用颜色变量
+
+| 用途 | 变量名 |
+|------|--------|
+| 主色 | `--lew-color-primary` |
+| 成功色 | `--lew-color-success` |
+| 错误色 | `--lew-color-error` |
+| 警告色 | `--lew-color-warning` |
+| 主背景 | `--lew-bgcolor-0` |
+| 卡片背景 | `--lew-bgcolor-1` |
+| 主文本 | `--lew-text-color-1` |
+| 次文本 | `--lew-text-color-3` |
+| 边框 | `--lew-border` |
+| 边框色 | `--lew-border-color` |
+
+### 9.2 常用尺寸变量
+
+| 用途 | 变量名 |
+|------|--------|
+| 小圆角 | `--lew-border-radius-small` |
+| 中圆角 | `--lew-border-radius-medium` |
+| 表单高度 | `--lew-form-item-height-medium` |
+| 表单字号 | `--lew-form-font-size-medium` |
+| 过渡动画 | `--lew-form-transition-ease` |
+
+## 10. 变更日志
+
+| 版本 | 变更内容 | 日期 |
+|------|----------|------|
+| 1.0.0 | 初始版本，完整样式系统文档 | 2026-01-18 |
