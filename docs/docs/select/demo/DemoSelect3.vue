@@ -44,7 +44,6 @@ const value = ref('')
   width: 100%;
   height: 48px;
   user-select: none;
-  padding: 2px 0px;
   box-sizing: border-box;
   cursor: pointer;
   overflow: hidden;

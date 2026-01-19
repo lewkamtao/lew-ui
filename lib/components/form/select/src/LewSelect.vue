@@ -600,15 +600,21 @@ defineExpose({
               }"
             >
               <template #default="{ itemData: templateProps }">
-                <slot
+                <div
                   v-if="$slots.item"
-                  name="item"
-                  :props="{
-                    ...templateProps,
-                    checked: getChecked(templateProps.value),
-                  }"
+                  class="lew-select-slot-item"
+                  :class="{ 'lew-select-item-disabled': templateProps.disabled }"
+                  :style="{ height: `${itemHeight}px` }"
                   @click="selectHandle(templateProps)"
-                />
+                >
+                  <slot
+                    name="item"
+                    :props="{
+                      ...templateProps,
+                      checked: getChecked(templateProps.value),
+                    }"
+                  />
+                </div>
                 <div
                   v-else
                   class="lew-select-item"
@@ -648,15 +654,21 @@ defineExpose({
               }"
             >
               <template v-for="item in state.options" :key="item.value">
-                <slot
+                <div
                   v-if="$slots.item"
-                  name="item"
-                  :props="{
-                    ...item,
-                    checked: getChecked(item.value),
-                  }"
+                  class="lew-select-slot-item"
+                  :class="{ 'lew-select-item-disabled': item.disabled }"
+                  :style="{ height: `${itemHeight}px` }"
                   @click="selectHandle(item)"
-                />
+                >
+                  <slot
+                    name="item"
+                    :props="{
+                      ...item,
+                      checked: getChecked(item.value),
+                    }"
+                  />
+                </div>
                 <div
                   v-else
                   class="lew-select-item"
@@ -829,13 +841,22 @@ defineExpose({
     }
 
     .lew-select-slot-item {
+      display: flex;
+      align-items: center;
       width: 100%;
+      box-sizing: border-box;
       border-radius: calc(var(--lew-border-radius-small) - 1px);
+      cursor: pointer;
     }
 
     .lew-select-slot-item:hover {
       color: var(--lew-text-color-0);
       background-color: var(--lew-pop-bgcolor-hover);
+    }
+
+    .lew-select-slot-item.lew-select-item-disabled {
+      opacity: var(--lew-disabled-opacity);
+      cursor: no-drop;
     }
 
     .lew-select-item-active {
