@@ -58,3 +58,8 @@ a {
   background-color: var(--lew-color-gray-light);
   border-radius: 4px;
 }
+
+.lucide {
+  flex-shrink: 0;
+  box-sizing: content-box;
+}
