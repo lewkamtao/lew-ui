@@ -77,7 +77,7 @@ function initTippy(): void {
     tippyInstance = tippy(element, {
       theme: 'light',
       delay: props.delay,
-      duration: [250, 250],
+      duration: [150, 150],
       content: text ? escape(String(text)) : lewTextTrimPopRef.value,
       animation: 'scale-subtle',
       hideOnClick: false,

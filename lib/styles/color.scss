@@ -687,13 +687,15 @@
   --lew-pop-border: var(--lew-border);
   --lew-drawer-header-border: 1px #{get-color-value($bgcolor, '4')} solid;
   --lew-drawer-footer-border: 1px #{get-color-value($bgcolor, '4')} solid;
+
+  // Tooltip 颜色变量
   --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
-  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
+  --lew-tooltip-bgcolor-hover: var(--lew-pop-bgcolor-hover);
   --lew-tooltip-box-shadow: drop-shadow(
-      0px 0px 1px color-mix(in srgb, #{get-color-value($bgcolor, '6')} 45%, transparent)
+      0px 0px 1px color-mix(in srgb, #{get-color-value($bgcolor, '7')} 60%, transparent)
     )
-    drop-shadow(0px 2px 8px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 4%, transparent))
-    drop-shadow(0px 30px 70px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 10%, transparent));
+    drop-shadow(0px 4px 12px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 15%, transparent))
+    drop-shadow(0px 12px 32px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 12%, transparent));
 }
 
 @mixin export-pop-colors-dark() {
@@ -703,15 +705,17 @@
   --lew-pop-shadow: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 4%, transparent) 0px 2px 8px;
   --lew-pop-border-color: var(--lew-border-color);
   --lew-pop-border: var(--lew-border);
-  --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
-  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
-  --lew-tooltip-box-shadow: drop-shadow(
-      0px 0px 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 45%, transparent)
-    )
-    drop-shadow(0px 2px 8px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 4%, transparent))
-    drop-shadow(0px 30px 70px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 10%, transparent));
   --lew-drawer-header-border: 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 10%, transparent) solid;
   --lew-drawer-footer-border: 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 10%, transparent) solid;
+
+  // Tooltip 颜色变量
+  --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
+  --lew-tooltip-bgcolor-hover: var(--lew-pop-bgcolor-hover);
+  --lew-tooltip-box-shadow: drop-shadow(
+      0px 0px 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 50%, transparent)
+    )
+    drop-shadow(0px 4px 12px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 40%, transparent))
+    drop-shadow(0px 12px 32px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 30%, transparent));
 }
 
 @mixin export-other-colors-light() {

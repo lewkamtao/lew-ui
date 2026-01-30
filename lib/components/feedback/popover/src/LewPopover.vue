@@ -77,7 +77,7 @@ function initTippy() {
     interactive: true,
     hideOnClick: tippyTrigger !== 'mouseenter' ? props.hideOnClick : false,
     placement,
-    duration: [250, 250],
+    duration: [150, 150],
     arrow: false,
     offset,
     delay: tippyTrigger === 'mouseenter' ? props.delay : undefined,

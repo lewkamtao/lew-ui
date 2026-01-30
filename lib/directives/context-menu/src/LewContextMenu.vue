@@ -69,7 +69,7 @@ const TIPPY_CONFIG = {
   trigger: 'mouseenter' as const,
   interactive: true,
   placement: 'right-start' as const,
-  duration: [250, 250] as [number, number],
+  duration: [150, 150] as [number, number],
   delay: [120, 120] as [number, number],
   arrow: false,
   offset: [0, 0] as [number, number],
@@ -165,17 +165,23 @@ onBeforeUnmount(() => {
   <LewFlex direction="y" gap="0" class="lew-context-menu">
     <template v-if="_options.length > 0">
       <div
-        v-for="(item, index) in _options" :key="`menu-item-${index}`" class="lew-context-menu-box" :class="{
+        v-for="(item, index) in _options"
+        :key="`menu-item-${index}`"
+        class="lew-context-menu-box"
+        :class="{
           'lew-context-menu-box-disabled': item.disabled,
           'lew-context-menu-box-divider-line': item.isDividerLine,
         }"
       >
         <div
           :ref="(el: any) => setItemRef(el, index)"
-          class="lew-context-menu-item" :style="{ 'animation-delay': `${index * 10}ms` }" :class="{
+          class="lew-context-menu-item"
+          :style="{ 'animation-delay': `${index * 10}ms` }"
+          :class="{
             'lew-context-menu-item-active': item.active,
             'lew-context-menu-item-disabled': item.disabled,
-          }" @click="clickItem(item)"
+          }"
+          @click="clickItem(item)"
         >
           <div v-if="hasCheckableItems" class="lew-context-menu-checkable">
             <CommonIcon v-if="item.checked" :size="12" :stroke-width="2.5" type="check" />
@@ -183,19 +189,33 @@ onBeforeUnmount(() => {
 
           <div class="lew-context-menu-label">
             <RenderComponent v-if="item.icon" :render-fn="item.icon" />
-            <RenderComponent class="lew-context-menu-label-text" :render-fn="item.label" />
+            <RenderComponent
+              class="lew-context-menu-label-text"
+              :render-fn="item.label"
+            />
           </div>
 
           <CommonIcon
-            v-if="hasChildrenItems" class="lew-context-menu-item-chevron" :size="14" :style="{
+            v-if="hasChildrenItems"
+            class="lew-context-menu-item-chevron"
+            :size="14"
+            :style="{
               opacity: item.children?.length ? 1 : 0,
-            }" type="chevron-right"
+            }"
+            type="chevron-right"
           />
         </div>
       </div>
     </template>
 
-    <LewEmpty v-else width="120px" padding="5px" font-size="12px" type="search" title="暂无操作" />
+    <LewEmpty
+      v-else
+      width="120px"
+      padding="5px"
+      font-size="12px"
+      type="search"
+      title="暂无操作"
+    />
   </LewFlex>
 </template>
 
