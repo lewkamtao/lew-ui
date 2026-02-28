@@ -33,6 +33,9 @@ export default {
     close: '閉じる',
     showCode: 'コードを表示',
     copySuccess: 'コピー成功！',
+    back: '戻る',
+    backToHome: 'ホームに戻る',
+    loading: '読み込み中...',
   },
   components: {
     image: {
@@ -127,6 +130,9 @@ export default {
         disabled: '無効状態',
         request: 'リクエスト',
       },
+      emits: {
+        click: 'ボタンクリック時にトリガー（無効またはローディング状態ではトリガーされません）',
+      },
     },
     tag: {
       name: 'タグ Tag',
@@ -152,6 +158,9 @@ export default {
       demo7: {
         title: 'スロット',
       },
+      demo8: {
+        title: '編集可能',
+      },
       props: {
         text: 'タグテキスト（スロットより優先、幅を超えると text-trim 効果が発動）',
         type: 'スタイルタイプ',
@@ -162,9 +171,14 @@ export default {
         round: '角丸',
         oversize: 'よりゆったりとしたサイズ',
         close: 'Promise 関数を受け取り、タグを閉じるために使用',
+        editable: '編集可能かどうか（v-model と一緒に使用）',
+        placeholder: '編集モードでのプレースホルダーテキスト',
       },
       emits: {
         close: 'タグを閉じるイベントコールバック',
+        change: '編集モードで内容が変更された時にトリガー',
+        focus: '編集状態に入った時にトリガー',
+        blur: '編集状態を抜けた時にトリガー',
       },
     },
     badge: {
@@ -2029,6 +2043,14 @@ export default {
       },
       demo4: {
         title: 'ESCキーでの閉じる設定',
+      },
+      demo5: {
+        title: 'ネストされたダイアログ',
+      },
+      demo6: {
+        title: 'ダイアログとドロワーのネスト',
+        description:
+          '複雑なシーンでの多層ネストをサポート。ダイアログ内でドロワーを開く、ドロワー内でダイアログを開く、最大4層のネストをサポート。',
       },
       model: {
         visible: '表示状態',

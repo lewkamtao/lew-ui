@@ -33,6 +33,9 @@ export default {
     close: '닫기',
     showCode: '코드 보기',
     copySuccess: '복사 성공!',
+    back: '뒤로',
+    backToHome: '홈으로 돌아가기',
+    loading: '로딩 중...',
   },
   components: {
     image: {
@@ -127,6 +130,9 @@ export default {
         disabled: '비활성화 상태 여부',
         request: '요청 여부',
       },
+      emits: {
+        click: '버튼 클릭 시 트리거됨 (비활성화 또는 로딩 상태에서는 트리거되지 않음)',
+      },
     },
     tag: {
       name: '태그 Tag',
@@ -152,6 +158,9 @@ export default {
       demo7: {
         title: '슬롯',
       },
+      demo8: {
+        title: '편집 가능',
+      },
       props: {
         text: '태그 텍스트, 슬롯보다 우선순위가 높으며, 너비를 초과하면 text-trim 효과 발생',
         type: '스타일 유형',
@@ -162,9 +171,14 @@ export default {
         round: '둥근 모서리 여부',
         oversize: '더 여유로운 크기',
         close: '태그를 닫기 위한 Promise 함수를 받습니다',
+        editable: '편집 가능 여부 (v-model과 함께 사용)',
+        placeholder: '편집 모드에서의 플레이스홀더 텍스트',
       },
       emits: {
         close: '태그 닫기 이벤트 콜백',
+        change: '편집 모드에서 내용 변경 시 트리거',
+        focus: '편집 상태 진입 시 트리거',
+        blur: '편집 상태 종료 시 트리거',
       },
     },
     badge: {
@@ -2077,6 +2091,14 @@ export default {
       },
       demo4: {
         title: 'ESC로 닫기 허용 여부',
+      },
+      demo5: {
+        title: '중첩 대화 상자',
+      },
+      demo6: {
+        title: '대화 상자와 서랍 중첩',
+        description:
+          '복잡한 시나리오에서의 다층 중첩, 대화 상자에서 서랍 열기, 서랍에서 대화 상자 열기, 최대 4단계 중첩 지원.',
       },
       model: {
         visible: '표시 여부',

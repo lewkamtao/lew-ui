@@ -33,6 +33,9 @@ export default {
     close: 'Chiudi',
     showCode: 'Mostra codice',
     copySuccess: 'Copia completata con successo!',
+    back: 'Indietro',
+    backToHome: 'Torna alla home',
+    loading: 'Caricamento...',
   },
   components: {
     image: {
@@ -127,6 +130,9 @@ export default {
         disabled: 'Disabilitato',
         request: 'Richiesta',
       },
+      emits: {
+        click: 'Attivato al clic del pulsante (non attivato in stato disabilitato o di caricamento)',
+      },
     },
     tag: {
       name: 'Tag',
@@ -153,6 +159,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Modificabile',
+      },
       props: {
         text: 'Testo del tag (priorità maggiore dello slot, testo tagliato se eccede la larghezza)',
         type: 'Tipo di stile',
@@ -163,9 +172,14 @@ export default {
         round: 'Bordi arrotondati',
         oversize: 'Dimensione più ampia',
         close: 'Funzione Promise per chiudere il tag',
+        editable: 'Modalità modificabile (richiede v-model)',
+        placeholder: 'Testo segnaposto in modalità modifica',
       },
       emits: {
         close: 'Callback chiusura tag',
+        change: 'Attivato quando il contenuto cambia in modalità modifica',
+        focus: 'Attivato quando si entra in modalità modifica',
+        blur: 'Attivato quando si esce dalla modalità modifica',
       },
     },
     badge: {
@@ -2017,6 +2031,14 @@ export default {
       },
       demo4: {
         title: 'Chiusura con ESC abilitata',
+      },
+      demo5: {
+        title: 'Modale annidato',
+      },
+      demo6: {
+        title: 'Nidificazione modale e drawer',
+        description:
+          'Nidificazione multilivello per scenari complessi, aprire drawer da modale, modale da drawer, fino a 4 livelli.',
       },
       model: {
         visible: 'Visibilità',

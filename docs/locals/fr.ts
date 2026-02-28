@@ -34,6 +34,9 @@ export default {
     close: 'Fermer',
     showCode: 'Afficher le code',
     copySuccess: 'Copie réussie !',
+    back: 'Retour',
+    backToHome: 'Retour à l\'accueil',
+    loading: 'Chargement...',
   },
   components: {
     image: {
@@ -128,6 +131,9 @@ export default {
         disabled: 'État désactivé',
         request: 'Requête',
       },
+      emits: {
+        click: 'Déclenché lors du clic sur le bouton (non déclenché en état désactivé ou en chargement)',
+      },
     },
     tag: {
       name: 'Étiquette',
@@ -154,6 +160,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Éditable',
+      },
       props: {
         text: 'Texte de l\'étiquette, prioritaire sur le slot, l\'effet text-trim sera déclenché en cas de dépassement de la largeur',
         type: 'Type de style',
@@ -164,9 +173,14 @@ export default {
         round: 'Coins arrondis',
         oversize: 'Taille plus relâchée',
         close: 'Fonction Promise pour fermer l\'étiquette',
+        editable: 'Mode éditable (nécessite v-model)',
+        placeholder: 'Texte de placeholder en mode édition',
       },
       emits: {
         close: 'Déclenché lors de la fermeture',
+        change: 'Déclenché lors du changement de contenu en mode édition',
+        focus: 'Déclenché lors de l\'entrée en mode édition',
+        blur: 'Déclenché lors de la sortie du mode édition',
       },
     },
     badge: {
@@ -2097,6 +2111,14 @@ export default {
       },
       demo4: {
         title: 'Fermeture par touche ESC',
+      },
+      demo5: {
+        title: 'Dialogue imbriqué',
+      },
+      demo6: {
+        title: 'Imbrication dialogue et tiroir',
+        description:
+          'Imbrication multi-niveaux pour scénarios complexes, ouvrir un tiroir depuis un dialogue, un dialogue depuis un tiroir, jusqu\'à 4 niveaux.',
       },
       model: {
         visible: 'Visibilité',

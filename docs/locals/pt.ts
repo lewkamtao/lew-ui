@@ -33,6 +33,9 @@ export default {
     close: 'Fechar',
     showCode: 'Mostrar código',
     copySuccess: 'Cópia bem-sucedida!',
+    back: 'Voltar',
+    backToHome: 'Voltar para a página inicial',
+    loading: 'Carregando...',
   },
   components: {
     image: {
@@ -127,6 +130,9 @@ export default {
         disabled: 'Estado desativado',
         request: 'Requisição',
       },
+      emits: {
+        click: 'Acionado ao clicar no botão (não acionado em estado desativado ou de carregamento)',
+      },
     },
     tag: {
       name: 'Etiqueta',
@@ -153,6 +159,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Editável',
+      },
       props: {
         text: 'Texto da etiqueta, tem prioridade sobre o slot, o efeito text-trim será ativado quando a largura for excedida',
         type: 'Tipo de estilo',
@@ -163,9 +172,14 @@ export default {
         round: 'Arredondado',
         oversize: 'Tamanho mais solto',
         close: 'Recebe uma função Promise para fechar a etiqueta',
+        editable: 'Modo editável (requer v-model)',
+        placeholder: 'Texto de espaço reservado no modo de edição',
       },
       emits: {
         close: 'Callback de evento ao fechar a etiqueta',
+        change: 'Acionado quando o conteúdo muda no modo de edição',
+        focus: 'Acionado ao entrar no modo de edição',
+        blur: 'Acionado ao sair do modo de edição',
       },
     },
     badge: {
@@ -2088,6 +2102,14 @@ export default {
       },
       demo4: {
         title: 'Permitir fechamento com ESC',
+      },
+      demo5: {
+        title: 'Diálogo aninhado',
+      },
+      demo6: {
+        title: 'Aninhamento de diálogo e gaveta',
+        description:
+          'Aninhamento multinível para cenários complexos, abrir gaveta a partir de diálogo, diálogo a partir de gaveta, até 4 níveis.',
       },
       model: {
         visible: 'Visibilidade',

@@ -33,6 +33,9 @@ export default {
     close: 'Cerrar',
     showCode: 'Mostrar código',
     copySuccess: '¡Copiado con éxito!',
+    back: 'Volver',
+    backToHome: 'Volver al inicio',
+    loading: 'Cargando...',
   },
   components: {
     image: {
@@ -128,6 +131,9 @@ export default {
         disabled: 'Estado deshabilitado',
         request: 'Solicitud',
       },
+      emits: {
+        click: 'Se activa al hacer clic en el botón (no se activa en estado deshabilitado o de carga)',
+      },
     },
     tag: {
       name: 'Etiqueta',
@@ -154,6 +160,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Editable',
+      },
       props: {
         text: 'Texto de la etiqueta, tiene prioridad sobre el slot, se activará el efecto text-trim cuando se exceda el ancho',
         type: 'Tipo de estilo',
@@ -164,9 +173,14 @@ export default {
         round: 'Bordes redondeados',
         oversize: 'Tamaño más holgado',
         close: 'Recibe una función Promise para cerrar la etiqueta',
+        editable: 'Modo editable (requiere v-model)',
+        placeholder: 'Texto de marcador de posición en modo edición',
       },
       emits: {
         close: 'Evento de cierre de etiqueta',
+        change: 'Se activa cuando el contenido cambia en modo edición',
+        focus: 'Se activa al entrar en modo edición',
+        blur: 'Se activa al salir del modo edición',
       },
     },
     badge: {
@@ -2066,7 +2080,15 @@ export default {
         title: 'Custom Header and Footer',
       },
       demo4: {
-        title: 'Allow ESC to Close',
+        title: 'Permitir cierre con ESC',
+      },
+      demo5: {
+        title: 'Diálogo anidado',
+      },
+      demo6: {
+        title: 'Anidación de diálogo y cajón',
+        description:
+          'Anidación multinivel para escenarios complejos, abrir cajón desde diálogo, diálogo desde cajón, hasta 4 niveles.',
       },
       model: {
         visible: 'Visible',

@@ -34,6 +34,9 @@ export default {
     close: 'Schließen',
     showCode: 'Code anzeigen',
     copySuccess: 'Kopieren erfolgreich!',
+    back: 'Zurück',
+    backToHome: 'Zurück zur Startseite',
+    loading: 'Laden...',
   },
   components: {
     image: {
@@ -129,6 +132,9 @@ export default {
         disabled: 'Deaktivierter Zustand',
         request: 'Anfrage',
       },
+      emits: {
+        click: 'Wird beim Klicken auf die Schaltfläche ausgelöst (nicht ausgelöst im deaktivierten oder Ladezustand)',
+      },
     },
     tag: {
       name: 'Etikett',
@@ -155,6 +161,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Bearbeitbar',
+      },
       props: {
         text: 'Etikettentext, hat Vorrang vor Slot, Text-Trim-Effekt wird bei Überschreitung der Breite ausgelöst',
         type: 'Stiltyp',
@@ -165,9 +174,14 @@ export default {
         round: 'Abgerundet',
         oversize: 'Großzügigere Größe',
         close: 'Empfängt eine Promise-Funktion zum Schließen des Etiketts',
+        editable: 'Bearbeitbarer Modus (erfordert v-model)',
+        placeholder: 'Platzhaltertext im Bearbeitungsmodus',
       },
       emits: {
         close: 'Rückruf beim Schließen des Etiketts',
+        change: 'Wird ausgelöst, wenn sich der Inhalt im Bearbeitungsmodus ändert',
+        focus: 'Wird beim Betreten des Bearbeitungsmodus ausgelöst',
+        blur: 'Wird beim Verlassen des Bearbeitungsmodus ausgelöst',
       },
     },
     badge: {
@@ -2106,6 +2120,14 @@ export default {
       },
       demo4: {
         title: 'ESC zum Schließen erlauben',
+      },
+      demo5: {
+        title: 'Verschachtelter Dialog',
+      },
+      demo6: {
+        title: 'Dialog- und Drawer-Verschachtelung',
+        description:
+          'Mehrstufige Verschachtelung für komplexe Szenarien, Drawer aus Dialog öffnen, Dialog aus Drawer öffnen, bis zu 4 Ebenen.',
       },
       model: {
         visible: 'Sichtbarkeit',
