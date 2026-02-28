@@ -81,16 +81,20 @@ onMounted(() => {
   initMarkdownIt()
 })
 
+// 通过 import.meta.glob 让 Vite 在构建时静态分析并打包所有 mdc 文件
+const mdcModules = import.meta.glob('../../lib/**/*.mdc', { query: '?raw', import: 'default' })
+
 // 尝试加载 mdc 文件的多个可能路径
 async function tryLoadMdc(paths: string[]): Promise<string | null> {
   for (const path of paths) {
-    try {
-      const mdcModule = await import(/* @vite-ignore */ `${path}?raw`)
-      return mdcModule.default || mdcModule
-    }
-    catch {
-      // 继续尝试下一个路径
-      continue
+    if (path in mdcModules) {
+      try {
+        const content = await mdcModules[path]()
+        return content as string
+      }
+      catch {
+        continue
+      }
     }
   }
   return null

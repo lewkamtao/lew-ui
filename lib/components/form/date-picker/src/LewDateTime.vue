@@ -16,7 +16,8 @@ const emit = defineEmits(['change', 'cancel'])
 const dateRef = ref()
 const timeRef = ref()
 
-// DateTime 组件专门处理日期和时间都存在的情况
+// 本地追踪已选中的日期，避免在模板中调用子组件方法导致跨组件响应式追踪
+const selectedDate = ref('')
 
 // 获取日期格式
 const dateFormat = computed(() => {
@@ -38,13 +39,15 @@ const timeFormat = computed(() => {
   return 'HH:mm:ss'
 })
 
-// 移除显示值计算属性，不再需要顶部显示
+function onDateChange(value: string) {
+  selectedDate.value = value
+}
 
 function init(value: string | undefined = '') {
   if (value) {
     const parsedDateTime = dayjs(value, props.valueFormat)
     if (parsedDateTime.isValid()) {
-      // 初始化子组件
+      selectedDate.value = parsedDateTime.format(dateFormat.value)
       nextTick(() => {
         dateRef.value?.init(parsedDateTime.format(dateFormat.value))
         timeRef.value?.init(parsedDateTime.format(timeFormat.value))
@@ -54,6 +57,7 @@ function init(value: string | undefined = '') {
       // 尝试使用默认解析
       const fallbackDateTime = dayjs(value)
       if (fallbackDateTime.isValid()) {
+        selectedDate.value = fallbackDateTime.format(dateFormat.value)
         nextTick(() => {
           dateRef.value?.init(fallbackDateTime.format(dateFormat.value))
           timeRef.value?.init(fallbackDateTime.format(timeFormat.value))
@@ -62,7 +66,9 @@ function init(value: string | undefined = '') {
     }
   }
   else {
+    // 无预设值时默认选中今日，与日历视觉保持一致
     const now = dayjs()
+    selectedDate.value = now.format(dateFormat.value)
     nextTick(() => {
       dateRef.value?.init(now.format(dateFormat.value))
       timeRef.value?.init(now.format(timeFormat.value))
@@ -71,7 +77,7 @@ function init(value: string | undefined = '') {
 }
 
 function confirmDateTime() {
-  // 从 ref 获取最新值
+  // 在事件处理函数中调用 getValue() 是安全的，不会产生响应式追踪问题
   const date = dateRef.value?.getValue() || ''
   const time = timeRef.value?.getValue() || ''
   if (date && time) {
@@ -80,8 +86,9 @@ function confirmDateTime() {
 }
 
 function initNow() {
-  // 使用当前时间初始化
   const now = dayjs()
+  // 点击"现在"即为显式选择当前日期，启用确认按钮
+  selectedDate.value = now.format(dateFormat.value)
   nextTick(() => {
     dateRef.value?.init(now.format(dateFormat.value))
     timeRef.value?.initCurrentTime()
@@ -101,7 +108,7 @@ defineExpose({ init })
     <div class="lew-datetime-content">
       <!-- 日期面板 -->
       <div class="lew-datetime-panel lew-datetime-date-panel">
-        <LewDate ref="dateRef" :value-format="dateFormat" />
+        <LewDate ref="dateRef" :value-format="dateFormat" @change="onDateChange" />
       </div>
 
       <!-- 时间面板 -->
@@ -127,7 +134,7 @@ defineExpose({ init })
           取消
         </LewButton>
         <LewButton
-          :disabled="!dateRef?.getValue() || !timeRef?.getValue()"
+          :disabled="!selectedDate"
           type="fill"
           color="primary"
           size="mini"

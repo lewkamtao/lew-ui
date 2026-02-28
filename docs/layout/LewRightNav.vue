@@ -220,7 +220,7 @@ onUnmounted(() => {
     height: 14px;
     background: linear-gradient(90deg, var(--lew-bgcolor-3) 25%, var(--lew-bgcolor-2) 50%, var(--lew-bgcolor-3) 75%);
     background-size: 200% 100%;
-    border-radius: var(--lew-border-radius-small);
+    border-radius: 3px;
     animation: skeleton-loading 1.5s infinite;
   }
 

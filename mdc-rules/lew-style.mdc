@@ -197,7 +197,8 @@ $semantic-colors: (
 
 /* Tooltip */
 --lew-tooltip-bgcolor             /* tooltip背景 */
---lew-tooltip-box-shadow          /* tooltip阴影 */
+--lew-tooltip-bgcolor-hover       /* tooltip hover背景 */
+--lew-tooltip-box-shadow          /* tooltip阴影（drop-shadow，更立体） */
 
 /* Modal */
 --lew-modal-bgcolor               /* 遮罩背景（半透明） */
@@ -531,4 +532,5 @@ mediaQuery.addEventListener('change', e => toggleDarkMode(e.matches))
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
+| 1.1.0 | 优化 Tooltip 阴影效果，增强白天模式可见度；重命名 `--lew-tooltip-bgcolor-active` 为 `--lew-tooltip-bgcolor-hover`；整理 tippy.scss 代码注释 | 2026-01-20 |
 | 1.0.0 | 初始版本，完整样式系统文档 | 2026-01-18 |

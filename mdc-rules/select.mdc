@@ -91,7 +91,27 @@ interface LewSelectSearchMethodParams {
 
 ### 3.7 插槽
 
-该组件暂不支持此功能。
+| 插槽名 | 说明 | 作用域参数 |
+|--------|------|------------|
+| header | 下拉框顶部自定义内容 | - |
+| footer | 下拉框底部自定义内容 | - |
+| empty | 无数据时的自定义内容 | - |
+| item | 自定义选项内容 | `{ props: { label, value, disabled, checked, ...其他选项属性 } }` |
+
+#### item 插槽使用示例
+
+```vue
+<lew-select v-model="value" :options="options">
+  <template #item="{ props }">
+    <div class="custom-item">
+      <span>{{ props.label }}</span>
+      <span v-if="props.checked">✓</span>
+    </div>
+  </template>
+</lew-select>
+```
+
+**注意**：使用 `item` 插槽时，点击事件由组件内部处理，无需在插槽内容中手动绑定点击事件。
 
 ## 4. 注意事项
 
@@ -178,6 +198,7 @@ const loadInitialOption = async () => {
 
 | 版本 | 变更内容 | 日期 |
 |------|----------|------|
+| 1.0.1 | 修复使用 item 插槽时点击无法选中值的问题 | 2026-01-19 |
 | 1.0.0 | 初始版本 | 2025-01-09 |
 
 ---

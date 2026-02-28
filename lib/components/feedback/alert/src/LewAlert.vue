@@ -73,11 +73,12 @@ const alertClassName = computed(() => {
       font-size: 14px;
       white-space: pre-line;
       word-wrap: break-word;
+      margin-top: -1.5px;
     }
 
     .lew-alert-content {
       width: 100%;
-      margin-top: 8px;
+      margin-top: 5px;
       font-size: 14px;
       white-space: pre-line;
       word-wrap: break-word;

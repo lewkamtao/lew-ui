@@ -28,5 +28,6 @@ module.exports = {
     'node_modules/**/*.css',
     'dist/**/*.css',
     'public/**/*.css',
+    'lib/styles/*.scss',
   ],
 }

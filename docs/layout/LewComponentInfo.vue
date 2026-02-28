@@ -18,26 +18,12 @@ const mdcPath = computed(() => getMdcPath(componentName.value))
 const showMdcDrawer = ref(false)
 const mdcFileExists = ref(false)
 
-// 检查 mdc 文件是否存在
-async function checkMdcFileExists() {
-  if (!mdcPath.value) {
-    mdcFileExists.value = false
-    return
-  }
+// 通过 import.meta.glob 让 Vite 在构建时静态分析并打包所有 mdc 文件
+const mdcModules = import.meta.glob('../../lib/**/*.mdc', { query: '?raw', import: 'default' })
 
-  try {
-    // 尝试加载文件
-    const mdcModule = await import(/* @vite-ignore */ `${mdcPath.value}?raw`)
-    if (mdcModule.default || mdcModule) {
-      mdcFileExists.value = true
-    }
-    else {
-      mdcFileExists.value = false
-    }
-  }
-  catch {
-    mdcFileExists.value = false
-  }
+// 检查 mdc 文件是否存在（直接查映射表，无需异步）
+function checkMdcFileExists() {
+  mdcFileExists.value = !!mdcPath.value && (mdcPath.value in mdcModules)
 }
 
 // 监听路由变化，重新检查文件
