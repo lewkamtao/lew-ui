@@ -294,7 +294,7 @@ export { _ButtonInternal }  // 下划线前缀表示内部 API
 
 ### 3. 文档更新
 - 更新 CHANGELOG
-- 更新组件文档
+- 更新相关文档页面与迁移说明
 - 添加迁移指南（如 Breaking）
 - 更新类型定义
 
