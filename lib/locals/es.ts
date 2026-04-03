@@ -91,18 +91,22 @@ export default {
   drawer: {
     closeText: 'Cerrar',
     okText: 'Aceptar',
+    confirmText: 'Confirmar',
   },
   modal: {
     closeText: 'Cerrar',
     okText: 'Aceptar',
+    confirmText: 'Confirmar',
   },
   dialog: {
     cancelText: 'Cancelar',
     okText: 'Aceptar',
+    confirmText: 'Confirmar',
   },
   popok: {
     cancelText: 'Cancelar',
     okText: 'Aceptar',
+    confirmText: 'Confirmar',
   },
   colorPicker: {
     placeholder: 'Por favor, introduzca',

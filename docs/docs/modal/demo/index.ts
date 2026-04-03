@@ -11,6 +11,8 @@ import DemoModal5 from './DemoModal5.vue'
 import DemoModal5Code from './DemoModal5.vue?raw'
 import DemoModal6 from './DemoModal6.vue'
 import DemoModal6Code from './DemoModal6.vue?raw'
+import DemoModal7 from './DemoModal7.vue'
+import DemoModal7Code from './DemoModal7.vue?raw'
 
 export const demoGroup = [
   DemoModal1,
@@ -19,6 +21,7 @@ export const demoGroup = [
   DemoModal4,
   DemoModal5,
   DemoModal6,
+  DemoModal7,
 ]
 
 export const codeGroup = [
@@ -28,4 +31,5 @@ export const codeGroup = [
   DemoModal4Code,
   DemoModal5Code,
   DemoModal6Code,
+  DemoModal7Code,
 ]

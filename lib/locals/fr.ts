@@ -91,18 +91,22 @@ export default {
   drawer: {
     closeText: 'Fermer',
     okText: 'OK',
+    confirmText: 'Confirmer',
   },
   modal: {
     closeText: 'Fermer',
     okText: 'OK',
+    confirmText: 'Confirmer',
   },
   dialog: {
     cancelText: 'Annuler',
     okText: 'OK',
+    confirmText: 'Confirmer',
   },
   popok: {
     cancelText: 'Annuler',
     okText: 'OK',
+    confirmText: 'Confirmer',
   },
   colorPicker: {
     placeholder: 'Veuillez saisir',

@@ -91,18 +91,22 @@ export default {
   drawer: {
     closeText: '閉じる',
     okText: '確定',
+    confirmText: '確認',
   },
   modal: {
     closeText: '閉じる',
     okText: '確定',
+    confirmText: '確認',
   },
   dialog: {
     cancelText: 'キャンセル',
     okText: '確定',
+    confirmText: '確認',
   },
   popok: {
     cancelText: 'キャンセル',
     okText: '確定',
+    confirmText: '確認',
   },
   colorPicker: {
     placeholder: '入力してください',

@@ -27,6 +27,10 @@ function open({
   form.value = cloneDeep(row)
 }
 
+function closeModal() {
+  visible.value = false
+}
+
 function ok() {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
@@ -72,16 +76,23 @@ defineExpose({ open })
 <template>
   <LewModal
     v-model:visible="visible"
-    :close-button-props="{
-      request: () => {
-        visible = false
+    :footer-buttons="[
+      {
+        props: {
+          text: locale.t('modal.closeText'),
+          type: 'light',
+          color: 'gray',
+          request: closeModal,
+        },
       },
-    } as any
-    "
-    :ok-button-props="{
-      request: ok,
-    } as any
-    "
+      {
+        props: {
+          text: locale.t('modal.okText'),
+          color: 'primary',
+          request: ok,
+        },
+      },
+    ]"
     :title="`${
       isEditing
         ? locale.t('inputTable.editTitle')

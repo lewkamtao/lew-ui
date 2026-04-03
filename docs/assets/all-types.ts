@@ -69,7 +69,7 @@ export default {
   "LewDialogType": `export type LewDialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'`,
   "LewMessageType": `export type LewMessageType = 'warning' | 'error' | 'info' | 'normal' | 'success' | 'loading'`,
   "LewNotificationType": `export type LewNotificationType = 'warning' | 'info' | 'normal' | 'success' | 'error'`,
-  "LewDialogOptions": `export interface LewDialogOptions {\n  type?: LewDialogType\n  icon?: LewComponentSource\n  title?: LewComponentSource\n  content?: LewComponentSource\n  hideIcon?: boolean\n  ok?: () => Promise<boolean>\n  cancel?: () => Promise<boolean>\n  okText?: string\n  cancelText?: string\n  closeOnClickOverlay?: boolean\n  closeByEsc?: boolean\n}`,
+  "LewDialogOptions": `export interface LewDialogOptions {\n  type?: LewDialogType\n  icon?: LewComponentSource\n  title?: LewComponentSource\n  content?: LewComponentSource\n  hideIcon?: boolean\n  footerButtons?: LewDialogPopokFooterButtonItem[]\n  closeOnClickOverlay?: boolean\n  closeByEsc?: boolean\n}`,
   "LewDialogMethod": `export interface LewDialogMethod {\n  (options: LewDialogOptions): void\n}`,
   "LewDialogInstance": `export interface LewDialogInstance {\n  name: string\n  warning: LewDialogMethod\n  error: LewDialogMethod\n  info: LewDialogMethod\n  normal: LewDialogMethod\n  success: LewDialogMethod\n}`,
   "LewMessageOptions": `export interface LewMessageOptions {\n  id?: string\n  content: string\n  duration?: number\n  onClose?: () => void\n}`,

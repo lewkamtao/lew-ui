@@ -2035,10 +2035,8 @@ export default {
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         closeByEsc: 'Fechar com a tecla ESC',
         hideFooter: 'Ocultar rodapé',
-        hideOkButton: 'Ocultar botão OK',
-        hideCloseButton: 'Ocultar botão de fechar',
-        okButtonProps: 'Propriedades do botão OK',
-        closeButtonProps: 'Propriedades do botão de fechar',
+        footerButtons:
+          'Botões do rodapé (props → LewButton, incl. request); padrão: um Confirmar fecha',
         zIndex: 'Índice Z',
       },
       emits: {
@@ -2067,16 +2065,17 @@ export default {
       demo6: {
         title: 'Ícone personalizado',
       },
+      demo7: {
+        title: 'Botões de rodapé personalizados',
+      },
       props: {
         type: 'Tipo',
         width: 'Largura',
         trigger: 'Gatilho',
         title: 'Título',
         content: 'Conteúdo',
-        okText: 'Texto do botão OK',
-        cancelText: 'Texto do botão Cancelar',
-        ok: 'Callback de confirmação',
-        cancel: 'Callback de cancelamento',
+        footerButtons:
+          'Botões do rodapé (props → LewButton, incl. request; false mantém aberto); padrão: um Confirmar',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         closeByEsc: 'Fechar com a tecla ESC',
         transformOrigin: 'Origem da transformação',
@@ -2111,6 +2110,9 @@ export default {
         description:
           'Aninhamento multinível para cenários complexos, abrir gaveta a partir de diálogo, diálogo a partir de gaveta, até 4 níveis.',
       },
+      demo7: {
+        title: 'footerButtons rodapé dinâmico',
+      },
       model: {
         visible: 'Visibilidade',
       },
@@ -2119,13 +2121,11 @@ export default {
         width: 'Largura',
         top: 'Distância do topo',
         hideFooter: 'Ocultar rodapé',
-        hideOkButton: 'Ocultar botão OK',
-        hideCloseButton: 'Ocultar botão de fechar',
+        footerButtons:
+          'Lista de botões (props → LewButton, incl. request); padrão: um Confirmar fecha',
         closeByEsc: 'Fechar com tecla ESC',
-        okButtonProps: 'Propriedades do botão OK',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         zIndex: 'Índice Z',
-        closeButtonProps: 'Propriedades do botão Fechar',
         maxHeight: 'Altura máxima',
       },
     },
@@ -2148,6 +2148,9 @@ export default {
       demo5: {
         title: 'Conteúdo personalizado',
       },
+      demo6: {
+        title: 'Botões de rodapé personalizados',
+      },
       props: {
         type: 'Tipo',
         width: 'Largura',
@@ -2155,10 +2158,8 @@ export default {
         title: 'Título',
         content: 'Conteúdo',
         placement: 'Posicionamento',
-        okText: 'Texto do botão OK',
-        cancelText: 'Texto do botão Cancelar',
-        ok: 'Callback de confirmação',
-        cancel: 'Callback de cancelamento',
+        footerButtons:
+          'Botões do rodapé (props → LewButton, incl. request; false mantém aberto); padrão: um Confirmar',
         icon: 'Ícone personalizado',
         hideIcon: 'Ocultar ícone',
       },

@@ -1975,10 +1975,8 @@ export default {
         closeOnClickOverlay: 'オーバーレイクリックで閉じるかどうか',
         closeByEsc: 'ESCキーで閉じるかどうか',
         hideFooter: 'フッターを非表示にするかどうか',
-        hideOkButton: '確認ボタンを非表示にするかどうか',
-        hideCloseButton: '閉じるボタンを非表示にするかどうか',
-        okButtonProps: '確認ボタンのプロパティ',
-        closeButtonProps: '閉じるボタンのプロパティ',
+        footerButtons:
+          'フッターボタン一覧（各項目 props→LewButton、request 可）；省略時は「確認」1件で閉じる',
         zIndex: '重なり順序',
       },
       emits: {
@@ -2007,16 +2005,17 @@ export default {
       demo6: {
         title: 'カスタムアイコン',
       },
+      demo7: {
+        title: 'フッターボタンのカスタム',
+      },
       props: {
         type: 'タイプ',
         width: '幅',
         trigger: 'トリガー方式',
         title: 'タイトル',
         content: '内容',
-        okText: '確認ボタンのテキスト',
-        cancelText: 'キャンセルボタンのテキスト',
-        ok: '確認時のコールバック',
-        cancel: 'キャンセル時のコールバック',
+        footerButtons:
+          'フッターボタン一覧（props→LewButton、request；false で閉じない）；省略時は「確認」1件',
         closeOnClickOverlay: 'オーバーレイクリックによる閉じる',
         closeByEsc: 'ESCキーによる閉じる',
         transformOrigin: 'アニメーション原点',
@@ -2052,6 +2051,9 @@ export default {
         description:
           '複雑なシーンでの多層ネストをサポート。ダイアログ内でドロワーを開く、ドロワー内でダイアログを開く、最大4層のネストをサポート。',
       },
+      demo7: {
+        title: 'footerButtons 動的フッター',
+      },
       model: {
         visible: '表示状態',
       },
@@ -2060,11 +2062,9 @@ export default {
         width: '幅',
         top: '上端からの距離',
         hideFooter: 'フッターを非表示にするかどうか',
-        hideOkButton: '確認ボタンを非表示にするかどうか',
-        hideCloseButton: '閉じるボタンを非表示にするかどうか',
+        footerButtons:
+          'フッターボタン一覧（各項目 props→LewButton、request 可）；省略時は「確認」1件で閉じる',
         closeByEsc: 'ESCキーでの閉じる可否',
-        okButtonProps: '確認ボタンのプロパティ',
-        closeButtonProps: '閉じるボタンのプロパティ',
         closeOnClickOverlay: 'オーバーレイクリックでの閉じる可否',
         zIndex: '重なり順序',
         maxHeight: '最大高さ',
@@ -2088,6 +2088,9 @@ export default {
       demo5: {
         title: 'カスタム内容',
       },
+      demo6: {
+        title: 'フッターボタンのカスタム',
+      },
       props: {
         type: 'タイプ',
         width: '幅',
@@ -2095,10 +2098,8 @@ export default {
         title: 'タイトル',
         content: '内容',
         placement: '表示位置',
-        okText: '確認ボタンのテキスト',
-        cancelText: 'キャンセルボタンのテキスト',
-        ok: '確認時のコールバック',
-        cancel: 'キャンセル時のコールバック',
+        footerButtons:
+          'フッターボタン一覧（props→LewButton、request；false で閉じない）；省略時は「確認」1件',
         icon: 'カスタムアイコン',
         hideIcon: 'アイコンを非表示にするかどうか',
       },

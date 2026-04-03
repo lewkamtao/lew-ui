@@ -91,18 +91,22 @@ export default {
   drawer: {
     closeText: '닫기',
     okText: '확인',
+    confirmText: '확인',
   },
   modal: {
     closeText: '닫기',
     okText: '확인',
+    confirmText: '확인',
   },
   dialog: {
     cancelText: '취소',
     okText: '확인',
+    confirmText: '확인',
   },
   popok: {
     cancelText: '취소',
     okText: '확인',
+    confirmText: '확인',
   },
   colorPicker: {
     placeholder: '입력해주세요',

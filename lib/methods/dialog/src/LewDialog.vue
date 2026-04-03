@@ -1,5 +1,6 @@
 <script lang="ts" setup name="dialog">
 import type { LewColor } from 'lew-ui'
+import type { LewDialogPopokFooterButtonItem } from 'lew-ui/types'
 import { useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
@@ -18,9 +19,7 @@ useDOMCreate('lew-dialog')
 const dialogId = `lew-dialog-${getUniqueId()}`
 
 const visible = ref(false)
-const okLoading = ref(false)
-const cancelLoading = ref(false)
-const okRef = ref()
+const primaryButtonRef = ref<{ $el?: HTMLElement } | null>(null)
 
 // 使用全局弹出层管理器
 const { zIndex: managedZIndex, isTop } = usePopupManager({
@@ -31,6 +30,46 @@ const { zIndex: managedZIndex, isTop } = usePopupManager({
   onClose: () => emit('close'),
 })
 
+const resolvedFooterButtons = computed<LewDialogPopokFooterButtonItem[]>(() => {
+  if (props.footerButtons != null) {
+    return props.footerButtons
+  }
+  return [
+    {
+      props: {
+        text: locale.t('dialog.confirmText'),
+        type: 'fill',
+        size: 'small',
+        color: props.type as LewColor,
+      },
+    },
+  ]
+})
+
+function bindPrimaryButtonRef(el: any, index: number) {
+  if (index === resolvedFooterButtons.value.length - 1) {
+    primaryButtonRef.value = el
+  }
+}
+
+function footerButtonBind(item: LewDialogPopokFooterButtonItem) {
+  const { request: _r, ...rest } = item.props ?? {}
+  return rest
+}
+
+async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem) {
+  const fn = item.props?.request
+  if (typeof fn === 'function') {
+    const result = await Promise.resolve(
+      (fn as () => boolean | void | Promise<boolean | void>)(),
+    )
+    if (result === false) {
+      return
+    }
+  }
+  visible.value = false
+}
+
 function maskClick() {
   if (props.closeOnClickOverlay && isTop()) {
     visible.value = false
@@ -40,8 +79,7 @@ function maskClick() {
 onMounted(() => {
   visible.value = true
   nextTick(() => {
-    if (okRef.value)
-      okRef.value.$el.focus()
+    primaryButtonRef.value?.$el?.focus?.()
   })
 })
 
@@ -50,23 +88,6 @@ watch(visible, (newVal) => {
     setTimeout(() => emit('close'), 500)
   }
 })
-
-async function handleAction(action: 'ok' | 'cancel') {
-  const actionFunction = props[action]
-  const loadingRef = action === 'ok' ? okLoading : cancelLoading
-
-  if (typeof actionFunction === 'function') {
-    loadingRef.value = true
-    const result = await actionFunction()
-    if (result !== false) {
-      visible.value = false
-    }
-    loadingRef.value = false
-  }
-}
-
-const ok = () => handleAction('ok')
-const cancel = () => handleAction('cancel')
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
@@ -106,23 +127,13 @@ if (props.closeByEsc) {
                 </div>
               </div>
             </LewFlex>
-            <div class="lew-dialog-box-footer">
+            <div v-if="resolvedFooterButtons.length > 0" class="lew-dialog-box-footer">
               <LewButton
-                :text="cancelText || locale.t('dialog.cancelText')"
-                color="gray"
-                type="light"
-                size="small"
-                :loading="cancelLoading"
-                @click.stop="cancel"
-              />
-              <LewButton
-                ref="okRef"
-                :text="okText || locale.t('dialog.okText')"
-                type="fill"
-                size="small"
-                :color="type as LewColor"
-                :loading="okLoading"
-                @click.stop="ok"
+                v-for="(item, index) in resolvedFooterButtons"
+                :key="index"
+                :ref="(el) => bindPrimaryButtonRef(el, index)"
+                v-bind="footerButtonBind(item)"
+                :request="() => mergeFooterRequest(item)"
               />
             </div>
           </LewFlex>

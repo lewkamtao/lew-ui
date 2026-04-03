@@ -2023,10 +2023,8 @@ export default {
         closeOnClickOverlay: '마스크 클릭 시 닫을지 여부',
         closeByEsc: 'ESC 키를 눌러 닫을지 여부',
         hideFooter: '푸터 숨기기 여부',
-        hideOkButton: '확인 버튼 숨기기 여부',
-        hideCloseButton: '닫기 버튼 숨기기 여부',
-        okButtonProps: '확인 버튼 속성',
-        closeButtonProps: '닫기 버튼 속성',
+        footerButtons:
+          '하단 버튼 목록(항목별 props→LewButton, request 포함); 미지정 시 확인 1개로 닫힘',
         zIndex: '계층',
       },
       emits: {
@@ -2055,16 +2053,17 @@ export default {
       demo6: {
         title: '사용자 정의 아이콘',
       },
+      demo7: {
+        title: '사용자 정의 하단 버튼',
+      },
       props: {
         type: '유형',
         width: '너비',
         trigger: '트리거 방식',
         title: '제목',
         content: '내용',
-        okText: '확인 버튼 텍스트',
-        cancelText: '취소 버튼 텍스트',
-        ok: '확인 콜백',
-        cancel: '취소 콜백',
+        footerButtons:
+          '하단 버튼 목록(props→LewButton, request; false면 유지); 미지정 시 확인 1개',
         closeOnClickOverlay: '마스크 클릭 시 닫을지 여부',
         closeByEsc: 'ESC 키를 눌러 닫을지 여부',
         transformOrigin: '애니메이션 원점',
@@ -2100,6 +2099,9 @@ export default {
         description:
           '복잡한 시나리오에서의 다층 중첩, 대화 상자에서 서랍 열기, 서랍에서 대화 상자 열기, 최대 4단계 중첩 지원.',
       },
+      demo7: {
+        title: 'footerButtons 동적 하단',
+      },
       model: {
         visible: '표시 여부',
       },
@@ -2108,11 +2110,9 @@ export default {
         width: '너비',
         top: '상단으로부터의 거리',
         hideFooter: '푸터 숨김 여부',
-        hideOkButton: '확인 버튼 숨기기 여부',
-        hideCloseButton: '닫기 버튼 숨기기 여부',
+        footerButtons:
+          '하단 버튼 목록(항목별 props→LewButton, request 포함); 미지정 시 확인 1개로 닫힘',
         closeByEsc: 'ESC 키로 닫기 가능 여부',
-        okButtonProps: '확인 버튼 속성',
-        closeButtonProps: '닫기 버튼 속성',
         closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
         zIndex: '층 레벨',
         maxHeight: '최대 높이',
@@ -2136,6 +2136,9 @@ export default {
       demo5: {
         title: '사용자 정의 내용',
       },
+      demo6: {
+        title: '사용자 정의 하단 버튼',
+      },
       props: {
         type: '유형',
         width: '너비',
@@ -2143,10 +2146,8 @@ export default {
         title: '제목',
         content: '내용',
         placement: '위치',
-        ok: '확인 콜백',
-        cancel: '취소 콜백',
-        okText: '확인 버튼 텍스트',
-        cancelText: '취소 버튼 텍스트',
+        footerButtons:
+          '하단 버튼 목록(props→LewButton, request; false면 유지); 미지정 시 확인 1개',
         icon: '사용자 정의 아이콘',
         hideIcon: '아이콘 숨기기 여부',
       },

@@ -10,6 +10,8 @@ import DemoDialog5 from './DemoDialog5.vue'
 import DemoDialog5Code from './DemoDialog5.vue?raw'
 import DemoDialog6 from './DemoDialog6.vue'
 import DemoDialog6Code from './DemoDialog6.vue?raw'
+import DemoDialog7 from './DemoDialog7.vue'
+import DemoDialog7Code from './DemoDialog7.vue?raw'
 
 export const demoGroup = [
   DemoDialog1,
@@ -18,6 +20,7 @@ export const demoGroup = [
   DemoDialog4,
   DemoDialog5,
   DemoDialog6,
+  DemoDialog7,
 ]
 
 export const codeGroup = [
@@ -27,4 +30,5 @@ export const codeGroup = [
   DemoDialog4Code,
   DemoDialog5Code,
   DemoDialog6Code,
+  DemoDialog7Code,
 ]

@@ -1963,10 +1963,8 @@ export default {
         closeOnClickOverlay: 'Chiudi cliccando sul overlay',
         closeByEsc: 'Chiudi con tasto ESC',
         hideFooter: 'Nascondi piè di pagina',
-        hideOkButton: 'Nascondi pulsante OK',
-        hideCloseButton: 'Nascondi pulsante Chiudi',
-        okButtonProps: 'Proprietà pulsante OK',
-        closeButtonProps: 'Proprietà pulsante Chiudi',
+        footerButtons:
+          'Pulsanti footer (props → LewButton, request); predefinito: un Conferma chiude',
         zIndex: 'z-index',
       },
       emits: {
@@ -1995,16 +1993,17 @@ export default {
       demo6: {
         title: 'Icona personalizzata',
       },
+      demo7: {
+        title: 'Pulsanti piè di pagina personalizzati',
+      },
       props: {
         type: 'Tipo',
         width: 'Larghezza',
         trigger: 'Trigger',
         title: 'Titolo',
         content: 'Contenuto',
-        okText: 'Testo pulsante OK',
-        cancelText: 'Testo pulsante Annulla',
-        ok: 'Callback conferma',
-        cancel: 'Callback annullamento',
+        footerButtons:
+          'Pulsanti footer (props → LewButton, request; false resta aperto); predefinito: un Conferma',
         closeOnClickOverlay: 'Chiudi cliccando sul overlay',
         closeByEsc: 'Chiudi con tasto ESC',
         transformOrigin: 'Origine trasformazione',
@@ -2040,6 +2039,9 @@ export default {
         description:
           'Nidificazione multilivello per scenari complessi, aprire drawer da modale, modale da drawer, fino a 4 livelli.',
       },
+      demo7: {
+        title: 'footerButtons piè dinamico',
+      },
       model: {
         visible: 'Visibilità',
       },
@@ -2049,13 +2051,11 @@ export default {
         top: 'Distanza dall\'alto',
         maxHeight: 'Altezza massima',
         hideFooter: 'Nascondi footer',
-        hideOkButton: 'Nascondi pulsante OK',
-        hideCloseButton: 'Nascondi pulsante Chiudi',
+        footerButtons:
+          'Elenco pulsanti (props → LewButton, request); predefinito: un Conferma chiude',
         closeByEsc: 'Chiudi con ESC',
-        okButtonProps: 'Proprietà OK',
         closeOnClickOverlay: 'Chiudi al click overlay',
         zIndex: 'Z-index',
-        closeButtonProps: 'Proprietà pulsante Chiudi',
       },
     },
     popok: {
@@ -2077,6 +2077,9 @@ export default {
       demo5: {
         title: 'Contenuto personalizzato',
       },
+      demo6: {
+        title: 'Pulsanti piè personalizzati',
+      },
       props: {
         type: 'Tipo',
         width: 'Larghezza',
@@ -2084,10 +2087,8 @@ export default {
         title: 'Titolo',
         content: 'Contenuto',
         placement: 'Posizione',
-        okText: 'Testo OK',
-        cancelText: 'Testo Annulla',
-        ok: 'Callback OK',
-        cancel: 'Callback Annulla',
+        footerButtons:
+          'Pulsanti footer (props → LewButton, request; false resta aperto); predefinito: un Conferma',
         icon: 'Icona personalizzata',
         hideIcon: 'Nascondi icona',
       },

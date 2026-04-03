@@ -4,20 +4,32 @@ function open() {
     title: 'Confirm Action',
     content:
       'This action will permanently delete your data. Are you sure you want to continue?',
-    okText: 'Confirm',
-    cancelText: 'Cancel',
     hideIcon: true,
     closeByEsc: true,
-    ok: () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(true)
-          LewMessage.success({
-            content: 'Action completed successfully',
-          })
-        }, 1000)
-      })
-    },
+    footerButtons: [
+      {
+        props: {
+          text: 'Cancel',
+          color: 'gray',
+          type: 'light',
+          size: 'small',
+        },
+      },
+      {
+        props: {
+          text: 'Confirm',
+          type: 'fill',
+          size: 'small',
+          color: 'info',
+          request: async () => {
+            await new Promise(r => setTimeout(r, 1000))
+            LewMessage.success({
+              content: 'Action completed successfully',
+            })
+          },
+        },
+      },
+    ],
   })
 }
 </script>

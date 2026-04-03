@@ -92,18 +92,22 @@ export default {
   drawer: {
     closeText: 'Schließen',
     okText: 'OK',
+    confirmText: 'Bestätigen',
   },
   modal: {
     closeText: 'Schließen',
     okText: 'OK',
+    confirmText: 'Bestätigen',
   },
   dialog: {
     cancelText: 'Abbrechen',
     okText: 'OK',
+    confirmText: 'Bestätigen',
   },
   popok: {
     cancelText: 'Abbrechen',
     okText: 'OK',
+    confirmText: 'Bestätigen',
   },
   colorPicker: {
     placeholder: 'Bitte eingeben',

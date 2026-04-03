@@ -3,6 +3,7 @@
 import { onClickOutside } from '@vueuse/core'
 
 // 2. 组件导入
+import type { LewModalFooterButtonItem } from 'lew-ui'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CloseButton from 'lew-ui/_components/CloseButton.vue'
 
@@ -86,6 +87,27 @@ const drawerBodyClass = computed(() => {
   })
 })
 
+const resolvedFooterButtons = computed<LewModalFooterButtonItem[]>(() => {
+  if (props.footerButtons != null) {
+    return props.footerButtons.map(item => ({
+      props: { size: 'small', ...item.props },
+    }))
+  }
+  return [
+    {
+      props: {
+        size: 'small',
+        type: 'fill',
+        color: 'primary',
+        text: locale.t('drawer.confirmText'),
+        request: async () => {
+          handleClose()
+        },
+      },
+    },
+  ]
+})
+
 // 方法
 function handleClose(): void {
   visible.value = false
@@ -153,30 +175,15 @@ onClickOutside(drawerBodyRef, (e: any) => {
             <slot name="footer" />
           </div>
           <LewFlex
-            v-else-if="!props.hideFooter"
+            v-else-if="!props.hideFooter && resolvedFooterButtons.length > 0"
             x="end"
             y="center"
             class="lew-drawer-footer"
           >
             <LewButton
-              v-if="!props.hideCloseButton"
-              v-bind="{
-                size: 'small',
-                text: locale.t('drawer.closeText'),
-                type: 'light',
-                color: 'normal',
-                request: handleClose,
-                ...(props.closeButtonProps as any),
-              }"
-            />
-            <LewButton
-              v-if="!props.hideOkButton"
-              v-bind="{
-                size: 'small',
-                text: locale.t('drawer.okText'),
-                color: 'primary',
-                ...(props.okButtonProps as any),
-              }"
+              v-for="(item, index) in resolvedFooterButtons"
+              :key="index"
+              v-bind="item.props"
             />
           </LewFlex>
         </div>

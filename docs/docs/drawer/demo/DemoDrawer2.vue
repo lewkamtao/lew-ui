@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const visible = ref(false)
 function ok() {
-  return new Promise<void>((resolve: any) => {
+  return new Promise<void>((resolve) => {
     setTimeout(() => {
       visible.value = false
-      resolve(true)
+      resolve()
     }, 1000)
   })
 }
@@ -24,8 +24,24 @@ function close() {
     v-model:visible="visible"
     width="350px"
     title="Simulate Async Request"
-    :ok-button-props="{ request: ok }"
-    :close-button-props="{ request: close }"
+    :footer-buttons="[
+      {
+        props: {
+          text: 'Cancel',
+          type: 'light',
+          color: 'gray',
+          request: close,
+        },
+      },
+      {
+        props: {
+          text: 'Confirm',
+          type: 'fill',
+          color: 'primary',
+          request: ok,
+        },
+      },
+    ]"
   >
     <div class="drawer-body">
       <div>Click confirm, the drawer will close after 1 second.</div>

@@ -1,75 +1,81 @@
 <script setup lang="ts">
 // 1. 类型导入
-import type { LewColor } from 'lew-ui'
+import type { LewColor } from "lew-ui";
+import type { LewDialogPopokFooterButtonItem } from "lew-ui/types";
 
 // 2. 组件导入
-import { LewButton, LewFlex, LewPopover, locale } from 'lew-ui'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { LewButton, LewFlex, LewPopover, locale } from "lew-ui";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import RenderComponent from "lew-ui/_components/RenderComponent.vue";
 
 // 3. 工具函数导入
-import { any2px } from 'lew-ui/utils'
+import { any2px } from "lew-ui/utils";
 
 // 4. 组件配置导入
-import { popokButtonProps } from './props'
+import { popokButtonProps } from "./props";
 
 // Props
-const props = defineProps(popokButtonProps)
+const props = defineProps(popokButtonProps);
 
 // 响应式状态
-const lewPopoverRef = ref()
-const okLoading = ref(false)
-const cancelLoading = ref(false)
-const okRef = ref()
+const lewPopoverRef = ref();
+const primaryButtonRef = ref<{ $el?: HTMLElement } | null>(null);
 
 // 计算属性
 const popokBodyStyle = computed(() => ({
   width: any2px(props.width),
-}))
+}));
 
-const cancelButtonText = computed(() => {
-  return props.cancelText || locale.t('popok.cancelText')
-})
+const resolvedFooterButtons = computed<LewDialogPopokFooterButtonItem[]>(() => {
+  if (props.footerButtons != null) {
+    return props.footerButtons;
+  }
+  return [
+    {
+      props: {
+        text: locale.t("popok.confirmText"),
+        type: "fill",
+        size: "small",
+        color: props.type as LewColor,
+      },
+    },
+  ];
+});
 
-const okButtonText = computed(() => {
-  return props.okText || locale.t('popok.okText')
-})
-
-// 方法
-async function handleAction(action: 'ok' | 'cancel') {
-  const actionFunction = props[action]
-  const loadingRef = action === 'ok' ? okLoading : cancelLoading
-
-  if (typeof actionFunction === 'function') {
-    loadingRef.value = true
-    const result = await actionFunction()
-    if (result !== false) {
-      hide()
-    }
-    loadingRef.value = false
+function bindPrimaryButtonRef(el: any, index: number) {
+  if (index === resolvedFooterButtons.value.length - 1) {
+    primaryButtonRef.value = el;
   }
 }
 
-function ok() {
-  handleAction('ok')
+function footerButtonBind(item: LewDialogPopokFooterButtonItem) {
+  const { request: _r, ...rest } = item.props ?? {};
+  return rest;
 }
 
-function cancel() {
-  handleAction('cancel')
+async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem) {
+  const fn = item.props?.request;
+  if (typeof fn === "function") {
+    const result = await Promise.resolve(
+      (fn as () => boolean | void | Promise<boolean | void>)()
+    );
+    if (result === false) {
+      return;
+    }
+  }
+  hide();
 }
 
 function hide() {
-  lewPopoverRef.value.hide()
+  lewPopoverRef.value.hide();
 }
 
 // 生命周期
 onMounted(() => {
   nextTick(() => {
-    if (okRef.value) {
-      okRef.value.$el.focus()
-    }
-  })
-})
+    primaryButtonRef.value?.$el?.focus?.();
+  });
+});
 </script>
 
 <template>
@@ -99,23 +105,13 @@ onMounted(() => {
               </div>
             </div>
           </LewFlex>
-          <div class="lew-popok-box-footer">
+          <div v-if="resolvedFooterButtons.length > 0" class="lew-popok-box-footer">
             <LewButton
-              :text="cancelButtonText"
-              color="gray"
-              type="light"
-              size="small"
-              :loading="cancelLoading"
-              @click.stop="cancel"
-            />
-            <LewButton
-              ref="okRef"
-              :text="okButtonText"
-              type="fill"
-              size="small"
-              :color="type as LewColor"
-              :loading="okLoading"
-              @click.stop="ok"
+              v-for="(item, index) in resolvedFooterButtons"
+              :key="index"
+              :ref="(el) => bindPrimaryButtonRef(el, index)"
+              v-bind="footerButtonBind(item)"
+              :request="() => mergeFooterRequest(item)"
             />
           </div>
         </LewFlex>
@@ -142,6 +138,7 @@ onMounted(() => {
   .lew-popok-box-left {
     width: 28px;
     margin-left: -2.5px;
+    flex-shrink: 0;
   }
 
   .lew-popok-box-right {

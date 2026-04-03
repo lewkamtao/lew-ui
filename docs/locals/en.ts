@@ -2013,10 +2013,8 @@ export default {
         closeOnClickOverlay: 'Close on Click Overlay',
         closeByEsc: 'Close by ESC',
         hideFooter: 'Hide Footer',
-        hideOkButton: 'Hide OK Button',
-        hideCloseButton: 'Hide Close Button',
-        okButtonProps: 'OK Button Props',
-        closeButtonProps: 'Close Button Props',
+        footerButtons:
+          'Footer buttons (LewButton props per item, incl. request); default single Confirm closes',
         zIndex: 'Z Index',
       },
       emits: {
@@ -2045,16 +2043,17 @@ export default {
       demo6: {
         title: 'Custom Icon',
       },
+      demo7: {
+        title: 'Custom footer buttons',
+      },
       props: {
         type: 'Type',
         width: 'Width',
         trigger: 'Trigger',
         title: 'Title',
         content: 'Content',
-        okText: 'OK Text',
-        cancelText: 'Cancel Text',
-        ok: 'OK Callback',
-        cancel: 'Cancel Callback',
+        footerButtons:
+          'Footer buttons (LewButton props per item, incl. request; return false keeps open); default single Confirm',
         closeOnClickOverlay: 'Close on Click Overlay',
         closeByEsc: 'Close by ESC',
         transformOrigin: 'Transform Origin',
@@ -2090,6 +2089,9 @@ export default {
         description:
           'Complex multi-layer nesting scenario, supports opening drawer from modal, modal from drawer, up to 4 levels of nesting.',
       },
+      demo7: {
+        title: 'footerButtons footer',
+      },
       model: {
         visible: 'Visible',
       },
@@ -2098,11 +2100,9 @@ export default {
         width: 'Width',
         top: 'Top',
         hideFooter: 'Hide Footer',
-        hideOkButton: 'Hide OK Button',
-        hideCloseButton: 'Hide Close Button',
+        footerButtons:
+          'Footer buttons (LewButton props per item, incl. request); default single Confirm closes',
         closeByEsc: 'Close by ESC',
-        okButtonProps: 'OK Button Props',
-        closeButtonProps: 'Close Button Props',
         closeOnClickOverlay: 'Close on Click Overlay',
         zIndex: 'Z Index',
         maxHeight: 'Max Height',
@@ -2127,6 +2127,9 @@ export default {
       demo5: {
         title: 'Custom Content',
       },
+      demo6: {
+        title: 'Custom footer buttons',
+      },
       props: {
         type: 'Type',
         width: 'Width',
@@ -2134,10 +2137,8 @@ export default {
         title: 'Title',
         content: 'Content',
         placement: 'Placement',
-        okText: 'OK Text',
-        cancelText: 'Cancel Text',
-        ok: 'OK Callback',
-        cancel: 'Cancel Callback',
+        footerButtons:
+          'Footer buttons (LewButton props per item, incl. request; return false keeps open); default single Confirm',
         icon: 'Custom Icon',
         hideIcon: 'Hide Icon',
       },

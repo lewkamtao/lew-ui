@@ -88,18 +88,22 @@ export default {
   drawer: {
     closeText: '关闭',
     okText: '确定',
+    confirmText: '确认',
   },
   modal: {
     closeText: '关闭',
     okText: '确定',
+    confirmText: '确认',
   },
   dialog: {
     cancelText: '取消',
     okText: '确定',
+    confirmText: '确认',
   },
   popok: {
     cancelText: '取消',
     okText: '确定',
+    confirmText: '确认',
   },
   colorPicker: {
     placeholder: '请输入',

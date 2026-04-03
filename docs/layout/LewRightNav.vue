@@ -1,173 +1,252 @@
 <script setup lang="ts">
-import { throttle } from 'lodash-es'
+import { useDemoLoaded } from 'docs/composables/useDemoLoaded'
 import { useRoute } from 'vue-router'
 
+/** 与滚动、点击跳转对齐的视口偏移（与正文 padding / 吸顶预留一致） */
+const SCROLL_MARGIN = 100
+
+interface NavItem {
+  /** 稳定唯一键，避免同文案标题导致激活错乱 */
+  key: string
+  label: string
+  top: number
+}
+
 const route = useRoute()
-const navMenus = ref([] as any)
-const activeItem = ref('')
+const { demoAllLoaded } = useDemoLoaded()
+const navMenus = ref<NavItem[]>([])
+const activeKey = ref('')
 
-// 轮询相关配置
-const POLL_INTERVAL = 50 // 轮询间隔 50ms
-const NO_CHANGE_TIMEOUT = 1000 // 2秒没有变化就结束轮询
+const navListRef = ref<HTMLElement | null>(null)
+const itemRefMap = new Map<string, HTMLElement>()
+const indicatorStyle = ref({
+  top: '0px',
+  height: '0px',
+  opacity: '0',
+})
 
-// 使用 ref 确保响应式和组件隔离
-const pollTimer = ref<ReturnType<typeof setInterval> | null>(null)
-const lastCount = ref(0)
-const noChangeTime = ref(0)
-const isPolling = ref(false)
+let listResizeObserver: ResizeObserver | null = null
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
+let scrollRaf = 0
+let mo: MutationObserver | null = null
+/** 点击目录 smooth 滚动期间忽略 scroll spy，避免高亮来回闪 */
+let clickSpyLockUntil = 0
 
-// 更新导航菜单数据
-function updateNavMenus(): number {
-  const titleDoms = document.getElementsByClassName('demo-title')
-  navMenus.value = Array.from(titleDoms).map((e: any) => {
-    return {
-      label: e.textContent,
-      top: e.offsetTop,
-    }
-  })
-  return titleDoms.length
+function setNavItemRef(el: unknown, key: string) {
+  if (el instanceof HTMLElement)
+    itemRefMap.set(key, el)
+  else
+    itemRefMap.delete(key)
 }
 
-// 清理定时器
-function clearPollTimer() {
-  if (pollTimer.value) {
-    clearInterval(pollTimer.value)
-    pollTimer.value = null
-  }
-  isPolling.value = false
-}
-
-const checkActive = throttle(() => {
-  // 获取当前滚动条位置 判断当前激活的标题
-  const mainDom: any = document.getElementById('component-main')
-  if (!mainDom)
-    return
-  const scrollTop = mainDom.scrollTop
-  // 找到距离当前滚动位置最接近的标题
-  let closestItem = { label: '' }
-  let minDistance = Infinity
-
-  navMenus.value.forEach((item: any) => {
-    const distance = Math.abs(item.top - scrollTop)
-    if (distance < minDistance) {
-      minDistance = distance
-      closestItem = item
-    }
-  })
-
-  activeItem.value = closestItem ? closestItem.label : ''
-}, 250)
-
-// 完成轮询（正常结束）
-function finishPolling() {
-  clearPollTimer()
-  // 最后更新一次位置并检查激活状态
+function syncIndicator(retry = 0) {
   nextTick(() => {
-    updateNavMenus()
-    checkActive()
-  })
-}
-
-// 开始轮询
-function startPolling() {
-  // 先清理可能存在的旧定时器
-  clearPollTimer()
-
-  // 重置所有状态
-  lastCount.value = 0
-  noChangeTime.value = 0
-  navMenus.value = []
-  activeItem.value = ''
-
-  // 先执行一次
-  lastCount.value = updateNavMenus()
-  isPolling.value = true
-
-  pollTimer.value = setInterval(() => {
-    // 如果已经停止轮询，直接返回
-    if (!isPolling.value) {
-      clearPollTimer()
+    const list = navListRef.value
+    const key = activeKey.value
+    if (!list || !key || !navMenus.value.length) {
+      indicatorStyle.value = { top: '0px', height: '0px', opacity: '0' }
       return
     }
-
-    const currentCount = updateNavMenus()
-
-    if (currentCount === lastCount.value) {
-      // 数量没变，累加无变化时间
-      noChangeTime.value += POLL_INTERVAL
-      if (noChangeTime.value >= NO_CHANGE_TIMEOUT) {
-        // 1秒没变化，停止轮询
-        finishPolling()
-      }
+    const el = itemRefMap.get(key)
+    if (!el) {
+      if (retry < 4)
+        requestAnimationFrame(() => syncIndicator(retry + 1))
+      return
     }
-    else {
-      // 有新增元素，重置计时
-      lastCount.value = currentCount
-      noChangeTime.value = 0
+    const listRect = list.getBoundingClientRect()
+    const elRect = el.getBoundingClientRect()
+    const top = elRect.top - listRect.top + list.scrollTop
+    const height = elRect.height
+    indicatorStyle.value = {
+      top: `${top}px`,
+      height: `${height}px`,
+      opacity: '1',
     }
-  }, POLL_INTERVAL)
-}
-
-function toScroll(item: any) {
-  const mainDom: any = document.getElementById('component-main')
-  if (mainDom) {
-    mainDom.scrollTop = item.top - 100
-  }
-  activeItem.value = item.label
-}
-
-// 监听路由变化，重新开始轮询
-watch(() => route.path, () => {
-  // 路由变化时，重新开始轮询
-  nextTick(() => {
-    startPolling()
   })
-}, { immediate: false })
+}
+
+function getMainEl(): HTMLElement | null {
+  return document.getElementById('component-main')
+}
+
+/** 元素相对滚动容器内容顶部的 scrollTop 偏移（不依赖 offsetParent） */
+function getOffsetTopInScrollContainer(el: HTMLElement, scrollParent: HTMLElement): number {
+  const p = scrollParent.getBoundingClientRect()
+  const r = el.getBoundingClientRect()
+  return r.top - p.top + scrollParent.scrollTop
+}
+
+function refreshNav() {
+  const main = getMainEl()
+  if (!main) {
+    navMenus.value = []
+    return
+  }
+  // 示例区块：.demo-title（LewDemoBox）；API 表格：.demo-docs-title（LewDocsTables，默认 v-show 等 demo 全加载）
+  const nodes = main.querySelectorAll('.demo-title, .demo-docs-title')
+  navMenus.value = Array.from(nodes)
+    .filter((node) => {
+      const el = node as HTMLElement
+      if (el.classList.contains('demo-docs-title'))
+        return demoAllLoaded.value
+      return true
+    })
+    .map((node, index) => {
+      const el = node as HTMLElement
+      const label = (el.textContent || '').trim() || `章节 ${index + 1}`
+      return {
+        key: `nav-${index}`,
+        label,
+        top: getOffsetTopInScrollContainer(el, main),
+      }
+    })
+}
+
+/** 当前应高亮的目录项：最后一个「标题顶 <= 滚动位置 + 边距」的条目 */
+function updateActiveFromScroll() {
+  if (performance.now() < clickSpyLockUntil)
+    return
+  const main = getMainEl()
+  if (!main || !navMenus.value.length) {
+    if (!navMenus.value.length)
+      activeKey.value = ''
+    return
+  }
+  const threshold = main.scrollTop + SCROLL_MARGIN
+  let key = ''
+  for (let i = navMenus.value.length - 1; i >= 0; i--) {
+    if (navMenus.value[i].top <= threshold) {
+      key = navMenus.value[i].key
+      break
+    }
+  }
+  if (!key)
+    key = navMenus.value[0].key
+  activeKey.value = key
+}
+
+function scheduleRefreshDebounced() {
+  if (debounceTimer)
+    clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    debounceTimer = null
+    refreshNav()
+    updateActiveFromScroll()
+    syncIndicator()
+  }, 80)
+}
+
+function onScroll() {
+  if (scrollRaf)
+    return
+  scrollRaf = requestAnimationFrame(() => {
+    scrollRaf = 0
+    updateActiveFromScroll()
+  })
+}
+
+function toScroll(item: NavItem) {
+  const main = getMainEl()
+  if (!main)
+    return
+  clickSpyLockUntil = performance.now() + 450
+  activeKey.value = item.key
+  main.scrollTo({ top: Math.max(0, item.top - SCROLL_MARGIN), behavior: 'smooth' })
+}
+
+function teardownMainListeners(main: HTMLElement) {
+  main.removeEventListener('scroll', onScroll)
+  mo?.disconnect()
+  mo = null
+  window.removeEventListener('resize', scheduleRefreshDebounced)
+}
+
+watch(
+  () => route.path,
+  () => {
+    activeKey.value = ''
+    nextTick(() => {
+      refreshNav()
+      updateActiveFromScroll()
+      scheduleRefreshDebounced()
+      syncIndicator()
+    })
+  },
+)
+
+watch(demoAllLoaded, () => {
+  nextTick(() => {
+    refreshNav()
+    updateActiveFromScroll()
+    syncIndicator()
+  })
+})
+
+watch(activeKey, () => {
+  syncIndicator()
+})
+
+watch(navMenus, () => {
+  syncIndicator()
+})
 
 onMounted(() => {
-  const mainDom: any = document.getElementById('component-main')
   nextTick(() => {
-    // 开始轮询获取导航菜单
-    startPolling()
-    mainDom?.addEventListener('scroll', checkActive)
+    const main = getMainEl()
+    if (!main)
+      return
+    refreshNav()
+    updateActiveFromScroll()
+    syncIndicator()
+    main.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', scheduleRefreshDebounced, { passive: true })
+    mo = new MutationObserver(() => scheduleRefreshDebounced())
+    mo.observe(main, { childList: true, subtree: true })
+    scheduleRefreshDebounced()
+
+    nextTick(() => {
+      if (navListRef.value) {
+        listResizeObserver = new ResizeObserver(() => syncIndicator())
+        listResizeObserver.observe(navListRef.value)
+      }
+    })
   })
 })
 
 onUnmounted(() => {
-  // 只清理定时器，不做其他操作
-  clearPollTimer()
-  const mainDom: any = document.getElementById('component-main')
-  mainDom && mainDom.removeEventListener('scroll', checkActive)
+  if (debounceTimer)
+    clearTimeout(debounceTimer)
+  debounceTimer = null
+  if (scrollRaf)
+    cancelAnimationFrame(scrollRaf)
+  scrollRaf = 0
+  listResizeObserver?.disconnect()
+  listResizeObserver = null
+  itemRefMap.clear()
+  const main = getMainEl()
+  if (main)
+    teardownMainListeners(main)
 })
 </script>
 
 <template>
   <div class="right-nav">
-    <lew-title class="item title" size="14px">
+    <lew-title class="nav-heading" size="14px">
       目录
     </lew-title>
-    <!-- 轮询中显示骨架图 -->
-    <template v-if="isPolling">
+    <div ref="navListRef" class="nav-list">
+      <div class="nav-indicator" :style="indicatorStyle" aria-hidden="true" />
       <div
-        v-for="i in 5"
-        :key="`skeleton-${i}`"
-        class="skeleton-item"
-      >
-        <div class="skeleton-bar" :style="{ width: `${60 + Math.random() * 30}%` }" />
-      </div>
-    </template>
-    <!-- 轮询结束显示真实内容 -->
-    <template v-else>
-      <div
-        v-for="(item, index) in navMenus"
-        :key="index"
-        class="item"
-        :class="{ active: item.label === activeItem }"
+        v-for="item in navMenus"
+        :key="item.key"
+        :ref="(el) => setNavItemRef(el, item.key)"
+        class="nav-item"
+        :class="{ 'is-active': item.key === activeKey }"
         @click="toScroll(item)"
       >
         {{ item.label }}
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -181,56 +260,61 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
 
-  .item {
-    display: block;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: var(--lew-border-radius-small);
-  }
-  .title {
-    border-bottom: 1px var(--lew-bgcolor-2) solid;
-    border-radius: 0px;
-  }
-  .item:hover {
+.nav-heading {
+  display: block;
+  padding: 5px 10px 10px;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--lew-bgcolor-2);
+  border-radius: 0;
+}
+
+.nav-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: var(--lew-border-radius-small);
+  background-color: var(--lew-color-primary-light);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  pointer-events: none;
+  z-index: 0;
+  transition:
+    top 0.32s cubic-bezier(0.33, 1, 0.68, 1),
+    height 0.32s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 0.2s ease;
+}
+
+.nav-item {
+  position: relative;
+  z-index: 1;
+  display: block;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: var(--lew-border-radius-small);
+  color: var(--lew-text-color-1);
+  transition: color 0.2s ease;
+
+  &:hover:not(.is-active) {
+    color: var(--lew-text-color-0);
     background-color: var(--lew-bgcolor-2);
   }
-  .title:hover {
-    background: none;
-  }
-  .active {
+
+  &.is-active {
     font-weight: 600;
-    background-color: var(--lew-color-primary-light);
-    color: var(--lew-color-primary-dark);
-  }
-  .active:hover {
-    background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
   }
 
-  // 骨架图样式
-  .skeleton-item {
-    padding: 5px 10px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-  }
-
-  .skeleton-bar {
-    height: 14px;
-    background: linear-gradient(90deg, var(--lew-bgcolor-3) 25%, var(--lew-bgcolor-2) 50%, var(--lew-bgcolor-3) 75%);
-    background-size: 200% 100%;
-    border-radius: 3px;
-    animation: skeleton-loading 1.5s infinite;
-  }
-
-  @keyframes skeleton-loading {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
+  &.is-active:hover {
+    color: var(--lew-color-primary-dark);
   }
 }
 </style>

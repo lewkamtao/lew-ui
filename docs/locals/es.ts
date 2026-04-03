@@ -2014,10 +2014,8 @@ export default {
         closeOnClickOverlay: 'Cerrar al hacer clic en la máscara',
         closeByEsc: 'Cerrar con la tecla ESC',
         hideFooter: 'Ocultar pie de página',
-        hideOkButton: 'Ocultar botón OK',
-        hideCloseButton: 'Ocultar botón Cerrar',
-        okButtonProps: 'Propiedades del botón OK',
-        closeButtonProps: 'Propiedades del botón de cierre',
+        footerButtons:
+          'Botones del pie (props → LewButton, incl. request); por defecto un Confirm cierra',
         zIndex: 'Índice Z',
       },
       emits: {
@@ -2045,16 +2043,17 @@ export default {
       demo6: {
         title: 'Icono personalizado',
       },
+      demo7: {
+        title: 'Botones de pie personalizados',
+      },
       props: {
         type: 'Tipo',
         width: 'Ancho',
         trigger: 'Disparador',
         title: 'Título',
         content: 'Contenido',
-        okText: 'Texto del botón OK',
-        cancelText: 'Texto del botón Cancelar',
-        ok: 'Callback de confirmación',
-        cancel: 'Callback de cancelación',
+        footerButtons:
+          'Botones del pie (props → LewButton, incl. request; false mantiene abierto); por defecto un Confirm',
         closeOnClickOverlay: 'Cerrar al hacer clic en la máscara',
         closeByEsc: 'Cerrar con la tecla ESC',
         transformOrigin: 'Origen de la transformación',
@@ -2090,6 +2089,9 @@ export default {
         description:
           'Anidación multinivel para escenarios complejos, abrir cajón desde diálogo, diálogo desde cajón, hasta 4 niveles.',
       },
+      demo7: {
+        title: 'footerButtons pie dinámico',
+      },
       model: {
         visible: 'Visible',
       },
@@ -2099,11 +2101,9 @@ export default {
         top: 'Superior',
         maxHeight: 'Altura máxima',
         hideFooter: 'Ocultar pie',
-        hideOkButton: 'Ocultar botón OK',
-        hideCloseButton: 'Ocultar botón Cerrar',
+        footerButtons:
+          'Lista de botones del pie (props → LewButton, incl. request); por defecto un Confirm cierra',
         closeByEsc: 'Cerrar con ESC',
-        okButtonProps: 'Propiedades del botón OK',
-        closeButtonProps: 'Propiedades del botón Cerrar',
         closeOnClickOverlay: 'Cerrar al hacer clic en la superposición',
         zIndex: 'Índice Z',
       },
@@ -2127,6 +2127,9 @@ export default {
       demo5: {
         title: 'Contenido personalizado',
       },
+      demo6: {
+        title: 'Botones de pie personalizados',
+      },
       props: {
         type: 'Tipo',
         width: 'Ancho',
@@ -2134,10 +2137,8 @@ export default {
         title: 'Título',
         content: 'Contenido',
         placement: 'Posición',
-        okText: 'Texto OK',
-        cancelText: 'Texto Cancelar',
-        ok: 'Callback OK',
-        cancel: 'Callback Cancelar',
+        footerButtons:
+          'Botones del pie (props → LewButton, incl. request; false mantiene abierto); por defecto un Confirm',
         icon: 'Icono personalizado',
         hideIcon: 'Ocultar icono',
       },

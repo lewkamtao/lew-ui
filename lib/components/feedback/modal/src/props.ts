@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewButtonProps } from 'lew-ui'
+import type { LewModalFooterButtonItem } from 'lew-ui'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 
@@ -61,36 +61,16 @@ export const modalProps = {
       propName: 'closeOnClickOverlay',
     }),
   },
-  okButtonProps: {
-    type: Object as PropType<LewButtonProps>,
-    typeComponents: [{ name: 'LewButtonProps', path: '/Button' }],
-    validator: validators.object({
+  footerButtons: {
+    type: Array as PropType<LewModalFooterButtonItem[]>,
+    description:
+      '自定义底部按钮列表，顺序即展示顺序；每项 `props` 透传 LewButton（`request` 处理异步）。不传则默认单个「确认」按钮并关闭，受 hideFooter 控制。',
+    validator: validators.array({
       componentName: 'LewModal',
-      propName: 'okButtonProps',
-    }),
-  },
-  closeButtonProps: {
-    type: Object as PropType<LewButtonProps>,
-    typeComponents: [{ name: 'LewButtonProps', path: '/Button' }],
-    validator: validators.object({
-      componentName: 'LewModal',
-      propName: 'closeButtonProps',
-    }),
-  },
-  hideOkButton: {
-    type: Boolean,
-    default: false,
-    validator: validators.boolean({
-      componentName: 'LewModal',
-      propName: 'hideOkButton',
-    }),
-  },
-  hideCloseButton: {
-    type: Boolean,
-    default: false,
-    validator: validators.boolean({
-      componentName: 'LewModal',
-      propName: 'hideCloseButton',
+      propName: 'footerButtons',
+      minLength: 0,
+      itemValidator: item =>
+        item != null && typeof item === 'object' && !Array.isArray(item),
     }),
   },
   /**

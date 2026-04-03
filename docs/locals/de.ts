@@ -2052,10 +2052,8 @@ export default {
         closeOnClickOverlay: 'Beim Klick auf die Maske schließen',
         closeByEsc: 'Mit ESC-Taste schließen',
         hideFooter: 'Fußbereich ausblenden',
-        hideOkButton: 'OK-Button ausblenden',
-        hideCloseButton: 'Schließen-Button ausblenden',
-        okButtonProps: 'Eigenschaften des OK-Buttons',
-        closeButtonProps: 'Eigenschaften des Schließen-Buttons',
+        footerButtons:
+          'Fußzeilen-Buttons (props → LewButton, inkl. request); Standard: ein Bestätigen schließt',
         zIndex: 'Z-Index',
       },
       emits: {
@@ -2084,16 +2082,17 @@ export default {
       demo6: {
         title: 'Benutzerdefiniertes Icon',
       },
+      demo7: {
+        title: 'Fußzeilen-Buttons anpassen',
+      },
       props: {
         type: 'Typ',
         width: 'Breite',
         trigger: 'Auslöser',
         title: 'Titel',
         content: 'Inhalt',
-        okText: 'OK-Button-Text',
-        cancelText: 'Abbrechen-Button-Text',
-        ok: 'Bestätigungs-Callback',
-        cancel: 'Abbruch-Callback',
+        footerButtons:
+          'Fußzeilen-Buttons (props → LewButton, inkl. request; false hält offen); Standard: ein Bestätigen',
         closeOnClickOverlay: 'Beim Klick auf die Maske schließen',
         closeByEsc: 'Mit ESC-Taste schließen',
         transformOrigin: 'Transformationsursprung',
@@ -2129,6 +2128,9 @@ export default {
         description:
           'Mehrstufige Verschachtelung für komplexe Szenarien, Drawer aus Dialog öffnen, Dialog aus Drawer öffnen, bis zu 4 Ebenen.',
       },
+      demo7: {
+        title: 'footerButtons dynamische Fußzeile',
+      },
       model: {
         visible: 'Sichtbarkeit',
       },
@@ -2137,11 +2139,9 @@ export default {
         width: 'Breite',
         top: 'Abstand zum oberen Rand',
         hideFooter: 'Fußbereich ausblenden',
-        hideOkButton: 'OK-Button ausblenden',
-        hideCloseButton: 'Schließen-Button ausblenden',
+        footerButtons:
+          'Fußzeilen-Buttonliste (props je Eintrag → LewButton, inkl. request); Standard: ein Bestätigen schließt',
         closeByEsc: 'Durch ESC-Taste schließen',
-        okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        closeButtonProps: 'Eigenschaften der Schließen-Schaltfläche',
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
         zIndex: 'Z-Index',
         maxHeight: 'Maximale Höhe',
@@ -2166,6 +2166,9 @@ export default {
       demo5: {
         title: 'Benutzerdefinierter Inhalt',
       },
+      demo6: {
+        title: 'Fußzeilen-Buttons anpassen',
+      },
       props: {
         type: 'Typ',
         width: 'Breite',
@@ -2173,10 +2176,8 @@ export default {
         title: 'Titel',
         content: 'Inhalt',
         placement: 'Position',
-        okText: 'Bestätigungstext',
-        cancelText: 'Abbruchtext',
-        ok: 'Bestätigungscallback',
-        cancel: 'Abbruchcallback',
+        footerButtons:
+          'Fußzeilen-Buttons (props → LewButton, inkl. request; false hält offen); Standard: ein Bestätigen',
         icon: 'Benutzerdefiniertes Icon',
         hideIcon: 'Icon ausblenden',
       },

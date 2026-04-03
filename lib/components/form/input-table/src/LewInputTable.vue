@@ -136,22 +136,36 @@ function del({ row }: { row: any, index: number }) {
 
   LewDialog.error({
     title: locale.t('inputTable.deleteConfirm'),
-    okText: locale.t('inputTable.delete'),
-    cancelText: locale.t('inputTable.cancel'),
     content: locale.t('inputTable.deleteConfirmContent'),
     closeOnClickOverlay: true,
     closeByEsc: true,
-    ok: () => {
-      // 通过rowKey找到正确的行进行删除
-      const rowId = row[props.rowKey]
-      const actualIndex = modelValue.value.findIndex(
-        item => item[props.rowKey] === rowId,
-      )
-      if (actualIndex !== -1) {
-        modelValue.value.splice(actualIndex, 1)
-      }
-      return Promise.resolve(true)
-    },
+    footerButtons: [
+      {
+        props: {
+          text: locale.t('inputTable.cancel'),
+          color: 'gray',
+          type: 'light',
+          size: 'small',
+        },
+      },
+      {
+        props: {
+          text: locale.t('inputTable.delete'),
+          type: 'fill',
+          size: 'small',
+          color: 'error',
+          request: async () => {
+            const rowId = row[props.rowKey]
+            const actualIndex = modelValue.value.findIndex(
+              item => item[props.rowKey] === rowId,
+            )
+            if (actualIndex !== -1) {
+              modelValue.value.splice(actualIndex, 1)
+            }
+          },
+        },
+      },
+    ],
   })
 }
 

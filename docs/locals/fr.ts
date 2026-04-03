@@ -2043,10 +2043,8 @@ export default {
         closeOnClickOverlay: 'Fermer en cliquant sur le masque',
         closeByEsc: 'Fermer avec la touche Echap',
         hideFooter: 'Masquer le pied de page',
-        hideOkButton: 'Masquer le bouton OK',
-        hideCloseButton: 'Masquer le bouton Fermer',
-        okButtonProps: 'Propriétés du bouton OK',
-        closeButtonProps: 'Propriétés du bouton de fermeture',
+        footerButtons:
+          'Boutons du pied (props → LewButton, request inclus) ; par défaut un Confirmer ferme',
         zIndex: 'Index Z',
       },
       emits: {
@@ -2075,16 +2073,17 @@ export default {
       demo6: {
         title: 'Icône personnalisée',
       },
+      demo7: {
+        title: 'Boutons de pied personnalisés',
+      },
       props: {
         type: 'Type',
         width: 'Largeur',
         trigger: 'Déclencheur',
         title: 'Titre',
         content: 'Contenu',
-        okText: 'Texte du bouton OK',
-        cancelText: 'Texte du bouton Annuler',
-        ok: 'Rappel de confirmation',
-        cancel: 'Rappel d\'annulation',
+        footerButtons:
+          'Boutons du pied (props → LewButton, request ; false laisse ouvert) ; défaut : un Confirmer',
         closeOnClickOverlay: 'Fermer en cliquant sur le masque',
         closeByEsc: 'Fermer avec la touche Echap',
         transformOrigin: 'Origine de la transformation',
@@ -2120,6 +2119,9 @@ export default {
         description:
           'Imbrication multi-niveaux pour scénarios complexes, ouvrir un tiroir depuis un dialogue, un dialogue depuis un tiroir, jusqu\'à 4 niveaux.',
       },
+      demo7: {
+        title: 'footerButtons pied dynamique',
+      },
       model: {
         visible: 'Visibilité',
       },
@@ -2129,11 +2131,9 @@ export default {
         top: 'Distance du haut',
         maxHeight: 'Hauteur maximale',
         hideFooter: 'Masquer le pied',
-        hideOkButton: 'Masquer le bouton OK',
-        hideCloseButton: 'Masquer le bouton Fermer',
+        footerButtons:
+          'Liste des boutons (props → LewButton, request) ; défaut : un Confirmer ferme',
         closeByEsc: 'Fermeture par touche ESC',
-        okButtonProps: 'Propriétés du bouton de confirmation',
-        closeButtonProps: 'Propriétés du bouton de fermeture',
         closeOnClickOverlay: 'Fermeture au clic sur le masque',
         zIndex: 'Niveau de couche',
       },
@@ -2157,6 +2157,9 @@ export default {
       demo5: {
         title: 'Contenu personnalisé',
       },
+      demo6: {
+        title: 'Boutons de pied personnalisés',
+      },
       props: {
         type: 'Type',
         width: 'Largeur',
@@ -2164,10 +2167,8 @@ export default {
         title: 'Titre',
         content: 'Contenu',
         placement: 'Position',
-        ok: 'Callback de confirmation',
-        cancel: 'Callback d\'annulation',
-        okText: 'Texte du bouton de confirmation',
-        cancelText: 'Texte du bouton d\'annulation',
+        footerButtons:
+          'Boutons du pied (props → LewButton, request ; false laisse ouvert) ; défaut : un Confirmer',
         icon: 'Icône personnalisée',
         hideIcon: 'Masquer l\'icône',
       },

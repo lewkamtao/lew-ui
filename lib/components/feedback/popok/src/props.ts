@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewPlacement, LewPopokType, LewTrigger } from 'lew-ui/types'
+import type { LewDialogPopokFooterButtonItem, LewPlacement, LewPopokType, LewTrigger } from 'lew-ui/types'
 import type { PropType } from 'vue'
 import validators, { validPlacementList, validPopokTypeList, validTriggerList } from 'lew-ui/validators'
 
@@ -34,41 +34,21 @@ export const popokButtonProps = {
       values: validPopokTypeList,
     }),
   },
-  okText: {
-    type: String,
-    defaultLocale: true,
-    validator: validators.string({
+  footerButtons: {
+    type: Array as PropType<LewDialogPopokFooterButtonItem[]>,
+    description:
+      '自定义底部按钮列表；每项 `props` 透传 LewButton，`request` 处理异步，`request` 返回 false 时不关闭。不传则默认单个「确认」按钮。',
+    validator: validators.array({
       componentName: 'LewPopok',
-      propName: 'okText',
-    }),
-  },
-  cancelText: {
-    type: String,
-    defaultLocale: true,
-    validator: validators.string({
-      componentName: 'LewPopok',
-      propName: 'cancelText',
-    }),
-  },
-  ok: {
-    type: Function as PropType<() => Promise<boolean>>,
-    default: () => true,
-    validator: validators.function({
-      componentName: 'LewPopok',
-      propName: 'ok',
-    }),
-  },
-  cancel: {
-    type: Function as PropType<() => Promise<boolean>>,
-    default: () => true,
-    validator: validators.function({
-      componentName: 'LewPopok',
-      propName: 'cancel',
+      propName: 'footerButtons',
+      minLength: 0,
+      itemValidator: item =>
+        item != null && typeof item === 'object' && !Array.isArray(item),
     }),
   },
   width: {
     type: String as PropType<Property.Width>,
-    default: '280px',
+    default: '350px',
     validator: validators.widthHeight({
       componentName: 'LewPopok',
       propName: 'width',

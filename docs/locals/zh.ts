@@ -1987,10 +1987,8 @@ export default {
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         hideFooter: '是否隐藏底部',
-        hideOkButton: '是否隐藏确认按钮',
-        hideCloseButton: '是否隐藏关闭按钮',
-        okButtonProps: '确认按钮的属性',
-        closeButtonProps: '取消按钮的属性',
+        footerButtons:
+          '底部按钮列表（每项 props 透传 LewButton，含 request）；不传为默认单个「确认」并关闭',
         zIndex: '层级',
       },
       emits: {
@@ -2018,16 +2016,17 @@ export default {
       demo6: {
         title: '自定义图标',
       },
+      demo7: {
+        title: '自定义底部按钮',
+      },
       props: {
         type: '类型',
         width: '宽度',
         trigger: '触发方式',
         title: '标题',
         content: '内容',
-        okText: '确认按钮文本',
-        cancelText: '取消按钮文本',
-        ok: '确认回调',
-        cancel: '取消回调',
+        footerButtons:
+          '底部按钮列表（每项 props 透传 LewButton，含 request；request 返回 false 时不关闭）；不传为默认单个「确认」并关闭',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         transformOrigin: '动画原点',
@@ -2062,6 +2061,9 @@ export default {
         description:
           '复杂场景下的多层嵌套，支持对话框中打开抽屉、抽屉中打开对话框，最多支持4层嵌套。',
       },
+      demo7: {
+        title: 'footerButtons 动态底部',
+      },
       model: {
         visible: '是否显示',
       },
@@ -2070,11 +2072,9 @@ export default {
         width: '宽度',
         top: '距离顶部的距离',
         hideFooter: '是否隐藏底部',
-        hideOkButton: '是否隐藏确认按钮',
-        hideCloseButton: '是否隐藏关闭按钮',
+        footerButtons:
+          '底部按钮列表（每项 props 透传 LewButton，含 request）；不传为默认单个「确认」并关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
-        okButtonProps: '确认按钮属性',
-        closeButtonProps: '取消按钮属性',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         zIndex: '层级',
         maxHeight: '最大高度',
@@ -2098,6 +2098,9 @@ export default {
       demo5: {
         title: '自定义内容',
       },
+      demo6: {
+        title: '自定义底部按钮',
+      },
       props: {
         type: '类型',
         width: '宽度',
@@ -2105,10 +2108,8 @@ export default {
         title: '标题',
         content: '内容',
         placement: '位置',
-        okText: '确认按钮文本',
-        cancelText: '取消按钮文本',
-        ok: '确认回调',
-        cancel: '取消回调',
+        footerButtons:
+          '底部按钮列表（每项 props 透传 LewButton，含 request；request 返回 false 时不关闭）；不传为默认单个「确认」并关闭',
         icon: '自定义图标',
         hideIcon: '是否隐藏图标',
       },

@@ -3,6 +3,7 @@
 import { onClickOutside } from '@vueuse/core'
 
 // 2. 组件导入
+import type { LewModalFooterButtonItem } from 'lew-ui'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CloseButton from 'lew-ui/_components/CloseButton.vue'
 
@@ -66,6 +67,27 @@ const modalStyle = computed(() => {
 const modalBodyMainStyle = computed(() => ({
   maxHeight: any2px(props.maxHeight),
 }))
+
+const resolvedFooterButtons = computed<LewModalFooterButtonItem[]>(() => {
+  if (props.footerButtons != null) {
+    return props.footerButtons.map(item => ({
+      props: { size: 'small', ...item.props },
+    }))
+  }
+  return [
+    {
+      props: {
+        size: 'small',
+        type: 'fill',
+        color: 'primary',
+        text: locale.t('modal.confirmText'),
+        request: async () => {
+          handleClose()
+        },
+      },
+    },
+  ]
+})
 
 // 方法
 function handleClose(): void {
@@ -131,29 +153,15 @@ onClickOutside(modalBodyRef, (e: any) => {
               <slot name="footer" />
             </div>
             <LewFlex
-              v-else-if="!props.hideFooter"
+              v-else-if="!props.hideFooter && resolvedFooterButtons.length > 0"
               x="end"
               y="center"
               class="lew-modal-footer"
             >
               <LewButton
-                v-if="!props.hideCloseButton"
-                v-bind="{
-                  size: 'small',
-                  type: 'light',
-                  color: 'gray',
-                  text: locale.t('modal.closeText'),
-                  ...(props.closeButtonProps as any),
-                }"
-              />
-              <LewButton
-                v-if="!props.hideOkButton"
-                v-bind="{
-                  size: 'small',
-                  text: locale.t('modal.okText'),
-                  color: 'primary',
-                  ...(props.okButtonProps as any),
-                }"
+                v-for="(item, index) in resolvedFooterButtons"
+                :key="index"
+                v-bind="item.props"
               />
             </LewFlex>
           </div>

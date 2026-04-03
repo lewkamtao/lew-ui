@@ -241,13 +241,27 @@ function deleteItem(item: any) {
   LewDialog.error({
     title: '确认删除',
     content: '删除后无法恢复，请谨慎操作',
-    cancelText: '手滑了',
-    ok: () => {
-      return new Promise((resolve) => {
-        options.value = options.value.filter((e: any) => e.id !== item.id)
-        resolve(true)
-      })
-    },
+    footerButtons: [
+      {
+        props: {
+          text: '手滑了',
+          color: 'gray',
+          type: 'light',
+          size: 'small',
+        },
+      },
+      {
+        props: {
+          text: '确定',
+          type: 'fill',
+          size: 'small',
+          color: 'error',
+          request: async () => {
+            options.value = options.value.filter((e: any) => e.id !== item.id)
+          },
+        },
+      },
+    ],
   })
 }
 
