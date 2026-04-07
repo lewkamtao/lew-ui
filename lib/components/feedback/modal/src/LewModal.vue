@@ -1,9 +1,9 @@
 <script setup lang="ts">
-// 1. 第三方库导入
-import { onClickOutside } from '@vueuse/core'
-
 // 2. 组件导入
 import type { LewModalFooterButtonItem } from 'lew-ui'
+
+// 1. 第三方库导入
+import { onClickOutside } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CloseButton from 'lew-ui/_components/CloseButton.vue'
 
