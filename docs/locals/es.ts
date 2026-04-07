@@ -1946,6 +1946,9 @@ export default {
       demo3: {
         title: 'Simulate Request',
       },
+      demo4: {
+        title: 'Efecto de apilamiento',
+      },
       emits: {
         close: 'Triggered when closed',
       },

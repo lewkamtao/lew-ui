@@ -1974,6 +1974,9 @@ export default {
       demo3: {
         title: 'Simulation de requête',
       },
+      demo4: {
+        title: 'Effet d\'empilement',
+      },
       emits: {
         close: 'Déclenché à la fermeture',
       },

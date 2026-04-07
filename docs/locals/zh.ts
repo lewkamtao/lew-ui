@@ -1920,6 +1920,9 @@ export default {
       demo3: {
         title: '模拟请求',
       },
+      demo4: {
+        title: '堆叠效果',
+      },
       emits: {
         close: '关闭时触发',
       },

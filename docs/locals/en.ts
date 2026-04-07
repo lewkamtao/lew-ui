@@ -1944,6 +1944,9 @@ export default {
       demo3: {
         title: 'Simulate Request',
       },
+      demo4: {
+        title: 'Stack Effect',
+      },
       emits: {
         close: 'Triggered when closed',
       },

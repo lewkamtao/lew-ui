@@ -1983,6 +1983,9 @@ export default {
       demo3: {
         title: 'Anfrage simulieren',
       },
+      demo4: {
+        title: 'Stapeleffekt',
+      },
       emits: {
         close: 'Wird beim Schließen ausgelöst',
       },

@@ -1955,6 +1955,9 @@ export default {
       demo3: {
         title: '요청 시뮬레이션',
       },
+      demo4: {
+        title: '스택 효과',
+      },
       emits: {
         close: '닫힐 때 트리거',
       },

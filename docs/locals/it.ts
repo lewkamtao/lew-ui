@@ -1896,6 +1896,9 @@ export default {
       demo3: {
         title: 'Simulazione richiesta',
       },
+      demo4: {
+        title: 'Effetto impilamento',
+      },
       emits: {
         close: 'Attivato alla chiusura',
       },

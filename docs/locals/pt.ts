@@ -1967,6 +1967,9 @@ export default {
       demo3: {
         title: 'Simulação de requisição',
       },
+      demo4: {
+        title: 'Efeito de empilhamento',
+      },
       emits: {
         close: 'Disparado ao fechar',
       },

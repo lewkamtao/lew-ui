@@ -1906,6 +1906,9 @@ export default {
       demo3: {
         title: 'リクエストのシミュレーション',
       },
+      demo4: {
+        title: 'スタック効果',
+      },
       emits: {
         close: '閉じられたときに発火',
       },
