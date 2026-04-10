@@ -1,81 +1,81 @@
 <script setup lang="ts">
 // 1. 类型导入
-import type { LewColor } from "lew-ui";
-import type { LewDialogPopokFooterButtonItem } from "lew-ui/types";
+import type { LewColor } from 'lew-ui'
+import type { LewDialogPopokFooterButtonItem } from 'lew-ui/types'
 
 // 2. 组件导入
-import { LewButton, LewFlex, LewPopover, locale } from "lew-ui";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import RenderComponent from "lew-ui/_components/RenderComponent.vue";
+import { LewButton, LewFlex, LewPopover, locale } from 'lew-ui'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 
 // 3. 工具函数导入
-import { any2px } from "lew-ui/utils";
+import { any2px } from 'lew-ui/utils'
 
 // 4. 组件配置导入
-import { popokButtonProps } from "./props";
+import { popokButtonProps } from './props'
 
 // Props
-const props = defineProps(popokButtonProps);
+const props = defineProps(popokButtonProps)
 
 // 响应式状态
-const lewPopoverRef = ref();
-const primaryButtonRef = ref<{ $el?: HTMLElement } | null>(null);
+const lewPopoverRef = ref()
+const primaryButtonRef = ref<{ $el?: HTMLElement } | null>(null)
 
 // 计算属性
 const popokBodyStyle = computed(() => ({
   width: any2px(props.width),
-}));
+}))
 
 const resolvedFooterButtons = computed<LewDialogPopokFooterButtonItem[]>(() => {
   if (props.footerButtons != null) {
-    return props.footerButtons;
+    return props.footerButtons
   }
   return [
     {
       props: {
-        text: locale.t("popok.confirmText"),
-        type: "fill",
-        size: "small",
+        text: locale.t('popok.confirmText'),
+        type: 'fill',
+        size: 'small',
         color: props.type as LewColor,
       },
     },
-  ];
-});
+  ]
+})
 
 function bindPrimaryButtonRef(el: any, index: number) {
   if (index === resolvedFooterButtons.value.length - 1) {
-    primaryButtonRef.value = el;
+    primaryButtonRef.value = el
   }
 }
 
 function footerButtonBind(item: LewDialogPopokFooterButtonItem) {
-  const { request: _r, ...rest } = item.props ?? {};
-  return rest;
+  const { request: _r, ...rest } = item.props ?? {}
+  return rest
 }
 
 async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem) {
-  const fn = item.props?.request;
-  if (typeof fn === "function") {
+  const fn = item.props?.request
+  if (typeof fn === 'function') {
     const result = await Promise.resolve(
-      (fn as () => boolean | void | Promise<boolean | void>)()
-    );
+      (fn as () => boolean | void | Promise<boolean | void>)(),
+    )
     if (result === false) {
-      return;
+      return
     }
   }
-  hide();
+  hide()
 }
 
 function hide() {
-  lewPopoverRef.value.hide();
+  lewPopoverRef.value.hide()
 }
 
 // 生命周期
 onMounted(() => {
   nextTick(() => {
-    primaryButtonRef.value?.$el?.focus?.();
-  });
-});
+    primaryButtonRef.value?.$el?.focus?.()
+  })
+})
 </script>
 
 <template>
