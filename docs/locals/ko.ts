@@ -23,6 +23,56 @@ export default {
     components: '컴포넌트',
     formEngine: '폼 엔진',
     descEngine: '설명 엔진',
+    bestPractices: '모범 사례',
+  },
+  bestPractices: {
+    heroTitle: '모범 사례 플레이그라운드',
+    heroDesc:
+      '실무 패턴: 필요한 만큼만 import, 폼·비동기, 피드백 구분, 테마 변수. 코드와 동작을 그대로 가져가세요.',
+    tabImport: 'import·번들',
+    tabForm: '폼·비동기',
+    tabFeedback: '피드백·접근성',
+    tabTheme: '테마·토큰',
+    importTitle: '온디맨드 import·트리셰이킹',
+    importDesc:
+      '쓰는 컴포넌트와 타입만 import하고 sideEffects를 지켜 미사용 코드를 제거하세요.',
+    formTitle: '스키마·검증·요청 상태',
+    formDesc:
+      'rule에 Yup을 두고 LewMessage.request로 제출을 감싸 loading/성공/실패를 UI와 맞춥니다.',
+    formHint: '입력 후 제출: 검증 실패 시 안내, 성공 시 지연을 시뮬레이션합니다.',
+    formSubmit: '모의 제출',
+    formReset: '초기화',
+    feedbackTitle: 'Message와 Notification',
+    feedbackDesc:
+      '가벼운 결과는 Message, 나중에 다시 봐야 하면 Notification. 위험한 작업은 Modal/Dialog로 확인.',
+    btnToast: 'Message',
+    btnNotify: 'Notification',
+    btnConfirm: '위험 작업 확인',
+    a11yTitle: '로딩·비활성·중복 클릭 방지',
+    a11yDesc:
+      '비동기 중에는 주 버튼 비활성 또는 로딩 표시. 의미 있는 컨트롤을 우선하세요.',
+    themeTitle: 'CSS 변수로 테마',
+    themeDesc:
+      '색·모서리는 --lew-* 토큰. 내부 class보다 전역에서 변수를 덮어쓰세요.',
+    themeTip: '라이트/다크 전환으로 확인. :root 또는 .lew-light / .lew-dark에서 덮어쓰기.',
+    copyDone: '코드가 복사되었습니다',
+    copyBtn: '복사',
+    formFieldName: '표시 이름',
+    formFieldEmail: '이메일',
+    formPhName: '홍길동',
+    formPhEmail: 'you@example.com',
+    formErrMin2: '2자 이상',
+    formErrEmail: '이메일 형식이 올바르지 않습니다',
+    formErrRequired: '필수 항목입니다',
+    formLoadingMsg: '제출 중…',
+    formSubmitInvalid: '입력 오류를 먼저 수정하세요',
+    formSubmitOk: '저장됨(모의 API ~800ms)',
+    feedbackToast: '가벼운 피드백 — 즉각적인 결과에 적합합니다.',
+    feedbackNotifyTitle: '남아 있는 알림',
+    feedbackNotifyContent:
+      '사용자가 페이지를 이동하거나 나중에 다시 읽을 수 있습니다. 수동으로 닫거나 시간이 지나면 사라집니다.',
+    feedbackDialogTitle: '되돌릴 수 없는 작업',
+    feedbackDialogContent: '흐름을 막고 명시적 확인을 요청합니다.',
   },
   base: {
     base: '기본',
@@ -36,6 +86,7 @@ export default {
     back: '뒤로',
     backToHome: '홈으로 돌아가기',
     loading: '로딩 중...',
+    deprecated: '사용 중단 컴포넌트',
   },
   components: {
     image: {
@@ -212,23 +263,8 @@ export default {
     },
     title: {
       name: '제목 Title',
-      description: '단순한 제목이 아닌, 콘텐츠의 핵심을 알려주는 힌트',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '굵기',
-      },
-      demo3: {
-        title: '색상',
-      },
-      props: {
-        text: '텍스트 내용',
-        size: '제목 텍스트 크기, 숫자(단위: 픽셀) 또는 문자열(예: "1.5em")로 지정 가능',
-        bold: '제목 텍스트 굵기, 100에서 900 사이의 100 단위 정수 선택 가능',
-        color:
-          '제목 텍스트 색상, 미리 정의된 색상 이름 또는 사용자 정의 색상 값 사용 가능',
-      },
+      description:
+        '[사용 중단] h1–h6 등 시맨틱 제목 또는 프로젝트 타이포그래피를 사용하세요. 문서 사이트는 DocHeading을 씁니다. LewTitle은 호환을 위해 내보냅니다.',
     },
     textTrim: {
       name: '텍스트 잘라내기 TextTrim',
@@ -300,12 +336,13 @@ export default {
     },
     icon: {
       name: '아이콘 Icon',
-      description: '아름다운 아이콘 모음, 인터페이스에 시각적 언어 추가',
+      description:
+        '[사용 중단] 내장 Icon 컴포넌트는 사용 중단입니다. Lucide 등을 프로젝트에서 직접 사용하세요.',
     },
     backTop: {
       name: '맨 위로 BackTop',
       description:
-        '한 번의 클릭으로 페이지 상단으로 이동, 긴 페이지 탐색을 편리하게',
+        '[사용 중단] 네이티브 스크롤 또는 직접 구현한 맨 위로 버튼을 권장합니다. LewBackTop·v-backtop은 남아 있으나 권장하지 않습니다.',
       demo1: {
         title: '기본 사용법',
       },
@@ -330,33 +367,7 @@ export default {
     steps: {
       name: '단계 Steps',
       description:
-        '작업 과정을 명확하게 표시하여 사용자가 현재 위치를 알 수 있게 합니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '상태',
-      },
-      demo3: {
-        title: '로딩 중',
-      },
-      model: {
-        modelValue: '현재 활성화된 단계의 인덱스 값',
-      },
-      props: {
-        options: '단계 구성 항목 배열',
-        status: '단계의 현재 상태',
-        minWidth: '최소 단계 너비',
-        canClickItem: '단계 항목을 클릭하여 전환할 수 있는지 여부',
-        canCrossSteps: '단계 간 전환할 수 있는지 여부',
-      },
-      options: {
-        title: '단계 제목',
-        description: '단계 설명',
-      },
-      emits: {
-        change: '단계 전환 시 트리거',
-      },
+        '[제거됨] LewSteps / lew-steps는 라이브러리에서 제거되었습니다. 단계 UI는 직접 구현하거나 다른 방식을 사용하세요.',
     },
     menu: {
       name: '메뉴 Menu',
@@ -750,7 +761,8 @@ export default {
         showCount: '글자 수 표시 여부',
         maxLength: '최대 입력 글자 수',
         size: '텍스트 영역 크기',
-        resize: '크기 조절 방향',
+        resize:
+          '오른쪽 아래 핸들로 조절 방향 (none / vertical / horizontal / both), 네이티브 resize 비활성',
         width: '너비',
         height: '높이',
         minWidth: '최소 너비',
@@ -2255,7 +2267,8 @@ export default {
     },
     empty: {
       name: '빈 상태 Empty',
-      description: '빈 데이터 상태 표시로, 빈 페이지를 더 친화적으로 만듭니다',
+      description:
+        '[사용 중단] 빈 상태는 앱에서 문구·일러스트·레이아웃을 직접 구현하세요. LewEmpty는 남아 있으나 권장하지 않습니다.',
       demo1: {
         title: '기본 사용법',
       },

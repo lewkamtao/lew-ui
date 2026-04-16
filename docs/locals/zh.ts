@@ -23,6 +23,56 @@ export default {
     components: '组件',
     formEngine: '表单引擎',
     descEngine: '描述引擎',
+    bestPractices: '最佳实践',
+  },
+  bestPractices: {
+    heroTitle: '最佳实践操场',
+    heroDesc:
+      '面向真实业务的组合示例：按需引入、表单与异步、反馈分层与主题变量。可直接对照源码与交互行为，把模式复制到你的项目里。',
+    tabImport: '引入与体积',
+    tabForm: '表单与异步',
+    tabFeedback: '反馈与可达性',
+    tabTheme: '主题与变量',
+    importTitle: '按需引入，保留 Tree-shaking',
+    importDesc:
+      '业务代码只导入用到的组件与类型，配合构建工具的 sideEffects 声明，避免把整库打进包里。',
+    formTitle: 'Schema 驱动 + 校验 + 请求态',
+    formDesc:
+      '用声明式字段描述表单，Yup 约束放在 rule；提交时用 LewMessage.request 统一处理 loading / 成功 / 失败，避免按钮与接口状态脱节。',
+    formHint: '试填后提交：校验失败会提示；通过后模拟接口延迟。',
+    formSubmit: '模拟提交',
+    formReset: '重置',
+    feedbackTitle: 'Message 与 Notification 的分工',
+    feedbackDesc:
+      '轻量结果用 Message（操作随即结束）；需要用户稍后回顾或跨页面留存用 Notification。危险操作前用 Modal / Dialog 二次确认。',
+    btnToast: '轻提示 Message',
+    btnNotify: '通知 Notification',
+    btnConfirm: '危险操作确认',
+    a11yTitle: '加载、禁用与防重复提交',
+    a11yDesc:
+      '异步进行中禁用主按钮或展示 loading，避免重复点击；对屏幕阅读器友好的组件请优先使用库内原生语义控件。',
+    themeTitle: '主题：覆盖 CSS 变量即可',
+    themeDesc:
+      '组件颜色与圆角由 --lew-* 变量驱动。在业务全局样式中覆盖变量，而不是逐个覆写组件内部 class。',
+    themeTip: '切换站点明暗模式即可看到变量生效；业务侧可在 :root 或 .lew-light / .lew-dark 下覆写。',
+    copyDone: '已复制示例代码',
+    copyBtn: '复制',
+    formFieldName: '显示名称',
+    formFieldEmail: '邮箱',
+    formPhName: '张三',
+    formPhEmail: 'name@company.com',
+    formErrMin2: '至少 2 个字符',
+    formErrEmail: '邮箱格式不正确',
+    formErrRequired: '此项必填',
+    formLoadingMsg: '提交中…',
+    formSubmitInvalid: '请先修正表单中的错误',
+    formSubmitOk: '已保存（模拟接口约 800ms）',
+    feedbackToast: '轻量反馈：适合立刻得到结果的操作。',
+    feedbackNotifyTitle: '可留存的通知',
+    feedbackNotifyContent:
+      '用户可能切页或稍后再读详情时使用；可手动关闭或等待自动消失。',
+    feedbackDialogTitle: '不可撤销的操作',
+    feedbackDialogContent: '危险流程应阻断并请求明确确认。',
   },
   base: {
     base: '基础',
@@ -36,6 +86,7 @@ export default {
     back: '返回',
     backToHome: '返回首页',
     loading: '加载中...',
+    deprecated: '已废弃组件',
   },
   components: {
     image: {
@@ -208,22 +259,8 @@ export default {
     },
     title: {
       name: '标题 Title',
-      description: '不只是标题，更是内容的灵魂提示',
-      demo1: {
-        title: '基础用法',
-      },
-      demo2: {
-        title: '粗体',
-      },
-      demo3: {
-        title: '色彩',
-      },
-      props: {
-        text: '文本内容',
-        size: '标题文字大小，可以是数字（单位：像素）或字符串（如 "1.5em"）',
-        bold: '标题文字粗细程度，可选值为 100 到 900 之间的整百数',
-        color: '标题文字颜色，可选值包括预定义的颜色名称或自定义的颜色值',
-      },
+      description:
+        '【已废弃】请使用 h1–h6 等语义化标题或自行组合样式；文档站使用 DocHeading 展示标题样式，LewTitle 仍导出以保持兼容。',
     },
     textTrim: {
       name: '文本截断 TextTrim',
@@ -292,11 +329,13 @@ export default {
     },
     icon: {
       name: '图标 Icon',
-      description: '精美的图标集合，为界面增添视觉语言',
+      description:
+        '【已废弃】内置图标组件已废弃，请使用 Lucide 等图标库自行引入。',
     },
     backTop: {
       name: '返回顶部 BackTop',
-      description: '一键回到顶部，让长页面浏览不再烦恼',
+      description:
+        '【已废弃】请使用原生滚动或自行实现回到顶部按钮；v-backtop 指令与 LewBackTop 仍可用但不再推荐使用。',
       demo1: {
         title: '基本用法',
       },
@@ -320,33 +359,8 @@ export default {
     },
     steps: {
       name: '步骤条 Steps',
-      description: '清晰展示操作流程，让用户知道自己在哪',
-      demo1: {
-        title: '基础用法',
-      },
-      demo2: {
-        title: '状态',
-      },
-      demo3: {
-        title: '加载中',
-      },
-      model: {
-        modelValue: '当前激活步骤的索引值',
-      },
-      props: {
-        options: '步骤配置项数组',
-        status: '步骤条的当前状态',
-        minWidth: '最小步骤宽度',
-        canClickItem: '是否可以点击步骤项切换',
-        canCrossSteps: '是否可以跨步骤切换',
-      },
-      options: {
-        title: '步骤标题',
-        description: '步骤描述',
-      },
-      emits: {
-        change: '步骤切换时触发',
-      },
+      description:
+        '【已移除】LewSteps / lew-steps 已从组件库中移除，步骤流程请自行实现 UI 或选用其他方案。',
     },
     menu: {
       name: '菜单 Menu',
@@ -736,7 +750,8 @@ export default {
         showCount: '是否显示字符计数',
         maxLength: '最大输入字符数',
         size: '文本域尺寸',
-        resize: '调整尺寸的方向',
+        resize:
+          '右下角拖动手柄调整尺寸方向（none / vertical / horizontal / both），已禁用原生缩放',
         width: '宽度',
         height: '高度',
         minWidth: '最小宽度',
@@ -2215,7 +2230,8 @@ export default {
     },
     empty: {
       name: '空状态 Empty',
-      description: '空数据状态展示，让空白页面更加友好',
+      description:
+        '【已废弃】请根据业务自行实现空状态（文案、插图与布局）；LewEmpty 仍可用但不再推荐使用。',
       demo1: {
         title: '基础用法',
       },

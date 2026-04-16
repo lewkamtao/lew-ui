@@ -267,7 +267,7 @@ defineExpose({ focus, validCheck })
   }
 
   .lew-input-number::placeholder {
-    color: rgb(165, 165, 165);
+    color: var(--lew-form-placeholder-color);
   }
 
   .lew-input-number-control {

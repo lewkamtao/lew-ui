@@ -4,6 +4,7 @@ import { useDemoLoaded } from 'docs/composables/useDemoLoaded'
 import docsLocale from 'docs/locals'
 import { LewFlex, LewPopover, LewTag, locale } from 'lew-ui'
 import RequiredIcon from 'lew-ui/components/form/form/src/RequiredIcon.vue'
+import DocHeading from './DocHeading.vue'
 import LewTypeCode from './LewTypeCode.vue'
 
 const props = defineProps({
@@ -308,7 +309,7 @@ function getTitle(title: string) {
         direction="y"
         x="start"
       >
-        <lew-title :id="item.title" size="18px" class="demo-docs-title">
+        <DocHeading :id="item.title" size="18px" class="demo-docs-title">
           {{ getTitle(item.title) }}
           <LewTag
             v-if="getTag(item.title)"
@@ -318,7 +319,7 @@ function getTitle(title: string) {
           >
             {{ getTag(item.title) }}
           </LewTag>
-        </lew-title>
+        </DocHeading>
         <lew-table
           :key="`${item.title}_${docsLocale.t('name')}_${route.path} `"
           bordered

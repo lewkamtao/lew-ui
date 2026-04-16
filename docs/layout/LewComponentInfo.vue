@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { renderDescription } from 'docs/lib/utils'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import DocHeading from './DocHeading.vue'
 
 const route = useRoute()
 
@@ -18,7 +19,7 @@ const componentName = computed(() => getComponentName())
 <template>
   <div>
     <div class="component-title-wrapper">
-      <lew-title>{{ $t(`components.${componentName}.name`) }}</lew-title>
+      <DocHeading>{{ $t(`components.${componentName}.name`) }}</DocHeading>
     </div>
     <div class="sub-title">
       <RenderComponent
@@ -36,7 +37,7 @@ const componentName = computed(() => getComponentName())
   align-items: center;
   margin-bottom: 0;
 
-  :deep(.lew-title) {
+  :deep(.doc-heading) {
     margin-bottom: 0;
   }
 }

@@ -44,6 +44,7 @@ export default {
   },
   textarea: {
     placeholder: 'Bitte eingeben',
+    resizeHandle: 'Zum Größenändern ziehen',
   },
   inputNumber: {
     placeholder: 'Bitte eingeben',
@@ -131,6 +132,9 @@ export default {
   pagination: {
     pageSize: '{pageSize} pro Seite',
     jumpTo: 'Springen zu',
+  },
+  contextMenu: {
+    noActions: 'Keine Aktionen verfügbar',
   },
   empty: {
     title: 'Keine Daten',

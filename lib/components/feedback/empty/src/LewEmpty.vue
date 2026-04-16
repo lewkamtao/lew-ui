@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * @deprecated 已废弃：请自行实现空状态；未来主版本可能移除。
+ */
 // 1. 组件导入
 import { locale } from 'lew-ui'
 

@@ -6,10 +6,10 @@ import LewComponentInfo from 'docs/layout/LewComponentInfo.vue'
   <div class="demo-wrapper">
     <LewComponentInfo />
 
-    <LewDemoBox title="图标废弃通知">
-      <lew-alert type="info">
+    <LewDemoBox title="组件废弃说明">
+      <lew-alert type="warning">
         <template #title>
-          Icon 组件废弃通知
+          Icon 已废弃
         </template>
         <template #content>
           我们将在 <b>v2.4.0</b> 版本中不再内置图标组件。<br><br>

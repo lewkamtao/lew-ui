@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: 'Please input',
+    resizeHandle: 'Drag to resize',
   },
   inputNumber: {
     placeholder: 'Please input',
@@ -130,6 +131,9 @@ export default {
   pagination: {
     pageSize: '{pageSize} items/page',
     jumpTo: 'Jump to',
+  },
+  contextMenu: {
+    noActions: 'No actions available',
   },
   empty: {
     title: 'No data',

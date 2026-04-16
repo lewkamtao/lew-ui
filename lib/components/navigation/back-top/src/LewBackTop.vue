@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * @deprecated 已废弃：请使用原生滚动或自定义回到顶部；未来主版本可能移除。
+ */
 import type { CSSProperties } from 'vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { useEventListener } from 'lew-ui/hooks'

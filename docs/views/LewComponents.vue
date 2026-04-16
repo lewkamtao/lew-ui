@@ -63,10 +63,6 @@ const options = computed(() => {
           value: '/Badge',
         },
         {
-          label: 'Title',
-          value: '/Title',
-        },
-        {
           label: 'TextTrim',
           value: '/TextTrim',
         },
@@ -78,24 +74,12 @@ const options = computed(() => {
           label: 'Mark',
           value: '/Mark',
         },
-        {
-          label: 'Icon',
-          value: '/Icon',
-        },
       ],
     },
     {
       label: docsLocale.t('base.navigation'),
       value: docsLocale.t('base.navigation'),
       children: [
-        {
-          label: 'BackTop',
-          value: '/BackTop',
-        },
-        {
-          label: 'Steps',
-          value: '/Steps',
-        },
         {
           label: 'Menu',
           value: '/Menu',
@@ -325,9 +309,31 @@ const options = computed(() => {
           label: 'Loading',
           value: '/Loading',
         },
+      ],
+    },
+    {
+      label: docsLocale.t('base.deprecated'),
+      value: docsLocale.t('base.deprecated'),
+      children: [
+        {
+          label: 'Icon',
+          value: '/Icon',
+        },
+        {
+          label: 'BackTop',
+          value: '/BackTop',
+        },
         {
           label: 'Empty',
           value: '/Empty',
+        },
+        {
+          label: 'Steps',
+          value: '/Steps',
+        },
+        {
+          label: 'Title',
+          value: '/Title',
         },
       ],
     },

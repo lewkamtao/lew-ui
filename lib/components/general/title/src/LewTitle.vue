@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * @deprecated 已废弃：请使用语义化标题或自定义样式；未来主版本可能移除。
+ */
 import type { CSSProperties } from 'vue'
 import { any2px } from 'lew-ui/utils'
 import { titleEmits } from './emits'

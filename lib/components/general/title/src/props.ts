@@ -3,6 +3,10 @@ import type { LewColor, LewSize } from 'lew-ui'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validColorList } from 'lew-ui/validators'
 
+/**
+ * LewTitle 已废弃：请使用语义化标题（h1–h6）或自行组合样式，未来主版本可能移除。
+ * @deprecated
+ */
 export const titleProps = {
   text: {
     type: String,

@@ -24,6 +24,56 @@ export default {
     components: 'Composants',
     formEngine: 'Moteur de formulaires',
     descEngine: 'Moteur de description',
+    bestPractices: 'Bonnes pratiques',
+  },
+  bestPractices: {
+    heroTitle: 'Best practices playground',
+    heroDesc:
+      'Production-minded patterns: on-demand imports, forms with async flow, layered feedback, and theme variables. Copy the code and behavior into your app.',
+    tabImport: 'Imports & bundle',
+    tabForm: 'Forms & async',
+    tabFeedback: 'Feedback & a11y',
+    tabTheme: 'Theme & tokens',
+    importTitle: 'On-demand imports & tree-shaking',
+    importDesc:
+      'Import only the components and types you use. Respect sideEffects in package metadata so bundlers can drop unused code.',
+    formTitle: 'Schema, validation & request state',
+    formDesc:
+      'Describe fields declaratively with Yup in rule; wrap submit with LewMessage.request so loading/success/error stay in sync with the UI.',
+    formHint: 'Submit after filling: validation errors show; success simulates network latency.',
+    formSubmit: 'Mock submit',
+    formReset: 'Reset',
+    feedbackTitle: 'Message vs Notification',
+    feedbackDesc:
+      'Use Message for lightweight, immediate outcomes; use Notification when users may need to revisit. Confirm destructive actions with Modal/Dialog.',
+    btnToast: 'Toast (Message)',
+    btnNotify: 'Notification',
+    btnConfirm: 'Destructive confirm',
+    a11yTitle: 'Loading, disabled & double-submit',
+    a11yDesc:
+      'Disable the primary control or show loading while async work runs. Prefer semantic controls from the library for better accessibility.',
+    themeTitle: 'Theme via CSS variables',
+    themeDesc:
+      'Colors and radii are driven by --lew-* tokens. Override variables in global styles instead of fighting internal class names.',
+    themeTip: 'Toggle site light/dark to see tokens; override under :root or .lew-light / .lew-dark in your app.',
+    copyDone: 'Sample code copied',
+    copyBtn: 'Copy',
+    formFieldName: 'Display name',
+    formFieldEmail: 'Email',
+    formPhName: 'Jane Doe',
+    formPhEmail: 'you@example.com',
+    formErrMin2: 'At least 2 characters',
+    formErrEmail: 'Invalid email',
+    formErrRequired: 'Required',
+    formLoadingMsg: 'Submitting…',
+    formSubmitInvalid: 'Fix validation errors first',
+    formSubmitOk: 'Saved (mock API ~800ms)',
+    feedbackToast: 'Lightweight feedback — for immediate outcomes.',
+    feedbackNotifyTitle: 'Sticky notification',
+    feedbackNotifyContent:
+      'Use when users may navigate away or read details later. Dismiss manually or wait for duration.',
+    feedbackDialogTitle: 'Irreversible action',
+    feedbackDialogContent: 'Block the flow and ask for explicit confirmation.',
   },
   base: {
     base: 'Base',
@@ -37,6 +87,7 @@ export default {
     back: 'Retour',
     backToHome: 'Retour à l\'accueil',
     loading: 'Chargement...',
+    deprecated: 'Obsolètes',
   },
   components: {
     image: {
@@ -215,23 +266,7 @@ export default {
     title: {
       name: 'Titre',
       description:
-        'Plus qu\'un simple titre, une essence qui donne vie au contenu',
-      demo1: {
-        title: 'Utilisation de base',
-      },
-      demo2: {
-        title: 'Gras',
-      },
-      demo3: {
-        title: 'Couleur',
-      },
-      props: {
-        text: 'Contenu du texte',
-        size: 'Taille du texte du titre, peut être un nombre (unité : pixels) ou une chaîne (ex : "1.5em")',
-        bold: 'Épaisseur du texte du titre, les valeurs possibles sont des nombres entiers entre 100 et 900',
-        color:
-          'Couleur du texte du titre, les valeurs possibles incluent des noms de couleurs prédéfinis ou des valeurs de couleur personnalisées',
-      },
+        '[Obsolète] Préférez des titres sémantiques (h1–h6) ou votre propre typographie. La doc utilise DocHeading ; LewTitle reste exporté pour compatibilité.',
     },
     textTrim: {
       name: 'Découpe de Texte',
@@ -307,12 +342,12 @@ export default {
     icon: {
       name: 'Icône',
       description:
-        'Collection d\'icônes élégantes, enrichissant le langage visuel de l\'interface',
+        '[Obsolète] Le composant Icon intégré est obsolète. Utilisez Lucide ou un autre pack d\'icônes.',
     },
     backTop: {
       name: 'Retour en haut',
       description:
-        'Retour en haut de page en un clic, facilitant la navigation sur les longues pages',
+        '[Obsolète] Préférez le défilement natif ou votre propre bouton. LewBackTop et v-backtop restent disponibles mais ne sont pas recommandés.',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -338,33 +373,7 @@ export default {
     steps: {
       name: 'Étapes',
       description:
-        'Affiche clairement le processus d\'opération, permettant à l\'utilisateur de savoir où il se trouve',
-      demo1: {
-        title: 'Utilisation de base',
-      },
-      demo2: {
-        title: 'État',
-      },
-      demo3: {
-        title: 'Chargement',
-      },
-      model: {
-        modelValue: 'Index de l\'étape actuellement active',
-      },
-      props: {
-        options: 'Tableau de configuration des étapes',
-        status: 'État actuel des étapes',
-        minWidth: 'Largeur minimale de l\'étape',
-        canClickItem: 'Autoriser le clic sur les éléments d\'étape',
-        canCrossSteps: 'Autoriser de sauter des étapes',
-      },
-      options: {
-        title: 'Titre de l\'étape',
-        description: 'Description de l\'étape',
-      },
-      emits: {
-        change: 'Déclenché lorsqu\'une étape change',
-      },
+        '[Supprimé] LewSteps / lew-steps a été retiré de la bibliothèque. Implémentez l’UI des étapes dans votre app ou une autre solution.',
     },
     menu: {
       name: 'Menu',
@@ -751,7 +760,8 @@ export default {
         showCount: 'Afficher le compteur de caractères',
         maxLength: 'Nombre maximum de caractères',
         size: 'Taille de la zone de texte',
-        resize: 'Direction de redimensionnement',
+        resize:
+          'Redimensionnement par poignée en bas à droite (none / vertical / horizontal / both) ; resize natif désactivé',
         width: 'Largeur',
         height: 'Hauteur',
         minWidth: 'Largeur minimale',
@@ -2279,7 +2289,7 @@ export default {
     empty: {
       name: 'État vide',
       description:
-        'Affichage d\'état sans données, pour des pages vides plus conviviales',
+        '[Obsolète] Implémentez les états vides dans votre app (texte, illustration, mise en page). LewEmpty reste disponible mais n\'est pas recommandé.',
       demo1: {
         title: 'Utilisation de base',
       },

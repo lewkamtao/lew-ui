@@ -23,6 +23,56 @@ export default {
     components: 'Componentes',
     formEngine: 'Motor de formularios',
     descEngine: 'Motor de descripción',
+    bestPractices: 'Buenas prácticas',
+  },
+  bestPractices: {
+    heroTitle: 'Best practices playground',
+    heroDesc:
+      'Production-minded patterns: on-demand imports, forms with async flow, layered feedback, and theme variables. Copy the code and behavior into your app.',
+    tabImport: 'Imports & bundle',
+    tabForm: 'Forms & async',
+    tabFeedback: 'Feedback & a11y',
+    tabTheme: 'Theme & tokens',
+    importTitle: 'On-demand imports & tree-shaking',
+    importDesc:
+      'Import only the components and types you use. Respect sideEffects in package metadata so bundlers can drop unused code.',
+    formTitle: 'Schema, validation & request state',
+    formDesc:
+      'Describe fields declaratively with Yup in rule; wrap submit with LewMessage.request so loading/success/error stay in sync with the UI.',
+    formHint: 'Submit after filling: validation errors show; success simulates network latency.',
+    formSubmit: 'Mock submit',
+    formReset: 'Reset',
+    feedbackTitle: 'Message vs Notification',
+    feedbackDesc:
+      'Use Message for lightweight, immediate outcomes; use Notification when users may need to revisit. Confirm destructive actions with Modal/Dialog.',
+    btnToast: 'Toast (Message)',
+    btnNotify: 'Notification',
+    btnConfirm: 'Destructive confirm',
+    a11yTitle: 'Loading, disabled & double-submit',
+    a11yDesc:
+      'Disable the primary control or show loading while async work runs. Prefer semantic controls from the library for better accessibility.',
+    themeTitle: 'Theme via CSS variables',
+    themeDesc:
+      'Colors and radii are driven by --lew-* tokens. Override variables in global styles instead of fighting internal class names.',
+    themeTip: 'Toggle site light/dark to see tokens; override under :root or .lew-light / .lew-dark in your app.',
+    copyDone: 'Sample code copied',
+    copyBtn: 'Copy',
+    formFieldName: 'Display name',
+    formFieldEmail: 'Email',
+    formPhName: 'Jane Doe',
+    formPhEmail: 'you@example.com',
+    formErrMin2: 'At least 2 characters',
+    formErrEmail: 'Invalid email',
+    formErrRequired: 'Required',
+    formLoadingMsg: 'Submitting…',
+    formSubmitInvalid: 'Fix validation errors first',
+    formSubmitOk: 'Saved (mock API ~800ms)',
+    feedbackToast: 'Lightweight feedback — for immediate outcomes.',
+    feedbackNotifyTitle: 'Sticky notification',
+    feedbackNotifyContent:
+      'Use when users may navigate away or read details later. Dismiss manually or wait for duration.',
+    feedbackDialogTitle: 'Irreversible action',
+    feedbackDialogContent: 'Block the flow and ask for explicit confirmation.',
   },
   base: {
     base: 'Base',
@@ -36,6 +86,7 @@ export default {
     back: 'Volver',
     backToHome: 'Volver al inicio',
     loading: 'Cargando...',
+    deprecated: 'Obsoletos',
   },
   components: {
     image: {
@@ -215,23 +266,7 @@ export default {
     title: {
       name: 'Título',
       description:
-        'No solo un título, sino una esencia que da vida al contenido',
-      demo1: {
-        title: 'Uso básico',
-      },
-      demo2: {
-        title: 'Negrita',
-      },
-      demo3: {
-        title: 'Color',
-      },
-      props: {
-        text: 'Contenido del texto',
-        size: 'Tamaño del texto del título, puede ser un número (unidad: píxeles) o una cadena (ej., "1.5em")',
-        bold: 'Grosor del texto del título, valores opcionales son números enteros entre 100 y 900',
-        color:
-          'Color del texto del título, los valores opcionales incluyen nombres de colores predefinidos o valores de color personalizados',
-      },
+        '[Obsoleto] Use encabezados semánticos (h1–h6) o su propia tipografía. La documentación usa DocHeading; LewTitle sigue exportado por compatibilidad.',
     },
     textTrim: {
       name: 'Recorte de Texto',
@@ -306,12 +341,12 @@ export default {
     icon: {
       name: 'Icon',
       description:
-        'A collection of exquisite icons, adding visual language to the interface',
+        '[Obsoleto] El componente Icon integrado está obsoleto. Use Lucide u otro conjunto de iconos en su proyecto.',
     },
     backTop: {
       name: 'Back to Top',
       description:
-        'One-click back to the top, making long page browsing no longer annoying',
+        '[Obsoleto] Prefiera el desplazamiento nativo o su propio botón «volver arriba». LewBackTop y v-backtop siguen disponibles pero no se recomiendan.',
       demo1: {
         title: 'Basic Usage',
       },
@@ -338,33 +373,7 @@ export default {
     steps: {
       name: 'Pasos',
       description:
-        'Muestra claramente el proceso de operación, permitiendo al usuario saber dónde se encuentra',
-      demo1: {
-        title: 'Uso básico',
-      },
-      demo2: {
-        title: 'Estado',
-      },
-      demo3: {
-        title: 'Cargando',
-      },
-      model: {
-        modelValue: 'Índice del paso actualmente activo',
-      },
-      props: {
-        options: 'Array de configuración de pasos',
-        status: 'Estado actual de los pasos',
-        minWidth: 'Ancho mínimo del paso',
-        canClickItem: 'Permitir clic en el elemento del paso',
-        canCrossSteps: 'Permitir cambiar entre pasos',
-      },
-      options: {
-        title: 'Título del paso',
-        description: 'Descripción del paso',
-      },
-      emits: {
-        change: 'Se activa al cambiar de paso',
-      },
+        '[Eliminado] LewSteps / lew-steps se ha eliminado de la biblioteca. Implemente la UI de pasos en su aplicación u otra solución.',
     },
     menu: {
       name: 'Menu',
@@ -735,7 +744,8 @@ export default {
         showCount: 'Show Character Count',
         maxLength: 'Maximum Input Characters',
         size: 'Textarea Size',
-        resize: 'Resize Direction',
+        resize:
+          'Redimensionar con asa inferior derecha (none / vertical / horizontal / both); resize nativo desactivado',
         width: 'Width',
         height: 'Height',
         minWidth: 'Minimum Width',
@@ -2247,7 +2257,8 @@ export default {
     },
     empty: {
       name: 'Empty',
-      description: 'Empty data state display, making blank pages more friendly',
+      description:
+        '[Obsoleto] Implemente los estados vacíos en su app (texto, ilustración, diseño). LewEmpty sigue disponible pero no se recomienda.',
       demo1: {
         title: 'Basic Usage',
       },

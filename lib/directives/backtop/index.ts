@@ -23,6 +23,7 @@ interface ExtendedHTMLElement extends HTMLElement {
   _backTopHandler?: () => void
 }
 
+/** @deprecated v-backtop 已废弃，仍注册以保持兼容。 */
 export const LewVBackTop = {
   install(app: App) {
     app.directive('backtop', {

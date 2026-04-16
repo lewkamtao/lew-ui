@@ -3,7 +3,10 @@ import type { LewEmptyType } from 'lew-ui'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validEmptyTypeList } from 'lew-ui/validators'
 
-// Props definitions
+/**
+ * LewEmpty 已废弃：请在业务中自行实现空状态展示，未来主版本可能移除。
+ * @deprecated
+ */
 export const emptyProps = {
   type: {
     type: String as PropType<LewEmptyType>,

@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: 'Veuillez saisir',
+    resizeHandle: 'Glisser pour redimensionner',
   },
   inputNumber: {
     placeholder: 'Veuillez saisir',
@@ -130,6 +131,9 @@ export default {
   pagination: {
     pageSize: '{pageSize} par page',
     jumpTo: 'Aller à',
+  },
+  contextMenu: {
+    noActions: 'Aucune action disponible',
   },
   empty: {
     title: 'Aucune donnée',

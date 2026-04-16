@@ -1,34 +1,20 @@
 <script setup lang="ts">
 import LewComponentInfo from 'docs/layout/LewComponentInfo.vue'
-import LewDemoBoxLayout from 'docs/layout/LewDemoBoxLayout.vue'
-import LewDocsTables from 'docs/layout/LewDocsTables.vue'
-import { useRoute } from 'vue-router'
-import * as API from './api'
-import { codeGroup, demoGroup } from './demo'
-
-const route = useRoute()
-// 转小写
-const componentName: string = (route.name as string)
-  .replace('R-Lew', '')
-  .replace(/^[A-Z]/, match => match.toLowerCase())
-const options = ref(
-  Object.keys(API).map((key: any) => {
-    // @ts-expect-error API key access
-    return API[key]
-  }),
-)
 </script>
 
 <template>
   <div class="demo-wrapper">
     <LewComponentInfo />
-    <LewDemoBoxLayout
-      :demo-group="demoGroup"
-      :code-group="codeGroup"
-      :component-name="componentName"
-      :columns="2"
-      gap="20px"
-    />
-    <LewDocsTables :options="options" />
+
+    <LewDemoBox title="组件废弃说明">
+      <lew-alert type="warning">
+        <template #title>
+          Title（LewTitle）已废弃
+        </template>
+        <template #content>
+          请优先使用语义化标题（如 <code>h1</code>–<code>h6</code>）或自行组合字号、字重与颜色。文档站内标题已改用 <code>DocHeading</code> 展示样式；LewTitle 仍导出以保持兼容。
+        </template>
+      </lew-alert>
+    </LewDemoBox>
   </div>
 </template>

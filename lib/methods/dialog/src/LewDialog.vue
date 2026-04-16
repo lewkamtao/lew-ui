@@ -111,7 +111,12 @@ if (props.closeByEsc) {
         <div v-if="visible" class="lew-dialog-mask" :style="{ zIndex: managedZIndex }" />
       </transition>
       <transition name="lew-dialog">
-        <div v-if="visible" class="lew-dialog" :style="{ zIndex: managedZIndex }" @click="maskClick">
+        <div
+          v-if="visible"
+          class="lew-dialog"
+          :style="{ zIndex: managedZIndex }"
+          @click="maskClick"
+        >
           <LewFlex direction="y" gap="20px" class="lew-dialog-box" @click.stop>
             <LewFlex y="start">
               <div v-if="!hideIcon" class="lew-dialog-box-left">
@@ -196,7 +201,7 @@ if (props.closeByEsc) {
       .lew-dialog-box-right-main {
         height: auto;
         font-size: 14px;
-        color: var(--lew-text-color-5);
+        color: var(--lew-text-color-2);
       }
     }
 

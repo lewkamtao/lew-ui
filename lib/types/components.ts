@@ -36,8 +36,6 @@ export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group
 
 export type LewSelectMultipleValueLayout = 'tag' | 'text'
 
-export type LewStepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
-
 export type LewTagClose = () => Promise<boolean>
 
 export type LewEmptyType = '404' | 'address' | 'article' | 'goods' | 'likes' | 'car' | 'comment' | 'network' | 'order' | 'search'
@@ -69,11 +67,6 @@ export interface LewBreadcrumbOption {
   label: string
   value?: string
   active?: boolean
-}
-
-export interface LewStepsOption {
-  title: LewComponentSource
-  description?: LewComponentSource
 }
 
 export interface LewTabsOption {

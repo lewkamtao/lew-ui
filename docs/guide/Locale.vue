@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocHeading from '../layout/DocHeading.vue'
 import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
 
 const code = ref(`import { setLocale } from 'lew-ui'
@@ -8,7 +9,7 @@ setLocale('en');`)
 
 <template>
   <div class="guide-wrapper">
-    <lew-title>国际化</lew-title>
+    <DocHeading>国际化</DocHeading>
     <p>
       Lew UI 支持国际化配置，您可以在
       <lew-mark>main.ts</lew-mark> 入口文件中进行如下设置：
@@ -18,9 +19,9 @@ setLocale('en');`)
 
     <br>
     <br>
-    <lew-title :size="16">
+    <DocHeading :size="16">
       支持的语言
-    </lew-title>
+    </DocHeading>
     <p>Lew UI 目前内置支持以下 9 种语言：</p>
     <table class="language-table">
       <thead>

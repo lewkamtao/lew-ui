@@ -528,7 +528,7 @@ onMounted(() => {
                 "
               />
               <lew-flex v-else>
-                <lew-empty title="开发中，敬请期待" />
+                <div class="form-engine-placeholder-empty">开发中，敬请期待</div>
               </lew-flex>
             </lew-flex>
           </lew-flex>
@@ -834,5 +834,13 @@ onMounted(() => {
   width: 100%;
   border-top: 1px solid var(--lew-bgcolor-3);
   border-bottom: 1px solid var(--lew-bgcolor-3);
+}
+
+.form-engine-placeholder-empty {
+  padding: 24px 16px;
+  color: var(--lew-text-color-5);
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
 }
 </style>

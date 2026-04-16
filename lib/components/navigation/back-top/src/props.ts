@@ -1,6 +1,10 @@
 import type { ExtractPublicPropTypes } from 'vue'
 import validators from 'lew-ui/validators'
 
+/**
+ * LewBackTop 已废弃：请使用原生滚动或自定义回到顶部能力，未来主版本可能移除。
+ * @deprecated
+ */
 export const backTopProps = {
   right: {
     type: Number,

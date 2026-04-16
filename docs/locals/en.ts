@@ -23,6 +23,56 @@ export default {
     components: 'Components',
     formEngine: 'Form Engine',
     descEngine: 'Description Engine',
+    bestPractices: 'Best Practices',
+  },
+  bestPractices: {
+    heroTitle: 'Best practices playground',
+    heroDesc:
+      'Production-minded patterns: on-demand imports, forms with async flow, layered feedback, and theme variables. Copy the code and behavior into your app.',
+    tabImport: 'Imports & bundle',
+    tabForm: 'Forms & async',
+    tabFeedback: 'Feedback & a11y',
+    tabTheme: 'Theme & tokens',
+    importTitle: 'On-demand imports & tree-shaking',
+    importDesc:
+      'Import only the components and types you use. Respect sideEffects in package metadata so bundlers can drop unused code.',
+    formTitle: 'Schema, validation & request state',
+    formDesc:
+      'Describe fields declaratively with Yup in rule; wrap submit with LewMessage.request so loading/success/error stay in sync with the UI.',
+    formHint: 'Submit after filling: validation errors show; success simulates network latency.',
+    formSubmit: 'Mock submit',
+    formReset: 'Reset',
+    feedbackTitle: 'Message vs Notification',
+    feedbackDesc:
+      'Use Message for lightweight, immediate outcomes; use Notification when users may need to revisit. Confirm destructive actions with Modal/Dialog.',
+    btnToast: 'Toast (Message)',
+    btnNotify: 'Notification',
+    btnConfirm: 'Destructive confirm',
+    a11yTitle: 'Loading, disabled & double-submit',
+    a11yDesc:
+      'Disable the primary control or show loading while async work runs. Prefer semantic controls from the library for better accessibility.',
+    themeTitle: 'Theme via CSS variables',
+    themeDesc:
+      'Colors and radii are driven by --lew-* tokens. Override variables in global styles instead of fighting internal class names.',
+    themeTip: 'Toggle site light/dark to see tokens; override under :root or .lew-light / .lew-dark in your app.',
+    copyDone: 'Sample code copied',
+    copyBtn: 'Copy',
+    formFieldName: 'Display name',
+    formFieldEmail: 'Email',
+    formPhName: 'Jane Doe',
+    formPhEmail: 'you@example.com',
+    formErrMin2: 'At least 2 characters',
+    formErrEmail: 'Invalid email',
+    formErrRequired: 'Required',
+    formLoadingMsg: 'Submitting…',
+    formSubmitInvalid: 'Fix validation errors first',
+    formSubmitOk: 'Saved (mock API ~800ms)',
+    feedbackToast: 'Lightweight feedback — for immediate outcomes.',
+    feedbackNotifyTitle: 'Sticky notification',
+    feedbackNotifyContent:
+      'Use when users may navigate away or read details later. Dismiss manually or wait for duration.',
+    feedbackDialogTitle: 'Irreversible action',
+    feedbackDialogContent: 'Block the flow and ask for explicit confirmation.',
   },
   base: {
     base: 'Base',
@@ -36,6 +86,7 @@ export default {
     back: 'Back',
     backToHome: 'Back to Home',
     loading: 'Loading...',
+    deprecated: 'Deprecated',
   },
   components: {
     image: {
@@ -213,23 +264,8 @@ export default {
     },
     title: {
       name: 'Title',
-      description: 'Not just a title, but a soul hint of the content',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Bold',
-      },
-      demo3: {
-        title: 'Color',
-      },
-      props: {
-        text: 'Text Content',
-        size: 'Title Text Size, can be a number (unit: pixel) or a string (e.g., "1.5em")',
-        bold: 'Title Text Boldness, optional values are integers between 100 and 900',
-        color:
-          'Title Text Color, optional values include predefined color names or custom color values',
-      },
+      description:
+        '[Deprecated] Prefer semantic headings (h1–h6) or your own typography. This site uses DocHeading for title styling; LewTitle remains exported for compatibility.',
     },
     textTrim: {
       name: 'Text Trim',
@@ -305,12 +341,12 @@ export default {
     icon: {
       name: 'Icon',
       description:
-        'A collection of exquisite icons, adding visual language to the interface',
+        '[Deprecated] The built-in Icon component is deprecated. Use Lucide or another icon set in your app.',
     },
     backTop: {
       name: 'Back to Top',
       description:
-        'One-click back to the top, making long page browsing no longer annoying',
+        '[Deprecated] Prefer native scrolling or your own back-to-top control. LewBackTop and v-backtop still exist but are not recommended.',
       demo1: {
         title: 'Basic Usage',
       },
@@ -337,33 +373,7 @@ export default {
     steps: {
       name: 'Steps',
       description:
-        'Clearly displays the operation process, letting users know where they are',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Status',
-      },
-      demo3: {
-        title: 'Loading',
-      },
-      model: {
-        modelValue: 'Index value of the current active step',
-      },
-      props: {
-        options: 'Array of step configuration items',
-        status: 'Current status of the steps',
-        minWidth: 'Minimum step width',
-        canClickItem: 'Whether to allow clicking step items to switch',
-        canCrossSteps: 'Whether to allow cross-step switching',
-      },
-      options: {
-        title: 'Step title',
-        description: 'Step description',
-      },
-      emits: {
-        change: 'Triggered when step changes',
-      },
+        '[Removed] LewSteps / lew-steps has been removed from the library. Implement step UI in your app or use another solution.',
     },
     menu: {
       name: 'Menu',
@@ -734,7 +744,8 @@ export default {
         showCount: 'Show Character Count',
         maxLength: 'Maximum Input Characters',
         size: 'Textarea Size',
-        resize: 'Resize Direction',
+        resize:
+          'Resize direction via bottom-right handle (none / vertical / horizontal / both); native resize disabled',
         width: 'Width',
         height: 'Height',
         minWidth: 'Minimum Width',
@@ -2246,7 +2257,8 @@ export default {
     },
     empty: {
       name: 'Empty',
-      description: 'Empty data state display, making blank pages more friendly',
+      description:
+        '[Deprecated] Implement empty states in your app (copy, illustration, layout). LewEmpty remains but is not recommended.',
       demo1: {
         title: 'Basic Usage',
       },

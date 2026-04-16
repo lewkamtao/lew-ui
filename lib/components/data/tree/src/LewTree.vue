@@ -284,7 +284,7 @@ onMounted(() => {
     <template v-if="dataSource && dataSource.length === 0">
       <slot v-if="$slots.empty" name="empty" />
       <LewFlex v-else direction="y" x="center" class="lew-not-found">
-        <lew-empty :title="locale.t('tree.noResult')" />
+        <span class="lew-tree-empty-hint">{{ locale.t('tree.noResult') }}</span>
       </LewFlex>
     </template>
     <LewFlex
@@ -316,6 +316,14 @@ onMounted(() => {
   padding: 5px 12px;
   font-size: 13px;
   opacity: 0.7;
+}
+
+.lew-tree-empty-hint {
+  padding: 16px 12px;
+  color: var(--lew-text-color-5);
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
 }
 
 .lew-tree-line {

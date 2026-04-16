@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: '入力してください',
+    resizeHandle: 'ドラッグしてサイズ変更',
   },
   inputNumber: {
     placeholder: '入力してください',
@@ -130,6 +131,9 @@ export default {
   pagination: {
     pageSize: '表示件数：{pageSize}件',
     jumpTo: '移動',
+  },
+  contextMenu: {
+    noActions: '操作がありません',
   },
   empty: {
     title: 'データがありません',

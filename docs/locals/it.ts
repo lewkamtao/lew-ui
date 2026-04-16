@@ -23,6 +23,56 @@ export default {
     components: 'Componenti',
     formEngine: 'Form Engine',
     descEngine: 'Description Engine',
+    bestPractices: 'Best practice',
+  },
+  bestPractices: {
+    heroTitle: 'Best practices playground',
+    heroDesc:
+      'Production-minded patterns: on-demand imports, forms with async flow, layered feedback, and theme variables. Copy the code and behavior into your app.',
+    tabImport: 'Imports & bundle',
+    tabForm: 'Forms & async',
+    tabFeedback: 'Feedback & a11y',
+    tabTheme: 'Theme & tokens',
+    importTitle: 'On-demand imports & tree-shaking',
+    importDesc:
+      'Import only the components and types you use. Respect sideEffects in package metadata so bundlers can drop unused code.',
+    formTitle: 'Schema, validation & request state',
+    formDesc:
+      'Describe fields declaratively with Yup in rule; wrap submit with LewMessage.request so loading/success/error stay in sync with the UI.',
+    formHint: 'Submit after filling: validation errors show; success simulates network latency.',
+    formSubmit: 'Mock submit',
+    formReset: 'Reset',
+    feedbackTitle: 'Message vs Notification',
+    feedbackDesc:
+      'Use Message for lightweight, immediate outcomes; use Notification when users may need to revisit. Confirm destructive actions with Modal/Dialog.',
+    btnToast: 'Toast (Message)',
+    btnNotify: 'Notification',
+    btnConfirm: 'Destructive confirm',
+    a11yTitle: 'Loading, disabled & double-submit',
+    a11yDesc:
+      'Disable the primary control or show loading while async work runs. Prefer semantic controls from the library for better accessibility.',
+    themeTitle: 'Theme via CSS variables',
+    themeDesc:
+      'Colors and radii are driven by --lew-* tokens. Override variables in global styles instead of fighting internal class names.',
+    themeTip: 'Toggle site light/dark to see tokens; override under :root or .lew-light / .lew-dark in your app.',
+    copyDone: 'Sample code copied',
+    copyBtn: 'Copy',
+    formFieldName: 'Display name',
+    formFieldEmail: 'Email',
+    formPhName: 'Jane Doe',
+    formPhEmail: 'you@example.com',
+    formErrMin2: 'At least 2 characters',
+    formErrEmail: 'Invalid email',
+    formErrRequired: 'Required',
+    formLoadingMsg: 'Submitting…',
+    formSubmitInvalid: 'Fix validation errors first',
+    formSubmitOk: 'Saved (mock API ~800ms)',
+    feedbackToast: 'Lightweight feedback — for immediate outcomes.',
+    feedbackNotifyTitle: 'Sticky notification',
+    feedbackNotifyContent:
+      'Use when users may navigate away or read details later. Dismiss manually or wait for duration.',
+    feedbackDialogTitle: 'Irreversible action',
+    feedbackDialogContent: 'Block the flow and ask for explicit confirmation.',
   },
   base: {
     base: 'Base',
@@ -36,6 +86,7 @@ export default {
     back: 'Indietro',
     backToHome: 'Torna alla home',
     loading: 'Caricamento...',
+    deprecated: 'Deprecati',
   },
   components: {
     image: {
@@ -213,22 +264,8 @@ export default {
     },
     title: {
       name: 'Titolo',
-      description: 'Non solo un titolo, ma l\'essenza del contenuto',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Grassetto',
-      },
-      demo3: {
-        title: 'Colori',
-      },
-      props: {
-        text: 'Contenuto testuale',
-        size: 'Dimensione testo (numero in pixel o stringa es. "1.5em")',
-        bold: 'Peso font (valori da 100 a 900)',
-        color: 'Colore testo (nome predefinito o valore personalizzato)',
-      },
+      description:
+        '[Deprecato] Usare titoli semantici (h1–h6) o tipografia personalizzata. La documentazione usa DocHeading; LewTitle resta esportato per compatibilità.',
     },
     textTrim: {
       name: 'Testo troncato',
@@ -299,11 +336,12 @@ export default {
     icon: {
       name: 'Icona',
       description:
-        'Una collezione di icone eleganti per arricchire l\'interfaccia',
+        '[Deprecato] Il componente Icon integrato è deprecato. Usare Lucide o un altro set di icone.',
     },
     backTop: {
       name: 'Torna su',
-      description: 'Torna all\'inizio della pagina con un click',
+      description:
+        '[Deprecato] Preferire lo scroll nativo o un pulsante personalizzato. LewBackTop e v-backtop restano ma non sono consigliati.',
       demo1: {
         title: 'Uso base',
       },
@@ -326,33 +364,7 @@ export default {
     steps: {
       name: 'Passi',
       description:
-        'Mostra chiaramente il processo di operazione, permettendo all\'utente di sapere dove si trova',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Stato',
-      },
-      demo3: {
-        title: 'Caricamento',
-      },
-      model: {
-        modelValue: 'Indice del passo attualmente attivo',
-      },
-      props: {
-        options: 'Array di configurazione dei passi',
-        status: 'Stato attuale dei passi',
-        minWidth: 'Larghezza minima del passo',
-        canClickItem: 'Consenti clic sugli elementi dei passi',
-        canCrossSteps: 'Consenti salto tra passi',
-      },
-      options: {
-        title: 'Titolo del passo',
-        description: 'Descrizione del passo',
-      },
-      emits: {
-        change: 'Attivato al cambio di passo',
-      },
+        '[Rimosso] LewSteps / lew-steps è stato rimosso dalla libreria. Implementa l’UI dei passi nell’app o un’altra soluzione.',
     },
     menu: {
       name: 'Menu',
@@ -705,7 +717,8 @@ export default {
         showCount: 'Mostra conteggio caratteri',
         maxLength: 'Lunghezza massima',
         size: 'Dimensione',
-        resize: 'Direzione ridimensionamento',
+        resize:
+          'Ridimensiona con maniglia in basso a destra (none / vertical / horizontal / both); resize nativo disattivato',
         width: 'Larghezza',
         height: 'Altezza',
         minWidth: 'Larghezza minima',
@@ -2198,7 +2211,7 @@ export default {
     empty: {
       name: 'Stato vuoto Empty',
       description:
-        'Visualizzazione stato dati vuoto, per pagine vuote più amichevoli',
+        '[Deprecato] Implementare gli stati vuoti nell\'app (testo, illustrazione, layout). LewEmpty resta ma non è consigliato.',
       demo1: {
         title: 'Uso base',
       },

@@ -437,7 +437,7 @@ const getTips = computed(() => {
     }
 
     .lew-upload-max-size {
-      color: var(--lew-text-color-5);
+      color: var(--lew-form-placeholder-color);
       transition: all var(--lew-form-transition-ease);
     }
 
@@ -639,7 +639,7 @@ const getTips = computed(() => {
       .lew-upload-footer {
         font-size: 14px;
         white-space: nowrap;
-        color: var(--lew-text-color-6);
+        color: var(--lew-form-placeholder-color);
       }
     }
 

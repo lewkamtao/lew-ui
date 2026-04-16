@@ -240,24 +240,6 @@
   );
 }
 
-@mixin export-steps-colors-light($color-name, $color-map) {
-  --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, '6')};
-  --lew-color-steps-#{$color-name}-active-text: #{get-color-value($text-color, '9')};
-  --lew-color-steps-#{$color-name}-active-icon: #{get-color-value($text-color, '9')};
-  --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, '1')};
-  --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, '6')};
-  --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, '6')};
-}
-
-@mixin export-steps-colors-dark($color-name, $color-map) {
-  --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, '4')};
-  --lew-color-steps-#{$color-name}-active-text: #{get-color-value($color-map, '7')};
-  --lew-color-steps-#{$color-name}-active-icon: #{get-color-value($color-map, '7')};
-  --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, '1')};
-  --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, '6')};
-  --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, '6')};
-}
-
 // ============================================
 // Pagination 组件主题颜色变量
 // 生成变量格式：--lew-color-pagination-{color-name}-*
@@ -373,7 +355,6 @@
       @include export-radio-colors-dark($name, $color-map);
       @include export-switch-colors-dark($name, $color-map);
       @include export-datepicker-colors-dark($name, $color-map);
-      @include export-steps-colors-dark($name, $color-map);
       @include export-pagination-colors-dark($name, $color-map);
       @include export-inputtag-colors-dark($name, $color-map);
       @include export-badge-colors-dark($name, $color-map);
@@ -387,7 +368,6 @@
       @include export-radio-colors-light($name, $color-map);
       @include export-switch-colors-light($name, $color-map);
       @include export-datepicker-colors-light($name, $color-map);
-      @include export-steps-colors-light($name, $color-map);
       @include export-pagination-colors-light($name, $color-map);
       @include export-inputtag-colors-light($name, $color-map);
       @include export-badge-colors-light($name, $color-map);
@@ -411,7 +391,6 @@
       @include export-radio-colors-dark($semantic-name, $color-map);
       @include export-switch-colors-dark($semantic-name, $color-map);
       @include export-datepicker-colors-dark($semantic-name, $color-map);
-      @include export-steps-colors-dark($semantic-name, $color-map);
       @include export-pagination-colors-dark($semantic-name, $color-map);
       @include export-inputtag-colors-dark($semantic-name, $color-map);
       @include export-badge-colors-dark($semantic-name, $color-map);
@@ -425,7 +404,6 @@
       @include export-radio-colors-light($semantic-name, $color-map);
       @include export-switch-colors-light($semantic-name, $color-map);
       @include export-datepicker-colors-light($semantic-name, $color-map);
-      @include export-steps-colors-light($semantic-name, $color-map);
       @include export-pagination-colors-light($semantic-name, $color-map);
       @include export-inputtag-colors-light($semantic-name, $color-map);
       @include export-badge-colors-light($semantic-name, $color-map);
@@ -534,6 +512,7 @@
   --lew-form-border-color-hover: #{get-color-value($bgcolor, '7')};
   --lew-form-border-color-active: #{get-color-value($bgcolor, '8')};
   --lew-form-box-shadow: 0px 0px 0px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 20%, transparent);
+  --lew-form-placeholder-color: var(--lew-text-color-5);
 }
 
 @mixin export-form-colors-dark() {
@@ -544,6 +523,7 @@
   --lew-form-border-color: transparent;
   --lew-form-border-color-focus: var(--lew-color-primary);
   --lew-form-border-color-hover: #{get-color-value(dark.$dark-bgcolor, '6')};
+  --lew-form-placeholder-color: var(--lew-text-color-5);
 }
 
 // ============================================

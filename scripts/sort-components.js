@@ -39,7 +39,6 @@ const componentPriority = {
   LewAlert: 26,
   LewActionBox: 27,
   LewBreadcrumb: 28,
-  LewSteps: 29,
   LewTabs: 30,
   LewCollapse: 31,
   LewMenu: 32,
@@ -92,7 +91,6 @@ const typePriority = {
   LewUploadStatus: 15,
   LewFormItemAs: 16,
   LewSelectMultipleValueLayout: 17,
-  LewStepsStatus: 18,
   // 选项类型
   LewButtonOption: 100,
   LewTagOption: 101,
@@ -123,7 +121,6 @@ const typePriority = {
   LewActionBoxOption: 126,
   LewBreadcrumbOption: 127,
   LewBreadcrumbOptions: 128,
-  LewStepsOption: 129,
   LewTabsOption: 130,
   LewCollapseOption: 131,
   LewMenuOption: 132,

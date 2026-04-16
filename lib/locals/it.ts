@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: 'Inserisci',
+    resizeHandle: 'Trascina per ridimensionare',
   },
   inputNumber: {
     placeholder: 'Inserisci',
@@ -130,6 +131,9 @@ export default {
   pagination: {
     pageSize: '{pageSize} per pagina',
     jumpTo: 'Vai a',
+  },
+  contextMenu: {
+    noActions: 'Nessuna azione disponibile',
   },
   empty: {
     title: 'Nessun dato',

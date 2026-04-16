@@ -1,35 +1,20 @@
 <script setup lang="ts">
 import LewComponentInfo from 'docs/layout/LewComponentInfo.vue'
-import LewDemoBoxLayout from 'docs/layout/LewDemoBoxLayout.vue'
-import LewDocsTables from 'docs/layout/LewDocsTables.vue'
-import { useRoute } from 'vue-router'
-import * as API from './api'
-import { codeGroup, demoGroup } from './demo'
-
-const route = useRoute()
-// 转小写
-const componentName: string = (route.name as string)
-  .replace('R-Lew', '')
-  .replace(/^[A-Z]/, match => match.toLowerCase()) // 修正:第一个字母转小写
-
-const options = ref(
-  Object.keys(API).map((key: any) => {
-    // @ts-expect-error API key access
-    return API[key]
-  }),
-)
 </script>
 
 <template>
   <div class="demo-wrapper">
     <LewComponentInfo />
-    <LewDemoBoxLayout
-      :demo-group="demoGroup"
-      :code-group="codeGroup"
-      :component-name="componentName"
-      :columns="1"
-      gap="20px"
-    />
-    <LewDocsTables :options="options" />
+
+    <LewDemoBox title="组件废弃说明">
+      <lew-alert type="warning">
+        <template #title>
+          BackTop（LewBackTop / v-backtop）已废弃
+        </template>
+        <template #content>
+          建议使用浏览器原生滚动或自行实现「回到顶部」按钮。LewBackTop 与 <code>v-backtop</code> 指令仍暂时保留以保持兼容。
+        </template>
+      </lew-alert>
+    </LewDemoBox>
   </div>
 </template>

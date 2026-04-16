@@ -23,6 +23,56 @@ export default {
     components: 'コンポーネント',
     formEngine: 'フォームエンジン',
     descEngine: '説明エンジン',
+    bestPractices: 'ベストプラクティス',
+  },
+  bestPractices: {
+    heroTitle: 'ベストプラクティス・プレイグラウンド',
+    heroDesc:
+      '本番向けの組み合わせ例：オンデマンド import、フォームと非同期、フィードバックの使い分け、テーマ変数。コードと挙動をそのままプロジェクトへ。',
+    tabImport: 'import とバンドル',
+    tabForm: 'フォームと非同期',
+    tabFeedback: 'フィードバックと a11y',
+    tabTheme: 'テーマとトークン',
+    importTitle: 'オンデマンド import / tree-shaking',
+    importDesc:
+      '使うコンポーネントと型だけを import。sideEffects 設定を尊重し、未使用コードを落とす。',
+    formTitle: 'スキーマ・バリデーション・リクエスト状態',
+    formDesc:
+      'Yup を rule に置き、LewMessage.request で送信を包み、loading / 成功 / 失敗を UI と同期。',
+    formHint: '入力後に送信：バリデーションエラーを表示、成功時は遅延をシミュレート。',
+    formSubmit: '送信（モック）',
+    formReset: 'リセット',
+    feedbackTitle: 'Message と Notification の役割',
+    feedbackDesc:
+      '軽い結果は Message。後から見返す必要があるなら Notification。破壊的操作は Modal / Dialog で確認。',
+    btnToast: 'Message',
+    btnNotify: 'Notification',
+    btnConfirm: '危険操作の確認',
+    a11yTitle: 'ローディング・無効化・二重送信防止',
+    a11yDesc:
+      '非同期中は主ボタンを無効化または loading 表示。意味のあるコントロールを優先。',
+    themeTitle: 'CSS 変数でテーマ',
+    themeDesc:
+      '色や角丸は --lew-*。内部 class ではなくグローバルで変数を上書き。',
+    themeTip: 'ライト/ダーク切替で確認。:root や .lew-light / .lew-dark で上書き。',
+    copyDone: 'コードをコピーしました',
+    copyBtn: 'コピー',
+    formFieldName: '表示名',
+    formFieldEmail: 'メール',
+    formPhName: '山田 太郎',
+    formPhEmail: 'you@example.com',
+    formErrMin2: '2 文字以上',
+    formErrEmail: 'メール形式が不正です',
+    formErrRequired: '必須です',
+    formLoadingMsg: '送信中…',
+    formSubmitInvalid: '入力エラーを修正してください',
+    formSubmitOk: '保存しました（モック API 約 800ms）',
+    feedbackToast: '軽いフィードバック — すぐ結果が欲しい操作向け。',
+    feedbackNotifyTitle: '残る通知',
+    feedbackNotifyContent:
+      'ページ遷移後やあとで読み返す可能性があるとき。手動で閉じるか時間経過で消えます。',
+    feedbackDialogTitle: '取り消せない操作',
+    feedbackDialogContent: 'フローを止め、明示的な確認を求めます。',
   },
   base: {
     base: '基本',
@@ -36,6 +86,7 @@ export default {
     back: '戻る',
     backToHome: 'ホームに戻る',
     loading: '読み込み中...',
+    deprecated: '非推奨コンポーネント',
   },
   components: {
     image: {
@@ -211,22 +262,8 @@ export default {
     },
     title: {
       name: 'タイトル Title',
-      description: 'タイトルだけでなく、コンテンツの本質的なヒント',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      demo2: {
-        title: '太字',
-      },
-      demo3: {
-        title: 'カラー',
-      },
-      props: {
-        text: 'テキスト内容',
-        size: 'タイトルのサイズ（数値：ピクセル、または文字列："1.5em"など）',
-        bold: 'タイトルの太さ（100から900の間の100単位の値）',
-        color: 'タイトルの色（定義済みの色名または任意のカラー値）',
-      },
+      description:
+        '【非推奨】見出しは h1–h6 などのセマンティック要素、または独自のタイポグラフィを使用してください。ドキュメントでは DocHeading を使用しています。LewTitle は互換のため残します。',
     },
     textTrim: {
       name: 'テキスト省略 TextTrim',
@@ -299,12 +336,12 @@ export default {
     icon: {
       name: 'アイコン Icon',
       description:
-        '美しいアイコンコレクション、インターフェースにビジュアル言語を追加',
+        '【非推奨】内蔵の Icon コンポーネントは非推奨です。Lucide などをプロジェクトで直接利用してください。',
     },
     backTop: {
       name: 'トップに戻る BackTop',
       description:
-        'ワンクリックでトップに戻り、長いページの閲覧をストレスフリーに',
+        '【非推奨】ネイティブスクロールや独自のトップへ戻る UI を推奨します。LewBackTop と v-backtop は残りますが推奨しません。',
       demo1: {
         title: '基本的な使い方',
       },
@@ -328,33 +365,7 @@ export default {
     steps: {
       name: 'ステップ',
       description:
-        '操作プロセスを明確に表示し、ユーザーが現在の位置を把握できるようにします',
-      demo1: {
-        title: '基本的な使用法',
-      },
-      demo2: {
-        title: 'ステータス',
-      },
-      demo3: {
-        title: '読み込み中',
-      },
-      model: {
-        modelValue: '現在アクティブなステップのインデックス値',
-      },
-      props: {
-        options: 'ステップ設定項目の配列',
-        status: 'ステップの現在のステータス',
-        minWidth: '最小ステップ幅',
-        canClickItem: 'ステップ項目をクリックして切り替えることができるか',
-        canCrossSteps: 'ステップ間で切り替えることができるか',
-      },
-      options: {
-        title: 'ステップのタイトル',
-        description: 'ステップの説明',
-      },
-      emits: {
-        change: 'ステップ切り替え時にトリガー',
-      },
+        '【削除済み】LewSteps / lew-steps はライブラリから削除されました。ステップ UI はアプリ側で実装するか別の手段を利用してください。',
     },
     menu: {
       name: 'メニュー Menu',
@@ -712,7 +723,8 @@ export default {
         showCount: '文字数カウントを表示するかどうか',
         maxLength: '最大入力文字数',
         size: 'テキストエリアのサイズ',
-        resize: 'リサイズ方向',
+        resize:
+          '右下ハンドルでリサイズ方向（none / vertical / horizontal / both）、ネイティブ resize は無効',
         width: '幅',
         height: '高さ',
         minWidth: '最小幅',
@@ -2205,7 +2217,8 @@ export default {
     },
     empty: {
       name: '空の状態 Empty',
-      description: '空のデータ状態表示、空白ページをよりフレンドリーに',
+      description:
+        '【非推奨】空状態は文言・イラスト・レイアウトをアプリ側で実装してください。LewEmpty は残りますが推奨しません。',
       demo1: {
         title: '基本的な使い方',
       },

@@ -158,7 +158,7 @@ onMounted(() => {
     .lew-popok-box-right-main {
       height: auto;
       font-size: 14px;
-      color: var(--lew-text-color-5);
+      color: var(--lew-text-color-2);
     }
   }
 

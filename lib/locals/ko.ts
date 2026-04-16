@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: '입력해주세요',
+    resizeHandle: '드래그하여 크기 조절',
   },
   inputNumber: {
     placeholder: '입력해주세요',
@@ -130,6 +131,9 @@ export default {
   pagination: {
     pageSize: '페이지당 {pageSize}개',
     jumpTo: '이동',
+  },
+  contextMenu: {
+    noActions: '사용 가능한 작업 없음',
   },
   empty: {
     title: '데이터 없음',

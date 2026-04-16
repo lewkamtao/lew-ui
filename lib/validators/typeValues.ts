@@ -16,7 +16,6 @@ import type {
   LewSelectMultipleValueLayout,
   LewSize,
   LewStatusColor,
-  LewStepsStatus,
   LewTabsType,
   LewTagType,
   LewTextareaResize,
@@ -110,8 +109,6 @@ export const validTagTypeList: LewTagType[] = ['fill', 'light', 'ghost']
 export const validBreadcrumbSeparatorList: LewBreadcrumbSeparator[] = ['shoulder', 'sprit']
 
 export const validSelectMultipleValueLayout: LewSelectMultipleValueLayout[] = ['tag', 'text']
-
-export const validStepsStatusList: LewStepsStatus[] = ['pending', 'loading', 'done', 'error', 'warning']
 
 export const validFormItemAsList: LewFormItemAs[] = ['input', 'textarea', 'input-tag', 'checkbox-group', 'radio-group', 'checkbox', 'select', 'date-picker', 'date-range-picker', 'tabs', 'cascader', 'switch', 'button', 'upload', 'input-number', 'slider', 'slider-range', 'color-picker', 'rate', 'tree-select']
 

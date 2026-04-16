@@ -286,7 +286,7 @@ defineExpose({ init, getValue })
 
     .lew-date-item-unselect {
       pointer-events: none;
-      color: var(--lew-text-color-5);
+      color: var(--lew-form-placeholder-color);
     }
 
     .lew-date-item-today {

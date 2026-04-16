@@ -2,6 +2,7 @@
 import { renderDescription } from 'docs/lib/utils'
 import docsLocale from 'docs/locals'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import DocHeading from './DocHeading.vue'
 import { Check, Code2, Copy, ExternalLink } from 'lucide-vue-next'
 import LewCodeHighlighter from './LewCodeHighlighter.vue'
 
@@ -133,9 +134,9 @@ async function copyCode(code: string) {
   <div class="demo-box">
     <!-- 标题区域 -->
     <div class="demo-header">
-      <lew-title :id="title" size="18px" class="demo-title">
+      <DocHeading :id="title" size="18px" class="demo-title">
         {{ title }}
-      </lew-title>
+      </DocHeading>
       <lew-tag v-if="checkHasContent(tag)" type="light" color="blue" size="small">
         {{ tag }}
       </lew-tag>

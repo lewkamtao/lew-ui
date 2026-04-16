@@ -251,7 +251,7 @@ defineExpose({ show, hide })
     .lew-date-range-picker-mid {
       display: flex;
       align-items: center;
-      color: var(--lew-text-color-5);
+      color: var(--lew-form-placeholder-color);
     }
 
     .lew-date-range-picker-icon-calendar {
@@ -275,7 +275,7 @@ defineExpose({ show, hide })
     }
 
     .lew-date-range-picker-placeholder {
-      color: var(--lew-text-color-5);
+      color: var(--lew-form-placeholder-color);
     }
   }
 

@@ -350,8 +350,7 @@ onMounted(() => {
     }
 
     &::placeholder {
-      color: var(--lew-text-color-5);
-      opacity: 0.6;
+      color: var(--lew-form-placeholder-color);
     }
   }
 

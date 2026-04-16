@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { LewXAlignment, LewYAlignment } from 'lew-ui/types'
 import { useResizeObserver } from '@vueuse/core'
-import { LewCheckbox, LewEmpty, LewFlex, LewTextTrim } from 'lew-ui'
+import { LewCheckbox, LewFlex, LewTextTrim, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { any2px, getUniqueId } from 'lew-ui/utils'
@@ -136,11 +136,6 @@ const getIconSize = computed(() => sizeConfig.value.iconSize)
 const getPadding = computed(() => sizeConfig.value.padding)
 const getEmptyPadding = computed(() => sizeConfig.value.emptyPadding)
 const getMinRowHeight = computed(() => sizeConfig.value.minRowHeight)
-
-const getEmptyProps = computed(() => ({
-  width: any2px(sizeConfig.value.emptyWidth),
-  fontSize: any2px(sizeConfig.value.fontSize),
-}))
 
 function getRowClass(index: number, row: any) {
   const isFocused
@@ -1250,7 +1245,15 @@ watch(
           y="center"
           :style="{ padding: `${getEmptyPadding}px` }"
         >
-          <LewEmpty v-bind="getEmptyProps" />
+          <span
+            class="lew-table-empty-text"
+            :style="{
+              fontSize: any2px(sizeConfig.fontSize),
+              maxWidth: any2px(sizeConfig.emptyWidth),
+            }"
+          >
+            {{ locale.t('empty.title') }}
+          </span>
         </LewFlex>
       </div>
       <div
@@ -1694,6 +1697,12 @@ watch(
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .lew-table-empty-text {
+      color: var(--lew-text-color-5);
+      text-align: center;
+      line-height: 1.5;
+    }
   }
 }
 

@@ -42,6 +42,7 @@ export default {
   },
   textarea: {
     placeholder: '请输入',
+    resizeHandle: '拖动调整大小',
   },
   inputNumber: {
     placeholder: '请输入',
@@ -127,6 +128,9 @@ export default {
   pagination: {
     pageSize: '{pageSize} 条/页',
     jumpTo: '跳转至',
+  },
+  contextMenu: {
+    noActions: '暂无操作',
   },
   empty: {
     title: '暂无数据',

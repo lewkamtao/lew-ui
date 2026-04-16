@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import DocHeading from '../layout/DocHeading.vue'
+</script>
+
 <template>
-  <lew-title>Todo List</lew-title>
+  <DocHeading>Todo List</DocHeading>
   <br>
   <div>
     <ul>

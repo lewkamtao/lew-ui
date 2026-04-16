@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { useDemoLoaded } from 'docs/composables/useDemoLoaded'
 import { useRoute } from 'vue-router'
+import DocHeading from './DocHeading.vue'
 
 /** 与滚动、点击跳转对齐的视口偏移（与正文 padding / 吸顶预留一致） */
 const SCROLL_MARGIN = 100
+/** scrollTop 取整误差补偿，避免「刚跳到标题」时被判成上一节 */
+const SCROLL_SPY_EPSILON = 3
+/** 点击目录后短暂忽略 scroll spy，避免与 programmatic scroll 竞态改写 activeKey */
+const CLICK_SPY_LOCK_MS = 120
 
 interface NavItem {
   /** 稳定唯一键，避免同文案标题导致激活错乱 */
@@ -29,7 +34,6 @@ let listResizeObserver: ResizeObserver | null = null
 let debounceTimer: ReturnType<typeof setTimeout> | null = null
 let scrollRaf = 0
 let mo: MutationObserver | null = null
-/** 点击目录 smooth 滚动期间忽略 scroll spy，避免高亮来回闪 */
 let clickSpyLockUntil = 0
 
 function setNavItemRef(el: unknown, key: string) {
@@ -112,7 +116,7 @@ function updateActiveFromScroll() {
       activeKey.value = ''
     return
   }
-  const threshold = main.scrollTop + SCROLL_MARGIN
+  const threshold = main.scrollTop + SCROLL_MARGIN + SCROLL_SPY_EPSILON
   let key = ''
   for (let i = navMenus.value.length - 1; i >= 0; i--) {
     if (navMenus.value[i].top <= threshold) {
@@ -149,9 +153,13 @@ function toScroll(item: NavItem) {
   const main = getMainEl()
   if (!main)
     return
-  clickSpyLockUntil = performance.now() + 450
-  activeKey.value = item.key
-  main.scrollTo({ top: Math.max(0, item.top - SCROLL_MARGIN), behavior: 'smooth' })
+  refreshNav()
+  const fresh = navMenus.value.find((n) => n.key === item.key)
+  if (!fresh)
+    return
+  clickSpyLockUntil = performance.now() + CLICK_SPY_LOCK_MS
+  activeKey.value = fresh.key
+  main.scrollTo({ top: Math.max(0, fresh.top - SCROLL_MARGIN), behavior: 'auto' })
 }
 
 function teardownMainListeners(main: HTMLElement) {
@@ -231,9 +239,9 @@ onUnmounted(() => {
 
 <template>
   <div class="right-nav">
-    <lew-title class="nav-heading" size="14px">
+    <DocHeading class="nav-heading" size="14px">
       目录
-    </lew-title>
+    </DocHeading>
     <div ref="navListRef" class="nav-list">
       <div class="nav-indicator" :style="indicatorStyle" aria-hidden="true" />
       <div

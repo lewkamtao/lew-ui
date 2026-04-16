@@ -589,7 +589,7 @@ defineExpose({ focus, blur })
   }
 
   .lew-input::placeholder {
-    color: rgb(165, 165, 165);
+    color: var(--lew-form-placeholder-color);
   }
 }
 

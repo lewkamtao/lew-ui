@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import DocHeading from '../../../layout/DocHeading.vue'
+
 const productFeatures = ref([
   { label: 'Dog', value: 'dog' },
   { label: 'Cat', value: 'cat' },
@@ -13,9 +15,9 @@ const selectedFeatures = ref([])
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-title :size="14">
+    <DocHeading :size="14">
       Without Icon Selection
-    </lew-title>
+    </DocHeading>
     <lew-checkbox-group
       v-model="selectedFeatures"
       block
@@ -33,9 +35,9 @@ const selectedFeatures = ref([])
     />
     <br>
     <br>
-    <lew-title :size="14">
+    <DocHeading :size="14">
       With Icon Selection
-    </lew-title>
+    </DocHeading>
     <lew-checkbox-group
       v-model="selectedFeatures"
       block
