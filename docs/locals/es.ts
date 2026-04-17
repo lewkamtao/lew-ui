@@ -86,7 +86,6 @@ export default {
     back: 'Volver',
     backToHome: 'Volver al inicio',
     loading: 'Cargando...',
-    deprecated: 'Obsoletos',
   },
   components: {
     image: {
@@ -263,11 +262,6 @@ export default {
         value: 'Valor de la insignia (se mostrará como punto si está vacío)',
       },
     },
-    title: {
-      name: 'Título',
-      description:
-        '[Obsoleto] Use encabezados semánticos (h1–h6) o su propia tipografía. La documentación usa DocHeading; LewTitle sigue exportado por compatibilidad.',
-    },
     textTrim: {
       name: 'Recorte de Texto',
       description:
@@ -324,56 +318,6 @@ export default {
         gap: 'Gap between child elements (unit: pixel)',
         width: 'Width of the Flex container (unit: pixel or percentage)',
       },
-    },
-    mark: {
-      name: 'Mark',
-      description: 'Add highlight marks to text, making key content stand out',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      props: {
-        color: 'Color Theme',
-        round: 'Round',
-        bold: 'Bold',
-        cursor: 'Cursor style when hovering',
-      },
-    },
-    icon: {
-      name: 'Icon',
-      description:
-        '[Obsoleto] El componente Icon integrado está obsoleto. Use Lucide u otro conjunto de iconos en su proyecto.',
-    },
-    backTop: {
-      name: 'Back to Top',
-      description:
-        '[Obsoleto] Prefiera el desplazamiento nativo o su propio botón «volver arriba». LewBackTop y v-backtop siguen disponibles pero no se recomiendan.',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Custom Content',
-      },
-      demo3: {
-        title: 'Trigger by Directive',
-      },
-      props: {
-        target:
-          'Specify the target element to trigger the scroll event, using CSS selector. If empty, defaults to the entire window.',
-        right:
-          'Set the distance of the component from the right side of the page, unit: pixel.',
-        bottom:
-          'Set the distance of the component from the bottom of the page, unit: pixel.',
-        valveHeight:
-          'Set the threshold of the page scroll height, the back to top button will be displayed when the scroll height exceeds this value, unit: pixel.',
-      },
-      emits: {
-        click: 'Back to top event callback',
-      },
-    },
-    steps: {
-      name: 'Pasos',
-      description:
-        '[Eliminado] LewSteps / lew-steps se ha eliminado de la biblioteca. Implemente la UI de pasos en su aplicación u otra solución.',
     },
     menu: {
       name: 'Menu',
@@ -469,31 +413,6 @@ export default {
         show: 'Menu show event callback',
         hide: 'Menu hide event callback',
         change: 'Menu item selection event callback',
-      },
-    },
-    breadcrumb: {
-      name: 'Breadcrumb',
-      description: 'Clear path navigation, ensuring users do not get lost',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Custom Current Selection',
-      },
-      demo3: {
-        title: 'Separator Icon Type',
-      },
-      props: {
-        options: 'Array of breadcrumb configuration items',
-        separator: 'Separator icon type',
-      },
-      breadcrumbOptions: {
-        label: 'Text of the breadcrumb item',
-        value: 'Value of the breadcrumb item',
-        active: 'Is it the current selected item',
-      },
-      emits: {
-        change: 'Triggered when the breadcrumb item changes',
       },
     },
     contextMenu: {
@@ -595,33 +514,30 @@ export default {
         title: 'Basic Usage',
       },
       demo2: {
-        title: 'Prefix and Suffix',
-      },
-      demo3: {
         title: 'Character Limit',
       },
-      demo4: {
+      demo3: {
         title: 'Alignment',
       },
-      demo5: {
+      demo4: {
         title: 'Password Visibility',
       },
-      demo6: {
+      demo5: {
         title: 'Auto Width',
       },
-      demo7: {
+      demo6: {
         title: 'Select All Text on Focus',
       },
-      demo8: {
+      demo7: {
         title: 'Clearable',
       },
-      demo9: {
+      demo8: {
         title: 'Read-only Status',
       },
-      demo10: {
+      demo9: {
         title: 'Disabled Status',
       },
-      demo11: {
+      demo10: {
         title: 'Trigger Event on Enter Key',
       },
       props: {
@@ -641,15 +557,7 @@ export default {
         autoWidth: 'Automatically Adjust Width Based on Content',
         selectByFocus: 'Enable Select All Text on Focus',
         copyable:
-          'Allow Copying Content (only effective when readonly is true and suffix is false)',
-        prefixes: 'Input Box Prefix Type',
-        prefixesOptions:
-          'List of Prefix Options for the Input Box, used when prefixes is select',
-        prefixesTooltip: 'Tooltip Text for the Input Box Prefix',
-        suffix: 'Input Box Suffix Type',
-        suffixOptions:
-          'List of Suffix Options for the Input Box, used when suffix is select',
-        suffixTooltip: 'Tooltip Text for the Input Box Suffix',
+          'Allow Copying Content (only effective when readonly is true)',
         okByEnter: 'Allow Confirmation by Enter Key',
       },
       emits: {
@@ -662,8 +570,6 @@ export default {
       },
       model: {
         modelValue: 'Input Box Bound Value',
-        prefixValue: 'Input Box Prefix Value',
-        suffixValue: 'Input Box Suffix Value',
       },
     },
     inputNumber: {
@@ -1409,41 +1315,6 @@ export default {
       emits: {
         change: 'Triggered when the value changes',
         clear: 'Triggered when cleared',
-      },
-    },
-    inputTable: {
-      name: 'Input Table',
-      description:
-        'Quickly input data in a table, making batch processing more efficient',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Default Value',
-      },
-      demo3: {
-        title: 'More Rich',
-      },
-      props: {
-        columns: 'Configuración de columnas',
-        size: 'Tamaño',
-        width: 'Ancho',
-        rowKey: 'Clave de fila',
-        batchDeletable: 'Permite eliminación por lotes',
-        addable: 'Permite agregar',
-        defaultForm: 'Formulario predeterminado',
-        deletable: 'Permite eliminar',
-        maxRows: 'Máximo de filas',
-        minRows: 'Mínimo de filas',
-        clearable: 'Permite limpiar',
-        sortable: 'Permite ordenar',
-        autoUniqueId: 'ID único automático',
-        uniqueField: 'Campo único',
-        sortTooltipCustomRender:
-          'Renderizado personalizado del tooltip de ordenamiento',
-      },
-      emits: {
-        change: 'Triggered when the value changes',
       },
     },
     switch: {
@@ -2253,22 +2124,6 @@ export default {
       },
       slots: {
         handle: 'Handle Slot',
-      },
-    },
-    empty: {
-      name: 'Empty',
-      description:
-        '[Obsoleto] Implemente los estados vacíos en su app (texto, ilustración, diseño). LewEmpty sigue disponible pero no se recomienda.',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      props: {
-        type: 'Type',
-        title: 'Title',
-        fontSize: 'Font Size',
-        padding: 'Padding',
-        width: 'Width',
-        height: 'Height',
       },
     },
     actionBox: {

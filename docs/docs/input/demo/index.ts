@@ -9,7 +9,6 @@ import DemoInput4Code from './DemoInput4.vue?raw'
 import DemoInput5 from './DemoInput5.vue'
 import DemoInput5Code from './DemoInput5.vue?raw'
 import DemoInput6 from './DemoInput6.vue'
-
 import DemoInput6Code from './DemoInput6.vue?raw'
 import DemoInput7 from './DemoInput7.vue'
 import DemoInput7Code from './DemoInput7.vue?raw'
@@ -19,8 +18,6 @@ import DemoInput9 from './DemoInput9.vue'
 import DemoInput9Code from './DemoInput9.vue?raw'
 import DemoInput10 from './DemoInput10.vue'
 import DemoInput10Code from './DemoInput10.vue?raw'
-import DemoInput11 from './DemoInput11.vue'
-import DemoInput11Code from './DemoInput11.vue?raw'
 
 export const demoGroup = [
   DemoInput1,
@@ -33,7 +30,6 @@ export const demoGroup = [
   DemoInput8,
   DemoInput9,
   DemoInput10,
-  DemoInput11,
 ]
 
 export const codeGroup = [
@@ -47,5 +43,4 @@ export const codeGroup = [
   DemoInput8Code,
   DemoInput9Code,
   DemoInput10Code,
-  DemoInput11Code,
 ]

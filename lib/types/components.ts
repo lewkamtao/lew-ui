@@ -20,15 +20,9 @@ export type LewImageObjectPosition = 'center' | 'top' | 'bottom' | 'left' | 'rig
 
 export type LewInputType = 'text' | 'password'
 
-export type LewInputPrefixesType = 'icon' | 'select' | 'text'
-
-export type LewInputSuffixType = 'icon' | 'select' | 'text'
-
 export type LewTextareaResize = 'none' | 'both' | 'horizontal' | 'vertical'
 
 export type LewTabsType = 'block' | 'line'
-
-export type LewBreadcrumbSeparator = 'shoulder' | 'sprit'
 
 export type LewUploadStatus = 'success' | 'fail' | 'uploading' | 'complete' | 'wrong_type' | 'wrong_size' | 'pending'
 
@@ -37,8 +31,6 @@ export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group
 export type LewSelectMultipleValueLayout = 'tag' | 'text'
 
 export type LewTagClose = () => Promise<boolean>
-
-export type LewEmptyType = '404' | 'address' | 'article' | 'goods' | 'likes' | 'car' | 'comment' | 'network' | 'order' | 'search'
 
 export type LewPopokType = 'error' | 'warning' | 'success' | 'info' | 'normal'
 
@@ -61,12 +53,6 @@ export interface LewActionBoxOption {
   icon?: LewComponentSource
   customRender?: LewComponentSource
   onClick?: (event?: MouseEvent) => void
-}
-
-export interface LewBreadcrumbOption {
-  label: string
-  value?: string
-  active?: boolean
 }
 
 export interface LewTabsOption {
@@ -107,13 +93,6 @@ export interface LewContextMenusOption {
   hideMenuOnClick?: boolean
   onClick?: (item: LewContextMenusOption, options: LewContextMenusOption[], instance: any) => void
   [key: string]: any
-}
-
-export interface LewInputTableColumn {
-  title: string
-  width?: number
-  field: string
-  as: string
 }
 
 export interface LewTableColumn {

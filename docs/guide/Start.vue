@@ -25,7 +25,7 @@ app.use(Lew);`)
     <br>
     <p>
       但，你别忘了还要在
-      <lew-mark>main.ts</lew-mark> 引入样式
+      <code>main.ts</code> 引入样式
     </p>
     <LewCodeHighlighter :code="pre2" lang="ts" />
 
@@ -36,7 +36,7 @@ app.use(Lew);`)
     </DocHeading>
     <p>
       你需要在
-      <lew-mark>main.ts</lew-mark>全局安装，这样你就可以在页面内使用全部组件。
+      <code>main.ts</code>全局安装，这样你就可以在页面内使用全部组件。
     </p>
     <LewCodeHighlighter :code="pre3" lang="ts" />
   </div>

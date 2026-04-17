@@ -86,7 +86,6 @@ export default {
     back: '返回',
     backToHome: '返回首页',
     loading: '加载中...',
-    deprecated: '已废弃组件',
   },
   components: {
     image: {
@@ -257,11 +256,6 @@ export default {
         value: '徽章值（为空时，会显示为点）',
       },
     },
-    title: {
-      name: '标题 Title',
-      description:
-        '【已废弃】请使用 h1–h6 等语义化标题或自行组合样式；文档站使用 DocHeading 展示标题样式，LewTitle 仍导出以保持兼容。',
-    },
     textTrim: {
       name: '文本截断 TextTrim',
       description: '优雅地处理过长文本，不让它破坏布局的美感',
@@ -313,54 +307,6 @@ export default {
         gap: '子元素之间的间距（单位：像素）',
         width: 'Flex 容器的宽度（单位：像素或百分比）',
       },
-    },
-    mark: {
-      name: '标记 Mark',
-      description: '为文字添加高亮标记，让重点内容一目了然',
-      demo1: {
-        title: '基础用法',
-      },
-      props: {
-        color: '颜色主题',
-        round: '是否圆角',
-        bold: '是否加粗',
-        cursor: '鼠标悬停时的光标样式',
-      },
-    },
-    icon: {
-      name: '图标 Icon',
-      description:
-        '【已废弃】内置图标组件已废弃，请使用 Lucide 等图标库自行引入。',
-    },
-    backTop: {
-      name: '返回顶部 BackTop',
-      description:
-        '【已废弃】请使用原生滚动或自行实现回到顶部按钮；v-backtop 指令与 LewBackTop 仍可用但不再推荐使用。',
-      demo1: {
-        title: '基本用法',
-      },
-      demo2: {
-        title: '自定义内容',
-      },
-      demo3: {
-        title: '指令方式触发',
-      },
-      props: {
-        target:
-          '指定触发滚动事件的目标元素，使用 CSS 选择器。如果为空，则默认为整个窗口。',
-        right: '设置组件距离页面右侧的距离，单位为像素。',
-        bottom: '设置组件距离页面底部的距离，单位为像素。',
-        valveHeight:
-          '设置页面滚动高度的阈值，当滚动高度超过此值时显示回到顶部按钮，单位为像素。',
-      },
-      emits: {
-        click: '回到顶部事件回调',
-      },
-    },
-    steps: {
-      name: '步骤条 Steps',
-      description:
-        '【已移除】LewSteps / lew-steps 已从组件库中移除，步骤流程请自行实现 UI 或选用其他方案。',
     },
     menu: {
       name: '菜单 Menu',
@@ -454,31 +400,6 @@ export default {
         show: '菜单显示事件回调',
         hide: '菜单隐藏事件回调',
         change: '菜单项选择事件回调',
-      },
-    },
-    breadcrumb: {
-      name: '面包屑 Breadcrumb',
-      description: '清晰的路径导航，让用户不会迷失方向',
-      demo1: {
-        title: '基础用法',
-      },
-      demo2: {
-        title: '自定义当前选中',
-      },
-      demo3: {
-        title: '分割图标类型',
-      },
-      props: {
-        options: '面包屑配置项数组',
-        separator: '分隔符图标类型',
-      },
-      breadcrumbOptions: {
-        label: '面包屑项的文本',
-        value: '面包屑项的值',
-        active: '是否为当前选中项',
-      },
-      emits: {
-        change: '面包屑项切换时触发',
       },
     },
     contextMenu: {
@@ -605,33 +526,30 @@ export default {
         title: '基础用法',
       },
       demo2: {
-        title: '前后缀',
-      },
-      demo3: {
         title: '字数限制',
       },
-      demo4: {
+      demo3: {
         title: '对齐方式',
       },
-      demo5: {
+      demo4: {
         title: '密码可见',
       },
-      demo6: {
+      demo5: {
         title: '宽度自适应',
       },
-      demo7: {
+      demo6: {
         title: '聚焦后选择全部文本',
       },
-      demo8: {
+      demo7: {
         title: '可清空的',
       },
-      demo9: {
+      demo8: {
         title: '只读状态',
       },
-      demo10: {
+      demo9: {
         title: '禁用状态',
       },
-      demo11: {
+      demo10: {
         title: '按下回车键触发事件',
       },
       props: {
@@ -649,14 +567,7 @@ export default {
         minWidth: '输入框最小宽度，支持数字（单位：像素）或带单位的字符串',
         autoWidth: '是否根据内容自动调整宽度',
         selectByFocus: '是否启用聚焦后选择全部文本',
-        copyable:
-          '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）',
-        prefixes: '输入框前缀类型',
-        prefixesOptions: '输入框前缀选项列表，当 prefixes 为 select 时使用',
-        prefixesTooltip: '输入框前缀的 tooltip 提示文本',
-        suffix: '输入框后缀类型',
-        suffixOptions: '输入框后缀选项列表，当 suffix 为 select 时使用',
-        suffixTooltip: '输入框后缀的 tooltip 提示文本',
+        copyable: '是否允许复制内容（仅在 readonly 为 true 时生效）',
         okByEnter: '是否允许通过回车键确认输入',
       },
       emits: {
@@ -669,8 +580,6 @@ export default {
       },
       model: {
         modelValue: '输入框的绑定值',
-        prefixValue: '输入框前缀的绑定值',
-        suffixValue: '输入框后缀的绑定值',
       },
     },
     inputNumber: {
@@ -1401,39 +1310,6 @@ export default {
       emits: {
         change: '值发生变化时触发',
         clear: '清空时触发',
-      },
-    },
-    inputTable: {
-      name: '表格输入框 InputTable',
-      description: '在表格中快速输入数据，让批量处理更加高效',
-      demo1: {
-        title: '基础用法',
-      },
-      demo2: {
-        title: '默认值',
-      },
-      demo3: {
-        title: '更丰富',
-      },
-      props: {
-        columns: '列配置',
-        size: '尺寸',
-        width: '宽度',
-        rowKey: '行键',
-        batchDeletable: '是否支持批量删除',
-        addable: '是否可添加',
-        defaultForm: '默认表单',
-        deletable: '是否可删除',
-        maxRows: '最大行数',
-        minRows: '最小行数',
-        clearable: '是否可清空',
-        sortable: '是否可排序',
-        autoUniqueId: '是否自动生成唯一ID',
-        uniqueField: '唯一字段',
-        sortTooltipCustomRender: '排序提示自定义渲染',
-      },
-      emits: {
-        change: '值发生变化时触发',
       },
     },
     switch: {
@@ -2226,22 +2102,6 @@ export default {
       },
       slots: {
         handle: '插槽处理',
-      },
-    },
-    empty: {
-      name: '空状态 Empty',
-      description:
-        '【已废弃】请根据业务自行实现空状态（文案、插图与布局）；LewEmpty 仍可用但不再推荐使用。',
-      demo1: {
-        title: '基础用法',
-      },
-      props: {
-        type: '类型',
-        title: '标题',
-        fontSize: '字体大小',
-        padding: '内边距',
-        width: '宽度',
-        height: '高度',
       },
     },
   },

@@ -86,7 +86,6 @@ export default {
     back: '뒤로',
     backToHome: '홈으로 돌아가기',
     loading: '로딩 중...',
-    deprecated: '사용 중단 컴포넌트',
   },
   components: {
     image: {
@@ -261,11 +260,6 @@ export default {
         value: '배지 값(비어 있을 경우 점으로 표시)',
       },
     },
-    title: {
-      name: '제목 Title',
-      description:
-        '[사용 중단] h1–h6 등 시맨틱 제목 또는 프로젝트 타이포그래피를 사용하세요. 문서 사이트는 DocHeading을 씁니다. LewTitle은 호환을 위해 내보냅니다.',
-    },
     textTrim: {
       name: '텍스트 잘라내기 TextTrim',
       description:
@@ -319,55 +313,6 @@ export default {
         gap: '자식 요소 간 간격(단위: 픽셀)',
         width: 'Flex 컨테이너 너비(단위: 픽셀 또는 백분율)',
       },
-    },
-    mark: {
-      name: '마크 Mark',
-      description:
-        '텍스트에 하이라이트 표시를 추가하여 중요 내용을 한눈에 알아볼 수 있게 합니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      props: {
-        color: '색상 테마',
-        round: '둥근 모서리 여부',
-        bold: '굵게 표시 여부',
-        cursor: '마우스 오버 시 커서 스타일',
-      },
-    },
-    icon: {
-      name: '아이콘 Icon',
-      description:
-        '[사용 중단] 내장 Icon 컴포넌트는 사용 중단입니다. Lucide 등을 프로젝트에서 직접 사용하세요.',
-    },
-    backTop: {
-      name: '맨 위로 BackTop',
-      description:
-        '[사용 중단] 네이티브 스크롤 또는 직접 구현한 맨 위로 버튼을 권장합니다. LewBackTop·v-backtop은 남아 있으나 권장하지 않습니다.',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '사용자 정의 내용',
-      },
-      demo3: {
-        title: '디렉티브 방식 트리거',
-      },
-      props: {
-        target:
-          '스크롤 이벤트를 트리거할 대상 요소, CSS 선택자 사용. 비어 있으면 전체 창이 기본값.',
-        right: '컴포넌트가 페이지 오른쪽에서 떨어진 거리, 단위는 픽셀.',
-        bottom: '컴포넌트가 페이지 하단에서 떨어진 거리, 단위는 픽셀.',
-        valveHeight:
-          '페이지 스크롤 높이 임계값, 이 값을 초과하면 맨 위로 버튼이 표시됨, 단위는 픽셀.',
-      },
-      emits: {
-        click: '맨 위로 이동 이벤트 콜백',
-      },
-    },
-    steps: {
-      name: '단계 Steps',
-      description:
-        '[제거됨] LewSteps / lew-steps는 라이브러리에서 제거되었습니다. 단계 UI는 직접 구현하거나 다른 방식을 사용하세요.',
     },
     menu: {
       name: '메뉴 Menu',
@@ -462,31 +407,6 @@ export default {
         show: '메뉴 표시 이벤트 콜백',
         hide: '메뉴 숨김 이벤트 콜백',
         change: '메뉴 항목 선택 이벤트 콜백',
-      },
-    },
-    breadcrumb: {
-      name: '브레드크럼 Breadcrumb',
-      description: '명확한 경로 탐색, 사용자가 방향을 잃지 않도록 도와줍니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '현재 선택 항목 사용자 정의',
-      },
-      demo3: {
-        title: '구분 아이콘 유형',
-      },
-      props: {
-        options: '브레드크럼 구성 항목 배열',
-        separator: '구분자 아이콘 유형',
-      },
-      breadcrumbOptions: {
-        label: '브레드크럼 항목 텍스트',
-        value: '브레드크럼 항목 값',
-        active: '현재 선택 항목 여부',
-      },
-      emits: {
-        change: '브레드크럼 항목 변경 시 트리거',
       },
     },
     contextMenu: {
@@ -613,33 +533,30 @@ export default {
         title: '기본 사용법',
       },
       demo2: {
-        title: '접두사와 접미사',
-      },
-      demo3: {
         title: '글자 수 제한',
       },
-      demo4: {
+      demo3: {
         title: '정렬 방식',
       },
-      demo5: {
+      demo4: {
         title: '비밀번호 표시',
       },
-      demo6: {
+      demo5: {
         title: '너비 자동 조정',
       },
-      demo7: {
+      demo6: {
         title: '포커스 시 전체 텍스트 선택',
       },
-      demo8: {
+      demo7: {
         title: '지울 수 있는',
       },
-      demo9: {
+      demo8: {
         title: '읽기 전용 상태',
       },
-      demo10: {
+      demo9: {
         title: '비활성화 상태',
       },
-      demo11: {
+      demo10: {
         title: '엔터 키 누름으로 이벤트 트리거',
       },
       props: {
@@ -659,14 +576,7 @@ export default {
         autoWidth: '내용에 따라 너비 자동 조정 여부',
         selectByFocus: '포커스 시 전체 텍스트 선택 활성화 여부',
         copyable:
-          '내용 복사 허용 여부(readonly가 true이고 suffix가 false인 경우만 적용)',
-        prefixes: '입력 상자 접두사 유형',
-        prefixesOptions:
-          '입력 상자 접두사 옵션 목록, prefixes가 select일 때 사용',
-        prefixesTooltip: '입력 상자 접두사의 툴팁 텍스트',
-        suffix: '입력 상자 접미사 유형',
-        suffixOptions: '입력 상자 접미사 옵션 목록, suffix가 select일 때 사용',
-        suffixTooltip: '입력 상자 접미사의 툴팁 텍스트',
+          '내용 복사 허용 여부(readonly가 true인 경우만 적용)',
         okByEnter: '엔터 키로 입력 확인 허용 여부',
       },
       emits: {
@@ -679,8 +589,6 @@ export default {
       },
       model: {
         modelValue: '입력 상자 바인딩 값',
-        prefixValue: '접두사 바인딩 값',
-        suffixValue: '접미사 바인딩 값',
       },
     },
     inputNumber: {
@@ -1425,40 +1333,6 @@ export default {
       emits: {
         change: '값 변경 시 트리거',
         clear: '지우기 시 트리거',
-      },
-    },
-    inputTable: {
-      name: '테이블 입력 InputTable',
-      description:
-        '테이블에서 데이터를 빠르게 입력하여 일괄 처리를 더욱 효율적으로 만듭니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '기본값',
-      },
-      demo3: {
-        title: '더 다양한 기능',
-      },
-      props: {
-        columns: '열 구성',
-        size: '크기',
-        width: '너비',
-        rowKey: '행 키',
-        batchDeletable: '일괄 삭제 지원 여부',
-        addable: '추가 가능 여부',
-        defaultForm: '기본 양식',
-        deletable: '삭제 가능 여부',
-        maxRows: '최대 행 수',
-        minRows: '최소 행 수',
-        clearable: '모두 지우기 가능 여부',
-        sortable: '정렬 가능 여부',
-        autoUniqueId: '자동 고유 ID 생성 여부',
-        uniqueField: '고유 필드',
-        sortTooltipCustomRender: '정렬 툴팁 커스텀 렌더링',
-      },
-      emits: {
-        change: '값 변경 시 트리거',
       },
     },
     switch: {
@@ -2263,22 +2137,6 @@ export default {
       },
       slots: {
         handle: '핸들 슬롯',
-      },
-    },
-    empty: {
-      name: '빈 상태 Empty',
-      description:
-        '[사용 중단] 빈 상태는 앱에서 문구·일러스트·레이아웃을 직접 구현하세요. LewEmpty는 남아 있으나 권장하지 않습니다.',
-      demo1: {
-        title: '기본 사용법',
-      },
-      props: {
-        type: '유형',
-        title: '제목',
-        fontSize: '글꼴 크기',
-        padding: '패딩',
-        width: '너비',
-        height: '높이',
       },
     },
   },

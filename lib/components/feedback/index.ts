@@ -1,6 +1,5 @@
 export * from './alert'
 export * from './drawer'
-export * from './empty'
 export * from './modal'
 export * from './popok'
 export * from './popover'

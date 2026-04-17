@@ -87,7 +87,6 @@ export default {
     back: 'Retour',
     backToHome: 'Retour à l\'accueil',
     loading: 'Chargement...',
-    deprecated: 'Obsolètes',
   },
   components: {
     image: {
@@ -263,11 +262,6 @@ export default {
         value: 'Valeur du badge (affichera un point si vide)',
       },
     },
-    title: {
-      name: 'Titre',
-      description:
-        '[Obsolète] Préférez des titres sémantiques (h1–h6) ou votre propre typographie. La doc utilise DocHeading ; LewTitle reste exporté pour compatibilité.',
-    },
     textTrim: {
       name: 'Découpe de Texte',
       description:
@@ -324,56 +318,6 @@ export default {
         gap: 'Espacement entre les éléments enfants (unité : pixels)',
         width: 'Largeur du conteneur Flex (unité : pixels ou pourcentage)',
       },
-    },
-    mark: {
-      name: 'Marqueur',
-      description:
-        'Ajoute une mise en évidence au texte, rendant le contenu important immédiatement visible',
-      demo1: {
-        title: 'Utilisation de base',
-      },
-      props: {
-        color: 'Thème de couleur',
-        round: 'Coins arrondis',
-        bold: 'Texte en gras',
-        cursor: 'Style du curseur au survol',
-      },
-    },
-    icon: {
-      name: 'Icône',
-      description:
-        '[Obsolète] Le composant Icon intégré est obsolète. Utilisez Lucide ou un autre pack d\'icônes.',
-    },
-    backTop: {
-      name: 'Retour en haut',
-      description:
-        '[Obsolète] Préférez le défilement natif ou votre propre bouton. LewBackTop et v-backtop restent disponibles mais ne sont pas recommandés.',
-      demo1: {
-        title: 'Utilisation de base',
-      },
-      demo2: {
-        title: 'Contenu personnalisé',
-      },
-      demo3: {
-        title: 'Déclenchement par directive',
-      },
-      props: {
-        target:
-          'Spécifie l\'élément cible qui déclenche l\'événement de défilement, utilisant un sélecteur CSS. Si vide, la fenêtre entière est utilisée par défaut.',
-        right:
-          'Distance entre le composant et le bord droit de la page, en pixels.',
-        bottom: 'Distance entre le composant et le bas de la page, en pixels.',
-        valveHeight:
-          'Hauteur de seuil de défilement de la page, le bouton de retour en haut s\'affiche lorsque le défilement dépasse cette valeur, en pixels.',
-      },
-      emits: {
-        click: 'Déclenché lors du clic sur Retour en haut',
-      },
-    },
-    steps: {
-      name: 'Étapes',
-      description:
-        '[Supprimé] LewSteps / lew-steps a été retiré de la bibliothèque. Implémentez l’UI des étapes dans votre app ou une autre solution.',
     },
     menu: {
       name: 'Menu',
@@ -475,32 +419,6 @@ export default {
         show: 'Déclenché lors de l\'affichage',
         hide: 'Déclenché lors du masquage',
         change: 'Déclenché lors de la sélection',
-      },
-    },
-    breadcrumb: {
-      name: 'Fil d\'Ariane',
-      description:
-        'Navigation claire des chemins, empêchant les utilisateurs de se perdre',
-      demo1: {
-        title: 'Utilisation de base',
-      },
-      demo2: {
-        title: 'Sélection personnalisée',
-      },
-      demo3: {
-        title: 'Types d\'icônes séparateurs',
-      },
-      props: {
-        options: 'Tableau de configuration du fil d\'Ariane',
-        separator: 'Type d\'icône séparateur',
-      },
-      breadcrumbOptions: {
-        label: 'Texte de l\'élément du fil d\'Ariane',
-        value: 'Valeur de l\'élément du fil d\'Ariane',
-        active: 'Si c\'est l\'élément actuellement sélectionné',
-      },
-      emits: {
-        change: 'Déclenché lors du changement d\'élément',
       },
     },
     contextMenu: {
@@ -607,33 +525,30 @@ export default {
         title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Préfixes et suffixes',
-      },
-      demo3: {
         title: 'Limite de caractères',
       },
-      demo4: {
+      demo3: {
         title: 'Alignement',
       },
-      demo5: {
+      demo4: {
         title: 'Visibilité du mot de passe',
       },
-      demo6: {
+      demo5: {
         title: 'Largeur adaptative',
       },
-      demo7: {
+      demo6: {
         title: 'Sélection du texte entier au focus',
       },
-      demo8: {
+      demo7: {
         title: 'Effaçable',
       },
-      demo9: {
+      demo8: {
         title: 'Lecture seule',
       },
-      demo10: {
+      demo9: {
         title: 'Désactivé',
       },
-      demo11: {
+      demo10: {
         title: 'Événement déclenché par la touche Entrée',
       },
       props: {
@@ -654,16 +569,7 @@ export default {
         autoWidth: 'Ajuster automatiquement la largeur en fonction du contenu',
         selectByFocus: 'Activer la sélection de tout le texte au focus',
         copyable:
-          'Autoriser la copie du contenu (uniquement valide lorsque readonly est true et suffix est false)',
-        prefixes: 'Type de préfixe du champ de saisie',
-        prefixesOptions:
-          'Liste des options de préfixe, utilisée lorsque prefixes est select',
-        prefixesTooltip:
-          'Texte d\'info-bulle pour le préfixe du champ de saisie',
-        suffix: 'Type de suffixe du champ de saisie',
-        suffixOptions:
-          'Liste des options de suffixe, utilisée lorsque suffix est select',
-        suffixTooltip: 'Texte d\'info-bulle pour le suffixe du champ de saisie',
+          'Autoriser la copie du contenu (uniquement valide lorsque readonly est true)',
         okByEnter: 'Autoriser la confirmation par la touche Entrée',
       },
       emits: {
@@ -676,8 +582,6 @@ export default {
       },
       model: {
         modelValue: 'Valeur liée',
-        prefixValue: 'Valeur du préfixe',
-        suffixValue: 'Valeur du suffixe',
       },
     },
     inputNumber: {
@@ -1436,40 +1340,6 @@ export default {
       emits: {
         change: 'Déclenché lorsque la valeur change',
         clear: 'Déclenché lors de l\'effacement',
-      },
-    },
-    inputTable: {
-      name: 'Table d\'entrée',
-      description:
-        'Saisie rapide de données dans un tableau, rendant le traitement par lots plus efficace',
-      demo1: {
-        title: 'Utilisation de base',
-      },
-      demo2: {
-        title: 'Valeurs par défaut',
-      },
-      demo3: {
-        title: 'Options avancées',
-      },
-      props: {
-        columns: 'Colonnes',
-        size: 'Taille',
-        width: 'Largeur',
-        rowKey: 'Clé de ligne',
-        batchDeletable: 'Suppression par lot',
-        addable: 'Ajoutable',
-        defaultForm: 'Formulaire par défaut',
-        deletable: 'Supprimable',
-        maxRows: 'Nombre maximal de lignes',
-        minRows: 'Nombre minimal de lignes',
-        clearable: 'Effaçable',
-        sortable: 'Triable',
-        autoUniqueId: 'Générer un ID unique automatiquement',
-        uniqueField: 'Champ unique',
-        sortTooltipCustomRender: `Rendu personnalisé de l'info-bulle de tri`,
-      },
-      emits: {
-        change: 'Déclenché lorsque la valeur change',
       },
     },
     switch: {
@@ -2284,22 +2154,6 @@ export default {
       },
       slots: {
         handle: 'Slot de gestion',
-      },
-    },
-    empty: {
-      name: 'État vide',
-      description:
-        '[Obsolète] Implémentez les états vides dans votre app (texte, illustration, mise en page). LewEmpty reste disponible mais n\'est pas recommandé.',
-      demo1: {
-        title: 'Utilisation de base',
-      },
-      props: {
-        type: 'Type',
-        title: 'Titre',
-        fontSize: 'Taille de police',
-        padding: 'Marge intérieure',
-        width: 'Largeur',
-        height: 'Hauteur',
       },
     },
     actionBox: {

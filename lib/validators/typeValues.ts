@@ -1,15 +1,11 @@
 import type {
-  LewBreadcrumbSeparator,
   LewColor,
   LewDialogType,
   LewDirection,
   LewDrawerPosition,
-  LewEmptyType,
   LewFormItemAs,
   LewImageObjectFit,
   LewImageObjectPosition,
-  LewInputPrefixesType,
-  LewInputSuffixType,
   LewInputType,
   LewPlacement,
   LewPopokType,
@@ -106,19 +102,13 @@ export const validObjectPositionList: LewImageObjectPosition[] = ['center', 'top
 
 export const validTagTypeList: LewTagType[] = ['fill', 'light', 'ghost']
 
-export const validBreadcrumbSeparatorList: LewBreadcrumbSeparator[] = ['shoulder', 'sprit']
-
 export const validSelectMultipleValueLayout: LewSelectMultipleValueLayout[] = ['tag', 'text']
 
 export const validFormItemAsList: LewFormItemAs[] = ['input', 'textarea', 'input-tag', 'checkbox-group', 'radio-group', 'checkbox', 'select', 'date-picker', 'date-range-picker', 'tabs', 'cascader', 'switch', 'button', 'upload', 'input-number', 'slider', 'slider-range', 'color-picker', 'rate', 'tree-select']
 
 export const validInputTypeList: LewInputType[] = ['text', 'password']
-export const validInputPrefixesTypeList: LewInputPrefixesType[] = ['icon', 'select', 'text']
-export const validInputSuffixTypeList: LewInputSuffixType[] = ['icon', 'select', 'text']
 export const validTabsTypeList: LewTabsType[] = ['block', 'line']
 
 export const validDrawerPositionList: LewDrawerPosition[] = ['left', 'right', 'top', 'bottom']
 
 export const validDialogTypeList: LewDialogType[] = ['warning', 'error', 'info', 'normal', 'success']
-
-export const validEmptyTypeList: LewEmptyType[] = ['404', 'address', 'article', 'goods', 'likes', 'car', 'comment', 'network', 'order', 'search']

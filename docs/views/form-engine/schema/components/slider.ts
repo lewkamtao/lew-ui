@@ -1,11 +1,5 @@
 export default [
   {
-    label: '配置',
-    as: 'input-table',
-    field: 'options',
-    direction: 'y',
-  },
-  {
     label: '最小值',
     as: 'input-number',
     componentWidth: 100,

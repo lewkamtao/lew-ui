@@ -86,7 +86,6 @@ export default {
     back: 'Indietro',
     backToHome: 'Torna alla home',
     loading: 'Caricamento...',
-    deprecated: 'Deprecati',
   },
   components: {
     image: {
@@ -262,11 +261,6 @@ export default {
         value: 'Valore badge (mostra punto se vuoto)',
       },
     },
-    title: {
-      name: 'Titolo',
-      description:
-        '[Deprecato] Usare titoli semantici (h1–h6) o tipografia personalizzata. La documentazione usa DocHeading; LewTitle resta esportato per compatibilità.',
-    },
     textTrim: {
       name: 'Testo troncato',
       description:
@@ -319,52 +313,6 @@ export default {
         gap: 'Spazio tra elementi (pixel)',
         width: 'Larghezza contenitore (pixel o percentuale)',
       },
-    },
-    mark: {
-      name: 'Evidenziatore',
-      description: 'Evidenzia il testo importante per una migliore visibilità',
-      demo1: {
-        title: 'Uso base',
-      },
-      props: {
-        color: 'Tema colore',
-        round: 'Bordi arrotondati',
-        bold: 'Grassetto',
-        cursor: 'Stile cursore al passaggio',
-      },
-    },
-    icon: {
-      name: 'Icona',
-      description:
-        '[Deprecato] Il componente Icon integrato è deprecato. Usare Lucide o un altro set di icone.',
-    },
-    backTop: {
-      name: 'Torna su',
-      description:
-        '[Deprecato] Preferire lo scroll nativo o un pulsante personalizzato. LewBackTop e v-backtop restano ma non sono consigliati.',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Contenuto personalizzato',
-      },
-      demo3: {
-        title: 'Attivazione tramite direttiva',
-      },
-      props: {
-        target: 'Selettore CSS elemento target (default: finestra)',
-        right: 'Distanza dal bordo destro (pixel)',
-        bottom: 'Distanza dal bordo inferiore (pixel)',
-        valveHeight: 'Altezza soglia per mostrare il pulsante (pixel)',
-      },
-      emits: {
-        click: 'Callback click torna su',
-      },
-    },
-    steps: {
-      name: 'Passi',
-      description:
-        '[Rimosso] LewSteps / lew-steps è stato rimosso dalla libreria. Implementa l’UI dei passi nell’app o un’altra soluzione.',
     },
     menu: {
       name: 'Menu',
@@ -459,31 +407,6 @@ export default {
         change: 'Callback selezione voce',
       },
     },
-    breadcrumb: {
-      name: 'Breadcrumb',
-      description: 'Navigazione chiara del percorso corrente',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Selezione personalizzata',
-      },
-      demo3: {
-        title: 'Tipo separatore',
-      },
-      props: {
-        options: 'Array configurazione breadcrumb',
-        separator: 'Tipo icona separatore',
-      },
-      breadcrumbOptions: {
-        label: 'Testo voce',
-        value: 'Valore voce',
-        active: 'Voce attiva',
-      },
-      emits: {
-        change: 'Callback cambio voce',
-      },
-    },
     contextMenu: {
       'name': 'Menu contestuale',
       'description': 'Menu tasto destro elegante per azioni contestuali',
@@ -573,33 +496,30 @@ export default {
         title: 'Uso base',
       },
       demo2: {
-        title: 'Prefisso/Suffisso',
-      },
-      demo3: {
         title: 'Limite caratteri',
       },
-      demo4: {
+      demo3: {
         title: 'Allineamento',
       },
-      demo5: {
+      demo4: {
         title: 'Password visibile',
       },
-      demo6: {
+      demo5: {
         title: 'Larghezza automatica',
       },
-      demo7: {
+      demo6: {
         title: 'Selezione al focus',
       },
-      demo8: {
+      demo7: {
         title: 'Cancellabile',
       },
-      demo9: {
+      demo8: {
         title: 'Sola lettura',
       },
-      demo10: {
+      demo9: {
         title: 'Disabilitato',
       },
-      demo11: {
+      demo10: {
         title: 'Evento invio',
       },
       props: {
@@ -617,13 +537,7 @@ export default {
         minWidth: 'Larghezza minima (pixel o unità)',
         autoWidth: 'Larghezza automatica',
         selectByFocus: 'Seleziona al focus',
-        copyable: 'Copiabile (solo readonly e no suffix)',
-        prefixes: 'Tipo prefisso',
-        prefixesOptions: 'Opzioni prefisso select',
-        prefixesTooltip: 'Tooltip prefisso',
-        suffix: 'Tipo suffisso',
-        suffixOptions: 'Opzioni suffisso select',
-        suffixTooltip: 'Tooltip suffisso',
+        copyable: 'Copiabile (solo readonly)',
         okByEnter: 'Conferma con Invio',
       },
       emits: {
@@ -636,8 +550,6 @@ export default {
       },
       model: {
         modelValue: 'Valore legato',
-        prefixValue: 'Valore prefisso',
-        suffixValue: 'Valore suffisso',
       },
     },
     inputNumber: {
@@ -1371,40 +1283,6 @@ export default {
       emits: {
         change: 'Cambio valore',
         clear: 'Cancellazione',
-      },
-    },
-    inputTable: {
-      name: 'Tabella Input',
-      description:
-        'Input dati in formato tabellare per inserimenti multipli efficienti',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Valori predefiniti',
-      },
-      demo3: {
-        title: 'Avanzato',
-      },
-      props: {
-        columns: 'Configurazione colonne',
-        size: 'Dimensione',
-        width: 'Larghezza',
-        rowKey: 'Chiave riga',
-        batchDeletable: 'Eliminazione multipla',
-        addable: 'Aggiungibile',
-        defaultForm: 'Form predefinito',
-        deletable: 'Eliminabile',
-        maxRows: 'Righe massime',
-        minRows: 'Righe minime',
-        clearable: 'Cancellabile',
-        sortable: 'Ordinabile',
-        autoUniqueId: 'ID unico automatico',
-        uniqueField: 'Campo univoco',
-        sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento',
-      },
-      emits: {
-        change: 'Cambio valore',
       },
     },
     switch: {
@@ -2206,22 +2084,6 @@ export default {
       },
       slots: {
         handle: 'Slot gestione',
-      },
-    },
-    empty: {
-      name: 'Stato vuoto Empty',
-      description:
-        '[Deprecato] Implementare gli stati vuoti nell\'app (testo, illustrazione, layout). LewEmpty resta ma non è consigliato.',
-      demo1: {
-        title: 'Uso base',
-      },
-      props: {
-        type: 'Tipo',
-        title: 'Titolo',
-        fontSize: 'Dimensione font',
-        padding: 'Padding',
-        width: 'Larghezza',
-        height: 'Altezza',
       },
     },
     actionBox: {

@@ -70,10 +70,6 @@ const options = computed(() => {
           label: 'Flex',
           value: '/Flex',
         },
-        {
-          label: 'Mark',
-          value: '/Mark',
-        },
       ],
     },
     {
@@ -91,10 +87,6 @@ const options = computed(() => {
         {
           label: 'Dropdown',
           value: '/Dropdown',
-        },
-        {
-          label: 'Breadcrumb',
-          value: '/Breadcrumb',
         },
         {
           label: 'ContextMenu',
@@ -179,16 +171,6 @@ const options = computed(() => {
         //   label: 'TreeSelectMultiple',
         //   value: '/TreeSelectMultiple',
         // },
-        {
-          label: 'InputTable',
-          value: '/InputTable',
-          tagProps: {
-            text: 'New',
-            type: 'ghost',
-            round: true,
-            color: 'green',
-          },
-        },
         {
           label: 'Switch',
           value: '/Switch',
@@ -308,32 +290,6 @@ const options = computed(() => {
         {
           label: 'Loading',
           value: '/Loading',
-        },
-      ],
-    },
-    {
-      label: docsLocale.t('base.deprecated'),
-      value: docsLocale.t('base.deprecated'),
-      children: [
-        {
-          label: 'Icon',
-          value: '/Icon',
-        },
-        {
-          label: 'BackTop',
-          value: '/BackTop',
-        },
-        {
-          label: 'Empty',
-          value: '/Empty',
-        },
-        {
-          label: 'Steps',
-          value: '/Steps',
-        },
-        {
-          label: 'Title',
-          value: '/Title',
         },
       ],
     },

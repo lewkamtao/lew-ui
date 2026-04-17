@@ -87,7 +87,6 @@ export default {
     back: 'Zurück',
     backToHome: 'Zurück zur Startseite',
     loading: 'Laden...',
-    deprecated: 'Veraltet',
   },
   components: {
     image: {
@@ -264,11 +263,6 @@ export default {
         value: 'Abzeichenwert (wird als Punkt angezeigt wenn leer)',
       },
     },
-    title: {
-      name: 'Titel',
-      description:
-        '[Veraltet] Nutzen Sie semantische Überschriften (h1–h6) oder eigene Typografie. Die Doku nutzt DocHeading; LewTitle bleibt aus Kompatibilität exportiert.',
-    },
     textTrim: {
       name: 'Textkürzung',
       description:
@@ -325,55 +319,6 @@ export default {
         gap: 'Abstand zwischen Kindelementen (Einheit: Pixel)',
         width: 'Breite des Flex-Containers (Einheit: Pixel oder Prozent)',
       },
-    },
-    mark: {
-      name: 'Markierung',
-      description:
-        'Fügt Hervorhebungen zu Texten hinzu, um wichtige Inhalte klar zu machen',
-      demo1: {
-        title: 'Grundlegende Verwendung',
-      },
-      props: {
-        color: 'Farbthema',
-        round: 'Abgerundet',
-        bold: 'Fettschrift aktivieren',
-        cursor: 'Mauszeiger-Stil beim Hover',
-      },
-    },
-    icon: {
-      name: 'Icon',
-      description:
-        '[Veraltet] Die eingebaute Icon-Komponente ist veraltet. Bitte Lucide oder ein anderes Icon-Set nutzen.',
-    },
-    backTop: {
-      name: 'Nach oben scrollen',
-      description:
-        '[Veraltet] Nutzen Sie natives Scrollen oder einen eigenen Button. LewBackTop und v-backtop bleiben verfügbar, werden aber nicht empfohlen.',
-      demo1: {
-        title: 'Grundlegende Verwendung',
-      },
-      demo2: {
-        title: 'Benutzerdefinierter Inhalt',
-      },
-      demo3: {
-        title: 'Direktiven-basierte Auslösung',
-      },
-      props: {
-        target:
-          'Zielelement für das Scroll-Event (CSS-Selektor). Standardmäßig das gesamte Fenster, wenn leer.',
-        right: 'Abstand zur rechten Seite in Pixeln',
-        bottom: 'Abstand zum unteren Rand in Pixeln',
-        valveHeight:
-          'Schwellenwert der Scroll-Höhe in Pixeln, ab dem der Button angezeigt wird',
-      },
-      emits: {
-        click: 'Callback beim Klick auf den Button',
-      },
-    },
-    steps: {
-      name: 'Schritte',
-      description:
-        '[Entfernt] LewSteps / lew-steps wurde aus der Bibliothek entfernt. Implementieren Sie die Schritt-UI selbst oder nutzen Sie eine andere Lösung.',
     },
     menu: {
       name: 'Menü',
@@ -470,32 +415,6 @@ export default {
         show: 'Callback beim Anzeigen des Menüs',
         hide: 'Callback beim Ausblenden des Menüs',
         change: 'Callback bei Auswahl eines Menüpunkts',
-      },
-    },
-    breadcrumb: {
-      name: 'Brotkrümelnavigation',
-      description:
-        'Klare Pfadnavigation, damit Benutzer nicht die Orientierung verlieren',
-      demo1: {
-        title: 'Grundlegende Verwendung',
-      },
-      demo2: {
-        title: 'Benutzerdefinierte Auswahl',
-      },
-      demo3: {
-        title: 'Trennzeichen-Icon-Typen',
-      },
-      props: {
-        options: 'Array der Brotkrümel-Konfigurationen',
-        separator: 'Trennzeichen-Icon-Typ',
-      },
-      breadcrumbOptions: {
-        label: 'Text des Brotkrümels',
-        value: 'Wert des Brotkrümels',
-        active: 'Ist aktuell ausgewählt',
-      },
-      emits: {
-        change: 'Wird ausgelöst, wenn sich der Brotkrümel ändert',
       },
     },
     contextMenu: {
@@ -633,33 +552,30 @@ export default {
         title: 'Grundlegende Verwendung',
       },
       demo2: {
-        title: 'Präfix und Suffix',
-      },
-      demo3: {
         title: 'Zeichenlimit',
       },
-      demo4: {
+      demo3: {
         title: 'Ausrichtung',
       },
-      demo5: {
+      demo4: {
         title: 'Passwort sichtbar',
       },
-      demo6: {
+      demo5: {
         title: 'Automatische Breitenanpassung',
       },
-      demo7: {
+      demo6: {
         title: 'Gesamten Text bei Fokus auswählen',
       },
-      demo8: {
+      demo7: {
         title: 'Löschbar',
       },
-      demo9: {
+      demo8: {
         title: 'Schreibgeschützt',
       },
-      demo10: {
+      demo9: {
         title: 'Deaktiviert',
       },
-      demo11: {
+      demo10: {
         title: 'Enter-Taste löst Event aus',
       },
       props: {
@@ -677,13 +593,7 @@ export default {
         minWidth: 'Minimale Breite, unterstützt Zahlen (Pixel) oder Einheiten',
         autoWidth: 'Breite automatisch an Inhalt anpassen',
         selectByFocus: 'Gesamten Text bei Fokus auswählen',
-        copyable: 'Kopieren erlauben (nur bei readonly=true und suffix=false)',
-        prefixes: 'Präfix-Typ',
-        prefixesOptions: 'Präfix-Optionen, wenn prefixes="select"',
-        prefixesTooltip: 'Präfix-Tooltip-Text',
-        suffix: 'Suffix-Typ',
-        suffixOptions: 'Suffix-Optionen, wenn suffix="select"',
-        suffixTooltip: 'Suffix-Tooltip-Text',
+        copyable: 'Kopieren erlauben (nur bei readonly=true)',
         okByEnter: 'Enter-Taste zur Bestätigung erlauben',
       },
       emits: {
@@ -696,8 +606,6 @@ export default {
       },
       model: {
         modelValue: 'Eingabefeld-Wert',
-        prefixValue: 'Präfix-Wert',
-        suffixValue: 'Suffix-Wert',
       },
     },
     inputNumber: {
@@ -1452,41 +1360,6 @@ export default {
       emits: {
         change: 'Wird bei Wertänderung ausgelöst',
         clear: 'Wird beim Löschen ausgelöst',
-      },
-    },
-    inputTable: {
-      name: 'Tabelleneingabe',
-      description:
-        'Schnelle Dateneingabe in Tabellen für effiziente Stapelverarbeitung',
-      demo1: {
-        title: 'Grundlegende Verwendung',
-      },
-      demo2: {
-        title: 'Standardwert',
-      },
-      demo3: {
-        title: 'Erweitert',
-      },
-      props: {
-        columns: 'Spaltenkonfiguration',
-        size: 'Größe',
-        width: 'Breite',
-        rowKey: 'Zeilenschlüssel',
-        batchDeletable: 'Stapellöschung erlauben',
-        addable: 'Hinzufügen erlauben',
-        defaultForm: 'Standardformular',
-        deletable: 'Löschen erlauben',
-        maxRows: 'Maximale Zeilenanzahl',
-        minRows: 'Minimale Zeilenanzahl',
-        clearable: 'Löschen erlauben',
-        sortable: 'Sortieren erlauben',
-        autoUniqueId: 'Automatische eindeutige ID',
-        uniqueField: 'Eindeutiges Feld',
-        sortTooltipCustomRender:
-          'Benutzerdefinierte Sortier-Tooltip-Darstellung',
-      },
-      emits: {
-        change: 'Wird bei Wertänderung ausgelöst',
       },
     },
     switch: {
@@ -2294,22 +2167,5 @@ export default {
         handle: 'Slot-Behandlung',
       },
     },
-    empty: {
-      name: 'Leerzustand',
-      description:
-        '[Veraltet] Implementieren Sie Leerzustände selbst (Text, Illustration, Layout). LewEmpty bleibt verfügbar, wird aber nicht empfohlen.',
-      demo1: {
-        title: 'Grundlegende Verwendung',
-      },
-      props: {
-        type: 'Typ',
-        title: 'Titel',
-        fontSize: 'Schriftgröße',
-        padding: 'Innenabstand',
-        width: 'Breite',
-        height: 'Höhe',
-      },
-    },
-
   },
 }

@@ -5,9 +5,9 @@ import DocHeading from '../../layout/DocHeading.vue'
 <template>
   <DocHeading size="18px">
     1.0.24 Beta
-    <lew-mark style="margin-left: 20px">
+    <code style="margin-left: 20px">
       2022-07
-    </lew-mark>
+    </code>
   </DocHeading>
   <br>
   <div>
@@ -16,8 +16,8 @@ import DocHeading from '../../layout/DocHeading.vue'
     </DocHeading>
     <ul>
       <li>
-        曾计划用<lew-mark>LewInput</lew-mark>的 type 承载多行（如 type="textarea"），但未在后续版本中落地；
-        多行文本请使用<lew-mark>LewTextarea</lew-mark>。
+        曾计划用<code>LewInput</code>的 type 承载多行（如 type="textarea"），但未在后续版本中落地；
+        多行文本请使用<code>LewTextarea</code>。
       </li>
     </ul>
     <DocHeading :size="14">
@@ -25,15 +25,15 @@ import DocHeading from '../../layout/DocHeading.vue'
     </DocHeading>
     <ul>
       <li>
-        新增<lew-mark>Table</lew-mark>、
-        <lew-mark>DatePicker</lew-mark>、 <lew-mark>InputPro</lew-mark>、
-        <lew-mark>Notification</lew-mark>、 <lew-mark>Pagination</lew-mark>、
-        <lew-mark>Drawer</lew-mark>、 <lew-mark>BackTop</lew-mark>。
+        新增<code>Table</code>、
+        <code>DatePicker</code>、 <code>InputPro</code>、
+        <code>Notification</code>、 <code>Pagination</code>、
+        <code>Drawer</code>、 <code>BackTop</code>。
       </li>
       <li>
-        新增<lew-mark>Input</lew-mark>的长度限制、清空、密码可见、尺寸、显示字数。
+        新增<code>Input</code>的长度限制、清空、密码可见、尺寸、显示字数。
       </li>
-      <li>新增<lew-mark>Checkbox</lew-mark>的纯 tag 样式。</li>
+      <li>新增<code>Checkbox</code>的纯 tag 样式。</li>
     </ul>
     <DocHeading :size="14">
       修复

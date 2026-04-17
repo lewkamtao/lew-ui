@@ -12,7 +12,7 @@ setLocale('en');`)
     <DocHeading>国际化</DocHeading>
     <p>
       Lew UI 支持国际化配置，您可以在
-      <lew-mark>main.ts</lew-mark> 入口文件中进行如下设置：
+      <code>main.ts</code> 入口文件中进行如下设置：
     </p>
 
     <LewCodeHighlighter :code="code" lang="ts" />
@@ -72,7 +72,7 @@ setLocale('en');`)
 
     <p>
       只需将
-      <lew-mark>setLocale</lew-mark>
+      <code>setLocale</code>
       的参数设置为上面对应的语言代码即可切换。
     </p>
   </div>

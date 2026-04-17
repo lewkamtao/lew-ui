@@ -31,7 +31,7 @@ const open = () => {
     </DocHeading>
     <p>
       tooltips 是一个自定义指令，你需要在
-      <lew-mark>main.ts</lew-mark> 注册该指令
+      <code>main.ts</code> 注册该指令
     </p>
     <LewCodeHighlighter :code="pre1" lang="ts" />
     <br>

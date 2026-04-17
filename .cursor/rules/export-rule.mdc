@@ -156,7 +156,7 @@ export { LewTooltip } from './components/feedback/tooltip'
 // Navigation 导航组件
 export { LewMenu, LewMenuItem, LewMenuGroup } from './components/navigation/menu'
 export { LewTabs, LewTabItem } from './components/navigation/tabs'
-export { LewBreadcrumb, LewBreadcrumbItem } from './components/navigation/breadcrumb'
+export { LewDropdown } from './components/navigation/dropdown'
 
 // ===========================
 // 2. 类型导出

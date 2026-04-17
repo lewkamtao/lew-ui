@@ -86,7 +86,6 @@ export default {
     back: '戻る',
     backToHome: 'ホームに戻る',
     loading: '読み込み中...',
-    deprecated: '非推奨コンポーネント',
   },
   components: {
     image: {
@@ -260,11 +259,6 @@ export default {
         value: 'バッジの値（空の場合はドットとして表示）',
       },
     },
-    title: {
-      name: 'タイトル Title',
-      description:
-        '【非推奨】見出しは h1–h6 などのセマンティック要素、または独自のタイポグラフィを使用してください。ドキュメントでは DocHeading を使用しています。LewTitle は互換のため残します。',
-    },
     textTrim: {
       name: 'テキスト省略 TextTrim',
       description: '長いテキストを優雅に処理し、レイアウトの美しさを保つ',
@@ -318,54 +312,6 @@ export default {
         gap: '子要素間の間隔（ピクセル）',
         width: 'Flexコンテナの幅（ピクセルまたはパーセント）',
       },
-    },
-    mark: {
-      name: 'マーク Mark',
-      description:
-        'テキストにハイライトを追加し、重要な内容を一目で分かるように',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      props: {
-        color: 'カラーテーマ',
-        round: '角丸',
-        bold: '太字',
-        cursor: 'ホバー時のカーソルスタイル',
-      },
-    },
-    icon: {
-      name: 'アイコン Icon',
-      description:
-        '【非推奨】内蔵の Icon コンポーネントは非推奨です。Lucide などをプロジェクトで直接利用してください。',
-    },
-    backTop: {
-      name: 'トップに戻る BackTop',
-      description:
-        '【非推奨】ネイティブスクロールや独自のトップへ戻る UI を推奨します。LewBackTop と v-backtop は残りますが推奨しません。',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      demo2: {
-        title: 'カスタムコンテンツ',
-      },
-      demo3: {
-        title: 'ディレクティブによるトリガー',
-      },
-      props: {
-        target:
-          'スクロールイベントをトリガーする対象要素（CSSセレクタ）。空の場合はウィンドウ全体',
-        right: 'ページ右端からの距離（ピクセル）',
-        bottom: 'ページ下端からの距離（ピクセル）',
-        valveHeight: 'ボタンを表示するスクロール高さのしきい値（ピクセル）',
-      },
-      emits: {
-        click: 'トップに戻るクリックイベントコールバック',
-      },
-    },
-    steps: {
-      name: 'ステップ',
-      description:
-        '【削除済み】LewSteps / lew-steps はライブラリから削除されました。ステップ UI はアプリ側で実装するか別の手段を利用してください。',
     },
     menu: {
       name: 'メニュー Menu',
@@ -462,31 +408,6 @@ export default {
         change: 'メニュー項目選択イベントコールバック',
       },
     },
-    breadcrumb: {
-      name: 'パンくずリスト Breadcrumb',
-      description: '明確なナビゲーションパスで、ユーザーが迷子にならないように',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      demo2: {
-        title: '現在の選択をカスタマイズ',
-      },
-      demo3: {
-        title: '区切りアイコンのタイプ',
-      },
-      props: {
-        options: 'パンくずリストの設定項目配列',
-        separator: '区切りアイコンのタイプ',
-      },
-      breadcrumbOptions: {
-        label: 'パンくずリスト項目のテキスト',
-        value: 'パンくずリスト項目の値',
-        active: '現在選択中の項目かどうか',
-      },
-      emits: {
-        change: 'パンくずリスト項目が変更された時に発火',
-      },
-    },
     contextMenu: {
       'name': 'コンテキストメニュー ContextMenu',
       'description': 'エレガントな右クリックメニューで、より自然な操作を実現',
@@ -576,33 +497,30 @@ export default {
         title: '基本的な使い方',
       },
       demo2: {
-        title: 'プレフィックス/サフィックス',
-      },
-      demo3: {
         title: '文字数制限',
       },
-      demo4: {
+      demo3: {
         title: '配置',
       },
-      demo5: {
+      demo4: {
         title: 'パスワード表示切替',
       },
-      demo6: {
+      demo5: {
         title: '幅自動調整',
       },
-      demo7: {
+      demo6: {
         title: 'フォーカス時全選択',
       },
-      demo8: {
+      demo7: {
         title: 'クリア可能',
       },
-      demo9: {
+      demo8: {
         title: '読み取り専用',
       },
-      demo10: {
+      demo9: {
         title: '無効状態',
       },
-      demo11: {
+      demo10: {
         title: 'Enterキーでイベント発火',
       },
       props: {
@@ -622,15 +540,7 @@ export default {
         autoWidth: 'コンテンツに応じて幅を自動調整するかどうか',
         selectByFocus: 'フォーカス時に全テキストを選択するかどうか',
         copyable:
-          'コピー可能にするかどうか（readonlyがtrueかつsuffixがfalseの場合のみ有効）',
-        prefixes: 'プレフィックスのタイプ',
-        prefixesOptions:
-          'プレフィックスのオプションリスト（prefixesがselectの場合に使用）',
-        prefixesTooltip: 'プレフィックスのツールチップテキスト',
-        suffix: 'サフィックスのタイプ',
-        suffixOptions:
-          'サフィックスのオプションリスト（suffixがselectの場合に使用）',
-        suffixTooltip: 'サフィックスのツールチップテキスト',
+          'コピー可能にするかどうか（readonlyがtrueの場合のみ有効）',
         okByEnter: 'Enterキーで確定を有効にするかどうか',
       },
       emits: {
@@ -643,8 +553,6 @@ export default {
       },
       model: {
         modelValue: 'バインド値',
-        prefixValue: 'プレフィックスのバインド値',
-        suffixValue: 'サフィックスのバインド値',
       },
     },
     inputNumber: {
@@ -1380,39 +1288,6 @@ export default {
       emits: {
         change: '値が変更された時に発火',
         clear: 'クリア時に発火',
-      },
-    },
-    inputTable: {
-      name: 'テーブル入力 InputTable',
-      description: 'テーブル内でデータを素早く入力し、一括処理をより効率的に',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      demo2: {
-        title: 'デフォルト値',
-      },
-      demo3: {
-        title: '高度な使い方',
-      },
-      props: {
-        columns: '列の設定',
-        size: 'サイズ',
-        width: '幅',
-        rowKey: '行キー',
-        batchDeletable: '一括削除を許可',
-        addable: '追加可能',
-        defaultForm: 'デフォルトフォーム',
-        deletable: '削除可能',
-        maxRows: '最大行数',
-        minRows: '最小行数',
-        clearable: 'クリア可能',
-        sortable: 'ソート可能',
-        autoUniqueId: '自動ID生成',
-        uniqueField: 'ユニークフィールド',
-        sortTooltipCustomRender: 'ソートツールチップのカスタムレンダリング',
-      },
-      emits: {
-        change: '値が変更された時に発火',
       },
     },
     switch: {
@@ -2213,22 +2088,6 @@ export default {
       },
       slots: {
         handle: 'カスタム処理用スロット',
-      },
-    },
-    empty: {
-      name: '空の状態 Empty',
-      description:
-        '【非推奨】空状態は文言・イラスト・レイアウトをアプリ側で実装してください。LewEmpty は残りますが推奨しません。',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      props: {
-        type: 'タイプ',
-        title: 'タイトル',
-        fontSize: 'フォントサイズ',
-        padding: 'パディング',
-        width: '幅',
-        height: '高さ',
       },
     },
     actionBox: {

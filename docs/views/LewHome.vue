@@ -228,30 +228,6 @@ function open(type: LewDialogType) {
   })
 }
 
-const breadcrumb_options = ref([
-  {
-    label: 'Shop',
-    value: '/',
-    type: 'light',
-  },
-  {
-    label: 'Electronics',
-    value: '/electronics',
-    type: 'light',
-  },
-  {
-    label: 'Smartphones',
-    value: '/electronics/smartphones',
-    type: 'light',
-  },
-  {
-    label: 'iPhone 14 Pro Max',
-    value: '',
-    active: true,
-    type: 'light',
-  },
-])
-
 const tab_options = ref([
   { label: 'Electronics', value: '1', type: 'light' },
   { label: 'Fashion', value: '2', type: 'light' },
@@ -442,10 +418,6 @@ onUnmounted(() => {
             <lew-button text="Services" color="cyan" type="light" />
             <lew-button text="Business" color="green" type="light" />
           </lew-flex>
-          <lew-flex x="end">
-            <lew-breadcrumb :options="breadcrumb_options" />
-          </lew-flex>
-
           <lew-flex x="end" style="width: 380px">
             <lew-tabs v-model="tabValue" :options="tab_options" />
           </lew-flex>

@@ -15,11 +15,6 @@ export interface LewLoadingDirectiveBinding {
   visible?: boolean
 }
 
-/** @deprecated 与 LewBackTop 一并废弃，请自行实现回到顶部。 */
-export interface LewBackTopDirectiveBinding {
-  target?: string
-}
-
 export interface LewContextMenuDirectiveBinding {
   options?: LewContextMenusOption[]
   disabled?: boolean
@@ -29,6 +24,5 @@ export interface LewContextMenuDirectiveBinding {
 export interface LewDirectiveBindings {
   'tooltip': LewTooltipDirectiveBinding
   'loading': LewLoadingDirectiveBinding
-  'backtop': LewBackTopDirectiveBinding
   'context-menu': LewContextMenuDirectiveBinding
 }
