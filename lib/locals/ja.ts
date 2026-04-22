@@ -115,7 +115,16 @@ export default {
   },
   pagination: {
     pageSize: '表示件数：{pageSize}件',
-    jumpTo: '移動',
+    jumpTo: 'ページ',
+    jumpConfirm: '移動',
+    summary: '{total} 件 · {current} / {totalPages} ページ',
+    perPage: '1ページあたり',
+    prevSection: '前のページへ',
+    nextSection: '次のページへ',
+    navLabel: 'ページ送り',
+    jumpGroup: 'ページへ移動',
+    prevPage: '前へ',
+    nextPage: '次へ',
   },
   contextMenu: {
     noActions: '操作がありません',

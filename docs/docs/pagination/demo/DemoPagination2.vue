@@ -6,21 +6,25 @@ const page = ref(1)
   <lew-flex direction="y" x="start" gap="24px">
     <lew-pagination
       v-model:current-page="page"
+      show-summary
       :total="1000"
       :visible-pages-count="5"
     />
     <lew-pagination
       v-model:current-page="page"
+      show-summary
       :total="10000"
       :visible-pages-count="7"
     />
     <lew-pagination
       v-model:current-page="page"
+      show-summary
       :total="100000"
       :visible-pages-count="9"
     />
     <lew-pagination
       v-model:current-page="page"
+      show-summary
       :total="15000000"
       :visible-pages-count="11"
     />

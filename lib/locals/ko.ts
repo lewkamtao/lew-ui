@@ -115,7 +115,16 @@ export default {
   },
   pagination: {
     pageSize: '페이지당 {pageSize}개',
-    jumpTo: '이동',
+    jumpTo: '페이지',
+    jumpConfirm: '이동',
+    summary: '{current} / {totalPages} 페이지 · 총 {total}개',
+    perPage: '페이지당',
+    prevSection: '이전 페이지 더보기',
+    nextSection: '다음 페이지 더보기',
+    navLabel: '페이지 탐색',
+    jumpGroup: '페이지 이동',
+    prevPage: '이전 페이지',
+    nextPage: '다음 페이지',
   },
   contextMenu: {
     noActions: '사용 가능한 작업 없음',

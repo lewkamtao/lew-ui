@@ -243,9 +243,6 @@ getInitialLocale().then((locale) => {
       <div class="menu-item" @click="goToPage('/Image')">
         {{ docsLocale.t("home.components") }}
       </div>
-      <div class="menu-item" @click="goToPage('/best-practices')">
-        {{ docsLocale.t("home.bestPractices") }}
-      </div>
       <div class="menu-item" @click="goToPage('/form-engine', true)">
         <lew-flex gap="5px">
           {{ docsLocale.t("home.formEngine") }}

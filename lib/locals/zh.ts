@@ -114,7 +114,16 @@ export default {
   },
   pagination: {
     pageSize: '{pageSize} 条/页',
-    jumpTo: '跳转至',
+    jumpTo: '页码',
+    jumpConfirm: '跳转',
+    summary: '第 {current} / {totalPages} 页，共 {total} 条',
+    perPage: '每页',
+    prevSection: '更多前面的页码',
+    nextSection: '更多后面的页码',
+    navLabel: '分页导航',
+    jumpGroup: '跳转到指定页',
+    prevPage: '上一页',
+    nextPage: '下一页',
   },
   contextMenu: {
     noActions: '暂无操作',

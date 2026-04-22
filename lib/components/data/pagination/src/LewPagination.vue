@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { LewSelectOption } from 'lew-ui/types'
-import { LewButton, LewFlex, LewInput, LewSelect, locale } from 'lew-ui'
+import { getLocale, LewButton, LewInput, LewSelect, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { object2class } from 'lew-ui/utils'
+import { formatIntegerLocale, object2class } from 'lew-ui/utils'
 import { paginationEmits } from './emits'
 import { paginationProps } from './props'
 
@@ -25,18 +25,38 @@ const normalizedVisiblePagesCount = computed(() =>
   Math.min(Math.max(props.visiblePagesCount, 5), 12),
 )
 
-const getPageSizeOptions = computed(() => {
+const pageSizeSelectOptions = computed((): LewSelectOption[] => {
   if (!Array.isArray(props.pageSizeOptions))
-    return [] as LewSelectOption[]
+    return []
 
+  const loc = currentLibLocale()
   const firstItem = props.pageSizeOptions[0]
   if (typeof firstItem === 'string' || typeof firstItem === 'number') {
-    return (props.pageSizeOptions as (string | number)[]).map(item => ({
-      label: locale.t('pagination.pageSize', { pageSize: item }),
-      value: item,
-    })) as unknown as LewSelectOption[]
+    return (props.pageSizeOptions as (string | number)[]).map((item) => {
+      const n = Number(item)
+      const label = Number.isFinite(n)
+        ? formatIntegerLocale(Math.trunc(n), loc)
+        : String(item)
+      return {
+        label,
+        value: item,
+      }
+    }) as LewSelectOption[]
   }
-  return props.pageSizeOptions as LewSelectOption[]
+  return (props.pageSizeOptions as LewSelectOption[]).map(opt => ({
+    label: opt.label,
+    value: opt.value,
+    disabled: opt.disabled,
+  }))
+})
+
+const pageSizeSelectWidth = computed(() => {
+  const map: Record<string, string> = {
+    small: '70px',
+    medium: '80px',
+    large: '90px',
+  }
+  return map[props.size] || '100px'
 })
 
 const getIconSize = computed(() => ICON_SIZE_MAP[props.size] || 18)
@@ -103,6 +123,28 @@ const getPaginationClassName = computed(() =>
   object2class('lew-pagination', { size: props.size }),
 )
 
+const canGoPrev = computed(() => currentPage.value > 1)
+const canGoNext = computed(() => currentPage.value < totalPages.value)
+
+function currentLibLocale(): string {
+  const g = (locale as unknown) as { locale?: { value: string } }
+  return g.locale?.value ?? getLocale()
+}
+
+function formatPaginationInteger(n: number): string {
+  return formatIntegerLocale(n, currentLibLocale())
+}
+
+const summaryText = computed(() => {
+  if (!props.showSummary)
+    return ''
+  return locale.t('pagination.summary', {
+    current: formatPaginationInteger(currentPage.value),
+    totalPages: formatPaginationInteger(totalPages.value),
+    total: formatPaginationInteger(total.value),
+  })
+})
+
 function changePage(page: number) {
   page = Math.floor(page)
   if (page < 1 || page > totalPages.value)
@@ -124,10 +166,17 @@ function checkPageSize(value?: string | number | (string | number)[]) {
   changePage(currentPage.value)
 }
 
+function parseJumpPageNumber(raw: string): number {
+  const digits = String(raw).replace(/\D/g, '')
+  if (digits === '')
+    return Number.NaN
+  return Number(digits)
+}
+
 function checkPageNum(value?: string) {
   if (value === undefined)
     return
-  const page = Number(value)
+  const page = parseJumpPageNumber(String(value))
   toPage.value = undefined
   if (page > totalPages.value || page < 1 || Number.isNaN(page))
     return
@@ -135,116 +184,287 @@ function checkPageNum(value?: string) {
   currentPage.value = page
   changePage(page)
 }
+
+function onPageKeydown(e: KeyboardEvent, page: number) {
+  if (e.key !== 'Enter' && e.key !== ' ')
+    return
+  e.preventDefault()
+  changePage(page)
+}
 </script>
 
 <template>
-  <div class="lew-pagination" :class="getPaginationClassName">
-    <LewFlex class="lew-pagination-control" gap="10">
-      <slot name="left" />
-      <LewFlex class="lew-pagination-page-box" gap="5px">
+  <nav
+    class="lew-pagination"
+    :class="getPaginationClassName"
+    :aria-label="locale.t('pagination.navLabel')"
+  >
+    <div class="lew-pagination-bar">
+      <div
+        v-if="$slots.left || summaryText"
+        class="lew-pagination-group lew-pagination-group--meta"
+      >
+        <slot name="left" />
+        <span v-if="summaryText" class="lew-pagination-summary" aria-live="polite">{{
+          summaryText
+        }}</span>
+      </div>
+      <div
+        class="lew-pagination-group lew-pagination-group--pager lew-pagination-page-box"
+      >
         <LewButton
           v-if="showPrevNextButtons"
           type="text"
           single-icon
           :size="size"
+          :disabled="!canGoPrev"
+          :title="locale.t('pagination.prevPage')"
+          :aria-label="locale.t('pagination.prevPage')"
           @click="changePage(currentPage - 1)"
         >
           <CommonIcon type="chevron-left" :size="getIconSize" />
         </LewButton>
         <div
           v-if="showOne"
+          role="button"
+          tabindex="0"
           class="lew-pagination-page-btn"
+          :aria-label="formatPaginationInteger(1)"
           @click="changePage(1)"
+          @keydown="onPageKeydown($event, 1)"
         >
-          1
+          {{ formatPaginationInteger(1) }}
         </div>
         <div
           v-if="startEllipsis"
+          role="button"
+          tabindex="0"
           class="lew-pagination-page-btn"
+          :title="locale.t('pagination.prevSection')"
+          :aria-label="locale.t('pagination.prevSection')"
           @click="changePage(visiblePages[0] - 1)"
+          @keydown="onPageKeydown($event, visiblePages[0] - 1)"
         >
           <CommonIcon :size="getIconSize" type="more-horizontal" />
         </div>
         <div
           v-else-if="showSecondPage"
+          role="button"
+          tabindex="0"
           class="lew-pagination-page-btn"
+          :aria-label="formatPaginationInteger(2)"
           @click="changePage(2)"
+          @keydown="onPageKeydown($event, 2)"
         >
-          2
+          {{ formatPaginationInteger(2) }}
         </div>
         <div
           v-for="(page, index) in visiblePages"
           :key="index"
+          role="button"
+          tabindex="0"
           class="lew-pagination-page-btn"
           :class="{ active: page === currentPage }"
+          :aria-label="formatPaginationInteger(page)"
+          :aria-current="page === currentPage ? 'page' : undefined"
           @click="changePage(page)"
+          @keydown="onPageKeydown($event, page)"
         >
-          {{ page }}
+          {{ formatPaginationInteger(page) }}
         </div>
         <div
           v-if="endEllipsis"
+          role="button"
+          tabindex="0"
           class="lew-pagination-page-btn"
+          :title="locale.t('pagination.nextSection')"
+          :aria-label="locale.t('pagination.nextSection')"
           @click="changePage(visiblePages[visiblePages.length - 1] + 1)"
+          @keydown="onPageKeydown($event, visiblePages[visiblePages.length - 1] + 1)"
         >
           <CommonIcon :size="getIconSize" type="more-horizontal" />
         </div>
         <div
           v-else-if="showSecondLastPage"
+          role="button"
+          tabindex="0"
           class="lew-pagination-page-btn"
+          :aria-label="formatPaginationInteger(totalPages - 1)"
           @click="changePage(totalPages - 1)"
+          @keydown="onPageKeydown($event, totalPages - 1)"
         >
-          {{ totalPages - 1 }}
+          {{ formatPaginationInteger(totalPages - 1) }}
         </div>
         <div
           v-if="showMax"
+          role="button"
+          tabindex="0"
           class="lew-pagination-page-btn"
+          :aria-label="formatPaginationInteger(totalPages)"
           @click="changePage(totalPages)"
+          @keydown="onPageKeydown($event, totalPages)"
         >
-          {{ totalPages }}
+          {{ formatPaginationInteger(totalPages) }}
         </div>
         <LewButton
           v-if="showPrevNextButtons"
           single-icon
           type="text"
           :size="size"
+          :disabled="!canGoNext"
+          :title="locale.t('pagination.nextPage')"
+          :aria-label="locale.t('pagination.nextPage')"
           @click="changePage(currentPage + 1)"
         >
           <CommonIcon type="chevron-right" :size="getIconSize" />
         </LewButton>
-      </LewFlex>
-      <LewSelect
-        v-model="pageSize"
-        auto-width
-        popover-width="150px"
-        :size="size"
-        :show-check-icon="false"
-        :options="getPageSizeOptions"
-        @change="checkPageSize"
-      />
-      <LewInput
-        v-model="toPage"
-        :size="size"
-        align="center"
-        :placeholder="locale.t('pagination.jumpTo')"
-        auto-width
-        @change="checkPageNum"
-      />
-      <slot name="right" />
-    </LewFlex>
-  </div>
+      </div>
+      <div
+        v-if="pageSizeSelectOptions.length"
+        class="lew-pagination-group lew-pagination-group--size"
+      >
+        <span class="lew-pagination-per-page-label">{{
+          locale.t("pagination.perPage")
+        }}</span>
+        <LewSelect
+          v-model="pageSize"
+          class="lew-pagination-page-size-select"
+          :width="pageSizeSelectWidth"
+          :popover-width="pageSizeSelectWidth"
+          :size="size"
+          :show-check-icon="false"
+          :options="pageSizeSelectOptions"
+          @change="checkPageSize"
+        />
+      </div>
+      <div
+        class="lew-pagination-group lew-pagination-group--jump"
+        role="group"
+        :aria-label="locale.t('pagination.jumpGroup')"
+      >
+        <LewInput
+          v-model="toPage"
+          :size="size"
+          align="center"
+          :placeholder="locale.t('pagination.jumpTo')"
+          auto-width
+          @change="checkPageNum"
+        />
+      </div>
+      <div v-if="$slots.right" class="lew-pagination-group lew-pagination-group--end">
+        <slot name="right" />
+      </div>
+    </div>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
 .lew-pagination {
-  display: inline-block;
+  display: inline-flex;
   box-sizing: border-box;
-  height: 40px;
+  max-width: 100%;
+  min-height: 40px;
   border-radius: var(--lew-border-radius-small);
   user-select: none;
   font-size: 14px;
+  vertical-align: middle;
 
-  .lew-pagination-control {
+  .lew-pagination-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px 14px;
+    min-height: 100%;
+    max-width: 100%;
+  }
+
+  .lew-pagination-group {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .lew-pagination-group--meta {
+    gap: 10px;
+  }
+
+  .lew-pagination-group--pager {
+    gap: 5px;
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .lew-pagination-page-box {
+    position: relative;
     height: 100%;
+  }
+
+  .lew-pagination-summary {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: min(100%, 22rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.92em;
+    line-height: 1.35;
+    color: var(--lew-text-color-2);
+    white-space: nowrap;
+  }
+
+  .lew-pagination-per-page-label {
+    flex-shrink: 0;
+    font-size: 0.92em;
+    color: var(--lew-text-color-2);
+    white-space: nowrap;
+  }
+
+  .lew-pagination-group--size {
+    flex: 0 0 auto;
+    align-items: center;
+
+    .lew-pagination-page-size-select {
+      flex: 0 0 auto;
+    }
+  }
+
+  .lew-pagination-group--jump {
+    flex: 0 0 auto;
+
+    :deep(.lew-input-view) {
+      min-width: 4.25rem;
+    }
+  }
+
+  .lew-pagination-group--end {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  @media (max-width: 640px) {
+    .lew-pagination-bar {
+      flex-wrap: wrap;
+      row-gap: 10px;
+      column-gap: 12px;
+      justify-content: flex-start;
+    }
+
+    .lew-pagination-group--pager {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+
+    .lew-pagination-group--meta {
+      flex: 1 1 100%;
+      justify-content: flex-start;
+    }
+
+    .lew-pagination-summary {
+      max-width: 100%;
+    }
   }
 
   .lew-pagination-page-btn {
@@ -265,6 +485,11 @@ function checkPageNum(value?: string) {
       background-color var(--lew-form-transition-ease),
       color var(--lew-form-transition-ease),
       transform var(--lew-form-transition-bezier);
+  }
+
+  .lew-pagination-page-btn:focus-visible {
+    outline: 2px solid var(--lew-color-primary);
+    outline-offset: 2px;
   }
 
   .lew-pagination-page-btn:hover:not(.active) {
@@ -289,12 +514,6 @@ function checkPageNum(value?: string) {
   .lew-pagination-page-btn.active:active {
     background-color: var(--lew-color-pagination-primary-active-bg-active);
     color: var(--lew-color-pagination-primary-active-text-active);
-  }
-
-  .lew-pagination-page-box {
-    width: auto;
-    position: relative;
-    height: 100%;
   }
 
   .lew-pagination-page-label {

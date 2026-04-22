@@ -17,6 +17,7 @@ setTimeout(() => {
     <lew-pagination
       v-model:current-page="pageNum"
       :page-size="pageSize"
+      show-summary
       :page-size-options="[
         {
           label: '10 / 页',
@@ -33,12 +34,6 @@ setTimeout(() => {
       ]"
       :total="total"
       @change="change"
-    >
-      <template #right>
-        <div style="margin-left: 20px">
-          共 {{ total }} 条
-        </div>
-      </template>
-    </lew-pagination>
+    />
   </div>
 </template>

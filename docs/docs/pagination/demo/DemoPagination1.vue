@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 const pageNum = ref(2)
 const pageSize = ref(20)
 function change(e: any) {
@@ -13,41 +13,26 @@ const total = ref(100)
       v-model:current-page="pageNum"
       :page-size="pageSize"
       size="small"
+      show-summary
       :total="total"
       @change="change"
-    >
-      <template #right>
-        <div style="margin-left: 12px">
-          共 {{ total }} 条
-        </div>
-      </template>
-    </lew-pagination>
+    />
     <lew-pagination
       v-model:current-page="pageNum"
       :page-size="pageSize"
+      show-summary
       :total="total"
       round
       @change="change"
-    >
-      <template #right>
-        <div style="margin-left: 12px">
-          共 {{ total }} 条
-        </div>
-      </template>
-    </lew-pagination>
+    />
     <lew-pagination
       v-model:current-page="pageNum"
       :page-size="pageSize"
       size="large"
+      show-summary
       :total="total"
       round
       @change="change"
-    >
-      <template #right>
-        <div style="margin-left: 12px">
-          共 {{ total }} 条
-        </div>
-      </template>
-    </lew-pagination>
+    />
   </lew-flex>
 </template>

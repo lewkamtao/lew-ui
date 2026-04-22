@@ -8,7 +8,6 @@ import LewComponents from '../views/LewComponents.vue'
 
 import LewGuide from '../views/LewGuide.vue'
 import LewHome from '../views/LewHome.vue'
-import LewBestPractices from '../views/LewBestPractices.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -17,11 +16,6 @@ const routes: Array<RouteRecordRaw> = [
     component: LewMain,
     children: [
       { path: '/', name: 'R-LewHome', component: LewHome },
-      {
-        path: '/best-practices',
-        name: 'R-LewBestPractices',
-        component: LewBestPractices,
-      },
 
       {
         path: '/Guide',

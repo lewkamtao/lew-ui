@@ -115,7 +115,16 @@ export default {
   },
   pagination: {
     pageSize: '{pageSize} par page',
-    jumpTo: 'Aller à',
+    jumpTo: 'Page',
+    jumpConfirm: 'Aller',
+    summary: 'Page {current} sur {totalPages} · {total} éléments',
+    perPage: 'Par page',
+    prevSection: 'Pages précédentes',
+    nextSection: 'Pages suivantes',
+    navLabel: 'Pagination',
+    jumpGroup: 'Aller à la page',
+    prevPage: 'Page précédente',
+    nextPage: 'Page suivante',
   },
   contextMenu: {
     noActions: 'Aucune action disponible',
