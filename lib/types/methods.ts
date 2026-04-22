@@ -1,4 +1,5 @@
 import type { LewComponentSource } from 'lew-ui'
+import type { LewDialogPopokFooterButtonItem } from './components'
 
 export interface LewDialogOptions {
   type?: LewDialogType
@@ -6,10 +7,8 @@ export interface LewDialogOptions {
   title?: LewComponentSource
   content?: LewComponentSource
   hideIcon?: boolean
-  ok?: () => Promise<boolean>
-  cancel?: () => Promise<boolean>
-  okText?: string
-  cancelText?: string
+  /** 自定义底部按钮列表；每项 `props` 透传 LewButton（`request` 处理异步）。Dialog 中 `request` 返回 `false` 可阻止关闭。不传则默认单个「确认」按钮。 */
+  footerButtons?: LewDialogPopokFooterButtonItem[]
   closeOnClickOverlay?: boolean
   closeByEsc?: boolean
 }

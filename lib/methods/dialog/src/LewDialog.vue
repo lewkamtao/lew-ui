@@ -1,10 +1,12 @@
 <script lang="ts" setup name="dialog">
 import type { LewColor } from 'lew-ui'
+import type { LewDialogPopokFooterButtonItem } from 'lew-ui/types'
 import { useMagicKeys } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { useDOMCreate } from 'lew-ui/hooks'
+import { useDOMCreate, usePopupManager } from 'lew-ui/hooks'
+import { getUniqueId } from 'lew-ui/utils'
 import { dialogEmits } from './emits'
 import { dialogProps } from './props'
 
@@ -13,13 +15,63 @@ const emit = defineEmits(dialogEmits)
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
 
+// 生成唯一 ID
+const dialogId = `lew-dialog-${getUniqueId()}`
+
 const visible = ref(false)
-const okLoading = ref(false)
-const cancelLoading = ref(false)
-const okRef = ref()
+const primaryButtonRef = ref<{ $el?: HTMLElement } | null>(null)
+
+// 使用全局弹出层管理器
+const { zIndex: managedZIndex, isTop } = usePopupManager({
+  id: dialogId,
+  type: 'modal', // Dialog 本质上是一种 Modal
+  visible,
+  closeByEsc: props.closeByEsc,
+  onClose: () => emit('close'),
+})
+
+const resolvedFooterButtons = computed<LewDialogPopokFooterButtonItem[]>(() => {
+  if (props.footerButtons != null) {
+    return props.footerButtons
+  }
+  return [
+    {
+      props: {
+        text: locale.t('dialog.confirmText'),
+        type: 'fill',
+        size: 'small',
+        color: props.type as LewColor,
+      },
+    },
+  ]
+})
+
+function bindPrimaryButtonRef(el: any, index: number) {
+  if (index === resolvedFooterButtons.value.length - 1) {
+    primaryButtonRef.value = el
+  }
+}
+
+function footerButtonBind(item: LewDialogPopokFooterButtonItem) {
+  const { request: _r, ...rest } = item.props ?? {}
+  return rest
+}
+
+async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem) {
+  const fn = item.props?.request
+  if (typeof fn === 'function') {
+    const result = await Promise.resolve(
+      (fn as () => boolean | void | Promise<boolean | void>)(),
+    )
+    if (result === false) {
+      return
+    }
+  }
+  visible.value = false
+}
 
 function maskClick() {
-  if (props.closeOnClickOverlay) {
+  if (props.closeOnClickOverlay && isTop()) {
     visible.value = false
   }
 }
@@ -27,8 +79,7 @@ function maskClick() {
 onMounted(() => {
   visible.value = true
   nextTick(() => {
-    if (okRef.value)
-      okRef.value.$el.focus()
+    primaryButtonRef.value?.$el?.focus?.()
   })
 })
 
@@ -38,26 +89,9 @@ watch(visible, (newVal) => {
   }
 })
 
-async function handleAction(action: 'ok' | 'cancel') {
-  const actionFunction = props[action]
-  const loadingRef = action === 'ok' ? okLoading : cancelLoading
-
-  if (typeof actionFunction === 'function') {
-    loadingRef.value = true
-    const result = await actionFunction()
-    if (result !== false) {
-      visible.value = false
-    }
-    loadingRef.value = false
-  }
-}
-
-const ok = () => handleAction('ok')
-const cancel = () => handleAction('cancel')
-
 if (props.closeByEsc) {
   watch(Escape, (v) => {
-    if (v && visible.value) {
+    if (v && visible.value && isTop()) {
       visible.value = false
     }
   })
@@ -67,16 +101,22 @@ if (props.closeByEsc) {
 <template>
   <teleport to="#lew-dialog">
     <div
+      :id="dialogId"
       class="lew-dialog-container"
       :style="{
         '--lew-dialog-transform-origin': transformOrigin,
       }"
     >
       <transition name="lew-dialog-mask">
-        <div v-if="visible" class="lew-dialog-mask" />
+        <div v-if="visible" class="lew-dialog-mask" :style="{ zIndex: managedZIndex }" />
       </transition>
       <transition name="lew-dialog">
-        <div v-if="visible" class="lew-dialog" @click="maskClick">
+        <div
+          v-if="visible"
+          class="lew-dialog"
+          :style="{ zIndex: managedZIndex }"
+          @click="maskClick"
+        >
           <LewFlex direction="y" gap="20px" class="lew-dialog-box" @click.stop>
             <LewFlex y="start">
               <div v-if="!hideIcon" class="lew-dialog-box-left">
@@ -92,23 +132,13 @@ if (props.closeByEsc) {
                 </div>
               </div>
             </LewFlex>
-            <div class="lew-dialog-box-footer">
+            <div v-if="resolvedFooterButtons.length > 0" class="lew-dialog-box-footer">
               <LewButton
-                :text="cancelText || locale.t('dialog.cancelText')"
-                color="gray"
-                type="light"
-                size="small"
-                :loading="cancelLoading"
-                @click.stop="cancel"
-              />
-              <LewButton
-                ref="okRef"
-                :text="okText || locale.t('dialog.okText')"
-                type="fill"
-                size="small"
-                :color="type as LewColor"
-                :loading="okLoading"
-                @click.stop="ok"
+                v-for="(item, index) in resolvedFooterButtons"
+                :key="index"
+                :ref="(el) => bindPrimaryButtonRef(el, index)"
+                v-bind="footerButtonBind(item)"
+                :request="() => mergeFooterRequest(item)"
               />
             </div>
           </LewFlex>
@@ -126,7 +156,6 @@ if (props.closeByEsc) {
   width: 100vw;
   height: 100vh;
   background-color: var(--lew-modal-bgcolor);
-  z-index: 2002;
 }
 
 .lew-dialog {
@@ -138,7 +167,6 @@ if (props.closeByEsc) {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2002;
 
   .lew-dialog-box {
     position: relative;
@@ -173,7 +201,7 @@ if (props.closeByEsc) {
       .lew-dialog-box-right-main {
         height: auto;
         font-size: 14px;
-        color: var(--lew-text-color-5);
+        color: var(--lew-text-color-2);
       }
     }
 

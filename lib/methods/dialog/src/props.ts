@@ -1,4 +1,4 @@
-import type { LewDialogType } from 'lew-ui'
+import type { LewDialogPopokFooterButtonItem, LewDialogType } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDialogTypeList } from 'lew-ui/validators'
 
@@ -33,36 +33,16 @@ export const dialogProps = {
       propName: 'hideIcon',
     }),
   },
-  okText: {
-    type: String,
-    defaultLocale: true,
-    validator: validators.string({
+  footerButtons: {
+    type: Array as PropType<LewDialogPopokFooterButtonItem[]>,
+    description:
+      '自定义底部按钮列表；每项 `props` 透传 LewButton，`request` 处理异步，`request` 返回 false 时不关闭。不传则默认单个「确认」按钮。',
+    validator: validators.array({
       componentName: 'LewDialog',
-      propName: 'okText',
-    }),
-  },
-  cancelText: {
-    type: String,
-    defaultLocale: true,
-    validator: validators.string({
-      componentName: 'LewDialog',
-      propName: 'cancelText',
-    }),
-  },
-  ok: {
-    type: Function as PropType<() => Promise<boolean>>,
-    default: () => Promise.resolve(true),
-    validator: validators.function({
-      componentName: 'LewDialog',
-      propName: 'ok',
-    }),
-  },
-  cancel: {
-    type: Function as PropType<() => Promise<boolean>>,
-    default: () => Promise.resolve(true),
-    validator: validators.function({
-      componentName: 'LewDialog',
-      propName: 'cancel',
+      propName: 'footerButtons',
+      minLength: 0,
+      itemValidator: item =>
+        item != null && typeof item === 'object' && !Array.isArray(item),
     }),
   },
   closeOnClickOverlay: {

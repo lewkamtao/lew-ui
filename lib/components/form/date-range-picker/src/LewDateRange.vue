@@ -585,7 +585,7 @@ const headDate = computed(() => {
           width: 28px;
           height: 28px;
           line-height: 28px;
-          color: var(--lew-text-color-6);
+          color: var(--lew-form-placeholder-color);
           border-radius: 50%;
           transition: all 0.1s ease;
           border: var(--lew-form-border-width) var(--lew-form-border-color) solid;

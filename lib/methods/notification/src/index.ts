@@ -3,33 +3,77 @@ import type {
   LewNotificationMethod,
   LewNotificationOptions,
   LewNotificationResult,
+  LewNotificationType,
 } from 'lew-ui/types'
 import { h, render } from 'vue'
 import NotificationContainer from './NotificationContainer.vue'
 
-let containerInstance: any = null
+// 容器实例接口定义
+interface NotificationContainerExposed {
+  add: (
+    type: string,
+    title: string,
+    content: string,
+    duration: number,
+    showProgress: boolean,
+    width: number | string,
+  ) => string
+  handleClose: (id: string) => void
+}
 
-function createContainer() {
+// 使用 WeakRef 或可清理的引用
+let containerInstance: NotificationContainerExposed | null = null
+let containerElement: HTMLDivElement | null = null
+
+/**
+ * 创建或获取通知容器
+ */
+function getContainer(): NotificationContainerExposed | null {
   if (!containerInstance) {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
+    containerElement = document.createElement('div')
+    containerElement.setAttribute('data-lew-notification-root', '')
+    document.body.appendChild(containerElement)
+
     const vnode = h(NotificationContainer)
-    render(vnode, container)
-    containerInstance = vnode.component?.exposed
+    render(vnode, containerElement)
+    containerInstance = vnode.component?.exposed as NotificationContainerExposed
   }
   return containerInstance
 }
 
-function createNotification(type: string): LewNotificationMethod {
-  return ({
-    title,
-    content,
-    duration = 3000,
-    showProgress = false,
-    width = 320,
-  }: LewNotificationOptions): LewNotificationResult => {
-    const container = createContainer()
-    const id = container?.add(
+/**
+ * 销毁通知容器（用于清理）
+ */
+export function destroyNotificationContainer(): void {
+  if (containerElement) {
+    render(null, containerElement)
+    containerElement.remove()
+    containerElement = null
+    containerInstance = null
+  }
+}
+
+/**
+ * 创建指定类型的通知方法
+ */
+function createNotification(type: LewNotificationType): LewNotificationMethod {
+  return (options: LewNotificationOptions): LewNotificationResult => {
+    const {
+      title,
+      content,
+      duration = 3000,
+      showProgress = false,
+      width = 320,
+    } = options
+
+    const container = getContainer()
+
+    if (!container) {
+      console.warn('[LewNotification] Failed to create notification container')
+      return { close: () => {} }
+    }
+
+    const id = container.add(
       type,
       title,
       content,
@@ -37,9 +81,10 @@ function createNotification(type: string): LewNotificationMethod {
       showProgress,
       width,
     )
+
     return {
       close: () => {
-        container?.handleClose(id)
+        container.handleClose(id)
       },
     }
   }

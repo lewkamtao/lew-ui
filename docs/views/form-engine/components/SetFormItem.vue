@@ -3,7 +3,6 @@ import {
   LewDatePicker,
   LewInput,
   LewInputNumber,
-  LewInputTable,
   LewInputTag,
   LewSelect,
   LewSwitch,
@@ -53,7 +52,6 @@ const asMap: Record<string, any> = {
   'switch': LewSwitch,
   'input-number': LewInputNumber,
   'set-option-modal': SetOptionModal,
-  'input-table': LewInputTable,
   'input-tag': LewInputTag,
 }
 </script>

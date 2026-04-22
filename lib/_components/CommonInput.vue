@@ -384,7 +384,7 @@ defineExpose({
   }
 
   .lew-placeholder {
-    color: rgb(165, 165, 165);
+    color: var(--lew-form-placeholder-color);
   }
 
   :deep() {
@@ -421,7 +421,7 @@ defineExpose({
     padding: 0;
 
     &::placeholder {
-      color: rgb(165, 165, 165);
+      color: var(--lew-form-placeholder-color);
     }
   }
 

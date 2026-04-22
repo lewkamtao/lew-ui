@@ -50,23 +50,14 @@ function handleClick(event: MouseEvent) {
 </script>
 
 <template>
-  <div
-    class="lew-close-button"
-    :class="closeButtonClass"
-    @click.stop="handleClick"
-  >
+  <div class="lew-close-button" :class="closeButtonClass" @click.stop="handleClick">
     <CommonIcon
       v-if="loading"
       :size="iconSize"
       type="loading"
       class="lew-close-button-icon-loading"
     />
-    <CommonIcon
-      v-else
-      :size="iconSize"
-      type="close"
-      class="lew-close-button-icon"
-    />
+    <CommonIcon v-else :size="iconSize" type="close" class="lew-close-button-icon" />
   </div>
 </template>
 

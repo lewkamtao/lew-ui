@@ -33,6 +33,9 @@ export default {
     close: '닫기',
     showCode: '코드 보기',
     copySuccess: '복사 성공!',
+    back: '뒤로',
+    backToHome: '홈으로 돌아가기',
+    loading: '로딩 중...',
   },
   components: {
     image: {
@@ -127,6 +130,9 @@ export default {
         disabled: '비활성화 상태 여부',
         request: '요청 여부',
       },
+      emits: {
+        click: '버튼 클릭 시 트리거됨 (비활성화 또는 로딩 상태에서는 트리거되지 않음)',
+      },
     },
     tag: {
       name: '태그 Tag',
@@ -152,6 +158,9 @@ export default {
       demo7: {
         title: '슬롯',
       },
+      demo8: {
+        title: '편집 가능',
+      },
       props: {
         text: '태그 텍스트, 슬롯보다 우선순위가 높으며, 너비를 초과하면 text-trim 효과 발생',
         type: '스타일 유형',
@@ -162,9 +171,14 @@ export default {
         round: '둥근 모서리 여부',
         oversize: '더 여유로운 크기',
         close: '태그를 닫기 위한 Promise 함수를 받습니다',
+        editable: '편집 가능 여부 (v-model과 함께 사용)',
+        placeholder: '편집 모드에서의 플레이스홀더 텍스트',
       },
       emits: {
         close: '태그 닫기 이벤트 콜백',
+        change: '편집 모드에서 내용 변경 시 트리거',
+        focus: '편집 상태 진입 시 트리거',
+        blur: '편집 상태 종료 시 트리거',
       },
     },
     badge: {
@@ -194,26 +208,6 @@ export default {
         color: '배지 색상',
         disabled: '비활성화 여부',
         value: '배지 값(비어 있을 경우 점으로 표시)',
-      },
-    },
-    title: {
-      name: '제목 Title',
-      description: '단순한 제목이 아닌, 콘텐츠의 핵심을 알려주는 힌트',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '굵기',
-      },
-      demo3: {
-        title: '색상',
-      },
-      props: {
-        text: '텍스트 내용',
-        size: '제목 텍스트 크기, 숫자(단위: 픽셀) 또는 문자열(예: "1.5em")로 지정 가능',
-        bold: '제목 텍스트 굵기, 100에서 900 사이의 100 단위 정수 선택 가능',
-        color:
-          '제목 텍스트 색상, 미리 정의된 색상 이름 또는 사용자 정의 색상 값 사용 가능',
       },
     },
     textTrim: {
@@ -268,80 +262,6 @@ export default {
         wrap: '공간이 부족할 때 자식 요소의 자동 줄바꿈 허용 여부',
         gap: '자식 요소 간 간격(단위: 픽셀)',
         width: 'Flex 컨테이너 너비(단위: 픽셀 또는 백분율)',
-      },
-    },
-    mark: {
-      name: '마크 Mark',
-      description:
-        '텍스트에 하이라이트 표시를 추가하여 중요 내용을 한눈에 알아볼 수 있게 합니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      props: {
-        color: '색상 테마',
-        round: '둥근 모서리 여부',
-        bold: '굵게 표시 여부',
-        cursor: '마우스 오버 시 커서 스타일',
-      },
-    },
-    icon: {
-      name: '아이콘 Icon',
-      description: '아름다운 아이콘 모음, 인터페이스에 시각적 언어 추가',
-    },
-    backTop: {
-      name: '맨 위로 BackTop',
-      description:
-        '한 번의 클릭으로 페이지 상단으로 이동, 긴 페이지 탐색을 편리하게',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '사용자 정의 내용',
-      },
-      demo3: {
-        title: '디렉티브 방식 트리거',
-      },
-      props: {
-        target:
-          '스크롤 이벤트를 트리거할 대상 요소, CSS 선택자 사용. 비어 있으면 전체 창이 기본값.',
-        right: '컴포넌트가 페이지 오른쪽에서 떨어진 거리, 단위는 픽셀.',
-        bottom: '컴포넌트가 페이지 하단에서 떨어진 거리, 단위는 픽셀.',
-        valveHeight:
-          '페이지 스크롤 높이 임계값, 이 값을 초과하면 맨 위로 버튼이 표시됨, 단위는 픽셀.',
-      },
-      emits: {
-        click: '맨 위로 이동 이벤트 콜백',
-      },
-    },
-    steps: {
-      name: '단계 Steps',
-      description:
-        '작업 과정을 명확하게 표시하여 사용자가 현재 위치를 알 수 있게 합니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '상태',
-      },
-      demo3: {
-        title: '로딩 중',
-      },
-      model: {
-        modelValue: '현재 활성화된 단계의 인덱스 값',
-      },
-      props: {
-        options: '단계 구성 항목 배열',
-        status: '단계의 현재 상태',
-        minWidth: '최소 단계 너비',
-        canClickItem: '단계 항목을 클릭하여 전환할 수 있는지 여부',
-        canCrossSteps: '단계 간 전환할 수 있는지 여부',
-      },
-      options: {
-        title: '단계 제목',
-        description: '단계 설명',
-      },
-      emits: {
-        change: '단계 전환 시 트리거',
       },
     },
     menu: {
@@ -437,31 +357,6 @@ export default {
         show: '메뉴 표시 이벤트 콜백',
         hide: '메뉴 숨김 이벤트 콜백',
         change: '메뉴 항목 선택 이벤트 콜백',
-      },
-    },
-    breadcrumb: {
-      name: '브레드크럼 Breadcrumb',
-      description: '명확한 경로 탐색, 사용자가 방향을 잃지 않도록 도와줍니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '현재 선택 항목 사용자 정의',
-      },
-      demo3: {
-        title: '구분 아이콘 유형',
-      },
-      props: {
-        options: '브레드크럼 구성 항목 배열',
-        separator: '구분자 아이콘 유형',
-      },
-      breadcrumbOptions: {
-        label: '브레드크럼 항목 텍스트',
-        value: '브레드크럼 항목 값',
-        active: '현재 선택 항목 여부',
-      },
-      emits: {
-        change: '브레드크럼 항목 변경 시 트리거',
       },
     },
     contextMenu: {
@@ -588,33 +483,30 @@ export default {
         title: '기본 사용법',
       },
       demo2: {
-        title: '접두사와 접미사',
-      },
-      demo3: {
         title: '글자 수 제한',
       },
-      demo4: {
+      demo3: {
         title: '정렬 방식',
       },
-      demo5: {
+      demo4: {
         title: '비밀번호 표시',
       },
-      demo6: {
+      demo5: {
         title: '너비 자동 조정',
       },
-      demo7: {
+      demo6: {
         title: '포커스 시 전체 텍스트 선택',
       },
-      demo8: {
+      demo7: {
         title: '지울 수 있는',
       },
-      demo9: {
+      demo8: {
         title: '읽기 전용 상태',
       },
-      demo10: {
+      demo9: {
         title: '비활성화 상태',
       },
-      demo11: {
+      demo10: {
         title: '엔터 키 누름으로 이벤트 트리거',
       },
       props: {
@@ -634,14 +526,7 @@ export default {
         autoWidth: '내용에 따라 너비 자동 조정 여부',
         selectByFocus: '포커스 시 전체 텍스트 선택 활성화 여부',
         copyable:
-          '내용 복사 허용 여부(readonly가 true이고 suffix가 false인 경우만 적용)',
-        prefixes: '입력 상자 접두사 유형',
-        prefixesOptions:
-          '입력 상자 접두사 옵션 목록, prefixes가 select일 때 사용',
-        prefixesTooltip: '입력 상자 접두사의 툴팁 텍스트',
-        suffix: '입력 상자 접미사 유형',
-        suffixOptions: '입력 상자 접미사 옵션 목록, suffix가 select일 때 사용',
-        suffixTooltip: '입력 상자 접미사의 툴팁 텍스트',
+          '내용 복사 허용 여부(readonly가 true인 경우만 적용)',
         okByEnter: '엔터 키로 입력 확인 허용 여부',
       },
       emits: {
@@ -654,8 +539,6 @@ export default {
       },
       model: {
         modelValue: '입력 상자 바인딩 값',
-        prefixValue: '접두사 바인딩 값',
-        suffixValue: '접미사 바인딩 값',
       },
     },
     inputNumber: {
@@ -736,7 +619,8 @@ export default {
         showCount: '글자 수 표시 여부',
         maxLength: '최대 입력 글자 수',
         size: '텍스트 영역 크기',
-        resize: '크기 조절 방향',
+        resize:
+          '오른쪽 아래 핸들로 조절 방향 (none / vertical / horizontal / both), 네이티브 resize 비활성',
         width: '너비',
         height: '높이',
         minWidth: '최소 너비',
@@ -1401,40 +1285,6 @@ export default {
         clear: '지우기 시 트리거',
       },
     },
-    inputTable: {
-      name: '테이블 입력 InputTable',
-      description:
-        '테이블에서 데이터를 빠르게 입력하여 일괄 처리를 더욱 효율적으로 만듭니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      demo2: {
-        title: '기본값',
-      },
-      demo3: {
-        title: '더 다양한 기능',
-      },
-      props: {
-        columns: '열 구성',
-        size: '크기',
-        width: '너비',
-        rowKey: '행 키',
-        batchDeletable: '일괄 삭제 지원 여부',
-        addable: '추가 가능 여부',
-        defaultForm: '기본 양식',
-        deletable: '삭제 가능 여부',
-        maxRows: '최대 행 수',
-        minRows: '최소 행 수',
-        clearable: '모두 지우기 가능 여부',
-        sortable: '정렬 가능 여부',
-        autoUniqueId: '자동 고유 ID 생성 여부',
-        uniqueField: '고유 필드',
-        sortTooltipCustomRender: '정렬 툴팁 커스텀 렌더링',
-      },
-      emits: {
-        change: '값 변경 시 트리거',
-      },
-    },
     switch: {
       name: '스위치 Switch',
       description: '간결한 스위치 선택기로 상태 전환을 더욱 명확하게 합니다',
@@ -1753,6 +1603,7 @@ export default {
         size: '크기',
         pageSizeOptions: '페이지 크기 옵션',
         visiblePagesCount: '표시할 페이지 수',
+        showSummary: '위치 요약 표시(현재 페이지, 전체 페이지, 전체 항목)',
       },
       emits: {
         change: '페이지 변경 시 트리거',
@@ -1941,6 +1792,9 @@ export default {
       demo3: {
         title: '요청 시뮬레이션',
       },
+      demo4: {
+        title: '스택 효과',
+      },
       emits: {
         close: '닫힐 때 트리거',
       },
@@ -2009,10 +1863,8 @@ export default {
         closeOnClickOverlay: '마스크 클릭 시 닫을지 여부',
         closeByEsc: 'ESC 키를 눌러 닫을지 여부',
         hideFooter: '푸터 숨기기 여부',
-        hideOkButton: '확인 버튼 숨기기 여부',
-        hideCloseButton: '닫기 버튼 숨기기 여부',
-        okButtonProps: '확인 버튼 속성',
-        closeButtonProps: '닫기 버튼 속성',
+        footerButtons:
+          '하단 버튼 목록(항목별 props→LewButton, request 포함); 미지정 시 확인 1개로 닫힘',
         zIndex: '계층',
       },
       emits: {
@@ -2041,16 +1893,17 @@ export default {
       demo6: {
         title: '사용자 정의 아이콘',
       },
+      demo7: {
+        title: '사용자 정의 하단 버튼',
+      },
       props: {
         type: '유형',
         width: '너비',
         trigger: '트리거 방식',
         title: '제목',
         content: '내용',
-        okText: '확인 버튼 텍스트',
-        cancelText: '취소 버튼 텍스트',
-        ok: '확인 콜백',
-        cancel: '취소 콜백',
+        footerButtons:
+          '하단 버튼 목록(props→LewButton, request; false면 유지); 미지정 시 확인 1개',
         closeOnClickOverlay: '마스크 클릭 시 닫을지 여부',
         closeByEsc: 'ESC 키를 눌러 닫을지 여부',
         transformOrigin: '애니메이션 원점',
@@ -2078,6 +1931,17 @@ export default {
       demo4: {
         title: 'ESC로 닫기 허용 여부',
       },
+      demo5: {
+        title: '중첩 대화 상자',
+      },
+      demo6: {
+        title: '대화 상자와 서랍 중첩',
+        description:
+          '복잡한 시나리오에서의 다층 중첩, 대화 상자에서 서랍 열기, 서랍에서 대화 상자 열기, 최대 4단계 중첩 지원.',
+      },
+      demo7: {
+        title: 'footerButtons 동적 하단',
+      },
       model: {
         visible: '표시 여부',
       },
@@ -2086,11 +1950,9 @@ export default {
         width: '너비',
         top: '상단으로부터의 거리',
         hideFooter: '푸터 숨김 여부',
-        hideOkButton: '확인 버튼 숨기기 여부',
-        hideCloseButton: '닫기 버튼 숨기기 여부',
+        footerButtons:
+          '하단 버튼 목록(항목별 props→LewButton, request 포함); 미지정 시 확인 1개로 닫힘',
         closeByEsc: 'ESC 키로 닫기 가능 여부',
-        okButtonProps: '확인 버튼 속성',
-        closeButtonProps: '닫기 버튼 속성',
         closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
         zIndex: '층 레벨',
         maxHeight: '최대 높이',
@@ -2114,6 +1976,9 @@ export default {
       demo5: {
         title: '사용자 정의 내용',
       },
+      demo6: {
+        title: '사용자 정의 하단 버튼',
+      },
       props: {
         type: '유형',
         width: '너비',
@@ -2121,10 +1986,8 @@ export default {
         title: '제목',
         content: '내용',
         placement: '위치',
-        ok: '확인 콜백',
-        cancel: '취소 콜백',
-        okText: '확인 버튼 텍스트',
-        cancelText: '취소 버튼 텍스트',
+        footerButtons:
+          '하단 버튼 목록(props→LewButton, request; false면 유지); 미지정 시 확인 1개',
         icon: '사용자 정의 아이콘',
         hideIcon: '아이콘 숨기기 여부',
       },
@@ -2225,21 +2088,6 @@ export default {
       },
       slots: {
         handle: '핸들 슬롯',
-      },
-    },
-    empty: {
-      name: '빈 상태 Empty',
-      description: '빈 데이터 상태 표시로, 빈 페이지를 더 친화적으로 만듭니다',
-      demo1: {
-        title: '기본 사용법',
-      },
-      props: {
-        type: '유형',
-        title: '제목',
-        fontSize: '글꼴 크기',
-        padding: '패딩',
-        width: '너비',
-        height: '높이',
       },
     },
   },

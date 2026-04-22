@@ -33,6 +33,9 @@ export default {
     close: '閉じる',
     showCode: 'コードを表示',
     copySuccess: 'コピー成功！',
+    back: '戻る',
+    backToHome: 'ホームに戻る',
+    loading: '読み込み中...',
   },
   components: {
     image: {
@@ -127,6 +130,9 @@ export default {
         disabled: '無効状態',
         request: 'リクエスト',
       },
+      emits: {
+        click: 'ボタンクリック時にトリガー（無効またはローディング状態ではトリガーされません）',
+      },
     },
     tag: {
       name: 'タグ Tag',
@@ -152,6 +158,9 @@ export default {
       demo7: {
         title: 'スロット',
       },
+      demo8: {
+        title: '編集可能',
+      },
       props: {
         text: 'タグテキスト（スロットより優先、幅を超えると text-trim 効果が発動）',
         type: 'スタイルタイプ',
@@ -162,9 +171,14 @@ export default {
         round: '角丸',
         oversize: 'よりゆったりとしたサイズ',
         close: 'Promise 関数を受け取り、タグを閉じるために使用',
+        editable: '編集可能かどうか（v-model と一緒に使用）',
+        placeholder: '編集モードでのプレースホルダーテキスト',
       },
       emits: {
         close: 'タグを閉じるイベントコールバック',
+        change: '編集モードで内容が変更された時にトリガー',
+        focus: '編集状態に入った時にトリガー',
+        blur: '編集状態を抜けた時にトリガー',
       },
     },
     badge: {
@@ -193,25 +207,6 @@ export default {
         color: 'バッジの色',
         disabled: '無効状態',
         value: 'バッジの値（空の場合はドットとして表示）',
-      },
-    },
-    title: {
-      name: 'タイトル Title',
-      description: 'タイトルだけでなく、コンテンツの本質的なヒント',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      demo2: {
-        title: '太字',
-      },
-      demo3: {
-        title: 'カラー',
-      },
-      props: {
-        text: 'テキスト内容',
-        size: 'タイトルのサイズ（数値：ピクセル、または文字列："1.5em"など）',
-        bold: 'タイトルの太さ（100から900の間の100単位の値）',
-        color: 'タイトルの色（定義済みの色名または任意のカラー値）',
       },
     },
     textTrim: {
@@ -266,80 +261,6 @@ export default {
         wrap: '子要素の折り返しを許可',
         gap: '子要素間の間隔（ピクセル）',
         width: 'Flexコンテナの幅（ピクセルまたはパーセント）',
-      },
-    },
-    mark: {
-      name: 'マーク Mark',
-      description:
-        'テキストにハイライトを追加し、重要な内容を一目で分かるように',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      props: {
-        color: 'カラーテーマ',
-        round: '角丸',
-        bold: '太字',
-        cursor: 'ホバー時のカーソルスタイル',
-      },
-    },
-    icon: {
-      name: 'アイコン Icon',
-      description:
-        '美しいアイコンコレクション、インターフェースにビジュアル言語を追加',
-    },
-    backTop: {
-      name: 'トップに戻る BackTop',
-      description:
-        'ワンクリックでトップに戻り、長いページの閲覧をストレスフリーに',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      demo2: {
-        title: 'カスタムコンテンツ',
-      },
-      demo3: {
-        title: 'ディレクティブによるトリガー',
-      },
-      props: {
-        target:
-          'スクロールイベントをトリガーする対象要素（CSSセレクタ）。空の場合はウィンドウ全体',
-        right: 'ページ右端からの距離（ピクセル）',
-        bottom: 'ページ下端からの距離（ピクセル）',
-        valveHeight: 'ボタンを表示するスクロール高さのしきい値（ピクセル）',
-      },
-      emits: {
-        click: 'トップに戻るクリックイベントコールバック',
-      },
-    },
-    steps: {
-      name: 'ステップ',
-      description:
-        '操作プロセスを明確に表示し、ユーザーが現在の位置を把握できるようにします',
-      demo1: {
-        title: '基本的な使用法',
-      },
-      demo2: {
-        title: 'ステータス',
-      },
-      demo3: {
-        title: '読み込み中',
-      },
-      model: {
-        modelValue: '現在アクティブなステップのインデックス値',
-      },
-      props: {
-        options: 'ステップ設定項目の配列',
-        status: 'ステップの現在のステータス',
-        minWidth: '最小ステップ幅',
-        canClickItem: 'ステップ項目をクリックして切り替えることができるか',
-        canCrossSteps: 'ステップ間で切り替えることができるか',
-      },
-      options: {
-        title: 'ステップのタイトル',
-        description: 'ステップの説明',
-      },
-      emits: {
-        change: 'ステップ切り替え時にトリガー',
       },
     },
     menu: {
@@ -437,31 +358,6 @@ export default {
         change: 'メニュー項目選択イベントコールバック',
       },
     },
-    breadcrumb: {
-      name: 'パンくずリスト Breadcrumb',
-      description: '明確なナビゲーションパスで、ユーザーが迷子にならないように',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      demo2: {
-        title: '現在の選択をカスタマイズ',
-      },
-      demo3: {
-        title: '区切りアイコンのタイプ',
-      },
-      props: {
-        options: 'パンくずリストの設定項目配列',
-        separator: '区切りアイコンのタイプ',
-      },
-      breadcrumbOptions: {
-        label: 'パンくずリスト項目のテキスト',
-        value: 'パンくずリスト項目の値',
-        active: '現在選択中の項目かどうか',
-      },
-      emits: {
-        change: 'パンくずリスト項目が変更された時に発火',
-      },
-    },
     contextMenu: {
       'name': 'コンテキストメニュー ContextMenu',
       'description': 'エレガントな右クリックメニューで、より自然な操作を実現',
@@ -551,33 +447,30 @@ export default {
         title: '基本的な使い方',
       },
       demo2: {
-        title: 'プレフィックス/サフィックス',
-      },
-      demo3: {
         title: '文字数制限',
       },
-      demo4: {
+      demo3: {
         title: '配置',
       },
-      demo5: {
+      demo4: {
         title: 'パスワード表示切替',
       },
-      demo6: {
+      demo5: {
         title: '幅自動調整',
       },
-      demo7: {
+      demo6: {
         title: 'フォーカス時全選択',
       },
-      demo8: {
+      demo7: {
         title: 'クリア可能',
       },
-      demo9: {
+      demo8: {
         title: '読み取り専用',
       },
-      demo10: {
+      demo9: {
         title: '無効状態',
       },
-      demo11: {
+      demo10: {
         title: 'Enterキーでイベント発火',
       },
       props: {
@@ -597,15 +490,7 @@ export default {
         autoWidth: 'コンテンツに応じて幅を自動調整するかどうか',
         selectByFocus: 'フォーカス時に全テキストを選択するかどうか',
         copyable:
-          'コピー可能にするかどうか（readonlyがtrueかつsuffixがfalseの場合のみ有効）',
-        prefixes: 'プレフィックスのタイプ',
-        prefixesOptions:
-          'プレフィックスのオプションリスト（prefixesがselectの場合に使用）',
-        prefixesTooltip: 'プレフィックスのツールチップテキスト',
-        suffix: 'サフィックスのタイプ',
-        suffixOptions:
-          'サフィックスのオプションリスト（suffixがselectの場合に使用）',
-        suffixTooltip: 'サフィックスのツールチップテキスト',
+          'コピー可能にするかどうか（readonlyがtrueの場合のみ有効）',
         okByEnter: 'Enterキーで確定を有効にするかどうか',
       },
       emits: {
@@ -618,8 +503,6 @@ export default {
       },
       model: {
         modelValue: 'バインド値',
-        prefixValue: 'プレフィックスのバインド値',
-        suffixValue: 'サフィックスのバインド値',
       },
     },
     inputNumber: {
@@ -698,7 +581,8 @@ export default {
         showCount: '文字数カウントを表示するかどうか',
         maxLength: '最大入力文字数',
         size: 'テキストエリアのサイズ',
-        resize: 'リサイズ方向',
+        resize:
+          '右下ハンドルでリサイズ方向（none / vertical / horizontal / both）、ネイティブ resize は無効',
         width: '幅',
         height: '高さ',
         minWidth: '最小幅',
@@ -1356,39 +1240,6 @@ export default {
         clear: 'クリア時に発火',
       },
     },
-    inputTable: {
-      name: 'テーブル入力 InputTable',
-      description: 'テーブル内でデータを素早く入力し、一括処理をより効率的に',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      demo2: {
-        title: 'デフォルト値',
-      },
-      demo3: {
-        title: '高度な使い方',
-      },
-      props: {
-        columns: '列の設定',
-        size: 'サイズ',
-        width: '幅',
-        rowKey: '行キー',
-        batchDeletable: '一括削除を許可',
-        addable: '追加可能',
-        defaultForm: 'デフォルトフォーム',
-        deletable: '削除可能',
-        maxRows: '最大行数',
-        minRows: '最小行数',
-        clearable: 'クリア可能',
-        sortable: 'ソート可能',
-        autoUniqueId: '自動ID生成',
-        uniqueField: 'ユニークフィールド',
-        sortTooltipCustomRender: 'ソートツールチップのカスタムレンダリング',
-      },
-      emits: {
-        change: '値が変更された時に発火',
-      },
-    },
     switch: {
       name: 'スイッチ Switch',
       description: 'シンプルな切り替えコントロール、状態の変更をより明確に',
@@ -1704,6 +1555,7 @@ export default {
         size: 'サイズ',
         pageSizeOptions: 'ページサイズオプション',
         visiblePagesCount: '表示ページ数',
+        showSummary: '位置の要約を表示（現在のページ、総ページ数、総件数）',
       },
       emits: {
         change: 'ページ変更時にトリガー',
@@ -1892,6 +1744,9 @@ export default {
       demo3: {
         title: 'リクエストのシミュレーション',
       },
+      demo4: {
+        title: 'スタック効果',
+      },
       emits: {
         close: '閉じられたときに発火',
       },
@@ -1961,10 +1816,8 @@ export default {
         closeOnClickOverlay: 'オーバーレイクリックで閉じるかどうか',
         closeByEsc: 'ESCキーで閉じるかどうか',
         hideFooter: 'フッターを非表示にするかどうか',
-        hideOkButton: '確認ボタンを非表示にするかどうか',
-        hideCloseButton: '閉じるボタンを非表示にするかどうか',
-        okButtonProps: '確認ボタンのプロパティ',
-        closeButtonProps: '閉じるボタンのプロパティ',
+        footerButtons:
+          'フッターボタン一覧（各項目 props→LewButton、request 可）；省略時は「確認」1件で閉じる',
         zIndex: '重なり順序',
       },
       emits: {
@@ -1993,16 +1846,17 @@ export default {
       demo6: {
         title: 'カスタムアイコン',
       },
+      demo7: {
+        title: 'フッターボタンのカスタム',
+      },
       props: {
         type: 'タイプ',
         width: '幅',
         trigger: 'トリガー方式',
         title: 'タイトル',
         content: '内容',
-        okText: '確認ボタンのテキスト',
-        cancelText: 'キャンセルボタンのテキスト',
-        ok: '確認時のコールバック',
-        cancel: 'キャンセル時のコールバック',
+        footerButtons:
+          'フッターボタン一覧（props→LewButton、request；false で閉じない）；省略時は「確認」1件',
         closeOnClickOverlay: 'オーバーレイクリックによる閉じる',
         closeByEsc: 'ESCキーによる閉じる',
         transformOrigin: 'アニメーション原点',
@@ -2030,6 +1884,17 @@ export default {
       demo4: {
         title: 'ESCキーでの閉じる設定',
       },
+      demo5: {
+        title: 'ネストされたダイアログ',
+      },
+      demo6: {
+        title: 'ダイアログとドロワーのネスト',
+        description:
+          '複雑なシーンでの多層ネストをサポート。ダイアログ内でドロワーを開く、ドロワー内でダイアログを開く、最大4層のネストをサポート。',
+      },
+      demo7: {
+        title: 'footerButtons 動的フッター',
+      },
       model: {
         visible: '表示状態',
       },
@@ -2038,11 +1903,9 @@ export default {
         width: '幅',
         top: '上端からの距離',
         hideFooter: 'フッターを非表示にするかどうか',
-        hideOkButton: '確認ボタンを非表示にするかどうか',
-        hideCloseButton: '閉じるボタンを非表示にするかどうか',
+        footerButtons:
+          'フッターボタン一覧（各項目 props→LewButton、request 可）；省略時は「確認」1件で閉じる',
         closeByEsc: 'ESCキーでの閉じる可否',
-        okButtonProps: '確認ボタンのプロパティ',
-        closeButtonProps: '閉じるボタンのプロパティ',
         closeOnClickOverlay: 'オーバーレイクリックでの閉じる可否',
         zIndex: '重なり順序',
         maxHeight: '最大高さ',
@@ -2066,6 +1929,9 @@ export default {
       demo5: {
         title: 'カスタム内容',
       },
+      demo6: {
+        title: 'フッターボタンのカスタム',
+      },
       props: {
         type: 'タイプ',
         width: '幅',
@@ -2073,10 +1939,8 @@ export default {
         title: 'タイトル',
         content: '内容',
         placement: '表示位置',
-        okText: '確認ボタンのテキスト',
-        cancelText: 'キャンセルボタンのテキスト',
-        ok: '確認時のコールバック',
-        cancel: 'キャンセル時のコールバック',
+        footerButtons:
+          'フッターボタン一覧（props→LewButton、request；false で閉じない）；省略時は「確認」1件',
         icon: 'カスタムアイコン',
         hideIcon: 'アイコンを非表示にするかどうか',
       },
@@ -2175,21 +2039,6 @@ export default {
       },
       slots: {
         handle: 'カスタム処理用スロット',
-      },
-    },
-    empty: {
-      name: '空の状態 Empty',
-      description: '空のデータ状態表示、空白ページをよりフレンドリーに',
-      demo1: {
-        title: '基本的な使い方',
-      },
-      props: {
-        type: 'タイプ',
-        title: 'タイトル',
-        fontSize: 'フォントサイズ',
-        padding: 'パディング',
-        width: '幅',
-        height: '高さ',
       },
     },
     actionBox: {

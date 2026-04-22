@@ -377,12 +377,12 @@ defineExpose({ show, hide })
     }
 
     .lew-date-picker-input::placeholder {
-      color: var(--lew-text-color-5);
+      color: var(--lew-form-placeholder-color);
       letter-spacing: 0;
     }
 
     .lew-date-picker-placeholder {
-      color: var(--lew-text-color-5);
+      color: var(--lew-form-placeholder-color);
     }
   }
 

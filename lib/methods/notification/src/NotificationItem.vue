@@ -16,7 +16,7 @@ defineProps<{
 
 const emit = defineEmits(notificationEmits)
 
-function onClose() {
+function handleClose(): void {
   emit('close')
 }
 </script>
@@ -42,13 +42,13 @@ function onClose() {
       <CloseIcon
         size="medium"
         class="lew-notification-close-icon"
-        @click="onClose"
+        @click="handleClose"
       />
     </div>
     <div
-      v-if="showProgress"
+      v-if="showProgress && duration > 0"
       class="lew-notification-progress"
-      :style="{ animationDuration: `${duration}ms` }"
+      :style="{ '--progress-duration': `${duration}ms` }"
     />
   </div>
 </template>
@@ -56,21 +56,19 @@ function onClose() {
 <style lang="scss" scoped>
 .lew-notification {
   position: relative;
-  right: 0;
   width: auto;
   display: flex;
+  flex-direction: column;
   flex-shrink: 0;
-  justify-content: space-between;
   border: var(--lew-pop-border);
-  margin-bottom: 12px;
   white-space: nowrap;
   box-shadow: var(--lew-pop-shadow);
   font-size: 14px;
   border-radius: var(--lew-border-radius-medium);
   overflow: hidden;
-  background-color: var(--lew-pop-bgcolor) !important;
-  border: var(--lew-pop-border);
+  background-color: var(--lew-pop-bgcolor);
   text-align: left;
+  will-change: transform, opacity;
 
   .lew-notification-box {
     display: flex;
@@ -79,11 +77,13 @@ function onClose() {
     box-sizing: border-box;
 
     .lew-notification-icon {
+      flex-shrink: 0;
       margin-right: 10px;
     }
 
     .lew-notification-body {
-      width: calc(100% - 40px);
+      flex: 1;
+      min-width: 0;
       display: flex;
       flex-direction: column;
       gap: 5px;
@@ -110,6 +110,10 @@ function onClose() {
       top: 10px;
       right: 10px;
       z-index: 9;
+
+      // 覆盖 CloseIcon 的背景色，确保暗色模式下有足够对比度
+      --lew-close-icon-bg-hover: rgba(128, 128, 128, 0.15);
+      --lew-close-icon-bg-active: rgba(128, 128, 128, 0.25);
     }
   }
 
@@ -121,11 +125,12 @@ function onClose() {
     height: 2px;
     background: var(--lew-color-primary-dark);
     transform-origin: left;
-    animation: progress linear forwards;
+    animation: lew-notification-progress linear forwards;
+    animation-duration: var(--progress-duration, 3000ms);
   }
 }
 
-@keyframes progress {
+@keyframes lew-notification-progress {
   from {
     transform: scaleX(1);
   }
@@ -135,6 +140,7 @@ function onClose() {
   }
 }
 
+// 类型颜色
 .lew-notification-normal .lew-notification-icon {
   color: var(--lew-color-normal);
 }

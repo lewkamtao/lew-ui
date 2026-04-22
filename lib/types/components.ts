@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewTagProps } from 'lew-ui'
+import type { LewButtonProps, LewTagProps } from 'lew-ui'
 import type { LewComponentSource, LewDirection, LewSize } from './base'
 
 export type LewButtonType = 'fill' | 'light' | 'ghost' | 'text'
@@ -20,15 +20,9 @@ export type LewImageObjectPosition = 'center' | 'top' | 'bottom' | 'left' | 'rig
 
 export type LewInputType = 'text' | 'password'
 
-export type LewInputPrefixesType = 'icon' | 'select' | 'text'
-
-export type LewInputSuffixType = 'icon' | 'select' | 'text'
-
 export type LewTextareaResize = 'none' | 'both' | 'horizontal' | 'vertical'
 
 export type LewTabsType = 'block' | 'line'
-
-export type LewBreadcrumbSeparator = 'shoulder' | 'sprit'
 
 export type LewUploadStatus = 'success' | 'fail' | 'uploading' | 'complete' | 'wrong_type' | 'wrong_size' | 'pending'
 
@@ -36,32 +30,29 @@ export type LewFormItemAs = 'input' | 'textarea' | 'input-tag' | 'checkbox-group
 
 export type LewSelectMultipleValueLayout = 'tag' | 'text'
 
-export type LewStepsStatus = 'pending' | 'loading' | 'done' | 'error' | 'warning'
-
 export type LewTagClose = () => Promise<boolean>
-
-export type LewEmptyType = '404' | 'address' | 'article' | 'goods' | 'likes' | 'car' | 'comment' | 'network' | 'order' | 'search'
 
 export type LewPopokType = 'error' | 'warning' | 'success' | 'info' | 'normal'
 
 export type LewDrawerPosition = 'left' | 'right' | 'top' | 'bottom'
+
+/**
+ * 弹层底部按钮：每项 `props` 透传 LewButton（含 `request` 异步等）。
+ * Modal / Drawer：关闭逻辑请在 `request` 内自行处理（默认单按钮已带关闭）。
+ * Dialog / Popok：`props.request` 执行后默认关闭；若返回 `false` 则保持打开。
+ */
+export interface LewModalFooterButtonItem {
+  props?: Partial<LewButtonProps>
+}
+
+/** Dialog / Popok 与 Modal 共用同一底部按钮项类型 */
+export type LewDialogPopokFooterButtonItem = LewModalFooterButtonItem
 
 export interface LewActionBoxOption {
   label: LewComponentSource
   icon?: LewComponentSource
   customRender?: LewComponentSource
   onClick?: (event?: MouseEvent) => void
-}
-
-export interface LewBreadcrumbOption {
-  label: string
-  value?: string
-  active?: boolean
-}
-
-export interface LewStepsOption {
-  title: LewComponentSource
-  description?: LewComponentSource
 }
 
 export interface LewTabsOption {
@@ -102,13 +93,6 @@ export interface LewContextMenusOption {
   hideMenuOnClick?: boolean
   onClick?: (item: LewContextMenusOption, options: LewContextMenusOption[], instance: any) => void
   [key: string]: any
-}
-
-export interface LewInputTableColumn {
-  title: string
-  width?: number
-  field: string
-  as: string
 }
 
 export interface LewTableColumn {

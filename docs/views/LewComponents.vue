@@ -63,10 +63,6 @@ const options = computed(() => {
           value: '/Badge',
         },
         {
-          label: 'Title',
-          value: '/Title',
-        },
-        {
           label: 'TextTrim',
           value: '/TextTrim',
         },
@@ -74,28 +70,12 @@ const options = computed(() => {
           label: 'Flex',
           value: '/Flex',
         },
-        {
-          label: 'Mark',
-          value: '/Mark',
-        },
-        {
-          label: 'Icon',
-          value: '/Icon',
-        },
       ],
     },
     {
       label: docsLocale.t('base.navigation'),
       value: docsLocale.t('base.navigation'),
       children: [
-        {
-          label: 'BackTop',
-          value: '/BackTop',
-        },
-        {
-          label: 'Steps',
-          value: '/Steps',
-        },
         {
           label: 'Menu',
           value: '/Menu',
@@ -107,10 +87,6 @@ const options = computed(() => {
         {
           label: 'Dropdown',
           value: '/Dropdown',
-        },
-        {
-          label: 'Breadcrumb',
-          value: '/Breadcrumb',
         },
         {
           label: 'ContextMenu',
@@ -195,16 +171,6 @@ const options = computed(() => {
         //   label: 'TreeSelectMultiple',
         //   value: '/TreeSelectMultiple',
         // },
-        {
-          label: 'InputTable',
-          value: '/InputTable',
-          tagProps: {
-            text: 'New',
-            type: 'ghost',
-            round: true,
-            color: 'green',
-          },
-        },
         {
           label: 'Switch',
           value: '/Switch',
@@ -324,10 +290,6 @@ const options = computed(() => {
         {
           label: 'Loading',
           value: '/Loading',
-        },
-        {
-          label: 'Empty',
-          value: '/Empty',
         },
       ],
     },

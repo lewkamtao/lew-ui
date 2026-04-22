@@ -1,7 +1,11 @@
+<script setup lang="ts">
+import DocHeading from '../../../layout/DocHeading.vue'
+</script>
+
 <template>
-  <lew-title size="16">
+  <DocHeading size="16">
     normal
-  </lew-title>
+  </DocHeading>
   <lew-flex x="start" y="end">
     <lew-tag size="small">
       Small
@@ -13,9 +17,9 @@
       Large
     </lew-tag>
   </lew-flex>
-  <lew-title style="margin-top: 30px" size="16">
+  <DocHeading class="demo-tag3-oversize-heading" size="16">
     oversize
-  </lew-title>
+  </DocHeading>
   <lew-flex x="start" y="end">
     <lew-tag size="small" oversize>
       Small
@@ -28,3 +32,9 @@
     </lew-tag>
   </lew-flex>
 </template>
+
+<style scoped>
+.demo-tag3-oversize-heading {
+  margin-top: 30px;
+}
+</style>

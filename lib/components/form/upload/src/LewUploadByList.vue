@@ -363,7 +363,7 @@ const getStatusText = computed(() => (item: LewUploadFileItem) => {
     .lew-upload-footer {
       font-size: 14px;
       white-space: nowrap;
-      color: var(--lew-text-color-6);
+      color: var(--lew-form-placeholder-color);
     }
   }
   .lew-upload-file-item-invalid {

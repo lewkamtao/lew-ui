@@ -33,6 +33,9 @@ export default {
     close: 'Fechar',
     showCode: 'Mostrar código',
     copySuccess: 'Cópia bem-sucedida!',
+    back: 'Voltar',
+    backToHome: 'Voltar para a página inicial',
+    loading: 'Carregando...',
   },
   components: {
     image: {
@@ -127,6 +130,9 @@ export default {
         disabled: 'Estado desativado',
         request: 'Requisição',
       },
+      emits: {
+        click: 'Acionado ao clicar no botão (não acionado em estado desativado ou de carregamento)',
+      },
     },
     tag: {
       name: 'Etiqueta',
@@ -153,6 +159,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Editável',
+      },
       props: {
         text: 'Texto da etiqueta, tem prioridade sobre o slot, o efeito text-trim será ativado quando a largura for excedida',
         type: 'Tipo de estilo',
@@ -163,9 +172,14 @@ export default {
         round: 'Arredondado',
         oversize: 'Tamanho mais solto',
         close: 'Recebe uma função Promise para fechar a etiqueta',
+        editable: 'Modo editável (requer v-model)',
+        placeholder: 'Texto de espaço reservado no modo de edição',
       },
       emits: {
         close: 'Callback de evento ao fechar a etiqueta',
+        change: 'Acionado quando o conteúdo muda no modo de edição',
+        focus: 'Acionado ao entrar no modo de edição',
+        blur: 'Acionado ao sair do modo de edição',
       },
     },
     badge: {
@@ -195,27 +209,6 @@ export default {
         color: 'Cor do emblema',
         disabled: 'Desativado',
         value: 'Valor do emblema (será exibido como ponto se vazio)',
-      },
-    },
-    title: {
-      name: 'Título',
-      description:
-        'Não apenas um título, mas a essência que dá vida ao conteúdo',
-      demo1: {
-        title: 'Uso básico',
-      },
-      demo2: {
-        title: 'Negrito',
-      },
-      demo3: {
-        title: 'Cor',
-      },
-      props: {
-        text: 'Conteúdo do texto',
-        size: 'Tamanho do texto do título, pode ser um número (unidade: pixels) ou uma string (ex: "1.5em")',
-        bold: 'Espessura do texto do título, valores opcionais são números inteiros entre 100 e 900',
-        color:
-          'Cor do texto do título, os valores opcionais incluem nomes de cores predefinidas ou valores de cor personalizados',
       },
     },
     textTrim: {
@@ -271,76 +264,6 @@ export default {
         wrap: 'Permite quebra de linha quando não há espaço',
         gap: 'Espaçamento entre elementos (pixels)',
         width: 'Largura do container Flex (pixels ou porcentagem)',
-      },
-    },
-    mark: {
-      name: 'Marcador Mark',
-      description: 'Destaca texto importante com realce visual',
-      demo1: {
-        title: 'Uso básico',
-      },
-      props: {
-        color: 'Cor do tema',
-        round: 'Bordas arredondadas',
-        bold: 'Texto em negrito',
-        cursor: 'Estilo do cursor ao passar o mouse',
-      },
-    },
-    icon: {
-      name: 'Ícone Icon',
-      description: 'Coleção de ícones elegantes para enriquecer a interface',
-    },
-    backTop: {
-      name: 'Voltar ao topo BackTop',
-      description: 'Retorna ao topo da página com um clique',
-      demo1: {
-        title: 'Uso básico',
-      },
-      demo2: {
-        title: 'Conteúdo personalizado',
-      },
-      demo3: {
-        title: 'Via diretiva',
-      },
-      props: {
-        target: 'Seletor CSS do elemento alvo. Se vazio, usa a janela inteira',
-        right: 'Distância da direita da página (pixels)',
-        bottom: 'Distância do fundo da página (pixels)',
-        valveHeight: 'Altura de rolagem para exibir o botão (pixels)',
-      },
-      emits: {
-        click: 'Callback ao clicar para voltar ao topo',
-      },
-    },
-    steps: {
-      name: 'Passos',
-      description:
-        'Exibe claramente o processo de operação, permitindo que o usuário saiba onde está',
-      demo1: {
-        title: 'Uso básico',
-      },
-      demo2: {
-        title: 'Status',
-      },
-      demo3: {
-        title: 'Carregando',
-      },
-      model: {
-        modelValue: 'Índice do passo atualmente ativo',
-      },
-      props: {
-        options: 'Array de configuração de passos',
-        status: 'Estado atual dos passos',
-        minWidth: 'Largura mínima do passo',
-        canClickItem: 'Se é possível clicar no item do passo para alternar',
-        canCrossSteps: 'Se é possível alternar entre passos',
-      },
-      options: {
-        title: 'Título do passo',
-        description: 'Descrição do passo',
-      },
-      emits: {
-        change: 'Disparado ao alternar o passo',
       },
     },
     menu: {
@@ -434,32 +357,6 @@ export default {
         hide: 'Callback ao ocultar menu',
         change: 'Callback ao selecionar item',
       },
-    },
-    breadcrumb: {
-      name: 'Navegação estrutural Breadcrumb',
-      description: 'Navegação clara do caminho para orientar usuários',
-      demo1: {
-        title: 'Uso básico',
-      },
-      demo2: {
-        title: 'Seleção atual personalizada',
-      },
-      demo3: {
-        title: 'Tipo de separador',
-      },
-      props: {
-        options: 'Array de configuração',
-        separator: 'Tipo de ícone separador',
-      },
-      breadcrumbOptions: {
-        label: 'Texto do item',
-        value: 'Valor do item',
-        active: 'Item atual',
-      },
-      emits: {
-        change: 'Disparado ao alternar o item da navegação estrutural',
-      },
-
     },
     contextMenu: {
       'name': 'Menu de contexto ContextMenu',
@@ -589,33 +486,30 @@ export default {
         title: 'Uso básico',
       },
       demo2: {
-        title: 'Prefixo e sufixo',
-      },
-      demo3: {
         title: 'Limite de caracteres',
       },
-      demo4: {
+      demo3: {
         title: 'Alinhamento',
       },
-      demo5: {
+      demo4: {
         title: 'Senha visível',
       },
-      demo6: {
+      demo5: {
         title: 'Largura automática',
       },
-      demo7: {
+      demo6: {
         title: 'Selecionar tudo ao focar',
       },
-      demo8: {
+      demo7: {
         title: 'Limpável',
       },
-      demo9: {
+      demo8: {
         title: 'Somente leitura',
       },
-      demo10: {
+      demo9: {
         title: 'Desabilitado',
       },
-      demo11: {
+      demo10: {
         title: 'Evento ao pressionar Enter',
       },
       props: {
@@ -633,13 +527,7 @@ export default {
         minWidth: 'Largura mínima',
         autoWidth: 'Ajusta largura automaticamente',
         selectByFocus: 'Seleciona todo o texto ao focar',
-        copyable: 'Permite copiar (apenas com readonly=true e suffix=false)',
-        prefixes: 'Tipo de prefixo',
-        prefixesOptions: 'Opções de prefixo para tipo select',
-        prefixesTooltip: 'Tooltip do prefixo',
-        suffix: 'Tipo de sufixo',
-        suffixOptions: 'Opções de sufixo para tipo select',
-        suffixTooltip: 'Tooltip do sufixo',
+        copyable: 'Permite copiar (apenas com readonly=true)',
         okByEnter: 'Permite confirmar com Enter',
       },
       emits: {
@@ -652,8 +540,6 @@ export default {
       },
       model: {
         modelValue: 'Valor vinculado',
-        prefixValue: 'Valor do prefixo',
-        suffixValue: 'Valor do sufixo',
       },
     },
     inputNumber: {
@@ -732,7 +618,8 @@ export default {
         showCount: 'Mostra contador',
         maxLength: 'Comprimento máximo',
         size: 'Tamanho',
-        resize: 'Direção de redimensionamento',
+        resize:
+          'Redimensionar pelo canto inferior direito (none / vertical / horizontal / both); resize nativo desligado',
         width: 'Largura',
         height: 'Altura',
         minWidth: 'Largura mínima',
@@ -1406,41 +1293,6 @@ export default {
         clear: 'Disparado ao limpar',
       },
     },
-    inputTable: {
-      name: 'Tabela de entrada InputTable',
-      description:
-        'Entrada rápida de dados em tabela para processamento em lote mais eficiente',
-      demo1: {
-        title: 'Uso básico',
-      },
-      demo2: {
-        title: 'Valor padrão',
-      },
-      demo3: {
-        title: 'Mais recursos',
-      },
-      props: {
-        columns: 'Configuração das colunas',
-        size: 'Tamanho',
-        width: 'Largura',
-        rowKey: 'Chave da linha',
-        batchDeletable: 'Permite exclusão em lote',
-        addable: 'Permite adicionar',
-        defaultForm: 'Formulário padrão',
-        deletable: 'Permite excluir',
-        maxRows: 'Número máximo de linhas',
-        minRows: 'Número mínimo de linhas',
-        clearable: 'Permite limpar',
-        sortable: 'Permite ordenar',
-        autoUniqueId: 'Gera ID único automaticamente',
-        uniqueField: 'Campo único',
-        sortTooltipCustomRender:
-          'Renderização personalizada da dica de ordenação',
-      },
-      emits: {
-        change: 'Disparado ao alterar valor',
-      },
-    },
     switch: {
       name: 'Interruptor Switch',
       description:
@@ -1762,6 +1614,7 @@ export default {
         size: 'Tamanho',
         pageSizeOptions: 'Opções de tamanho da página',
         visiblePagesCount: 'Número de páginas visíveis',
+        showSummary: 'Mostrar resumo (página atual, total de páginas, total de itens)',
       },
       emits: {
         change: 'Nome do evento',
@@ -1953,6 +1806,9 @@ export default {
       demo3: {
         title: 'Simulação de requisição',
       },
+      demo4: {
+        title: 'Efeito de empilhamento',
+      },
       emits: {
         close: 'Disparado ao fechar',
       },
@@ -2021,10 +1877,8 @@ export default {
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         closeByEsc: 'Fechar com a tecla ESC',
         hideFooter: 'Ocultar rodapé',
-        hideOkButton: 'Ocultar botão OK',
-        hideCloseButton: 'Ocultar botão de fechar',
-        okButtonProps: 'Propriedades do botão OK',
-        closeButtonProps: 'Propriedades do botão de fechar',
+        footerButtons:
+          'Botões do rodapé (props → LewButton, incl. request); padrão: um Confirmar fecha',
         zIndex: 'Índice Z',
       },
       emits: {
@@ -2053,16 +1907,17 @@ export default {
       demo6: {
         title: 'Ícone personalizado',
       },
+      demo7: {
+        title: 'Botões de rodapé personalizados',
+      },
       props: {
         type: 'Tipo',
         width: 'Largura',
         trigger: 'Gatilho',
         title: 'Título',
         content: 'Conteúdo',
-        okText: 'Texto do botão OK',
-        cancelText: 'Texto do botão Cancelar',
-        ok: 'Callback de confirmação',
-        cancel: 'Callback de cancelamento',
+        footerButtons:
+          'Botões do rodapé (props → LewButton, incl. request; false mantém aberto); padrão: um Confirmar',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         closeByEsc: 'Fechar com a tecla ESC',
         transformOrigin: 'Origem da transformação',
@@ -2089,6 +1944,17 @@ export default {
       demo4: {
         title: 'Permitir fechamento com ESC',
       },
+      demo5: {
+        title: 'Diálogo aninhado',
+      },
+      demo6: {
+        title: 'Aninhamento de diálogo e gaveta',
+        description:
+          'Aninhamento multinível para cenários complexos, abrir gaveta a partir de diálogo, diálogo a partir de gaveta, até 4 níveis.',
+      },
+      demo7: {
+        title: 'footerButtons rodapé dinâmico',
+      },
       model: {
         visible: 'Visibilidade',
       },
@@ -2097,13 +1963,11 @@ export default {
         width: 'Largura',
         top: 'Distância do topo',
         hideFooter: 'Ocultar rodapé',
-        hideOkButton: 'Ocultar botão OK',
-        hideCloseButton: 'Ocultar botão de fechar',
+        footerButtons:
+          'Lista de botões (props → LewButton, incl. request); padrão: um Confirmar fecha',
         closeByEsc: 'Fechar com tecla ESC',
-        okButtonProps: 'Propriedades do botão OK',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         zIndex: 'Índice Z',
-        closeButtonProps: 'Propriedades do botão Fechar',
         maxHeight: 'Altura máxima',
       },
     },
@@ -2126,6 +1990,9 @@ export default {
       demo5: {
         title: 'Conteúdo personalizado',
       },
+      demo6: {
+        title: 'Botões de rodapé personalizados',
+      },
       props: {
         type: 'Tipo',
         width: 'Largura',
@@ -2133,10 +2000,8 @@ export default {
         title: 'Título',
         content: 'Conteúdo',
         placement: 'Posicionamento',
-        okText: 'Texto do botão OK',
-        cancelText: 'Texto do botão Cancelar',
-        ok: 'Callback de confirmação',
-        cancel: 'Callback de cancelamento',
+        footerButtons:
+          'Botões do rodapé (props → LewButton, incl. request; false mantém aberto); padrão: um Confirmar',
         icon: 'Ícone personalizado',
         hideIcon: 'Ocultar ícone',
       },
@@ -2238,22 +2103,6 @@ export default {
       },
       slots: {
         handle: 'Slot de manipulação',
-      },
-    },
-    empty: {
-      name: 'Estado Vazio (Empty)',
-      description:
-        'Exibição de estado de dados vazios, tornando páginas em branco mais amigáveis',
-      demo1: {
-        title: 'Uso básico',
-      },
-      props: {
-        type: 'Tipo',
-        title: 'Título',
-        fontSize: 'Tamanho da fonte',
-        padding: 'Preenchimento',
-        width: 'Largura',
-        height: 'Altura',
       },
     },
   },

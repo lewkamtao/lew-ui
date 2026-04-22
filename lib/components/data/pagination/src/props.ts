@@ -32,6 +32,14 @@ export const paginationProps = {
       max: 21,
     }),
   },
+  showSummary: {
+    type: Boolean,
+    default: false,
+    validator: validators.boolean({
+      componentName: 'LewPagination',
+      propName: 'showSummary',
+    }),
+  },
 }
 
 export type LewPaginationProps = ExtractPublicPropTypes<typeof paginationProps>

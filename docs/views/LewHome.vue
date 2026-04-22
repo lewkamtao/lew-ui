@@ -4,6 +4,7 @@ import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { random } from 'lodash-es'
 import { useRouter } from 'vue-router'
 import * as Yup from 'yup'
+import DocHeading from '../layout/DocHeading.vue'
 import LewBg from '../layout/LewBg.vue'
 
 const viewTotal = ref(1000000000)
@@ -227,30 +228,6 @@ function open(type: LewDialogType) {
   })
 }
 
-const breadcrumb_options = ref([
-  {
-    label: 'Shop',
-    value: '/',
-    type: 'light',
-  },
-  {
-    label: 'Electronics',
-    value: '/electronics',
-    type: 'light',
-  },
-  {
-    label: 'Smartphones',
-    value: '/electronics/smartphones',
-    type: 'light',
-  },
-  {
-    label: 'iPhone 14 Pro Max',
-    value: '',
-    active: true,
-    type: 'light',
-  },
-])
-
 const tab_options = ref([
   { label: 'Electronics', value: '1', type: 'light' },
   { label: 'Fashion', value: '2', type: 'light' },
@@ -370,18 +347,18 @@ onUnmounted(() => {
       <lew-flex direction="x" gap="40">
         <lew-flex class="item" width="350px" direction="y" x="end" gap="40">
           <lew-flex direction="y" x="end" gap="0px">
-            <lew-title size="16px" :bold="200">
+            <DocHeading size="16px" :bold="200">
               Lew Design 16px
-            </lew-title>
-            <lew-title size="24px" :bold="400">
+            </DocHeading>
+            <DocHeading size="24px" :bold="400">
               Lew Design 24px
-            </lew-title>
-            <lew-title size="32px" :bold="600">
+            </DocHeading>
+            <DocHeading size="32px" :bold="600">
               Lew Design 32px
-            </lew-title>
-            <lew-title size="40px" :bold="800">
+            </DocHeading>
+            <DocHeading size="40px" :bold="800">
               Lew Design 40px
-            </lew-title>
+            </DocHeading>
           </lew-flex>
           <lew-flex style="width: 500px" x="end" gap="20px">
             <lew-avatar size="40px" shape="circle" />
@@ -441,10 +418,6 @@ onUnmounted(() => {
             <lew-button text="Services" color="cyan" type="light" />
             <lew-button text="Business" color="green" type="light" />
           </lew-flex>
-          <lew-flex x="end">
-            <lew-breadcrumb :options="breadcrumb_options" />
-          </lew-flex>
-
           <lew-flex x="end" style="width: 380px">
             <lew-tabs v-model="tabValue" :options="tab_options" />
           </lew-flex>

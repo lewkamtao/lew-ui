@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { LewSelectOption } from 'lew-ui/types'
 import { useDebounceFn } from '@vueuse/core'
-import { LewCheckbox, LewEmpty, LewFlex, LewPopover, locale } from 'lew-ui'
+import { LewCheckbox, LewFlex, LewPopover, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import CommonInput from 'lew-ui/_components/CommonInput.vue'
 import {
@@ -178,40 +178,53 @@ onUnmounted(() => {
   }
 })
 
-const SELECT_WIDTH_TOLERANCE = 40
+/** 与 CommonInput 中 `.lew-value { width: calc(100% - 24px) }` 的右侧预留一致 */
+const SELECT_RIGHT_ICON_RESERVE = 24
 
 function calculateAutoWidth() {
   if (!props.autoWidth)
+    return
+
+  const commonInput = lewSelectInputRef.value
+  const rootEl = commonInput?.$el as HTMLElement | undefined
+  if (!commonInput || !rootEl)
     return
 
   const tempDiv = document.createElement('div')
   tempDiv.style.position = 'absolute'
   tempDiv.style.visibility = 'hidden'
   tempDiv.style.whiteSpace = 'nowrap'
+  tempDiv.style.top = '0'
+  tempDiv.style.left = '0'
   tempDiv.style.fontSize = getComputedStyle(document.body).fontSize
-  if (lewSelectInputRef.value) {
-    const {
-      fontSize,
-      fontFamily,
-      padding,
-      marginLeft,
-    } = lewSelectInputRef.value.getInputRefStyle()
-    tempDiv.style.fontSize = fontSize
-    tempDiv.style.fontFamily = fontFamily
-    tempDiv.style.padding = padding
-    let textContent = state.keyword
-    if (!textContent || textContent.trim() === '') {
-      textContent = props.placeholder || locale.t('select.placeholder')
-    }
-    tempDiv.textContent = textContent
-    document.body.appendChild(tempDiv)
 
-    const textWidth = tempDiv.clientWidth
-    console.log(marginLeft)
-    state.autoWidth = textWidth + SELECT_WIDTH_TOLERANCE + Number.parseInt(marginLeft)
+  const {
+    fontSize,
+    fontFamily,
+    padding,
+    marginLeft,
+  } = commonInput.getInputRefStyle()
+  tempDiv.style.fontSize = fontSize
+  tempDiv.style.fontFamily = fontFamily
+  tempDiv.style.padding = padding
 
-    document.body.removeChild(tempDiv)
+  let textContent = state.keyword
+  if (!textContent || textContent.trim() === '') {
+    textContent = props.placeholder || locale.t('select.placeholder')
   }
+  tempDiv.textContent = textContent
+  document.body.appendChild(tempDiv)
+
+  const contentWidth = tempDiv.clientWidth
+  const rootCs = getComputedStyle(rootEl)
+  const borderX
+    = Number.parseFloat(rootCs.borderLeftWidth) + Number.parseFloat(rootCs.borderRightWidth)
+  const ml = Number.parseFloat(marginLeft) || 0
+
+  // tempDiv 已含文本 + 输入框水平 padding；再补右侧图标区、边框与输入框 margin-left
+  state.autoWidth = contentWidth + SELECT_RIGHT_ICON_RESERVE + borderX + ml
+
+  document.body.removeChild(tempDiv)
 }
 
 watch(
@@ -579,7 +592,7 @@ defineExpose({
           <template v-if="shouldShowEmptyState">
             <slot v-if="$slots.empty" name="empty" />
             <LewFlex v-else direction="y" x="center" class="lew-not-found">
-              <LewEmpty :title="locale.t('select.noResult')" />
+              <span class="lew-select-empty-hint">{{ locale.t('select.noResult') }}</span>
             </LewFlex>
           </template>
           <template v-else>
@@ -600,15 +613,21 @@ defineExpose({
               }"
             >
               <template #default="{ itemData: templateProps }">
-                <slot
+                <div
                   v-if="$slots.item"
-                  name="item"
-                  :props="{
-                    ...templateProps,
-                    checked: getChecked(templateProps.value),
-                  }"
+                  class="lew-select-slot-item"
+                  :class="{ 'lew-select-item-disabled': templateProps.disabled }"
+                  :style="{ height: `${itemHeight}px` }"
                   @click="selectHandle(templateProps)"
-                />
+                >
+                  <slot
+                    name="item"
+                    :props="{
+                      ...templateProps,
+                      checked: getChecked(templateProps.value),
+                    }"
+                  />
+                </div>
                 <div
                   v-else
                   class="lew-select-item"
@@ -648,15 +667,21 @@ defineExpose({
               }"
             >
               <template v-for="item in state.options" :key="item.value">
-                <slot
+                <div
                   v-if="$slots.item"
-                  name="item"
-                  :props="{
-                    ...item,
-                    checked: getChecked(item.value),
-                  }"
+                  class="lew-select-slot-item"
+                  :class="{ 'lew-select-item-disabled': item.disabled }"
+                  :style="{ height: `${itemHeight}px` }"
                   @click="selectHandle(item)"
-                />
+                >
+                  <slot
+                    name="item"
+                    :props="{
+                      ...item,
+                      checked: getChecked(item.value),
+                    }"
+                  />
+                </div>
                 <div
                   v-else
                   class="lew-select-item"
@@ -730,7 +755,7 @@ defineExpose({
   .lew-result-count {
     padding: 5px 12px;
     font-size: 13px;
-    opacity: 0.7;
+    color: var(--lew-form-placeholder-color);
   }
 
   .lew-select-options-box {
@@ -739,6 +764,15 @@ defineExpose({
     overflow-x: hidden;
     overflow-y: auto;
     transition: all 0.25s ease;
+
+    .lew-select-empty-hint {
+      display: block;
+      padding: 16px 12px;
+      color: var(--lew-form-placeholder-color);
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.5;
+    }
 
     .lew-select-item {
       position: relative;
@@ -778,7 +812,7 @@ defineExpose({
 
           &.is-group {
             padding-left: 12px;
-            color: var(--lew-text-color-6);
+            color: var(--lew-form-placeholder-color);
             font-size: 12px;
             pointer-events: none;
             padding-top: 4px;
@@ -829,13 +863,22 @@ defineExpose({
     }
 
     .lew-select-slot-item {
+      display: flex;
+      align-items: center;
       width: 100%;
+      box-sizing: border-box;
       border-radius: calc(var(--lew-border-radius-small) - 1px);
+      cursor: pointer;
     }
 
     .lew-select-slot-item:hover {
       color: var(--lew-text-color-0);
       background-color: var(--lew-pop-bgcolor-hover);
+    }
+
+    .lew-select-slot-item.lew-select-item-disabled {
+      opacity: var(--lew-disabled-opacity);
+      cursor: no-drop;
     }
 
     .lew-select-item-active {
@@ -861,7 +904,7 @@ defineExpose({
     }
 
     .lew-select-item-is-group {
-      color: var(--lew-text-color-6);
+      color: var(--lew-form-placeholder-color);
       background-color: var(--lew-pop-bgcolor);
       cursor: default;
       box-sizing: border-box;

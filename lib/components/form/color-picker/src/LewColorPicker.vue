@@ -158,6 +158,10 @@ function convertToHex(color: string): string {
       background-color: transparent;
       padding-left: 8px;
       color: var(--lew-text-color-1);
+
+      &::placeholder {
+        color: var(--lew-form-placeholder-color);
+      }
     }
   }
 

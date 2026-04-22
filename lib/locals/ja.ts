@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: '入力してください',
+    resizeHandle: 'ドラッグしてサイズ変更',
   },
   inputNumber: {
     placeholder: '入力してください',
@@ -73,36 +74,25 @@ export default {
     placeholderStart: '開始日',
     placeholderEnd: '終了日',
   },
-  inputTable: {
-    addText: '追加',
-    deleteConfirm: '削除確認',
-    delete: '削除',
-    cancel: 'キャンセル',
-    deleteConfirmContent:
-      'このデータを削除してもよろしいですか？この操作は即時に反映されます。ご注意ください。',
-    minRows: '最小行数に達しているため、削除できません',
-    maxRows: '最大行数に達しているため、追加できません',
-    uniqueFieldExist:
-      'この{label}は既に存在します。重複しない{label}を入力してください。',
-    save: '保存',
-    modelTitle: 'データ追加',
-    editTitle: 'データ編集',
-  },
   drawer: {
     closeText: '閉じる',
     okText: '確定',
+    confirmText: '確認',
   },
   modal: {
     closeText: '閉じる',
     okText: '確定',
+    confirmText: '確認',
   },
   dialog: {
     cancelText: 'キャンセル',
     okText: '確定',
+    confirmText: '確認',
   },
   popok: {
     cancelText: 'キャンセル',
     okText: '確定',
+    confirmText: '確認',
   },
   colorPicker: {
     placeholder: '入力してください',
@@ -125,7 +115,19 @@ export default {
   },
   pagination: {
     pageSize: '表示件数：{pageSize}件',
-    jumpTo: '移動',
+    jumpTo: 'ページ',
+    jumpConfirm: '移動',
+    summary: '{total} 件 · {current} / {totalPages} ページ',
+    perPage: '1ページあたり',
+    prevSection: '前のページへ',
+    nextSection: '次のページへ',
+    navLabel: 'ページ送り',
+    jumpGroup: 'ページへ移動',
+    prevPage: '前へ',
+    nextPage: '次へ',
+  },
+  contextMenu: {
+    noActions: '操作がありません',
   },
   empty: {
     title: 'データがありません',

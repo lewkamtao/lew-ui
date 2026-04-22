@@ -42,6 +42,7 @@ export default {
   },
   textarea: {
     placeholder: '请输入',
+    resizeHandle: '拖动调整大小',
   },
   inputNumber: {
     placeholder: '请输入',
@@ -72,34 +73,25 @@ export default {
     placeholderStart: '开始日期',
     placeholderEnd: '结束日期',
   },
-  inputTable: {
-    addText: '添加',
-    deleteConfirm: '删除确认',
-    delete: '删除',
-    cancel: '取消',
-    deleteConfirmContent: '你是否要删除该数据，此操作会立即生效，请谨慎操作！',
-    minRows: '已达到最小行数限制，无法删除',
-    maxRows: '已达到最大行数限制，无法添加',
-    uniqueFieldExist: '该{label}已存在。请输入一个不重复的{label}。',
-    save: '保存',
-    modelTitle: '新增数据',
-    editTitle: '编辑数据',
-  },
   drawer: {
     closeText: '关闭',
     okText: '确定',
+    confirmText: '确认',
   },
   modal: {
     closeText: '关闭',
     okText: '确定',
+    confirmText: '确认',
   },
   dialog: {
     cancelText: '取消',
     okText: '确定',
+    confirmText: '确认',
   },
   popok: {
     cancelText: '取消',
     okText: '确定',
+    confirmText: '确认',
   },
   colorPicker: {
     placeholder: '请输入',
@@ -122,7 +114,19 @@ export default {
   },
   pagination: {
     pageSize: '{pageSize} 条/页',
-    jumpTo: '跳转至',
+    jumpTo: '页码',
+    jumpConfirm: '跳转',
+    summary: '第 {current} / {totalPages} 页，共 {total} 条',
+    perPage: '每页',
+    prevSection: '更多前面的页码',
+    nextSection: '更多后面的页码',
+    navLabel: '分页导航',
+    jumpGroup: '跳转到指定页',
+    prevPage: '上一页',
+    nextPage: '下一页',
+  },
+  contextMenu: {
+    noActions: '暂无操作',
   },
   empty: {
     title: '暂无数据',

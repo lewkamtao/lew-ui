@@ -1,3 +1,9 @@
+// ============================================
+// Tippy 弹出层基础样式
+// 变量定义位于 lib/styles/color.scss
+// ============================================
+
+// 基础样式
 .tippy-box {
   box-sizing: border-box !important;
   color: var(--lew-text-color-0) !important;
@@ -11,15 +17,23 @@
   }
 }
 
+// ============================================
+// Popover 弹出框样式
+// 使用变量：--lew-pop-bgcolor, --lew-pop-border, --lew-pop-shadow
+// ============================================
 .tippy-box[data-lew~='popover'] {
-  color: var(--lew-color-text-0) !important;
+  color: var(--lew-text-color-0) !important;
   background-color: var(--lew-pop-bgcolor) !important;
   border: var(--lew-pop-border) !important;
   box-shadow: var(--lew-pop-shadow) !important;
 }
 
+// ============================================
+// Tooltip 工具提示样式
+// 使用变量：--lew-tooltip-bgcolor, --lew-tooltip-box-shadow
+// ============================================
 .tippy-box[data-lew~='tooltip'] {
-  color: var(--lew-color-text-0) !important;
+  color: var(--lew-text-color-0) !important;
   background-color: var(--lew-tooltip-bgcolor) !important;
   box-shadow: none !important;
   filter: var(--lew-tooltip-box-shadow) !important;
@@ -30,6 +44,7 @@
     overflow-y: auto;
     font-size: 14px;
 
+    // 滚动条样式
     &::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -55,11 +70,17 @@
     }
   }
 
+  // 箭头样式
   .tippy-svg-arrow {
     fill: var(--lew-tooltip-bgcolor) !important;
   }
 }
 
+// ============================================
+// 箭头位置样式（根据弹出方向定位）
+// ============================================
+
+// 顶部弹出时箭头位置
 .tippy-box[data-placement^='top'] > .tippy-svg-arrow {
   bottom: 0;
 
@@ -70,6 +91,7 @@
   }
 }
 
+// 底部弹出时箭头位置
 .tippy-box[data-placement^='bottom'] > .tippy-svg-arrow {
   top: 0;
 
@@ -79,6 +101,7 @@
   }
 }
 
+// 左侧弹出时箭头位置
 .tippy-box[data-placement^='left'] > .tippy-svg-arrow {
   right: 0;
 
@@ -90,6 +113,7 @@
   }
 }
 
+// 右侧弹出时箭头位置
 .tippy-box[data-placement^='right'] > .tippy-svg-arrow {
   left: 0;
 
@@ -101,12 +125,13 @@
   }
 }
 
+// 箭头基础样式
 .tippy-svg-arrow {
   position: absolute;
   width: 16px;
   height: 16px;
   text-align: initial;
-  fill: #333;
+  fill: var(--lew-text-color-3);
 
   & > svg {
     position: absolute;

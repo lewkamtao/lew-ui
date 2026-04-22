@@ -221,7 +221,13 @@ getInitialLocale().then((locale) => {
 <template>
   <lew-flex mode="between" class="Header">
     <lew-flex id="logo" class="logo" x="start" @click="goHome">
-      <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30">
+      <img
+        src="../assets/images/logo.png"
+        alt="logo"
+        srcset=""
+        width="30"
+        height="30"
+      >
       <span style="margin-left: 10px"> Lew UI</span>
       <lew-tag type="light" size="small" style="margin-left: 10px">
         v{{ version }}
@@ -271,7 +277,7 @@ getInitialLocale().then((locale) => {
 <style lang="scss" scoped>
 .Header {
   position: relative;
-  z-index: 1001;
+  z-index: 2001;
   display: flex;
   align-items: center;
   justify-content: space-between;

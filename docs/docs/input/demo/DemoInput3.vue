@@ -1,23 +1,25 @@
 <script setup lang="ts">
-const inputValue = ref('')
-const maxLength = ref(50)
+const leftAlignedText = ref('这是左对齐文本')
+const centeredText = ref('这是居中对齐文本')
+const rightAlignedText = ref('这是右对齐文本')
 </script>
 
 <template>
-  <lew-flex gap="20px" x="start" direction="y">
+  <lew-flex style="width: 300px" gap="20px" x="start" direction="y">
     <lew-input
-      v-model="inputValue"
-      width="300px"
-      placeholder="Please enter content"
-      clearable
-      show-count
-      :max-length="maxLength"
+      v-model="leftAlignedText"
+      align="left"
+      placeholder="左对齐输入框"
     />
     <lew-input
-      v-model="inputValue"
-      width="300px"
-      placeholder="Please enter content"
-      show-count
+      v-model="centeredText"
+      align="center"
+      placeholder="居中对齐输入框"
+    />
+    <lew-input
+      v-model="rightAlignedText"
+      align="right"
+      placeholder="右对齐输入框"
     />
   </lew-flex>
 </template>

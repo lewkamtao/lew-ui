@@ -242,17 +242,13 @@ defineExpose({ validate, setError, setIgnoreValidate })
       class="lew-label-box-wrapper"
     >
       <div v-if="as" class="lew-label-box">
-        <RequiredIcon
-          v-if="required && label"
-          :size="requiredIconSizeMap[size]"
-        />
+        <RequiredIcon v-if="required && label" :size="requiredIconSizeMap[size]" />
         {{ label }}
         <CommonIcon
           v-if="tips"
           v-tooltip="{
             content: tips,
           }"
-          style="margin-top: 1px"
           :size="tipsIconSizeMap[size]"
           type="normal"
         />

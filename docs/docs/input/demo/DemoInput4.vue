@@ -1,25 +1,15 @@
 <script setup lang="ts">
-const leftAlignedText = ref('这是左对齐文本')
-const centeredText = ref('这是居中对齐文本')
-const rightAlignedText = ref('这是右对齐文本')
+const v = ref('')
 </script>
 
 <template>
   <lew-flex style="width: 300px" gap="20px" x="start" direction="y">
     <lew-input
-      v-model="leftAlignedText"
-      align="left"
-      placeholder="左对齐输入框"
-    />
-    <lew-input
-      v-model="centeredText"
-      align="center"
-      placeholder="居中对齐输入框"
-    />
-    <lew-input
-      v-model="rightAlignedText"
-      align="right"
-      placeholder="右对齐输入框"
+      v-model="v"
+      type="password"
+      placeholder="密码可见"
+      show-password
+      :max-length="30"
     />
   </lew-flex>
 </template>

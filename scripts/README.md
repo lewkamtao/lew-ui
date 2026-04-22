@@ -228,22 +228,13 @@ bracketCount // 方括号 [ ]
 
 ---
 
-## 🤖 与 AI 开发的关系
+## 📚 在文档系统中的作用
 
-这两个脚本是 lew-ui 组件库**自动化文档系统**的核心工具：
+这两个脚本是 lew-ui 组件库文档系统的核心工具：
 
 1. **类型提取** → 为在线文档提供类型预览功能
 2. **类型排序** → 确保代码的可维护性和一致性
 
-在 `.cursor/rules/docs-test.mdc` 中，定义了文档系统的规范，这些脚本是规范落地的技术实现。
-
----
-
-## 📖 相关文档
-
-- `.cursor/rules/component-structure.mdc` - 组件结构规范
-- `.cursor/rules/typescript.mdc` - TypeScript 类型设计规范
-- `.cursor/rules/docs-test.mdc` - 文档与测试规范
 - `docs/layout/LewDocsTables.vue` - 文档表格组件（使用 `all-types.ts`）
 
 ---
@@ -270,4 +261,3 @@ bracketCount // 方括号 [ ]
 
 **最后更新**：2025-12-20  
 **维护者**：lew-ui 开发团队
-

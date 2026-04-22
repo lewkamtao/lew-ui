@@ -33,6 +33,9 @@ export default {
     close: 'Chiudi',
     showCode: 'Mostra codice',
     copySuccess: 'Copia completata con successo!',
+    back: 'Indietro',
+    backToHome: 'Torna alla home',
+    loading: 'Caricamento...',
   },
   components: {
     image: {
@@ -127,6 +130,9 @@ export default {
         disabled: 'Disabilitato',
         request: 'Richiesta',
       },
+      emits: {
+        click: 'Attivato al clic del pulsante (non attivato in stato disabilitato o di caricamento)',
+      },
     },
     tag: {
       name: 'Tag',
@@ -153,6 +159,9 @@ export default {
       demo7: {
         title: 'Slot',
       },
+      demo8: {
+        title: 'Modificabile',
+      },
       props: {
         text: 'Testo del tag (priorità maggiore dello slot, testo tagliato se eccede la larghezza)',
         type: 'Tipo di stile',
@@ -163,9 +172,14 @@ export default {
         round: 'Bordi arrotondati',
         oversize: 'Dimensione più ampia',
         close: 'Funzione Promise per chiudere il tag',
+        editable: 'Modalità modificabile (richiede v-model)',
+        placeholder: 'Testo segnaposto in modalità modifica',
       },
       emits: {
         close: 'Callback chiusura tag',
+        change: 'Attivato quando il contenuto cambia in modalità modifica',
+        focus: 'Attivato quando si entra in modalità modifica',
+        blur: 'Attivato quando si esce dalla modalità modifica',
       },
     },
     badge: {
@@ -195,25 +209,6 @@ export default {
         color: 'Colore badge',
         disabled: 'Disabilitato',
         value: 'Valore badge (mostra punto se vuoto)',
-      },
-    },
-    title: {
-      name: 'Titolo',
-      description: 'Non solo un titolo, ma l\'essenza del contenuto',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Grassetto',
-      },
-      demo3: {
-        title: 'Colori',
-      },
-      props: {
-        text: 'Contenuto testuale',
-        size: 'Dimensione testo (numero in pixel o stringa es. "1.5em")',
-        bold: 'Peso font (valori da 100 a 900)',
-        color: 'Colore testo (nome predefinito o valore personalizzato)',
       },
     },
     textTrim: {
@@ -267,77 +262,6 @@ export default {
         wrap: 'Permetti a capo automatico',
         gap: 'Spazio tra elementi (pixel)',
         width: 'Larghezza contenitore (pixel o percentuale)',
-      },
-    },
-    mark: {
-      name: 'Evidenziatore',
-      description: 'Evidenzia il testo importante per una migliore visibilità',
-      demo1: {
-        title: 'Uso base',
-      },
-      props: {
-        color: 'Tema colore',
-        round: 'Bordi arrotondati',
-        bold: 'Grassetto',
-        cursor: 'Stile cursore al passaggio',
-      },
-    },
-    icon: {
-      name: 'Icona',
-      description:
-        'Una collezione di icone eleganti per arricchire l\'interfaccia',
-    },
-    backTop: {
-      name: 'Torna su',
-      description: 'Torna all\'inizio della pagina con un click',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Contenuto personalizzato',
-      },
-      demo3: {
-        title: 'Attivazione tramite direttiva',
-      },
-      props: {
-        target: 'Selettore CSS elemento target (default: finestra)',
-        right: 'Distanza dal bordo destro (pixel)',
-        bottom: 'Distanza dal bordo inferiore (pixel)',
-        valveHeight: 'Altezza soglia per mostrare il pulsante (pixel)',
-      },
-      emits: {
-        click: 'Callback click torna su',
-      },
-    },
-    steps: {
-      name: 'Passi',
-      description:
-        'Mostra chiaramente il processo di operazione, permettendo all\'utente di sapere dove si trova',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Stato',
-      },
-      demo3: {
-        title: 'Caricamento',
-      },
-      model: {
-        modelValue: 'Indice del passo attualmente attivo',
-      },
-      props: {
-        options: 'Array di configurazione dei passi',
-        status: 'Stato attuale dei passi',
-        minWidth: 'Larghezza minima del passo',
-        canClickItem: 'Consenti clic sugli elementi dei passi',
-        canCrossSteps: 'Consenti salto tra passi',
-      },
-      options: {
-        title: 'Titolo del passo',
-        description: 'Descrizione del passo',
-      },
-      emits: {
-        change: 'Attivato al cambio di passo',
       },
     },
     menu: {
@@ -433,31 +357,6 @@ export default {
         change: 'Callback selezione voce',
       },
     },
-    breadcrumb: {
-      name: 'Breadcrumb',
-      description: 'Navigazione chiara del percorso corrente',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Selezione personalizzata',
-      },
-      demo3: {
-        title: 'Tipo separatore',
-      },
-      props: {
-        options: 'Array configurazione breadcrumb',
-        separator: 'Tipo icona separatore',
-      },
-      breadcrumbOptions: {
-        label: 'Testo voce',
-        value: 'Valore voce',
-        active: 'Voce attiva',
-      },
-      emits: {
-        change: 'Callback cambio voce',
-      },
-    },
     contextMenu: {
       'name': 'Menu contestuale',
       'description': 'Menu tasto destro elegante per azioni contestuali',
@@ -547,33 +446,30 @@ export default {
         title: 'Uso base',
       },
       demo2: {
-        title: 'Prefisso/Suffisso',
-      },
-      demo3: {
         title: 'Limite caratteri',
       },
-      demo4: {
+      demo3: {
         title: 'Allineamento',
       },
-      demo5: {
+      demo4: {
         title: 'Password visibile',
       },
-      demo6: {
+      demo5: {
         title: 'Larghezza automatica',
       },
-      demo7: {
+      demo6: {
         title: 'Selezione al focus',
       },
-      demo8: {
+      demo7: {
         title: 'Cancellabile',
       },
-      demo9: {
+      demo8: {
         title: 'Sola lettura',
       },
-      demo10: {
+      demo9: {
         title: 'Disabilitato',
       },
-      demo11: {
+      demo10: {
         title: 'Evento invio',
       },
       props: {
@@ -591,13 +487,7 @@ export default {
         minWidth: 'Larghezza minima (pixel o unità)',
         autoWidth: 'Larghezza automatica',
         selectByFocus: 'Seleziona al focus',
-        copyable: 'Copiabile (solo readonly e no suffix)',
-        prefixes: 'Tipo prefisso',
-        prefixesOptions: 'Opzioni prefisso select',
-        prefixesTooltip: 'Tooltip prefisso',
-        suffix: 'Tipo suffisso',
-        suffixOptions: 'Opzioni suffisso select',
-        suffixTooltip: 'Tooltip suffisso',
+        copyable: 'Copiabile (solo readonly)',
         okByEnter: 'Conferma con Invio',
       },
       emits: {
@@ -610,8 +500,6 @@ export default {
       },
       model: {
         modelValue: 'Valore legato',
-        prefixValue: 'Valore prefisso',
-        suffixValue: 'Valore suffisso',
       },
     },
     inputNumber: {
@@ -691,7 +579,8 @@ export default {
         showCount: 'Mostra conteggio caratteri',
         maxLength: 'Lunghezza massima',
         size: 'Dimensione',
-        resize: 'Direzione ridimensionamento',
+        resize:
+          'Ridimensiona con maniglia in basso a destra (none / vertical / horizontal / both); resize nativo disattivato',
         width: 'Larghezza',
         height: 'Altezza',
         minWidth: 'Larghezza minima',
@@ -1346,40 +1235,6 @@ export default {
         clear: 'Cancellazione',
       },
     },
-    inputTable: {
-      name: 'Tabella Input',
-      description:
-        'Input dati in formato tabellare per inserimenti multipli efficienti',
-      demo1: {
-        title: 'Uso base',
-      },
-      demo2: {
-        title: 'Valori predefiniti',
-      },
-      demo3: {
-        title: 'Avanzato',
-      },
-      props: {
-        columns: 'Configurazione colonne',
-        size: 'Dimensione',
-        width: 'Larghezza',
-        rowKey: 'Chiave riga',
-        batchDeletable: 'Eliminazione multipla',
-        addable: 'Aggiungibile',
-        defaultForm: 'Form predefinito',
-        deletable: 'Eliminabile',
-        maxRows: 'Righe massime',
-        minRows: 'Righe minime',
-        clearable: 'Cancellabile',
-        sortable: 'Ordinabile',
-        autoUniqueId: 'ID unico automatico',
-        uniqueField: 'Campo univoco',
-        sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento',
-      },
-      emits: {
-        change: 'Cambio valore',
-      },
-    },
     switch: {
       name: 'Interruttore',
       description: 'Selettore a interruttore per stati binari',
@@ -1693,6 +1548,7 @@ export default {
         size: 'Dimensione',
         pageSizeOptions: 'Opzioni dimensione pagina',
         visiblePagesCount: 'Pagine visibili',
+        showSummary: 'Mostra riepilogo (pagina corrente, pagine totali, elementi totali)',
       },
       emits: {
         change: 'Nome evento',
@@ -1882,6 +1738,9 @@ export default {
       demo3: {
         title: 'Simulazione richiesta',
       },
+      demo4: {
+        title: 'Effetto impilamento',
+      },
       emits: {
         close: 'Attivato alla chiusura',
       },
@@ -1949,10 +1808,8 @@ export default {
         closeOnClickOverlay: 'Chiudi cliccando sul overlay',
         closeByEsc: 'Chiudi con tasto ESC',
         hideFooter: 'Nascondi piè di pagina',
-        hideOkButton: 'Nascondi pulsante OK',
-        hideCloseButton: 'Nascondi pulsante Chiudi',
-        okButtonProps: 'Proprietà pulsante OK',
-        closeButtonProps: 'Proprietà pulsante Chiudi',
+        footerButtons:
+          'Pulsanti footer (props → LewButton, request); predefinito: un Conferma chiude',
         zIndex: 'z-index',
       },
       emits: {
@@ -1981,16 +1838,17 @@ export default {
       demo6: {
         title: 'Icona personalizzata',
       },
+      demo7: {
+        title: 'Pulsanti piè di pagina personalizzati',
+      },
       props: {
         type: 'Tipo',
         width: 'Larghezza',
         trigger: 'Trigger',
         title: 'Titolo',
         content: 'Contenuto',
-        okText: 'Testo pulsante OK',
-        cancelText: 'Testo pulsante Annulla',
-        ok: 'Callback conferma',
-        cancel: 'Callback annullamento',
+        footerButtons:
+          'Pulsanti footer (props → LewButton, request; false resta aperto); predefinito: un Conferma',
         closeOnClickOverlay: 'Chiudi cliccando sul overlay',
         closeByEsc: 'Chiudi con tasto ESC',
         transformOrigin: 'Origine trasformazione',
@@ -2018,6 +1876,17 @@ export default {
       demo4: {
         title: 'Chiusura con ESC abilitata',
       },
+      demo5: {
+        title: 'Modale annidato',
+      },
+      demo6: {
+        title: 'Nidificazione modale e drawer',
+        description:
+          'Nidificazione multilivello per scenari complessi, aprire drawer da modale, modale da drawer, fino a 4 livelli.',
+      },
+      demo7: {
+        title: 'footerButtons piè dinamico',
+      },
       model: {
         visible: 'Visibilità',
       },
@@ -2027,13 +1896,11 @@ export default {
         top: 'Distanza dall\'alto',
         maxHeight: 'Altezza massima',
         hideFooter: 'Nascondi footer',
-        hideOkButton: 'Nascondi pulsante OK',
-        hideCloseButton: 'Nascondi pulsante Chiudi',
+        footerButtons:
+          'Elenco pulsanti (props → LewButton, request); predefinito: un Conferma chiude',
         closeByEsc: 'Chiudi con ESC',
-        okButtonProps: 'Proprietà OK',
         closeOnClickOverlay: 'Chiudi al click overlay',
         zIndex: 'Z-index',
-        closeButtonProps: 'Proprietà pulsante Chiudi',
       },
     },
     popok: {
@@ -2055,6 +1922,9 @@ export default {
       demo5: {
         title: 'Contenuto personalizzato',
       },
+      demo6: {
+        title: 'Pulsanti piè personalizzati',
+      },
       props: {
         type: 'Tipo',
         width: 'Larghezza',
@@ -2062,10 +1932,8 @@ export default {
         title: 'Titolo',
         content: 'Contenuto',
         placement: 'Posizione',
-        okText: 'Testo OK',
-        cancelText: 'Testo Annulla',
-        ok: 'Callback OK',
-        cancel: 'Callback Annulla',
+        footerButtons:
+          'Pulsanti footer (props → LewButton, request; false resta aperto); predefinito: un Conferma',
         icon: 'Icona personalizzata',
         hideIcon: 'Nascondi icona',
       },
@@ -2167,22 +2035,6 @@ export default {
       },
       slots: {
         handle: 'Slot gestione',
-      },
-    },
-    empty: {
-      name: 'Stato vuoto Empty',
-      description:
-        'Visualizzazione stato dati vuoto, per pagine vuote più amichevoli',
-      demo1: {
-        title: 'Uso base',
-      },
-      props: {
-        type: 'Tipo',
-        title: 'Titolo',
-        fontSize: 'Dimensione font',
-        padding: 'Padding',
-        width: 'Larghezza',
-        height: 'Altezza',
       },
     },
     actionBox: {

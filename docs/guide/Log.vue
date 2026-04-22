@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import DocHeading from '../layout/DocHeading.vue'
 import v1_0_24 from './log/v1_0_24.vue'
 import v1_0_34 from './log/v1_0_34.vue'
 </script>
 
 <template>
-  <lew-title>更新日志</lew-title>
+  <DocHeading>更新日志</DocHeading>
   <br>
   <br>
   <v1_0_34 />

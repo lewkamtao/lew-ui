@@ -240,24 +240,6 @@
   );
 }
 
-@mixin export-steps-colors-light($color-name, $color-map) {
-  --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, '6')};
-  --lew-color-steps-#{$color-name}-active-text: #{get-color-value($text-color, '9')};
-  --lew-color-steps-#{$color-name}-active-icon: #{get-color-value($text-color, '9')};
-  --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, '1')};
-  --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, '6')};
-  --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, '6')};
-}
-
-@mixin export-steps-colors-dark($color-name, $color-map) {
-  --lew-color-steps-#{$color-name}-active-bg: #{get-color-value($color-map, '4')};
-  --lew-color-steps-#{$color-name}-active-text: #{get-color-value($color-map, '7')};
-  --lew-color-steps-#{$color-name}-active-icon: #{get-color-value($color-map, '7')};
-  --lew-color-steps-#{$color-name}-succeeded-bg: #{get-color-value($color-map, '1')};
-  --lew-color-steps-#{$color-name}-succeeded-icon: #{get-color-value($color-map, '6')};
-  --lew-color-steps-#{$color-name}-active-title: #{get-color-value($color-map, '6')};
-}
-
 // ============================================
 // Pagination 组件主题颜色变量
 // 生成变量格式：--lew-color-pagination-{color-name}-*
@@ -373,7 +355,6 @@
       @include export-radio-colors-dark($name, $color-map);
       @include export-switch-colors-dark($name, $color-map);
       @include export-datepicker-colors-dark($name, $color-map);
-      @include export-steps-colors-dark($name, $color-map);
       @include export-pagination-colors-dark($name, $color-map);
       @include export-inputtag-colors-dark($name, $color-map);
       @include export-badge-colors-dark($name, $color-map);
@@ -387,7 +368,6 @@
       @include export-radio-colors-light($name, $color-map);
       @include export-switch-colors-light($name, $color-map);
       @include export-datepicker-colors-light($name, $color-map);
-      @include export-steps-colors-light($name, $color-map);
       @include export-pagination-colors-light($name, $color-map);
       @include export-inputtag-colors-light($name, $color-map);
       @include export-badge-colors-light($name, $color-map);
@@ -411,7 +391,6 @@
       @include export-radio-colors-dark($semantic-name, $color-map);
       @include export-switch-colors-dark($semantic-name, $color-map);
       @include export-datepicker-colors-dark($semantic-name, $color-map);
-      @include export-steps-colors-dark($semantic-name, $color-map);
       @include export-pagination-colors-dark($semantic-name, $color-map);
       @include export-inputtag-colors-dark($semantic-name, $color-map);
       @include export-badge-colors-dark($semantic-name, $color-map);
@@ -425,7 +404,6 @@
       @include export-radio-colors-light($semantic-name, $color-map);
       @include export-switch-colors-light($semantic-name, $color-map);
       @include export-datepicker-colors-light($semantic-name, $color-map);
-      @include export-steps-colors-light($semantic-name, $color-map);
       @include export-pagination-colors-light($semantic-name, $color-map);
       @include export-inputtag-colors-light($semantic-name, $color-map);
       @include export-badge-colors-light($semantic-name, $color-map);
@@ -526,24 +504,26 @@
 
 @mixin export-form-colors-light() {
   --lew-form-bgcolor: #{get-color-value($bgcolor, '4')};
-  --lew-form-bgcolor-hover: #{get-color-value($bgcolor, '5')};
-  --lew-form-bgcolor-active: #{get-color-value($bgcolor, '6')};
+  --lew-form-bgcolor-hover: #{get-color-value($bgcolor, '6')};
+  --lew-form-bgcolor-active: #{get-color-value($bgcolor, '7')};
   --lew-form-bgcolor-focus: #{get-color-value($bgcolor, '1')};
   --lew-form-border-color: transparent;
   --lew-form-border-color-focus: var(--lew-color-primary);
   --lew-form-border-color-hover: #{get-color-value($bgcolor, '7')};
   --lew-form-border-color-active: #{get-color-value($bgcolor, '8')};
   --lew-form-box-shadow: 0px 0px 0px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 20%, transparent);
+  --lew-form-placeholder-color: var(--lew-text-color-5);
 }
 
 @mixin export-form-colors-dark() {
   --lew-form-bgcolor: #{get-color-value(dark.$dark-bgcolor, '3')};
-  --lew-form-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '4')};
-  --lew-form-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '3')};
+  --lew-form-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '5')};
+  --lew-form-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '4')};
   --lew-form-bgcolor-focus: #{get-color-value(dark.$dark-bgcolor, '1')};
   --lew-form-border-color: transparent;
   --lew-form-border-color-focus: var(--lew-color-primary);
   --lew-form-border-color-hover: #{get-color-value(dark.$dark-bgcolor, '6')};
+  --lew-form-placeholder-color: var(--lew-text-color-5);
 }
 
 // ============================================
@@ -627,6 +607,8 @@
   // 表格行 hover：使用更深的颜色，让 hover 效果更明显
   --lew-table-tr-hover-bgcolor: #{get-color-value($bgcolor, '2')};
   --lew-table-tr-selected: #{get-color-value(map.get($colors, 'blue'), '1')};
+  // 表格行 focused：使用淡黄色高亮，醒目但不刺眼
+  --lew-table-tr-focused-bgcolor: #{get-color-value(map.get($colors, 'yellow'), '1')};
   --lew-table-scroll-line-color-start: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 0%, transparent);
   --lew-table-scroll-line-color-end: color-mix(in srgb, #{get-color-value($bgcolor, '9')} 15%, transparent);
   --lew-table-tr-dragging-bgcolor: color-mix(in srgb, #{get-color-value($bgcolor, '0')} 80%, transparent);
@@ -648,6 +630,8 @@
   // 表格行 hover：使用更深的颜色，让 hover 效果更明显
   --lew-table-tr-hover-bgcolor: #{get-color-value(dark.$dark-bgcolor, '4')};
   --lew-table-tr-selected: #{get-color-value(dark.$dark-bgcolor, '4')};
+  // 表格行 focused：暗黑模式下使用较深的黄色高亮
+  --lew-table-tr-focused-bgcolor: #{get-color-value(map.get(dark.$dark-colors, 'yellow'), '2')};
   --lew-table-scroll-line-color-start: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 0%, transparent);
   --lew-table-scroll-line-color-end: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 20%, transparent);
   --lew-table-tr-dragging-bgcolor: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 40%, transparent);
@@ -658,17 +642,19 @@
 
 @mixin export-action-box-colors-light() {
   // ActionBox 组件颜色变量 - 白天模式
-  // 建立清晰的 hover 和 active 层次
-  --lew-action-box-bgcolor-hover: #{get-color-value($bgcolor, '2')};
-  --lew-action-box-bgcolor-active: #{get-color-value($bgcolor, '3')};
+  // 使用更深的色阶，确保在表格等有背景的场景中也能看到明显的 hover 层次
+  // 表格行 hover 使用 bgcolor-2，这里使用 bgcolor-4/6 形成对比
+  --lew-action-box-bgcolor-hover: #{get-color-value($bgcolor, '4')};
+  --lew-action-box-bgcolor-active: #{get-color-value($bgcolor, '6')};
   --lew-action-box-text-color: #{get-color-value($text-color, '1')};
 }
 
 @mixin export-action-box-colors-dark() {
   // ActionBox 组件颜色变量 - 暗黑模式
-  // 使用更大的层次差异，让 hover 和 active 更明显
-  --lew-action-box-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '5')};
-  --lew-action-box-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '7')};
+  // 使用更高的色阶差异，确保在表格等有背景的场景中也能看到明显的 hover 层次
+  // 表格行 hover 使用 dark-bgcolor-4，这里使用 dark-bgcolor-6/8 形成对比
+  --lew-action-box-bgcolor-hover: #{get-color-value(dark.$dark-bgcolor, '6')};
+  --lew-action-box-bgcolor-active: #{get-color-value(dark.$dark-bgcolor, '8')};
   --lew-action-box-text-color: #{get-color-value(dark.$dark-text-color, '1')};
 }
 
@@ -681,13 +667,15 @@
   --lew-pop-border: var(--lew-border);
   --lew-drawer-header-border: 1px #{get-color-value($bgcolor, '4')} solid;
   --lew-drawer-footer-border: 1px #{get-color-value($bgcolor, '4')} solid;
+
+  // Tooltip 颜色变量
   --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
-  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
+  --lew-tooltip-bgcolor-hover: var(--lew-pop-bgcolor-hover);
   --lew-tooltip-box-shadow: drop-shadow(
-      0px 0px 1px color-mix(in srgb, #{get-color-value($bgcolor, '6')} 45%, transparent)
+      0px 0px 1px color-mix(in srgb, #{get-color-value($bgcolor, '7')} 60%, transparent)
     )
-    drop-shadow(0px 2px 8px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 4%, transparent))
-    drop-shadow(0px 30px 70px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 10%, transparent));
+    drop-shadow(0px 4px 12px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 15%, transparent))
+    drop-shadow(0px 12px 32px color-mix(in srgb, #{get-color-value($bgcolor, '9')} 12%, transparent));
 }
 
 @mixin export-pop-colors-dark() {
@@ -697,15 +685,17 @@
   --lew-pop-shadow: color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 4%, transparent) 0px 2px 8px;
   --lew-pop-border-color: var(--lew-border-color);
   --lew-pop-border: var(--lew-border);
-  --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
-  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
-  --lew-tooltip-box-shadow: drop-shadow(
-      0px 0px 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 45%, transparent)
-    )
-    drop-shadow(0px 2px 8px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 4%, transparent))
-    drop-shadow(0px 30px 70px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 10%, transparent));
   --lew-drawer-header-border: 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 10%, transparent) solid;
   --lew-drawer-footer-border: 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 10%, transparent) solid;
+
+  // Tooltip 颜色变量
+  --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
+  --lew-tooltip-bgcolor-hover: var(--lew-pop-bgcolor-hover);
+  --lew-tooltip-box-shadow: drop-shadow(
+      0px 0px 1px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '9')} 50%, transparent)
+    )
+    drop-shadow(0px 4px 12px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 40%, transparent))
+    drop-shadow(0px 12px 32px color-mix(in srgb, #{get-color-value(dark.$dark-bgcolor, '0')} 30%, transparent));
 }
 
 @mixin export-other-colors-light() {

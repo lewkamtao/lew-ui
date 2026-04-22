@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: '입력해주세요',
+    resizeHandle: '드래그하여 크기 조절',
   },
   inputNumber: {
     placeholder: '입력해주세요',
@@ -73,36 +74,25 @@ export default {
     placeholderStart: '시작일',
     placeholderEnd: '종료일',
   },
-  inputTable: {
-    addText: '추가',
-    deleteConfirm: '삭제 확인',
-    delete: '삭제',
-    cancel: '취소',
-    deleteConfirmContent:
-      '이 데이터를 삭제하시겠습니까? 이 작업은 즉시 적용되므로 주의해주세요!',
-    minRows: '최소 행 수에 도달하여 삭제할 수 없습니다',
-    maxRows: '최대 행 수에 도달하여 추가할 수 없습니다',
-    uniqueFieldExist:
-      '이 {label}이(가) 이미 존재합니다. 중복되지 않는 {label}을(를) 입력해주세요.',
-    save: '저장',
-    modelTitle: '데이터 추가',
-    editTitle: '데이터 편집',
-  },
   drawer: {
     closeText: '닫기',
     okText: '확인',
+    confirmText: '확인',
   },
   modal: {
     closeText: '닫기',
     okText: '확인',
+    confirmText: '확인',
   },
   dialog: {
     cancelText: '취소',
     okText: '확인',
+    confirmText: '확인',
   },
   popok: {
     cancelText: '취소',
     okText: '확인',
+    confirmText: '확인',
   },
   colorPicker: {
     placeholder: '입력해주세요',
@@ -125,7 +115,19 @@ export default {
   },
   pagination: {
     pageSize: '페이지당 {pageSize}개',
-    jumpTo: '이동',
+    jumpTo: '페이지',
+    jumpConfirm: '이동',
+    summary: '{current} / {totalPages} 페이지 · 총 {total}개',
+    perPage: '페이지당',
+    prevSection: '이전 페이지 더보기',
+    nextSection: '다음 페이지 더보기',
+    navLabel: '페이지 탐색',
+    jumpGroup: '페이지 이동',
+    prevPage: '이전 페이지',
+    nextPage: '다음 페이지',
+  },
+  contextMenu: {
+    noActions: '사용 가능한 작업 없음',
   },
   empty: {
     title: '데이터 없음',

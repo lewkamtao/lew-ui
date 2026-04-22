@@ -2,6 +2,7 @@
 import dayjs from 'dayjs'
 import { LewButton } from 'lew-ui'
 import { debounce, throttle } from 'lodash-es'
+import { computed, nextTick, onBeforeUnmount, reactive, ref } from 'vue'
 
 const props = defineProps({
   valueFormat: {
@@ -339,7 +340,16 @@ function onScroll(type: string, event: Event) {
 }
 
 function getValue() {
-  return timeValue.value || _timeValue.value
+  // 优先返回用户确认的值，其次是滚动中间值，最后从 timeState 计算（init 后始终有效）
+  return (
+    timeValue.value
+    || _timeValue.value
+    || dayjs()
+      .hour(timeState.hour)
+      .minute(timeState.minute)
+      .second(timeState.second)
+      .format(props.valueFormat)
+  )
 }
 
 onBeforeUnmount(() => {

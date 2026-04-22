@@ -23,10 +23,7 @@ function dialog(type: LewDialogType, options: LewDialogOptions) {
     content,
     icon,
     hideIcon,
-    ok = () => Promise.resolve(true),
-    cancel = () => Promise.resolve(true),
-    okText,
-    cancelText,
+    footerButtons,
     closeOnClickOverlay = false,
     closeByEsc = false,
   } = options
@@ -44,18 +41,15 @@ function dialog(type: LewDialogType, options: LewDialogOptions) {
           closeByEsc,
           type,
           hideIcon,
-          okText,
-          cancelText,
           transformOrigin,
           icon,
           title,
           content,
-          ok,
+          footerButtons,
           onClose: () => {
             app.unmount()
             div.remove()
           },
-          cancel,
         },
         {
           default: () => [],

@@ -1,42 +1,35 @@
 <script setup lang="ts">
-import type { LewContextMenusOption } from 'lew-ui'
-import { useMagicKeys } from '@vueuse/core'
-import { LewDropdown, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
-import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
-import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
-import { any2px, object2class } from 'lew-ui/utils'
-import { inputEmits } from './emits'
-import { inputProps } from './props'
+import { useMagicKeys } from "@vueuse/core";
+import { LewMessage, LewTooltip, locale } from "lew-ui";
+import CloseIcon from "lew-ui/_components/CloseIcon.vue";
+import CommonIcon from "lew-ui/_components/CommonIcon.vue";
+import { any2px, object2class } from "lew-ui/utils";
+import { inputEmits } from "./emits";
+import { inputProps } from "./props";
 
 // Props & Emits
-const props = defineProps(inputProps)
-const emit = defineEmits(inputEmits)
+const props = defineProps(inputProps);
+const emit = defineEmits(inputEmits);
 
 // Models
-const modelValue = defineModel<string | undefined>({ required: true })
-const prefixValue = defineModel<string | undefined>('prefixValue')
-const suffixValue = defineModel<string | undefined>('suffixValue')
+const modelValue = defineModel<string | undefined>({ required: true });
 
 // Constants
-const COPY_SUCCESS_DELAY = 2000
+const COPY_SUCCESS_DELAY = 2000;
 
 // Refs
-const lewInputRef = ref<HTMLInputElement>()
-const lewInputCountRef = ref<HTMLElement>()
-const isCopy = ref(false)
-const _type = ref(props.type)
-const isFocus = ref(false)
-const state = reactive({
-  prefixesDropdown: 'hide',
-  suffixDropdown: 'hide',
-})
+const lewInputRef = ref<HTMLInputElement>();
+const lewInputCountRef = ref<HTMLElement>();
+const isCopy = ref(false);
+const _type = ref(props.type);
+const isFocus = ref(false);
 
-let timer: NodeJS.Timeout | null = null
+let timer: NodeJS.Timeout | null = null;
 
 // Initialize tooltip directive
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive("tooltip")) {
+  app.use(LewTooltip);
 }
 
 // Computed
@@ -46,228 +39,179 @@ const getIconSize = computed(
       small: 14,
       medium: 15,
       large: 16,
-    }[props.size]),
-)
+    }[props.size])
+);
 
 // 右侧图标显示状态计算
 const showCloseIcon = computed(() => {
-  return props.clearable && modelValue.value && !props.readonly
-})
+  return props.clearable && modelValue.value && !props.readonly;
+});
 
 const showPasswordIcon = computed(() => {
-  return props.showPassword && props.type === 'password'
-})
+  return props.showPassword && props.type === "password";
+});
 
 const showCopyIcon = computed(() => {
   return (
-    props.copyable
-    && props.readonly
-    && modelValue.value
-    && !props.suffix
-    && !showCloseIcon.value
-    && !showPasswordIcon.value
-  )
-})
+    props.copyable &&
+    props.readonly &&
+    modelValue.value &&
+    !showCloseIcon.value &&
+    !showPasswordIcon.value
+  );
+});
 
 const rightIconCount = computed(() => {
-  let count = 0
-  if (showCloseIcon.value)
-    count++
-  if (showPasswordIcon.value)
-    count++
-  if (showCopyIcon.value)
-    count++
-  return count
-})
+  let count = 0;
+  if (showCloseIcon.value) count++;
+  if (showPasswordIcon.value) count++;
+  if (showCopyIcon.value) count++;
+  return count;
+});
 
 const getInputViewStyle = computed(() => {
   return {
-    width: props.autoWidth ? 'auto' : any2px(props.width),
-  }
-})
-
-const getPrefixesDropdownStyle = computed(() => {
-  return {
-    fontSize: `var(--lew-form-font-size-${props.size})`,
-  }
-})
-
-const getSuffixDropdownStyle = computed(() => {
-  return {
-    fontSize: `var(--lew-form-font-size-${props.size})`,
-  }
-})
+    width: props.autoWidth ? "auto" : any2px(props.width),
+  };
+});
 
 const getInputBoxStyle = computed(() => {
   return {
     minWidth: any2px(props.minWidth),
-  }
-})
+  };
+});
 
 const getInputStyle = computed(() => {
-  const { showCount } = props
-  const countWidth = lewInputCountRef.value?.offsetWidth || 0
+  const { showCount } = props;
+  const countWidth = lewInputCountRef.value?.offsetWidth || 0;
   // 每个图标大约占 20px（图标本身 + gap），如果有多个图标需要累加
-  const iconWidth = rightIconCount.value * 20
+  const iconWidth = rightIconCount.value * 20;
   // 如果有 count，需要额外空间（12px 间距）
-  const countSpace = showCount && modelValue.value ? countWidth + 12 : 0
+  const countSpace = showCount && modelValue.value ? countWidth + 12 : 0;
   // 如果有图标或 count，需要额外空间（10px 右侧 padding）
-  const rightSpace = rightIconCount.value > 0 || countSpace > 0 ? 10 : 0
+  const rightSpace = rightIconCount.value > 0 || countSpace > 0 ? 10 : 0;
   return {
     width: `calc(100% - ${iconWidth + countSpace + rightSpace}px)`,
-  }
-})
+  };
+});
 
-const getType = computed(() =>
-  props.type === 'password' ? _type.value : props.type,
-)
+const getType = computed(() => (props.type === "password" ? _type.value : props.type));
 
 const getInputClassNames = computed(() => {
-  const { size, readonly, disabled, align, autoWidth } = props
-  return object2class('lew-input-view', {
+  const { size, readonly, disabled, align, autoWidth } = props;
+  return object2class("lew-input-view", {
     size,
     readonly,
     disabled,
     align,
     autoWidth,
-  })
-})
-
-const getPrefixesLabel = computed(() => {
-  return (
-    props.prefixesOptions.find(e => e.value === prefixValue.value)?.label
-    || ''
-  )
-})
-
-const getSuffixLabel = computed(() => {
-  return (
-    props.suffixOptions.find(e => e.value === suffixValue.value)?.label || ''
-  )
-})
-
-const computedPrefixesOptions = computed(() => {
-  return props.prefixesOptions.map((e) => {
-    return {
-      ...e,
-      onClick: () => {
-        prefixValue.value = e.value
-      },
-    }
-  })
-})
-
-const computedSuffixOptions = computed(() => {
-  return props.suffixOptions.map((e) => {
-    return {
-      ...e,
-      onClick: () => {
-        suffixValue.value = e.value
-      },
-    }
-  })
-})
+  });
+});
 
 // Methods
 function clear() {
-  modelValue.value = undefined
-  emit('clear')
-  emit('change', undefined)
+  modelValue.value = undefined;
+  emit("clear");
+  emit("change", undefined);
 }
 
 function focus() {
-  lewInputRef.value?.focus()
+  lewInputRef.value?.focus();
 }
 
 function blur() {
-  lewInputRef.value?.blur()
+  lewInputRef.value?.blur();
 }
 
 function showPasswordFn() {
-  _type.value = _type.value === 'text' ? 'password' : 'text'
+  _type.value = _type.value === "text" ? "password" : "text";
 }
 
 function _focus(e: FocusEvent) {
   if (props.selectByFocus) {
-    (e.currentTarget as HTMLInputElement)?.select()
+    (e.currentTarget as HTMLInputElement)?.select();
   }
-  emit('focus', e)
-  isFocus.value = true
+  emit("focus", e);
+  isFocus.value = true;
 }
 
 function _blur(e: FocusEvent) {
-  emit('blur', e)
-  isFocus.value = false
+  emit("blur", e);
+  isFocus.value = false;
 }
 
 function handleInput(event: Event) {
-  const target = event.target as HTMLInputElement
-  emit('input', target.value)
+  const target = event.target as HTMLInputElement;
+  emit("input", target.value);
 }
 
 function handleChange(event: Event) {
-  const target = event.target as HTMLInputElement
-  emit('change', target.value)
+  const target = event.target as HTMLInputElement;
+  emit("change", target.value);
 }
 
-function prefixesChange(item: LewContextMenusOption) {
-  prefixValue.value = item.value
-}
-
-function suffixChange(item: LewContextMenusOption) {
-  suffixValue.value = item.value
+/** 边框与内边距等区域未命中 input 时委托聚焦；使用 capture 避免被其它库 stopPropagation */
+function handleInputViewMouseDown(e: MouseEvent) {
+  if (props.disabled || props.readonly) return;
+  const raw = e.target;
+  const el =
+    raw instanceof Element ? raw : raw instanceof Node ? raw.parentElement : null;
+  if (!el) return;
+  if (el.closest(".lew-input-controls")) return;
+  const inputEl = lewInputRef.value;
+  if (!inputEl || inputEl.disabled) return;
+  if (inputEl === el || inputEl.contains(el)) return;
+  nextTick(() => inputEl.focus());
 }
 
 function copy() {
-  const textarea = document.createElement('textarea')
-  textarea.style.cssText = 'position:fixed;top:-200vh;'
-  textarea.value = modelValue.value as string
+  const textarea = document.createElement("textarea");
+  textarea.style.cssText = "position:fixed;top:-200vh;";
+  textarea.value = modelValue.value as string;
 
-  document.body.appendChild(textarea)
-  textarea.select()
+  document.body.appendChild(textarea);
+  textarea.select();
 
-  if (document.execCommand('copy')) {
-    LewMessage.success(locale.t('input.copySuccess'))
-    isCopy.value = true
+  if (document.execCommand("copy")) {
+    LewMessage.success(locale.t("input.copySuccess"));
+    isCopy.value = true;
     timer = setTimeout(() => {
-      isCopy.value = false
-    }, COPY_SUCCESS_DELAY)
-  }
-  else {
-    LewMessage.error(locale.t('input.copyFailed'))
+      isCopy.value = false;
+    }, COPY_SUCCESS_DELAY);
+  } else {
+    LewMessage.error(locale.t("input.copyFailed"));
   }
 
-  document.body.removeChild(textarea)
+  document.body.removeChild(textarea);
 }
 
 // Watchers
 watch(
   () => props.type,
   (v) => {
-    if (v === 'password') {
-      _type.value = 'password'
+    if (v === "password") {
+      _type.value = "password";
     }
-  },
-)
+  }
+);
 
 if (props.okByEnter) {
-  const { enter } = useMagicKeys()
+  const { enter } = useMagicKeys();
   watch(enter, (v) => {
     if (v && isFocus.value) {
-      lewInputRef.value?.blur()
-      emit('ok', modelValue.value)
+      lewInputRef.value?.blur();
+      emit("ok", modelValue.value);
     }
-  })
+  });
 }
 
 // Lifecycle
 onUnmounted(() => {
-  if (timer)
-    clearTimeout(timer)
-})
+  if (timer) clearTimeout(timer);
+});
 
 // Expose
-defineExpose({ focus, blur })
+defineExpose({ focus, blur });
 </script>
 
 <template>
@@ -275,52 +219,8 @@ defineExpose({ focus, blur })
     class="lew-input-view"
     :class="getInputClassNames"
     :style="getInputViewStyle"
+    @click="handleInputViewMouseDown"
   >
-    <div
-      v-if="prefixes"
-      v-tooltip="{
-        content: prefixesTooltip,
-        trigger: 'mouseenter',
-      }"
-      class="lew-input-prefixes"
-    >
-      <div v-if="prefixes === 'text'">
-        {{ prefixValue }}
-      </div>
-      <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-        <CommonIcon :size="getIconSize" :type="prefixValue" />
-      </div>
-      <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
-        <LewDropdown
-          placement="bottom"
-          trigger="click"
-          :options="computedPrefixesOptions"
-          @change="prefixesChange"
-          @show="state.prefixesDropdown = 'show'"
-          @hide="state.prefixesDropdown = 'hide'"
-        >
-          <LewFlex
-            gap="5px"
-            x="start"
-            class="lew-input-prefixes-dropdown"
-            :class="{
-              'lew-input-prefixes-dropdown-open':
-                state.prefixesDropdown === 'show',
-            }"
-            :style="getPrefixesDropdownStyle"
-          >
-            <div>
-              {{ getPrefixesLabel }}
-            </div>
-            <CommonIcon
-              :size="getIconSize"
-              type="chevron-down"
-              class="icon-select"
-            />
-          </LewFlex>
-        </LewDropdown>
-      </div>
-    </div>
     <div class="lew-input-box" :style="getInputBoxStyle">
       <input
         ref="lewInputRef"
@@ -344,10 +244,7 @@ defineExpose({ focus, blur })
       <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear" />
       <div
         v-if="
-          showCloseIcon ||
-            showPasswordIcon ||
-            showCopyIcon ||
-            (modelValue && showCount)
+          showCloseIcon || showPasswordIcon || showCopyIcon || (modelValue && showCount)
         "
         class="lew-input-controls"
       >
@@ -393,49 +290,6 @@ defineExpose({ focus, blur })
         />
       </div>
     </div>
-
-    <div
-      v-if="suffix"
-      v-tooltip="{
-        content: suffixTooltip,
-        trigger: suffixTooltip ? 'mouseenter' : '',
-      }"
-      class="lew-input-suffix"
-    >
-      <div v-if="suffix === 'text'">
-        {{ suffixValue }}
-      </div>
-      <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-        <CommonIcon :size="getIconSize" :type="suffixValue" />
-      </div>
-      <div v-if="suffix === 'select'" class="lew-input-suffix-select">
-        <LewDropdown
-          placement="bottom"
-          trigger="click"
-          :options="computedSuffixOptions"
-          @change="suffixChange"
-          @show="state.suffixDropdown = 'show'"
-          @hide="state.suffixDropdown = 'hide'"
-        >
-          <LewFlex
-            gap="5px"
-            x="start"
-            class="lew-input-suffix-dropdown"
-            :class="{
-              'lew-input-suffix-dropdown-open': state.suffixDropdown === 'show',
-            }"
-            :style="getSuffixDropdownStyle"
-          >
-            <div>{{ getSuffixLabel }}</div>
-            <CommonIcon
-              :size="getIconSize"
-              type="chevron-down"
-              class="icon-select"
-            />
-          </LewFlex>
-        </LewDropdown>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -447,13 +301,13 @@ defineExpose({ focus, blur })
   width: 100%;
   align-items: center;
   justify-content: space-between;
+  cursor: text;
   overflow: hidden;
   background-color: var(--lew-form-bgcolor);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-form-box-shadow);
-  transition:
-    background-color var(--lew-form-transition-ease),
+  transition: background-color var(--lew-form-transition-ease),
     border-color var(--lew-form-transition-ease);
 
   .lew-input-box {
@@ -465,6 +319,7 @@ defineExpose({ focus, blur })
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    cursor: text;
 
     .lew-input {
       height: 100%;
@@ -508,71 +363,6 @@ defineExpose({ focus, blur })
     }
   }
 
-  .lew-input-prefixes,
-  .lew-input-suffix {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    white-space: nowrap;
-    user-select: none;
-
-    .icon-select {
-      transition: transform var(--lew-form-transition-bezier);
-    }
-
-    .icon-select-up {
-      transform: rotate(180deg);
-    }
-  }
-
-  .lew-input-prefixes::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 1px;
-    height: 100%;
-    background: var(--lew-bgcolor-4);
-    content: '';
-    transition: background-color var(--lew-form-transition-ease);
-  }
-
-  .lew-input-suffix::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1px;
-    height: 100%;
-    background: var(--lew-bgcolor-4);
-    content: '';
-    transition: background-color var(--lew-form-transition-ease);
-  }
-
-  .lew-input-prefixes-dropdown,
-  .lew-input-suffix-dropdown {
-    cursor: pointer;
-  }
-
-  .lew-input-prefixes-dropdown-open,
-  .lew-input-suffix-dropdown-open {
-    opacity: 0.4;
-
-    .icon-select {
-      transform: rotate(180deg);
-    }
-  }
-
-  .lew-input-prefixes-icon {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .lew-input-suffix-icon {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   .lew-input {
     box-sizing: border-box;
     width: 100%;
@@ -589,7 +379,7 @@ defineExpose({ focus, blur })
   }
 
   .lew-input::placeholder {
-    color: rgb(165, 165, 165);
+    color: var(--lew-form-placeholder-color);
   }
 }
 
@@ -630,6 +420,11 @@ defineExpose({ focus, blur })
     min-width: 60px;
     height: 1px;
     visibility: hidden;
+    pointer-events: none;
+  }
+
+  .lew-input-auto-width-clear {
+    pointer-events: none;
   }
 
   .lew-input-box {
@@ -644,19 +439,6 @@ defineExpose({ focus, blur })
   .lew-input-box {
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
-  }
-
-  .lew-input-prefixes,
-  .lew-input-suffix,
-  .lew-input-prefixes-dropdown,
-  .lew-input-suffix-dropdown {
-    height: var(--lew-form-item-height-small);
-    line-height: var(--lew-form-input-line-height-small);
-  }
-
-  .lew-input-prefixes,
-  .lew-input-suffix {
-    padding: 0px 7px;
   }
 
   .lew-input {
@@ -691,19 +473,6 @@ defineExpose({ focus, blur })
     font-size: var(--lew-form-font-size-medium);
   }
 
-  .lew-input-prefixes,
-  .lew-input-suffix,
-  .lew-input-prefixes-dropdown,
-  .lew-input-suffix-dropdown {
-    height: var(--lew-form-item-height-medium);
-    line-height: var(--lew-form-input-line-height-medium);
-  }
-
-  .lew-input-prefixes,
-  .lew-input-suffix {
-    padding: 0px 9px;
-  }
-
   .lew-input {
     height: var(--lew-form-item-height-medium);
     font-size: var(--lew-form-font-size-medium);
@@ -734,19 +503,6 @@ defineExpose({ focus, blur })
   .lew-input-box {
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
-  }
-
-  .lew-input-prefixes,
-  .lew-input-suffix,
-  .lew-input-prefixes-dropdown,
-  .lew-input-suffix-dropdown {
-    height: var(--lew-form-item-height-large);
-    line-height: var(--lew-form-input-line-height-large);
-  }
-
-  .lew-input-prefixes,
-  .lew-input-suffix {
-    padding: 0px 12px;
   }
 
   .lew-input {
@@ -795,27 +551,11 @@ defineExpose({ focus, blur })
 
 .lew-input-view:hover {
   background-color: var(--lew-form-bgcolor-hover);
-
-  .lew-input-prefixes::after {
-    background: var(--lew-bgcolor-6);
-  }
-
-  .lew-input-suffix::before {
-    background: var(--lew-bgcolor-6);
-  }
 }
 
 .lew-input-view:focus-within {
   background-color: var(--lew-form-bgcolor-focus);
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-
-  .lew-input-prefixes::after {
-    background: var(--lew-bgcolor-4);
-  }
-
-  .lew-input-suffix::before {
-    background: var(--lew-bgcolor-4);
-  }
 }
 
 .lew-input-view-readonly {

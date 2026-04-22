@@ -206,25 +206,6 @@ export default {
         value: '徽章值（为空时，会显示为点）',
       },
     },
-    title: {
-      name: '标题 Title',
-      description: '不只是标题，更是内容的灵魂提示',
-      demo1: {
-        title: '基础用法',
-      },
-      demo2: {
-        title: '粗体',
-      },
-      demo3: {
-        title: '色彩',
-      },
-      props: {
-        text: '文本内容',
-        size: '标题文字大小，可以是数字（单位：像素）或字符串（如 "1.5em"）',
-        bold: '标题文字粗细程度，可选值为 100 到 900 之间的整百数',
-        color: '标题文字颜色，可选值包括预定义的颜色名称或自定义的颜色值',
-      },
-    },
     textTrim: {
       name: '文本截断 TextTrim',
       description: '优雅地处理过长文本，不让它破坏布局的美感',
@@ -275,77 +256,6 @@ export default {
         wrap: '是否允许子元素在空间不足时自动换行',
         gap: '子元素之间的间距（单位：像素）',
         width: 'Flex 容器的宽度（单位：像素或百分比）',
-      },
-    },
-    mark: {
-      name: '标记 Mark',
-      description: '为文字添加高亮标记，让重点内容一目了然',
-      demo1: {
-        title: '基础用法',
-      },
-      props: {
-        color: '颜色主题',
-        round: '是否圆角',
-        bold: '是否加粗',
-        cursor: '鼠标悬停时的光标样式',
-      },
-    },
-    icon: {
-      name: '图标 Icon',
-      description: '精美的图标集合，为界面增添视觉语言',
-    },
-    backTop: {
-      name: '返回顶部 BackTop',
-      description: '一键回到顶部，让长页面浏览不再烦恼',
-      demo1: {
-        title: '基本用法',
-      },
-      demo2: {
-        title: '自定义内容',
-      },
-      demo3: {
-        title: '指令方式触发',
-      },
-      props: {
-        target:
-          '指定触发滚动事件的目标元素，使用 CSS 选择器。如果为空，则默认为整个窗口。',
-        right: '设置组件距离页面右侧的距离，单位为像素。',
-        bottom: '设置组件距离页面底部的距离，单位为像素。',
-        valveHeight:
-          '设置页面滚动高度的阈值，当滚动高度超过此值时显示回到顶部按钮，单位为像素。',
-      },
-      emits: {
-        click: '回到顶部事件回调',
-      },
-    },
-    steps: {
-      name: '步骤条 Steps',
-      description: '清晰展示操作流程，让用户知道自己在哪',
-      demo1: {
-        title: '基础用法',
-      },
-      demo2: {
-        title: '状态',
-      },
-      demo3: {
-        title: '加载中',
-      },
-      model: {
-        modelValue: '当前激活步骤的索引值',
-      },
-      props: {
-        options: '步骤配置项数组',
-        status: '步骤条的当前状态',
-        minWidth: '最小步骤宽度',
-        canClickItem: '是否可以点击步骤项切换',
-        canCrossSteps: '是否可以跨步骤切换',
-      },
-      options: {
-        title: '步骤标题',
-        description: '步骤描述',
-      },
-      emits: {
-        change: '步骤切换时触发',
       },
     },
     menu: {
@@ -440,31 +350,6 @@ export default {
         show: '菜单显示事件回调',
         hide: '菜单隐藏事件回调',
         change: '菜单项选择事件回调',
-      },
-    },
-    breadcrumb: {
-      name: '面包屑 Breadcrumb',
-      description: '清晰的路径导航，让用户不会迷失方向',
-      demo1: {
-        title: '基础用法',
-      },
-      demo2: {
-        title: '自定义当前选中',
-      },
-      demo3: {
-        title: '分割图标类型',
-      },
-      props: {
-        options: '面包屑配置项数组',
-        separator: '分隔符图标类型',
-      },
-      breadcrumbOptions: {
-        label: '面包屑项的文本',
-        value: '面包屑项的值',
-        active: '是否为当前选中项',
-      },
-      emits: {
-        change: '面包屑项切换时触发',
       },
     },
     contextMenu: {
@@ -591,33 +476,30 @@ export default {
         title: '基础用法',
       },
       demo2: {
-        title: '前后缀',
-      },
-      demo3: {
         title: '字数限制',
       },
-      demo4: {
+      demo3: {
         title: '对齐方式',
       },
-      demo5: {
+      demo4: {
         title: '密码可见',
       },
-      demo6: {
+      demo5: {
         title: '宽度自适应',
       },
-      demo7: {
+      demo6: {
         title: '聚焦后选择全部文本',
       },
-      demo8: {
+      demo7: {
         title: '可清空的',
       },
-      demo9: {
+      demo8: {
         title: '只读状态',
       },
-      demo10: {
+      demo9: {
         title: '禁用状态',
       },
-      demo11: {
+      demo10: {
         title: '按下回车键触发事件',
       },
       props: {
@@ -635,14 +517,7 @@ export default {
         minWidth: '输入框最小宽度，支持数字（单位：像素）或带单位的字符串',
         autoWidth: '是否根据内容自动调整宽度',
         selectByFocus: '是否启用聚焦后选择全部文本',
-        copyable:
-          '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）',
-        prefixes: '输入框前缀类型',
-        prefixesOptions: '输入框前缀选项列表，当 prefixes 为 select 时使用',
-        prefixesTooltip: '输入框前缀的 tooltip 提示文本',
-        suffix: '输入框后缀类型',
-        suffixOptions: '输入框后缀选项列表，当 suffix 为 select 时使用',
-        suffixTooltip: '输入框后缀的 tooltip 提示文本',
+        copyable: '是否允许复制内容（仅在 readonly 为 true 时生效）',
         okByEnter: '是否允许通过回车键确认输入',
       },
       emits: {
@@ -655,8 +530,6 @@ export default {
       },
       model: {
         modelValue: '输入框的绑定值',
-        prefixValue: '输入框前缀的绑定值',
-        suffixValue: '输入框后缀的绑定值',
       },
     },
     inputNumber: {
@@ -736,7 +609,8 @@ export default {
         showCount: '是否显示字符计数',
         maxLength: '最大输入字符数',
         size: '文本域尺寸',
-        resize: '调整尺寸的方向',
+        resize:
+          '右下角拖动手柄调整尺寸方向（none / vertical / horizontal / both），已禁用原生缩放',
         width: '宽度',
         height: '高度',
         minWidth: '最小宽度',
@@ -1388,39 +1262,6 @@ export default {
         clear: '清空时触发',
       },
     },
-    inputTable: {
-      name: '表格输入框 InputTable',
-      description: '在表格中快速输入数据，让批量处理更加高效',
-      demo1: {
-        title: '基础用法',
-      },
-      demo2: {
-        title: '默认值',
-      },
-      demo3: {
-        title: '更丰富',
-      },
-      props: {
-        columns: '列配置',
-        size: '尺寸',
-        width: '宽度',
-        rowKey: '行键',
-        batchDeletable: '是否支持批量删除',
-        addable: '是否可添加',
-        defaultForm: '默认表单',
-        deletable: '是否可删除',
-        maxRows: '最大行数',
-        minRows: '最小行数',
-        clearable: '是否可清空',
-        sortable: '是否可排序',
-        autoUniqueId: '是否自动生成唯一ID',
-        uniqueField: '唯一字段',
-        sortTooltipCustomRender: '排序提示自定义渲染',
-      },
-      emits: {
-        change: '值发生变化时触发',
-      },
-    },
     switch: {
       name: '开关 Switch',
       description: '简洁的开关选择器，让状态切换更加明确',
@@ -1716,7 +1557,7 @@ export default {
     },
     pagination: {
       name: '分页 Pagination',
-      description: '清晰的分页导航，让数据浏览更加轻松',
+      description: '清晰的分页导航：页码成组展示，每页条数与跳转分区排列，支持跳转按钮与 Enter 确认',
       demo1: {
         title: '基础用法',
       },
@@ -1735,6 +1576,7 @@ export default {
         size: '尺寸',
         pageSizeOptions: '每页大小选项',
         visiblePagesCount: '可见页数',
+        showSummary: '展示位置摘要（当前页、总页数、总条数）',
       },
       emits: {
         change: '分页变化时触发',
@@ -1920,6 +1762,9 @@ export default {
       demo3: {
         title: '模拟请求',
       },
+      demo4: {
+        title: '堆叠效果',
+      },
       emits: {
         close: '关闭时触发',
       },
@@ -1987,10 +1832,8 @@ export default {
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         hideFooter: '是否隐藏底部',
-        hideOkButton: '是否隐藏确认按钮',
-        hideCloseButton: '是否隐藏关闭按钮',
-        okButtonProps: '确认按钮的属性',
-        closeButtonProps: '取消按钮的属性',
+        footerButtons:
+          '底部按钮列表（每项 props 透传 LewButton，含 request）；不传为默认单个「确认」并关闭',
         zIndex: '层级',
       },
       emits: {
@@ -2018,16 +1861,17 @@ export default {
       demo6: {
         title: '自定义图标',
       },
+      demo7: {
+        title: '自定义底部按钮',
+      },
       props: {
         type: '类型',
         width: '宽度',
         trigger: '触发方式',
         title: '标题',
         content: '内容',
-        okText: '确认按钮文本',
-        cancelText: '取消按钮文本',
-        ok: '确认回调',
-        cancel: '取消回调',
+        footerButtons:
+          '底部按钮列表（每项 props 透传 LewButton，含 request；request 返回 false 时不关闭）；不传为默认单个「确认」并关闭',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         transformOrigin: '动画原点',
@@ -2054,6 +1898,17 @@ export default {
       demo4: {
         title: '是否允许esc关闭',
       },
+      demo5: {
+        title: '嵌套对话框',
+      },
+      demo6: {
+        title: '对话框和抽屉嵌套',
+        description:
+          '复杂场景下的多层嵌套，支持对话框中打开抽屉、抽屉中打开对话框，最多支持4层嵌套。',
+      },
+      demo7: {
+        title: 'footerButtons 动态底部',
+      },
       model: {
         visible: '是否显示',
       },
@@ -2062,11 +1917,9 @@ export default {
         width: '宽度',
         top: '距离顶部的距离',
         hideFooter: '是否隐藏底部',
-        hideOkButton: '是否隐藏确认按钮',
-        hideCloseButton: '是否隐藏关闭按钮',
+        footerButtons:
+          '底部按钮列表（每项 props 透传 LewButton，含 request）；不传为默认单个「确认」并关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
-        okButtonProps: '确认按钮属性',
-        closeButtonProps: '取消按钮属性',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         zIndex: '层级',
         maxHeight: '最大高度',
@@ -2090,6 +1943,9 @@ export default {
       demo5: {
         title: '自定义内容',
       },
+      demo6: {
+        title: '自定义底部按钮',
+      },
       props: {
         type: '类型',
         width: '宽度',
@@ -2097,10 +1953,8 @@ export default {
         title: '标题',
         content: '内容',
         placement: '位置',
-        okText: '确认按钮文本',
-        cancelText: '取消按钮文本',
-        ok: '确认回调',
-        cancel: '取消回调',
+        footerButtons:
+          '底部按钮列表（每项 props 透传 LewButton，含 request；request 返回 false 时不关闭）；不传为默认单个「确认」并关闭',
         icon: '自定义图标',
         hideIcon: '是否隐藏图标',
       },
@@ -2199,21 +2053,6 @@ export default {
       },
       slots: {
         handle: '插槽处理',
-      },
-    },
-    empty: {
-      name: '空状态 Empty',
-      description: '空数据状态展示，让空白页面更加友好',
-      demo1: {
-        title: '基础用法',
-      },
-      props: {
-        type: '类型',
-        title: '标题',
-        fontSize: '字体大小',
-        padding: '内边距',
-        width: '宽度',
-        height: '高度',
       },
     },
   },

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="LewContextMenu">
 import type { LewContextMenusOption } from 'lew-ui/types'
 import type { Instance as TippyInstance } from 'tippy.js'
-import { LewEmpty, LewFlex } from 'lew-ui'
+import { LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import _LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
@@ -69,7 +69,7 @@ const TIPPY_CONFIG = {
   trigger: 'mouseenter' as const,
   interactive: true,
   placement: 'right-start' as const,
-  duration: [250, 250] as [number, number],
+  duration: [150, 150] as [number, number],
   delay: [120, 120] as [number, number],
   arrow: false,
   offset: [0, 0] as [number, number],
@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
         }"
       >
         <div
-          :ref="(el: Element | ComponentPublicInstance | null) => setItemRef(el, index)"
+          :ref="(el: any) => setItemRef(el, index)"
           class="lew-context-menu-item"
           :style="{ 'animation-delay': `${index * 10}ms` }"
           :class="{
@@ -208,14 +208,7 @@ onBeforeUnmount(() => {
       </div>
     </template>
 
-    <LewEmpty
-      v-else
-      width="120px"
-      padding="5px"
-      font-size="12px"
-      type="search"
-      title="暂无操作"
-    />
+    <span v-else class="lew-context-menu-empty">{{ locale.t('contextMenu.noActions') }}</span>
   </LewFlex>
 </template>
 
@@ -333,6 +326,17 @@ onBeforeUnmount(() => {
     height: 0px;
     border-bottom: var(--lew-pop-border);
   }
+}
+
+.lew-context-menu-empty {
+  display: block;
+  box-sizing: border-box;
+  width: 120px;
+  padding: 5px;
+  font-size: 12px;
+  color: var(--lew-text-color-5);
+  text-align: center;
+  line-height: 1.5;
 }
 
 .lew-context-menu-item-active {

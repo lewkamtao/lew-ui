@@ -44,6 +44,7 @@ export default {
   },
   textarea: {
     placeholder: 'Bitte eingeben',
+    resizeHandle: 'Zum Größenändern ziehen',
   },
   inputNumber: {
     placeholder: 'Bitte eingeben',
@@ -74,36 +75,25 @@ export default {
     placeholderStart: 'Startdatum',
     placeholderEnd: 'Enddatum',
   },
-  inputTable: {
-    addText: 'Hinzufügen',
-    deleteConfirm: 'Löschen bestätigen',
-    delete: 'Löschen',
-    cancel: 'Abbrechen',
-    deleteConfirmContent:
-      'Sind Sie sicher, dass Sie diese Daten löschen möchten? Diese Aktion wird sofort wirksam, bitte seien Sie vorsichtig!',
-    minRows: 'Minimale Zeilenanzahl erreicht, Löschen nicht möglich',
-    maxRows: 'Maximale Zeilenanzahl erreicht, Hinzufügen nicht möglich',
-    uniqueFieldExist:
-      'Dieses {label} existiert bereits. Bitte geben Sie ein eindeutiges {label} ein.',
-    save: 'Speichern',
-    modelTitle: 'Daten hinzufügen',
-    editTitle: 'Daten bearbeiten',
-  },
   drawer: {
     closeText: 'Schließen',
     okText: 'OK',
+    confirmText: 'Bestätigen',
   },
   modal: {
     closeText: 'Schließen',
     okText: 'OK',
+    confirmText: 'Bestätigen',
   },
   dialog: {
     cancelText: 'Abbrechen',
     okText: 'OK',
+    confirmText: 'Bestätigen',
   },
   popok: {
     cancelText: 'Abbrechen',
     okText: 'OK',
+    confirmText: 'Bestätigen',
   },
   colorPicker: {
     placeholder: 'Bitte eingeben',
@@ -126,7 +116,19 @@ export default {
   },
   pagination: {
     pageSize: '{pageSize} pro Seite',
-    jumpTo: 'Springen zu',
+    jumpTo: 'Seite',
+    jumpConfirm: 'Los',
+    summary: 'Seite {current} von {totalPages} · {total} Einträge',
+    perPage: 'Pro Seite',
+    prevSection: 'Vorherige Seiten',
+    nextSection: 'Weitere Seiten',
+    navLabel: 'Seitennummerierung',
+    jumpGroup: 'Zu Seite springen',
+    prevPage: 'Vorherige Seite',
+    nextPage: 'Nächste Seite',
+  },
+  contextMenu: {
+    noActions: 'Keine Aktionen verfügbar',
   },
   empty: {
     title: 'Keine Daten',

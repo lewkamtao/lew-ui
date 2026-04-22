@@ -222,13 +222,27 @@ function deleteItem(item: any) {
   LewDialog.error({
     title: '确认删除',
     content: '删除后无法恢复，请谨慎操作',
-    cancelText: '手滑了',
-    ok: () => {
-      return new Promise((resolve) => {
-        options.value = options.value.filter((e: any) => e.id !== item.id)
-        resolve(true)
-      })
-    },
+    footerButtons: [
+      {
+        props: {
+          text: '手滑了',
+          color: 'gray',
+          type: 'light',
+          size: 'small',
+        },
+      },
+      {
+        props: {
+          text: '确定',
+          type: 'fill',
+          size: 'small',
+          color: 'error',
+          request: async () => {
+            options.value = options.value.filter((e: any) => e.id !== item.id)
+          },
+        },
+      },
+    ],
   })
 }
 
@@ -252,14 +266,19 @@ if (!isInfo) {
     title: '温馨提示',
     content:
       '当前表单引擎仍处于开发测试状态，请勿用于生产环境，当前配置项仍未完善，持续更新中，敬请期待。',
-    cancelText: '',
-    okText: '知道了',
-    ok: () => {
-      return new Promise((resolve) => {
-        localStorage.setItem('isAlertByFormEngine', '1')
-        resolve(true)
-      })
-    },
+    footerButtons: [
+      {
+        props: {
+          text: '知道了',
+          type: 'fill',
+          size: 'small',
+          color: 'warning',
+          request: async () => {
+            localStorage.setItem('isAlertByFormEngine', '1')
+          },
+        },
+      },
+    ],
   })
 }
 
@@ -509,7 +528,7 @@ onMounted(() => {
                 "
               />
               <lew-flex v-else>
-                <lew-empty title="开发中，敬请期待" />
+                <div class="form-engine-placeholder-empty">开发中，敬请期待</div>
               </lew-flex>
             </lew-flex>
           </lew-flex>
@@ -815,5 +834,13 @@ onMounted(() => {
   width: 100%;
   border-top: 1px solid var(--lew-bgcolor-3);
   border-bottom: 1px solid var(--lew-bgcolor-3);
+}
+
+.form-engine-placeholder-empty {
+  padding: 24px 16px;
+  color: var(--lew-text-color-5);
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
 }
 </style>

@@ -59,6 +59,38 @@ export function numFormat(num: number) {
   return integerPart + decimalPart
 }
 
+/** 与 lib/locals 语言码对齐，供 Intl 千分位等使用 */
+const LIB_LOCALE_TO_INTL: Record<string, string> = {
+  zh: 'zh-CN',
+  en: 'en-US',
+  ja: 'ja-JP',
+  ko: 'ko-KR',
+  de: 'de-DE',
+  fr: 'fr-FR',
+  es: 'es-ES',
+  it: 'it-IT',
+  pt: 'pt-BR',
+}
+
+/**
+ * 按当前语言环境格式化整数（千分位等），不含小数
+ */
+export function formatIntegerLocale(num: number, libLocale: string): string {
+  if (!Number.isFinite(num))
+    return String(num)
+  const n = Math.trunc(num)
+  const intlTag = LIB_LOCALE_TO_INTL[libLocale] ?? libLocale
+  try {
+    return new Intl.NumberFormat(intlTag, {
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    }).format(n)
+  }
+  catch {
+    return numFormat(n)
+  }
+}
+
 export function any2px(value: number | string | undefined): string {
   if (!value) {
     return ''

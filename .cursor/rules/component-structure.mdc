@@ -42,6 +42,34 @@ button/
     └── SubComponent.vue      # 子组件（如 LewButtonGroup）
 ```
 
+## 文档配套规范
+
+> **重要性**：⭐⭐⭐⭐⭐  
+> 组件不再维护根目录 `.mdc` 文档，文档能力统一放在 `docs/docs/`、`docs/locals/` 与 API 导出中。
+
+### 文档目录建议
+
+```text
+docs/docs/button/
+├── index.ts
+├── DemoButton.vue
+├── api/
+│   ├── index.ts
+│   ├── props.ts
+│   ├── emits.ts
+│   └── model.ts      # 如组件支持 v-model
+└── demo/
+    ├── index.ts
+    ├── DemoButton1.vue
+    └── DemoButton1.vue?raw
+```
+
+### 文档维护要求
+- 为组件提供可运行示例，并保持示例代码与实际行为一致
+- 在 `docs/docs/{component}/api/` 中导出 props、emits、model 等 API 数据
+- 在 `docs/locals/` 中维护组件名称、描述、API 字段说明等文案
+- 不要新增组件根目录 `{component-name}.mdc` 文件
+
 ## 自动导入规范
 
 ### Vue API 自动导入
@@ -1249,6 +1277,11 @@ import { LewButton } from 'lew-ui'  // 只打包 Button
 - [ ] 类名遵循 BEM 规范
 - [ ] 没有 TypeScript 错误
 - [ ] 没有 ESLint/Stylelint 错误
+
+### 文档配套
+- [ ] 组件示例已放在 `docs/docs/{component}/demo/`
+- [ ] `docs/docs/{component}/api/` 已导出最新 Props/Events/Model 信息
+- [ ] `docs/locals/` 中的名称、描述和 API 文案已同步
 
 ### v-model 支持（如适用）
 - [ ] 组件内使用 `defineModel` API

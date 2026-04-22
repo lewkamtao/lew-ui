@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
+import type { CSSProperties } from 'vue'
+import { useDebounceFn, useMagicKeys } from '@vueuse/core'
 import { LewTooltip, locale } from 'lew-ui'
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import { any2px, object2class } from 'lew-ui/utils'
-import { throttle } from 'lodash-es'
 import { textareaEmits } from './emits'
 import { textareaProps } from './props'
 
@@ -15,33 +15,28 @@ const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const lewTextareaRef = ref()
-const lewTextareaViewRef = ref()
-
-const resizeObj = ref({
-  height: 0,
-  width: 0,
-})
-
-const handleResize = throttle(() => {
-  if (props.resize !== 'none') {
-    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
-    resizeObj.value = {
-      width,
-      height,
-    }
-  }
-}, 250)
-
-onMounted(() => {
-  // 只在客户端环境下使用 ResizeObserver
-  useResizeObserver(lewTextareaViewRef, handleResize)
-})
+const lewTextareaRef = ref<HTMLTextAreaElement>()
+const wrapperRef = ref<HTMLElement>()
 
 const modelValue: Ref<string | undefined> = defineModel()
 const state = reactive({
   isFocus: false,
 })
+
+/** 用户拖动手柄后的像素尺寸；未拖动轴向沿用 props（如 width: 100%） */
+const userBoxPx = reactive<{ w?: number; h?: number }>({})
+
+let resizeSession: {
+  pointerId: number
+  startX: number
+  startY: number
+  startW: number
+  startH: number
+  minW: number
+  maxW: number
+  minH: number
+  maxH: number
+} | null = null
 
 function clear(): void {
   modelValue.value = undefined
@@ -87,37 +82,184 @@ function handleChange(event: Event) {
   emit('change', target.value)
 }
 
-const getTextareaStyle: any = computed(() => {
-  const {
-    width,
-    height,
-    size,
-    resize,
-    maxHeight,
-    minHeight,
-    maxWidth,
-    minWidth,
-  } = props
-  const heightMap: Record<string, number> = {
-    small: 60,
-    medium: 75,
-    large: 90,
+const resizeHoriz = computed(
+  () => props.resize === 'horizontal' || props.resize === 'both',
+)
+const resizeVert = computed(
+  () => props.resize === 'vertical' || props.resize === 'both',
+)
+const showResizeHandle = computed(
+  () => props.resize !== 'none' && !props.disabled,
+)
+
+function parseCssBoundPx(raw: string, kind: 'min' | 'max'): number {
+  const s = raw?.trim() ?? ''
+  if (kind === 'max' && (s === '' || s === 'none')) {
+    return Number.POSITIVE_INFINITY
   }
-  const obj = {
-    resize: resize as string,
-    minWidth: width ? any2px(width) : any2px(minWidth),
-    minHeight: height ? any2px(height || heightMap[size]) : any2px(minHeight),
+  if (kind === 'min' && (s === '' || s === 'auto')) {
+    return 0
+  }
+  const n = Number.parseFloat(s)
+  if (!Number.isFinite(n)) {
+    return kind === 'min' ? 0 : Number.POSITIVE_INFINITY
+  }
+  return n
+}
+
+function clamp(n: number, min: number, max: number): number {
+  if (max < min) {
+    return n
+  }
+  return Math.min(max, Math.max(min, n))
+}
+
+function readResizeBounds(el: HTMLElement) {
+  const cs = getComputedStyle(el)
+  return {
+    minW: parseCssBoundPx(cs.minWidth, 'min'),
+    maxW: parseCssBoundPx(cs.maxWidth, 'max'),
+    minH: parseCssBoundPx(cs.minHeight, 'min'),
+    maxH: parseCssBoundPx(cs.maxHeight, 'max'),
+  }
+}
+
+function onResizePointerDown(e: PointerEvent) {
+  if (!showResizeHandle.value) {
+    return
+  }
+  e.preventDefault()
+  e.stopPropagation()
+  const wrap = wrapperRef.value
+  if (!wrap) {
+    return
+  }
+  const rect = wrap.getBoundingClientRect()
+  const b = readResizeBounds(wrap)
+  resizeSession = {
+    pointerId: e.pointerId,
+    startX: e.clientX,
+    startY: e.clientY,
+    startW: rect.width,
+    startH: rect.height,
+    minW: b.minW,
+    maxW: b.maxW,
+    minH: b.minH,
+    maxH: b.maxH,
+  }
+  document.body.style.userSelect = 'none'
+  ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+}
+
+function onResizePointerMove(e: PointerEvent) {
+  if (!resizeSession || e.pointerId !== resizeSession.pointerId) {
+    return
+  }
+  const dx = e.clientX - resizeSession.startX
+  const dy = e.clientY - resizeSession.startY
+  if (resizeHoriz.value) {
+    userBoxPx.w = clamp(
+      resizeSession.startW + dx,
+      resizeSession.minW,
+      resizeSession.maxW,
+    )
+  }
+  if (resizeVert.value) {
+    userBoxPx.h = clamp(
+      resizeSession.startH + dy,
+      resizeSession.minH,
+      resizeSession.maxH,
+    )
+  }
+}
+
+function endResize(e: PointerEvent) {
+  if (!resizeSession || e.pointerId !== resizeSession.pointerId) {
+    return
+  }
+  const target = e.currentTarget as HTMLElement
+  try {
+    target.releasePointerCapture(e.pointerId)
+  }
+  catch {
+    /* ignore */
+  }
+  resizeSession = null
+  document.body.style.userSelect = ''
+}
+
+function onResizeLostCapture(e: PointerEvent) {
+  if (resizeSession && e.pointerId === resizeSession.pointerId) {
+    resizeSession = null
+    document.body.style.userSelect = ''
+  }
+}
+
+const wrapperStyle = computed((): CSSProperties => {
+  const { width, height, minWidth, minHeight, maxWidth, maxHeight } = props
+  const style: CSSProperties = {
+    minWidth: any2px(minWidth),
     maxWidth: any2px(maxWidth),
+    minHeight: any2px(minHeight),
     maxHeight: any2px(maxHeight),
-    width: any2px(width),
-    height: any2px(height || heightMap[size]),
   }
-  if (resizeObj.value.width > 0) {
-    obj.width = `${resizeObj.value.width}px`
-    obj.height = `${resizeObj.value.height}px`
+  if (userBoxPx.w != null && resizeHoriz.value) {
+    style.width = `${userBoxPx.w}px`
   }
-  return obj
+  else {
+    const w = any2px(width)
+    if (w) {
+      style.width = w
+    }
+  }
+  if (userBoxPx.h != null && resizeVert.value) {
+    style.height = `${userBoxPx.h}px`
+  }
+  else {
+    const h = any2px(height)
+    if (h) {
+      style.height = h
+    }
+  }
+  return style
 })
+
+const textareaStyle = computed(
+  (): CSSProperties => ({
+    resize: 'none',
+    width: '100%',
+    height: '100%',
+    minHeight: 0,
+    maxHeight: 'none',
+  }),
+)
+
+const resizeHandleCursor = computed(() => {
+  if (props.resize === 'vertical') {
+    return 'ns-resize'
+  }
+  if (props.resize === 'horizontal') {
+    return 'ew-resize'
+  }
+  return 'nwse-resize'
+})
+
+watch(
+  () =>
+    [
+      props.width,
+      props.height,
+      props.minWidth,
+      props.minHeight,
+      props.maxWidth,
+      props.maxHeight,
+      props.resize,
+    ] as const,
+  () => {
+    userBoxPx.w = undefined
+    userBoxPx.h = undefined
+  },
+)
 
 const ok = useDebounceFn(() => {
   emit('ok', modelValue.value)
@@ -140,15 +282,19 @@ defineExpose({ focus, blur })
 
 <template>
   <div
-    ref="lewTextareaViewRef"
+    ref="wrapperRef"
     class="lew-textarea-view"
-    :style="getTextareaStyle"
-    :class="getTextareaClassNames"
+    :class="[
+      getTextareaClassNames,
+      { 'lew-textarea-view--clearable': clearable && !readonly },
+    ]"
+    :style="wrapperStyle"
   >
     <textarea
       ref="lewTextareaRef"
       v-model="modelValue"
       class="lew-textarea lew-scrollbar"
+      :style="textareaStyle"
       :placeholder="
         placeholder ? placeholder : locale.t('textarea.placeholder')
       "
@@ -161,7 +307,25 @@ defineExpose({ focus, blur })
       @change="handleChange"
     />
 
-    <div v-if="modelValue && showCount" class="lew-textarea-count">
+    <button
+      v-if="showResizeHandle"
+      type="button"
+      class="lew-textarea-resize-handle"
+      :style="{ cursor: resizeHandleCursor }"
+      :aria-label="locale.t('textarea.resizeHandle')"
+      tabindex="-1"
+      @pointerdown="onResizePointerDown"
+      @pointermove="onResizePointerMove"
+      @pointerup="endResize"
+      @pointercancel="endResize"
+      @lostpointercapture="onResizeLostCapture"
+    />
+
+    <div
+      v-if="modelValue && showCount"
+      class="lew-textarea-count"
+      :class="{ 'lew-textarea-count--with-handle': showResizeHandle }"
+    >
       {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : "" }}
     </div>
     <CloseIcon
@@ -177,6 +341,8 @@ defineExpose({ focus, blur })
 .lew-textarea-view {
   position: relative;
   display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
   width: 100%;
   overflow: hidden;
   box-sizing: border-box;
@@ -190,19 +356,51 @@ defineExpose({ focus, blur })
     height 0s;
 
   .lew-textarea {
+    flex: 1 1 auto;
+    min-height: 0;
     width: 100%;
-    height: 100%;
     text-overflow: ellipsis;
     border: none;
     background: none;
     color: var(--lew-text-color-1);
     outline: none;
     box-sizing: border-box;
-    resize: none;
   }
 
   .lew-textarea::placeholder {
-    color: rgb(165, 165, 165);
+    color: var(--lew-form-placeholder-color);
+  }
+
+  .lew-textarea-resize-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0 0 var(--lew-border-radius-small) 0;
+    background: transparent;
+    touch-action: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 3px;
+      bottom: 3px;
+      width: 7px;
+      height: 7px;
+      border-right: 2px solid var(--lew-text-color-5);
+      border-bottom: 2px solid var(--lew-text-color-5);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    &:hover::after {
+      opacity: 0.85;
+    }
   }
 
   .lew-textarea-count {
@@ -219,6 +417,11 @@ defineExpose({ focus, blur })
     user-select: none;
     transition: opacity var(--lew-form-transition-ease);
   }
+
+  .lew-textarea-count--with-handle {
+    right: 16px;
+  }
+
   .lew-textarea-count:hover {
     opacity: 0.2;
   }
@@ -280,46 +483,17 @@ defineExpose({ focus, blur })
   }
 }
 
-.lew-textarea-view-textarea {
-  position: relative;
-  flex-direction: column;
-  justify-content: center;
+/* clearable：为右上角关闭按钮预留右侧空间；未开启时保持表单默认左右对称 padding，内容占满可用宽度 */
+.lew-textarea-view--clearable.lew-textarea-view-size-small .lew-textarea {
+  padding-right: 32px;
 }
 
-.lew-textarea-view {
-  .resize-btn {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    width: 10px;
-    height: 10px;
-    border-radius: 4px;
-    content: '';
-    z-index: 9;
-    opacity: 1;
-    display: none;
-  }
+.lew-textarea-view--clearable.lew-textarea-view-size-medium .lew-textarea {
+  padding-right: 34px;
 }
 
-.lew-textarea-view-resize-both {
-  .resize-btn {
-    display: block;
-    cursor: nwse-resize;
-  }
-}
-
-.lew-textarea-view-resize-vertical {
-  .resize-btn {
-    display: block;
-    cursor: row-resize;
-  }
-}
-
-.lew-textarea-view-resize-horizontal {
-  .resize-btn {
-    display: block;
-    cursor: col-resize;
-  }
+.lew-textarea-view--clearable.lew-textarea-view-size-large .lew-textarea {
+  padding-right: 36px;
 }
 
 .lew-textarea-view:hover {
@@ -338,7 +512,7 @@ defineExpose({ focus, blur })
 
 .lew-textarea-view-readonly {
   user-select: text;
-  pointer-events: none; //鼠标点击不可修改
+  /* 保留选择与复制，仅依赖 readonly 属性禁止编辑 */
 }
 
 .lew-textarea-view-disabled {

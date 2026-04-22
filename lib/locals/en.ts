@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: 'Please input',
+    resizeHandle: 'Drag to resize',
   },
   inputNumber: {
     placeholder: 'Please input',
@@ -73,36 +74,25 @@ export default {
     placeholderStart: 'Start date',
     placeholderEnd: 'End date',
   },
-  inputTable: {
-    addText: 'Add',
-    deleteConfirm: 'Delete Confirmation',
-    delete: 'Delete',
-    cancel: 'Cancel',
-    deleteConfirmContent:
-      'Are you sure you want to delete this data? This operation will take effect immediately, please proceed with caution!',
-    minRows: 'Minimum row limit reached, cannot delete',
-    maxRows: 'Maximum row limit reached, cannot add',
-    uniqueFieldExist:
-      'This {label} already exists. Please enter a unique {label}.',
-    save: 'Save',
-    modelTitle: 'Add Data',
-    editTitle: 'Edit Data',
-  },
   drawer: {
     closeText: 'Close',
     okText: 'OK',
+    confirmText: 'Confirm',
   },
   modal: {
     closeText: 'Close',
     okText: 'OK',
+    confirmText: 'Confirm',
   },
   dialog: {
     cancelText: 'Cancel',
     okText: 'OK',
+    confirmText: 'Confirm',
   },
   popok: {
     cancelText: 'Cancel',
     okText: 'OK',
+    confirmText: 'Confirm',
   },
   colorPicker: {
     placeholder: 'Please input',
@@ -125,7 +115,19 @@ export default {
   },
   pagination: {
     pageSize: '{pageSize} items/page',
-    jumpTo: 'Jump to',
+    jumpTo: 'Page',
+    jumpConfirm: 'Go',
+    summary: 'Page {current} of {totalPages} · {total} items',
+    perPage: 'Per page',
+    prevSection: 'Earlier pages',
+    nextSection: 'Later pages',
+    navLabel: 'Pagination',
+    jumpGroup: 'Go to page',
+    prevPage: 'Previous page',
+    nextPage: 'Next page',
+  },
+  contextMenu: {
+    noActions: 'No actions available',
   },
   empty: {
     title: 'No data',

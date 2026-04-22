@@ -93,8 +93,6 @@ const columns = [
 
 const selectedKeys = ref<number[]>([])
 
-const tableRef = ref()
-
 function setSelectedBrands() {
   selectedKeys.value = [2, 3]
 }
@@ -107,7 +105,6 @@ function setSelectedBrands() {
     </lew-button>
     <div>Selected: {{ selectedKeys }}</div>
     <lew-table
-      ref="tableRef"
       v-model:selected-keys="selectedKeys"
       :data-source="data"
       :columns="columns"

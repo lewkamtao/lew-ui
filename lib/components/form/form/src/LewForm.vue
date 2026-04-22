@@ -8,6 +8,7 @@ import {
   retrieveNestedFieldValue,
 } from 'lew-ui/utils'
 import { debounce } from 'lodash-es'
+import { ref } from 'vue'
 import * as Yup from 'yup'
 import { formEmits } from './emits'
 import LewFormItem from './LewFormItem.vue'
@@ -16,6 +17,7 @@ import { formProps } from './props'
 
 const props = defineProps(formProps)
 const emit = defineEmits(formEmits)
+
 const formMap = ref<Record<string, any>>({})
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
@@ -30,11 +32,7 @@ const normalizePropCache = new Map<
 >()
 
 function normalizeProp(
-  value:
-    | string
-    | boolean
-    | ((formData: Record<string, any>) => boolean)
-    | undefined,
+  value: string | boolean | ((formData: Record<string, any>) => boolean) | undefined,
 ) {
   if (value === undefined) {
     return () => false
@@ -103,9 +101,7 @@ const formSchema = computed(() => {
   return schema
 })
 
-const gridTemplateColumns = computed(
-  () => `repeat(${props.columns}, minmax(0, 1fr))`,
-)
+const gridTemplateColumns = computed(() => `repeat(${props.columns}, minmax(0, 1fr))`)
 
 function getForm() {
   const formData = formatFormByMap(toRaw(formMap.value))
@@ -114,11 +110,7 @@ function getForm() {
   for (const item of componentOptions.value) {
     if (item.outputFormat && item.field && result[item.field] !== undefined) {
       const _value = item.outputFormat({ item, value: result[item.field] })
-      if (
-        typeof _value === 'object'
-        && _value !== null
-        && !Array.isArray(_value)
-      ) {
+      if (typeof _value === 'object' && _value !== null && !Array.isArray(_value)) {
         delete result[item.field]
         Object.assign(result, _value)
       }
@@ -238,8 +230,7 @@ const defaultReadonlyFn = () => Boolean(props.readonly)
 const defaultVisibleFn = () => true
 
 function getItemProps(item: LewFormOption) {
-  const fieldKey
-    = item.field || `__index_${componentOptions.value.indexOf(item)}`
+  const fieldKey = item.field || `__index_${componentOptions.value.indexOf(item)}`
   const currentLabelWidth = getLabelWidth.value
   const cacheKeyFull = `${fieldKey}_${props.direction}_${props.size}_${currentLabelWidth}`
 

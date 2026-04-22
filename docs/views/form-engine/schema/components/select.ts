@@ -5,12 +5,6 @@ export default [
     field: 'placeholder',
   },
   {
-    label: '选项配置',
-    as: 'input-table',
-    field: 'options',
-    direction: 'y',
-  },
-  {
     label: '触发方式',
     as: 'tabs',
     field: 'trigger',

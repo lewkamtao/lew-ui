@@ -211,26 +211,6 @@ export default {
         value: 'Badge Value (will display as dot if empty)',
       },
     },
-    title: {
-      name: 'Title',
-      description: 'Not just a title, but a soul hint of the content',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Bold',
-      },
-      demo3: {
-        title: 'Color',
-      },
-      props: {
-        text: 'Text Content',
-        size: 'Title Text Size, can be a number (unit: pixel) or a string (e.g., "1.5em")',
-        bold: 'Title Text Boldness, optional values are integers between 100 and 900',
-        color:
-          'Title Text Color, optional values include predefined color names or custom color values',
-      },
-    },
     textTrim: {
       name: 'Text Trim',
       description:
@@ -287,82 +267,6 @@ export default {
         wrap: 'Allow child elements to wrap automatically when space is insufficient',
         gap: 'Gap between child elements (unit: pixel)',
         width: 'Width of the Flex container (unit: pixel or percentage)',
-      },
-    },
-    mark: {
-      name: 'Mark',
-      description: 'Add highlight marks to text, making key content stand out',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      props: {
-        color: 'Color Theme',
-        round: 'Round',
-        bold: 'Bold',
-        cursor: 'Cursor style when hovering',
-      },
-    },
-    icon: {
-      name: 'Icon',
-      description:
-        'A collection of exquisite icons, adding visual language to the interface',
-    },
-    backTop: {
-      name: 'Back to Top',
-      description:
-        'One-click back to the top, making long page browsing no longer annoying',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Custom Content',
-      },
-      demo3: {
-        title: 'Trigger by Directive',
-      },
-      props: {
-        target:
-          'Specify the target element to trigger the scroll event, using CSS selector. If empty, defaults to the entire window.',
-        right:
-          'Set the distance of the component from the right side of the page, unit: pixel.',
-        bottom:
-          'Set the distance of the component from the bottom of the page, unit: pixel.',
-        valveHeight:
-          'Set the threshold of the page scroll height, the back to top button will be displayed when the scroll height exceeds this value, unit: pixel.',
-      },
-      emits: {
-        click: 'Back to top event callback',
-      },
-    },
-    steps: {
-      name: 'Steps',
-      description:
-        'Clearly displays the operation process, letting users know where they are',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Status',
-      },
-      demo3: {
-        title: 'Loading',
-      },
-      model: {
-        modelValue: 'Index value of the current active step',
-      },
-      props: {
-        options: 'Array of step configuration items',
-        status: 'Current status of the steps',
-        minWidth: 'Minimum step width',
-        canClickItem: 'Whether to allow clicking step items to switch',
-        canCrossSteps: 'Whether to allow cross-step switching',
-      },
-      options: {
-        title: 'Step title',
-        description: 'Step description',
-      },
-      emits: {
-        change: 'Triggered when step changes',
       },
     },
     menu: {
@@ -459,31 +363,6 @@ export default {
         show: 'Menu show event callback',
         hide: 'Menu hide event callback',
         change: 'Menu item selection event callback',
-      },
-    },
-    breadcrumb: {
-      name: 'Breadcrumb',
-      description: 'Clear path navigation, ensuring users do not get lost',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Custom Current Selection',
-      },
-      demo3: {
-        title: 'Separator Icon Type',
-      },
-      props: {
-        options: 'Array of breadcrumb configuration items',
-        separator: 'Separator icon type',
-      },
-      breadcrumbOptions: {
-        label: 'Text of the breadcrumb item',
-        value: 'Value of the breadcrumb item',
-        active: 'Is it the current selected item',
-      },
-      emits: {
-        change: 'Triggered when the breadcrumb item changes',
       },
     },
     contextMenu: {
@@ -585,33 +464,30 @@ export default {
         title: 'Basic Usage',
       },
       demo2: {
-        title: 'Prefix and Suffix',
-      },
-      demo3: {
         title: 'Character Limit',
       },
-      demo4: {
+      demo3: {
         title: 'Alignment',
       },
-      demo5: {
+      demo4: {
         title: 'Password Visibility',
       },
-      demo6: {
+      demo5: {
         title: 'Auto Width',
       },
-      demo7: {
+      demo6: {
         title: 'Select All Text on Focus',
       },
-      demo8: {
+      demo7: {
         title: 'Clearable',
       },
-      demo9: {
+      demo8: {
         title: 'Read-only Status',
       },
-      demo10: {
+      demo9: {
         title: 'Disabled Status',
       },
-      demo11: {
+      demo10: {
         title: 'Trigger Event on Enter Key',
       },
       props: {
@@ -631,15 +507,7 @@ export default {
         autoWidth: 'Automatically Adjust Width Based on Content',
         selectByFocus: 'Enable Select All Text on Focus',
         copyable:
-          'Allow Copying Content (only effective when readonly is true and suffix is false)',
-        prefixes: 'Input Box Prefix Type',
-        prefixesOptions:
-          'List of Prefix Options for the Input Box, used when prefixes is select',
-        prefixesTooltip: 'Tooltip Text for the Input Box Prefix',
-        suffix: 'Input Box Suffix Type',
-        suffixOptions:
-          'List of Suffix Options for the Input Box, used when suffix is select',
-        suffixTooltip: 'Tooltip Text for the Input Box Suffix',
+          'Allow Copying Content (only effective when readonly is true)',
         okByEnter: 'Allow Confirmation by Enter Key',
       },
       emits: {
@@ -652,8 +520,6 @@ export default {
       },
       model: {
         modelValue: 'Input Box Bound Value',
-        prefixValue: 'Input Box Prefix Value',
-        suffixValue: 'Input Box Suffix Value',
       },
     },
     inputNumber: {
@@ -734,7 +600,8 @@ export default {
         showCount: 'Show Character Count',
         maxLength: 'Maximum Input Characters',
         size: 'Textarea Size',
-        resize: 'Resize Direction',
+        resize:
+          'Resize direction via bottom-right handle (none / vertical / horizontal / both); native resize disabled',
         width: 'Width',
         height: 'Height',
         minWidth: 'Minimum Width',
@@ -1402,40 +1269,6 @@ export default {
         clear: 'Triggered when cleared',
       },
     },
-    inputTable: {
-      name: 'Input Table',
-      description:
-        'Quickly input data in a table, making batch processing more efficient',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      demo2: {
-        title: 'Default Value',
-      },
-      demo3: {
-        title: 'More Rich',
-      },
-      props: {
-        columns: 'Column Configuration',
-        size: 'Size',
-        width: 'Width',
-        rowKey: 'Row Key',
-        batchDeletable: 'Batch Deletable',
-        addable: 'Addable',
-        defaultForm: 'Default Form',
-        deletable: 'Deletable',
-        maxRows: 'Maximum Rows',
-        minRows: 'Minimum Rows',
-        clearable: 'Clearable',
-        sortable: 'Sortable',
-        autoUniqueId: 'Auto Generate Unique ID',
-        uniqueField: 'Unique Field',
-        sortTooltipCustomRender: 'Sort Tooltip Custom Render',
-      },
-      emits: {
-        change: 'Triggered when value changes',
-      },
-    },
     switch: {
       name: 'Switch',
       description: 'Simple switch selector, making state switching clearer',
@@ -1734,7 +1567,8 @@ export default {
     },
     pagination: {
       name: 'Pagination',
-      description: 'Clear pagination navigation, making data browsing easier',
+      description:
+        'Clear pagination: grouped page numbers, separated tools for page size and go-to-page, with a Go button and Enter to confirm',
       demo1: {
         title: 'Basic Usage',
       },
@@ -1753,6 +1587,7 @@ export default {
         size: 'Size',
         pageSizeOptions: 'Page Size Options',
         visiblePagesCount: 'Visible Pages Count',
+        showSummary: 'Show summary (current page, total pages, total items)',
       },
       emits: {
         change: 'Change Event',
@@ -1944,6 +1779,9 @@ export default {
       demo3: {
         title: 'Simulate Request',
       },
+      demo4: {
+        title: 'Stack Effect',
+      },
       emits: {
         close: 'Triggered when closed',
       },
@@ -2013,10 +1851,8 @@ export default {
         closeOnClickOverlay: 'Close on Click Overlay',
         closeByEsc: 'Close by ESC',
         hideFooter: 'Hide Footer',
-        hideOkButton: 'Hide OK Button',
-        hideCloseButton: 'Hide Close Button',
-        okButtonProps: 'OK Button Props',
-        closeButtonProps: 'Close Button Props',
+        footerButtons:
+          'Footer buttons (LewButton props per item, incl. request); default single Confirm closes',
         zIndex: 'Z Index',
       },
       emits: {
@@ -2045,16 +1881,17 @@ export default {
       demo6: {
         title: 'Custom Icon',
       },
+      demo7: {
+        title: 'Custom footer buttons',
+      },
       props: {
         type: 'Type',
         width: 'Width',
         trigger: 'Trigger',
         title: 'Title',
         content: 'Content',
-        okText: 'OK Text',
-        cancelText: 'Cancel Text',
-        ok: 'OK Callback',
-        cancel: 'Cancel Callback',
+        footerButtons:
+          'Footer buttons (LewButton props per item, incl. request; return false keeps open); default single Confirm',
         closeOnClickOverlay: 'Close on Click Overlay',
         closeByEsc: 'Close by ESC',
         transformOrigin: 'Transform Origin',
@@ -2082,6 +1919,17 @@ export default {
       demo4: {
         title: 'Allow ESC to Close',
       },
+      demo5: {
+        title: 'Nested Modal',
+      },
+      demo6: {
+        title: 'Modal and Drawer Nesting',
+        description:
+          'Complex multi-layer nesting scenario, supports opening drawer from modal, modal from drawer, up to 4 levels of nesting.',
+      },
+      demo7: {
+        title: 'footerButtons footer',
+      },
       model: {
         visible: 'Visible',
       },
@@ -2090,11 +1938,9 @@ export default {
         width: 'Width',
         top: 'Top',
         hideFooter: 'Hide Footer',
-        hideOkButton: 'Hide OK Button',
-        hideCloseButton: 'Hide Close Button',
+        footerButtons:
+          'Footer buttons (LewButton props per item, incl. request); default single Confirm closes',
         closeByEsc: 'Close by ESC',
-        okButtonProps: 'OK Button Props',
-        closeButtonProps: 'Close Button Props',
         closeOnClickOverlay: 'Close on Click Overlay',
         zIndex: 'Z Index',
         maxHeight: 'Max Height',
@@ -2119,6 +1965,9 @@ export default {
       demo5: {
         title: 'Custom Content',
       },
+      demo6: {
+        title: 'Custom footer buttons',
+      },
       props: {
         type: 'Type',
         width: 'Width',
@@ -2126,10 +1975,8 @@ export default {
         title: 'Title',
         content: 'Content',
         placement: 'Placement',
-        okText: 'OK Text',
-        cancelText: 'Cancel Text',
-        ok: 'OK Callback',
-        cancel: 'Cancel Callback',
+        footerButtons:
+          'Footer buttons (LewButton props per item, incl. request; return false keeps open); default single Confirm',
         icon: 'Custom Icon',
         hideIcon: 'Hide Icon',
       },
@@ -2230,21 +2077,6 @@ export default {
       },
       slots: {
         handle: 'Handle Slot',
-      },
-    },
-    empty: {
-      name: 'Empty',
-      description: 'Empty data state display, making blank pages more friendly',
-      demo1: {
-        title: 'Basic Usage',
-      },
-      props: {
-        type: 'Type',
-        title: 'Title',
-        fontSize: 'Font Size',
-        padding: 'Padding',
-        width: 'Width',
-        height: 'Height',
       },
     },
     actionBox: {

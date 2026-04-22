@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocHeading from '../layout/DocHeading.vue'
 import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
 
 const pre1 = ref(`import { LewTooltip } from 'lew-ui';
@@ -22,22 +23,22 @@ const open = () => {
 
 <template>
   <div class="guide-wrapper">
-    <lew-title>Q&A</lew-title>
+    <DocHeading>Q&A</DocHeading>
     <br>
     <br>
-    <lew-title :size="16">
+    <DocHeading :size="16">
       如何使用 Tooltips
-    </lew-title>
+    </DocHeading>
     <p>
       tooltips 是一个自定义指令，你需要在
-      <lew-mark>main.ts</lew-mark> 注册该指令
+      <code>main.ts</code> 注册该指令
     </p>
     <LewCodeHighlighter :code="pre1" lang="ts" />
     <br>
     <br>
-    <lew-title :size="16">
+    <DocHeading :size="16">
       关于 Dialog 和 Message 的用法
-    </lew-title>
+    </DocHeading>
     <p>如果你使用的方式不是全局引入，你需要引入它们才能使用</p>
     <LewCodeHighlighter :code="pre2" lang="ts" />
   </div>

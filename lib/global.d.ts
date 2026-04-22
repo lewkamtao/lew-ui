@@ -6,7 +6,6 @@ declare module 'vue' {
   interface GlobalDirectives {
     vTooltip: LewDirectiveBindings['tooltip']
     vLoading: LewDirectiveBindings['loading']
-    vBacktop: LewDirectiveBindings['backtop']
     vContextMenu: LewDirectiveBindings['context-menu']
   }
 }

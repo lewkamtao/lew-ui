@@ -12,7 +12,23 @@ import DemoPopok4Code from './DemoPopok4.vue?raw'
 
 import DemoPopok5 from './DemoPopok5.vue'
 import DemoPopok5Code from './DemoPopok5.vue?raw'
+import DemoPopok6 from './DemoPopok6.vue'
+import DemoPopok6Code from './DemoPopok6.vue?raw'
 
-export const demoGroup = [DemoPopok1, DemoPopok2, DemoPopok3, DemoPopok4, DemoPopok5]
+export const demoGroup = [
+  DemoPopok1,
+  DemoPopok2,
+  DemoPopok3,
+  DemoPopok4,
+  DemoPopok5,
+  DemoPopok6,
+]
 
-export const codeGroup = [DemoPopok1Code, DemoPopok2Code, DemoPopok3Code, DemoPopok4Code, DemoPopok5Code]
+export const codeGroup = [
+  DemoPopok1Code,
+  DemoPopok2Code,
+  DemoPopok3Code,
+  DemoPopok4Code,
+  DemoPopok5Code,
+  DemoPopok6Code,
+]

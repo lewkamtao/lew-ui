@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const visible = ref(false)
 const bindOptions = ref({})
-const formRef = ref()
 function open(options: any) {
   visible.value = true
   bindOptions.value = options
@@ -17,14 +16,14 @@ defineExpose({ open })
     close-by-esc
     :close-button-props="{
       request: () => {
-        visible = false
+        visible = false;
       },
     }"
     hide-ok-button
     title="预览效果"
   >
     <div class="preview-modal-content lew-scrollbar">
-      <lew-desc ref="formRef" v-bind="bindOptions" />
+      <lew-desc v-bind="bindOptions" />
     </div>
   </lew-modal>
 </template>

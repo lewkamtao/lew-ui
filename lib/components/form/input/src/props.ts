@@ -1,17 +1,11 @@
 import type { Property } from 'csstype'
-import type { LewContextMenusOption, LewSize } from 'lew-ui'
-import type { LewInputPrefixesType, LewInputSuffixType, LewInputType, LewXAlignment } from 'lew-ui/types'
+import type { LewSize } from 'lew-ui'
+import type { LewInputType, LewXAlignment } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
-import validators, { validInputPrefixesTypeList, validInputSuffixTypeList, validInputTypeList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
+import validators, { validInputTypeList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
 
 export const inputModel = {
   modelValue: {
-    type: [String, Number],
-  },
-  prefixValue: {
-    type: [String, Number],
-  },
-  suffixValue: {
     type: [String, Number],
   },
 }
@@ -131,54 +125,6 @@ export const inputProps = {
     validator: validators.boolean({
       componentName: 'LewInput',
       propName: 'copyable',
-    }),
-  },
-  prefixes: {
-    type: String as PropType<LewInputPrefixesType>,
-    typeValues: validInputPrefixesTypeList,
-    validator: validators.enum({
-      componentName: 'LewInput',
-      propName: 'prefixes',
-      values: validInputPrefixesTypeList,
-    }),
-  },
-  prefixesOptions: {
-    type: Array as PropType<LewContextMenusOption[]>,
-    default: () => [],
-    validator: validators.array({
-      componentName: 'LewInput',
-      propName: 'prefixesOptions',
-    }),
-  },
-  prefixesTooltip: {
-    type: String,
-    validator: validators.string({
-      componentName: 'LewInput',
-      propName: 'prefixesTooltip',
-    }),
-  },
-  suffix: {
-    type: String as PropType<LewInputSuffixType>,
-    typeValues: validInputSuffixTypeList,
-    validator: validators.enum({
-      componentName: 'LewInput',
-      propName: 'suffix',
-      values: validInputSuffixTypeList,
-    }),
-  },
-  suffixOptions: {
-    type: Array as PropType<LewContextMenusOption[]>,
-    default: () => [],
-    validator: validators.array({
-      componentName: 'LewInput',
-      propName: 'suffixOptions',
-    }),
-  },
-  suffixTooltip: {
-    type: String,
-    validator: validators.string({
-      componentName: 'LewInput',
-      propName: 'suffixTooltip',
     }),
   },
   okByEnter: {

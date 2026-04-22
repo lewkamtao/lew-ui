@@ -62,12 +62,12 @@ function handleOptionClick(
       <RenderComponent
         v-if="isValidComponent(option.customRender)"
         :render-fn="option.customRender"
-        @click="(event: MouseEvent) => handleOptionClick(option, event)"
+        @click.stop="(event: MouseEvent) => handleOptionClick(option, event)"
       />
       <div
         v-else
         class="lew-action-box-item"
-        @click="(event: MouseEvent) => handleOptionClick(option, event)"
+        @click.stop="(event: MouseEvent) => handleOptionClick(option, event)"
       >
         <RenderComponent
           v-if="option.icon && !props.iconOnly"
@@ -91,7 +91,11 @@ function handleOptionClick(
         class="lew-action-box-divider"
       />
     </template>
-    <LewDropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
+    <LewDropdown
+      v-if="dropdownOptions.length > 0"
+      :options="dropdownOptions"
+      @click.stop
+    >
       <div class="lew-action-box-item">
         <RenderComponent
           v-if="props.dropdownIcon"

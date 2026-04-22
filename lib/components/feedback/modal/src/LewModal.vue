@@ -1,13 +1,14 @@
 <script setup lang="ts">
-// 1. 第三方库导入
-import { onClickOutside, useMagicKeys } from '@vueuse/core'
-
 // 2. 组件导入
+import type { LewModalFooterButtonItem } from 'lew-ui'
+
+// 1. 第三方库导入
+import { onClickOutside } from '@vueuse/core'
 import { LewButton, LewFlex, locale } from 'lew-ui'
 import CloseButton from 'lew-ui/_components/CloseButton.vue'
 
 // 3. Hooks 导入
-import { useDOMCreate } from 'lew-ui/hooks'
+import { useDOMCreate, usePopupManager } from 'lew-ui/hooks'
 
 // 4. 工具函数导入
 import { any2px, getUniqueId } from 'lew-ui/utils'
@@ -21,7 +22,6 @@ const props = defineProps(modalProps)
 const emit = defineEmits(modalEmits)
 
 // Composables
-const { Escape } = useMagicKeys()
 useDOMCreate('lew-modal')
 
 // v-model
@@ -29,52 +29,31 @@ const visible = defineModel<boolean>('visible', { default: false })
 
 // 响应式状态
 const modalBodyRef = ref<HTMLElement | null>(null)
-const recomputeTrigger = ref<number>(0)
 
 // 常量
 const modalId = `lew-modal-${getUniqueId()}`
 
 // Slots 检测
-const slots = useSlots()
+const slots: ReturnType<typeof useSlots> = useSlots()
 
-// 计算属性
-const isTopModal = computed(() => {
-  // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
-  void recomputeTrigger.value
+// 使用全局弹出层管理器
+const { zIndex: managedZIndex, isTop } = usePopupManager({
+  id: modalId,
+  type: 'modal',
+  visible,
+  closeByEsc: props.closeByEsc,
+  onClose: () => emit('close'),
+})
 
-  if (!visible.value) {
-    return false
+// 计算最终使用的 z-index
+// 如果用户手动设置了 zIndex（非默认值），则使用用户设置的值
+// 否则使用管理器分配的值
+const actualZIndex = computed(() => {
+  // 默认值为 2001，如果用户传入了其他值，优先使用用户的值
+  if (props.zIndex !== 2001) {
+    return props.zIndex
   }
-
-  const modalEl = document.getElementById(modalId)
-  if (!modalEl) {
-    return false
-  }
-
-  // 检查是否有 dialog 在顶层
-  const dialogEl = document.getElementById('lew-dialog')
-  const hasDialog = dialogEl && dialogEl.children.length > 0
-  if (hasDialog) {
-    return false
-  }
-
-  // 获取所有 modal 元素
-  const modalContainer = modalEl?.parentElement
-  if (!modalContainer) {
-    return false
-  }
-
-  const openModals = Array.from(modalContainer.childNodes)
-    .filter((e): e is Element => e instanceof Element)
-    .filter(e => e.children.length > 0)
-    .filter((e) => {
-      // 只考虑可见的 modal
-      const modalBody = e.querySelector('.lew-modal') as HTMLElement
-      return modalBody && modalBody.style.display !== 'none'
-    })
-
-  // 检查当前 modal 是否是最后一个（顶层）
-  return openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId
+  return managedZIndex.value || props.zIndex
 })
 
 const modalStyle = computed(() => {
@@ -89,91 +68,45 @@ const modalBodyMainStyle = computed(() => ({
   maxHeight: any2px(props.maxHeight),
 }))
 
-// 方法
-function forceRecomputeTopModal() {
-  recomputeTrigger.value++
-}
+const resolvedFooterButtons = computed<LewModalFooterButtonItem[]>(() => {
+  if (props.footerButtons != null) {
+    return props.footerButtons.map(item => ({
+      props: { size: 'small', ...item.props },
+    }))
+  }
+  return [
+    {
+      props: {
+        size: 'small',
+        type: 'fill',
+        color: 'primary',
+        text: locale.t('modal.confirmText'),
+        request: async () => {
+          handleClose()
+        },
+      },
+    },
+  ]
+})
 
+// 方法
 function handleClose(): void {
   visible.value = false
   emit('close')
 }
 
-// 监听全局 modal 状态变化（通过定时器检查）
-let globalCheckTimer: ReturnType<typeof setInterval> | null = null
-
-function startGlobalCheck() {
-  if (globalCheckTimer) {
-    clearInterval(globalCheckTimer)
-  }
-
-  globalCheckTimer = setInterval(() => {
-    if (visible.value) {
-      forceRecomputeTopModal()
-    }
-  }, 100) // 每100ms检查一次
-}
-
-function stopGlobalCheck() {
-  if (globalCheckTimer) {
-    clearInterval(globalCheckTimer)
-    globalCheckTimer = null
-  }
-}
-
 // 监听器
-watch(
-  modalBodyRef,
-  async (newVal) => {
-    if (newVal && visible.value) {
-      await nextTick()
-      forceRecomputeTopModal()
-    }
-  },
-  { immediate: true },
-)
-
-watch(visible, async (newVal) => {
+watch(visible, async () => {
   await nextTick()
-  // modal 状态变化时，强制重新计算
-  forceRecomputeTopModal()
-
-  // 控制全局检查定时器
-  if (newVal) {
-    startGlobalCheck()
-  }
-  else {
-    stopGlobalCheck()
-  }
 })
 
 onClickOutside(modalBodyRef, (e: any) => {
-  if (visible.value && props.closeOnClickOverlay) {
+  if (visible.value && props.closeOnClickOverlay && isTop()) {
     const { parentElement } = e?.target as Element
     if (parentElement?.id === modalId) {
       visible.value = false
     }
   }
-})
-
-if (props.closeByEsc) {
-  watch(Escape, (v) => {
-    if (!visible.value || !v || !isTopModal.value) {
-      return
-    }
-    visible.value = false
-  })
-}
-
-// 生命周期
-onMounted(() => {
-  if (visible.value) {
-    startGlobalCheck()
-  }
-})
-
-onUnmounted(() => {
-  stopGlobalCheck()
 })
 </script>
 
@@ -181,10 +114,14 @@ onUnmounted(() => {
   <teleport to="#lew-modal">
     <div :id="modalId" class="lew-modal-container">
       <transition name="lew-modal-mask">
-        <div v-if="visible" :style="{ zIndex: props.zIndex }" class="lew-modal-mask" />
+        <div
+          v-if="visible"
+          :style="{ zIndex: actualZIndex }"
+          class="lew-modal-mask"
+        />
       </transition>
       <transition name="lew-modal">
-        <div v-if="visible" :style="{ zIndex: props.zIndex }" class="lew-modal">
+        <div v-if="visible" :style="{ zIndex: actualZIndex }" class="lew-modal">
           <div ref="modalBodyRef" :style="modalStyle" class="lew-modal-body">
             <div v-if="slots.header" class="lew-modal-header-slot">
               <slot name="header" />
@@ -195,10 +132,7 @@ onUnmounted(() => {
               y="center"
               class="lew-modal-header"
             >
-              <div
-                class="lew-modal-title"
-                :title="props.title"
-              >
+              <div class="lew-modal-title" :title="props.title">
                 {{ props.title }}
               </div>
               <CloseButton
@@ -209,36 +143,25 @@ onUnmounted(() => {
                 @click="handleClose"
               />
             </LewFlex>
-            <div class="lew-modal-body-main lew-scrollbar" :style="modalBodyMainStyle">
+            <div
+              class="lew-modal-body-main lew-scrollbar"
+              :style="modalBodyMainStyle"
+            >
               <slot />
             </div>
             <div v-if="slots.footer" class="lew-modal-footer-slot">
               <slot name="footer" />
             </div>
             <LewFlex
-              v-else-if="!props.hideFooter"
+              v-else-if="!props.hideFooter && resolvedFooterButtons.length > 0"
               x="end"
               y="center"
               class="lew-modal-footer"
             >
               <LewButton
-                v-if="!props.hideCloseButton"
-                v-bind="{
-                  size: 'small',
-                  type: 'light',
-                  color: 'gray',
-                  text: locale.t('modal.closeText'),
-                  ...(props.closeButtonProps as any),
-                }"
-              />
-              <LewButton
-                v-if="!props.hideOkButton"
-                v-bind="{
-                  size: 'small',
-                  text: locale.t('modal.okText'),
-                  color: 'primary',
-                  ...(props.okButtonProps as any),
-                }"
+                v-for="(item, index) in resolvedFooterButtons"
+                :key="index"
+                v-bind="item.props"
               />
             </LewFlex>
           </div>

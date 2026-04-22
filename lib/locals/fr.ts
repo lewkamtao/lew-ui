@@ -43,6 +43,7 @@ export default {
   },
   textarea: {
     placeholder: 'Veuillez saisir',
+    resizeHandle: 'Glisser pour redimensionner',
   },
   inputNumber: {
     placeholder: 'Veuillez saisir',
@@ -73,36 +74,25 @@ export default {
     placeholderStart: 'Date de début',
     placeholderEnd: 'Date de fin',
   },
-  inputTable: {
-    addText: 'Ajouter',
-    deleteConfirm: 'Confirmer la suppression',
-    delete: 'Supprimer',
-    cancel: 'Annuler',
-    deleteConfirmContent:
-      'Êtes-vous sûr de vouloir supprimer ces données ? Cette opération sera appliquée immédiatement, veuillez faire attention !',
-    minRows: 'Limite minimale de lignes atteinte, impossible de supprimer',
-    maxRows: 'Limite maximale de lignes atteinte, impossible d\'ajouter',
-    uniqueFieldExist:
-      'Ce {label} existe déjà. Veuillez saisir un {label} unique.',
-    save: 'Enregistrer',
-    modelTitle: 'Ajouter des données',
-    editTitle: 'Modifier les données',
-  },
   drawer: {
     closeText: 'Fermer',
     okText: 'OK',
+    confirmText: 'Confirmer',
   },
   modal: {
     closeText: 'Fermer',
     okText: 'OK',
+    confirmText: 'Confirmer',
   },
   dialog: {
     cancelText: 'Annuler',
     okText: 'OK',
+    confirmText: 'Confirmer',
   },
   popok: {
     cancelText: 'Annuler',
     okText: 'OK',
+    confirmText: 'Confirmer',
   },
   colorPicker: {
     placeholder: 'Veuillez saisir',
@@ -125,7 +115,19 @@ export default {
   },
   pagination: {
     pageSize: '{pageSize} par page',
-    jumpTo: 'Aller à',
+    jumpTo: 'Page',
+    jumpConfirm: 'Aller',
+    summary: 'Page {current} sur {totalPages} · {total} éléments',
+    perPage: 'Par page',
+    prevSection: 'Pages précédentes',
+    nextSection: 'Pages suivantes',
+    navLabel: 'Pagination',
+    jumpGroup: 'Aller à la page',
+    prevPage: 'Page précédente',
+    nextPage: 'Page suivante',
+  },
+  contextMenu: {
+    noActions: 'Aucune action disponible',
   },
   empty: {
     title: 'Aucune donnée',

@@ -15,10 +15,6 @@ export interface LewLoadingDirectiveBinding {
   visible?: boolean
 }
 
-export interface LewBackTopDirectiveBinding {
-  target?: string
-}
-
 export interface LewContextMenuDirectiveBinding {
   options?: LewContextMenusOption[]
   disabled?: boolean
@@ -28,6 +24,5 @@ export interface LewContextMenuDirectiveBinding {
 export interface LewDirectiveBindings {
   'tooltip': LewTooltipDirectiveBinding
   'loading': LewLoadingDirectiveBinding
-  'backtop': LewBackTopDirectiveBinding
   'context-menu': LewContextMenuDirectiveBinding
 }

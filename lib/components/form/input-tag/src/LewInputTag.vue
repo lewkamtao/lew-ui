@@ -1,336 +1,349 @@
 <script setup lang="ts">
-import { LewInput, LewMessage, LewTag, locale } from "lew-ui";
-import CloseIcon from "lew-ui/_components/CloseIcon.vue";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px, object2class } from "lew-ui/utils";
-import { cloneDeep } from "lodash-es";
-import { inputTagEmits } from "./emits";
-import { inputTagProps } from "./props";
+import { LewInput, LewMessage, LewTag, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
+import { inputTagEmits } from './emits'
+import { inputTagProps } from './props'
 
-const props = defineProps(inputTagProps);
-const emit = defineEmits(inputTagEmits);
+const props = defineProps(inputTagProps)
+const emit = defineEmits(inputTagEmits)
 
-const modelValue = defineModel<string[] | undefined>();
-const inputValue = ref<string>("");
-const lewInputRef = ref<any>(null);
-const isInputActive = ref<boolean>(false);
-const isTagMarkedForDeletion = ref<boolean>(false);
-const autoWidthDelay = ref<boolean>(false);
-const editingIndex = ref<number>(-1);
-const selectedTagIndex = ref<number>(-1);
+const modelValue = defineModel<string[] | undefined>()
+const inputValue = ref<string>('')
+const lewInputRef = ref<any>(null)
+const isInputActive = ref<boolean>(false)
+const isTagMarkedForDeletion = ref<boolean>(false)
+const autoWidthDelay = ref<boolean>(false)
+const editingIndex = ref<number>(-1)
+const selectedTagIndex = ref<number>(-1)
 
-let originalKeydownHandler: ((event: KeyboardEvent) => void) | null = null;
+let originalKeydownHandler: ((event: KeyboardEvent) => void) | null = null
 
 function attachKeydownListener() {
-  originalKeydownHandler = document.onkeydown;
+  originalKeydownHandler = document.onkeydown
   document.onkeydown = function (event: KeyboardEvent) {
-    const keyCode = event.key || event.code;
-    if (!isInputActive.value && selectedTagIndex.value < 0) return;
+    const keyCode = event.key || event.code
+    if (!isInputActive.value && selectedTagIndex.value < 0)
+      return
 
-    const tagsLength = (modelValue.value || []).length;
+    const tagsLength = (modelValue.value || []).length
 
     // 处理标签选中状态下的键盘事件
     if (selectedTagIndex.value >= 0) {
-      handleSelectedTagKeydown(event, keyCode, tagsLength);
-      return;
+      handleSelectedTagKeydown(event, keyCode, tagsLength)
+      return
     }
 
     // 处理输入框状态下的键盘事件
     if (inputValue.value) {
-      if (keyCode === "Enter" || keyCode === "NumpadEnter") {
-        isTagMarkedForDeletion.value = false;
-        document.onkeydown = originalKeydownHandler;
-        isInputActive.value = false;
-        tryAddTag();
-        openInput();
+      if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
+        isTagMarkedForDeletion.value = false
+        document.onkeydown = originalKeydownHandler
+        isInputActive.value = false
+        tryAddTag()
+        openInput()
       }
-    } else {
+    }
+    else {
       // 输入框为空时的键盘导航
-      if (keyCode === "ArrowLeft" && tagsLength > 0) {
-        event.preventDefault();
-        selectedTagIndex.value = tagsLength - 1;
-        isTagMarkedForDeletion.value = false;
-        return;
+      if (keyCode === 'ArrowLeft' && tagsLength > 0) {
+        event.preventDefault()
+        selectedTagIndex.value = tagsLength - 1
+        isTagMarkedForDeletion.value = false
+        return
       }
 
-      if (keyCode === "Backspace" || keyCode === "Delete") {
+      if (keyCode === 'Backspace' || keyCode === 'Delete') {
         if (
-          Array.isArray(modelValue.value) &&
-          modelValue.value.length > 0 &&
-          isTagMarkedForDeletion.value
+          Array.isArray(modelValue.value)
+          && modelValue.value.length > 0
+          && isTagMarkedForDeletion.value
         ) {
-          const newValue = [...(modelValue.value || [])];
-          newValue.splice(newValue.length - 1, 1);
-          modelValue.value = newValue;
-          emit("change", cloneDeep(newValue));
-          isTagMarkedForDeletion.value = false;
-        } else {
-          isTagMarkedForDeletion.value = true;
+          const newValue = [...(modelValue.value || [])]
+          newValue.splice(newValue.length - 1, 1)
+          modelValue.value = newValue
+          emit('change', cloneDeep(newValue))
+          isTagMarkedForDeletion.value = false
+        }
+        else {
+          isTagMarkedForDeletion.value = true
         }
       }
     }
-  };
+  }
 }
 
 // 处理选中标签时的键盘事件
 function handleSelectedTagKeydown(
   event: KeyboardEvent,
   keyCode: string,
-  tagsLength: number
+  tagsLength: number,
 ) {
-  event.preventDefault();
+  event.preventDefault()
 
   switch (keyCode) {
-    case "ArrowLeft":
+    case 'ArrowLeft':
       if (selectedTagIndex.value > 0) {
-        selectedTagIndex.value--;
+        selectedTagIndex.value--
       }
-      break;
-    case "ArrowRight":
+      break
+    case 'ArrowRight':
       if (selectedTagIndex.value < tagsLength - 1) {
-        selectedTagIndex.value++;
-      } else {
-        // 移动到输入框
-        selectedTagIndex.value = -1;
-        nextTick(() => {
-          lewInputRef.value?.focus();
-        });
+        selectedTagIndex.value++
       }
-      break;
-    case "Enter":
-    case "NumpadEnter":
+      else {
+        // 移动到输入框
+        selectedTagIndex.value = -1
+        nextTick(() => {
+          lewInputRef.value?.focus()
+        })
+      }
+      break
+    case 'Enter':
+    case 'NumpadEnter':
       // 进入编辑模式
-      startEditingSelectedTag();
-      break;
-    case "Backspace":
-    case "Delete":
+      startEditingSelectedTag()
+      break
+    case 'Backspace':
+    case 'Delete':
       // 删除选中的标签
-      deleteSelectedTag();
-      break;
-    case "Escape":
+      deleteSelectedTag()
+      break
+    case 'Escape':
       // 取消选中，回到输入框
-      selectedTagIndex.value = -1;
+      selectedTagIndex.value = -1
       nextTick(() => {
-        lewInputRef.value?.focus();
-      });
-      break;
+        lewInputRef.value?.focus()
+      })
+      break
   }
 }
 
 // 开始编辑选中的标签
 function startEditingSelectedTag() {
-  if (selectedTagIndex.value < 0 || props.readonly || props.disabled) return;
+  if (selectedTagIndex.value < 0 || props.readonly || props.disabled)
+    return
 
-  const index = selectedTagIndex.value;
-  editingIndex.value = index;
-  selectedTagIndex.value = -1;
+  const index = selectedTagIndex.value
+  editingIndex.value = index
+  selectedTagIndex.value = -1
 
   // 触发标签的点击事件来进入编辑模式
   nextTick(() => {
     const tagEl = document.querySelector(
-      `.lew-input-tag-item:nth-child(${index + 1})`
-    ) as HTMLElement;
-    tagEl?.click();
-  });
+      `.lew-input-tag-item:nth-child(${index + 1})`,
+    ) as HTMLElement
+    tagEl?.click()
+  })
 }
 
 // 删除选中的标签
 function deleteSelectedTag() {
-  if (selectedTagIndex.value < 0) return;
+  if (selectedTagIndex.value < 0)
+    return
 
-  const index = selectedTagIndex.value;
-  const tagsLength = (modelValue.value || []).length;
+  const index = selectedTagIndex.value
+  const tagsLength = (modelValue.value || []).length
 
-  delTag(index);
+  delTag(index)
 
   // 更新选中索引
   if (tagsLength <= 1) {
-    selectedTagIndex.value = -1;
+    selectedTagIndex.value = -1
     nextTick(() => {
-      lewInputRef.value?.focus();
-    });
-  } else if (index >= tagsLength - 1) {
-    selectedTagIndex.value = tagsLength - 2;
+      lewInputRef.value?.focus()
+    })
+  }
+  else if (index >= tagsLength - 1) {
+    selectedTagIndex.value = tagsLength - 2
   }
 }
 
 function detachKeydownListener() {
   if (document.onkeydown && document.onkeydown !== originalKeydownHandler) {
-    document.onkeydown = originalKeydownHandler;
+    document.onkeydown = originalKeydownHandler
   }
 }
 
 function openInput() {
   // 如果正在编辑标签，不打开输入框
-  if (editingIndex.value >= 0) return;
-  if (isInputActive.value || props.disabled || props.readonly) return;
+  if (editingIndex.value >= 0)
+    return
+  if (isInputActive.value || props.disabled || props.readonly)
+    return
   if (
-    props.maxLength > 0 &&
-    Array.isArray(modelValue.value) &&
-    modelValue.value.length >= props.maxLength
+    props.maxLength > 0
+    && Array.isArray(modelValue.value)
+    && modelValue.value.length >= props.maxLength
   ) {
     LewMessage.warning(
-      locale.t("inputTag.maxLength", { maxLength: props.maxLength })
-    );
-    return;
+      locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
+    )
+    return
   }
-  isInputActive.value = true;
+  isInputActive.value = true
   nextTick(() => {
-    if (lewInputRef.value && typeof lewInputRef.value?.focus === "function") {
-      lewInputRef.value?.focus();
+    if (lewInputRef.value && typeof lewInputRef.value?.focus === 'function') {
+      lewInputRef.value?.focus()
     }
-  });
-  attachKeydownListener();
+  })
+  attachKeydownListener()
 }
 
 // 尝试添加标签
 function tryAddTag(): boolean {
-  if (!inputValue.value || inputValue.value.trim() === "") return false;
-  addTag();
-  return true;
+  if (!inputValue.value || inputValue.value.trim() === '')
+    return false
+  addTag()
+  return true
 }
 
 function addTag() {
-  const _value = Array.isArray(modelValue.value) ? [...modelValue.value] : [];
-  if (!inputValue.value || inputValue.value.trim() === "") return;
+  const _value = Array.isArray(modelValue.value) ? [...modelValue.value] : []
+  if (!inputValue.value || inputValue.value.trim() === '')
+    return
   if (props.maxLength > 0 && _value.length >= props.maxLength) {
-    inputValue.value = "";
-    isInputActive.value = false;
+    inputValue.value = ''
+    isInputActive.value = false
     LewMessage.warning(
-      locale.t("inputTag.maxLength", { maxLength: props.maxLength })
-    );
-    return;
+      locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
+    )
+    return
   }
-  _value.push(inputValue.value);
-  const addedValue = inputValue.value;
-  inputValue.value = "";
-  modelValue.value = _value;
-  emit("change", cloneDeep(_value));
-  emit("add", addedValue);
+  _value.push(inputValue.value)
+  const addedValue = inputValue.value
+  inputValue.value = ''
+  modelValue.value = _value
+  emit('change', cloneDeep(_value))
+  emit('add', addedValue)
 }
 
 function delTag(index: number) {
   if (
-    !Array.isArray(modelValue.value) ||
-    index < 0 ||
-    index >= modelValue.value.length
+    !Array.isArray(modelValue.value)
+    || index < 0
+    || index >= modelValue.value.length
   ) {
-    return;
+    return
   }
-  const removedTag = modelValue.value[index];
-  const newValue = [...modelValue.value];
-  newValue.splice(index, 1);
-  modelValue.value = newValue;
+  const removedTag = modelValue.value[index]
+  const newValue = [...modelValue.value]
+  newValue.splice(index, 1)
+  modelValue.value = newValue
   if (newValue.length === 0) {
-    autoWidthDelay.value = true;
+    autoWidthDelay.value = true
     setTimeout(() => {
-      autoWidthDelay.value = false;
-    }, 550);
+      autoWidthDelay.value = false
+    }, 550)
   }
-  emit("change", cloneDeep(newValue));
-  emit("remove", removedTag, index);
+  emit('change', cloneDeep(newValue))
+  emit('remove', removedTag, index)
 }
 
 // 标签编辑相关
 function handleTagChange(index: number, newValue: string) {
-  if (!Array.isArray(modelValue.value)) return;
+  if (!Array.isArray(modelValue.value))
+    return
 
-  const trimmedValue = newValue.trim();
+  const trimmedValue = newValue.trim()
 
   // 如果编辑后为空，删除该标签
   if (!trimmedValue) {
-    delTag(index);
-    return;
+    delTag(index)
+    return
   }
 
   // 更新值
-  const newArray = [...modelValue.value];
-  newArray[index] = trimmedValue;
-  modelValue.value = newArray;
-  emit("change", cloneDeep(newArray));
+  const newArray = [...modelValue.value]
+  newArray[index] = trimmedValue
+  modelValue.value = newArray
+  emit('change', cloneDeep(newArray))
 }
 
 function handleTagFocus(index: number) {
-  editingIndex.value = index;
-  selectedTagIndex.value = -1;
-  isTagMarkedForDeletion.value = false;
+  editingIndex.value = index
+  selectedTagIndex.value = -1
+  isTagMarkedForDeletion.value = false
 }
 
 function handleTagBlur() {
-  editingIndex.value = -1;
+  editingIndex.value = -1
 }
 
 function clear() {
-  modelValue.value = [];
-  inputValue.value = "";
-  emit("clear");
-  emit("change", undefined);
+  modelValue.value = []
+  inputValue.value = ''
+  emit('clear')
+  emit('change', undefined)
 }
 
 function onBlur() {
-  isTagMarkedForDeletion.value = false;
-  selectedTagIndex.value = -1;
-  detachKeydownListener();
+  isTagMarkedForDeletion.value = false
+  selectedTagIndex.value = -1
+  detachKeydownListener()
   if (inputValue.value) {
-    tryAddTag();
+    tryAddTag()
   }
   // 延迟移除输入框，避免闪烁
   setTimeout(() => {
-    isInputActive.value = false;
-  }, 150);
+    isInputActive.value = false
+  }, 150)
 }
 
 function onFocus() {
-  if (props.disabled || props.readonly) return;
-  isInputActive.value = true;
-  selectedTagIndex.value = -1;
-  attachKeydownListener();
+  if (props.disabled || props.readonly)
+    return
+  isInputActive.value = true
+  selectedTagIndex.value = -1
+  attachKeydownListener()
 }
 
 const getInputClassNames = computed(() => {
-  const { size, readonly, disabled, clearable } = props;
-  return object2class("lew-input-tag-view", {
+  const { size, readonly, disabled, clearable } = props
+  return object2class('lew-input-tag-view', {
     size,
     readonly,
     disabled,
     clearable,
-    "tag-editing": editingIndex.value >= 0,
-    "input-focused": isInputActive.value,
-  });
-});
+    'tag-editing': editingIndex.value >= 0,
+    'input-focused': isInputActive.value,
+  })
+})
 
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
     small: 13,
     medium: 14,
     large: 16,
-  };
-  return size[props.size] || 14;
-});
+  }
+  return size[props.size] || 14
+})
 
 const shouldShowIcon = computed(
-  () => !((modelValue.value || []).length > 0 && props.clearable)
-);
+  () => !((modelValue.value || []).length > 0 && props.clearable),
+)
 
 const shouldShowClearIcon = computed(
   () =>
-    (modelValue.value || []).length > 0 && props.clearable && !props.readonly
-);
+    (modelValue.value || []).length > 0 && props.clearable && !props.readonly,
+)
 
 const isTagMarked = computed(() => (index: number) => {
   return (
-    isTagMarkedForDeletion.value &&
-    index === (modelValue.value || []).length - 1
-  );
-});
+    isTagMarkedForDeletion.value
+    && index === (modelValue.value || []).length - 1
+  )
+})
 
 const isTagSelected = computed(() => (index: number) => {
-  return selectedTagIndex.value === index;
-});
+  return selectedTagIndex.value === index
+})
 
 onUnmounted(() => {
-  detachKeydownListener();
-});
+  detachKeydownListener()
+})
 </script>
 
 <template>
@@ -410,7 +423,8 @@ onUnmounted(() => {
   box-sizing: border-box;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
-  transition: background-color var(--lew-form-transition-ease),
+  transition:
+    background-color var(--lew-form-transition-ease),
     border-color var(--lew-form-transition-ease);
   overflow: hidden;
   width: 100%;

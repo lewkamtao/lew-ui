@@ -6,6 +6,9 @@ import validators, { validColorList } from 'lew-ui/validators'
 const typeValues = ['fill', 'light', 'ghost', 'text']
 const sizeValues = ['mini', 'small', 'medium', 'large']
 
+/** 点击时执行，支持同步/异步；部分场景（如 Dialog/Popok 底部）可读返回值 `false`。 */
+export type LewButtonRequestFn = () => void | boolean | Promise<void | boolean>
+
 export const buttonProps = {
   text: {
     type: String,
@@ -92,7 +95,7 @@ export const buttonProps = {
     }),
   },
   request: {
-    type: Function as PropType<() => Promise<void>>,
+    type: Function as PropType<LewButtonRequestFn>,
     validator: validators.function({
       componentName: 'LewButton',
       propName: 'request',
