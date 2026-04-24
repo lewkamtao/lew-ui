@@ -65,7 +65,7 @@ export const drawerProps = {
   footerButtons: {
     type: Array as PropType<LewModalFooterButtonItem[]>,
     description:
-      '自定义底部按钮列表；每项 `props` 透传 LewButton（`request` 处理异步）。不传则默认单个「确认」按钮并关闭，受 hideFooter 控制。',
+      '自定义底部按钮列表；每项 `props` 透传 LewButton（`request` 处理异步），`emitOk` 控制该按钮成功关闭时是否触发 `ok`。不传则默认单个「确认」并关闭，受 hideFooter 控制。',
     validator: validators.array({
       componentName: 'LewDrawer',
       propName: 'footerButtons',

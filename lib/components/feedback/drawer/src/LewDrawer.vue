@@ -11,7 +11,7 @@ import CloseButton from 'lew-ui/_components/CloseButton.vue'
 import { useDOMCreate, usePopupManager } from 'lew-ui/hooks'
 
 // 4. 工具函数导入
-import { any2px, getUniqueId, object2class } from 'lew-ui/utils'
+import { any2px, getUniqueId, object2class, shouldFooterEmitOk } from 'lew-ui/utils'
 
 // 5. 组件配置导入
 import { drawerEmits } from './emits'
@@ -37,7 +37,7 @@ const drawerId = `lew-drawer-${getUniqueId()}`
 const slots: ReturnType<typeof useSlots> = useSlots()
 
 // 使用全局弹出层管理器
-const { zIndex: managedZIndex, isTop } = usePopupManager({
+const { zIndex: managedZIndex, isTop, close: closePopup } = usePopupManager({
   id: drawerId,
   type: 'drawer',
   visible,
@@ -91,6 +91,7 @@ const resolvedFooterButtons = computed<LewModalFooterButtonItem[]>(() => {
   if (props.footerButtons != null) {
     return props.footerButtons.map(item => ({
       props: { size: 'small', ...item.props },
+      emitOk: item.emitOk,
     }))
   }
   return [
@@ -100,18 +101,35 @@ const resolvedFooterButtons = computed<LewModalFooterButtonItem[]>(() => {
         type: 'fill',
         color: 'primary',
         text: locale.t('drawer.confirmText'),
-        request: async () => {
-          handleClose()
-        },
       },
     },
   ]
 })
 
+function footerButtonBind(item: LewModalFooterButtonItem) {
+  const { request: _r, ...rest } = item.props ?? {}
+  return rest
+}
+
+async function mergeFooterRequest(item: LewModalFooterButtonItem, index: number) {
+  const fn = item.props?.request
+  if (typeof fn === 'function') {
+    const result = await Promise.resolve(
+      (fn as () => boolean | void | Promise<boolean | void>)(),
+    )
+    if (result === false) {
+      return
+    }
+  }
+  if (shouldFooterEmitOk(item, index, resolvedFooterButtons.value.length)) {
+    emit('ok')
+  }
+  closePopup()
+}
+
 // 方法
 function handleClose(): void {
-  visible.value = false
-  emit('close')
+  closePopup()
 }
 
 // 监听器
@@ -124,7 +142,7 @@ onClickOutside(drawerBodyRef, (e: any) => {
     const target = e?.target as Element | undefined
     const parentElement = target?.parentElement
     if (parentElement?.id === drawerId) {
-      visible.value = false
+      closePopup()
     }
   }
 })
@@ -183,7 +201,8 @@ onClickOutside(drawerBodyRef, (e: any) => {
             <LewButton
               v-for="(item, index) in resolvedFooterButtons"
               :key="index"
-              v-bind="item.props"
+              v-bind="footerButtonBind(item)"
+              :request="() => mergeFooterRequest(item, index)"
             />
           </LewFlex>
         </div>

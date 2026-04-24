@@ -25,15 +25,10 @@ function close() {
     close-on-click-overlay
     width="420px"
     title="Delete Account"
-    :ok-button-props="{
-      request: ok,
-      color: 'danger',
-      text: 'Delete',
-    }"
-    :close-button-props="{
-      request: close,
-      text: 'Cancel',
-    }"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: 'Cancel', request: close } },
+      { props: { type: 'fill', color: 'danger', size: 'small', text: 'Delete', request: ok } },
+    ]"
   >
     <div class="modal-body">
       <div class="warning-icon">

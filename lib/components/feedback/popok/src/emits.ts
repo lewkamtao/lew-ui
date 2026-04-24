@@ -1,4 +1,4 @@
-export const drawerEmits = {
+export const popokEmits = {
   close: () => true,
   ok: () => true,
 } as const

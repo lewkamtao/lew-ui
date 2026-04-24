@@ -1,21 +1,9 @@
 <script setup lang="ts">
-// Confirm
-function ok() {
-  return new Promise((resolve: any) => {
-    setTimeout(() => {
-      resolve(true)
-      LewMessage.success('Task completed successfully')
-    }, 1000)
-  })
+function onCancel() {
+  LewMessage.info('Cancelled')
 }
-// Cancel
-function cancel() {
-  return new Promise((resolve: any) => {
-    setTimeout(() => {
-      resolve(true)
-      LewMessage.warning('Operation cancelled')
-    }, 1000)
-  })
+function onOk() {
+  LewMessage.success('Confirmed')
 }
 </script>
 
@@ -25,10 +13,11 @@ function cancel() {
     title="Delete Project"
     content="This action cannot be undone. Are you sure you want to delete this project?"
     placement="bottom-start"
-    cancel-text="Cancel"
-    ok-text="Delete"
-    :ok="ok"
-    :cancel="cancel"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: 'Cancel', request: onCancel } },
+      { props: { type: 'fill', color: 'red', size: 'small', text: 'Delete' } },
+    ]"
+    @ok="onOk"
   >
     <lew-button text="Delete Project" type="ghost" color="red" />
   </lew-popok>

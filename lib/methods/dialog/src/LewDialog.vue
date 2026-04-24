@@ -6,7 +6,7 @@ import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
 import { useDOMCreate, usePopupManager } from 'lew-ui/hooks'
-import { getUniqueId } from 'lew-ui/utils'
+import { getUniqueId, shouldFooterEmitOk } from 'lew-ui/utils'
 import { dialogEmits } from './emits'
 import { dialogProps } from './props'
 
@@ -57,7 +57,7 @@ function footerButtonBind(item: LewDialogPopokFooterButtonItem) {
   return rest
 }
 
-async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem) {
+async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem, index: number) {
   const fn = item.props?.request
   if (typeof fn === 'function') {
     const result = await Promise.resolve(
@@ -66,6 +66,9 @@ async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem) {
     if (result === false) {
       return
     }
+  }
+  if (shouldFooterEmitOk(item, index, resolvedFooterButtons.value.length)) {
+    emit('ok')
   }
   visible.value = false
 }
@@ -138,7 +141,7 @@ if (props.closeByEsc) {
                 :key="index"
                 :ref="(el) => bindPrimaryButtonRef(el, index)"
                 v-bind="footerButtonBind(item)"
-                :request="() => mergeFooterRequest(item)"
+                :request="() => mergeFooterRequest(item, index)"
               />
             </div>
           </LewFlex>

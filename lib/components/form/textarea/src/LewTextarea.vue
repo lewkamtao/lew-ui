@@ -24,7 +24,7 @@ const state = reactive({
 })
 
 /** 用户拖动手柄后的像素尺寸；未拖动轴向沿用 props（如 width: 100%） */
-const userBoxPx = reactive<{ w?: number; h?: number }>({})
+const userBoxPx = reactive<{ w?: number, h?: number }>({})
 
 let resizeSession: {
   pointerId: number

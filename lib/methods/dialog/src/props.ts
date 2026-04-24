@@ -36,7 +36,7 @@ export const dialogProps = {
   footerButtons: {
     type: Array as PropType<LewDialogPopokFooterButtonItem[]>,
     description:
-      '自定义底部按钮列表；每项 `props` 透传 LewButton，`request` 处理异步，`request` 返回 false 时不关闭。不传则默认单个「确认」按钮。',
+      '自定义底部按钮列表；每项 `props` 透传 LewButton，`request` 处理异步（返回 `false` 不关闭），`emitOk` 控制该按钮成功关闭时是否触发 `ok`。不传则默认单个「确认」按钮。',
     validator: validators.array({
       componentName: 'LewDialog',
       propName: 'footerButtons',

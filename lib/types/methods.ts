@@ -11,6 +11,10 @@ export interface LewDialogOptions {
   footerButtons?: LewDialogPopokFooterButtonItem[]
   closeOnClickOverlay?: boolean
   closeByEsc?: boolean
+  /** 确认（`ok` 事件）：默认确认键或主操作在关闭前 */
+  onOk?: () => void
+  /** 关闭（`close` 事件）：可在此卸载/清理 */
+  onClose?: () => void
 }
 
 export type LewDialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'

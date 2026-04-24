@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { useMagicKeys } from "@vueuse/core";
-import { LewMessage, LewTooltip, locale } from "lew-ui";
-import CloseIcon from "lew-ui/_components/CloseIcon.vue";
-import CommonIcon from "lew-ui/_components/CommonIcon.vue";
-import { any2px, object2class } from "lew-ui/utils";
-import { inputEmits } from "./emits";
-import { inputProps } from "./props";
+import { useMagicKeys } from '@vueuse/core'
+import { LewMessage, LewTooltip, locale } from 'lew-ui'
+import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { any2px, object2class } from 'lew-ui/utils'
+import { inputEmits } from './emits'
+import { inputProps } from './props'
 
 // Props & Emits
-const props = defineProps(inputProps);
-const emit = defineEmits(inputEmits);
+const props = defineProps(inputProps)
+const emit = defineEmits(inputEmits)
 
 // Models
-const modelValue = defineModel<string | undefined>({ required: true });
+const modelValue = defineModel<string | undefined>({ required: true })
 
 // Constants
-const COPY_SUCCESS_DELAY = 2000;
+const COPY_SUCCESS_DELAY = 2000
 
 // Refs
-const lewInputRef = ref<HTMLInputElement>();
-const lewInputCountRef = ref<HTMLElement>();
-const isCopy = ref(false);
-const _type = ref(props.type);
-const isFocus = ref(false);
+const lewInputRef = ref<HTMLInputElement>()
+const lewInputCountRef = ref<HTMLElement>()
+const isCopy = ref(false)
+const _type = ref(props.type)
+const isFocus = ref(false)
 
-let timer: NodeJS.Timeout | null = null;
+let timer: NodeJS.Timeout | null = null
 
 // Initialize tooltip directive
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
 // Computed
@@ -39,179 +39,189 @@ const getIconSize = computed(
       small: 14,
       medium: 15,
       large: 16,
-    }[props.size])
-);
+    }[props.size]),
+)
 
 // 右侧图标显示状态计算
 const showCloseIcon = computed(() => {
-  return props.clearable && modelValue.value && !props.readonly;
-});
+  return props.clearable && modelValue.value && !props.readonly
+})
 
 const showPasswordIcon = computed(() => {
-  return props.showPassword && props.type === "password";
-});
+  return props.showPassword && props.type === 'password'
+})
 
 const showCopyIcon = computed(() => {
   return (
-    props.copyable &&
-    props.readonly &&
-    modelValue.value &&
-    !showCloseIcon.value &&
-    !showPasswordIcon.value
-  );
-});
+    props.copyable
+    && props.readonly
+    && modelValue.value
+    && !showCloseIcon.value
+    && !showPasswordIcon.value
+  )
+})
 
 const rightIconCount = computed(() => {
-  let count = 0;
-  if (showCloseIcon.value) count++;
-  if (showPasswordIcon.value) count++;
-  if (showCopyIcon.value) count++;
-  return count;
-});
+  let count = 0
+  if (showCloseIcon.value)
+    count++
+  if (showPasswordIcon.value)
+    count++
+  if (showCopyIcon.value)
+    count++
+  return count
+})
 
 const getInputViewStyle = computed(() => {
   return {
-    width: props.autoWidth ? "auto" : any2px(props.width),
-  };
-});
+    width: props.autoWidth ? 'auto' : any2px(props.width),
+  }
+})
 
 const getInputBoxStyle = computed(() => {
   return {
     minWidth: any2px(props.minWidth),
-  };
-});
+  }
+})
 
 const getInputStyle = computed(() => {
-  const { showCount } = props;
-  const countWidth = lewInputCountRef.value?.offsetWidth || 0;
+  const { showCount } = props
+  const countWidth = lewInputCountRef.value?.offsetWidth || 0
   // 每个图标大约占 20px（图标本身 + gap），如果有多个图标需要累加
-  const iconWidth = rightIconCount.value * 20;
+  const iconWidth = rightIconCount.value * 20
   // 如果有 count，需要额外空间（12px 间距）
-  const countSpace = showCount && modelValue.value ? countWidth + 12 : 0;
+  const countSpace = showCount && modelValue.value ? countWidth + 12 : 0
   // 如果有图标或 count，需要额外空间（10px 右侧 padding）
-  const rightSpace = rightIconCount.value > 0 || countSpace > 0 ? 10 : 0;
+  const rightSpace = rightIconCount.value > 0 || countSpace > 0 ? 10 : 0
   return {
     width: `calc(100% - ${iconWidth + countSpace + rightSpace}px)`,
-  };
-});
+  }
+})
 
-const getType = computed(() => (props.type === "password" ? _type.value : props.type));
+const getType = computed(() => (props.type === 'password' ? _type.value : props.type))
 
 const getInputClassNames = computed(() => {
-  const { size, readonly, disabled, align, autoWidth } = props;
-  return object2class("lew-input-view", {
+  const { size, readonly, disabled, align, autoWidth } = props
+  return object2class('lew-input-view', {
     size,
     readonly,
     disabled,
     align,
     autoWidth,
-  });
-});
+  })
+})
 
 // Methods
 function clear() {
-  modelValue.value = undefined;
-  emit("clear");
-  emit("change", undefined);
+  modelValue.value = undefined
+  emit('clear')
+  emit('change', undefined)
 }
 
 function focus() {
-  lewInputRef.value?.focus();
+  lewInputRef.value?.focus()
 }
 
 function blur() {
-  lewInputRef.value?.blur();
+  lewInputRef.value?.blur()
 }
 
 function showPasswordFn() {
-  _type.value = _type.value === "text" ? "password" : "text";
+  _type.value = _type.value === 'text' ? 'password' : 'text'
 }
 
 function _focus(e: FocusEvent) {
   if (props.selectByFocus) {
-    (e.currentTarget as HTMLInputElement)?.select();
+    (e.currentTarget as HTMLInputElement)?.select()
   }
-  emit("focus", e);
-  isFocus.value = true;
+  emit('focus', e)
+  isFocus.value = true
 }
 
 function _blur(e: FocusEvent) {
-  emit("blur", e);
-  isFocus.value = false;
+  emit('blur', e)
+  isFocus.value = false
 }
 
 function handleInput(event: Event) {
-  const target = event.target as HTMLInputElement;
-  emit("input", target.value);
+  const target = event.target as HTMLInputElement
+  emit('input', target.value)
 }
 
 function handleChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  emit("change", target.value);
+  const target = event.target as HTMLInputElement
+  emit('change', target.value)
 }
 
 /** 边框与内边距等区域未命中 input 时委托聚焦；使用 capture 避免被其它库 stopPropagation */
 function handleInputViewMouseDown(e: MouseEvent) {
-  if (props.disabled || props.readonly) return;
-  const raw = e.target;
-  const el =
-    raw instanceof Element ? raw : raw instanceof Node ? raw.parentElement : null;
-  if (!el) return;
-  if (el.closest(".lew-input-controls")) return;
-  const inputEl = lewInputRef.value;
-  if (!inputEl || inputEl.disabled) return;
-  if (inputEl === el || inputEl.contains(el)) return;
-  nextTick(() => inputEl.focus());
+  if (props.disabled || props.readonly)
+    return
+  const raw = e.target
+  const el
+    = raw instanceof Element ? raw : raw instanceof Node ? raw.parentElement : null
+  if (!el)
+    return
+  if (el.closest('.lew-input-controls'))
+    return
+  const inputEl = lewInputRef.value
+  if (!inputEl || inputEl.disabled)
+    return
+  if (inputEl === el || inputEl.contains(el))
+    return
+  nextTick(() => inputEl.focus())
 }
 
 function copy() {
-  const textarea = document.createElement("textarea");
-  textarea.style.cssText = "position:fixed;top:-200vh;";
-  textarea.value = modelValue.value as string;
+  const textarea = document.createElement('textarea')
+  textarea.style.cssText = 'position:fixed;top:-200vh;'
+  textarea.value = modelValue.value as string
 
-  document.body.appendChild(textarea);
-  textarea.select();
+  document.body.appendChild(textarea)
+  textarea.select()
 
-  if (document.execCommand("copy")) {
-    LewMessage.success(locale.t("input.copySuccess"));
-    isCopy.value = true;
+  if (document.execCommand('copy')) {
+    LewMessage.success(locale.t('input.copySuccess'))
+    isCopy.value = true
     timer = setTimeout(() => {
-      isCopy.value = false;
-    }, COPY_SUCCESS_DELAY);
-  } else {
-    LewMessage.error(locale.t("input.copyFailed"));
+      isCopy.value = false
+    }, COPY_SUCCESS_DELAY)
+  }
+  else {
+    LewMessage.error(locale.t('input.copyFailed'))
   }
 
-  document.body.removeChild(textarea);
+  document.body.removeChild(textarea)
 }
 
 // Watchers
 watch(
   () => props.type,
   (v) => {
-    if (v === "password") {
-      _type.value = "password";
+    if (v === 'password') {
+      _type.value = 'password'
     }
-  }
-);
+  },
+)
 
 if (props.okByEnter) {
-  const { enter } = useMagicKeys();
+  const { enter } = useMagicKeys()
   watch(enter, (v) => {
     if (v && isFocus.value) {
-      lewInputRef.value?.blur();
-      emit("ok", modelValue.value);
+      lewInputRef.value?.blur()
+      emit('ok', modelValue.value)
     }
-  });
+  })
 }
 
 // Lifecycle
 onUnmounted(() => {
-  if (timer) clearTimeout(timer);
-});
+  if (timer)
+    clearTimeout(timer)
+})
 
 // Expose
-defineExpose({ focus, blur });
+defineExpose({ focus, blur })
 </script>
 
 <template>
@@ -307,7 +317,8 @@ defineExpose({ focus, blur });
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-form-box-shadow);
-  transition: background-color var(--lew-form-transition-ease),
+  transition:
+    background-color var(--lew-form-transition-ease),
     border-color var(--lew-form-transition-ease);
 
   .lew-input-box {

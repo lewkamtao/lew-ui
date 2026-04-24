@@ -2,13 +2,13 @@
 import { LewButton } from 'lew-ui'
 import { h } from 'vue'
 
-function ok() {
-  LewMessage.success('Confirmed')
-}
-function cancel() {
+function onCancel() {
   LewMessage.info('Cancelled')
 }
-// 优化为苹果风格的简洁英文提示，无按钮
+function onOk() {
+  LewMessage.success('Confirmed')
+}
+
 const content = h(
   'div',
   {
@@ -45,11 +45,12 @@ const content = h(
     type="error"
     :content="content"
     placement="bottom-start"
-    ok-text="Delete"
-    cancel-text="Cancel"
-    :ok="ok"
-    :cancel="cancel"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: 'Cancel', request: onCancel } },
+      { props: { type: 'fill', color: 'red', size: 'small', text: 'Delete' } },
+    ]"
     trigger="hover"
+    @ok="onOk"
   >
     <LewButton text="Hover to trigger" type="text" color="red" />
   </lew-popok>

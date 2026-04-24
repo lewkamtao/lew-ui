@@ -2,6 +2,7 @@
 const visible = ref(false)
 const edit = ref(false)
 const notify = ref(false)
+
 function ok() {
   return new Promise<void>(() => {
     setTimeout(() => {
@@ -25,8 +26,6 @@ function close() {
     v-model:visible="visible"
     close-on-click-overlay
     width="550px"
-    :ok-button-props="{ request: ok }"
-    :close-button-props="{ request: close }"
   >
     <template #header>
       <lew-flex x="start" class="lew-modal-header">

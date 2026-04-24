@@ -14,12 +14,7 @@ defineExpose({ open })
     v-model:visible="visible"
     close-on-click-overlay
     close-by-esc
-    :close-button-props="{
-      request: () => {
-        visible = false;
-      },
-    }"
-    hide-ok-button
+    hide-footer
     title="预览效果"
   >
     <div class="preview-modal-content lew-scrollbar">

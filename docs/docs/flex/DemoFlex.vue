@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import LewComponentInfo from "docs/layout/LewComponentInfo.vue";
-import LewDemoBoxLayout from "docs/layout/LewDemoBoxLayout.vue";
-import LewDocsTables from "docs/layout/LewDocsTables.vue";
-import { useRoute } from "vue-router";
-import * as API from "./api";
-import { codeGroup, demoGroup } from "./demo";
+import LewComponentInfo from 'docs/layout/LewComponentInfo.vue'
+import LewDemoBoxLayout from 'docs/layout/LewDemoBoxLayout.vue'
+import LewDocsTables from 'docs/layout/LewDocsTables.vue'
+import { useRoute } from 'vue-router'
+import * as API from './api'
+import { codeGroup, demoGroup } from './demo'
 
-const route = useRoute();
+const route = useRoute()
 // 转小写
 const componentName: string = (route.name as string)
-  .replace("R-Lew", "")
-  .replace(/^[A-Z]/, (match) => match.toLowerCase());
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, match => match.toLowerCase())
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-expect-error API key access
-    return API[key];
-  })
-);
+    return API[key]
+  }),
+)
 </script>
 
 <template>

@@ -1833,11 +1833,12 @@ export default {
         closeByEsc: '是否可通过按下 ESC 关闭',
         hideFooter: '是否隐藏底部',
         footerButtons:
-          '底部按钮列表（每项 props 透传 LewButton，含 request）；不传为默认单个「确认」并关闭',
+          '底部按钮列表（每项 props 透传 LewButton，含 request；可选 emitOk）；不传为默认单个「确认」并关闭',
         zIndex: '层级',
       },
       emits: {
-        close: '关闭时触发',
+        close: '关闭时触发（遮罩、ESC、标题栏关闭、底部操作完成关闭等）',
+        ok: '底部主操作完成并关闭时触发（默认单「确认」或 `emitOk` 为真的项；多按钮时默认识别最后一项为主操作）',
       },
     },
     dialog: {
@@ -1879,8 +1880,8 @@ export default {
         hideIcon: '是否隐藏图标',
       },
       emits: {
-        ok: '点击确认按钮时触发',
-        cancel: '点击取消按钮时触发',
+        ok: '底部主操作完成并关闭时触发',
+        close: '弹层关闭时触发',
       },
     },
     modal: {
@@ -1918,11 +1919,15 @@ export default {
         top: '距离顶部的距离',
         hideFooter: '是否隐藏底部',
         footerButtons:
-          '底部按钮列表（每项 props 透传 LewButton，含 request）；不传为默认单个「确认」并关闭',
+          '底部按钮列表（每项 props 透传 LewButton，含 request；可选 emitOk）；不传为默认单个「确认」并关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         zIndex: '层级',
         maxHeight: '最大高度',
+      },
+      emits: {
+        close: '关闭时触发',
+        ok: '底部主操作完成并关闭时触发',
       },
     },
     popok: {
@@ -1954,9 +1959,13 @@ export default {
         content: '内容',
         placement: '位置',
         footerButtons:
-          '底部按钮列表（每项 props 透传 LewButton，含 request；request 返回 false 时不关闭）；不传为默认单个「确认」并关闭',
+          '底部按钮列表（每项 props 透传 LewButton，含 request；request 返回 false 时不关闭；可选 emitOk）；不传为默认单个「确认」并关闭',
         icon: '自定义图标',
         hideIcon: '是否隐藏图标',
+      },
+      emits: {
+        close: '气泡关闭时触发',
+        ok: '底部主操作完成并关闭时触发',
       },
     },
     popover: {

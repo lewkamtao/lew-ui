@@ -26,6 +26,8 @@ function dialog(type: LewDialogType, options: LewDialogOptions) {
     footerButtons,
     closeOnClickOverlay = false,
     closeByEsc = false,
+    onOk,
+    onClose: onCloseUser,
   } = options
 
   const div = document.createElement('div')
@@ -46,7 +48,11 @@ function dialog(type: LewDialogType, options: LewDialogOptions) {
           title,
           content,
           footerButtons,
+          onOk: () => {
+            onOk?.()
+          },
           onClose: () => {
+            onCloseUser?.()
             app.unmount()
             div.remove()
           },

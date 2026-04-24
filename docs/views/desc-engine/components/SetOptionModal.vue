@@ -19,16 +19,10 @@ defineExpose({ open })
       close-by-esc
       width="550px"
       title="设置选项"
-      :close-button-props="{
-        request: () => {
-          visible = false
-        },
-      }"
-      :ok-button-props="{
-        request: () => {
-          visible = false
-        },
-      }"
+      :footer-buttons="[
+        { props: { type: 'text', color: 'gray', size: 'small', text: '取消' } },
+        { props: { type: 'fill', color: 'primary', size: 'small', text: '确定' } },
+      ]"
     >
       <div class="modal-body">
         <div>A beautiful component library based on vue3</div>

@@ -17,16 +17,10 @@ const visible = ref(false)
     close-by-esc
     width="420px"
     title="System Preferences"
-    :close-button-props="{
-      request: () => {
-        visible = false
-      },
-    }"
-    :ok-button-props="{
-      request: () => {
-        visible = false
-      },
-    }"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: 'Cancel' } },
+      { props: { type: 'fill', color: 'primary', size: 'small', text: 'OK' } },
+    ]"
   >
     <div class="modal-body">
       <div class="preferences-content">

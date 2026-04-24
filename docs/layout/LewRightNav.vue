@@ -154,7 +154,7 @@ function toScroll(item: NavItem) {
   if (!main)
     return
   refreshNav()
-  const fresh = navMenus.value.find((n) => n.key === item.key)
+  const fresh = navMenus.value.find(n => n.key === item.key)
   if (!fresh)
     return
   clickSpyLockUntil = performance.now() + CLICK_SPY_LOCK_MS
