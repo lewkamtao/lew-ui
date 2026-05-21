@@ -50,12 +50,10 @@ function close2() {
     close-by-esc
     width="1000px"
     title="BILLY Bookcase"
-    :close-button-props="{
-      request: close1,
-    }"
-    :ok-button-props="{
-      request: ok1,
-    }"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: 'Cancel', request: close1 } },
+      { props: { type: 'fill', color: 'primary', size: 'small', text: 'OK', request: ok1 } },
+    ]"
   >
     <div class="modal-body">
       <div class="product-container">
@@ -101,12 +99,10 @@ function close2() {
     close-by-esc
     width="400px"
     title="Assembly Guide"
-    :ok-button-props="{
-      request: ok2,
-    }"
-    :close-button-props="{
-      request: close2,
-    }"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: 'Cancel', request: close2 } },
+      { props: { type: 'fill', color: 'primary', size: 'small', text: 'OK', request: ok2 } },
+    ]"
   >
     <div class="modal-body">
       <div class="assembly-container">

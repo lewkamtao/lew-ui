@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { LewUploadFileItem, LewUploadStatus } from 'lew-ui/types'
 import { useClipboardItems } from '@vueuse/core'
-import { LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
+import { LewMessage } from 'lew-ui/methods/message'
 import { any2px, formatBytes, getUniqueId, object2class } from 'lew-ui/utils'
 import { cloneDeep, isFunction } from 'lodash-es'
 import { uploadEmits } from './emits'

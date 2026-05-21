@@ -1,17 +1,19 @@
 <script setup lang="ts">
 // 2. 组件导入
-import type { LewModalFooterButtonItem } from 'lew-ui'
+import type { LewModalFooterButtonItem } from 'lew-ui/types'
 
 // 1. 第三方库导入
 import { onClickOutside } from '@vueuse/core'
-import { LewButton, LewFlex, locale } from 'lew-ui'
 import CloseButton from 'lew-ui/_components/CloseButton.vue'
-
+import { LewButton } from 'lew-ui/components/general/button'
+import { LewFlex } from 'lew-ui/components/general/flex'
 // 3. Hooks 导入
 import { useDOMCreate, usePopupManager } from 'lew-ui/hooks'
 
+import { locale } from 'lew-ui/locals'
+
 // 4. 工具函数导入
-import { any2px, getUniqueId } from 'lew-ui/utils'
+import { any2px, getUniqueId, shouldFooterEmitOk } from 'lew-ui/utils'
 
 // 5. 组件配置导入
 import { modalEmits } from './emits'
@@ -37,7 +39,7 @@ const modalId = `lew-modal-${getUniqueId()}`
 const slots: ReturnType<typeof useSlots> = useSlots()
 
 // 使用全局弹出层管理器
-const { zIndex: managedZIndex, isTop } = usePopupManager({
+const { zIndex: managedZIndex, isTop, close: closePopup } = usePopupManager({
   id: modalId,
   type: 'modal',
   visible,
@@ -72,6 +74,7 @@ const resolvedFooterButtons = computed<LewModalFooterButtonItem[]>(() => {
   if (props.footerButtons != null) {
     return props.footerButtons.map(item => ({
       props: { size: 'small', ...item.props },
+      emitOk: item.emitOk,
     }))
   }
   return [
@@ -81,18 +84,35 @@ const resolvedFooterButtons = computed<LewModalFooterButtonItem[]>(() => {
         type: 'fill',
         color: 'primary',
         text: locale.t('modal.confirmText'),
-        request: async () => {
-          handleClose()
-        },
       },
     },
   ]
 })
 
+function footerButtonBind(item: LewModalFooterButtonItem) {
+  const { request: _r, ...rest } = item.props ?? {}
+  return rest
+}
+
+async function mergeFooterRequest(item: LewModalFooterButtonItem, index: number) {
+  const fn = item.props?.request
+  if (typeof fn === 'function') {
+    const result = await Promise.resolve(
+      (fn as () => boolean | void | Promise<boolean | void>)(),
+    )
+    if (result === false) {
+      return
+    }
+  }
+  if (shouldFooterEmitOk(item, index, resolvedFooterButtons.value.length)) {
+    emit('ok')
+  }
+  closePopup()
+}
+
 // 方法
 function handleClose(): void {
-  visible.value = false
-  emit('close')
+  closePopup()
 }
 
 // 监听器
@@ -104,7 +124,7 @@ onClickOutside(modalBodyRef, (e: any) => {
   if (visible.value && props.closeOnClickOverlay && isTop()) {
     const { parentElement } = e?.target as Element
     if (parentElement?.id === modalId) {
-      visible.value = false
+      closePopup()
     }
   }
 })
@@ -160,8 +180,9 @@ onClickOutside(modalBodyRef, (e: any) => {
             >
               <LewButton
                 v-for="(item, index) in resolvedFooterButtons"
-                :key="index"
-                v-bind="item.props"
+                :key="item.props?.text ?? `footer-${index}`"
+                v-bind="footerButtonBind(item)"
+                :request="() => mergeFooterRequest(item, index)"
               />
             </LewFlex>
           </div>

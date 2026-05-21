@@ -1,6 +1,7 @@
 import type { Property } from 'csstype'
-import type { LewButtonProps, LewTagProps } from 'lew-ui'
-import type { LewComponentSource, LewDirection, LewSize } from './base'
+import type { LewButtonProps } from '../components/general/button'
+import type { LewTagProps } from '../components/general/tag'
+import type { LewComponentSource, LewDirection, LewSize, LewXAlignment, LewYAlignment } from './base'
 
 export type LewButtonType = 'fill' | 'light' | 'ghost' | 'text'
 
@@ -38,11 +39,13 @@ export type LewDrawerPosition = 'left' | 'right' | 'top' | 'bottom'
 
 /**
  * 弹层底部按钮：每项 `props` 透传 LewButton（含 `request` 异步等）。
- * Modal / Drawer：关闭逻辑请在 `request` 内自行处理（默认单按钮已带关闭）。
- * Dialog / Popok：`props.request` 执行后默认关闭；若返回 `false` 则保持打开。
+ * `request` 执行后默认关闭；若返回 `false` 则保持打开。
+ * `emitOk` 控制该按钮成功关闭时是否触发组件的 `ok` 事件，未设时单按钮视为确认，多按钮时仅最后一项为确认（右侧主操作）。
  */
 export interface LewModalFooterButtonItem {
   props?: Partial<LewButtonProps>
+  /** 为 true 时该按钮在 request 成功并关闭时触发 `ok`；为 false 不触发；未设时按单按钮 / 最末项推断 */
+  emitOk?: boolean
 }
 
 /** Dialog / Popok 与 Modal 共用同一底部按钮项类型 */
@@ -100,10 +103,13 @@ export interface LewTableColumn {
   field: string
   fixed?: 'left' | 'right'
   width?: number
-  x?: string
-  y?: string
+  x?: LewXAlignment
+  y?: LewYAlignment
   columnStyle?: string
   sortable?: boolean
+  type?: 'text-trim'
+  customRender?: (ctx: { row: Record<string, unknown>, column: LewTableColumn, text: unknown }) => unknown
+  children?: LewTableColumn[]
 }
 
 export interface LewDescOption {

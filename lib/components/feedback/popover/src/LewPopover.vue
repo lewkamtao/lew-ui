@@ -2,7 +2,7 @@
 // 1. 第三方库导入
 import { watchDebounced } from '@vueuse/core'
 // 2. 组件导入
-import { LewLoading } from 'lew-ui'
+import { LewLoading } from 'lew-ui/directives/loading'
 
 // 3. 工具函数导入
 import { any2px } from 'lew-ui/utils'

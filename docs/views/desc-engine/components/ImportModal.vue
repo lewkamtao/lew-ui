@@ -34,7 +34,9 @@ function open() {
   fieldOptions.value = ''
   visible.value = true
 }
-// Start of Selection
+function closeImport() {
+  visible.value = false
+}
 function ok() {
   if (!fieldOptions.value) {
     emit('import', parseToStandardJSON(defaultOptions))
@@ -67,15 +69,11 @@ defineExpose({ open })
   <lew-modal
     v-model:visible="visible"
     width="500px"
-    :close-button-props="{
-      request: () => {
-        visible = false;
-      },
-    }"
-    :ok-button-props="{
-      request: ok,
-    }"
     title="导入字段"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: '取消', request: closeImport } },
+      { props: { type: 'fill', size: 'small', text: '确定', request: ok } },
+    ]"
   >
     <div class="import-modal-content lew-scrollbar">
       <lew-textarea

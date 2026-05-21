@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { LewColor } from 'lew-ui'
-import type { LewUploadFileItem } from 'lew-ui/types'
-import { LewFlex, LewImage, LewTooltip, locale } from 'lew-ui'
+import type { LewColor, LewUploadFileItem } from 'lew-ui/types'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { LewImage } from 'lew-ui/components/general/image'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
 import {
   any2px,
   checkUrlIsImage,

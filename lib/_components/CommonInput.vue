@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
-import { LewInput, LewTag, locale } from 'lew-ui'
+import type { LewSize } from 'lew-ui/types'
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewInput } from 'lew-ui/components/form/input'
+import { LewTag } from 'lew-ui/components/general/tag'
+import { locale } from 'lew-ui/locals'
 import { any2px, object2class } from 'lew-ui/utils'
 
 const props = defineProps({
@@ -327,7 +329,7 @@ defineExpose({
           class="lew-multiple-search-input"
           :size="(size as any)"
           :placeholder="!hasSelectedItems ? placeholderText : ' '"
-          @input="(value) => inputHandle({ target: { value } } as unknown as Event)"
+          @input="(value?: string) => inputHandle({ target: { value: value ?? '' } } as unknown as Event)"
         />
       </div>
     </template>

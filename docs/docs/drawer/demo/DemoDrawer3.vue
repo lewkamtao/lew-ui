@@ -23,8 +23,6 @@ function close() {
   <lew-drawer
     v-model:visible="visible"
     width="750px"
-    :ok-button-props="{ request: ok }"
-    :close-button-props="{ request: close }"
   >
     <template #header>
       <lew-flex x="start" class="lew-drawer-header">
@@ -41,7 +39,7 @@ function close() {
           Takes effect immediately after submission
         </lew-flex>
         <lew-flex x="end" y="center">
-          <lew-button type="text" color="gray" :request="ok">
+          <lew-button type="text" color="gray" :request="close">
             Cancel
           </lew-button>
           <lew-button :request="ok">

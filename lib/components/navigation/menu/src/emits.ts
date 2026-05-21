@@ -1,4 +1,4 @@
-import type { LewMenuOption } from 'lew-ui'
+import type { LewMenuOption } from 'lew-ui/types'
 
 export const menuEmits = {
   change: (item: LewMenuOption) => item,

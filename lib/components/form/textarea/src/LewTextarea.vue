@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
 import { useDebounceFn, useMagicKeys } from '@vueuse/core'
-import { LewTooltip, locale } from 'lew-ui'
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
 import { any2px, object2class } from 'lew-ui/utils'
 import { textareaEmits } from './emits'
 import { textareaProps } from './props'
@@ -24,7 +25,7 @@ const state = reactive({
 })
 
 /** 用户拖动手柄后的像素尺寸；未拖动轴向沿用 props（如 width: 100%） */
-const userBoxPx = reactive<{ w?: number; h?: number }>({})
+const userBoxPx = reactive<{ w?: number, h?: number }>({})
 
 let resizeSession: {
   pointerId: number

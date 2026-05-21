@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { LewRadioOption } from 'lew-ui/types'
-import { LewFlex } from 'lew-ui'
+import { LewFlex } from 'lew-ui/components/general/flex'
 import { object2class } from 'lew-ui/utils'
 import { radioGroupEmits } from './emits'
 import LewRadio from './LewRadio.vue'

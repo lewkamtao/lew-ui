@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 import CommonIcon from '../_components/CommonIcon.vue'
 
 export * from './dragmove'
+export * from './footerButtonEmit'
 export * from './select'
 
 export function getFormItemRequired(item: LewFormOption) {

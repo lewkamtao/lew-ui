@@ -22,12 +22,10 @@ function handleClose() {
     close-by-esc
     width="500px"
     title="User Profile"
-    :close-button-props="{
-      request: handleClose,
-    }"
-    :ok-button-props="{
-      request: handleOk,
-    }"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: 'Cancel', request: handleClose } },
+      { props: { type: 'fill', color: 'primary', size: 'small', text: 'OK', request: handleOk } },
+    ]"
   >
     <div class="modal-body">
       <div class="profile-container">

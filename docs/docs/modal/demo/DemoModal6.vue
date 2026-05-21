@@ -206,10 +206,9 @@ function closeAll() {
     width="400px"
     close-on-click-overlay
     close-by-esc
-    :ok-button-props="{
-      request: handleSaveEdit,
-      text: '保存',
-    }"
+    :footer-buttons="[
+      { props: { type: 'fill', color: 'primary', size: 'small', text: '保存', request: handleSaveEdit } },
+    ]"
   >
     <div class="edit-form">
       <div class="form-item">
@@ -283,11 +282,9 @@ function closeAll() {
     v-model:visible="confirmModalVisible"
     title="确认操作"
     width="350px"
-    :ok-button-props="{
-      request: handleConfirm,
-      text: '确认',
-      color: 'error',
-    }"
+    :footer-buttons="[
+      { props: { type: 'fill', color: 'error', size: 'small', text: '确认', request: handleConfirm } },
+    ]"
   >
     <div class="confirm-body">
       <div class="confirm-icon">

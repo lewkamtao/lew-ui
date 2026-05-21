@@ -137,7 +137,7 @@ const LewMessage: LewMessageInstance = {
     }
   },
 
-  message: ({ type, e }: { type: string; e: LewMessageOptions }) => {
+  message: ({ type, e }: { type: string, e: LewMessageOptions }) => {
     const container = getContainer()
     if (!container) {
       console.warn('[LewMessage] Failed to create message container')

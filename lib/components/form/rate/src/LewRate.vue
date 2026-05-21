@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { LewTooltip } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
 import { any2px, object2class } from 'lew-ui/utils'
 import { rateEmits } from './emits'
 import { rateProps } from './props'

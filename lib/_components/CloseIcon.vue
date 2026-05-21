@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
+import type { LewSize } from 'lew-ui/types'
 import { object2class } from '../utils'
 import CommonIcon from './CommonIcon.vue'
 

@@ -1,4 +1,4 @@
-import type { LewComponentSource } from 'lew-ui'
+import type { LewComponentSource } from './base'
 import type { LewDialogPopokFooterButtonItem } from './components'
 
 export interface LewDialogOptions {
@@ -11,6 +11,10 @@ export interface LewDialogOptions {
   footerButtons?: LewDialogPopokFooterButtonItem[]
   closeOnClickOverlay?: boolean
   closeByEsc?: boolean
+  /** 确认（`ok` 事件）：默认确认键或主操作在关闭前 */
+  onOk?: () => void
+  /** 关闭（`close` 事件）：可在此卸载/清理 */
+  onClose?: () => void
 }
 
 export type LewDialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'

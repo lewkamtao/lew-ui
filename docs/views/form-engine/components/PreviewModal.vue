@@ -6,6 +6,9 @@ function open(options: any) {
   visible.value = true
   bindOptions.value = options
 }
+function closeModal() {
+  visible.value = false
+}
 function ok() {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
@@ -25,16 +28,11 @@ defineExpose({ open })
     close-on-click-overlay
     close-by-esc
     max-height="calc(100vh - 240px - 50px - 72px)"
-    :close-button-props="{
-      request: () => {
-        visible = false
-      },
-    }"
-    :ok-button-props="{
-      text: '校验表单',
-      request: ok,
-    }"
     title="预览表单"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: '取消', request: closeModal } },
+      { props: { type: 'fill', size: 'small', text: '校验表单', request: ok } },
+    ]"
   >
     <div class="preview-modal-content lew-scrollbar">
       <lew-form ref="formRef" v-bind="bindOptions" />

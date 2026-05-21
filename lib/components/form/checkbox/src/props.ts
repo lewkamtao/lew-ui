@@ -1,4 +1,4 @@
-import type { LewCheckboxOption, LewDirection, LewSize } from 'lew-ui'
+import type { LewCheckboxOption, LewDirection, LewSize } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList } from 'lew-ui/validators'
 

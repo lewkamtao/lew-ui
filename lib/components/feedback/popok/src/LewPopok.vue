@@ -1,21 +1,25 @@
 <script setup lang="ts">
 // 1. 类型导入
-import type { LewColor } from 'lew-ui'
-import type { LewDialogPopokFooterButtonItem } from 'lew-ui/types'
+import type { LewColor, LewDialogPopokFooterButtonItem } from 'lew-ui/types'
 
-// 2. 组件导入
-import { LewButton, LewFlex, LewPopover, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { LewPopover } from 'lew-ui/components/feedback/popover'
+// 2. 组件导入
+import { LewButton } from 'lew-ui/components/general/button'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { locale } from 'lew-ui/locals'
 
 // 3. 工具函数导入
-import { any2px } from 'lew-ui/utils'
+import { any2px, shouldFooterEmitOk } from 'lew-ui/utils'
 
 // 4. 组件配置导入
+import { popokEmits } from './emits'
 import { popokButtonProps } from './props'
 
-// Props
+// Props & Emits
 const props = defineProps(popokButtonProps)
+const emit = defineEmits(popokEmits)
 
 // 响应式状态
 const lewPopoverRef = ref()
@@ -53,7 +57,7 @@ function footerButtonBind(item: LewDialogPopokFooterButtonItem) {
   return rest
 }
 
-async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem) {
+async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem, index: number) {
   const fn = item.props?.request
   if (typeof fn === 'function') {
     const result = await Promise.resolve(
@@ -62,6 +66,9 @@ async function mergeFooterRequest(item: LewDialogPopokFooterButtonItem) {
     if (result === false) {
       return
     }
+  }
+  if (shouldFooterEmitOk(item, index, resolvedFooterButtons.value.length)) {
+    emit('ok')
   }
   hide()
 }
@@ -84,6 +91,7 @@ onMounted(() => {
     class="lew-popok"
     :trigger="trigger"
     :placement="placement"
+    @hide="() => emit('close')"
   >
     <template #trigger>
       <slot />
@@ -111,7 +119,7 @@ onMounted(() => {
               :key="index"
               :ref="(el) => bindPrimaryButtonRef(el, index)"
               v-bind="footerButtonBind(item)"
-              :request="() => mergeFooterRequest(item)"
+              :request="() => mergeFooterRequest(item, index)"
             />
           </div>
         </LewFlex>

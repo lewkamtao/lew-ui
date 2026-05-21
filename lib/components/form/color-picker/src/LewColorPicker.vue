@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { locale } from 'lew-ui'
+import { locale } from 'lew-ui/locals'
 import { any2px, object2class } from 'lew-ui/utils'
 import { colorPickerEmits } from './emits'
 import { colorPickerProps } from './props'

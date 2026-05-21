@@ -1852,11 +1852,12 @@ export default {
         closeByEsc: 'Close by ESC',
         hideFooter: 'Hide Footer',
         footerButtons:
-          'Footer buttons (LewButton props per item, incl. request); default single Confirm closes',
+          'Footer buttons (LewButton props per item, incl. request and optional emitOk); default single Confirm closes',
         zIndex: 'Z Index',
       },
       emits: {
-        close: 'Triggered when closed',
+        close: 'When the layer closes (overlay, ESC, header close, footer action, etc.)',
+        ok: 'When the primary footer action completes and closes (default single Confirm, or item with emitOk; last button in multi-button layout)',
       },
     },
     dialog: {
@@ -1899,8 +1900,8 @@ export default {
         hideIcon: 'Hide Icon',
       },
       emits: {
-        ok: 'Triggered when OK button is clicked',
-        cancel: 'Triggered when Cancel button is clicked',
+        ok: 'When the primary footer action completes and closes',
+        close: 'When the dialog layer closes',
       },
     },
     modal: {
@@ -1939,11 +1940,15 @@ export default {
         top: 'Top',
         hideFooter: 'Hide Footer',
         footerButtons:
-          'Footer buttons (LewButton props per item, incl. request); default single Confirm closes',
+          'Footer buttons (LewButton props per item, incl. request and optional emitOk); default single Confirm closes',
         closeByEsc: 'Close by ESC',
         closeOnClickOverlay: 'Close on Click Overlay',
         zIndex: 'Z Index',
         maxHeight: 'Max Height',
+      },
+      emits: {
+        close: 'When the layer closes',
+        ok: 'When the primary footer action completes and closes',
       },
     },
     popok: {
@@ -1976,9 +1981,13 @@ export default {
         content: 'Content',
         placement: 'Placement',
         footerButtons:
-          'Footer buttons (LewButton props per item, incl. request; return false keeps open); default single Confirm',
+          'Footer buttons (LewButton props per item, incl. request, optional emitOk; return false keeps open); default single Confirm',
         icon: 'Custom Icon',
         hideIcon: 'Hide Icon',
+      },
+      emits: {
+        close: 'When the popover hides',
+        ok: 'When the primary footer action completes and closes',
       },
     },
     popover: {

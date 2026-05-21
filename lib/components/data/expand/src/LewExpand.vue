@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// 1. 组件导入
-import { LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+// 1. 组件导入
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { locale } from 'lew-ui/locals'
 
 // 2. 工具函数导入
 import { any2px } from 'lew-ui/utils'

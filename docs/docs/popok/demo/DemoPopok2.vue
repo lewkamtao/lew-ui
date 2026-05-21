@@ -1,9 +1,9 @@
 <script setup lang="ts">
-function ok() {
-  LewMessage.success('Confirmed')
-}
-function cancel() {
+function onCancel() {
   LewMessage.info('Cancelled')
+}
+function onOk() {
+  LewMessage.success('Confirmed')
 }
 </script>
 
@@ -14,11 +14,12 @@ function cancel() {
     type="error"
     content="This action cannot be undone. Please confirm!"
     placement="bottom-start"
-    ok-text="Delete"
-    cancel-text="Cancel"
-    :ok="ok"
-    :cancel="cancel"
+    :footer-buttons="[
+      { props: { type: 'text', color: 'gray', size: 'small', text: 'Cancel', request: onCancel } },
+      { props: { type: 'fill', color: 'red', size: 'small', text: 'Delete' } },
+    ]"
     trigger="hover"
+    @ok="onOk"
   >
     <lew-button text="Hover to trigger" type="text" color="red" />
   </lew-popok>

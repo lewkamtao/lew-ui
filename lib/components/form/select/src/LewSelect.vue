@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { LewSelectOption } from 'lew-ui/types'
 import { useDebounceFn } from '@vueuse/core'
-import { LewCheckbox, LewFlex, LewPopover, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import CommonInput from 'lew-ui/_components/CommonInput.vue'
+import { LewPopover } from 'lew-ui/components/feedback/popover'
+import { LewCheckbox } from 'lew-ui/components/form/checkbox'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { locale } from 'lew-ui/locals'
 import {
   any2px,
   filterSelectOptionsByKeyword,

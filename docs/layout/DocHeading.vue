@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { LewColor } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
 import type { CSSProperties } from 'vue'
+import { any2px } from 'lew-ui/utils'
 
 const props = withDefaults(
   defineProps<{
