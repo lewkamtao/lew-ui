@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { LewCollapseTransition, LewFlex } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { LewCollapseTransition } from 'lew-ui/components/data/collapse'
+import { LewFlex } from 'lew-ui/components/general/flex'
 import { isValidComponent } from 'lew-ui/utils/render'
 import { cloneDeep } from 'lodash-es'
 import { inject } from 'vue'

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 // 1. 类型导入
-import type { LewColor } from 'lew-ui'
-import type { LewDialogPopokFooterButtonItem } from 'lew-ui/types'
+import type { LewColor, LewDialogPopokFooterButtonItem } from 'lew-ui/types'
 
-// 2. 组件导入
-import { LewButton, LewFlex, LewPopover, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { LewPopover } from 'lew-ui/components/feedback/popover'
+// 2. 组件导入
+import { LewButton } from 'lew-ui/components/general/button'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { locale } from 'lew-ui/locals'
 
 // 3. 工具函数导入
 import { any2px, shouldFooterEmitOk } from 'lew-ui/utils'

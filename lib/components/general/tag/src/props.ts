@@ -1,5 +1,4 @@
-import type { LewSize } from 'lew-ui'
-import type { LewTagType } from 'lew-ui/types'
+import type { LewSize, LewTagType } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validColorList, validSizeList, validTagTypeList } from 'lew-ui/validators'
 

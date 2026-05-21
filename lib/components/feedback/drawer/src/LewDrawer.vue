@@ -1,14 +1,16 @@
 <script setup lang="ts">
 // 2. 组件导入
-import type { LewModalFooterButtonItem } from 'lew-ui'
+import type { LewModalFooterButtonItem } from 'lew-ui/types'
 
 // 1. 第三方库导入
 import { onClickOutside } from '@vueuse/core'
-import { LewButton, LewFlex, locale } from 'lew-ui'
 import CloseButton from 'lew-ui/_components/CloseButton.vue'
-
+import { LewButton } from 'lew-ui/components/general/button'
+import { LewFlex } from 'lew-ui/components/general/flex'
 // 3. Hooks 导入
 import { useDOMCreate, usePopupManager } from 'lew-ui/hooks'
+
+import { locale } from 'lew-ui/locals'
 
 // 4. 工具函数导入
 import { any2px, getUniqueId, object2class, shouldFooterEmitOk } from 'lew-ui/utils'
@@ -200,7 +202,7 @@ onClickOutside(drawerBodyRef, (e: any) => {
           >
             <LewButton
               v-for="(item, index) in resolvedFooterButtons"
-              :key="index"
+              :key="item.props?.text ?? `footer-${index}`"
               v-bind="footerButtonBind(item)"
               :request="() => mergeFooterRequest(item, index)"
             />

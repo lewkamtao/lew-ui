@@ -1,4 +1,4 @@
-import type { LewComponentSource } from 'lew-ui'
+import type { LewComponentSource } from './base'
 import type { LewDialogPopokFooterButtonItem } from './components'
 
 export interface LewDialogOptions {

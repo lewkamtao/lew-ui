@@ -1,23 +1,21 @@
 <script lang="ts" setup>
 import type { LewXAlignment, LewYAlignment } from 'lew-ui/types'
-import { useResizeObserver } from '@vueuse/core'
-import { LewCheckbox, LewFlex, LewTextTrim, locale } from 'lew-ui'
+import { useResizeObserver, useThrottleFn } from '@vueuse/core'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { any2px, getUniqueId } from 'lew-ui/utils'
-import {
-  difference,
-  isEmpty,
-  isString,
-  keys,
-  pickBy,
-  sumBy,
-  throttle,
-} from 'lodash-es'
+import { LewCheckbox } from 'lew-ui/components/form/checkbox'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { LewTextTrim } from 'lew-ui/components/general/text-trim'
+import { locale } from 'lew-ui/locals'
+import { any2px } from 'lew-ui/utils'
 import { markRaw } from 'vue'
+import { createTableLayoutState, useTableColumns } from './composables/useTableColumns'
+import { useTableSelection } from './composables/useTableSelection'
+import { useTableColumnSort } from './composables/useTableSort'
 import { tableEmits } from './emits'
 import { tableProps } from './props'
 import SortIcon from './SortIcon.vue'
+import { addUniqueIdToDataSource } from './utils/tableData'
 
 const props = defineProps(tableProps)
 const emit = defineEmits(tableEmits)
@@ -44,23 +42,7 @@ let tooltipAnimationFrame: number | null = null
 let rowHeightRAF: number | null = null
 const _rowKey = props.rowKey || '_lew_table_tr_id'
 
-const layoutState = shallowReactive({
-  isScrollbarVisible: false,
-  isScroll: false,
-  scrollClientWidth: 0,
-  hiddenScrollLine: 'all',
-  fixedLeftWidth: 0,
-  fixedRightWidth: 0,
-})
-
-const selectionState = shallowReactive({
-  isAllChecked: false,
-  selectedRowsMap: {} as Record<string, boolean>,
-})
-
-const focusState = shallowReactive({
-  focusedRowsMap: {} as Record<string, boolean>,
-})
+const layoutState = createTableLayoutState()
 
 const dragState = shallowReactive({
   dragIndex: -1,
@@ -90,52 +72,54 @@ const columnWidthCache = new Map<string, number>()
 const rowHeightCache = new Map<string, string>()
 const columnStyleCache = new Map<string, string>()
 
-const SIZE_CONFIG = {
-  small: {
-    checkableWidth: 50,
-    dragColumnWidth: 40,
-    headHeight: 34,
-    fontSize: 13,
-    iconSize: 15,
-    padding: '8px',
-    emptyPadding: 20,
-    emptyWidth: 150,
-    minRowHeight: 32,
-  },
-  medium: {
-    checkableWidth: 60,
-    dragColumnWidth: 45,
-    headHeight: 38,
-    fontSize: 14,
-    iconSize: 16,
-    padding: '10px',
-    emptyPadding: 30,
-    emptyWidth: 200,
-    minRowHeight: 36,
-  },
-  large: {
-    checkableWidth: 70,
-    dragColumnWidth: 50,
-    headHeight: 44,
-    fontSize: 16,
-    iconSize: 17,
-    padding: '12px',
-    emptyPadding: 40,
-    emptyWidth: 250,
-    minRowHeight: 42,
-  },
-} as const
+const {
+  getCheckableWidth,
+  getDragColumnWidth,
+  getHeadHeight,
+  getIconSize,
+  getPadding,
+  getEmptyPadding,
+  getMinRowHeight,
+  sizeConfig,
+  fixedColumns,
+  headerColumns,
+  totalColumnWidth,
+  fixedWidths,
+  getColumnStyle,
+  getHeaderColumnStyle,
+  columnLevel,
+  nonFixedHeaderColumns,
+  nonFixedColumns,
+} = useTableColumns({
+  columns: computed(() => props.columns),
+  size: computed(() => props.size),
+  checkable: computed(() => props.checkable),
+  sortable: computed(() => props.sortable),
+  layoutState,
+  columnWidthCache,
+  columnStyleCache,
+})
 
-const sizeConfig = computed(() => SIZE_CONFIG[props.size])
+const {
+  selectionState,
+  focusState,
+  updateAllCheckedState,
+  setAllRowsChecked,
+  handleRowClick,
+  updateSelectedKeys,
+  getRowSelectedState,
+} = useTableSelection({
+  props,
+  emit,
+  selectedKeys,
+  dataSource: computed(() => dataState.dataSource),
+  rowKey: _rowKey,
+})
 
-const getCheckableWidth = computed(() => sizeConfig.value.checkableWidth)
-const getDragColumnWidth = computed(() => sizeConfig.value.dragColumnWidth)
-const getHeadHeight = computed(() => sizeConfig.value.headHeight)
-const getFontSize = computed(() => sizeConfig.value.fontSize)
-const getIconSize = computed(() => sizeConfig.value.iconSize)
-const getPadding = computed(() => sizeConfig.value.padding)
-const getEmptyPadding = computed(() => sizeConfig.value.emptyPadding)
-const getMinRowHeight = computed(() => sizeConfig.value.minRowHeight)
+const { sort } = useTableColumnSort({
+  sortValue,
+  emit,
+})
 
 function getRowClass(index: number, row: any) {
   const isFocused
@@ -152,127 +136,9 @@ function getRowClass(index: number, row: any) {
   }
 }
 
-function getRowSelectedState(row: any): boolean {
-  return selectionState.selectedRowsMap[row[_rowKey]] || false
-}
-
-const processedColumns = computed(() => {
-  return processColumnsWidth(props.columns)
-})
-
-const leafColumns = computed(() => {
-  return getLeafColumns(processedColumns.value)
-})
-
-const nonFixedColumns = computed(() => {
-  return leafColumns.value.filter(col => !col.fixed)
-})
-
-const fixedColumns = computed(() => ({
-  left: leafColumns.value.filter(col => col.fixed === 'left'),
-  right: leafColumns.value.filter(col => col.fixed === 'right'),
-}))
-
-const headerColumns = computed(() => ({
-  left: processedColumns.value.filter(col => col.fixed === 'left'),
-  right: processedColumns.value.filter(col => col.fixed === 'right'),
-  nonFixed: processedColumns.value.filter(col => !col.fixed),
-}))
-
-const totalColumnWidth = computed(() => {
-  let width = sumBy(leafColumns.value, 'width')
-  if (props.checkable)
-    width += getCheckableWidth.value
-  if (props.sortable)
-    width += getDragColumnWidth.value
-  return width
-})
-
-const fixedWidths = computed(() => {
-  const leftWidth = sumBy(fixedColumns.value.left, 'width')
-  const rightWidth = sumBy(fixedColumns.value.right, 'width')
-  return {
-    left:
-      leftWidth
-      + (props.checkable ? getCheckableWidth.value : 0)
-      + (props.sortable ? getDragColumnWidth.value : 0),
-    right: rightWidth,
-  }
-})
-
-const baseSizeStyle = computed(
-  () => `padding: ${getPadding.value}; font-size: ${getFontSize.value}px;`,
-)
-const headerSizeStyle = computed(() => `font-size: ${getFontSize.value}px;`)
-
-function getColumnStyle(column: any, row?: any): string {
-  const width = column.width
-  const customStyle = row?.tdStyle?.[column.field] || ''
-  const cacheKey = `${column.field}_${width}_${layoutState.isScrollbarVisible}_${layoutState.scrollClientWidth}_${customStyle}`
-
-  const cached = columnStyleCache.get(cacheKey)
-  if (cached)
-    return cached
-
-  let result: string
-  if (layoutState.isScrollbarVisible || column.fixed) {
-    result = `${baseSizeStyle.value}; width: ${width}px; ${customStyle}`
-  }
-  else {
-    const nonFixedWidth
-      = totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right
-    const availableWidth
-      = layoutState.scrollClientWidth
-        - fixedWidths.value.left
-        - fixedWidths.value.right
-    const tdWidth
-      = nonFixedWidth > 0 ? (width / nonFixedWidth) * availableWidth : width
-    result = `${baseSizeStyle.value}; width: ${tdWidth}px; ${customStyle}`
-  }
-
-  columnStyleCache.set(cacheKey, result)
-  return result
-}
-
-function getHeaderColumnStyle(column: any, row?: any): string {
-  const width = column.width
-  const customStyle = row?.tdStyle?.[column.field] || ''
-
-  if (layoutState.isScrollbarVisible || column.fixed) {
-    return `${headerSizeStyle.value}; width: ${width}px; ${customStyle}`
-  }
-
-  const nonFixedWidth
-    = totalColumnWidth.value - fixedWidths.value.left - fixedWidths.value.right
-  const availableWidth
-    = layoutState.scrollClientWidth
-      - fixedWidths.value.left
-      - fixedWidths.value.right
-  const tdWidth
-    = nonFixedWidth > 0 ? (width / nonFixedWidth) * availableWidth : width
-  return `${headerSizeStyle.value}; width: ${tdWidth}px; ${customStyle}`
-}
-
 const hasPartialSelection = computed(() => {
   const selectedRowsMap = selectionState.selectedRowsMap
   return dataState.dataSource.some((row: any) => selectedRowsMap[row[_rowKey]])
-})
-
-const columnLevel = computed(() => {
-  const findMaxDepth = (columns: any[], currentDepth = 1): number => {
-    if (!columns || columns.length === 0)
-      return currentDepth
-
-    let maxDepth = currentDepth
-    for (const col of columns) {
-      if (col.children && col.children.length > 0) {
-        const childDepth = findMaxDepth(col.children, currentDepth + 1)
-        maxDepth = Math.max(maxDepth, childDepth)
-      }
-    }
-    return maxDepth
-  }
-  return findMaxDepth(props.columns)
 })
 
 const getScrollLineLeftClassName = computed(() => {
@@ -302,8 +168,6 @@ const getTableClass = computed(() => ({
   'lew-table-has-fixed-right': hasFixedRight.value,
 }))
 
-const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
-
 function getColumnX(column: any): LewXAlignment {
   return column.x || 'start'
 }
@@ -312,50 +176,12 @@ function getColumnY(column: any): LewYAlignment | undefined {
   return column.y
 }
 
-function calculateColumnWidth(column: any): number {
-  const cacheKey = column.field || column.title || JSON.stringify(column)
-  const cached = columnWidthCache.get(cacheKey)
-  if (cached !== undefined) {
-    return cached
+function getCellText(row: Record<string, unknown>, field: string): string {
+  const value = row[field]
+  if (value === null || value === undefined || value === '') {
+    return '-'
   }
-
-  let width: number
-  if (column.children?.length > 0) {
-    width = column.children.reduce(
-      (sum: number, child: any) => sum + (calculateColumnWidth(child) || 100),
-      0,
-    )
-  }
-  else {
-    width = column.width || 100
-  }
-
-  columnWidthCache.set(cacheKey, width)
-  return width
-}
-
-function processColumnsWidth(columns: any[]) {
-  return columns.map((col) => {
-    const cloneCol = { ...col }
-    cloneCol.width = calculateColumnWidth(cloneCol)
-    return cloneCol
-  })
-}
-
-function getLeafColumns(columns: any[]) {
-  const result: any[] = []
-  const traverse = (cols: any[]) => {
-    cols.forEach((col) => {
-      if (col.children && col.children.length > 0) {
-        traverse(col.children)
-      }
-      else {
-        result.push(col)
-      }
-    })
-  }
-  traverse(columns)
-  return result
+  return typeof value === 'string' ? value : String(value)
 }
 
 function getCachedRenderResult(column: any, row: any) {
@@ -375,99 +201,6 @@ function getCachedRenderResult(column: any, row: any) {
 
 function clearRenderCache() {
   renderCache.clear()
-}
-
-function updateAllCheckedState() {
-  const checkedKeys = keys(pickBy(selectionState.selectedRowsMap, Boolean))
-  const allDataKeys = dataState.dataSource.map((row: any) =>
-    String(row[_rowKey]),
-  )
-  const uncheckedKeys = difference(allDataKeys, checkedKeys)
-  selectionState.isAllChecked
-    = isEmpty(uncheckedKeys)
-      && props.multiple
-      && props.checkable
-      && checkedKeys.length > 0
-}
-
-function setAllRowsChecked(checked: boolean) {
-  const newMap: Record<string, boolean> = {}
-  for (const row of dataState.dataSource) {
-    newMap[row[_rowKey]] = checked
-  }
-  selectionState.selectedRowsMap = newMap
-  if (props.multiple) {
-    selectedKeys.value = checked ? keys(newMap) : []
-  }
-}
-
-function toggleRowSelection(row: any) {
-  if (!props.checkable)
-    return
-
-  const rowKey = row[_rowKey]
-  const isChecked = selectionState.selectedRowsMap[rowKey]
-
-  if (props.multiple) {
-    selectionState.selectedRowsMap[rowKey] = !isChecked
-    selectedKeys.value = keys(pickBy(selectionState.selectedRowsMap, Boolean))
-  }
-  else {
-    selectionState.selectedRowsMap = { [rowKey]: !isChecked }
-    selectedKeys.value = isChecked ? undefined : rowKey
-  }
-  emit('selectChange', selectedKeys.value)
-  updateAllCheckedState()
-}
-
-function toggleRowFocus(row: any) {
-  // 当 checkable 启用时，focusable 不起作用
-  if (!props.focusable || props.checkable)
-    return
-
-  const rowKey = row[_rowKey]
-  const isFocused = focusState.focusedRowsMap[rowKey]
-  // 直接点击切换聚焦状态，支持多选
-  focusState.focusedRowsMap = {
-    ...focusState.focusedRowsMap,
-    [rowKey]: !isFocused,
-  }
-}
-
-function handleRowClick(row: any) {
-  if (props.checkable) {
-    toggleRowSelection(row)
-  }
-  else if (props.focusable) {
-    toggleRowFocus(row)
-  }
-}
-
-function updateSelectedKeys(newKeys: any) {
-  if (props.multiple) {
-    const newMap: Record<string, boolean> = {}
-    for (const row of dataState.dataSource) {
-      newMap[row[_rowKey]] = false
-    }
-    if (Array.isArray(newKeys)) {
-      for (const key of newKeys) {
-        newMap[key] = true
-      }
-    }
-    selectionState.selectedRowsMap = newMap
-  }
-  else {
-    selectionState.selectedRowsMap = { [newKeys]: true }
-  }
-}
-
-function showTextAndEmpty(text: any) {
-  if (text === null || text === undefined || text === '') {
-    return '-'
-  }
-  else {
-    return isString(text) ? text : String(text)
-  }
 }
 
 const X_ALIGN_MAP: Record<string, string> = {
@@ -550,31 +283,6 @@ function readerHeaderTd({ column }: any) {
         : null,
     ],
   )
-}
-
-function sort(column: any) {
-  if (column.sortable) {
-    let value = sortValue.value?.[column.field]
-
-    switch (value) {
-      case 'desc':
-        value = 'asc'
-        break
-      case 'asc':
-        value = undefined
-        break
-      default:
-        value = 'desc'
-        break
-    }
-
-    sortValue.value = {
-      ...(sortValue.value || {}),
-      [column.field]: value,
-    }
-
-    emit('sortChange', { ...sortValue.value })
-  }
 }
 
 function updateScrollState() {
@@ -703,7 +411,7 @@ function computeTableRowHeightSync() {
   dataState.isRowHeightReady = true
 }
 
-const handleTableResize = throttle(() => {
+const handleTableResize = useThrottleFn(() => {
   const table = tableRef.value
   if (!table)
     return
@@ -776,7 +484,7 @@ function initDragState() {
   dragState.isDragging = false
 }
 
-const throttledTooltipUpdate = throttle(
+const throttledTooltipUpdate = useThrottleFn(
   updateTooltipPosition,
   TOOLTIP_THROTTLE_DELAY,
 )
@@ -980,15 +688,6 @@ function getIndicatorStyle(): string {
   return `display: block; transform: translateY(${offsetTop}px); opacity: 1;`
 }
 
-function addUniqueIdToDataSource(dataSource: any[]): any[] {
-  return dataSource.map((row) => {
-    if (!row._lew_table_tr_id) {
-      row._lew_table_tr_id = getUniqueId()
-    }
-    return markRaw(row)
-  })
-}
-
 function getRowHeight(row: any): string {
   if (!row?._lew_table_tr_id)
     return 'auto'
@@ -1082,7 +781,7 @@ watch(selectedKeys, (newVal: any) => {
   }
 })
 
-const throttledRowHeightCompute = throttle(() => {
+const throttledRowHeightCompute = useThrottleFn(() => {
   if (!dataState.isInitializing) {
     computeTableRowHeight()
   }
@@ -1323,7 +1022,7 @@ watch(
                   :x="column.x"
                   style="width: 100%"
                 >
-                  <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
+                  <LewTextTrim :text="getCellText(row, column.field)" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
                   <RenderComponent
@@ -1331,7 +1030,7 @@ watch(
                   />
                 </template>
                 <template v-else>
-                  {{ showTextAndEmpty(row[column.field]) }}
+                  {{ getCellText(row, column.field) }}
                 </template>
               </template>
             </LewFlex>
@@ -1373,7 +1072,7 @@ watch(
                   :x="column.x"
                   style="width: 100%"
                 >
-                  <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
+                  <LewTextTrim :text="getCellText(row, column.field)" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
                   <RenderComponent
@@ -1381,7 +1080,7 @@ watch(
                   />
                 </template>
                 <template v-else>
-                  {{ showTextAndEmpty(row[column.field]) }}
+                  {{ getCellText(row, column.field) }}
                 </template>
               </template>
             </LewFlex>
@@ -1423,7 +1122,7 @@ watch(
                   :x="column.x"
                   style="width: 100%"
                 >
-                  <LewTextTrim :text="showTextAndEmpty(row[column.field])" />
+                  <LewTextTrim :text="getCellText(row, column.field)" />
                 </LewFlex>
                 <template v-else-if="column.customRender">
                   <RenderComponent
@@ -1431,7 +1130,7 @@ watch(
                   />
                 </template>
                 <template v-else>
-                  {{ showTextAndEmpty(row[column.field]) }}
+                  {{ getCellText(row, column.field) }}
                 </template>
               </template>
             </LewFlex>

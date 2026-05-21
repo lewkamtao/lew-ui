@@ -1,5 +1,4 @@
-import type { LewContextMenusOption } from 'lew-ui'
-import type { LewPlacement, LewTrigger } from 'lew-ui/types'
+import type { LewContextMenusOption, LewPlacement, LewTrigger } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validPlacementList, validTriggerList } from 'lew-ui/validators'
 

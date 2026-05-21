@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { LewFlex, LewTooltip, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { inputNumberEmits } from './emits'

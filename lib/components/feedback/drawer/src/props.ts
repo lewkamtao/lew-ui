@@ -1,6 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewModalFooterButtonItem } from 'lew-ui'
-import type { LewDrawerPosition } from 'lew-ui/types'
+import type { LewDrawerPosition, LewModalFooterButtonItem } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDrawerPositionList } from 'lew-ui/validators'
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { LewMenuOption } from 'lew-ui'
-import { LewTag } from 'lew-ui'
+import type { LewMenuOption } from 'lew-ui/types'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { LewTag } from 'lew-ui/components/general/tag'
 import { toRaw } from 'vue'
 import { menuEmits } from './emits'
 import { menuProps } from './props'

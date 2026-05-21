@@ -1,4 +1,4 @@
-import type { LewStatusColor } from 'lew-ui'
+import type { LewStatusColor } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validStatusColorList } from 'lew-ui/validators'
 

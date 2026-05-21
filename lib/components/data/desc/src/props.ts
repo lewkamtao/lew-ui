@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewDescOption, LewDirection, LewSize } from 'lew-ui'
+import type { LewDescOption, LewDirection, LewSize } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validDirectionList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
 

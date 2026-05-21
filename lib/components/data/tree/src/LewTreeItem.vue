@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { LewCheckbox, LewCollapseTransition, LewMessage } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { LewCollapseTransition } from 'lew-ui/components/data/collapse'
+import { LewCheckbox } from 'lew-ui/components/form/checkbox'
+import { LewMessage } from 'lew-ui/methods/message'
 import { insertChildByKey } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
 import { treeItemProps } from './props'

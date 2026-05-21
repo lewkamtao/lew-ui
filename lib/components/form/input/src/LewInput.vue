@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useMagicKeys } from '@vueuse/core'
-import { LewMessage, LewTooltip, locale } from 'lew-ui'
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
+import { LewMessage } from 'lew-ui/methods/message'
 import { any2px, object2class } from 'lew-ui/utils'
 import { inputEmits } from './emits'
 import { inputProps } from './props'

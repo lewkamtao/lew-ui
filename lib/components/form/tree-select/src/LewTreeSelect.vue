@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { LewPopover, LewTooltip, LewTree } from 'lew-ui'
 import CommonInput from 'lew-ui/_components/CommonInput.vue'
+import { LewTree } from 'lew-ui/components/data/tree'
+import { LewPopover } from 'lew-ui/components/feedback/popover'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
 import { any2px, findNodeByKey, object2class } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import { treeSelectEmits } from './emits'

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { RetItemType } from '../../date-picker/src/date'
 import dayjs from 'dayjs'
-import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewButton } from 'lew-ui/components/general/button'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { locale } from 'lew-ui/locals'
 import { cloneDeep } from 'lodash-es'
 import { getMonthDate } from '../../date-picker/src/date'
 import { dateRangeEmits } from './emits'
@@ -53,7 +55,7 @@ const object2class = computed(() => (type: string, item: RetItemType) => {
   switch (type) {
     case 'today':
       if (_curDate.isSame(_date) && item.date === item.showDate) {
-        return true
+        return 'today'
       }
       break
     case 'rangeMonth':

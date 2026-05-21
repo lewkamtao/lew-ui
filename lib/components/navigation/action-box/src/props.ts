@@ -1,5 +1,4 @@
-import type { LewXAlignment } from 'lew-ui'
-import type { LewActionBoxOption } from 'lew-ui/types'
+import type { LewActionBoxOption, LewXAlignment } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validXAlignmentList } from 'lew-ui/validators'
 

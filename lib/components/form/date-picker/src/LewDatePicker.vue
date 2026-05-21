@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { LewPopover, LewTooltip, locale } from 'lew-ui'
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewPopover } from 'lew-ui/components/feedback/popover'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
 import { any2px, object2class } from 'lew-ui/utils'
 import { datePickerEmits } from './emits'
 import { formatDate, isValidDate } from './formatters'

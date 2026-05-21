@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { useThrottleFn } from '@vueuse/core'
 import { any2px, dragmove } from 'lew-ui/utils'
-import { throttle } from 'lodash-es'
 import { sliderEmits } from './emits'
 
 import { sliderProps } from './props'
@@ -73,14 +73,14 @@ const trackRef = ref<HTMLElement | null>(null)
 const dotX = ref(0)
 
 // 视图更新节流：50ms 更新频率，用于流畅的视觉反馈
-const throttledUpdateView = throttle((newValue: number) => {
+const throttledUpdateView = useThrottleFn((newValue: number) => {
   const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
   internalViewValue.value = clampedValue
   setDotByValue(clampedValue)
 }, 50)
 
 // 数据更新节流：250ms 更新频率，用于减少外部状态更新频率
-const throttledUpdateModelValue = throttle((newValue: number) => {
+const throttledUpdateModelValue = useThrottleFn((newValue: number) => {
   const clampedValue = Math.max(getMin.value, Math.min(getMax.value, newValue))
   modelValue.value = clampedValue
   emit('change', clampedValue)

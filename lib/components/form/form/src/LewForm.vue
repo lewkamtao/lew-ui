@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { LewFormOption } from 'lew-ui/types'
+import { useDebounceFn } from '@vueuse/core'
 import { Parser } from 'expr-eval'
 import {
   any2px,
@@ -7,8 +8,8 @@ import {
   getFormItemRequired,
   retrieveNestedFieldValue,
 } from 'lew-ui/utils'
-import { debounce } from 'lodash-es'
 import { ref } from 'vue'
+import { object } from 'yup'
 import * as Yup from 'yup'
 import { formEmits } from './emits'
 import LewFormItem from './LewFormItem.vue'
@@ -75,7 +76,7 @@ function createFormSchema(options: LewFormOption[]) {
     return acc
   }, {})
 
-  return Yup.object().shape(schemaMap)
+  return object().shape(schemaMap)
 }
 
 const formSchema = computed(() => {
@@ -263,7 +264,7 @@ function getItemProps(item: LewFormOption) {
   return baseProps
 }
 
-const handleChange = debounce(() => {
+const handleChange = useDebounceFn(() => {
   emit('change', getForm())
 }, 100)
 

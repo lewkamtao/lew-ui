@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { LewCollapseModelValue } from 'lew-ui/types'
 import type { Ref } from 'vue'
-import { LewFlex } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewFlex } from 'lew-ui/components/general/flex'
 import { any2px } from 'lew-ui/utils'
 import { inject, ref, toRaw, watch } from 'vue'
 import { collapseItemEmits } from './collapseItemEmits'

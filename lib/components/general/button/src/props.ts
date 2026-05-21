@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewButtonSize, LewButtonType, LewColor } from 'lew-ui'
+import type { LewButtonSize, LewButtonType, LewColor } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validColorList } from 'lew-ui/validators'
 

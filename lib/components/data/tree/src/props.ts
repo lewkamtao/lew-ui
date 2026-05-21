@@ -1,4 +1,4 @@
-import type { LewTreeDataSource } from 'lew-ui'
+import type { LewTreeDataSource } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 

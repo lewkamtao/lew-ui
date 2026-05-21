@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewTextTrim } from 'lew-ui'
+import { LewTextTrim } from 'lew-ui/components/general/text-trim'
 import { formatComponent } from 'lew-ui/utils/render'
 
 defineProps({
