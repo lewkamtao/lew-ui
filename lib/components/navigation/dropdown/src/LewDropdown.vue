@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LewContextMenusOption } from 'lew-ui'
-import { LewPopover } from 'lew-ui'
+import type { LewContextMenusOption } from 'lew-ui/types'
+import { LewPopover } from 'lew-ui/components/feedback/popover'
 import LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
 import { dropdownEmits } from './emits'
 import { dropdownProps } from './props'

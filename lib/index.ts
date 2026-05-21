@@ -1,4 +1,4 @@
-import type { App } from 'vue'
+import type { App, Component } from 'vue'
 
 // 全局 => 定义 install 方法
 import * as components from './components'
@@ -20,23 +20,25 @@ export * from './types'
 
 function install(Vue: App): void {
   Object.keys(components).forEach((key) => {
-    const component: any = components[key as keyof typeof components]
-    if (component.name || component.__name) {
-      Vue.component(component.name || component.__name, component)
+    const component = components[key as keyof typeof components] as Component
+    const name = component.name || (component as { __name?: string }).__name
+    if (name) {
+      Vue.component(name, component)
     }
   })
 
   Object.keys(directives).forEach((key) => {
     const directive = directives[key as keyof typeof directives]
-    if (typeof directive === 'object' && 'install' in directive) {
-      Vue.use(directive)
+    if (typeof directive === 'object' && directive && 'install' in directive) {
+      Vue.use(directive as { install: (app: App) => void })
     }
   })
 
   Object.keys(methods).forEach((key) => {
     const methodInstance = methods[key as keyof typeof methods]
-    if ('name' in methodInstance) {
-      ;(window as any)[methodInstance.name] = methodInstance
+    if (methodInstance && typeof methodInstance === 'object' && 'name' in methodInstance) {
+      ;(window as unknown as Record<string, unknown>)[methodInstance.name as string]
+        = methodInstance
     }
   })
 }

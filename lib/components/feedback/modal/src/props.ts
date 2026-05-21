@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewModalFooterButtonItem } from 'lew-ui'
+import type { LewModalFooterButtonItem } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'
 

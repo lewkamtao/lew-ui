@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import { useDebounceFn, useThrottleFn } from '@vueuse/core'
 import dayjs from 'dayjs'
-import { LewButton } from 'lew-ui'
-import { debounce, throttle } from 'lodash-es'
+import { LewButton } from 'lew-ui/components/general/button'
 import { computed, nextTick, onBeforeUnmount, reactive, ref } from 'vue'
 
 const props = defineProps({
@@ -329,8 +329,8 @@ function handleScrollEnd(type: string, event: Event) {
     .format(props.valueFormat)
 }
 
-const throttledHandleScroll = throttle(handleScroll, 250)
-const debouncedHandleScrollEnd = debounce(handleScrollEnd, 250)
+const throttledHandleScroll = useThrottleFn(handleScroll, 250)
+const debouncedHandleScrollEnd = useDebounceFn(handleScrollEnd, 250)
 
 function onScroll(type: string, event: Event) {
   if (dragState.isDragging)

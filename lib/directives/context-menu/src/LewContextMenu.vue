@@ -1,10 +1,11 @@
 <script setup lang="ts" name="LewContextMenu">
 import type { LewContextMenusOption } from 'lew-ui/types'
 import type { Instance as TippyInstance } from 'tippy.js'
-import { LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { LewFlex } from 'lew-ui/components/general/flex'
 import _LewContextMenu from 'lew-ui/directives/context-menu/src/LewContextMenu.vue'
+import { locale } from 'lew-ui/locals'
 import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import tippy from 'tippy.js'

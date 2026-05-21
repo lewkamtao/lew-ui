@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { LewActionBoxOption, LewContextMenusOption } from 'lew-ui/types'
-import { LewDropdown, LewFlex } from 'lew-ui'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { LewDropdown } from 'lew-ui/components/navigation/dropdown'
 import { parseDimension } from 'lew-ui/utils'
 import { isValidComponent } from 'lew-ui/utils/render'
 import { actionBoxEmits } from './emits'

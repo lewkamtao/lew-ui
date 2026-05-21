@@ -1,6 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewSize } from 'lew-ui'
-import type { LewInputType, LewXAlignment } from 'lew-ui/types'
+import type { LewInputType, LewSize, LewXAlignment } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validInputTypeList, validSizeList, validXAlignmentList } from 'lew-ui/validators'
 

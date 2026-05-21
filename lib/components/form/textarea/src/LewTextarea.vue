@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
 import { useDebounceFn, useMagicKeys } from '@vueuse/core'
-import { LewTooltip, locale } from 'lew-ui'
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
 import { any2px, object2class } from 'lew-ui/utils'
 import { textareaEmits } from './emits'
 import { textareaProps } from './props'

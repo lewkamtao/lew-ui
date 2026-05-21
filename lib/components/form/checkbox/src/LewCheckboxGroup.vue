@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { LewCheckboxOption } from 'lew-ui'
-import { LewCheckbox, LewFlex } from 'lew-ui'
+import type { LewCheckboxOption } from 'lew-ui/types'
+import { LewCheckbox } from 'lew-ui/components/form/checkbox'
+import { LewFlex } from 'lew-ui/components/general/flex'
 import { object2class } from 'lew-ui/utils'
 import { checkboxGroupEmits } from './emits'
 import { checkboxGroupProps } from './props'

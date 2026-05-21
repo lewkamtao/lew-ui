@@ -1,31 +1,28 @@
 <script setup lang="ts">
 import type { LewFormItemAs } from 'lew-ui/types'
-import {
-  LewButton,
-  LewCascader,
-  LewCheckbox,
-  LewCheckboxGroup,
-  LewColorPicker,
-  LewDatePicker,
-  LewDateRangePicker,
-  LewInput,
-  LewInputNumber,
-  LewInputTag,
-  LewRadioGroup,
-  LewRate,
-  LewSelect,
-  LewSlider,
-  LewSliderRange,
-  LewSwitch,
-  LewTabs,
-  LewTextarea,
-  LewTooltip,
-  LewTreeSelect,
-  LewUpload,
-} from 'lew-ui'
+import { useDebounceFn } from '@vueuse/core'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewCascader } from 'lew-ui/components/form/cascader'
+import { LewCheckbox, LewCheckboxGroup } from 'lew-ui/components/form/checkbox'
+import { LewColorPicker } from 'lew-ui/components/form/color-picker'
+import { LewDatePicker } from 'lew-ui/components/form/date-picker'
+import { LewDateRangePicker } from 'lew-ui/components/form/date-range-picker'
+import { LewInput } from 'lew-ui/components/form/input'
+import { LewInputNumber } from 'lew-ui/components/form/input-number'
+import { LewInputTag } from 'lew-ui/components/form/input-tag'
+import { LewRadioGroup } from 'lew-ui/components/form/radio'
+import { LewRate } from 'lew-ui/components/form/rate'
+import { LewSelect } from 'lew-ui/components/form/select'
+import { LewSlider } from 'lew-ui/components/form/slider'
+import { LewSliderRange } from 'lew-ui/components/form/slider-range'
+import { LewSwitch } from 'lew-ui/components/form/switch'
+import { LewTabs } from 'lew-ui/components/form/tabs'
+import { LewTextarea } from 'lew-ui/components/form/textarea'
+import { LewTreeSelect } from 'lew-ui/components/form/tree-select'
+import { LewUpload } from 'lew-ui/components/form/upload'
+import { LewButton } from 'lew-ui/components/general/button'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
 import { any2px, object2class } from 'lew-ui/utils'
-import { debounce } from 'lodash-es'
 import { formItemEmits } from './emits'
 import { formItemProps, requiredIconSizeMap, tipsIconSizeMap } from './props'
 import RequiredIcon from './RequiredIcon.vue'
@@ -120,7 +117,7 @@ function validate() {
     })
 }
 
-const debouncedValidate = debounce(validate, 120)
+const debouncedValidate = useDebounceFn(validate, 120)
 
 function setError(msg: any) {
   errMsg.value = msg || ''

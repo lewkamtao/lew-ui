@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import type { RetItemType, RetType } from './date'
 import dayjs from 'dayjs'
-import { LewButton, LewFlex, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewButton } from 'lew-ui/components/general/button'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { locale } from 'lew-ui/locals'
 import { object2class } from 'lew-ui/utils'
 import { getMonthDate } from './date'
 

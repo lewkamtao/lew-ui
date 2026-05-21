@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
-import { LewButton } from 'lew-ui'
+import { LewButton } from 'lew-ui/components/general/button'
 import LewDate from './LewDate.vue'
 import LewTime from './LewTime.vue'
 

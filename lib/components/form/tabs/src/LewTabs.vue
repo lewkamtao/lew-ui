@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { LewTabsOption } from 'lew-ui/types'
+import { useDebounceFn } from '@vueuse/core'
 import { any2px, object2class } from 'lew-ui/utils'
 import { tabsEmits } from './emits'
 import { tabsProps } from './props'
@@ -108,14 +109,9 @@ function selectItem(value: string | number | undefined, type?: string) {
   }
 }
 
-let timer: ReturnType<typeof setTimeout> | undefined
-
-function debounce() {
-  clearTimeout(timer)
-  timer = setTimeout(() => {
-    init()
-  }, 250)
-}
+const debouncedInit = useDebounceFn(() => {
+  init()
+}, 250)
 
 const getTabsWrapperClassName = computed(() => {
   const { type, round, disabled, readonly } = props
@@ -168,7 +164,7 @@ onMounted(() => {
   nextTick(() => {
     init()
   })
-  window.addEventListener('resize', debounce, false)
+  window.addEventListener('resize', debouncedInit, false)
 })
 
 const getItemStyle = computed(() => {
@@ -185,7 +181,7 @@ const getTabsStyle = computed(() => {
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', debounce)
+  window.removeEventListener('resize', debouncedInit)
 })
 </script>
 

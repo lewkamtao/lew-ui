@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import type { LewSelectOption } from 'lew-ui/types'
-import { getLocale, LewButton, LewInput, LewSelect, locale } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewInput } from 'lew-ui/components/form/input'
+import { LewSelect } from 'lew-ui/components/form/select'
+import { LewButton } from 'lew-ui/components/general/button'
+import { getLocale, locale } from 'lew-ui/locals'
 import { formatIntegerLocale, object2class } from 'lew-ui/utils'
 import { paginationEmits } from './emits'
 import { paginationProps } from './props'
@@ -259,8 +262,8 @@ function onPageKeydown(e: KeyboardEvent, page: number) {
           {{ formatPaginationInteger(2) }}
         </div>
         <div
-          v-for="(page, index) in visiblePages"
-          :key="index"
+          v-for="page in visiblePages"
+          :key="page"
           role="button"
           tabindex="0"
           class="lew-pagination-page-btn"

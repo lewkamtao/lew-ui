@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
-import { LewButton, LewFlex } from 'lew-ui'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewButton } from 'lew-ui/components/general/button'
+import { LewFlex } from 'lew-ui/components/general/flex'
 import { object2class } from 'lew-ui/utils'
 
 const props = defineProps({

@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import type { LewSize } from 'lew-ui'
-import { LewDateRange, LewPopover, LewTooltip, locale } from 'lew-ui'
+import type { LewSize } from 'lew-ui/types'
 import CloseIcon from 'lew-ui/_components/CloseIcon.vue'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
+import { LewPopover } from 'lew-ui/components/feedback/popover'
+import { LewDateRange } from 'lew-ui/components/form/date-range-picker'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
 import { any2px, object2class } from 'lew-ui/utils'
 import { dateRangePickerEmits } from './emits'
 import { dateRangePickerProps } from './props'

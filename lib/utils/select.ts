@@ -1,4 +1,4 @@
-import type { LewSelectMultipleOption, LewSelectOption } from 'lew-ui'
+import type { LewSelectMultipleOption, LewSelectOption } from 'lew-ui/types'
 
 type Options = LewSelectOption | LewSelectMultipleOption
 type OptionsGroup = LewSelectOption | LewSelectMultipleOption

@@ -1,4 +1,4 @@
-import type { LewAvatarPlacement, LewAvatarShape, LewAvatarStatus, LewImageObjectFit, LewImageObjectPosition } from 'lew-ui'
+import type { LewAvatarPlacement, LewAvatarShape, LewAvatarStatus, LewImageObjectFit, LewImageObjectPosition } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validObjectFitList, validObjectPositionList } from 'lew-ui/validators'
 

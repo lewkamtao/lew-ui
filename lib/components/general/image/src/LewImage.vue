@@ -3,7 +3,9 @@
 import { useImage } from '@vueuse/core'
 
 // 2. 组件导入
-import { LewFlex, LewTooltip, locale } from 'lew-ui'
+import { LewFlex } from 'lew-ui/components/general/flex'
+import { LewTooltip } from 'lew-ui/directives/tooltip'
+import { locale } from 'lew-ui/locals'
 
 // 3. 工具函数导入
 import { any2px } from 'lew-ui/utils'

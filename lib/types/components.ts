@@ -1,6 +1,7 @@
 import type { Property } from 'csstype'
-import type { LewButtonProps, LewTagProps } from 'lew-ui'
-import type { LewComponentSource, LewDirection, LewSize } from './base'
+import type { LewButtonProps } from '../components/general/button'
+import type { LewTagProps } from '../components/general/tag'
+import type { LewComponentSource, LewDirection, LewSize, LewXAlignment, LewYAlignment } from './base'
 
 export type LewButtonType = 'fill' | 'light' | 'ghost' | 'text'
 
@@ -102,10 +103,13 @@ export interface LewTableColumn {
   field: string
   fixed?: 'left' | 'right'
   width?: number
-  x?: string
-  y?: string
+  x?: LewXAlignment
+  y?: LewYAlignment
   columnStyle?: string
   sortable?: boolean
+  type?: 'text-trim'
+  customRender?: (ctx: { row: Record<string, unknown>, column: LewTableColumn, text: unknown }) => unknown
+  children?: LewTableColumn[]
 }
 
 export interface LewDescOption {

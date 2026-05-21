@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewSelectOption, LewSelectSearchMethodParams, LewSize, LewTrigger } from 'lew-ui'
+import type { LewSelectOption, LewSelectSearchMethodParams, LewSize, LewTrigger } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList, validTriggerList } from 'lew-ui/validators'
 

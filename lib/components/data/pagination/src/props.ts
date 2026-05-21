@@ -1,4 +1,4 @@
-import type { LewSelectOption, LewSize } from 'lew-ui'
+import type { LewSelectOption, LewSize } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validSizeList } from 'lew-ui/validators'
 

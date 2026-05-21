@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewTagProps } from 'lew-ui'
+import type { LewTagProps } from 'lew-ui/components/general/tag'
 import type { LewMenuTreeOption } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators from 'lew-ui/validators'

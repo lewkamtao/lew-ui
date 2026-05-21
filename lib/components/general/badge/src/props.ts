@@ -1,4 +1,4 @@
-import type { LewColor, LewOffset } from 'lew-ui'
+import type { LewColor, LewOffset } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validColorList } from 'lew-ui/validators'
 

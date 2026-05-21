@@ -1,4 +1,4 @@
-import type { LewTreeDataSource } from 'lew-ui'
+import type { LewTreeDataSource } from 'lew-ui/types'
 import { has } from 'lodash-es'
 
 /**

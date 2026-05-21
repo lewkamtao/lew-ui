@@ -1,5 +1,5 @@
 import type { Property } from 'csstype'
-import type { LewSize, LewTextareaResize } from 'lew-ui'
+import type { LewSize, LewTextareaResize } from 'lew-ui/types'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import validators, { validResizeList, validSizeList } from 'lew-ui/validators'
 
