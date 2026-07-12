@@ -11,7 +11,7 @@ const total = ref(100)
   <lew-flex direction="y" x="start" gap="24px">
     <lew-pagination
       v-model:current-page="pageNum"
-      :page-size="pageSize"
+      v-model:page-size="pageSize"
       size="small"
       show-summary
       :total="total"
@@ -19,19 +19,17 @@ const total = ref(100)
     />
     <lew-pagination
       v-model:current-page="pageNum"
-      :page-size="pageSize"
+      v-model:page-size="pageSize"
       show-summary
       :total="total"
-      round
       @change="change"
     />
     <lew-pagination
       v-model:current-page="pageNum"
-      :page-size="pageSize"
+      v-model:page-size="pageSize"
       size="large"
       show-summary
       :total="total"
-      round
       @change="change"
     />
   </lew-flex>

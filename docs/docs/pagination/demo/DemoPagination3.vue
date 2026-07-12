@@ -13,27 +13,12 @@ setTimeout(() => {
 </script>
 
 <template>
-  <div>
-    <lew-pagination
-      v-model:current-page="pageNum"
-      :page-size="pageSize"
-      show-summary
-      :page-size-options="[
-        {
-          label: '10 / 页',
-          value: 10,
-        },
-        {
-          label: '20 / 页',
-          value: 20,
-        },
-        {
-          label: '30 / 页',
-          value: 30,
-        },
-      ]"
-      :total="total"
-      @change="change"
-    />
-  </div>
+  <lew-pagination
+    v-model:current-page="pageNum"
+    v-model:page-size="pageSize"
+    show-summary
+    :page-size-options="[10, 20, 30]"
+    :total="total"
+    @change="change"
+  />
 </template>
