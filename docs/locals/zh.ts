@@ -1527,6 +1527,11 @@ export default {
       demo12: {
         title: '拖拽排序',
       },
+      demo13: {
+        title: '虚拟滚动',
+        description:
+          '1000 行开启 ```virtual```，配合左右固定列与多选。虚拟滚动下行高固定；关闭虚拟滚动后行高仍随内容自适应。',
+      },
 
       props: {
         columns: '列',
@@ -1539,6 +1544,9 @@ export default {
         rowKey: '行键',
         sortTooltipCustomRender: '排序提示自定义渲染',
         sortable: '可排序',
+        focusable: '是否可聚焦行',
+        virtual:
+          '虚拟滚动：true 强制开启，false 强制关闭；默认在设置 maxHeight 且行数超过阈值时自动开启。开启后行高固定为 size 对应高度',
       },
       tableColumns: {
         field: '字段',
@@ -1557,7 +1565,7 @@ export default {
     },
     pagination: {
       name: '分页 Pagination',
-      description: '清晰的分页导航：页码成组展示，每页条数与跳转分区排列，支持跳转按钮与 Enter 确认',
+      description: '全宽三栏布局：左侧数量摘要、中间页码切换与跳转、右侧每页条数分段切换',
       demo1: {
         title: '基础用法',
       },

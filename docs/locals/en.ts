@@ -1538,6 +1538,11 @@ export default {
       demo12: {
         title: 'Drag Sort',
       },
+      demo13: {
+        title: 'Virtual Scroll',
+        description:
+          'Enable ```virtual``` for 1000 rows with fixed columns and selection. Row height is fixed under virtual scroll; without it, rows still grow with content.',
+      },
       props: {
         columns: 'Columns',
         dataSource: 'Data Source',
@@ -1549,6 +1554,9 @@ export default {
         rowKey: 'Row Key',
         sortTooltipCustomRender: 'Sort Tooltip Custom Render',
         sortable: 'Sortable',
+        focusable: 'Whether rows can be focused',
+        virtual:
+          'Virtual scroll: true to force on, false to force off; by default auto-enables when maxHeight is set and row count exceeds the threshold. When enabled, row height is fixed by size',
       },
       tableColumns: {
         field: 'Field',
@@ -1568,7 +1576,7 @@ export default {
     pagination: {
       name: 'Pagination',
       description:
-        'Clear pagination: grouped page numbers, separated tools for page size and go-to-page, with a Go button and Enter to confirm',
+        'Full-width three-zone layout: summary on the left, page controls and jump in the center, segmented page-size tabs on the right',
       demo1: {
         title: 'Basic Usage',
       },

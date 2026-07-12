@@ -23,6 +23,8 @@ import DemoTable11 from './DemoTable11.vue'
 import DemoTable11Code from './DemoTable11.vue?raw'
 import DemoTable12 from './DemoTable12.vue'
 import DemoTable12Code from './DemoTable12.vue?raw'
+import DemoTable13 from './DemoTable13.vue'
+import DemoTable13Code from './DemoTable13.vue?raw'
 
 export const demoGroup = [
   DemoTable1,
@@ -37,6 +39,7 @@ export const demoGroup = [
   DemoTable10,
   DemoTable11,
   DemoTable12,
+  DemoTable13,
 ]
 
 export const codeGroup = [
@@ -52,4 +55,5 @@ export const codeGroup = [
   DemoTable10Code,
   DemoTable11Code,
   DemoTable12Code,
+  DemoTable13Code,
 ]

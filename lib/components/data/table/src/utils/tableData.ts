@@ -4,10 +4,13 @@ import { markRaw } from 'vue'
 
 export function addUniqueIdToDataSource(dataSource: Record<string, unknown>[]) {
   return dataSource.map((row) => {
-    if (!row._lew_table_tr_id) {
-      row._lew_table_tr_id = getUniqueId()
+    if (row._lew_table_tr_id) {
+      return markRaw(row)
     }
-    return markRaw(row)
+    return markRaw({
+      ...row,
+      _lew_table_tr_id: getUniqueId(),
+    })
   })
 }
 

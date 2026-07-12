@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { LewMessage } from 'lew-ui'
 import {
   Archive,
   Copy,
@@ -10,7 +9,8 @@ import {
   Share,
   Trash,
   View,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
+import { LewMessage } from 'lew-ui'
 
 const data: any = [
   {

@@ -105,6 +105,18 @@ export const tableProps = {
       propName: 'focusable',
     }),
   },
+  /**
+   * 虚拟滚动：true 强制开启，false 强制关闭；
+   * 默认 undefined 表示在设置了 maxHeight 且行数超过阈值时自动开启。
+   */
+  virtual: {
+    type: Boolean,
+    default: undefined,
+    validator: validators.boolean({
+      componentName: 'LewTable',
+      propName: 'virtual',
+    }),
+  },
 }
 
 export type LewTableProps = ExtractPublicPropTypes<typeof tableProps>
