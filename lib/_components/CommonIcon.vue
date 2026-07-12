@@ -37,7 +37,7 @@ import {
   UploadCloud,
   UserRound,
   X,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 import { getColorType, iconColorType } from '../utils'
 
 const props = defineProps({

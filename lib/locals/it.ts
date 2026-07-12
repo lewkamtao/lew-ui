@@ -118,13 +118,10 @@ export default {
     jumpTo: 'Pag.',
     jumpConfirm: 'Vai',
     summary: 'Pagina {current} di {totalPages} · {total} elementi',
-    perPage: 'Per pagina',
     prevSection: 'Pagine precedenti',
     nextSection: 'Pagine successive',
     navLabel: 'Paginazione',
     jumpGroup: 'Vai a pagina',
-    prevPage: 'Pagina precedente',
-    nextPage: 'Pagina successiva',
   },
   contextMenu: {
     noActions: 'Nessuna azione disponibile',

@@ -1,46 +1,18 @@
-import type { App, Component } from 'vue'
-
-// 全局 => 定义 install 方法
-import * as components from './components'
-import * as directives from './directives'
-import * as methods from './methods'
-// tippy 样式
-import 'tippy.js/dist/tippy.css' // optional for styling
-import 'tippy.js/animations/shift-away-subtle.css'
-
-import 'tippy.js/animations/scale-subtle.css'
-// 引入样式
-import './styles/index.scss'
+/**
+ * Lew UI 主入口
+ * - 纯具名导出，无顶层样式副作用，便于 Tree-shaking
+ * - 样式请单独：import 'lew-ui/style'
+ * - 全量注册：app.use(LewUI) 或 app.use(install)
+ */
 
 export * from './components'
 export * from './directives'
+export { default, install } from './install'
+export { default as LewUI } from './install'
 export * from './locals'
+
 export * from './methods'
 export * from './types'
 
-function install(Vue: App): void {
-  Object.keys(components).forEach((key) => {
-    const component = components[key as keyof typeof components] as Component
-    const name = component.name || (component as { __name?: string }).__name
-    if (name) {
-      Vue.component(name, component)
-    }
-  })
-
-  Object.keys(directives).forEach((key) => {
-    const directive = directives[key as keyof typeof directives]
-    if (typeof directive === 'object' && directive && 'install' in directive) {
-      Vue.use(directive as { install: (app: App) => void })
-    }
-  })
-
-  Object.keys(methods).forEach((key) => {
-    const methodInstance = methods[key as keyof typeof methods]
-    if (methodInstance && typeof methodInstance === 'object' && 'name' in methodInstance) {
-      ;(window as unknown as Record<string, unknown>)[methodInstance.name as string]
-        = methodInstance
-    }
-  })
-}
-
-export default { install }
+declare const __LEW_VERSION__: string
+export const version = typeof __LEW_VERSION__ !== 'undefined' ? __LEW_VERSION__ : '2.8.2'

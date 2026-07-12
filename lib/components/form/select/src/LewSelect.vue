@@ -3,6 +3,7 @@ import type { LewSelectOption } from 'lew-ui/types'
 import { useDebounceFn } from '@vueuse/core'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import CommonInput from 'lew-ui/_components/CommonInput.vue'
+import VirtList from 'lew-ui/_components/VirtList.vue'
 import { LewPopover } from 'lew-ui/components/feedback/popover'
 import { LewCheckbox } from 'lew-ui/components/form/checkbox'
 import { LewFlex } from 'lew-ui/components/general/flex'
@@ -17,7 +18,6 @@ import {
   poll,
 } from 'lew-ui/utils'
 import { cloneDeep, isFunction } from 'lodash-es'
-import { VirtList } from 'vue-virt-list'
 import { selectEmits } from './emits'
 import { selectProps } from './props'
 

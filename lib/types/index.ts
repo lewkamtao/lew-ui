@@ -1,3 +1,5 @@
+/// <reference path="./vue-shim.ts" />
+
 export * from './base'
 export * from './components'
 export * from './directives'

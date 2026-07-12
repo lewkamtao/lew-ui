@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 import zipPack from 'vite-plugin-zip-pack'
+import pkg from './package.json'
 
 const resolve = (path: string) => fileURLToPath(new URL(path, import.meta.url))
 
@@ -27,6 +28,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      'lew-ui/style': resolve('./lib/style.ts'),
       'lew-ui': resolve('./lib'),
       'docs': resolve('./docs'),
       '@': resolve('./lib'),
@@ -44,7 +46,7 @@ export default defineConfig({
             if (!packageName)
               return 'vendor'
 
-            const largePackages = ['vue', 'vue-router', 'vue-i18n', 'lodash-es', '@vueuse', 'lucide-vue-next', 'shiki']
+            const largePackages = ['vue', 'vue-router', 'vue-i18n', 'lodash-es', '@vueuse', '@lucide', 'shiki']
             for (const pkg of largePackages) {
               if (packageName.includes(pkg))
                 return `vendor-${pkg.replace('@', '').replace('/', '-')}`
@@ -74,5 +76,6 @@ export default defineConfig({
   },
   define: {
     __DEV__: false,
+    __LEW_VERSION__: JSON.stringify(pkg.version),
   },
 })

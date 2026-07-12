@@ -3,13 +3,13 @@ import type { LewCascaderOption } from 'lew-ui/types'
 import type { CascaderNodeCache } from './cascader'
 import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import CommonInput from 'lew-ui/_components/CommonInput.vue'
+import VirtList from 'lew-ui/_components/VirtList.vue'
 import { LewPopover } from 'lew-ui/components/feedback/popover'
 import { LewCheckbox } from 'lew-ui/components/form/checkbox'
 import { LewTooltip } from 'lew-ui/directives/tooltip'
 import { useTreeSelection } from 'lew-ui/hooks'
 import { any2px, object2class } from 'lew-ui/utils'
 import { cloneDeep, isEqual, isFunction } from 'lodash-es'
-import { VirtList } from 'vue-virt-list'
 import {
   createCascaderCache,
   findAndAddChildrenByValue,

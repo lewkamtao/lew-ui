@@ -12,16 +12,16 @@
     "frontend"
   ],
   "sideEffects": [
-    "*.css",
-    "*.scss",
-    "dist/index.css"
+    "**/*.css",
+    "**/*.scss"
   ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./style": "./dist/index.css"
+    "./style": "./dist/style.css",
+    "./package.json": "./package.json"
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -32,7 +32,7 @@
     "package.json"
   ],
   "engines": {
-    "node": "^22.0.0"
+    "node": ">=20"
   },
   "scripts": {
     "dev": "vite",
@@ -55,47 +55,62 @@
     "vue": "^3.5.3"
   },
   "dependencies": {
-    "@vueuse/core": "^13.5.0",
+    "@lucide/vue": "^1.24.0",
+    "@vueuse/core": "^14.3.0",
     "csstype": "^3.1.3",
-    "dayjs": "^1.11.13",
-    "expr-eval": "^2.0.2",
+    "dayjs": "^1.11.21",
+    "expr-eval-fork": "^3.0.3",
     "lodash-es": "^4.17.21",
-    "lucide-vue-next": "^0.534.0",
     "tippy.js": "^6.3.7",
-    "vue-i18n": "^11.1.0",
-    "vue-virt-list": "^1.5.11",
+    "vue-i18n": "^11.4.6",
     "yup": "^1.2.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^5.0.0",
+    "@antfu/eslint-config": "^9.1.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.16.0",
     "@vitejs/plugin-vue": "^6.0.0",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vue/test-utils": "^2.4.6",
-    "axios": "^1.6.7",
-    "eslint": "^9.31.0",
-    "eslint-plugin-format": "^1.0.1",
+    "@vitest/coverage-v8": "^4.1.10",
+    "@vue/test-utils": "^2.4.11",
+    "axios": "^1.18.1",
+    "eslint": "^10.7.0",
+    "eslint-plugin-format": "^2.0.1",
     "eslint-plugin-unused-imports": "^4.3.0",
-    "jsdom": "^26.1.0",
-    "rollup-plugin-visualizer": "^6.0.3",
-    "sass": "^1.89.2",
-    "shiki-code-block-vue": "0.0.6-beta.1",
-    "stylelint": "16.2.1",
-    "stylelint-config-rational-order": "0.1.2",
-    "stylelint-config-recommended": "^16.0.0",
-    "stylelint-order": "^7.0.0",
-    "ts-morph": "^26.0.0",
-    "tsx": "^4.20.3",
+    "jsdom": "^29.1.1",
+    "rollup-plugin-visualizer": "^7.0.1",
+    "sass": "^1.101.0",
+    "shiki": "3.12.2",
+    "shiki-block-vue": "1.1.2",
+    "stylelint": "17.14.0",
+    "stylelint-config-recess-order": "7.7.0",
+    "stylelint-order": "^8.1.1",
+    "ts-morph": "^28.0.0",
+    "tsx": "^4.23.0",
     "typescript": "^5.8.3",
-    "unplugin-auto-import": "^20.3.0",
-    "vite": "8.0.0-beta.0",
-    "vite-plugin-dts": "^4.5.4",
+    "unplugin-auto-import": "^21.0.0",
+    "vite": "8.1.4",
+    "vite-plugin-dts": "^5.0.3",
     "vite-plugin-zip-pack": "^1.2.3",
-    "vitest": "^3.2.4",
-    "vue": "^3.5.17",
+    "vitest": "^4.1.10",
+    "vue": "^3.5.39",
     "vue-router": "^4.0.13",
-    "vue-tsc": "^3.0.1",
+    "vue-tsc": "^3.3.7",
     "vuedraggable": "^4.1.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "form-data": ">=4.0.6",
+      "js-yaml": ">=4.2.0",
+      "esbuild": ">=0.28.1"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@parcel/watcher"
+    ],
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "vite": "8"
+      }
+    }
   }
 }
