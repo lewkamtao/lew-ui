@@ -18,9 +18,9 @@ interface FontStyle {
 // Constants
 const TOLERANCE_RATIO = 0.98
 const MIN_WIDTH_DIFFERENCE = 2
-const ELLIPSIS = '.....'
+const ELLIPSIS = '…'
 const MIN_VISIBLE_CHARS = 1
-const WIDTH_SAFETY_MARGIN = 12
+const WIDTH_SAFETY_MARGIN = 8
 const MAX_CACHE_SIZE = 500
 
 // Cache for measurement results
@@ -40,13 +40,14 @@ function getCanvasContext(): CanvasRenderingContext2D {
 
 // Extract font style from computed style
 function extractFontStyle(style: CSSStyleDeclaration): FontStyle {
+  const fontStyle = style.fontStyle || 'normal'
   const fontWeight = style.fontWeight || 'normal'
   const fontSize = style.fontSize || '14px'
   const fontFamily = style.fontFamily || 'sans-serif'
   const letterSpacing = Number.parseFloat(style.letterSpacing) || 0
 
   return {
-    font: `${fontWeight} ${fontSize} ${fontFamily}`,
+    font: `${fontStyle} ${fontWeight} ${fontSize} ${fontFamily}`,
     letterSpacing,
   }
 }
@@ -190,7 +191,8 @@ export function getDisplayText(params: GetDisplayTextParams): DisplayTextResult 
 }
 
 /**
- * Clear measurement cache
+ * Clear measurement cache.
+ * 模块级共享缓存，仅在测试或主动重置时调用；组件卸载时不应清空。
  */
 export function clearMeasureCache(): void {
   measureCache.clear()

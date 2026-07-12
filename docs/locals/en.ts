@@ -256,10 +256,11 @@ export default {
         title: 'Alignment',
       },
       props: {
-        text: 'Text Content',
+        text: 'Text content; mutually exclusive with the default slot, text takes priority',
         lineClamp:
-          'Maximum number of lines to display, excess will be truncated',
-        allowHTML: 'Allow rendering HTML tags',
+          'Maximum number of lines to display, excess will be truncated; takes precedence over reserveEnd when both are set',
+        allowHTML:
+          'Whether tooltip content is parsed as HTML (only applies when using text; slot content is a DOM node and is unaffected)',
         placement: 'Tooltip display position',
         offset:
           'Tooltip offset relative to the target element [x, y] (unit: pixel)',
@@ -268,10 +269,7 @@ export default {
         delay:
           'Delay time for showing and hiding the tooltip [show delay, hide delay] (unit: millisecond)',
         reserveEnd:
-          'Number of characters to retain at the end, will show ellipsis in the middle when text overflows, retaining the beginning and specified number of ending characters',
-      },
-      emits: {
-        click: 'Triggered when text is clicked',
+          'Number of characters to retain at the end; shows a middle ellipsis when text overflows (only applies to single-line text prop)',
       },
     },
     flex: {
