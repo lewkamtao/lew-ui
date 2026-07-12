@@ -133,10 +133,15 @@ onMounted(() => {
   display: inline-block;
 }
 
+.lew-popok-body {
+  box-sizing: border-box;
+}
+
 .lew-popok-box {
   position: relative;
+  box-sizing: border-box;
   display: flex;
-  width: 450px;
+  width: 100%;
   height: auto;
   padding: 20px;
   border-radius: var(--lew-border-radius-small);
@@ -152,9 +157,10 @@ onMounted(() => {
   .lew-popok-box-right {
     position: relative;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 7px;
-    width: calc(450px - 15px - 30px);
+    min-width: 0;
 
     .lew-popok-box-right-header {
       width: 100%;

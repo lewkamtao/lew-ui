@@ -46,7 +46,6 @@ alwaysApply: false
     // UI 相关
     "@lucide/vue": "^1.24.0",       // 图标库
     "tippy.js": "^6.3.7",           // 提示工具
-    "vuedraggable": "^4.1.0",       // 拖拽
     
     // 特定功能
     "expr-eval-fork": "^3.0.3",     // 表达式计算（安全 fork）

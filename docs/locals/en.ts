@@ -1569,7 +1569,7 @@ export default {
       demo13: {
         title: 'Virtual Scroll',
         description:
-          'Enable ```virtual``` for 1000 rows with fixed columns and selection. Row height is fixed under virtual scroll; without it, rows still grow with content.',
+          'Enable ```virtual``` for 100,000 rows with fixed columns and selection. Row height is fixed under virtual scroll; without it, rows still grow with content.',
       },
       props: {
         columns: 'Columns',

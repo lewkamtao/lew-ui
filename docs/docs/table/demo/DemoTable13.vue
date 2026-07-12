@@ -69,7 +69,7 @@ const columns = [
   },
 ]
 
-const dataSource = Array.from({ length: 1000 }, (_, index) => {
+const dataSource = Array.from({ length: 100000 }, (_, index) => {
   const id = index + 1
   return {
     id,

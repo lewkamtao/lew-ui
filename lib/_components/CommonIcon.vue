@@ -129,6 +129,14 @@ const iconStyle = computed(() => {
       : '',
   }
 })
+
+// Lucide 用 `strokeWidth || default`，0 会被当成假值回退为 2，导致填充图标出现描边
+const lucideStrokeWidth = computed(() =>
+  props.strokeWidth === 0 ? 0.0001 : props.strokeWidth,
+)
+const lucideStrokeColor = computed(() =>
+  props.strokeWidth === 0 ? 'transparent' : undefined,
+)
 </script>
 
 <template>
@@ -139,7 +147,8 @@ const iconStyle = computed(() => {
       'lew-icon-loading': loading,
     }"
     :style="iconStyle"
-    :stroke-width
+    :stroke-width="lucideStrokeWidth"
+    :color="lucideStrokeColor"
     :size
     :fill
   />
