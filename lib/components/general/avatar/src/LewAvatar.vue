@@ -9,18 +9,30 @@ import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import { any2px } from 'lew-ui/utils'
 
 // 4. 组件配置导入
+import { avatarEmits } from './emits'
 import { avatarProps } from './props'
 
-// Props
+// Props / Emits
 const props = defineProps(avatarProps)
+const emit = defineEmits(avatarEmits)
+const slots = useSlots()
+
+function parseSize(size: string | number): number {
+  if (typeof size === 'number')
+    return size
+  const parsed = Number.parseFloat(size)
+  return Number.isFinite(parsed) ? parsed : 40
+}
+
+const normalizedSrc = computed(() => props.src?.trim() || '')
 
 // Composables
 const imageOptions = ref({
-  src: props.src,
+  src: normalizedSrc.value,
 })
 
 watch(
-  () => props.src,
+  normalizedSrc,
   (newVal: string) => {
     imageOptions.value.src = newVal
   },
@@ -28,6 +40,16 @@ watch(
 )
 
 const { isLoading, error } = useImage(imageOptions)
+
+watch(error, (err) => {
+  if (err && normalizedSrc.value)
+    emit('error', err)
+})
+
+watch(isLoading, (loading, wasLoading) => {
+  if (wasLoading && !loading && !error.value && normalizedSrc.value)
+    emit('load')
+})
 
 // 常量
 const BORDER_RADIUS_MAP: Record<string, string> = {
@@ -37,6 +59,8 @@ const BORDER_RADIUS_MAP: Record<string, string> = {
 }
 
 // 计算属性
+const sizeValue = computed(() => parseSize(props.size))
+
 const avatarStyle = computed(() => ({
   width: any2px(props.size),
   height: any2px(props.size),
@@ -52,8 +76,7 @@ const imageStyle = computed(() => ({
 }))
 
 const textStyle = computed(() => {
-  const size
-    = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
+  const size = sizeValue.value
   return {
     fontSize: `${size * 0.45}px`,
     lineHeight: `${size - 2}px`,
@@ -63,10 +86,16 @@ const textStyle = computed(() => {
   }
 })
 
+/** 文字头像来源：优先 name，兼容旧用法回退 alt */
+const displayName = computed(() => props.name || props.alt || '')
+
+/** 图片无障碍文案：优先 alt，回退 name */
+const imageAlt = computed(() => props.alt || props.name || '')
+
 const altText = computed(() => {
-  if (!props.alt)
+  if (!displayName.value)
     return ''
-  const result = props.alt
+  const result = displayName.value
     .split(' ')
     .map(word => word.charAt(0))
     .join('')
@@ -84,9 +113,7 @@ const statusDotStyle = computed(() => {
   if (!props.status)
     return {}
 
-  const sizeValue
-    = typeof props.size === 'number' ? props.size : Number.parseFloat(props.size)
-  const dotSize = sizeValue * 0.2
+  const dotSize = sizeValue.value * 0.2
 
   return {
     width: any2px(dotSize),
@@ -94,50 +121,74 @@ const statusDotStyle = computed(() => {
   }
 })
 
-const iconSize = computed(() => {
-  const { size } = props
-  return typeof size === 'number' ? size * 0.5 : Number.parseInt(size) * 0.5
-})
+const iconSize = computed(() => sizeValue.value * 0.5)
 
-const showSkeleton = computed(() => isLoading.value || props.loading)
+const showSkeleton = computed(
+  () => (Boolean(normalizedSrc.value) && isLoading.value) || props.loading,
+)
 const showImage = computed(
-  () => props.src && !error.value && !showSkeleton.value,
+  () => normalizedSrc.value && !error.value && !showSkeleton.value,
 )
 const showAltText = computed(
-  () => !props.src && props.alt && !showSkeleton.value,
+  () => !normalizedSrc.value && displayName.value && !showSkeleton.value,
 )
 const showIcon = computed(
-  () => !props.src && !props.alt && !showSkeleton.value,
+  () => !normalizedSrc.value && !displayName.value && !showSkeleton.value,
 )
-const showFallback = computed(() => error.value && !showSkeleton.value)
+const showFallback = computed(
+  () => Boolean(normalizedSrc.value) && Boolean(error.value) && !showSkeleton.value,
+)
+
+const accessibleLabel = computed(() => {
+  if (imageAlt.value)
+    return imageAlt.value
+  if (props.status)
+    return `avatar ${props.status}`
+  return 'avatar'
+})
 </script>
 
 <template>
-  <div class="lew-avatar" :style="avatarStyle">
+  <div
+    class="lew-avatar"
+    role="img"
+    :aria-label="accessibleLabel"
+    :style="avatarStyle"
+  >
     <div class="lew-avatar-box" :style="avatarBoxStyle">
-      <div v-if="showSkeleton" class="skeletons" />
-      <img
-        v-else-if="showImage"
-        :alt="props.alt"
-        :src="props.src"
-        loading="lazy"
-        :style="imageStyle"
-      >
-      <div
-        v-else-if="showAltText || (showFallback && props.alt)"
-        class="lew-avatar-text"
-        :style="textStyle"
-      >
-        {{ altText }}
-      </div>
-      <CommonIcon
-        v-else-if="showIcon || showFallback"
-        class="lew-avatar-user-icon"
-        :size="iconSize"
-        type="user"
-      />
+      <slot v-if="slots.default" />
+      <template v-else>
+        <div v-if="showSkeleton" class="skeletons" />
+        <img
+          v-else-if="showImage"
+          :alt="imageAlt"
+          :src="normalizedSrc"
+          loading="lazy"
+          :style="imageStyle"
+        >
+        <slot v-else-if="showFallback && slots.error" name="error" />
+        <div
+          v-else-if="showAltText || (showFallback && displayName)"
+          class="lew-avatar-text"
+          :style="textStyle"
+        >
+          {{ altText }}
+        </div>
+        <slot v-else-if="(showIcon || showFallback) && slots.icon" name="icon" />
+        <CommonIcon
+          v-else-if="showIcon || showFallback"
+          class="lew-avatar-user-icon"
+          :size="iconSize"
+          type="user"
+        />
+      </template>
     </div>
-    <i v-if="props.status" :class="statusDotClass" :style="statusDotStyle" />
+    <i
+      v-if="props.status"
+      :class="statusDotClass"
+      :style="statusDotStyle"
+      aria-hidden="true"
+    />
   </div>
 </template>
 
@@ -148,6 +199,10 @@ const showFallback = computed(() => error.value && !showSkeleton.value)
   flex-shrink: 0;
 
   .lew-avatar-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -192,6 +247,23 @@ const showFallback = computed(() => error.value && !showSkeleton.value)
     }
   }
 
+  @keyframes lew-avatar-status-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    70% {
+      transform: scale(1.65);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1.65);
+      opacity: 0;
+    }
+  }
+
   // Status dot (使用 class 而非 computed style，性能更好)
   .lew-avatar-status-dot {
     position: absolute;
@@ -216,6 +288,15 @@ const showFallback = computed(() => error.value && !showSkeleton.value)
 
   .lew-avatar-status-dot--processing {
     background-color: var(--lew-color-info);
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background-color: var(--lew-color-info);
+      content: '';
+      animation: lew-avatar-status-pulse 1.2s ease-out infinite;
+    }
   }
 
   .lew-avatar-status-dot--away {
@@ -243,23 +324,27 @@ const showFallback = computed(() => error.value && !showSkeleton.value)
     right: -0.05rem;
   }
 
-  // Square shape positioning
-  .lew-avatar-status-dot--square-top-left {
+  // Square / sharp shape positioning
+  .lew-avatar-status-dot--square-top-left,
+  .lew-avatar-status-dot--sharp-top-left {
     top: -0.25rem;
     left: -0.25rem;
   }
 
-  .lew-avatar-status-dot--square-top-right {
+  .lew-avatar-status-dot--square-top-right,
+  .lew-avatar-status-dot--sharp-top-right {
     top: -0.25rem;
     right: -0.25rem;
   }
 
-  .lew-avatar-status-dot--square-bottom-left {
+  .lew-avatar-status-dot--square-bottom-left,
+  .lew-avatar-status-dot--sharp-bottom-left {
     bottom: -0.25rem;
     left: -0.25rem;
   }
 
-  .lew-avatar-status-dot--square-bottom-right {
+  .lew-avatar-status-dot--square-bottom-right,
+  .lew-avatar-status-dot--sharp-bottom-right {
     bottom: -0.25rem;
     right: -0.25rem;
   }

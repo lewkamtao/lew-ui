@@ -8,7 +8,7 @@ const shapeValues = ['circle', 'square', 'sharp']
 
 export const avatarProps = {
   size: {
-    type: String,
+    type: [String, Number] as PropType<string | number>,
     default: '40px',
     validator: validators.widthHeight({
       componentName: 'LewAvatar',
@@ -39,6 +39,16 @@ export const avatarProps = {
     validator: validators.string({
       componentName: 'LewAvatar',
       propName: 'src',
+    }),
+  },
+  /**
+   * 用于生成文字头像的名称；未传时回退到 `alt`
+   */
+  name: {
+    type: String,
+    validator: validators.string({
+      componentName: 'LewAvatar',
+      propName: 'name',
     }),
   },
   alt: {

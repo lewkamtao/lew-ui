@@ -21,8 +21,6 @@ export default {
     home: '首页',
     install: '安装',
     components: '组件',
-    formEngine: '表单引擎',
-    descEngine: '描述引擎',
   },
   base: {
     base: '基础',
@@ -81,16 +79,46 @@ export default {
         description:
           '通过 shape 控制头像的形状, 可选值为 ```circle``` ```square``` ```sharp```。',
       },
+      demo5: {
+        title: '插槽',
+        description:
+          '支持 ```default``` 自定义内容、```icon``` 默认图标、```error``` 加载失败内容。',
+      },
+      demo6: {
+        title: '头像组',
+        description:
+          '使用 ```LewAvatarGroup``` 叠放展示多个头像，可通过 ```max``` 限制数量并显示剩余计数。',
+      },
       props: {
-        size: '尺寸',
+        size: '尺寸，支持数字或带单位字符串',
         loading: '是否显示加载中状态',
         shape: '形状',
         src: '图片地址',
-        alt: '图片描述',
+        name: '名称，用于生成文字头像；未传时回退到 alt',
+        alt: '图片无障碍描述；未传 name 时也可用于生成文字头像',
         status: '状态',
         objectFit: '图片填充模式',
         objectPosition: '图片位置',
         statusPlacement: '状态位置',
+      },
+      'props(AvatarGroup)': {
+        max: '最多显示的头像数量（含剩余计数）',
+        size: '统一设置子头像尺寸，子项单独设置时优先生效',
+        shape: '统一设置子头像形状，子项单独设置时优先生效',
+        overlap: '头像重叠间距',
+      },
+      slots: {
+        default: '自定义头像内容，优先级最高',
+        icon: '无图片且无名称时的自定义图标',
+        error: '图片加载失败时的自定义内容',
+      },
+      'slots(AvatarGroup)': {
+        default: '头像列表',
+        rest: '自定义剩余数量头像，参数为 { rest }',
+      },
+      emits: {
+        load: '图片加载成功时触发',
+        error: '图片加载失败时触发',
       },
     },
     button: {
@@ -424,7 +452,7 @@ export default {
         title: '支持网格布局',
       },
       demo5: {
-        title: '搭配表单引擎配置',
+        title: 'JSON 配置',
       },
       demo6: {
         title: '表单项异步加载',

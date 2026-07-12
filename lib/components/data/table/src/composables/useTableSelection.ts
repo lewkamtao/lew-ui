@@ -33,6 +33,12 @@ export function useTableSelection(options: {
     focusedRowsMap: {},
   })
 
+  function getRawSelectedKeys(): unknown[] {
+    return dataSource.value
+      .filter(row => selectionState.selectedRowsMap[String(row[rowKey])])
+      .map(row => row[rowKey])
+  }
+
   function updateAllCheckedState() {
     const checkedKeys = keys(pickBy(selectionState.selectedRowsMap, Boolean))
     const allDataKeys = dataSource.value.map(row => String(row[rowKey]))
@@ -46,29 +52,49 @@ export function useTableSelection(options: {
 
   function setAllRowsChecked(checked: boolean) {
     const newMap: Record<string, boolean> = {}
+    const nextKeys: unknown[] = []
     for (const row of dataSource.value) {
-      newMap[String(row[rowKey])] = checked
+      const rawKey = row[rowKey]
+      newMap[String(rawKey)] = checked
+      if (checked)
+        nextKeys.push(rawKey)
     }
     selectionState.selectedRowsMap = newMap
-    if (props.multiple) {
-      selectedKeys.value = checked ? keys(newMap) : []
-    }
+    selectionState.isAllChecked
+      = checked
+        && props.multiple
+        && props.checkable
+        && nextKeys.length > 0
+    if (props.multiple)
+      selectedKeys.value = checked ? nextKeys : []
+    emit('selectChange', selectedKeys.value)
+  }
+
+  function handleHeaderCheckboxClick() {
+    if (!props.checkable || !props.multiple || dataSource.value.length === 0)
+      return
+    setAllRowsChecked(!selectionState.isAllChecked)
   }
 
   function toggleRowSelection(row: Record<string, unknown>) {
     if (!props.checkable)
       return
 
-    const key = String(row[rowKey])
-    const isChecked = selectionState.selectedRowsMap[key]
+    const rawKey = row[rowKey]
+    const key = String(rawKey)
+    const isChecked = !!selectionState.selectedRowsMap[key]
 
     if (props.multiple) {
-      selectionState.selectedRowsMap[key] = !isChecked
-      selectedKeys.value = keys(pickBy(selectionState.selectedRowsMap, Boolean))
+      // shallowReactive 需替换引用才会触发更新
+      selectionState.selectedRowsMap = {
+        ...selectionState.selectedRowsMap,
+        [key]: !isChecked,
+      }
+      selectedKeys.value = getRawSelectedKeys()
     }
     else {
       selectionState.selectedRowsMap = { [key]: !isChecked }
-      selectedKeys.value = isChecked ? undefined : key
+      selectedKeys.value = isChecked ? undefined : rawKey
     }
     emit('selectChange', selectedKeys.value)
     updateAllCheckedState()
@@ -102,14 +128,19 @@ export function useTableSelection(options: {
         newMap[String(row[rowKey])] = false
       }
       if (Array.isArray(newKeys)) {
-        for (const key of newKeys) {
-          newMap[key] = true
-        }
+        for (const key of newKeys)
+          newMap[String(key)] = true
       }
       selectionState.selectedRowsMap = newMap
+      updateAllCheckedState()
     }
-    else if (newKeys !== undefined) {
+    else if (newKeys !== undefined && newKeys !== null && newKeys !== '') {
       selectionState.selectedRowsMap = { [String(newKeys)]: true }
+      updateAllCheckedState()
+    }
+    else {
+      selectionState.selectedRowsMap = {}
+      selectionState.isAllChecked = false
     }
   }
 
@@ -122,6 +153,7 @@ export function useTableSelection(options: {
     focusState,
     updateAllCheckedState,
     setAllRowsChecked,
+    handleHeaderCheckboxClick,
     toggleRowSelection,
     toggleRowFocus,
     handleRowClick,

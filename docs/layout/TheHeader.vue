@@ -130,16 +130,6 @@ getInitialLocale().then((locale) => {
       <div class="menu-item" @click="goToPage('/Image')">
         {{ docsLocale.t("home.components") }}
       </div>
-      <div class="menu-item" @click="goToPage('/form-engine', true)">
-        <lew-flex gap="5px">
-          {{ docsLocale.t("home.formEngine") }}
-        </lew-flex>
-      </div>
-      <div class="menu-item" @click="goToPage('/desc-engine', true)">
-        <lew-flex gap="5px">
-          {{ docsLocale.t("home.descEngine") }}
-        </lew-flex>
-      </div>
     </lew-flex>
     <lew-flex gap="15px" x="end" class="menu">
       <div v-if="isDev" class="menu-item menu-item-icon" @click="goToSettings">

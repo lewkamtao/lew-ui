@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { ref } from 'vue'
 import LewTable from './LewTable.vue'
 
 describe('lewTable', () => {
@@ -275,6 +276,40 @@ describe('lewTable', () => {
     expect(bodyCells[3].text()).toContain('2030')
     expect(bodyCells[4].text()).toContain('999')
 
+    wrapper.unmount()
+  })
+
+  it('selects all rows when header checkbox cell is clicked', async () => {
+    const selectedKeys = ref<(string | number)[]>([])
+    const wrapper = mount(LewTable, {
+      props: {
+        'columns': [
+          { title: 'Name', field: 'name', width: 120 },
+          { title: 'Age', field: 'age', width: 80 },
+        ],
+        'dataSource': [
+          { id: 1, name: 'Alice', age: 20 },
+          { id: 2, name: 'Bob', age: 22 },
+          { id: 3, name: 'Carol', age: 24 },
+        ],
+        'checkable': true,
+        'multiple': true,
+        'rowKey': 'id',
+        'selectedKeys': selectedKeys.value,
+        'onUpdate:selectedKeys': (value: (string | number)[]) => {
+          selectedKeys.value = value
+          wrapper.setProps({ selectedKeys: value })
+        },
+      },
+    })
+
+    await wrapper.vm.$nextTick()
+    const headerCheckbox = wrapper.find('.lew-table-head .lew-table-checkbox-wrapper')
+    expect(headerCheckbox.exists()).toBe(true)
+    await headerCheckbox.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    expect(selectedKeys.value).toEqual([1, 2, 3])
     wrapper.unmount()
   })
 })

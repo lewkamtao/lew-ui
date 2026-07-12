@@ -21,8 +21,6 @@ export default {
     home: 'Home',
     install: 'Install',
     components: 'Components',
-    formEngine: 'Form Engine',
-    descEngine: 'Description Engine',
   },
   base: {
     base: 'Base',
@@ -84,16 +82,46 @@ export default {
         description:
           'Control the shape of the avatar through `shape`, optional values are `circle`, `square`, `sharp`.',
       },
+      demo5: {
+        title: 'Slots',
+        description:
+          'Supports `default` custom content, `icon` for empty state, and `error` for load failure.',
+      },
+      demo6: {
+        title: 'Avatar Group',
+        description:
+          'Use `LewAvatarGroup` to stack avatars. Set `max` to limit visible count and show the rest as +N.',
+      },
       props: {
-        size: 'Size',
+        size: 'Size, accepts number or string with unit',
         loading: 'Show Loading Status',
         shape: 'Shape',
         src: 'Image Source',
-        alt: 'Image Description',
+        name: 'Name used for text avatar; falls back to alt when omitted',
+        alt: 'Image alt text; also used for text avatar when name is omitted',
         status: 'Status',
         objectFit: 'Image Fill Mode',
         objectPosition: 'Image Position',
         statusPlacement: 'Status Placement',
+      },
+      'props(AvatarGroup)': {
+        max: 'Max avatars to show (including the rest count)',
+        size: 'Unified child size; individual avatar size wins when set',
+        shape: 'Unified child shape; individual avatar shape wins when set',
+        overlap: 'Overlap spacing between avatars',
+      },
+      slots: {
+        default: 'Custom avatar content, highest priority',
+        icon: 'Custom icon when there is no image or name',
+        error: 'Custom content when image loading fails',
+      },
+      'slots(AvatarGroup)': {
+        default: 'Avatar list',
+        rest: 'Custom rest-count avatar, params: { rest }',
+      },
+      emits: {
+        load: 'Emitted when the image loads successfully',
+        error: 'Emitted when the image fails to load',
       },
     },
     button: {
@@ -404,7 +432,7 @@ export default {
         title: 'Support Grid Layout',
       },
       demo5: {
-        title: 'Configure with Form Engine',
+        title: 'JSON Configuration',
       },
       demo6: {
         title: 'Form Item Async Loading',

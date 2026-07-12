@@ -95,6 +95,7 @@ const {
   focusState,
   updateAllCheckedState,
   setAllRowsChecked,
+  handleHeaderCheckboxClick,
   handleRowClick,
   updateSelectedKeys,
   getRowSelectedState,
@@ -877,8 +878,12 @@ watch(isVirtualEnabled, () => {
           </div>
           <div
             v-if="checkable"
-            :class="getSpecialColumnClass('checkbox')"
+            :class="[
+              getSpecialColumnClass('checkbox'),
+              { 'lew-table-checkbox-wrapper--static': !multiple },
+            ]"
             :style="getSpecialColumnStyle('checkbox')"
+            @click.stop="handleHeaderCheckboxClick"
           >
             <LewCheckbox
               v-if="multiple"
@@ -886,7 +891,6 @@ watch(isVirtualEnabled, () => {
               :size="size"
               :disabled="dataState.dataSource.length === 0"
               :certain="hasPartialSelection && !selectionState.isAllChecked"
-              @change="setAllRowsChecked($event)"
             />
             <CommonIcon
               v-else
@@ -1137,18 +1141,21 @@ watch(isVirtualEnabled, () => {
     flex-grow: 0;
     flex-shrink: 0;
     position: relative;
+  }
 
-    &:hover:not(.lew-table-tr-dragging) {
+  // 拖拽中关闭行 hover；focus/selected 不被 hover 覆盖
+  &:not(.lew-table-dragging) .lew-table-tr:hover:not(.lew-table-tr-focused):not(
+    .lew-table-tr-selected
+  ) {
+    background-color: var(--lew-table-tr-hover-bgcolor);
+
+    .lew-table-td-sticky {
       background-color: var(--lew-table-tr-hover-bgcolor);
+    }
 
-      .lew-table-td-sticky {
-        background-color: var(--lew-table-tr-hover-bgcolor);
-      }
-
-      .lew-table-checkbox {
-        .lew-checkbox-icon-box {
-          border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-        }
+    .lew-table-checkbox {
+      .lew-checkbox-icon-box {
+        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       }
     }
   }
@@ -1257,6 +1264,16 @@ watch(isVirtualEnabled, () => {
   .lew-table-checkbox-wrapper {
     position: relative;
     cursor: pointer;
+
+    // 单选模式表头仅为示意图标，不可点击
+    &--static {
+      cursor: default;
+
+      &::after {
+        cursor: default;
+        pointer-events: none;
+      }
+    }
   }
 
   .lew-table-drag-handle {
@@ -1340,10 +1357,12 @@ watch(isVirtualEnabled, () => {
   position: absolute;
   z-index: 1;
   content: '';
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  // 扩大整格点击热区；点击落在 wrapper 上（表头全选 / 表体行选）
+  cursor: pointer;
 }
 
 .lew-table {
@@ -1407,19 +1426,27 @@ watch(isVirtualEnabled, () => {
   }
 
   .lew-table-tr-dragging {
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--lew-table-tr-dragging-bgcolor);
-      pointer-events: none;
-      z-index: 1;
+    // 不能用行级 opacity（会切断 sticky），改为单元格自身淡化
+    .lew-table-td {
+      opacity: 0.4;
+      // 顶边随单元格一起淡化（行只画 border-bottom，顶线本属上一行）
+      box-shadow: inset 0 1px 0 var(--lew-table-border-color);
     }
+  }
+
+  // 去掉上一行未淡化的底边，避免拖拽行顶线仍是实线
+  .lew-table-tr:has(+ .lew-table-tr-dragging) .lew-table-td {
+    border-bottom-color: transparent;
+  }
+
+  // 拖的是首行时，顶线来自表头底边
+  &:has(
+    .lew-table-body > .lew-table-tr-dragging:first-child,
+    .lew-table-body > .lew-table-virtual-spacer:first-child + .lew-table-tr-dragging
+  )
+    .lew-table-head
+    .lew-table-td:not(.lew-table-td-parent) {
+    border-bottom-color: transparent;
   }
 }
 </style>

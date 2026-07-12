@@ -72,9 +72,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- 纯 demo 页面，无任何外层组件，用于性能分析 -->
-  <div v-if="componentPath && demoComponent" class="standalone-demo-pure">
-    <component :is="demoComponent" />
+  <!-- 独立沙盒页：四周留白 + 居中舞台，便于聚焦查看 demo -->
+  <div v-if="componentPath && demoComponent" class="standalone-demo">
+    <div class="standalone-demo-stage">
+      <component :is="demoComponent" />
+    </div>
   </div>
   <div v-else-if="componentPath" class="standalone-demo-loading">
     {{ docsLocale.t("base.loading") }}
@@ -85,15 +87,28 @@ onMounted(async () => {
 </template>
 
 <style lang="scss" scoped>
-// 纯 demo 页面，最小化样式，用于性能分析
-.standalone-demo-pure {
-  width: 100vw;
-  height: 100vh;
-  padding: 0;
-  margin: 0;
-  overflow: auto;
+.standalone-demo {
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100vh;
+  padding: 48px 40px;
+  overflow: auto;
+  background-color: var(--lew-bgcolor-2);
+}
+
+.standalone-demo-stage {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 960px;
+  min-height: 240px;
+  padding: 40px;
   background-color: var(--lew-bgcolor-0);
+  border: var(--lew-pop-border);
+  border-radius: var(--lew-border-radius-small);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 4%);
 }
 
 .standalone-demo-loading,
@@ -101,9 +116,20 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   color: var(--lew-text-color-5);
   font-size: 14px;
+  background-color: var(--lew-bgcolor-2);
+}
+
+@media (width <= 768px) {
+  .standalone-demo {
+    padding: 24px 16px;
+  }
+
+  .standalone-demo-stage {
+    padding: 24px 16px;
+  }
 }
 </style>

@@ -43,16 +43,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Playground.vue'),
   },
   {
-    path: '/form-engine',
-    name: 'FormEngine',
-    component: () => import('../views/form-engine/index.vue'),
-  },
-  {
-    path: '/desc-engine',
-    name: 'DescEngine',
-    component: () => import('../views/desc-engine/index.vue'),
-  },
-  {
     path: '/check-lang',
     name: 'CheckLang',
     component: () => import('../views/check-lang/index.vue'),

@@ -1,1 +1,5 @@
 export { default as props } from './props'
+export { default as groupProps } from './groupProps'
+export { default as slots } from './slots'
+export { default as groupSlots } from './groupSlots'
+export { default as emits } from './emits'
