@@ -89,7 +89,7 @@ onMounted(() => {
 
 watch(visible, (newVal) => {
   if (!newVal) {
-    setTimeout(() => emit('close'), 500)
+    setTimeout(emit, 500, 'close')
   }
 })
 

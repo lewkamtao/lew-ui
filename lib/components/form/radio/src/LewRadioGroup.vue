@@ -30,7 +30,6 @@ const getRadioGroupClassName = computed(() => {
     x="start"
     gap="10"
     wrap
-    class="lew-radio-group"
     :direction
     :class="getRadioGroupClassName"
   >
@@ -50,12 +49,6 @@ const getRadioGroupClassName = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.lew-radio-group {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 .lew-radio-group-size-small {
   min-height: var(--lew-form-item-height-small);
 }

@@ -34,7 +34,7 @@ alwaysApply: false
   "dependencies": {
     // Vue 生态 - 核心必需
     "vue": "^3.5.3",
-    "@vueuse/core": "^13.5.0",
+    "@vueuse/core": "^14.3.0",
     "vue-router": "^4.0.13",
     "vue-i18n": "^11.1.0",
     
@@ -44,15 +44,14 @@ alwaysApply: false
     "axios": "^1.6.7",
     
     // UI 相关
-    "lucide-vue-next": "^0.534.0",  // 图标库
+    "@lucide/vue": "^1.24.0",       // 图标库
     "tippy.js": "^6.3.7",           // 提示工具
-    "vue-virt-list": "^1.5.11",     // 虚拟列表
     "vuedraggable": "^4.1.0",       // 拖拽
     
     // 特定功能
-    "expr-eval": "^2.0.2",          // 表达式计算
+    "expr-eval-fork": "^3.0.3",     // 表达式计算（安全 fork）
     "yup": "^1.2.0",                // 表单验证
-    "shiki-code-block-vue": "0.0.6-beta.1", // 代码高亮
+    "shiki-block-vue": "^1.1.2", // 代码高亮
     "loading-masker": "^1.0.0"      // 加载遮罩
   }
 }
@@ -71,7 +70,7 @@ alwaysApply: false
     // 代码质量
     "@antfu/eslint-config": "^5.0.0",
     "eslint": "^9.31.0",
-    "stylelint": "16.2.1",
+    "stylelint": "17.14.0",
     
     // 类型定义
     "@types/node": "^22.16.0",
@@ -135,11 +134,11 @@ const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss')
 const tomorrow = dayjs().add(1, 'day')
 ```
 
-#### 4. lucide-vue-next - 图标
+#### 4. @lucide/vue - 图标
 
 ```typescript
 // ✅ 使用 lucide 图标（已集成到 CommonIcon）
-import { Check, X, ChevronDown, Search } from 'lucide-vue-next'
+import { Check, X, ChevronDown, Search } from '@lucide/vue'
 
 // 通常通过 CommonIcon 组件使用
 <CommonIcon type="check" />
@@ -323,7 +322,7 @@ lib/
 // ✅ 内部公共组件（所有组件共用）
 <script setup lang="ts">
 import { computed } from 'vue'
-import * as Icons from 'lucide-vue-next'
+import * as Icons from '@lucide/vue'
 
 const props = defineProps<{
   type: string
@@ -488,7 +487,7 @@ pnpm update --latest
     "dayjs": "^1.11.13",
     
     // 🔶 beta/实验性：锁定精确版本
-    "shiki-code-block-vue": "0.0.6-beta.1"
+    "shiki-block-vue": "^1.1.2"
   }
 }
 ```

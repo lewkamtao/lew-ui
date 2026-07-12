@@ -17,7 +17,7 @@ import { TREE_INJECTION_KEY } from './types'
 const props = defineProps(treeProps)
 const emit = defineEmits(treeEmits)
 const modelValue = defineModel<string | string[]>()
-const expandKeys = defineModel<string[]>('expandKeys', { required: false, default: [] })
+const expandKeys = defineModel<string[]>('expandKeys', { required: false, default: () => [] })
 const dataSource = ref<LewTreeDataSource[]>([])
 const loading = ref<boolean>(false)
 const keyword = ref<string>('')

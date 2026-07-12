@@ -355,8 +355,6 @@ function getValue() {
 onBeforeUnmount(() => {
   document.removeEventListener('mousemove', handleDragMove)
   document.removeEventListener('mouseup', handleDragEnd)
-  throttledHandleScroll.cancel()
-  debouncedHandleScrollEnd.cancel()
 })
 
 defineExpose({ init, initCurrentTime, getValue })

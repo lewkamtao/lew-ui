@@ -79,7 +79,6 @@ initCheckbox()
     gap="10"
     wrap
     :direction
-    class="lew-checkbox-group"
     :class="getCheckboxGroupClassName"
   >
     <LewCheckbox
@@ -98,12 +97,6 @@ initCheckbox()
 </template>
 
 <style lang="scss" scoped>
-.lew-checkbox-group {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 .lew-checkbox-group-size-small {
   min-height: var(--lew-form-item-height-small);
 }

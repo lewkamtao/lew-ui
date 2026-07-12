@@ -256,8 +256,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   _dragmove()
-  throttledUpdateView.cancel()
-  throttledUpdateModelValue.cancel()
 })
 
 watch(

@@ -211,9 +211,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   _dragmove()
-  // 取消节流函数
-  throttledUpdateView.cancel()
-  throttledUpdateModelValue.cancel()
 })
 
 // 监听 modelValue 的变化，同步内部视图状态和实时更新 dot 的位置

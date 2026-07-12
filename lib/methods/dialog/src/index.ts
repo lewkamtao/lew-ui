@@ -3,8 +3,6 @@ import { useMouse } from '@vueuse/core'
 import { createApp, h } from 'vue'
 import _LewDialog from './LewDialog.vue'
 
-const { x, y } = useMouse()
-
 function createDialog(type: LewDialogType) {
   return (options: LewDialogOptions) => dialog(type, options)
 }
@@ -15,6 +13,16 @@ const dialogTypes: Record<LewDialogType, (options: LewDialogOptions) => void> = 
   info: createDialog('info'),
   normal: createDialog('normal'),
   success: createDialog('success'),
+}
+
+let mousePosition: ReturnType<typeof useMouse> | null = null
+
+function getTransformOrigin(): string {
+  if (typeof window === 'undefined')
+    return 'center center'
+  // 首次打开 Dialog 时再订阅指针，避免 import 即产生副作用
+  mousePosition ??= useMouse()
+  return `${mousePosition.x.value}px ${mousePosition.y.value}px`
 }
 
 function dialog(type: LewDialogType, options: LewDialogOptions) {
@@ -31,7 +39,7 @@ function dialog(type: LewDialogType, options: LewDialogOptions) {
   } = options
 
   const div = document.createElement('div')
-  const transformOrigin = `${x.value}px ${y.value}px`
+  const transformOrigin = getTransformOrigin()
   document.body.appendChild(div)
 
   const app = createApp({

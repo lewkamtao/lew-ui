@@ -226,7 +226,7 @@ export function retrieveNestedFieldValue(obj: any, field: string) {
   const keys = field.split('.') // 将字符串的嵌套字段按照 '.' 分割成数组
   let value = obj
   for (const key of keys) {
-    if (value && Object.prototype.hasOwnProperty.call(value, key)) {
+    if (value && Object.hasOwn(value, key)) {
       value = value[key]
     }
     else {
@@ -295,7 +295,7 @@ export function getFileIcon(fileName: string = '') {
     case 'avi':
     case 'mkv':
     case 'flv':
-      return getAssetsFile({ name: 'file_mp4.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_video.svg', type: 'icon' })
     case 'png':
     case 'jpg':
     case 'jpeg':
@@ -306,7 +306,7 @@ export function getFileIcon(fileName: string = '') {
     case 'ico':
       return getAssetsFile({ name: 'file_img.svg', type: 'icon' })
     case 'psd':
-      return getAssetsFile({ name: 'file_psd.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_ps.svg', type: 'icon' })
     case 'ai':
     case 'cdr':
       return getAssetsFile({ name: 'file_ai.svg', type: 'icon' })

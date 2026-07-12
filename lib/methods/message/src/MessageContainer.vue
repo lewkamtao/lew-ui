@@ -123,7 +123,7 @@ function clearHideTimer(): void {
 function startTimer(id: string, ms: number): void {
   if (ms <= 0)
     return
-  timers.set(id, setTimeout(() => remove(id), ms))
+  timers.set(id, setTimeout(remove, ms, id))
 }
 
 function pauseAllTimers(): void {

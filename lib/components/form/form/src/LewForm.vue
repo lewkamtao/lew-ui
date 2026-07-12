@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { LewFormOption } from 'lew-ui/types'
 import { useDebounceFn } from '@vueuse/core'
-import { Parser } from 'expr-eval'
+import { Parser } from 'expr-eval-fork'
 import {
   any2px,
   formatFormByMap,
