@@ -9,7 +9,7 @@ import {
   Share,
   Trash,
   View,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 
 const options = ref([
   {

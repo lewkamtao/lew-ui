@@ -9,7 +9,7 @@ import {
   Settings,
   Sun,
   User,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 
 const options = ref<any[]>([
   {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LewMenuOption } from 'lew-ui/types'
-import { Menu } from 'lucide-vue-next'
+import { Menu } from '@lucide/vue'
 import { useRoute } from 'vue-router'
 import TheSiderbar from '../layout/TheSiderbar.vue'
 

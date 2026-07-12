@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { Menu } from '@lucide/vue'
 import docsLocale from 'docs/locals'
-import { Menu } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 import LewRightNav from '../layout/LewRightNav.vue'
 import TheSiderbar from '../layout/TheSiderbar.vue'

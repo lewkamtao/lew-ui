@@ -9,7 +9,7 @@ import {
   Navigation,
   RotateCw,
   Search,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 
 const options1: LewContextMenusOption[] = [
   {

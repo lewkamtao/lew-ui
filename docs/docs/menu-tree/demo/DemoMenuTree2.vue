@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { LewMenuTreeOption } from 'lew-ui/types'
-import { BarChart2, Home, Settings, ShoppingCart, Target, Users } from 'lucide-vue-next'
+import { BarChart2, Home, Settings, ShoppingCart, Target, Users } from '@lucide/vue'
 
 const value = ref('')
 const options: LewMenuTreeOption[] = [

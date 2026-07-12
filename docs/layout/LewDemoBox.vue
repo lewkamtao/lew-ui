@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { Check, Code2, Copy, ExternalLink } from '@lucide/vue'
 import { renderDescription } from 'docs/lib/utils'
 import docsLocale from 'docs/locals'
 import RenderComponent from 'lew-ui/_components/RenderComponent.vue'
-import { Check, Code2, Copy, ExternalLink } from 'lucide-vue-next'
 import DocHeading from './DocHeading.vue'
 import LewCodeHighlighter from './LewCodeHighlighter.vue'
 

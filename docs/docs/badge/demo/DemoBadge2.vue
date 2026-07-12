@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Activity, Home, Search } from 'lucide-vue-next'
+import { Activity, Home, Search } from '@lucide/vue'
 </script>
 
 <template>

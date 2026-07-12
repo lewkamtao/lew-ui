@@ -8,7 +8,7 @@ import {
   PieChart,
   Smile,
   Users,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 
 const options = ref([
   {

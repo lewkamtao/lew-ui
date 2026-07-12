@@ -6,9 +6,9 @@ const v = ref(40)
   <lew-slider
     v-model="v"
     width="700px"
-    step="5"
-    max="70"
-    min="30"
+    :step="5"
+    :max="70"
+    :min="30"
     :options="[
       {
         label: '低',

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { LewMenuTreeOption } from 'lew-ui/types'
-import { FileText, MessageSquare, Tag, Users } from 'lucide-vue-next'
+import { FileText, MessageSquare, Tag, Users } from '@lucide/vue'
 
 const value = ref('')
 const expandKeys = ref([

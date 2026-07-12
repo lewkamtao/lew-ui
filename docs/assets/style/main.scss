@@ -1,8 +1,8 @@
 body,
 html {
   overflow: hidden;
-  color: var(--lew-text-color-1);
   font-size: 14px;
+  color: var(--lew-text-color-1);
   background: var(--lew-bgcolor-4);
 }
 
@@ -22,25 +22,25 @@ a {
 }
 
 .sub-title {
-  color: var(--lew-text-color-4);
-  font-weight: 400;
   font-size: 14px;
+  font-weight: 400;
   line-height: 30px;
+  color: var(--lew-text-color-4);
 }
 
 .demo-tips {
   margin: 20px 0;
-  color: var(--lew-text-color-6);
-  font-weight: 400;
   font-size: 14px;
+  font-weight: 400;
+  color: var(--lew-text-color-6);
 }
 
 .guide-wrapper {
   p {
     margin: 10px 0 20px;
-    color: var(--lew-text-color-5);
     font-size: 14px;
     line-height: 30px;
+    color: var(--lew-text-color-5);
   }
 
   .pre-box {
@@ -60,6 +60,6 @@ a {
 }
 
 .lucide {
-  flex-shrink: 0;
   box-sizing: content-box;
+  flex-shrink: 0;
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CodeBlock from 'shiki-code-block-vue'
+import CodeBlock from 'shiki-block-vue'
 
 defineProps({
   code: {
@@ -21,7 +21,7 @@ defineProps({
     <CodeBlock
       :lang="lang as any"
       :code="code"
-      :theme="{
+      :themes="{
         light: 'github-light',
         dark: 'github-dark',
       }"
@@ -63,5 +63,9 @@ defineProps({
 .lew-dark .shiki,
 .lew-dark .shiki span {
   color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 </style>

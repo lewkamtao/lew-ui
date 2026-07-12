@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Settings } from 'lucide-vue-next'
+import { Settings } from '@lucide/vue'
 
 const visible = ref(false)
 </script>

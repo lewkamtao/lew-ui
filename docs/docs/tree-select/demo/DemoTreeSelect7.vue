@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { Box } from '@lucide/vue'
 import axios from 'docs/axios/http'
-import { Box } from 'lucide-vue-next'
 
 function initMethod() {
   return new Promise<any[]>((resolve) => {

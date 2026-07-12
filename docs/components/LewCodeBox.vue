@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check, Copy } from 'lucide-vue-next'
+import { Check, Copy } from '@lucide/vue'
 import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
 
 defineProps({

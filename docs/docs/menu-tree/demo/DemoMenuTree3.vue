@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { LewMenuTreeOption } from 'lew-ui/types'
-import { BarChart2, Calendar, FileText, Settings, Target, Users } from 'lucide-vue-next'
+import { BarChart2, Calendar, FileText, Settings, Target, Users } from '@lucide/vue'
 
 const value = ref('1-1-1')
 const expandKeys = ref(['1', '1-1', '1-1-1'])

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Language } from '../../locals/index'
 import { useDark } from '@vueuse/core'
 import { messages } from 'docs/locals/index'
 import {
@@ -13,6 +12,9 @@ import {
   pt as compPT,
   zh as compZH,
 } from 'lew-ui/locals/index'
+
+/** 文档仅 zh/en；组件库保留全部语言，审查页用统一字符串语言码 */
+type LangCode = string
 
 const docs_langs = messages
 
@@ -56,7 +58,7 @@ const diffResults = ref<Record<string, string[]>>({})
 const languages = computed(() => {
   const langs = Object.keys(currentLangs.value).filter(
     lang => lang !== baseLanguage,
-  ) as Language[]
+  ) as LangCode[]
 
   // 按差异数量从多到少排序
   return langs.sort((a, b) => {
@@ -105,7 +107,7 @@ function compareObjects(base: any, target: any, path = ''): string[] {
 }
 
 // 当前选择的语言，需要在使用之前声明
-const currentLang = ref<Language>('en')
+const currentLang = ref<LangCode>('en')
 
 // 执行比较并生成结果
 function generateDiff() {
@@ -114,9 +116,9 @@ function generateDiff() {
   Object.keys(currentLangs.value)
     .filter(lang => lang !== baseLanguage)
     .forEach((lang) => {
-      const targetMessages = currentLangs.value[lang as Language]
+      const targetMessages = currentLangs.value[lang as keyof typeof currentLangs.value]
       const differences = compareObjects(baseMessages.value, targetMessages)
-      diffResults.value[lang as Language] = differences
+      diffResults.value[lang] = differences
     })
 }
 
@@ -138,7 +140,7 @@ if (languages.value.length > 0) {
 }
 
 // 切换语言
-function changeLang(lang: Language) {
+function changeLang(lang: LangCode) {
   currentLang.value = lang
 }
 

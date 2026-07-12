@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { LewSize } from 'lew-ui/types'
 
+import { Monitor, Moon, Sun, Upload } from '@lucide/vue'
 import { useDark } from '@vueuse/core'
 import dayjs from 'dayjs'
 import LewCodeBox from 'docs/components/LewCodeBox.vue'
@@ -9,7 +10,6 @@ import CommonIcon from 'lew-ui/_components/CommonIcon.vue'
 import LewGetLabelWidth from 'lew-ui/components/form/form/src/LewGetLabelWidth.vue'
 import { any2px, formatFormByMap, getFormItemRequired, getUniqueId } from 'lew-ui/utils'
 import { cloneDeep, debounce, has } from 'lodash-es'
-import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
 import draggable from 'vuedraggable'
 import PreviewModal from './components/PreviewModal.vue'
 import SetForm from './components/SetForm.vue'

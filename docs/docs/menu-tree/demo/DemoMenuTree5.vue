@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { LewMenuTreeOption } from 'lew-ui/types'
-import { LewFlex, LewTag } from 'lew-ui'
 import {
   BarChart2,
   FileText,
@@ -8,7 +7,8 @@ import {
   Settings,
   Tag,
   Users,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
+import { LewFlex, LewTag } from 'lew-ui'
 
 const value = ref('')
 const expandKeys = ref([])

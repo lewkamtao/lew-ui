@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ChevronLeft } from 'lucide-vue-next'
+import { ChevronLeft } from '@lucide/vue'
 
 const value = ref<string[]>(['1'])
 const companies = [

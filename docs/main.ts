@@ -4,10 +4,9 @@ import { createApp } from 'vue'
 
 import AppVue from './App.vue'
 import router from './router/index'
-import 'lew-ui/styles/reset.scss'
+// 组件库全局主题（含 tippy / CSS 变量）；开发态经 alias 指向 lib/style.ts
+import 'lew-ui/style'
 import 'docs/assets/style/reset.scss'
-import 'lew-ui/styles/var.scss'
-import 'lew-ui/styles/main.scss'
 import 'docs/assets/style/main.scss'
 
 const app = createApp(AppVue)

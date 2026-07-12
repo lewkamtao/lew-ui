@@ -12,7 +12,7 @@ defineProps({
   },
 })
 
-const form: any = defineModel({ default: {} })
+const form = defineModel<Record<string, any>>({ default: () => ({}) })
 </script>
 
 <template>

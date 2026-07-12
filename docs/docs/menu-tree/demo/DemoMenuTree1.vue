@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { LewMenuTreeOption } from 'lew-ui/types'
-import { Headphones, Laptop, Smartphone, Tv, Watch } from 'lucide-vue-next'
+import { Headphones, Laptop, Smartphone, Tv, Watch } from '@lucide/vue'
 
 const selectKey = ref('1-1-1-1')
 const expandKeys = ref(['1', '1-1', '1-1-1'])

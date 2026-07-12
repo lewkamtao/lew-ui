@@ -22,8 +22,8 @@ function formatTooltip(v: number) {
   <lew-slider
     v-model="v"
     width="700px"
-    max="100"
-    min="-30"
+    :max="100"
+    :min="-30"
     :format-tooltip="formatTooltip"
     :options="[
       {
@@ -47,6 +47,6 @@ function formatTooltip(v: number) {
         value: 100,
       },
     ]"
-    step="1"
+    :step="1"
   />
 </template>

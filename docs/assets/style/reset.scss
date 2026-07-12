@@ -26,9 +26,6 @@ html {
 /* ---------- Body ---------- */
 body {
   margin: 0;
-  color: #1f2329;
-
-  font-size: 14px;
 
   /* Google M3 font stack */
   font-family:
@@ -41,7 +38,10 @@ body {
     'Microsoft YaHei',
     'Noto Sans CJK SC',
     sans-serif;
+
+  font-size: 14px;
   line-height: 1.5;
+  color: #1f2329;
   background-color: #ffffff;
 
   text-rendering: optimizeLegibility;
@@ -65,8 +65,8 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-weight: inherit;
   font-size: inherit;
+  font-weight: inherit;
 }
 
 p,
@@ -86,8 +86,8 @@ small {
 /* ---------- Lists ---------- */
 ul,
 ol {
-  margin: 0;
   padding: 0;
+  margin: 0;
   list-style: none;
 }
 
@@ -110,8 +110,8 @@ iframe {
 
 /* ---------- Table ---------- */
 table {
-  border-collapse: collapse;
   border-spacing: 0;
+  border-collapse: collapse;
 }
 
 /* ---------- Form Elements ---------- */
@@ -119,24 +119,24 @@ button,
 input,
 select,
 textarea {
-  margin: 0;
   padding: 0;
-  color: inherit;
+  margin: 0;
   font: inherit;
+  color: inherit;
 }
 
 button {
+  cursor: pointer;
   background: none;
   border: none;
-  cursor: pointer;
 }
 
 input,
 select,
 textarea {
+  outline: none;
   background: transparent;
   border: none;
-  outline: none;
 }
 
 textarea {
@@ -152,8 +152,8 @@ input[type='reset'] {
 }
 
 input[type='search'] {
-  outline-offset: -2px;
   -webkit-appearance: none;
+  outline-offset: -2px;
 }
 
 ::-webkit-inner-spin-button,

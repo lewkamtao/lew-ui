@@ -4,7 +4,7 @@ import { h } from 'vue'
 export function convertProps(json: any) {
   const props = []
   for (const key in json) {
-    if (Object.prototype.hasOwnProperty.call(json, key)) {
+    if (Object.hasOwn(json, key)) {
       let type = ''
       if (Array.isArray(json[key].type)) {
         type = json[key].type
@@ -38,7 +38,7 @@ export function convertProps(json: any) {
 export function convertEmits(emits: Record<string, (...args: any[]) => any>) {
   const emitsList = []
   for (const key in emits) {
-    if (Object.prototype.hasOwnProperty.call(emits, key)) {
+    if (Object.hasOwn(emits, key)) {
       const emitFn = emits[key]
       const fnString = emitFn.toString()
 
