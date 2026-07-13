@@ -132,6 +132,10 @@ const estimatedContainerHeight = computed(() => {
   return 0
 })
 
+const virtualHeaderHeight = computed(
+  () => getHeadHeight.value * columnLevel.value + columnLevel.value,
+)
+
 const {
   containerRef: virtualContainerRef,
   visibleItems,
@@ -142,6 +146,7 @@ const {
   itemSize: getMinRowHeight,
   buffer: 5,
   estimatedContainerHeight: estimatedContainerHeight.value,
+  scrollOffset: virtualHeaderHeight,
 })
 
 const renderedRows = computed(() => {
@@ -177,6 +182,82 @@ const virtualBottomSpacer = computed(() => {
 
 const rowHeightPx = computed(() => `${getMinRowHeight.value}px`)
 
+const virtualScrollDirection = ref<'up' | 'down' | 'none'>('none')
+const virtualEnteringRowIds = shallowReactive<Record<string, true>>({})
+let virtualVisibleRowIds = new Set<string>()
+let virtualPrevStartIndex = -1
+let virtualEnterClearTimer: ReturnType<typeof setTimeout> | null = null
+
+function resetVirtualRowTransitions(): void {
+  virtualScrollDirection.value = 'none'
+  for (const key of Object.keys(virtualEnteringRowIds))
+    delete virtualEnteringRowIds[key]
+  virtualVisibleRowIds.clear()
+  virtualPrevStartIndex = -1
+  if (virtualEnterClearTimer !== null) {
+    clearTimeout(virtualEnterClearTimer)
+    virtualEnterClearTimer = null
+  }
+}
+
+function updateVirtualRowTransitions(): void {
+  if (!isVirtualEnabled.value)
+    return
+
+  const rows = visibleItems.value
+  if (!rows.length) {
+    resetVirtualRowTransitions()
+    return
+  }
+
+  const start = rows[0]!.index
+  const nextIds = new Set<string>()
+
+  if (virtualPrevStartIndex < 0) {
+    for (const { data } of rows)
+      nextIds.add(data._lew_table_tr_id)
+    virtualVisibleRowIds = nextIds
+    virtualPrevStartIndex = start
+    return
+  }
+
+  if (start > virtualPrevStartIndex)
+    virtualScrollDirection.value = 'down'
+  else if (start < virtualPrevStartIndex)
+    virtualScrollDirection.value = 'up'
+
+  virtualPrevStartIndex = start
+
+  for (const key of Object.keys(virtualEnteringRowIds))
+    delete virtualEnteringRowIds[key]
+
+  for (const { data } of rows) {
+    const rowId = data._lew_table_tr_id
+    nextIds.add(rowId)
+    if (!virtualVisibleRowIds.has(rowId))
+      virtualEnteringRowIds[rowId] = true
+  }
+
+  virtualVisibleRowIds = nextIds
+
+  if (!Object.keys(virtualEnteringRowIds).length)
+    return
+
+  if (virtualEnterClearTimer !== null)
+    clearTimeout(virtualEnterClearTimer)
+
+  virtualEnterClearTimer = setTimeout(() => {
+    virtualEnterClearTimer = null
+    for (const key of Object.keys(virtualEnteringRowIds))
+      delete virtualEnteringRowIds[key]
+    virtualScrollDirection.value = 'none'
+  }, 220)
+}
+
+watch(visibleItems, () => {
+  nextTick(updateVirtualRowTransitions)
+}, { flush: 'post' })
+
 function getRowStyle() {
   // 虚拟滚动必须固定行高；普通模式仅设最小高度，允许内容撑开
   if (isVirtualEnabled.value) {
@@ -196,11 +277,19 @@ function getRowClass(index: number, row: any) {
       && !props.checkable
       && focusState.focusedRowsMap[row[_rowKey]]
 
-  return {
+  const classes: Record<string, boolean> = {
     'lew-table-tr-dragging': dragState.dragIndex === index,
     'lew-table-tr-selected': selectionState.selectedRowsMap[row[_rowKey]],
     'lew-table-tr-focused': isFocused,
   }
+
+  if (isVirtualEnabled.value && virtualEnteringRowIds[row._lew_table_tr_id]) {
+    classes['lew-table-tr-virtual-enter'] = true
+    classes['lew-table-tr-virtual-enter--down'] = virtualScrollDirection.value === 'down'
+    classes['lew-table-tr-virtual-enter--up'] = virtualScrollDirection.value === 'up'
+  }
+
+  return classes
 }
 
 const hasPartialSelection = computed(() => {
@@ -242,6 +331,23 @@ const getTableClass = computed(() => ({
   'lew-table-has-fixed-right': hasFixedRight.value,
   'lew-table-virtual': isVirtualEnabled.value,
 }))
+
+const tableStyle = computed(() => {
+  if (!props.maxHeight)
+    return undefined
+
+  const maxH = any2px(props.maxHeight)
+  if (isVirtualEnabled.value) {
+    // 固定视口高度，避免内容撑高容器后 visibleCount 持续增大
+    return {
+      height: maxH,
+      maxHeight: maxH,
+    }
+  }
+  return {
+    maxHeight: maxH,
+  }
+})
 
 function getColumnX(column: any): LewXAlignment {
   return column.x || 'start'
@@ -441,6 +547,8 @@ const handleTableResize = useThrottleFn(() => {
   if (layoutState.scrollClientWidth !== newScrollClientWidth) {
     layoutState.scrollClientWidth = newScrollClientWidth
     columnStyleCache.clear()
+    if (isVirtualEnabled.value)
+      updateVirtualScroll()
   }
   if (layoutState.isScroll !== newIsScroll) {
     layoutState.isScroll = newIsScroll
@@ -455,8 +563,6 @@ const handleTableResize = useThrottleFn(() => {
   }
 
   updateScrollState()
-  if (isVirtualEnabled.value)
-    updateVirtualScroll()
 }, THROTTLE_DELAY)
 
 function init() {
@@ -772,6 +878,7 @@ watch(tableRef, (el) => {
 })
 
 onUnmounted(() => {
+  resetVirtualRowTransitions()
   if (tooltipAnimationFrame) {
     cancelAnimationFrame(tooltipAnimationFrame)
     tooltipAnimationFrame = null
@@ -786,6 +893,7 @@ watch(
   (newVal) => {
     clearRenderCache()
     columnStyleCache.clear()
+    resetVirtualRowTransitions()
 
     const newDataSource = addUniqueIdToDataSource(newVal)
     dataState.dataSource = newDataSource
@@ -829,10 +937,12 @@ watch(
   },
 )
 
-watch(isVirtualEnabled, () => {
+watch(isVirtualEnabled, (enabled) => {
+  resetVirtualRowTransitions()
   nextTick(() => {
     virtualContainerRef.value = tableRef.value || null
-    updateVirtualScroll()
+    if (enabled)
+      updateVirtualScroll()
   })
 })
 </script>
@@ -857,7 +967,7 @@ watch(isVirtualEnabled, () => {
       ref="tableRef"
       class="lew-table lew-scrollbar"
       :class="getTableClass"
-      :style="`max-height: ${any2px(maxHeight)}`"
+      :style="tableStyle"
       @scroll="handleTableScroll"
     >
       <div
@@ -1172,8 +1282,45 @@ watch(isVirtualEnabled, () => {
 
   // 虚拟滚动时在单元格内裁切超高内容；不要给 tr 设 overflow，否则会切断 sticky
   &.lew-table-virtual {
+    // 防止 top spacer 变化时浏览器 scroll anchoring 自动改 scrollTop，引发无限重算
+    overflow-anchor: none;
+
+    .lew-table-body {
+      overflow-anchor: none;
+    }
+
     .lew-table-td {
       overflow: hidden;
+    }
+
+    .lew-table-tr-virtual-enter {
+      animation: lew-table-virtual-row-enter 0.2s cubic-bezier(0.2, 0, 0.2, 1) both;
+    }
+
+    .lew-table-tr-virtual-enter--down {
+      --lew-table-virtual-enter-y: 8px;
+    }
+
+    .lew-table-tr-virtual-enter--up {
+      --lew-table-virtual-enter-y: -8px;
+    }
+
+    @keyframes lew-table-virtual-row-enter {
+      from {
+        opacity: 0;
+        transform: translateY(var(--lew-table-virtual-enter-y, 8px));
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lew-table-tr-virtual-enter {
+        animation: none;
+      }
     }
   }
 

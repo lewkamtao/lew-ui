@@ -65,6 +65,36 @@ describe('useVirtualScroll', () => {
     el.remove()
   })
 
+  it('scrollOffset 会扣除 sticky 表头等固定占位后再计算窗口', async () => {
+    const list = ref(Array.from({ length: 100 }, (_, i) => ({ id: i })))
+    const { containerRef, visibleItems, offsetY, update } = useVirtualScroll(list, {
+      itemSize: 20,
+      buffer: 1,
+      scrollOffset: 40,
+    })
+
+    const el = createContainer(200)
+    containerRef.value = el
+    await nextTick()
+    update()
+
+    expect(visibleItems.value[0]?.index).toBe(0)
+
+    // 仅滚过表头高度时，数据窗口仍应从第 0 行开始
+    el.scrollTop = 35
+    update()
+    expect(visibleItems.value[0]?.index).toBe(0)
+    expect(offsetY.value).toBe(0)
+
+    // 滚过表头 + 2 行后，窗口应切换到 index 2
+    el.scrollTop = 40 + 40
+    update()
+    expect(visibleItems.value[0]?.index).toBe(1)
+    expect(offsetY.value).toBe(20)
+
+    el.remove()
+  })
+
   it('scrollToIndex / reset 能定位滚动位置', async () => {
     vi.stubGlobal(
       'requestAnimationFrame',

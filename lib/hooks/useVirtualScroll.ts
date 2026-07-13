@@ -15,6 +15,11 @@ export interface UseVirtualScrollOptions {
   buffer?: number | Ref<number> | ComputedRef<number>
   /** 预估容器高度，首屏 ResizeObserver 前使用，默认 0 */
   estimatedContainerHeight?: number
+  /**
+   * 滚动容器内固定占位高度（如 sticky 表头）。
+   * 从 scrollTop / clientHeight 中扣除后再计算可见窗口。
+   */
+  scrollOffset?: number | Ref<number> | ComputedRef<number>
 }
 
 export interface VirtualScrollItem<T> {
@@ -60,6 +65,8 @@ export function useVirtualScroll<T>(
   let rafId = 0
   let resizeObserver: ResizeObserver | null = null
   let boundEl: HTMLElement | null = null
+  let stableBodyClientHeight = 0
+  let lastObservedWidth = 0
 
   const getList = (): T[] => {
     if (typeof list === 'function')
@@ -69,6 +76,7 @@ export function useVirtualScroll<T>(
 
   const getItemSize = () => Math.max(1, Number(unref(options.itemSize)) || 1)
   const getBuffer = () => Math.max(0, Number(unref(options.buffer ?? 5)) || 0)
+  const getScrollOffset = () => Math.max(0, Number(unref(options.scrollOffset ?? 0)) || 0)
 
   const totalHeight = computed(() => getList().length * getItemSize())
 
@@ -77,8 +85,12 @@ export function useVirtualScroll<T>(
     const buffer = getBuffer()
     const length = getList().length
 
-    if (length === 0 || clientHeight <= 0) {
+    if (length === 0) {
       return { start: 0, end: 0, offset: 0 }
+    }
+
+    if (clientHeight <= 0) {
+      return null
     }
 
     const start = Math.max(0, Math.floor(scrollTop / size) - buffer)
@@ -92,7 +104,7 @@ export function useVirtualScroll<T>(
   }
 
   function applyRange(start: number, end: number, offset: number, force = false) {
-    if (!force && start === startIndex && end === endIndex) {
+    if (!force && start === startIndex && end === endIndex && offsetY.value === offset) {
       return
     }
 
@@ -108,16 +120,65 @@ export function useVirtualScroll<T>(
     visibleItems.value = next
   }
 
-  function update(force = false) {
+  function resolveViewportMetrics() {
     const el = containerRef.value
     const clientHeight = el?.clientHeight || containerHeight.value
     const scrollTop = el?.scrollTop ?? 0
+    const scrollOffset = getScrollOffset()
+    const clientWidth = el?.clientWidth ?? 0
+    const rawBodyClientHeight = Math.max(0, clientHeight - scrollOffset)
 
-    if (el && clientHeight > 0)
+    if (clientWidth > 0 && clientWidth !== lastObservedWidth) {
+      lastObservedWidth = clientWidth
+      stableBodyClientHeight = rawBodyClientHeight
+    }
+    else if (rawBodyClientHeight > 0 && stableBodyClientHeight === 0) {
+      stableBodyClientHeight = rawBodyClientHeight
+    }
+    else if (
+      rawBodyClientHeight > 0
+      && Math.abs(rawBodyClientHeight - stableBodyClientHeight) > 24
+    ) {
+      stableBodyClientHeight = rawBodyClientHeight
+    }
+
+    const bodyClientHeight = stableBodyClientHeight > 0
+      ? stableBodyClientHeight
+      : rawBodyClientHeight
+
+    return {
+      scrollTop,
+      bodyScrollTop: Math.max(0, scrollTop - scrollOffset),
+      bodyClientHeight,
+      clientHeight,
+    }
+  }
+
+  function update(force = false) {
+    const { bodyScrollTop, bodyClientHeight, clientHeight } = resolveViewportMetrics()
+
+    if (containerRef.value && clientHeight > 0)
       containerHeight.value = clientHeight
 
-    const { start, end, offset } = computeRange(scrollTop, clientHeight)
-    applyRange(start, end, offset, force)
+    let range = computeRange(bodyScrollTop, bodyClientHeight)
+
+    if (!range) {
+      if (!force)
+        return
+
+      const fallbackHeight = Math.max(
+        getItemSize(),
+        bodyClientHeight
+        || Math.max(0, containerHeight.value - getScrollOffset())
+        || options.estimatedContainerHeight
+        || getItemSize() * 10,
+      )
+      range = computeRange(bodyScrollTop, fallbackHeight)
+      if (!range)
+        return
+    }
+
+    applyRange(range.start, range.end, range.offset, force)
   }
 
   function scheduleUpdate() {
@@ -146,8 +207,9 @@ export function useVirtualScroll<T>(
     if (length === 0)
       return
 
+    const scrollOffset = getScrollOffset()
     const target = Math.max(0, Math.min(index, length - 1))
-    const itemTop = target * size
+    const itemTop = scrollOffset + target * size
     const itemBottom = itemTop + size
     const viewTop = el.scrollTop
     const viewBottom = viewTop + el.clientHeight
@@ -155,7 +217,7 @@ export function useVirtualScroll<T>(
     let nextTop = itemTop
 
     if (align === 'center') {
-      nextTop = itemTop - (el.clientHeight - size) / 2
+      nextTop = itemTop - (el.clientHeight - scrollOffset - size) / 2
     }
     else if (align === 'end') {
       nextTop = itemBottom - el.clientHeight
@@ -178,6 +240,8 @@ export function useVirtualScroll<T>(
     const el = containerRef.value
     if (el)
       el.scrollTop = 0
+    stableBodyClientHeight = 0
+    lastObservedWidth = 0
     update(true)
   }
 
@@ -210,6 +274,8 @@ export function useVirtualScroll<T>(
     }
 
     containerHeight.value = el.clientHeight
+    stableBodyClientHeight = 0
+    lastObservedWidth = 0
     update(true)
   }
 
@@ -219,18 +285,20 @@ export function useVirtualScroll<T>(
     () => getList(),
     async () => {
       await nextTick()
-      const el = containerRef.value
-      if (el) {
-        const maxScroll = Math.max(0, el.scrollHeight - el.clientHeight)
-        if (el.scrollTop > maxScroll)
-          el.scrollTop = maxScroll
-      }
       update(true)
+      await nextTick()
+      const el = containerRef.value
+      if (!el)
+        return
+
+      const maxScroll = Math.max(0, el.scrollHeight - el.clientHeight)
+      if (el.scrollTop > maxScroll)
+        el.scrollTop = maxScroll
     },
   )
 
   watch(
-    () => [getItemSize(), getBuffer()] as const,
+    () => [getItemSize(), getBuffer(), getScrollOffset()] as const,
     () => update(true),
   )
 
@@ -251,6 +319,6 @@ export function useVirtualScroll<T>(
     totalHeight,
     scrollToIndex,
     reset,
-    update: () => update(true),
+    update: () => update(false),
   }
 }

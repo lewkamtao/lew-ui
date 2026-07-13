@@ -17,9 +17,15 @@ const isEllipsisByTextTrim = ref(false)
 const isEllipsis = ref(false)
 
 let tippyInstance: Instance | null = null
-let isHovering = false
+let isHoveringTrigger = false
+let isHoveringTooltip = false
+let isSelectingInTooltip = false
 let showTimer: ReturnType<typeof setTimeout> | null = null
 let hideTimer: ReturnType<typeof setTimeout> | null = null
+
+function isPointerOver(): boolean {
+  return isHoveringTrigger || isHoveringTooltip || isSelectingInTooltip
+}
 
 // 缓存上一次计算的输入，避免重复计算
 let lastCalculateInput = { text: '', reserveEnd: 0, width: 0, lineClamp: 0 }
@@ -119,11 +125,24 @@ function createTippy(): void {
     content: getTooltipContent(),
     animation: 'scale-subtle',
     hideOnClick: false,
-    interactive: false,
+    interactive: true,
+    interactiveBorder: 8,
     appendTo: () => document.body,
     arrow: roundArrow,
     maxWidth: 250,
     ...getTippyProps(),
+    onMount(instance) {
+      const { popper } = instance
+      popper.addEventListener('mouseenter', handleTooltipMouseEnter)
+      popper.addEventListener('mouseleave', handleTooltipMouseLeave)
+      popper.addEventListener('mousedown', handleTooltipMouseDown)
+    },
+    onDestroy(instance) {
+      const { popper } = instance
+      popper.removeEventListener('mouseenter', handleTooltipMouseEnter)
+      popper.removeEventListener('mouseleave', handleTooltipMouseLeave)
+      popper.removeEventListener('mousedown', handleTooltipMouseDown)
+    },
   })
   tippyInstance.popper.children[0].setAttribute('data-lew', 'tooltip')
 }
@@ -138,6 +157,9 @@ function updateTippy(): void {
 
 function destroyTippy(): void {
   clearHoverTimers()
+  isHoveringTooltip = false
+  isSelectingInTooltip = false
+  document.removeEventListener('mouseup', handleDocumentMouseUp)
   if (tippyInstance) {
     tippyInstance.destroy()
     tippyInstance = null
@@ -150,7 +172,7 @@ function scheduleShow(): void {
   const [showDelay] = getDelay()
   showTimer = setTimeout(() => {
     showTimer = null
-    if (isHovering)
+    if (isPointerOver())
       tippyInstance?.show()
   }, showDelay)
 }
@@ -161,7 +183,7 @@ function scheduleHide(): void {
   const [, hideDelay] = getDelay()
   hideTimer = setTimeout(() => {
     hideTimer = null
-    if (!isHovering)
+    if (!isPointerOver())
       tippyInstance?.hide()
   }, hideDelay)
 }
@@ -227,7 +249,7 @@ function calculateDisplayText(): void {
 const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
 
 function handleMouseEnter(): void {
-  isHovering = true
+  isHoveringTrigger = true
   isEllipsis.value = checkEllipsis()
   if (!hasEllipsis.value)
     return
@@ -239,8 +261,32 @@ function handleMouseEnter(): void {
 }
 
 function handleMouseLeave(): void {
-  isHovering = false
+  isHoveringTrigger = false
   scheduleHide()
+}
+
+function handleTooltipMouseEnter(): void {
+  isHoveringTooltip = true
+  clearHideTimer()
+}
+
+function handleTooltipMouseLeave(): void {
+  isHoveringTooltip = false
+  if (!isSelectingInTooltip)
+    scheduleHide()
+}
+
+function handleTooltipMouseDown(): void {
+  isSelectingInTooltip = true
+  clearHideTimer()
+  document.addEventListener('mouseup', handleDocumentMouseUp)
+}
+
+function handleDocumentMouseUp(): void {
+  document.removeEventListener('mouseup', handleDocumentMouseUp)
+  isSelectingInTooltip = false
+  if (!isPointerOver())
+    scheduleHide()
 }
 
 onMounted(() => {
@@ -249,7 +295,9 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  isHovering = false
+  isHoveringTrigger = false
+  isHoveringTooltip = false
+  isSelectingInTooltip = false
   destroyTippy()
 })
 

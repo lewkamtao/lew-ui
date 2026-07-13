@@ -74,7 +74,7 @@ const dataSource = Array.from({ length: 100000 }, (_, index) => {
   return {
     id,
     name: `User ${id}`,
-    email: `user${id}@examexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleple.com`,
+    email: `user${id}@qq.com`,
     department: departments[index % departments.length],
     role: roles[index % roles.length],
     city: cities[index % cities.length],
