@@ -50,10 +50,12 @@ describe('useVirtualScroll', () => {
     await nextTick()
     update()
 
+    const windowBefore = visibleItems.value
     const startBefore = visibleItems.value[0]?.index
     const endBefore = visibleItems.value.at(-1)?.index
     el.scrollTop = 10
     update()
+    expect(visibleItems.value).toBe(windowBefore)
     expect(visibleItems.value[0]?.index).toBe(startBefore)
     expect(visibleItems.value.at(-1)?.index).toBe(endBefore)
 
@@ -65,7 +67,7 @@ describe('useVirtualScroll', () => {
     el.remove()
   })
 
-  it('scrollOffset 会扣除 sticky 表头等固定占位后再计算窗口', async () => {
+  it('scrollOffset 只扣除 sticky 表头占用的视口高度，并能渲染到列表末尾', async () => {
     const list = ref(Array.from({ length: 100 }, (_, i) => ({ id: i })))
     const { containerRef, visibleItems, offsetY, update } = useVirtualScroll(list, {
       itemSize: 20,
@@ -80,17 +82,67 @@ describe('useVirtualScroll', () => {
 
     expect(visibleItems.value[0]?.index).toBe(0)
 
-    // 仅滚过表头高度时，数据窗口仍应从第 0 行开始
+    // 小幅滚动仍被首屏缓冲区覆盖
     el.scrollTop = 35
     update()
     expect(visibleItems.value[0]?.index).toBe(0)
     expect(offsetY.value).toBe(0)
 
-    // 滚过表头 + 2 行后，窗口应切换到 index 2
+    // sticky 表头只占用视口，不应再从 scrollTop 中重复扣除
     el.scrollTop = 40 + 40
     update()
-    expect(visibleItems.value[0]?.index).toBe(1)
-    expect(offsetY.value).toBe(20)
+    expect(visibleItems.value[0]?.index).toBe(3)
+    expect(offsetY.value).toBe(60)
+
+    // 内容总高度 2000 + 表头 40 - 容器 200 = 最大 scrollTop 1840
+    el.scrollTop = 1840
+    update()
+    expect(visibleItems.value.at(-1)?.index).toBe(99)
+
+    el.remove()
+  })
+
+  it('快速跳跃滚动时同步切换渲染窗口，不额外等待一帧', async () => {
+    const requestFrame = vi.fn(() => 1)
+    vi.stubGlobal('requestAnimationFrame', requestFrame)
+
+    const list = ref(Array.from({ length: 1000 }, (_, i) => ({ id: i })))
+    const { containerRef, visibleItems } = useVirtualScroll(list, {
+      itemSize: 20,
+      buffer: 2,
+      bufferScreens: 1,
+    })
+
+    const el = createContainer(100)
+    containerRef.value = el
+    await nextTick()
+
+    el.scrollTop = 1000
+    el.dispatchEvent(new Event('scroll'))
+
+    expect(requestFrame).not.toHaveBeenCalled()
+    expect(visibleItems.value[0]!.index).toBeLessThanOrEqual(50)
+    expect(visibleItems.value.at(-1)!.index).toBeGreaterThanOrEqual(54)
+
+    el.remove()
+    vi.unstubAllGlobals()
+  })
+
+  it('bufferScreens 会按一屏数据计算基础缓冲', async () => {
+    const list = ref(Array.from({ length: 100 }, (_, i) => ({ id: i })))
+    const { containerRef, visibleItems, update } = useVirtualScroll(list, {
+      itemSize: 20,
+      buffer: 1,
+      bufferScreens: 1,
+    })
+
+    const el = createContainer(100)
+    containerRef.value = el
+    await nextTick()
+    update()
+
+    // 5 行视口 + 上下各 5 行缓冲
+    expect(visibleItems.value).toHaveLength(15)
 
     el.remove()
   })
@@ -124,5 +176,29 @@ describe('useVirtualScroll', () => {
 
     el.remove()
     vi.unstubAllGlobals()
+  })
+
+  it('scrollToIndex 在 sticky 表头下按真实内容坐标定位', async () => {
+    const list = ref(Array.from({ length: 100 }, (_, i) => ({ id: i })))
+    const { containerRef, scrollToIndex } = useVirtualScroll(list, {
+      itemSize: 20,
+      buffer: 1,
+      scrollOffset: 40,
+    })
+
+    const el = createContainer(200)
+    containerRef.value = el
+    await nextTick()
+
+    scrollToIndex(20, 'start')
+    expect(el.scrollTop).toBe(400)
+
+    scrollToIndex(20, 'center')
+    expect(el.scrollTop).toBe(330)
+
+    scrollToIndex(20, 'end')
+    expect(el.scrollTop).toBe(260)
+
+    el.remove()
   })
 })

@@ -9,7 +9,7 @@ const pre2 = ref(`import 'lew-ui/style'`)
 const pre3 = ref(`import { createApp } from 'vue'
 import LewUI from 'lew-ui'
 import 'lew-ui/style'
-import App from './App.vue'
+import App from ${JSON.stringify('./App.vue')}
 
 const app = createApp(App)
 app.use(LewUI)

@@ -5,7 +5,7 @@ import LewCodeHighlighter from '../layout/LewCodeHighlighter.vue'
 const pre1 = ref(`import { createApp } from 'vue'
 import { LewTooltip, LewLoading, LewVContextMenu } from 'lew-ui'
 import 'lew-ui/style'
-import App from './App.vue'
+import App from ${JSON.stringify('./App.vue')}
 
 const app = createApp(App)
 // 按需注册指令；若已 app.use(LewUI) 全量安装则无需再注册

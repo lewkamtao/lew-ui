@@ -94,7 +94,6 @@ const {
   selectionState,
   focusState,
   updateAllCheckedState,
-  setAllRowsChecked,
   handleHeaderCheckboxClick,
   handleRowClick,
   updateSelectedKeys,
@@ -145,6 +144,8 @@ const {
 } = useVirtualScroll(dataSourceRef, {
   itemSize: getMinRowHeight,
   buffer: 5,
+  // 按一屏数据计算基础缓冲，再按滚动方向动态分配。
+  bufferScreens: 1,
   estimatedContainerHeight: estimatedContainerHeight.value,
   scrollOffset: virtualHeaderHeight,
 })
@@ -181,84 +182,7 @@ const virtualBottomSpacer = computed(() => {
 })
 
 const rowHeightPx = computed(() => `${getMinRowHeight.value}px`)
-
-const virtualScrollDirection = ref<'up' | 'down' | 'none'>('none')
-const virtualEnteringRowIds = shallowReactive<Record<string, true>>({})
-let virtualVisibleRowIds = new Set<string>()
-let virtualPrevStartIndex = -1
-let virtualEnterClearTimer: ReturnType<typeof setTimeout> | null = null
-
-function resetVirtualRowTransitions(): void {
-  virtualScrollDirection.value = 'none'
-  for (const key of Object.keys(virtualEnteringRowIds))
-    delete virtualEnteringRowIds[key]
-  virtualVisibleRowIds.clear()
-  virtualPrevStartIndex = -1
-  if (virtualEnterClearTimer !== null) {
-    clearTimeout(virtualEnterClearTimer)
-    virtualEnterClearTimer = null
-  }
-}
-
-function updateVirtualRowTransitions(): void {
-  if (!isVirtualEnabled.value)
-    return
-
-  const rows = visibleItems.value
-  if (!rows.length) {
-    resetVirtualRowTransitions()
-    return
-  }
-
-  const start = rows[0]!.index
-  const nextIds = new Set<string>()
-
-  if (virtualPrevStartIndex < 0) {
-    for (const { data } of rows)
-      nextIds.add(data._lew_table_tr_id)
-    virtualVisibleRowIds = nextIds
-    virtualPrevStartIndex = start
-    return
-  }
-
-  if (start > virtualPrevStartIndex)
-    virtualScrollDirection.value = 'down'
-  else if (start < virtualPrevStartIndex)
-    virtualScrollDirection.value = 'up'
-
-  virtualPrevStartIndex = start
-
-  for (const key of Object.keys(virtualEnteringRowIds))
-    delete virtualEnteringRowIds[key]
-
-  for (const { data } of rows) {
-    const rowId = data._lew_table_tr_id
-    nextIds.add(rowId)
-    if (!virtualVisibleRowIds.has(rowId))
-      virtualEnteringRowIds[rowId] = true
-  }
-
-  virtualVisibleRowIds = nextIds
-
-  if (!Object.keys(virtualEnteringRowIds).length)
-    return
-
-  if (virtualEnterClearTimer !== null)
-    clearTimeout(virtualEnterClearTimer)
-
-  virtualEnterClearTimer = setTimeout(() => {
-    virtualEnterClearTimer = null
-    for (const key of Object.keys(virtualEnteringRowIds))
-      delete virtualEnteringRowIds[key]
-    virtualScrollDirection.value = 'none'
-  }, 220)
-}
-
-watch(visibleItems, () => {
-  nextTick(updateVirtualRowTransitions)
-}, { flush: 'post' })
-
-function getRowStyle() {
+const rowStyle = computed(() => {
   // 虚拟滚动必须固定行高；普通模式仅设最小高度，允许内容撑开
   if (isVirtualEnabled.value) {
     return {
@@ -269,7 +193,7 @@ function getRowStyle() {
   return {
     minHeight: rowHeightPx.value,
   }
-}
+})
 
 function getRowClass(index: number, row: any) {
   const isFocused
@@ -277,19 +201,11 @@ function getRowClass(index: number, row: any) {
       && !props.checkable
       && focusState.focusedRowsMap[row[_rowKey]]
 
-  const classes: Record<string, boolean> = {
+  return {
     'lew-table-tr-dragging': dragState.dragIndex === index,
     'lew-table-tr-selected': selectionState.selectedRowsMap[row[_rowKey]],
     'lew-table-tr-focused': isFocused,
   }
-
-  if (isVirtualEnabled.value && virtualEnteringRowIds[row._lew_table_tr_id]) {
-    classes['lew-table-tr-virtual-enter'] = true
-    classes['lew-table-tr-virtual-enter--down'] = virtualScrollDirection.value === 'down'
-    classes['lew-table-tr-virtual-enter--up'] = virtualScrollDirection.value === 'up'
-  }
-
-  return classes
 }
 
 const hasPartialSelection = computed(() => {
@@ -878,7 +794,6 @@ watch(tableRef, (el) => {
 })
 
 onUnmounted(() => {
-  resetVirtualRowTransitions()
   if (tooltipAnimationFrame) {
     cancelAnimationFrame(tooltipAnimationFrame)
     tooltipAnimationFrame = null
@@ -893,7 +808,6 @@ watch(
   (newVal) => {
     clearRenderCache()
     columnStyleCache.clear()
-    resetVirtualRowTransitions()
 
     const newDataSource = addUniqueIdToDataSource(newVal)
     dataState.dataSource = newDataSource
@@ -938,7 +852,6 @@ watch(
 )
 
 watch(isVirtualEnabled, (enabled) => {
-  resetVirtualRowTransitions()
   nextTick(() => {
     virtualContainerRef.value = tableRef.value || null
     if (enabled)
@@ -1053,7 +966,7 @@ watch(isVirtualEnabled, (enabled) => {
             { 'lew-table-tr-last': i === dataState.dataSource.length - 1 },
           ]"
           :data-row-id="row._lew_table_tr_id"
-          :style="getRowStyle()"
+          :style="rowStyle"
           @click="handleRowClick(row)"
         >
           <div
@@ -1254,9 +1167,7 @@ watch(isVirtualEnabled, (enabled) => {
   }
 
   // 拖拽中关闭行 hover；focus/selected 不被 hover 覆盖
-  &:not(.lew-table-dragging) .lew-table-tr:hover:not(.lew-table-tr-focused):not(
-    .lew-table-tr-selected
-  ) {
+  &:not(.lew-table-dragging) .lew-table-tr:hover:not(.lew-table-tr-focused):not(.lew-table-tr-selected) {
     background-color: var(--lew-table-tr-hover-bgcolor);
 
     .lew-table-td-sticky {
@@ -1291,36 +1202,6 @@ watch(isVirtualEnabled, (enabled) => {
 
     .lew-table-td {
       overflow: hidden;
-    }
-
-    .lew-table-tr-virtual-enter {
-      animation: lew-table-virtual-row-enter 0.2s cubic-bezier(0.2, 0, 0.2, 1) both;
-    }
-
-    .lew-table-tr-virtual-enter--down {
-      --lew-table-virtual-enter-y: 8px;
-    }
-
-    .lew-table-tr-virtual-enter--up {
-      --lew-table-virtual-enter-y: -8px;
-    }
-
-    @keyframes lew-table-virtual-row-enter {
-      from {
-        opacity: 0;
-        transform: translateY(var(--lew-table-virtual-enter-y, 8px));
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .lew-table-tr-virtual-enter {
-        animation: none;
-      }
     }
   }
 
@@ -1588,9 +1469,9 @@ watch(isVirtualEnabled, (enabled) => {
 
   // 拖的是首行时，顶线来自表头底边
   &:has(
-    .lew-table-body > .lew-table-tr-dragging:first-child,
-    .lew-table-body > .lew-table-virtual-spacer:first-child + .lew-table-tr-dragging
-  )
+      .lew-table-body > .lew-table-tr-dragging:first-child,
+      .lew-table-body > .lew-table-virtual-spacer:first-child + .lew-table-tr-dragging
+    )
     .lew-table-head
     .lew-table-td:not(.lew-table-td-parent) {
     border-bottom-color: transparent;

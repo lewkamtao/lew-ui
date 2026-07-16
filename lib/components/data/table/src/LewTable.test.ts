@@ -106,6 +106,43 @@ describe('lewTable', () => {
     wrapper.unmount()
   })
 
+  it('keeps the last rows rendered after a fast jump to the virtual scroll bottom', async () => {
+    const dataSource = Array.from({ length: 200 }, (_, index) => ({
+      id: index,
+      name: `User ${index}`,
+    }))
+
+    const wrapper = mount(LewTable, {
+      props: {
+        columns: [
+          { title: 'ID', field: 'id', width: 80 },
+          { title: 'Name', field: 'name', width: 120 },
+        ],
+        dataSource,
+        maxHeight: 300,
+        virtual: true,
+      },
+      attachTo: document.body,
+    })
+
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    const tableEl = wrapper.find('.lew-table').element as HTMLElement
+    Object.defineProperty(tableEl, 'clientHeight', { value: 300, configurable: true })
+
+    // medium: 表头 38 + 边界 1，行高 36；直接跳到最大滚动位置。
+    tableEl.scrollTop = 39 + dataSource.length * 36 - 300
+    tableEl.dispatchEvent(new Event('scroll'))
+    await wrapper.vm.$nextTick()
+
+    const renderedRows = wrapper.findAll('.lew-table-body .lew-table-tr')
+    expect(renderedRows.at(-1)?.text()).toContain('User 199')
+    expect(wrapper.find('.lew-table-body .lew-table-virtual-spacer:last-child').exists()).toBe(false)
+
+    wrapper.unmount()
+  })
+
   it('does not mutate original dataSource rows when adding internal ids', async () => {
     const row = { name: 'Alice' }
     const dataSource = [row]
